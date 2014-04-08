@@ -1,0 +1,18 @@
+default: &default
+  adapter: mysql2
+  encoding: utf8
+  pool: 5
+  username: root
+  password:
+
+development:
+  <<: *default
+  database: management_console_development
+
+test:
+  <<: *default
+  database: management_console_test
+
+production:
+  <<: *default
+  database: management_console_production
