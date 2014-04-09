@@ -1,1 +1,3 @@
-# The Management Console App
+# SoleMan
+
+The Management Console App
