@@ -16,3 +16,4 @@ test:
 production:
   <<: *default
   database: management_console_production
+  password: <%= ENV["DB_PASSWORD"] %>
