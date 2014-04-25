@@ -34,4 +34,15 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+
+  # Mailer configuration
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+      :address => 'smtp.deliverhq.com',
+      :domain => 'datacentred.co.uk',
+      :authentication => :cram_md5,
+      :user_name => 'yvnkigkbn5',
+      :password => '7y7qh820t4'
+  }
 end
