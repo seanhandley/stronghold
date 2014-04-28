@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+source 'https://rails-assets.org'
 
 gem 'rails', '4.1.0'
 gem 'mysql2'
@@ -15,3 +16,4 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'unicorn'
 gem 'haml'
 gem 'bootstrap-sass'
+gem 'rails-assets-normalize-css'
