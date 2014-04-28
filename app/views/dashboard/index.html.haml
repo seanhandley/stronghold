@@ -1,0 +1,23 @@
+= image_tag 'logo_large.png'
+
+%h1 Dashboard
+
+%p 
+  Some text with some
+  = link_to 'links', ''
+
+%h2 Another section
+%ul
+  %li Things
+  %li Things
+
+%h3 More stuff
+
+= select_tag 'hello', options_for_select([["Yo", 0], ["Sup", 2]])
+
+%button{'type' => 'button', 'class' => 'btn btn-default'} Default
+%button{'type' => 'button', 'class' => 'btn btn-primary'} Primary
+%button{'type' => 'button', 'class' => 'btn btn-success'} Success
+%button{'type' => 'button', 'class' => 'btn btn-info'} Info
+%button{'type' => 'button', 'class' => 'btn btn-warning'} Warning
+%button{'type' => 'button', 'class' => 'btn btn-danger'} Danger
