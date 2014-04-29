@@ -4,3 +4,4 @@
 
 %p= link_to 'CSS', css_path
 %p= link_to 'Components', components_path
+%p= link_to 'Log out?', support_session_path(current_user), :method => :delete, data: { confirm: "Log out?" }
