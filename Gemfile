@@ -17,3 +17,9 @@ gem 'unicorn'
 gem 'haml'
 gem 'bootstrap-sass', '~> 3.1.1'
 gem 'rails-assets-normalize-css'
+
+group :test do
+  gem 'minitest-rails'
+  gem 'faker'
+  gem 'machinist'
+end

@@ -1,0 +1,16 @@
+= image_tag 'logo_large.png'
+
+#flashes= display_flash
+
+%h3 Login
+
+= form_for(User.new, :url => support_sessions_path, :method => :post, :html => {:role => 'form'}) do |f|
+  .form-group
+    %label{'for' => "exampleInputEmail1"} Email address
+    = f.email_field :email, :class => "form-control",
+                    :id => "exampleInputEmail1", :placeholder => "Enter email"
+  .form-group
+    %label{'for' => "exampleInputPassword1"} Password
+    = f.password_field :password, :class => "form-control",
+                       :id => "exampleInputPassword1", :placeholder => "Enter Password"
+  = f.submit 'Log In', :class => 'btn btn-primary'
