@@ -15,5 +15,5 @@ gem 'spring',            group: :development
 gem 'bcrypt', '~> 3.1.7'
 gem 'unicorn'
 gem 'haml'
-gem 'bootstrap-sass'
+gem 'bootstrap-sass', '~> 3.1.1'
 gem 'rails-assets-normalize-css'

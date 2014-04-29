@@ -132,7 +132,7 @@ PLATFORMS
 
 DEPENDENCIES
   bcrypt (~> 3.1.7)
-  bootstrap-sass
+  bootstrap-sass (~> 3.1.1)
   coffee-rails (~> 4.0.0)
   haml
   jbuilder (~> 2.0)
