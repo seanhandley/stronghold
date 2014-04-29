@@ -2,22 +2,18 @@
 
 %h1 Dashboard
 
-%p 
-  Some text with some
-  = link_to 'links', ''
+%p= link_to 'CSS', css_path
+%p= link_to 'Components', components_path
 
-%h2 Another section
-%ul
-  %li Things
-  %li Things
+%h3 Login
 
-%h3 More stuff
-
-= select_tag 'hello', options_for_select([["Yo", 0], ["Sup", 2]])
-
-%button{'type' => 'button', 'class' => 'btn btn-default'} Default
-%button{'type' => 'button', 'class' => 'btn btn-primary'} Primary
-%button{'type' => 'button', 'class' => 'btn btn-success'} Success
-%button{'type' => 'button', 'class' => 'btn btn-info'} Info
-%button{'type' => 'button', 'class' => 'btn btn-warning'} Warning
-%button{'type' => 'button', 'class' => 'btn btn-danger'} Danger
+%form{'role' => 'form'}
+  .form-group
+    %label{'for' => "exampleInputEmail1"} Email address
+    = text_field_tag 'email', '', :type => "email", :class => "form-control",
+                              :id => "exampleInputEmail1", :placeholder => "Enter email"
+  .form-group
+    %label{'for' => "exampleInputPassword1"} Password
+    = text_field_tag 'password', '', :type => "password", :class => "form-control",
+                              :id => "exampleInputPassword1", :placeholder => "Enter Password"
+  = submit_tag 'Submit', :type => 'submit', :class => 'btn btn-primary'
