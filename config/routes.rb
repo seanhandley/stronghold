@@ -1,8 +1,13 @@
 Rails.application.routes.draw do
 
-   root 'dashboard#index'
+  get '/css', :controller => 'support/dashboard', :action => 'css'
+  get '/components', :controller => 'support/dashboard', :action => 'components'
 
-   get '/css', :controller => 'dashboard', :action => 'css'
-   get '/components', :controller => 'dashboard', :action => 'components'
+  namespace :support do
+    root :to => 'dashboard#index'
+    resources :sessions
+  end
+
+  root :to => 'support/dashboard#index'
 
 end
