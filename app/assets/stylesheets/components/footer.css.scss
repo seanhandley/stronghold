@@ -1,9 +1,12 @@
 footer {
   background: #0d0d0d;
   color: rgba(255, 255, 255, 0.7);
-  height: 80px;
   padding: 2em 0 3em;
   border-top: 1px solid #1a1a1a;
+}
+
+footer, .push {
+  height: 80px;
 }
 
 footer a, footer a:hover {
