@@ -33,3 +33,9 @@ footer img.social-media-badge {
     display: none;
   }
 }
+
+@media only screen and (max-height: 420px), only screen and (max-device-height: 420px) {
+  footer {
+    display: none;
+  }
+}
