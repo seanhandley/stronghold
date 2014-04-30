@@ -11,9 +11,11 @@
   %meta{'name' => 'viewport', 'content' => 'width=device-width, initial-scale=1'}
 
 %body
-  #flashes= display_flash
   #wrap
+
     .container
+      = image_tag 'logo_small.png'
+      #flashes= display_flash
       = yield
       .push
   = render partial: 'shared/footer'
