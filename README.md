@@ -1,3 +1,3 @@
-# SoleMan
+# Stronghold
 
 The Management Console App
