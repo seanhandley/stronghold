@@ -1,0 +1,26 @@
+footer {
+  background: #0d0d0d;
+  color: rgba(255, 255, 255, 0.7);
+  height: 80px;
+  padding: 2em 0 3em;
+  border-top: 1px solid #1a1a1a;
+}
+
+footer a, footer a:hover {
+  color: #FFF;
+}
+
+#wrap {
+  min-height: 100%;
+  height: auto !important;
+  margin: 0 auto -80px;  
+}
+
+html, body {
+  height: 100%;
+}
+
+footer img.social-media-badge {
+  height: 30px;
+  width: 30px;
+}
