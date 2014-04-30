@@ -6,3 +6,19 @@
   position: absolute;
   top: 0; left: 0; bottom: 0; right: 0;
 }
+
+img.login-logo {
+  height: auto;
+  width: 240px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+@media only screen 
+and (min-device-width : 320px) 
+and (max-device-width : 480px) {
+  .container#login {
+    width: 260px;
+  }
+}
