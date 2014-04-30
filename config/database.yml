@@ -7,13 +7,13 @@ default: &default
 
 development:
   <<: *default
-  database: management_console_development
+  database: stronghold_development
 
 test:
   <<: *default
-  database: management_console_test
+  database: stronghold_test
 
 production:
   <<: *default
-  database: management_console_production
+  database: stronghold_production
   password: <%= ENV["DB_PASSWORD"] %>

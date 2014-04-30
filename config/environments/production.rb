@@ -44,7 +44,7 @@ Rails.application.configure do
 
   # Set to :debug to see everything in the log.
   config.log_level = :info
-  config.logger = ActiveSupport::Logger.new("/var/log/rails/soleman/production.log")
+  config.logger = ActiveSupport::Logger.new("/var/log/rails/stronghold/production.log")
 
 
   # Prepend all log lines with the following tags.
