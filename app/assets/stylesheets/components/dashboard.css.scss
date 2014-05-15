@@ -1,0 +1,31 @@
+img.logo {
+  float: left;
+  margin-top: 15px;
+  margin-right: 10px;
+}
+
+i.dashboard-icon {
+  font-size: 6em;
+}
+
+.dashboard-option {
+  opacity: 0.8;
+  width: 140px;
+  margin: auto;
+  text-align: center;
+  padding: 10px;
+  margin-bottom: 30px;
+  cursor: pointer;
+}
+
+.dashboard-option:hover {
+  opacity: 1.0;
+}
+
+.dashboard-option:hover h4 {
+  color: #AE4725;
+}
+
+.dashboard-option h4 {
+  color: #C47E50;
+}
