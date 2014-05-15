@@ -4,7 +4,7 @@
 
 %h3 Log In
 
-= form_for(User.new, :url => support_sessions_path, :method => :post, :html => {:role => 'form'}) do |f|
+= form_for(User.new, :url => sessions_path, :method => :post, :html => {:role => 'form'}) do |f|
   .form-group
     %label{'for' => "exampleInputEmail1"} Email address
     = f.email_field :email, :class => "form-control",

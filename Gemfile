@@ -17,6 +17,8 @@ gem 'unicorn'
 gem 'haml'
 gem 'bootstrap-sass', '~> 3.1.1'
 gem 'rails-assets-normalize-css'
+gem 'cancan'
+gem 'font-awesome-sass'
 
 group :test do
   gem 'minitest-rails'

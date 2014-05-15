@@ -1,0 +1,13 @@
+- @roles.each do |role|
+  %h2= role.name
+  = form_for role, :url => support_role_path(role), :remote => true do |f|
+    - for role_group_name, permissions in Permissions.user.group_by { |k,v| v[:group] }.sort_by{ |a, b| a }
+      .control-group
+        %h3= role_group_name
+        = hidden_field_tag 'role[name]', role.name
+        .controls
+          - for key, perms in permissions
+            %label.checkbox
+              = check_box_tag 'role[permissions][]', key, role.permissions.include?(key), :id => "permission-#{key}", :class => 'role-permission'
+              = "#{perms[:description]}?"
+

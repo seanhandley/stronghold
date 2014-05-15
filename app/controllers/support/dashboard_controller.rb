@@ -1,5 +1,7 @@
 class Support::DashboardController < SupportBaseController
 
+  skip_authorization_check
+
   def css
     
   end

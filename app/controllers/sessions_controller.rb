@@ -1,4 +1,4 @@
-class Support::SessionsController < ApplicationController
+class SessionsController < ApplicationController
 
   layout 'login'
   
@@ -22,7 +22,7 @@ class Support::SessionsController < ApplicationController
   def destroy
     session[:user_id] = nil if session[:user_id]
     respond_to do |wants|
-      wants.html { redirect_to new_support_session_path, :notice => "You have been logged out." }
+      wants.html { redirect_to sign_in_path, :notice => "You have been logged out." }
     end
   end
 
