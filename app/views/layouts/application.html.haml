@@ -1,7 +1,7 @@
 !!!
 %html
   %head
-  %title Datacentred
+  %title Datacentred Dashboard
   = favicon_link_tag 'favicon.ico'
   = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
   = javascript_include_tag 'application', 'data-turbolinks-track' => true
@@ -14,11 +14,14 @@
   #wrap
 
     .container
-      = image_tag 'logo_small.png'
+      = image_tag 'logo_small.png', class: 'logo'
+      %div
+        %h2 > Dashboard
       #flashes= display_flash
+      %nav= render partial: 'shared/support_nav'
       = yield
       .push
-  = render partial: 'shared/footer'
+  /= render partial: 'shared/footer'
   :javascript
     (function (i, s, o, g, r, a, m) {
         i['GoogleAnalyticsObject'] = r;

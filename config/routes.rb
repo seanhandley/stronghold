@@ -5,8 +5,14 @@ Rails.application.routes.draw do
 
   namespace :support do
     root :to => 'dashboard#index'
-    resources :sessions
+    resources :instances
+    resources :users
+    resources :roles
   end
+
+  resources :sessions
+
+  get 'sign_in', :controller => 'sessions', :action => 'new'
 
   root :to => 'support/dashboard#index'
 
