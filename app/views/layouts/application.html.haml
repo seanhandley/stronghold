@@ -14,9 +14,10 @@
   #wrap
 
     .container
-      = image_tag 'logo_small.png', class: 'logo'
-      %div
-        %h2 > Dashboard
+      %a{href: support_root_path, class: 'back-to-dash' }
+        = image_tag 'logo_small.png', class: 'logo'
+        %div
+          %h2 > Dashboard
       #flashes= display_flash
       %nav= render partial: 'shared/support_nav'
       = yield
