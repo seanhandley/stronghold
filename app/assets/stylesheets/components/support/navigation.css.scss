@@ -1,0 +1,19 @@
+nav {
+  margin-bottom: 40px;
+  border-bottom: solid 1px grey;
+  text-align: right;
+}
+
+nav span.choice {
+  border-right: solid 1px grey;
+  padding-right: 5px;
+}
+
+nav span.choice.logout {
+  border-right: 0px
+}
+
+nav span.choice a:hover {
+  text-decoration: none;
+  opacity:0.4;
+}
