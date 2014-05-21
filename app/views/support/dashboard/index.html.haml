@@ -1,31 +1,33 @@
 .container-fluid
   .row
     .col-md-3.col-xs-6
-      .dashboard-option
-        %i.dashboard-icon.fa.fa-rocket
-        %h4 instances
+      %a{href: support_instances_path, class: 'dashboard-link'}
+        .dashboard-option
+          %i.dashboard-icon.fa.fa-rocket
+          %h4 instances
     .col-md-3.col-xs-6
-      .dashboard-option
+      .dashboard-option.dashboard-option-disabled
         %i.dashboard-icon.fa.fa-database
         %h4 storage
     .col-md-3.col-xs-6
-      .dashboard-option
+      .dashboard-option.dashboard-option-disabled
         %i.dashboard-icon.fa.fa-sitemap
         %h4 network
     .col-md-3.col-xs-6
-      .dashboard-option
+      .dashboard-option.dashboard-option-disabled
         %i.dashboard-icon.fa.fa-power-off
         %h4 colo
   .row
     .col-md-3.col-xs-6
-      .dashboard-option
-        %i.dashboard-icon.fa.fa-users
-        %h4 users/roles
+      %a{href: support_roles_path, class: 'dashboard-link'}
+        .dashboard-option
+          %i.dashboard-icon.fa.fa-users
+          %h4 users/roles
     .col-md-3.col-xs-6
-      .dashboard-option
+      .dashboard-option.dashboard-option-disabled
         %i.dashboard-icon.fa.fa-life-ring
         %h4 support
     .col-md-3.col-xs-6
-      .dashboard-option
+      .dashboard-option.dashboard-option-disabled
         %i.dashboard-icon.fa.fa-money
         %h4 billing

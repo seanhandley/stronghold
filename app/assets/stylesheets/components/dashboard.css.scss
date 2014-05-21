@@ -1,3 +1,5 @@
+@import "settings";
+
 img.logo {
   float: left;
   margin-top: 15px;
@@ -18,14 +20,38 @@ i.dashboard-icon {
   cursor: pointer;
 }
 
+a.dashboard-link {
+  color: $headings-color;
+}
+
+a.dashboard-link:hover, a.dashboard-link:active {
+  text-decoration: none;
+}
+
 .dashboard-option:hover {
   opacity: 1.0;
 }
 
+.dashboard-option-disabled {
+  cursor: not-allowed;
+}
+
+.dashboard-option-disabled:hover {
+  opacity: 0.8 !important;
+}
+
 .dashboard-option:hover h4 {
-  color: #AE4725;
+  color: $menu-link-hover-colour;
 }
 
 .dashboard-option h4 {
-  color: #C47E50;
+  color: $menu-link-colour;
+}
+
+.dashboard-option-disabled:hover h4 {
+  color: $menu-link-colour;
+}
+
+a.back-to-dash {
+  text-decoration: none;
 }
