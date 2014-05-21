@@ -11,7 +11,7 @@ i.dashboard-icon {
 }
 
 .dashboard-option {
-  opacity: 0.8;
+  opacity: 0.9;
   width: 140px;
   margin: auto;
   text-align: center;
@@ -34,10 +34,11 @@ a.dashboard-link:hover, a.dashboard-link:active {
 
 .dashboard-option-disabled {
   cursor: not-allowed;
+  opacity: 0.5;
 }
 
 .dashboard-option-disabled:hover {
-  opacity: 0.8 !important;
+  opacity: 0.5 !important;
 }
 
 .dashboard-option:hover h4 {
