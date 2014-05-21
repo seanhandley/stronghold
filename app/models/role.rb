@@ -8,6 +8,6 @@ class Role < ActiveRecord::Base
   end
 
   def has_permission?(permission)
-    permissions.include?(permission)
+    power_user || permissions.include?(permission)
   end
 end

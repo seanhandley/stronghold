@@ -10,3 +10,9 @@ end
 User.blueprint(:without_password) do
   password { nil }
 end
+
+Role.blueprint do
+  name        { Faker::Lorem.word }
+  permissions { [] }
+  power_user  { false }
+end

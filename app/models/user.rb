@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :roles
 
   def has_permission?(permission)
-    roles.collect(&:permissions).flatten.include? permission
+    power_user? || roles.collect(&:permissions).flatten.include?(permission)
   end
 
   def power_user?
