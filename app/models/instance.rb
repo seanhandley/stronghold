@@ -1,2 +1,2 @@
-class Instance < ActiveRecord::Base
+class Instance
 end
