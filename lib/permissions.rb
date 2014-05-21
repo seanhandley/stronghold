@@ -4,6 +4,7 @@ class Permissions
       {
         # Instances
         'instances.read' => { :description => 'Can view instances', :group => 'Instances' },
+        'instances.modify' => { :description => 'Can manage instances', :group => 'Instances' },
 
         # Roles
         'roles.read' => { :description => 'Can view roles', :group => 'Roles' },
