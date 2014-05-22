@@ -5,6 +5,7 @@ class Support::RolesController < SupportBaseController
 
   def index
     @roles = Role.all
+    @users = User.all
   end
 
   def update

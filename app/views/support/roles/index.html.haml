@@ -1,14 +1,51 @@
 .container-fluid
-  - @roles.each do |role|
-    %h2= role.name
-    = form_for role, :url => support_role_path(role), :remote => true do |f|
-      - for role_group_name, permissions in Permissions.user.group_by { |k,v| v[:group] }.sort_by{ |a, b| a }
-        .control-group
-          %h3= role_group_name
-          = hidden_field_tag 'role[name]', role.name
-          .controls
-            - for key, perms in permissions
-              %label.checkbox
-                = check_box_tag 'role[permissions][]', key, role.permissions.include?(key), :id => "permission-#{key}", :class => 'role-permission'
-                = "#{perms[:description]}?"
+  %ul.nav.nav-tabs
+    %li.active
+      %a{:href => '#users', 'data-toggle' => 'tab'}
+        %i.fa.fa-user
+        Users
+    %li
+      %a{:href => '#roles', 'data-toggle' => 'tab'}
+        %i.fa.fa-key
+        Roles
+
+  .tab-content
+    .tab-pane.active#users
+      .panel-group#accordionUsers
+        - @users.each do |user|
+          .panel.panel-default
+            .panel-heading
+              %h2.panel-title= link_to user.name, "#user_#{user.id}", 'data-toggle' => 'collapse', 'data-parent' => '#accordionUsers'
+           
+            .panel-collapse.collapse{:id => "user_#{user.id}"}
+              .panel-body
+                - if user.roles.present?
+                  Assigned roles:
+                  = list_of_roles(user)
+                - else
+                  No roles assigned to this user.
+                = form_for user, :url => support_user_path(user), :html => { :class => 'form-horizontal'}, :remote => true do |f|
+                  / Fill me in
+    .tab-pane#roles
+      .panel-group#accordionRoles
+        - @roles.each do |role|
+          .panel.panel-default
+            .panel-heading
+              %h2.panel-title
+                = link_to role.name, "#role_#{role.id}", 'data-toggle' => 'collapse', 'data-parent' => '#accordionRoles'
+              %p.tiny= "#{role.users.count} members"
+           
+            .panel-collapse.collapse{:id => "role_#{role.id}"}
+              .panel-body
+                = form_for role, :url => support_role_path(role), :html => { :class => 'form-horizontal'}, :remote => true do |f|
+                  - for role_group_name, permissions in Permissions.user.group_by { |k,v| v[:group] }.sort_by{ |a, b| a }
+                    .control-group
+                      %h3= role_group_name
+                      = hidden_field_tag 'role[name]', role.name
+                      .controls
+                        - for key, perms in permissions
+                          %label.checkbox
+                            = check_box_tag 'role[permissions][]', key, role.permissions.include?(key), :id => "permission-#{key}", :class => 'role-permission'
+                            = "#{perms[:description]}?"
+
 
