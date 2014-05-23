@@ -2,20 +2,22 @@
   %ul.nav.nav-tabs
     %li.active
       %a{:href => '#users', 'data-toggle' => 'tab'}
-        %i.fa.fa-user
         Users
     %li
       %a{:href => '#roles', 'data-toggle' => 'tab'}
-        %i.fa.fa-key
         Roles
 
   .tab-content
     .tab-pane.active#users
+      .page-controls
+        %button.btn.btn-primary.btn-xs New User
       .panel-group#accordionUsers
         - @users.each do |user|
           .panel.panel-default
             .panel-heading
-              %h2.panel-title= link_to user.name, "#user_#{user.id}", 'data-toggle' => 'collapse', 'data-parent' => '#accordionUsers'
+              %h2.panel-title
+                %i.fa.fa-user
+                = link_to user.name, "#user_#{user.id}", 'data-toggle' => 'collapse', 'data-parent' => '#accordionUsers'
            
             .panel-collapse.collapse{:id => "user_#{user.id}"}
               .panel-body
@@ -28,10 +30,13 @@
                   / Fill me in
     .tab-pane#roles
       .panel-group#accordionRoles
+        .page-controls
+          %button.btn.btn-primary.btn-xs New Role
         - @roles.each do |role|
           .panel.panel-default
             .panel-heading
               %h2.panel-title
+                %i.fa.fa-key
                 = link_to role.name, "#role_#{role.id}", 'data-toggle' => 'collapse', 'data-parent' => '#accordionRoles'
               %p.tiny= "#{role.users.count} members"
            

@@ -15,7 +15,7 @@
         %h4 network
     .col-md-3.col-xs-6
       .dashboard-option.dashboard-option-disabled
-        %i.dashboard-icon.fa.fa-power-off
+        = image_tag('server.svg', class: 'dashboard-option')
         %h4 colo
   .row
     .col-md-3.col-xs-6
@@ -31,3 +31,7 @@
       .dashboard-option.dashboard-option-disabled
         %i.dashboard-icon.fa.fa-money
         %h4 billing
+    .col-md-3.col-xs-6
+      .dashboard-option.dashboard-option-disabled
+        %i.dashboard-icon.fa.fa-dashboard
+        %h4 stats
