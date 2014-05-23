@@ -10,7 +10,7 @@ i.dashboard-icon {
   font-size: 6em;
 }
 
-.dashboard-option {
+div.dashboard-option {
   opacity: 0.9;
   width: 140px;
   margin: auto;
@@ -28,31 +28,36 @@ a.dashboard-link:hover, a.dashboard-link:active {
   text-decoration: none;
 }
 
-.dashboard-option:hover {
+div.dashboard-option:hover {
   opacity: 1.0;
 }
 
-.dashboard-option-disabled {
+div.dashboard-option-disabled {
   cursor: not-allowed;
   opacity: 0.5;
 }
 
-.dashboard-option-disabled:hover {
+div.dashboard-option-disabled:hover {
   opacity: 0.5 !important;
 }
 
-.dashboard-option:hover h4 {
+div.dashboard-option:hover h4 {
   color: $menu-link-hover-colour;
 }
 
-.dashboard-option h4 {
+div.dashboard-option h4 {
   color: $menu-link-colour;
 }
 
-.dashboard-option-disabled:hover h4 {
+div.dashboard-option-disabled:hover h4 {
   color: $menu-link-colour;
 }
 
 a.back-to-dash {
   text-decoration: none;
+}
+
+img.dashboard-option {
+  height: 84px;
+  width: auto;
 }
