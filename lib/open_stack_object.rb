@@ -87,7 +87,12 @@ module OpenStackObject
 
   class Resource < Base
     def self.collection_name ; :resources ; end
-    def self.object_name     ; :metering ; end
+    def self.object_name     ; :metering  ; end
+  end
+
+  class Flavour < Base
+    def self.collection_name ; :flavors ; end
+    def self.object_name     ; :compute ; end    
   end
 
 end
