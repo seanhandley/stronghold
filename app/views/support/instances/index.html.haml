@@ -1,2 +1,5 @@
-Instances!
+%h2 Instances
+%ul
+  - @instances.each do |instance|
+    %li= "#{instance.name} (#{instance.state})"
 
