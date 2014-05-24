@@ -24,6 +24,12 @@ class Instance
     def all
       compute.servers.map{|s| new(s) }
     end
+
+    def find_all_by(attribute, value)
+      [compute.servers.find {|s| s.send(attribute.to_sym) == value}].flatten.map do |s|
+        new(s)
+      end
+    end
     
     private
 
