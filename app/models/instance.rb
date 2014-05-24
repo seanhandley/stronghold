@@ -7,6 +7,18 @@ class Instance
     delegations.each{|a| class_eval{|c| delegate a.to_sym, to: :server}}
   end
 
+  def to_s
+    "#<Instance:#{id} #{delegations.collect{|d| "@#{d}=#{send(d.to_sym).inspect}"}.join ', '}>"
+  end
+
+  def id
+    server.id
+  end
+
+  def inspect
+    to_s
+  end
+
   class << self
 
     def all
