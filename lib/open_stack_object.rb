@@ -19,14 +19,6 @@ module OpenStackObject
       to_s
     end
 
-    def self.attributes(*args)
-      @@attributes = args.each{|a| class_eval{|c| delegate a.to_sym, to: :obj}}
-    end
-
-    def obj
-      @obj
-    end
-
     class << self
 
       def all
@@ -45,6 +37,20 @@ module OpenStackObject
         @@c ||= "Fog::#{object_name.to_s.titleize}".constantize.new(OPENSTACK_ARGS)
       end
 
+    end
+
+    private
+
+    def self.attributes(*args)
+      @@attributes = args.each{|a| class_eval{|c| delegate a.to_sym, to: :obj}}
+    end
+
+    def self.methods(*args)
+      args.each{|a| class_eval{|c| delegate a.to_sym, to: :obj}}
+    end
+
+    def obj
+      @obj
     end
 
   end
