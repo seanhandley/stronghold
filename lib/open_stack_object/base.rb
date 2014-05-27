@@ -72,7 +72,7 @@ module OpenStackObject
     rescue Excon::Errors::Conflict => e
       raise OpenStackObject::Error, JSON.parse(e.response.data[:body])['conflictingRequest']['message']
     rescue Fog::Compute::OpenStack::NotFound => e
-      raise OpenStackObject::Error, JSON.parse(e.response.data[:body])['itemNotFound']['message']
+      raise OpenStackObject::Error, 'Could not find that object'
     end
 
   end
