@@ -8,3 +8,6 @@ OPENSTACK_ARGS = {
   :openstack_api_key  => ENV["OPENSTACK_PASSWORD"],
   :openstack_tenant   => ENV["OPENSTACK_TENANT"]
 }
+
+Excon.defaults[:write_timeout] = 10
+Excon.defaults[:read_timeout] = 10
