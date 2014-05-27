@@ -1,5 +1,5 @@
 module OpenStack
-  class Flavour < OpenStackObject::Flavour
+  class Flavor < OpenStackObject::Flavor
     attributes :name, :ram, :disk, :vcpus, :swap
   end
 end
