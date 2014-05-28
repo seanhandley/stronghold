@@ -1,7 +1,7 @@
 module OpenStack
   class Instance < OpenStackObject::Server
 
-    attributes :name, :state
+    attributes :name, :state, :all_addresses
 
     methods :reboot, :wait_for
 
@@ -36,6 +36,17 @@ module OpenStack
         wait_for { state.downcase == 'paused' }
         reload
       end
+    end
+
+    def destroy
+      # Ensure we disassociate floating IPs before removal
+      all_addresses.each do |address|
+        service_method do |s|
+          s.disassociate_address(id, address['ip'])
+          s.release_address(address['id'])
+        end
+      end
+      super
     end
 
   end

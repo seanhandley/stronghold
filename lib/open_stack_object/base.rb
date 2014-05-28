@@ -19,6 +19,10 @@ module OpenStackObject
       to_s
     end
 
+    def destroy
+      obj.destroy
+    end
+
     class << self
 
       def all
@@ -50,7 +54,7 @@ module OpenStackObject
     private
 
     def self.default_methods
-      [:destroy, :reload, :persisted?]
+      [:reload, :persisted?]
     end
 
     def self.attributes(*args)
