@@ -46,7 +46,9 @@ module OpenStackObject
       private
 
       def conn
-        @@c ||= "Fog::#{object_name.to_s.titleize}".constantize.new(OPENSTACK_ARGS)
+        Rails.cache.fetch(expires_in: 15.minutes) do
+          "Fog::#{object_name.to_s.titleize}".constantize.new(OPENSTACK_ARGS)
+        end
       end
 
     end
