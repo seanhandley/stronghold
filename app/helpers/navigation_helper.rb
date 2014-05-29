@@ -2,7 +2,7 @@ module NavigationHelper
   def build_support_navigation
     navigation = {}
 
-    if can? :read, :instance
+    if can? :read, OpenStack::Instance
       navigation["Instances"] = support_instances_path
     end
 
