@@ -1,8 +1,8 @@
 class Support::InstancesController < SupportBaseController
 
-  load_and_authorize_resource
+  load_and_authorize_resource :class => "OpenStack::Instance"
 
   def index
-    @instances = Instance.all
+    @instances = OpenStack::Instance.all
   end
 end
