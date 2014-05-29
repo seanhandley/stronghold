@@ -17,9 +17,10 @@ gem 'unicorn'
 gem 'haml'
 gem 'bootstrap-sass', '~> 3.1.1'
 gem 'rails-assets-normalize-css'
-gem 'cancan'
+gem 'cancan', '~> 1.6.10'
 gem 'font-awesome-sass'
-gem 'fog'
+gem 'fog', '~> 1.22.0'
+gem 'gravatar_image_tag', '~> 1.2.0'
 
 group :test do
   gem 'minitest-rails'
