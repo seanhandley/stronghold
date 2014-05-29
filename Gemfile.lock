@@ -66,6 +66,7 @@ GEM
     font-awesome-sass (4.1.0)
       sass (~> 3.2)
     formatador (0.2.5)
+    gravatar_image_tag (1.2.0)
     haml (4.0.5)
       tilt
     hike (1.2.3)
@@ -167,11 +168,12 @@ PLATFORMS
 DEPENDENCIES
   bcrypt (~> 3.1.7)
   bootstrap-sass (~> 3.1.1)
-  cancan
+  cancan (~> 1.6.10)
   coffee-rails (~> 4.0.0)
   faker
-  fog
+  fog (~> 1.22.0)
   font-awesome-sass
+  gravatar_image_tag (~> 1.2.0)
   haml
   jbuilder (~> 2.0)
   jquery-rails
