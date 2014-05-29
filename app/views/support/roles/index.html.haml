@@ -13,23 +13,14 @@
         %button.btn.btn-primary.btn-xs
           %i.fa.fa-edit
           New
-      .panel-group#accordionUsers
-        - @users.each do |user|
-          .panel.panel-default
-            .panel-heading
-              %h2.panel-title
-                %i.fa.fa-user
-                = link_to user.name, "#user_#{user.id}", 'data-toggle' => 'collapse', 'data-parent' => '#accordionUsers'
-           
-            .panel-collapse.collapse{:id => "user_#{user.id}"}
-              .panel-body
-                - if user.roles.present?
-                  Assigned roles:
-                  = list_of_roles(user)
-                - else
-                  No roles assigned to this user.
-                = form_for user, :url => support_user_path(user), :html => { :class => 'form-horizontal'}, :remote => true do |f|
-                  / Fill me in
+      %table.table
+        %tbody
+          - @users.each do |user|
+            %tr
+              %td= gravatar_image_tag(user.email, title: user.name, alt: user.name)
+              %td= link_to user.name, "#user_#{user.id}", 'data-toggle' => 'collapse', 'data-parent' => '#accordionUsers'
+              %td= link_to user.email, "mailto:#{user.email}"
+
     .tab-pane#roles
       .panel-group#accordionRoles
         .page-controls

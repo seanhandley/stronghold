@@ -11,15 +11,16 @@
   %meta{'name' => 'viewport', 'content' => 'width=device-width, initial-scale=1'}
 
 %body
-  #wrap
-
+  .top-nav
     .container
+      .context-nav= render partial: 'shared/support_nav'
       %a{href: support_root_path, class: 'back-to-dash' }
         = image_tag 'logo_small.png', class: 'logo'
-        %div
-          %h2 > Dashboard
+      
+  #wrap
+    .container
+      %h3 Example Organisation
       #flashes= display_flash
-      %nav= render partial: 'shared/support_nav'
       = yield
       .push
   /= render partial: 'shared/footer'
