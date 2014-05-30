@@ -21,6 +21,7 @@
     .container
       %h3 Example Organisation
       #flashes= display_flash
+      = render partial: 'shared/top_menu' unless request.url == support_root_url
       = yield
       .push
   /= render partial: 'shared/footer'
