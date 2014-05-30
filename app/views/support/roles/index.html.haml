@@ -45,7 +45,7 @@
               %h2.panel-title
                 %i.fa.fa-key
                 = link_to role.name, "#role_#{role.id}", 'data-toggle' => 'collapse', 'data-parent' => '#accordionRoles'
-              %p.tiny= "#{role.users.count} members"
+              %p.tiny= pluralize(role.users.count, 'member')
               %div
                 - for user in role.users
                   %a{href: support_user_path(user)}
