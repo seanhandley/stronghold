@@ -1,19 +1,19 @@
 .top-menu
-  %span.top-menu-option
+  .top-menu-option{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => "Instances", 'class' => (current_section == 'instances' ? 'selected' : '')}
     %a{href: support_instances_path}
       %i.top-menu-icon.fa.fa-rocket
-  %span.top-menu-option
+  .top-menu-option.top-menu-option-disabled{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => "Storage"}
     %i.top-menu-icon.fa.fa-database
-  %span.top-menu-option
+  .top-menu-option.top-menu-option-disabled{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => "Networking"}
     %i.top-menu-icon.fa.fa-sitemap
-  %span.top-menu-option
+  .top-menu-option.top-menu-option-disabled{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => "Colo"}
     = image_tag('server.svg')
-  %span.top-menu-option
+  .top-menu-option{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => "Users/Roles", 'class' => (current_section == 'roles' ? 'selected' : '')}
     %a{href: support_roles_path}
       %i.top-menu-icon.fa.fa-users
-  %span.top-menu-option
+  .top-menu-option.top-menu-option-disabled{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => "Support"}
     %i.top-menu-icon.fa.fa-life-ring
-  %span.top-menu-option
+  .top-menu-option.top-menu-option-disabled{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => "Billing"}
     %i.top-menu-icon.fa.fa-money
-  %span.top-menu-option
+  .top-menu-option.top-menu-option-disabled{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => "Metrics"}
     %i.top-menu-icon.fa.fa-dashboard

@@ -3,6 +3,10 @@ class Support::RolesController < SupportBaseController
   load_and_authorize_resource
   before_filter :find_role
 
+  def current_section
+    'roles'
+  end
+
   def index
     @roles = Role.all
     @users = User.all
