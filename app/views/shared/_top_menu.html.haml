@@ -1,7 +1,6 @@
 .top-menu
-  .top-menu-option{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => "Instances", 'class' => (current_section == 'instances' ? 'selected' : '')}
-    %a{href: support_instances_path}
-      %i.top-menu-icon.fa.fa-rocket
+  .top-menu-option.top-menu-option-disabled{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => "Instances"}
+    %i.top-menu-icon.fa.fa-rocket
   .top-menu-option.top-menu-option-disabled{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => "Storage"}
     %i.top-menu-icon.fa.fa-database
   .top-menu-option.top-menu-option-disabled{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => "Networking"}
