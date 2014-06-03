@@ -15,7 +15,7 @@ class Support::DashboardController < SupportBaseController
   end
 
   def index
-    
+    redirect_to support_roles_path
   end
 
 end
