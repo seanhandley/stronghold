@@ -13,23 +13,26 @@
         %button.btn.btn-primary.btn-xs
           %i.fa.fa-edit
           New
-      .panel-group#accordionUsers
-        - @users.each do |user|
-          .panel.panel-default
-            .panel-heading
-              %h2.panel-title
-                %i.fa.fa-user
-                = link_to user.name, "#user_#{user.id}", 'data-toggle' => 'collapse', 'data-parent' => '#accordionUsers'
-           
-            .panel-collapse.collapse{:id => "user_#{user.id}"}
-              .panel-body
-                - if user.roles.present?
-                  Assigned roles:
-                  = list_of_roles(user)
-                - else
-                  No roles assigned to this user.
-                = form_for user, :url => support_user_path(user), :html => { :class => 'form-horizontal'}, :remote => true do |f|
-                  / Fill me in
+      %table.table
+        %thead
+          %th
+            %i.fa.fa-user
+          %th
+            Name
+          %th
+            E-Mail
+          %th
+            Roles
+        %tbody
+          - @users.each do |user|
+            %tr
+              %td= gravatar_image_tag(user.email, title: user.name, alt: user.name)
+              %td= link_to user.name, "#user_#{user.id}", 'data-toggle' => 'collapse', 'data-parent' => '#accordionUsers'
+              %td= link_to user.email, "mailto:#{user.email}"
+              %td
+                %i.fa.fa-key
+                = list_of_roles(user)
+
     .tab-pane#roles
       .panel-group#accordionRoles
         .page-controls
@@ -42,7 +45,11 @@
               %h2.panel-title
                 %i.fa.fa-key
                 = link_to role.name, "#role_#{role.id}", 'data-toggle' => 'collapse', 'data-parent' => '#accordionRoles'
-              %p.tiny= "#{role.users.count} members"
+              %p.tiny= pluralize(role.users.count, 'member')
+              %div
+                - for user in role.users
+                  %a{href: support_user_path(user)}
+                    = gravatar_image_tag(user.email, title: user.name, alt: user.name)
            
             .panel-collapse.collapse{:id => "role_#{role.id}"}
               .panel-body

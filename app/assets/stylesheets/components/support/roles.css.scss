@@ -1,7 +1,24 @@
 div.tab-content {
   padding: 5px;
-  border: 1px solid #dddddd;
-  border-top-color: transparent;
+  border: 0px;
+}
+
+.nav-tabs {
+  border: 0px;
+  float: right;
+}
+
+.nav-tabs > li > a {
+  border: 0px;
+}
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+  border: 0px;
+  font-weight: bold;
+}
+
+.nav > li > a:hover, .nav > li > a:focus {
+  background-color: #fff;
 }
 
 div.panel-heading {
