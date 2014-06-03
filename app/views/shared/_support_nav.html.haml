@@ -1,6 +1,4 @@
-/ - build_support_navigation.each do |title, link|
-/   - unless link.empty?
-/     %span.choice= link_to title, link
-
-%span.choice.logout
-= link_to 'Log out', session_path(current_user), :method => :delete, data: { confirm: "Log out?" }
+.nav-profile
+  = gravatar_image_tag('sean.handley@datacentred.co.uk', :class => 'img-circle nav-profile')
+  %span.caret
+/= link_to 'Log out', session_path(current_user), :method => :delete, data: { confirm: "Log out?" }

@@ -11,15 +11,19 @@
   %meta{'name' => 'viewport', 'content' => 'width=device-width, initial-scale=1'}
 
 %body
-  #wrap
-
+  .top-nav
     .container
       %a{href: support_root_path, class: 'back-to-dash' }
         = image_tag 'logo_small.png', class: 'logo'
-        %div
-          %h2 > Dashboard
+      = render partial: 'shared/top_menu' unless request.url == support_root_url
+      .context-nav= render partial: 'shared/support_nav'
+      
+  #wrap
+    .container
+      %h3.organisation
+        = image_tag 'bbc.png'
+        BBC Media City
       #flashes= display_flash
-      %nav= render partial: 'shared/support_nav'
       = yield
       .push
   /= render partial: 'shared/footer'
