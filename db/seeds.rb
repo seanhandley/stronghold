@@ -6,5 +6,10 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-User.create(email: 'support@datacentred.co.uk', password: 'llama123',
+user = User.create(email: 'support@datacentred.co.uk', password: 'llama123',
             first_name: 'Testy', last_name: 'Tester')
+
+role = Role.create(name: 'Owners', permissions: Permissions.user.keys, power_user: true)
+
+user.roles << role
+user.save!
