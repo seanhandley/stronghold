@@ -13,15 +13,17 @@
 %body
   .top-nav
     .container
-      .context-nav= render partial: 'shared/support_nav'
       %a{href: support_root_path, class: 'back-to-dash' }
         = image_tag 'logo_small.png', class: 'logo'
+      = render partial: 'shared/top_menu' unless request.url == support_root_url
+      .context-nav= render partial: 'shared/support_nav'
       
   #wrap
     .container
-      %h3 Example Organisation
+      %h3.organisation
+        = image_tag 'bbc.png'
+        BBC Media City
       #flashes= display_flash
-      = render partial: 'shared/top_menu' unless request.url == support_root_url
       = yield
       .push
   /= render partial: 'shared/footer'
