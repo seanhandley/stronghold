@@ -89,4 +89,7 @@ Rails.application.configure do
       :user_name => 'mfkfxyw9k9',
       :password => 'aoz21e56ef'
   }
+
+  # Error handling
+  config.exceptions_app = self.routes
 end
