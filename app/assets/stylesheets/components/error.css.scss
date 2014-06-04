@@ -1,0 +1,16 @@
+div.thunder-cloud {
+  background: url('../thunder.svg');
+  background-repeat:no-repeat;
+  background-attachment:fixed;
+  background-position:center; 
+  background-size: 100% 100%;
+  opacity: 0.05;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: -1;
+}
+
+div.error-page {
+  text-align: center;
+}
