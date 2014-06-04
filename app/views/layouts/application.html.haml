@@ -11,14 +11,15 @@
   %meta{'name' => 'viewport', 'content' => 'width=device-width, initial-scale=1'}
 
 %body
-  .top-nav
-    .container
-      %a{href: support_root_path, class: 'back-to-dash' }
-        = image_tag 'logo_small.png', class: 'logo'
-      = render partial: 'shared/top_menu' unless request.url == support_root_url
-      .context-nav= render partial: 'shared/support_nav'
-      
   #wrap
+    .top-nav
+      .container
+        %a{href: support_root_path, class: 'back-to-dash' }
+          = image_tag 'logo_small.png', class: 'logo'
+        = render partial: 'shared/top_menu' unless request.url == support_root_url
+        .context-nav= render partial: 'shared/support_nav'
+      
+  
     .container
       %h3.organisation
         = image_tag 'bbc.png'
@@ -26,5 +27,5 @@
       #flashes= display_flash
       = yield
       .push
-  /= render partial: 'shared/footer'
-  = render partial: 'shared/ga'
+= render partial: 'shared/footer'
+= render partial: 'shared/ga'
