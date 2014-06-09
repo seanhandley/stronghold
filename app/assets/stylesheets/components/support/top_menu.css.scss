@@ -1,0 +1,57 @@
+@import "settings";
+
+.top-menu {
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%;
+  text-align: center;
+}
+
+div.top-menu-option {
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 8px;
+  text-align: center;
+  cursor: pointer;
+  width: 12%;
+  float: left;
+}
+
+div.top-menu-option-disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+div.top-menu-option:hover, div.top-menu-option:active {
+  border-bottom: solid 3px $headings-color;
+}
+
+div.top-menu-option.selected {
+  border-bottom: solid 3px $headings-color;
+}
+
+div.top-menu-option a {
+  text-decoration: none;
+  color: $headings-color;
+}
+
+div.top-menu-option a:hover, div.top-menu-option a:active {
+  color: $headings-color;
+}
+
+i.top-menu-icon {
+  font-size: 1.7em;
+}
+
+.top-menu img {
+  vertical-align: top;
+  height: 25px;
+  width: auto;
+}
+
+@media only screen and (max-width: 480px), only screen and (max-device-width: 480px) {
+  .top-menu {
+    opacity: 0.0;
+  }
+}

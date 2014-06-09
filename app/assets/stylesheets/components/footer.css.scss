@@ -1,38 +1,27 @@
 footer {
-  background: #0d0d0d;
-  color: rgba(255, 255, 255, 0.7);
-  padding: 2em 0 3em;
-  border-top: 1px solid #1a1a1a;
-  height: 80px;
+  background: #fff;
+  color: rgba(0, 0, 0, 0.7);
+  padding: 20px 0px 0px;
+  height: 60px;
+  text-align: right;
 }
 
 .push {
-  height: 120px;
+  height: 60px;
 }
 
 footer a, footer a:hover {
-  color: #FFF;
+  color: #000;
 }
 
 #wrap {
   min-height: 100%;
   height: auto !important;
-  margin: 0 auto -80px;  
+  margin: 0 auto -60px;  
 }
 
 html, body {
   height: 100%;
-}
-
-footer img.social-media-badge {
-  height: 30px;
-  width: 30px;
-}
-
-@media only screen and (max-width: 480px), only screen and (max-device-width: 480px) {
-  #credit.pull-right {
-    display: none;
-  }
 }
 
 @media only screen and (max-height: 420px), only screen and (max-device-height: 420px) {

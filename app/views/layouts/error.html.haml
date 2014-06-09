@@ -1,7 +1,7 @@
 !!!
 %html
   %head
-  %title Datacentred Dashboard
+  %title Oops!
   = favicon_link_tag 'favicon.ico'
   = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
   = javascript_include_tag 'application', 'data-turbolinks-track' => true
@@ -11,20 +11,15 @@
   %meta{'name' => 'viewport', 'content' => 'width=device-width, initial-scale=1'}
 
 %body
+  .thunder-cloud
   #wrap
     .top-nav
       .container
         %a{href: support_root_path, class: 'back-to-dash' }
           = image_tag 'logo_small.png', class: 'logo'
-        = render partial: 'shared/top_menu' unless request.url == support_root_url
-        .context-nav= render partial: 'shared/support_nav'
-      
-  
-    .container
-      %h3.organisation
-        = image_tag 'bbc.png'
-        BBC Media City
-      #flashes= display_flash
+    .container.error-page
+      .push
+      .push
       = yield
       .push
 = render partial: 'shared/footer'

@@ -1,0 +1,2 @@
+$ ->
+  $('.top-menu-option').tooltip({})
