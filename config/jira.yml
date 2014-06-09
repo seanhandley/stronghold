@@ -1,0 +1,12 @@
+default: &default
+  username: stronghold
+  url: 'https://datacentred.atlassian.net'
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+production:
+  <<: *default
