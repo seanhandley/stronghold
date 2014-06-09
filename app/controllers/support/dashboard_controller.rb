@@ -2,6 +2,10 @@ class Support::DashboardController < SupportBaseController
 
   skip_authorization_check
 
+  def current_section
+    'dashboard'
+  end
+
   def css
     
   end
@@ -11,7 +15,7 @@ class Support::DashboardController < SupportBaseController
   end
 
   def index
-    
+    redirect_to support_roles_path
   end
 
 end

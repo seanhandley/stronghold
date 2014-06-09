@@ -8,5 +8,10 @@
 
 organization = Organization.create(reference: 'dc456', name: 'BBC')
 
-organization.users.create(email: 'support@datacentred.co.uk', password: 'llama123',
+user = organization.users.create(email: 'support@datacentred.co.uk', password: 'llama123',
             first_name: 'Testy', last_name: 'Tester')
+
+role = Role.create(name: 'Owners', permissions: Permissions.user.keys, power_user: true)
+
+user.roles << role
+user.save!

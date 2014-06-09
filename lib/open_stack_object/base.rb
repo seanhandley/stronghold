@@ -46,7 +46,7 @@ module OpenStackObject
       private
 
       def conn
-        @@c ||= "Fog::#{object_name.to_s.titleize}".constantize.new(OPENSTACK_ARGS)
+        "Fog::#{object_name.to_s.titleize}".constantize.new(OPENSTACK_ARGS)
       end
 
     end

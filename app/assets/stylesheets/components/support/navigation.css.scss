@@ -15,3 +15,32 @@ nav span.choice a:hover {
   text-decoration: none;
   opacity:0.4;
 }
+
+div.top-nav {
+  background: #eee;
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 10px;
+  min-height: 47px;
+}
+
+h3.organisation {
+  padding-bottom: 10px;
+  border-bottom: solid 1px #ccc;
+}
+
+h3.organisation img {
+  margin-right: 5px;
+}
+
+div.context-nav {
+  float: right;
+  vertical-align: middle;
+}
+
+div.nav-profile {
+  cursor: pointer;
+}
+
+img.nav-profile {
+  //border: solid 1px #444;
+}

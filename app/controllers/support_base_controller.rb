@@ -2,6 +2,8 @@ class SupportBaseController < ApplicationController
 
   before_filter :current_user, :authenticate_user!
 
+  helper_method :current_section
+
   check_authorization
 
   def current_ability
