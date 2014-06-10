@@ -153,9 +153,13 @@ module OpenStackObject
       yield(obj.service)
       self
     rescue Excon::Errors::Conflict => e
-      raise OpenStackObject::Error, JSON.parse(e.response.data[:body])['conflictingRequest']['message']
+      raise OpenStackObject::Error, api_error_message(e)
     rescue Fog::Compute::OpenStack::NotFound => e
       raise OpenStackObject::Error, 'Could not find that object'
+    end
+
+    def api_error_message(e)
+      JSON.parse(e.response.data[:body])['conflictingRequest']['message']
     end
 
   end
