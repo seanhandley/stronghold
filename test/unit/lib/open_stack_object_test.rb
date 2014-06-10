@@ -1,4 +1,5 @@
 require 'test_helper'
+require_relative '../../support/open_stack_mocks'
 
 class TestOpenStackObject < Minitest::Test
   def setup
@@ -27,51 +28,34 @@ class TestOpenStackObject < Minitest::Test
     assert_equal 'Error!', @foo.send(:api_error_message, MockError.new)
   end
 
-end
-
-class Foo < OpenStackObject::Server
-  attributes :foo, :bar
-  methods :baz
-
-  def call_service_method
-    service_method do |s|
-      return s.a_service_method
+  def test_to_s_and_inspect
+    [:to_s, :inspect].each do |sym|
+      assert_equal "#<Foo:mock_id @foo=\"test\", @bar=\"test\">", @foo.send(sym)
     end
   end
-end
 
-class Mock
-  def id
-    "mock_id"
+  def test_method_all_wraps_results
+    Foo.all.each{|f| assert f.class.to_s == 'Foo'}
   end
 
-  def foo
-    'test'
+  def test_method_find_all_by_wraps_results
+    Foo.find_all_by(:id, 'foo').each{|f| assert f.class.to_s == 'Foo'}
   end
 
-  def bar
-    'test'
+  def test_method_find_by_all_returns_empty_if_not_found
+    assert_equal [], Foo.find_all_by(:id, 'bar')
   end
 
-  def baz
-    'test'
+  def test_method_hands_off_to_get
+    assert_equal 'foo', Foo.find('foo').id
   end
 
-  def service
-    MockService.new
+  def test_method_find_returns_nil_if_not_found
+    assert_equal nil, Foo.find('bar')
   end
-end
 
-class MockService ; def a_service_method ; 'service!' ; end ; end
-
-class MockError
-  def response
-    MockResponse.new
+  def test_method_create_returns_a_foo
+    assert_equal 'Foo', Foo.create(name: 'foo').class.to_s
   end
-end
 
-class MockResponse
-  def data
-    {body: {'conflictingRequest' => {'message' => 'Error!'}}.to_json}
-  end
 end

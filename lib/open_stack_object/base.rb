@@ -75,8 +75,8 @@ module OpenStackObject
       # @param [String] id the ID of the item
       # @return [OpenStackObject::Base] Object with this ID, otherwise nil
       def find(id)
-        return nil unless @obj
-        new conn.send(collection_name).get(id)
+        result = conn.send(collection_name).get(id)
+        result ? new(result) : nil
       end
 
       # Create a new OpenStack object
