@@ -41,6 +41,13 @@ class SupportTicket
   end
 
   class << self
+
+    def filter(reference, statuses)
+    end
+
+    def all(reference)
+    end
+
     def open(reference)
       project.issues.select do |issue|
         [
