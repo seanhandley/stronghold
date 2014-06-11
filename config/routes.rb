@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   get 'sign_in', :controller => 'sessions', :action => 'new'
 
   root :to => 'support/dashboard#index'
+  #root :to => 'support/test'
 
   if Rails.env.production?
     get '404', :to => 'errors#page_not_found'

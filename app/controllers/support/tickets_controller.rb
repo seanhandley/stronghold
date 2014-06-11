@@ -7,8 +7,8 @@ class Support::TicketsController < SupportBaseController
   end
 
   def index
-    @organization = User.first.organization
-    @tickets = @organization.tickets.closed
+    @organization = current_user.organization
+    #@tickets = @organization.tickets.closed
   end
 
 end
