@@ -22,10 +22,13 @@ gem 'font-awesome-sass'
 gem 'fog', '~> 1.22.0'
 gem 'gravatar_image_tag', '~> 1.2.0'
 gem 'jira-ruby', '~> 0.1.10'
-gem 'angularjs-rails'
 
 group :test do
   gem 'minitest-rails'
   gem 'faker'
   gem 'machinist'
 end
+
+source 'https://rails-assets.org'
+gem 'rails-assets-angular'
+gem 'rails-assets-angular-mocks'
