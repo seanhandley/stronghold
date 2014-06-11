@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   end
 
   resources :sessions
+  get '/signup/:id', :controller => 'signups', :action => 'update'
 
   get 'sign_in', :controller => 'sessions', :action => 'new'
 
