@@ -1,6 +1,7 @@
 GEM
   remote: https://rubygems.org/
   remote: https://rails-assets.org/
+  remote: https://rails-assets.org/
   specs:
     actionmailer (4.1.1)
       actionpack (= 4.1.1)
@@ -28,7 +29,6 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
-    angularjs-rails (1.2.16)
     arel (5.0.1.20140414130214)
     bcrypt (3.1.7)
     bootstrap-sass (3.1.1.1)
@@ -116,6 +116,9 @@ GEM
       bundler (>= 1.3.0, < 2.0)
       railties (= 4.1.1)
       sprockets-rails (~> 2.0)
+    rails-assets-angular (1.2.17)
+    rails-assets-angular-mocks (1.2.17)
+      rails-assets-angular (= 1.2.17)
     rails-assets-normalize-css (3.0.1)
     railties (4.1.1)
       actionpack (= 4.1.1)
@@ -171,7 +174,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  angularjs-rails
   bcrypt (~> 3.1.7)
   bootstrap-sass (~> 3.1.1)
   cancan (~> 1.6.10)
@@ -188,6 +190,8 @@ DEPENDENCIES
   minitest-rails
   mysql2
   rails (= 4.1.1)
+  rails-assets-angular
+  rails-assets-angular-mocks
   rails-assets-normalize-css
   sass-rails (~> 4.0.3)
   sdoc (~> 0.4.0)
