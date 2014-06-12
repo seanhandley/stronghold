@@ -7,8 +7,17 @@ class Support::TicketsController < SupportBaseController
   end
 
   def index
-    @organization = current_user.organization
-    #@tickets = @organization.tickets.closed
+    respond_to do |format|
+      format.json {
+        render :json => current_user.organization.tickets.all
+      }
+      format.html
+    end
+  end
+
+  private
+  def get_tickets
+
   end
 
 end
