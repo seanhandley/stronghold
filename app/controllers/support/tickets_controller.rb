@@ -15,9 +15,4 @@ class Support::TicketsController < SupportBaseController
     end
   end
 
-  private
-  def get_tickets
-
-  end
-
 end
