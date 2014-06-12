@@ -1,1 +1,1 @@
-angular.module('app', []);
+stronghold = angular.module('stronghold', ['ngResource']);

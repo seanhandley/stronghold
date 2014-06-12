@@ -92,4 +92,8 @@ Rails.application.configure do
 
   # Error handling
   config.exceptions_app = self.routes
+
+  # Prevent Angular conflicts
+  config.assets.js_compressor = Uglifier.new(mangle: false)
+
 end
