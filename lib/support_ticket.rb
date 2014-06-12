@@ -1,11 +1,5 @@
 require 'jira'
 
-module IssueStatus
-  ToDo       = 'To Do'
-  InProgress = 'In Progress'
-  Done       = 'Done'
-end
-
 class SupportTicket
 
   attr_accessor :id, :title, :description
@@ -27,6 +21,7 @@ class SupportTicket
   end
 
   def self.create(params)
+    #issue = self.client.Issue.build
     issue = self.project.client.Issue.build
     expected_params = {'summary' => params[:title], "issuetype"=>{"id"=>"1"}}
     issue.save({
@@ -42,27 +37,9 @@ class SupportTicket
 
   class << self
 
-    def filter(reference, statuses)
-    end
-
     def all(reference)
-    end
-
-    def open(reference)
-      project.issues.select do |issue|
-        [
-          (issue.fields['labels'].first == reference),
-          ([IssueStatus::ToDo, IssueStatus::InProgress].include?(issue.fields['status']['name'])),
-        ].all?
-      end
-    end
-
-    def closed(reference)
-      project.issues.select do |issue|
-        [
-          (issue.fields['labels'].first == reference),
-          (issue.fields['status']['name'] == IssueStatus::Done),
-        ].all?
+      return project.issues.select do |issue|
+        (issue.fields['labels'].first == reference)
       end
     end
 
@@ -73,6 +50,7 @@ class SupportTicket
     def project
       client.Project.find("ST")
     end
+
   end
 
 end

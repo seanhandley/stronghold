@@ -8,7 +8,12 @@ Rails.application.routes.draw do
     resources :instances
     resources :users
     resources :roles
-    resources :tickets
+    get 'tickets', :controller => 'tickets', :action => 'index'
+    namespace :api, defaults: {format: :json} do
+      resources :tickets, only: [:index] do
+        resources :comments, only: [:create, :update, :destroy]
+      end
+    end
   end
 
   resources :sessions
@@ -16,7 +21,6 @@ Rails.application.routes.draw do
   get 'sign_in', :controller => 'sessions', :action => 'new'
 
   root :to => 'support/dashboard#index'
-  #root :to => 'support/test'
 
   if Rails.env.production?
     get '404', :to => 'errors#page_not_found'
