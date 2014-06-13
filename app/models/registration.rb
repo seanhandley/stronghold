@@ -26,7 +26,7 @@ class Registration
         @owners = @organization.roles.create name: 'Owners', power_user: true
       end
       @user = @organization.users.create email: invite.email, password: password,
-                                         roles: (invite.roles << @owners)
+                                         roles: (invite.roles + [@owners])
       return true
     end 
     false
