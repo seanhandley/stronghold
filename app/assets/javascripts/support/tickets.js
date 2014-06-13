@@ -8,14 +8,11 @@ $(window).load(function () {
   }).done(
     function(json) {
       var tickets = [];
-      console.log(json);
       $.each(json, function (id, jsonElement) {
-        attrs = jsonElement.attrs;
-        key = attrs.key;
-        fields = attrs.fields;
-        tickets.push('<li>' + key + '</li>');
+        tickets.push('<li>' + jsonElement.attrs.key + '</li>');
       });
-      $("#tester").html(tickets.join(''));
+      tickets = tickets.join('');
+      $("#tester").html(tickets);
     }
   );
 
