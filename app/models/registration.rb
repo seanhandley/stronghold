@@ -24,9 +24,12 @@ class Registration
       unless invite.organization
         @organization = Organization.create(name: organization_name)
         @owners = @organization.roles.create name: 'Owners', power_user: true
+      else
+        @organization = invite.organization
       end
+      roles = (invite.roles + [@owners]).flatten.compact
       @user = @organization.users.create email: invite.email, password: password,
-                                         roles: (invite.roles + [@owners])
+                                         roles: roles
       return true
     end 
     false
