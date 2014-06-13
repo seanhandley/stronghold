@@ -27,8 +27,16 @@ class OrganizationTickets
   def closed
     all.select do |issue|
       [
-        (issue.fields['status']['name'] == IssueStatus::Done),
+        (issue.fields['status']['name'] == IssueStatus::Done)
       ].all?
+    end
+  end
+
+  def some_ticket(key)
+    all.select do |issue|
+      [
+        (issue.key == key)
+      ].first
     end
   end
 

@@ -1,3 +1,7 @@
 <div ng-controller="TicketsCtrl">
-  <h1>Message: {{message}}</h1>
+  <ul>
+    <li ng-repeat="ticket in tickets">
+      <h3>{{ticket.key}}</h3>
+    </li>
+  </ul>
 </div>

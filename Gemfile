@@ -21,6 +21,7 @@ gem 'font-awesome-sass'
 gem 'fog', '~> 1.22.0'
 gem 'gravatar_image_tag', '~> 1.2.0'
 gem 'jira-ruby', '~> 0.1.10'
+gem 'js-routes'
 
 group :test do
   gem 'minitest-rails'
