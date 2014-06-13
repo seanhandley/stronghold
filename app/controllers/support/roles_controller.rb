@@ -8,8 +8,8 @@ class Support::RolesController < SupportBaseController
   end
 
   def index
-    @roles = Role.all
-    @users = User.all
+    @roles = current_user.organization.roles
+    @users = current_user.organization.users
   end
 
   def update

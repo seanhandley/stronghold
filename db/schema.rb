@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140612151243) do
+ActiveRecord::Schema.define(version: 20140613150956) do
 
   create_table "invites", force: true do |t|
     t.string   "email"
@@ -41,7 +41,8 @@ ActiveRecord::Schema.define(version: 20140612151243) do
     t.text     "permissions"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "power_user",  default: false
+    t.boolean  "power_user",      default: false
+    t.integer  "organization_id"
   end
 
   create_table "roles_users", force: true do |t|
