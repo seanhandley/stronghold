@@ -14,7 +14,7 @@ class Organization < ActiveRecord::Base
 
   def generate_reference
     return if reference
-    ref = name.parameterize.upcase.slice(0,8)
+    ref = name.parameterize.gsub('-','').upcase.slice(0,8)
     count = 0
     until([Organization.find_by_reference(ref)].flatten.compact.empty?) do
       ref = (ref + (count += 1).to_s)
