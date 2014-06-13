@@ -10,7 +10,7 @@ Rails.application.routes.draw do
     resources :roles
     get 'tickets', :controller => 'tickets', :action => 'index'
     namespace :api, defaults: {format: :json} do
-      resources :tickets, only: [:index] do
+      resources :tickets, only: [:index, :show] do
         resources :comments, only: [:create, :update, :destroy]
       end
     end

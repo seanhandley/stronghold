@@ -7,12 +7,6 @@ class Support::TicketsController < SupportBaseController
   end
 
   def index
-    respond_to do |format|
-      format.json {
-        render :json => current_user.organization.tickets.all
-      }
-      format.html
-    end
   end
 
 end

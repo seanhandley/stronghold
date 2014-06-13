@@ -15,3 +15,4 @@
 //= require angular
 //= require_tree .
 //= require bootstrap
+//= require js-routes
