@@ -1,10 +1,10 @@
 Hello and welcome to DataCentred,
 
-In order to access your services with us, please <%= link_to 'set up your new account', signup_url(@signup, :token => @signup.token) %>.
+Your account is ready to be accessed for the first time. Please <%= link_to 'set up your new account', edit_signup_url(@invite, :token => @invite.token) %>.
 
-The above setup link will expire in 72 hours. If your token has expired, please contact support@datacentred.co.uk to request a new token.
+The above setup link will expire at <%= am_pm_time(@invite.expires_at) %> on <%= long_date(@invite.expires_at) %>. If your token has expired, please contact support@datacentred.co.uk to request a new token.
 
-This message was generated on <%= DateTime.now %>.
+This message was generated at <%= am_pm_time(DateTime.now) %> on <%= long_date(DateTime.now) %>.
 
 Kind regards,
 DataCentred Ltd.

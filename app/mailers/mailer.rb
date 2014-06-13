@@ -1,8 +1,9 @@
 class Mailer < ActionMailer::Base
+  add_template_helper(DateTimeHelper)
   default :from => "DataCentred Ltd <noreply@datacentred.co.uk>"
   
-  def signup(signup_id)
-    @signup = Signup.find(signup_id)
-    mail(:to => @signup.email, :subject => "DataCentred: Please set up your account")
+  def signup(invite_id)
+    @invite = Invite.find(invite_id)
+    mail(:to => @invite.email, :subject => "Welcome to DataCentred")
   end
 end
