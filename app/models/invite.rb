@@ -19,7 +19,7 @@ class Invite < ActiveRecord::Base
   end
 
   def expires_at
-    created_at + 72.hours
+    created_at ? created_at + 72.hours : Time.now + 72.hours
   end
 
   private
