@@ -1,4 +1,4 @@
 .nav-profile
-  = gravatar_image_tag('sean.handley@datacentred.co.uk', :class => 'img-circle nav-profile')
+  = gravatar_image_tag(current_user.email, :class => 'img-circle nav-profile')
   %span.caret
 /= link_to 'Log out', session_path(current_user), :method => :delete, data: { confirm: "Log out?" }
