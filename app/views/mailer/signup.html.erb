@@ -1,7 +1,7 @@
 <div id="container">
   <p>Hello and welcome to DataCentred,</p>
 
-  <p>Your account is ready to be accessed for the first time. Please <%= link_to 'set up your new account', signup_begin_url(@invite.token) %>.</p>
+  <p>Your account is ready to be accessed for the first time. Please <%= link_to 'set up your new account', signup_begin_url(@invite.token), :target => "_blank" %>.</p>
 
   <p>The above setup link will expire at <%= am_pm_time(@invite.expires_at) %> on <%= long_date(@invite.expires_at) %>. If the link has expired, please contact support@datacentred.co.uk to request a new token.</p>
 
