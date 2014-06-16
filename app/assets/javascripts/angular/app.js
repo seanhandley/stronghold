@@ -1,0 +1,1 @@
+stronghold = angular.module('stronghold', ['ngResource']);
