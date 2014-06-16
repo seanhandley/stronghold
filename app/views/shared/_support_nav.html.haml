@@ -5,9 +5,13 @@
       %span.caret
     %ul{'class' => "dropdown-menu pull-right", 'role' => "menu"}
       %li
-        %a{:href => '#', :method => :delete, data: { confirm: "Log out?" }} 
-          %i.fa.fa-sliders
-          Account Settings
+        %a{:href => '#'} 
+          %i.fa.fa-user
+          My Details
+      %li
+        %a{:href => '#'} 
+          %i.fa.fa-suitcase
+          Company Details
       %li.divider
       %li
         %a{:href => session_path(current_user), :method => :delete, data: { confirm: "Log out?" }} 
