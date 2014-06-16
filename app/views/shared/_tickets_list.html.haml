@@ -1,0 +1,11 @@
+%table.table{:'ng-controller' => "TicketsCtrl"}
+  %thead
+    %th.status-head
+    %th
+      Ticket
+  %tbody{:'ng-repeat' => "ticket in tickets_" + status}
+    %tr
+      %td.status
+        %i.fa.fa-circle{:class => ("status-" + status)}
+      %td
+        {{ticket.attrs.key}}
