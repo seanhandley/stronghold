@@ -1,4 +1,4 @@
-%table.table{:'ng-controller' => "TicketsController"}
+%table.table
   %thead
     %th.status-head
     %th
@@ -8,4 +8,4 @@
       %td.status
         %i.fa.fa-circle{:class => ("status-" + status)}
       %td
-        {{ticket.attrs.fields.summary}}
+        =link_to "{{ticket.attrs.fields.summary}}", "", {:'ng-click' => 'showTicket(ticket)'}

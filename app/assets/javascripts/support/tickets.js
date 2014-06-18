@@ -27,10 +27,15 @@ stronghold.controller('TicketsController', function($scope, TicketsFactory) {
     $scope.tickets = [];
     $.each(statuses, function(status_index, status) {
       $scope.tickets[status.name] = $.grep(tickets, function(ticket) {
-        console.log(ticket);
         return $.inArray(ticket.attrs.fields.status.name, status.jira_statuses);
       });
     });
+    console.log($scope.tickets["closed"].length);
   });
+
+  $scope.selectedTicket = null;
+  $scope.showTicket = function(ticket) {
+    $scope.selectedTicket = ticket;
+  }
 
 });

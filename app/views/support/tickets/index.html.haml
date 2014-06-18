@@ -1,20 +1,24 @@
-.container-fluid
-  %ul.nav.nav-tabs
-    %li.active
-      %a{:href => '#openTickets', 'data-toggle' => 'tab'}
-        Open
-    %li
-      %a{:href => '#closedTickets', 'data-toggle' => 'tab'}
-        Closed
+.container-fluid{:'ng-controller' => "TicketsController"}
+  .col-xs-6
+    %ul.nav.nav-tabs
+      %li.active
+        %a{:href => '#openTickets', 'data-toggle' => 'tab'}
+          Open
+      %li
+        %a{:href => '#closedTickets', 'data-toggle' => 'tab'}
+          Closed
 
-  .tab-content
-    .page-controls
-      %button.btn.btn-primary.btn-xs
-        %i.fa.fa-edit
-        New Ticket
+    .tab-content
+      .page-controls
+        %button.btn.btn-primary.btn-xs
+          %i.fa.fa-edit
+          New Ticket
 
-    .tab-pane.active#openTickets
-      = render partial: 'shared/tickets_list', locals: {status: "open"}
+      .tab-pane.active#openTickets
+        = render partial: 'shared/tickets_list', locals: {status: "open"}
 
-    .tab-pane#closedTickets
-      = render partial: 'shared/tickets_list', locals: {status: "closed"}
+      .tab-pane#closedTickets
+        = render partial: 'shared/tickets_list', locals: {status: "closed"}
+  .col-xs-6
+    %h1 {{selectedTicket.attrs.fields.summary}}
+    %p {{selectedTicket.attrs.fields.description}}

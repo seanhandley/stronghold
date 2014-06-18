@@ -11,7 +11,12 @@ end
 
 class MockProject
   def find(args)
-    OpenStruct.new(:attrs => {'id' => '1'}, :client => OpenStruct.new(:Issue => OpenStruct.new(:build => MockIssue.new)))
+    OpenStruct.new(:issues => issues, :attrs => {'id' => '1'}, :client => OpenStruct.new(:Issue => OpenStruct.new(:build => MockIssue.new)))
+  end
+  def issues
+    a = OpenStruct.new(:fields => {"labels" => ["dc456"]})
+    b = OpenStruct.new(:fields => {"labels" => ["dc3455656"]})
+    [a, a, b]
   end
 end
 
@@ -47,4 +52,11 @@ class TestSupportTicket < Minitest::Test
       assert support_ticket.is_a? SupportTicket
     end
   end
+
+  def test_method_all
+    SupportTicket.stub(:client, MockClient.new) do
+      assert_equal 2, SupportTicket.all("dc456").count
+    end
+  end
+
 end
