@@ -1,19 +1,5 @@
 var stronghold = angular.module("stronghold", []);
 
-// def closed
-//   all.select do |issue|
-//     [
-//       (issue.fields['status']['name'] == IssueStatus::Done)
-//     ].all?
-//   end
-// end
-
-// module IssueStatus
-//   ToDo       = 'To Do'
-//   InProgress = 'In Progress'
-//   Done       = 'Done'
-// end
-
 stronghold.factory('TicketsFactory', function($http) {
   return {
     getTickets: function() {
@@ -26,27 +12,25 @@ stronghold.factory('TicketsFactory', function($http) {
 
 stronghold.controller('TicketsController', function($scope, TicketsFactory) {
 
-  TicketsFactory.getTickets().then(function(tickets) {
-    $scope.tickets = tickets;
-  });
+  statuses = [
+    {
+      "name": "open",
+      "jira_statuses": ['To Do', 'In Progress']
+    },
+    {
+      "name": "closed",
+      "jira_statuses": ['Done']
+    }
+  ];
 
-  $scope.getTickets = function(status) {
-    console.log($scope);
-    $scope.tickets = $.grep($scope.tickets, function(ticket) {
-      var ticketStatus = ticket["attrs"]["fields"]["status"]["name"];
-      console.log(ticketStatus);
-      switch(status) {
-        case "open":
-          return (ticketStatus === "To Do" || ticketStatus === "In Progress");
-          break;
-        case "closed":
-          return (ticketStatus === "Done");
-          break;
-        default:
-          return false;
-          break;
-      }
+  TicketsFactory.getTickets().then(function(tickets) {
+    $scope.tickets = [];
+    $.each(statuses, function(status_index, status) {
+      $scope.tickets[status.name] = $.grep(tickets, function(ticket) {
+        console.log(ticket);
+        return $.inArray(ticket.attrs.fields.status.name, status.jira_statuses);
+      });
     });
-  }
+  });
 
 });

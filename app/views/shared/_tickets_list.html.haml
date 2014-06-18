@@ -3,10 +3,9 @@
     %th.status-head
     %th
       Ticket
-  %tbody{:'ng-repeat' => ("ticket in getTickets('" + status + "')")}
-    //('" + status + "')
+  %tbody{:'ng-repeat' => ("ticket in tickets['" + status + "']")}
     %tr
       %td.status
         %i.fa.fa-circle{:class => ("status-" + status)}
       %td
-        {{ticket.status}}
+        {{ticket.attrs.fields.summary}}
