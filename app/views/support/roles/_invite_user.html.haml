@@ -1,0 +1,7 @@
+%p Invite a new user
+.input-group
+  %span.input-group-addon
+    %i.fa.fa-envelope
+  = text_field_tag :foo, nil, placeholder: 'E-mail address', class: "form-control"
+.input-group
+  = select_tag :bar, roles_for_select(current_user.organization), class: "form-control"
