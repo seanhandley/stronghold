@@ -1,4 +1,5 @@
-require 'test_helper'
+require "minitest/autorun"
+require_relative '../../../lib/support_ticket'
 require 'ostruct'
 
 class MockClient
