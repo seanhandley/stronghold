@@ -12,25 +12,33 @@ stronghold.factory('TicketsFactory', function($http) {
 
 stronghold.controller('TicketsController', function($scope, TicketsFactory) {
 
-  statuses = [
+  $scope.statuses = {
+    "open":
     {
-      "name": "open",
+      "color": "green",
       "jira_statuses": ['To Do', 'In Progress']
     },
+    "closed":
     {
-      "name": "closed",
+      "color": "red",
       "jira_statuses": ['Done']
     }
-  ];
+  };
 
   TicketsFactory.getTickets().then(function(tickets) {
+    //This was fun to fix. Turns out grep doesn't work like LINQ, and expects boolean false.
     $scope.tickets = [];
-    $.each(statuses, function(status_index, status) {
-      $scope.tickets[status.name] = $.grep(tickets, function(ticket) {
-        return $.inArray(ticket.attrs.fields.status.name, status.jira_statuses);
+    $.each($scope.statuses, function(status_name, status) {
+      $scope.tickets[status_name] = $.grep(tickets, function(ticket) {
+        if ($.inArray(ticket.attrs.fields.status.name, status.jira_statuses)) {
+          //console.log("for status " + status_name + ", do NOT include " + ticket.attrs.key + " as " + ticket.attrs.fields.status.name + " is in the next line:");
+          //console.log(status.jira_statuses);
+          return false;
+        } else {
+          return true;
+        }
       });
     });
-    console.log($scope.tickets["closed"].length);
   });
 
   $scope.selectedTicket = null;

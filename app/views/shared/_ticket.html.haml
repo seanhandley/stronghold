@@ -1,2 +1,11 @@
-%h1 {{selectedTicket.attrs.fields.summary}}
-%p {{selectedTicket.attrs.fields.description}}
+.some-info.ticket{:'ng-hide' => "selectedTicket"}
+  %p
+    %i.fa.fa-info-circle.fa-5x
+  %p
+    Select a ticket.
+.ticket{:'ng-show' => "selectedTicket"}
+  %h1 ({{selectedTicket.attrs.key}}) {{selectedTicket.attrs.fields.summary}}
+  %h4 Description
+  %p {{selectedTicket.attrs.fields.description}}
+  %h4 Comments
+  (...)

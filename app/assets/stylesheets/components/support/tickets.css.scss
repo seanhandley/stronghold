@@ -1,15 +1,20 @@
-$status-open-color: green;
-$status-closed-color: red;
-
 .status-head, .status {
   width: 32px;
   text-align: right;
 }
 
 .status-open {
-  color: $status-open-color;
+  color: green;
 }
 
 .status-closed {
-  color: $status-closed-color;
+  color: red;
+}
+
+.some-info {
+  color: #666666;
+  text-align: center;
+  p:first-child {
+
+  }
 }
