@@ -22,6 +22,9 @@ gem 'font-awesome-sass'
 gem 'fog', '~> 1.22.0'
 gem 'gravatar_image_tag', '~> 1.2.0'
 gem 'jira-ruby', '~> 0.1.10'
+gem 'rails-assets-select2'
+gem 'rails-assets-select2-bootstrap-css'
+gem 'sidekiq'
 
 group :test do
   gem 'minitest-rails'

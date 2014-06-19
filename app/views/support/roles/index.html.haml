@@ -9,7 +9,9 @@
 
   .tab-content
     .tab-pane.active#users
-      = render partial: 'invite_user'
+      %button.btn.btn-primary.btn-xs{'data-toggle' => "modal", 'data-target' => "#inviteUser"}
+        %i.fa.fa-envelope
+        Invite new user
       %table.table
         %thead
           %th
@@ -61,4 +63,4 @@
                             = check_box_tag 'role[permissions][]', key, role.permissions.include?(key), :id => "permission-#{key}", :class => 'role-permission'
                             = "#{perms[:description]}?"
 
-
+= render partial: 'invite_user'
