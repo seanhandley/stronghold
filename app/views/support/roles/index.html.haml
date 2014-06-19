@@ -9,9 +9,10 @@
 
   .tab-content
     .tab-pane.active#users
-      %button.btn.btn-primary.btn-xs{'data-toggle' => "modal", 'data-target' => "#inviteUser"}
-        %i.fa.fa-envelope
-        Invite new user
+      .page-controls
+        %button.btn.btn-primary.btn-xs{'data-toggle' => "modal", 'data-target' => "#inviteUser"}
+          %i.fa.fa-envelope
+          Invite new user
       %table.table
         %thead
           %th
