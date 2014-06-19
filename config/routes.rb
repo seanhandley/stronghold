@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     resources :instances
     resources :users
     resources :roles
+    resources :invites, only: [:create]
   end
 
   resources :sessions

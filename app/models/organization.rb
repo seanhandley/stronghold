@@ -5,6 +5,7 @@ class Organization < ActiveRecord::Base
 
   has_many :users
   has_many :roles
+  has_many :invites
 
   def tickets
     OrganizationTickets.new(reference)

@@ -1,7 +1,24 @@
-%p Invite a new user
-.input-group
-  %span.input-group-addon
-    %i.fa.fa-envelope
-  = text_field_tag :foo, nil, placeholder: 'E-mail address', class: "form-control"
-.input-group
-  = select_tag :bar, roles_for_select(current_user.organization), class: "form-control"
+.modal.fade#inviteUser{'tabindex' => "-1", 'role' => "dialog", 'aria-labelledby' => "inviteUser", 'aria-hidden' => "true"}
+  .modal-dialog
+    .modal-content
+      = form_tag url_for(controller: 'support/invites', action: 'create'), :remote => true do
+        .modal-header
+          %button{'type' => "button", 'class' => "close", 'data-dismiss' => "modal", 'aria-hidden' => "true"}
+            &times;
+          %h4.modal-title#inviteUser
+            %i.fa.fa-envelope
+            Invite User
+          %p Please enter an email address and at least one role.
+        .modal-body
+          .input-group.has-warning
+            %span.input-group-addon
+              %i.fa.fa-envelope
+            = text_field_tag :email, nil, placeholder: 'E-mail address', class: "form-control", autofocus: true
+          .input-group.has-warning
+            %span.input-group-addon
+              %i.fa.fa-key
+            = select_tag :roles, roles_for_select(current_user.organization), class: "select-roles", multiple: true, placeholder: 'Assign at least one role'
+        .modal-footer
+          %button.btn.btn-default{'data-toggle' => "modal", 'data-dismiss' => "modal"}
+            Cancel
+          = submit_tag 'Invite', class: 'btn btn-primary', id: 'submit'
