@@ -20,5 +20,4 @@
       .tab-pane#closedTickets
         = render partial: 'shared/tickets_list', locals: {status: "closed"}
   .col-xs-6
-    %h1 {{selectedTicket.attrs.fields.summary}}
-    %p {{selectedTicket.attrs.fields.description}}
+    = render partial: 'shared/ticket'
