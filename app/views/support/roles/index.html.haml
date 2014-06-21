@@ -36,8 +36,8 @@
     .tab-pane#roles
       .panel-group#accordionRoles
         .page-controls
-          %button.btn.btn-primary.btn-xs
-            %i.fa.fa-edit
+          %button.btn.btn-primary.btn-xs{'data-toggle' => "modal", 'data-target' => "#addRole"}
+            %i.fa.fa-key
             Add New Role
         - @roles.each do |role|
           .panel.panel-default
@@ -61,7 +61,8 @@
                       .controls
                         - for key, perms in permissions
                           %label.checkbox
-                            = check_box_tag 'role[permissions][]', key, role.permissions.include?(key), :id => "permission-#{key}", :class => 'role-permission'
+                            = check_box_tag 'role[permissions][]', key, role.permissions.include?(key), :id => "permission-#{key}", :class => 'role-permission', :disabled => role.power_user? ? true : false
                             = "#{perms[:description]}?"
 
 = render partial: 'invite_user'
+= render partial: 'add_role'
