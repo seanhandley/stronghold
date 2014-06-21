@@ -4,8 +4,9 @@ class Support::InvitesController < SupportBaseController
 
   def create
     roles = create_params[:roles].collect do |r|
-      Role.find(r.to_i)
-    end
+      current_user.organization.roles.find(r.to_i)
+    end.compact
+    
     @invite = Invite.new(organization: current_user.organization,
                          email: create_params[:email], roles: roles)
     if @invite.save
