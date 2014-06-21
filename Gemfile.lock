@@ -33,7 +33,7 @@ GEM
     bootstrap-sass (3.1.1.1)
       sass (~> 3.2)
     builder (3.2.2)
-    cancan (1.6.10)
+    cancancan (1.8.2)
     celluloid (0.15.1)
       timers (~> 1.1.0)
     coffee-rails (4.0.1)
@@ -190,7 +190,7 @@ PLATFORMS
 DEPENDENCIES
   bcrypt (~> 3.1.7)
   bootstrap-sass (~> 3.1.1)
-  cancan (~> 1.6.10)
+  cancancan (~> 1.8)
   coffee-rails (~> 4.0.0)
   faker
   fog (~> 1.22.0)
