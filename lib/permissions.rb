@@ -8,7 +8,8 @@ class Permissions
 
         # Roles
         'roles.read' => { :description => 'Can view roles', :group => 'Roles' },
-        'roles.modify' => { :description => 'Can manage roles', :group => 'Roles' }
+        'roles.modify' => { :description => 'Can manage roles', :group => 'Roles' },
+        'roles.invite' => { :description => 'Can invite users', :group => 'Roles' }
 
       }
     end
