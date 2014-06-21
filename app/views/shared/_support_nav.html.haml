@@ -14,6 +14,6 @@
           Company Details
       %li.divider
       %li
-        %a{:href => session_path(current_user), :method => :delete, data: { confirm: "Log out?" }} 
+        %a{:href => session_path(current_user), data: { confirm: "Log out?", :method => :delete }} 
           %i.fa.fa-sign-out
           Log out
