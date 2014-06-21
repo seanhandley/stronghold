@@ -13,11 +13,11 @@
           .input-group.has-warning
             %span.input-group-addon
               %i.fa.fa-envelope
-            = text_field_tag :email, nil, placeholder: 'E-mail address', class: "form-control", autofocus: true
+            = text_field_tag 'invite[email]', nil, placeholder: 'E-mail address', class: "form-control", autofocus: true
           .input-group.has-warning
             %span.input-group-addon
               %i.fa.fa-key
-            = select_tag :roles, roles_for_select(current_user.organization), class: "select-roles", multiple: true, placeholder: 'Assign at least one role'
+            = select_tag 'invite[roles]', roles_for_select(current_user.organization), class: "select-roles", multiple: true, placeholder: 'Assign at least one role'
         .modal-footer
           %button.btn.btn-default{'data-toggle' => "modal", 'data-dismiss' => "modal"}
             Cancel
