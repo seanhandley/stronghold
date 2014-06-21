@@ -11,6 +11,7 @@ class User::Ability
     # Roles
     can :read, Role if user.has_permission?('roles.read')
     can :modify, Role if user.has_permission?('roles.modify')
+    can :modify, Invite if user.has_permission?('roles.invite')
 
     ## Power User can do everything
     can :modify, :all if user.power_user?
