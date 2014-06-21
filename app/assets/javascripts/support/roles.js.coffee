@@ -46,14 +46,14 @@ $ ->
 
   $('.select-roles').select2();
 
-  $('#inviteUser #email').keyup (e) ->
+  $('#inviteUser #invite_email').keyup (e) ->
     state = validateEmail($(this))
     toggleErrorState($(this).closest('.input-group'), state)
-    toggleButtonState('email', state);
-  $('#inviteUser #email').keyup()
+    toggleButtonState('invite_email', state);
+  $('#inviteUser #invite_email').keyup()
 
-  $('#inviteUser select#roles').change (e) ->
+  $('#inviteUser select#invite_roles').change (e) ->
     state = validateRoles($(this))
     toggleErrorState($(this).closest('.input-group'), state)
-    toggleButtonState('roles', state);
-  $('#inviteUser select#roles').change()
+    toggleButtonState('invite_roles', state);
+  $('#inviteUser select#invite_roles').change()

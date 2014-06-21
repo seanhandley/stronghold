@@ -1,14 +1,13 @@
 class Support::InvitesController < SupportBaseController
 
-  skip_authorization_check
+  load_and_authorize_resource param_method: :create_params
 
   def create
     roles = create_params[:roles].collect do |r|
       current_user.organization.roles.find(r.to_i)
     end.compact
-    
-    @invite = Invite.new(organization: current_user.organization,
-                         email: create_params[:email], roles: roles)
+
+    @invite = current_user.organization.create(create_params)
     if @invite.save
       MailWorker.perform_async(:signup, @invite.id)
       javascript_redirect_to support_roles_path
@@ -20,7 +19,7 @@ class Support::InvitesController < SupportBaseController
   private
 
   def create_params
-    params.permit(:email, :roles => [])
+    params.require(:invite).permit(:email, :roles => [])
   end
 
 end
