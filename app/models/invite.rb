@@ -24,6 +24,10 @@ class Invite < ActiveRecord::Base
     persisted? ? created_at + 72.hours : Time.now + 72.hours
   end
 
+  def power_invite?
+    organization.blank?
+  end
+
   private
 
   def complete?
@@ -32,10 +36,6 @@ class Invite < ActiveRecord::Base
 
   def active?
     !complete? && (expires_at > Time.now)
-  end
-
-  def power_invite?
-    organization.blank?
   end
 
   def generate_token
