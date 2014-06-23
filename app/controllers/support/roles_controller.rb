@@ -12,6 +12,7 @@ class Support::RolesController < SupportBaseController
     @roles = @organization.roles
     @users = @organization.users
     @new_role = Role.new
+    @new_invite = Invite.new
   end
 
   def update
@@ -28,8 +29,7 @@ class Support::RolesController < SupportBaseController
       javascript_redirect_to(support_roles_path)
     else
       respond_to do |format|
-        format.json { head :ok }
-        format.html
+        format.js { render :template => "shared/dialog_errors", :locals => {:object => @role } }
       end
     end
   end
