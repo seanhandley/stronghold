@@ -8,4 +8,4 @@
       %td.status
         %i.fa.fa-circle{:style => "color: {{statuses['" + status + "'].color;}}"}
       %td
-        =link_to "{{ticket.attrs.fields.summary}}", "", {:'ng-click' => 'showTicket(ticket)'}
+        =link_to "({{ticket.attrs.key}}) {{ticket.attrs.fields.summary}}", "", {:'ng-click' => 'showTicket(ticket)'}
