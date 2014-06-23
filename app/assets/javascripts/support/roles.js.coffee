@@ -22,16 +22,6 @@ toggleErrorState = (e, state) ->
   e.removeClass('has-warning')
   e.addClass(state)
 
-states = {}
-
-toggleButtonState = (input, state) ->
-  states[input] = state
-  for _, value of states
-    if value != 'has-success'
-      $('#inviteUser input#submit').attr('disabled', 'disabled')
-      return false
-  $('#inviteUser input#submit').removeAttr('disabled')
-
 $ ->
   $('.role-permission').click (e) ->
     $(e.currentTarget).parents('form').submit()
@@ -44,16 +34,14 @@ $ ->
     el = $(this).find("a[data-toggle='collapse']").attr('href')
     $(el).collapse('toggle')
 
-  $('.select-roles').select2();
+  $('#invite_role_ids').select2();
 
   $('#inviteUser #invite_email').keyup (e) ->
     state = validateEmail($(this))
     toggleErrorState($(this).closest('.input-group'), state)
-    toggleButtonState('invite_email', state);
   $('#inviteUser #invite_email').keyup()
 
-  $('#inviteUser select#invite_roles').change (e) ->
+  $('#inviteUser select#invite_role_ids').change (e) ->
     state = validateRoles($(this))
     toggleErrorState($(this).closest('.input-group'), state)
-    toggleButtonState('invite_roles', state);
-  $('#inviteUser select#invite_roles').change()
+  $('#inviteUser select#invite_role_ids').change()
