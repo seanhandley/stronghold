@@ -44,6 +44,7 @@ GEM
       execjs
     coffee-script-source (1.7.0)
     connection_pool (1.1.0)
+    database_cleaner (0.8.0)
     erubis (2.7.0)
     excon (0.33.0)
     execjs (2.0.2)
@@ -192,6 +193,7 @@ DEPENDENCIES
   bootstrap-sass (~> 3.1.1)
   cancancan (~> 1.8)
   coffee-rails (~> 4.0.0)
+  database_cleaner
   faker
   fog (~> 1.22.0)
   font-awesome-sass

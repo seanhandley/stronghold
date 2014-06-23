@@ -3,6 +3,9 @@ require File.expand_path("../../config/environment", __FILE__)
 require "rails/test_help"
 require "minitest/rails"
 require File.expand_path(File.dirname(__FILE__) + '/blueprints')
+require 'database_cleaner'
+
+DatabaseCleaner.strategy = :truncation
 
 # To add Capybara feature tests add `gem "minitest-rails-capybara"`
 # to the test group in the Gemfile and uncomment the following:
