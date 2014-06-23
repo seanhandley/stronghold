@@ -61,4 +61,8 @@ class TestInviteValidations < Minitest::Test
     assert_equal (@invite.created_at + 72.hours).utc.to_s, @invite.expires_at.utc.to_s
   end
 
+  def teardown
+    DatabaseCleaner.clean  
+  end
+
 end
