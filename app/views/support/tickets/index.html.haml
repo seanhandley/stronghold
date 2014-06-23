@@ -1,13 +1,13 @@
 .container-fluid{:'ng-controller' => "TicketsController"}
   .col-xs-6
 
-    .some-info{:'ng-show' => "tickets"}
+    .some-info{:'ng-hide' => "!!tickets"}
       %p
         %i.fa.fa-refresh.fa-spin.fa-5x
       %p
         Loading tickets...
 
-    %div{:'ng-hide' => "tickets"}
+    %div{:'ng-show' => "!!tickets"}
       %ul.nav.nav-tabs
         %li.active
           %a{:href => '#openTickets', 'data-toggle' => 'tab'}

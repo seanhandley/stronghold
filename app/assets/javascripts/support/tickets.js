@@ -30,6 +30,7 @@ stronghold.controller('TicketsController', function($scope, TicketsFactory) {
         return (!($.inArray(ticket.attrs.fields.status.name, status.jira_statuses)));
       });
     });
+    $scope.$apply();
     console.log(JSON.stringify($scope.tickets["closed"][0]));
   });
 
