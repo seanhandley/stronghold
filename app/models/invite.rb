@@ -8,11 +8,11 @@ class Invite < ActiveRecord::Base
   belongs_to :organization
   has_and_belongs_to_many :roles
 
-  def is_valid?
+  def can_register?
     if active? && !complete?
       true
     else
-      raise ArgumentError, 'this signup token is invalid'
+      false
     end
   end
 
@@ -21,7 +21,7 @@ class Invite < ActiveRecord::Base
   end
 
   def expires_at
-    created_at ? created_at + 72.hours : Time.now + 72.hours
+    persisted? ? created_at + 72.hours : Time.now + 72.hours
   end
 
   private
@@ -34,13 +34,17 @@ class Invite < ActiveRecord::Base
     !complete? && (expires_at > Time.now)
   end
 
+  def power_invite?
+    organization.blank?
+  end
+
   def generate_token
     return if token
     update_column(:token, SecureRandom.hex(16))
   end
 
   def has_roles?
-    errors.add(:base, "Please give this user at least one role") unless roles.present?
+    errors.add(:base, "Please give this user at least one role") unless power_invite? || roles.present?
   end
 
   def email_looks_valid?

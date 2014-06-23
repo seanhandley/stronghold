@@ -12,7 +12,7 @@ class Registration
   end
 
   def valid?
-    if !invite.is_valid?
+    if !invite.can_register?
       errors.add :base, 'Signup token is not valid'
     elsif password != confirm_password
       errors.add :base,  'Passwords do not match'
