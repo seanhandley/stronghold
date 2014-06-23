@@ -4,6 +4,8 @@ class Role < ActiveRecord::Base
 
   serialize :permissions
 
+  validates :name, length: {minimum: 1}, allow_blank: false
+
   def permissions
     read_attribute(:permissions) || []
   end
