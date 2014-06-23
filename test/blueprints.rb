@@ -32,3 +32,10 @@ Invite.blueprint(:power_user) do
   organization { nil }
   roles { [] }
 end
+
+Invite.blueprint(:expired) do
+  email { Faker::Internet.email }
+  organization { Organization.make! }
+  roles { [Role.make!] }
+  created_at { Time.now - 7.days }
+end
