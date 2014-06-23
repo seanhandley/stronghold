@@ -1,0 +1,1 @@
+var stronghold = angular.module("stronghold", []);
