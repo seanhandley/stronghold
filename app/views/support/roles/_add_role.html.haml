@@ -8,8 +8,9 @@
           %h4.modal-title#addRole
             %i.fa.fa-key
             Add Role
-          %p Something
+          %p Give the new role a name that describes its responsibilities.
         .modal-body
+          = javascript_error_messages_for(@new_role)
           .input-group
             %span.input-group-addon
               %i.fa.fa-key
