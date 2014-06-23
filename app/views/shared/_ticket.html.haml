@@ -8,4 +8,6 @@
   %h4 Description
   %p {{selectedTicket.attrs.fields.description}}
   %h4 Comments
-  (...)
+  %div{:'ng-repeat' => ("comment in selectedTicket.comments")}
+    %div
+      Hello, World.
