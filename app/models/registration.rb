@@ -21,12 +21,13 @@ class Registration
     elsif !invite.organization && organization_name.blank?
       errors.add :base, 'Organization name is blank'
     else
-      unless invite.organization
+      if invite.organization
+        @organization = invite.organization
+      else
         @organization = Organization.create(name: organization_name)
         @owners = @organization.roles.create name: 'Owners', power_user: true
-      else
-        @organization = invite.organization
       end
+      
       roles = (invite.roles + [@owners]).flatten.compact
       @user = @organization.users.create email: invite.email, password: password,
                                          roles: roles
