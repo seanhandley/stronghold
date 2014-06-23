@@ -25,6 +25,7 @@ gem 'jira-ruby', '~> 0.1.10'
 gem 'rails-assets-select2'
 gem 'rails-assets-select2-bootstrap-css'
 gem 'sidekiq'
+gem 'database_cleaner'
 
 group :test do
   gem 'minitest-rails'
