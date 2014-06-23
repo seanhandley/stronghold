@@ -8,20 +8,7 @@ class SupportTicket
     @obj = obj
   end
 
-  def id
-    @obj.key
-  end
-
-  def title
-    @obj.summary
-  end
-
-  def description
-    @obj.description
-  end
-
   def self.create(params)
-    #issue = self.client.Issue.build
     issue = self.project.client.Issue.build
     expected_params = {'summary' => params[:title], "issuetype"=>{"id"=>"1"}}
     issue.save({
