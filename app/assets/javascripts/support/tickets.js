@@ -1,5 +1,3 @@
-var stronghold = angular.module("stronghold", []);
-
 stronghold.factory('TicketsFactory', function($http) {
   return {
     getTickets: function() {
@@ -26,17 +24,10 @@ stronghold.controller('TicketsController', function($scope, TicketsFactory) {
   };
 
   TicketsFactory.getTickets().then(function(tickets) {
-    //This was fun to fix. Turns out grep doesn't work like LINQ, and expects boolean false.
     $scope.tickets = [];
     $.each($scope.statuses, function(status_name, status) {
       $scope.tickets[status_name] = $.grep(tickets, function(ticket) {
-        if ($.inArray(ticket.attrs.fields.status.name, status.jira_statuses)) {
-          //console.log("for status " + status_name + ", do NOT include " + ticket.attrs.key + " as " + ticket.attrs.fields.status.name + " is in the next line:");
-          //console.log(status.jira_statuses);
-          return false;
-        } else {
-          return true;
-        }
+        return (!($.inArray(ticket.attrs.fields.status.name, status.jira_statuses)));
       });
     });
   });
