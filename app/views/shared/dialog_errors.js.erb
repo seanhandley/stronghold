@@ -1,0 +1,20 @@
+$('form *').removeClass('withError')
+
+<% for field, message in object.errors %>
+  $('form #<%="#{object.class.to_s.underscore.gsub("/","_")}_#{field}"%>').addClass('withError');
+<% end %>
+
+<% 
+content = Array.new
+content << "<div class='errorExplanation'><a class='close error-close'>×</a><h3>The following errors occured:</h3>"
+content << "<ul>"
+object.errors.full_messages.each {|msg| content << "<li>#{msg}</li>" }
+content << "</ul></div>"
+%>
+
+$('.errorExplanation').remove();
+$('.errors<%="#{object.id}"%>').before('<%= raw "#{escape_javascript content.join}" %>');
+
+$('.error-close').click(function(){
+  $('.errorExplanation').remove();
+});

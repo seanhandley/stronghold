@@ -1,3 +1,5 @@
+@import "settings";
+
 div.thunder-cloud {
   background: url('../thunder.svg');
   background-repeat:no-repeat;
@@ -13,4 +15,21 @@ div.thunder-cloud {
 
 div.error-page {
   text-align: center;
+}
+
+div.errorExplanation {
+  background-color: $brand-warning;
+  padding: 1px 5px 5px 15px;
+  color: #fff;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+div.errorExplanation h3 {
+  color: #fff;
+  font-size: 12px;
+}
+
+div.errorExplanation a.close {
+  color: #fff; 
 }
