@@ -35,4 +35,8 @@ class TestRolePermissions < Minitest::Test
     end
   end
 
+  def teardown
+    DatabaseCleaner.clean  
+  end
+
 end
