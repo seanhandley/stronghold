@@ -10,9 +10,8 @@ class SignupsController < ApplicationController
 
   def update
     @registration = Registration.new(@invite, update_params)
-    if @registration.valid?
+    if @registration.process!
       session[:user_id] = @registration.user.id
-      @invite.complete!
       redirect_to support_root_path, notice: 'Welcome!'
     else
       flash[:error] = @registration.errors.full_messages.join('<br>')
