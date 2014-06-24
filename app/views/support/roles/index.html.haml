@@ -40,16 +40,23 @@
             %i.fa.fa-key
             Add New Role
         - @roles.each do |role|
-          = render partial: 'form', locals: {role: role, form_path: support_role_path(role), verb: 'Rename', id: "renameRole#{role.id}"}
+          - unless role.power_user?
+            = render partial: 'form', locals: {role: role, form_path: support_role_path(role), verb: 'Rename', id: "renameRole#{role.id}"}
           .panel.panel-default
             .panel-heading
+              - unless role.power_user?
+                .pull-right
+                  %a{'href' => support_role_path(role), :data => { confirm: "Delete the #{role.name} role?", method: :delete}}
+                    %i.fa.fa-trash-o
               %h2.panel-title
                 %i.fa.fa-key
                 = link_to role.name, "#role_#{role.id}", 'data-toggle' => 'collapse', 'data-parent' => '#accordionRoles'
+              - unless role.power_user?
+                %p.tiny
+                  %a{'href' => '#', 'data-toggle' => "modal", 'data-target' => "#renameRole#{role.id}"}
+                    Rename?
               %p.tiny
                 = pluralize(role.users.count, 'member')
-                = link_to 'Rename?', '#', 'data-toggle' => "modal", 'data-target' => "#renameRole#{role.id}"
-                = link_to 'Delete?', support_role_path(role), :data => { confirm: 'Are you sure?', method: :delete}
               %div
                 - for user in role.users
                   %a{href: support_user_path(user)}
@@ -57,16 +64,19 @@
            
             .panel-collapse.collapse{:id => "role_#{role.id}"}
               .panel-body
-                = form_for role, :url => support_role_path(role), :html => { :class => 'form-horizontal'}, :remote => true do |f|
-                  - for role_group_name, permissions in Permissions.user.group_by { |k,v| v[:group] }.sort_by{ |a, b| a }
-                    .control-group
-                      %h3= role_group_name
-                      = hidden_field_tag 'role[name]', role.name
-                      .controls
-                        - for key, perms in permissions
-                          %label.checkbox
-                            = check_box_tag 'role[permissions][]', key, role.permissions.include?(key), :id => "permission-#{key}", :class => 'role-permission', :disabled => role.power_user? ? true : false
-                            = "#{perms[:description]}?"
+                - if role.power_user?
+                  This is the owners' group - owners can see and do everything.
+                - else
+                  = form_for role, :url => support_role_path(role), :html => { :class => 'form-horizontal'}, :remote => true do |f|
+                    - for role_group_name, permissions in Permissions.user.group_by { |k,v| v[:group] }.sort_by{ |a, b| a }
+                      .control-group
+                        %h3= role_group_name
+                        = hidden_field_tag 'role[name]', role.name
+                        .controls
+                          - for key, perms in permissions
+                            %label.checkbox
+                              = check_box_tag 'role[permissions][]', key, role.permissions.include?(key), :id => "permission-#{key}", :class => 'role-permission', :disabled => role.power_user? ? true : false
+                              = "#{perms[:description]}?"
 
 = render partial: 'invite_user'
 = render partial: 'form', locals: {role: @new_role, form_path: support_roles_path, verb: 'Create', id: 'createRole'}
