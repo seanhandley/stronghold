@@ -16,9 +16,17 @@ class Support::RolesController < SupportBaseController
   end
 
   def update
+    renamed = @role.name != role_params[:name]
     @role.update!(role_params)
+    puts renamed.inspect
     respond_to do |format|
-      format.json { head :ok }
+      format.js {
+        if renamed
+          javascript_redirect_to support_roles_path(tab: 'roles')
+        else
+          head :ok
+        end
+      }
       format.html
     end
   end
@@ -26,7 +34,7 @@ class Support::RolesController < SupportBaseController
   def create
     @role = @organization.roles.create(role_params)
     if @role.save
-      javascript_redirect_to(support_roles_path)
+      javascript_redirect_to support_roles_path(tab: 'roles')
     else
       respond_to do |format|
         format.js { render :template => "shared/dialog_errors", :locals => {:object => @role } }
