@@ -45,3 +45,6 @@ $ ->
     state = validateRoles($(this))
     toggleErrorState($(this).closest('.input-group'), state)
   $('#inviteUser select#invite_role_ids').change()
+
+  $('a[data-toggle="tab"]').on 'shown.bs.tab', (e) ->
+    window.history.replaceState('', '', 'roles?tab=' + $(e.target).data('name'))
