@@ -7,24 +7,15 @@
       %p
         Loading tickets...
 
-    %div{:'ng-show' => "!!tickets"}
-      %ul.nav.nav-tabs
-        %li.active
-          %a{:href => '#openTickets', 'data-toggle' => 'tab'}
-            Open
-        %li
-          %a{:href => '#closedTickets', 'data-toggle' => 'tab'}
-            Closed
-      .tab-content
-        .page-controls
-          %button.btn.btn-primary.btn-xs
-            %i.fa.fa-edit
-            New Ticket
+    .page-controls
+      %button.btn.btn-primary.btn-xs
+        %i.fa.fa-edit
+        New Ticket
 
-        .tab-pane.active#openTickets
-          = render partial: 'shared/tickets_list', locals: {status: "open"}
+    %div{:'ng-init' => 'getTickets()', :'ng-show' => "!!tickets"}
+      %tabset
+        %tab{:'ng-repeat' => "(status, status_object) in statuses", :heading => "{{status}}"}
+          = render partial: 'shared/tickets_list'
 
-        .tab-pane#closedTickets
-          = render partial: 'shared/tickets_list', locals: {status: "closed"}
   .col-xs-6
     = render partial: 'shared/ticket'

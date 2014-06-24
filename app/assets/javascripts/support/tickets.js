@@ -23,16 +23,17 @@ stronghold.controller('TicketsController', function($scope, TicketsFactory) {
     }
   };
 
-  TicketsFactory.getTickets().then(function(tickets) {
-    $scope.tickets = [];
-    $.each($scope.statuses, function(status_name, status) {
-      $scope.tickets[status_name] = $.grep(tickets, function(ticket) {
-        return (!($.inArray(ticket.attrs.fields.status.name, status.jira_statuses)));
+  $scope.tickets = null;
+  $scope.getTickets = function() {
+    TicketsFactory.getTickets().then(function(tickets) {
+      $scope.tickets = [];
+      $.each($scope.statuses, function(status_name, status) {
+        $scope.tickets[status_name] = $.grep(tickets, function(ticket) {
+          return (!($.inArray(ticket.attrs.fields.status.name, status.jira_statuses)));
+        });
       });
     });
-    $scope.$apply();
-    console.log(JSON.stringify($scope.tickets["closed"][0]));
-  });
+  }
 
   $scope.selectedTicket = null;
   $scope.showTicket = function(ticket) {
