@@ -1,9 +1,4 @@
-.some-info.ticket{:'ng-hide' => "selectedTicket"}
-  %p
-    %i.fa.fa-info-circle.fa-5x
-  %p
-    Select a ticket.
-.ticket{:'ng-show' => "selectedTicket"}
+.ticket
   %h1 ({{selectedTicket.attrs.key}}) {{selectedTicket.attrs.fields.summary}}
   %h4 Description
   %p {{selectedTicket.attrs.fields.description}}

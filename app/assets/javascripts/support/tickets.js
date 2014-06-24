@@ -29,10 +29,20 @@ stronghold.controller('TicketsController', function($scope, TicketsFactory) {
       $scope.tickets = [];
       $.each($scope.statuses, function(index, status) {
         $scope.tickets[status.name] = $.grep(tickets, function(ticket) {
+          //return false;
           return (!($.inArray(ticket.attrs.fields.status.name, status.jira_statuses)));
         });
       });
     });
+  }
+
+  $scope.countTickets = function() {
+    if ($scope.tickets == null) return null;
+    var t = 0;
+    for (var index in $scope.tickets) {
+      t += $scope.tickets[index].length;
+    }
+    return t;
   }
 
   $scope.selectedTicket = null;
