@@ -10,25 +10,25 @@ stronghold.factory('TicketsFactory', function($http) {
 
 stronghold.controller('TicketsController', function($scope, TicketsFactory) {
 
-  $scope.statuses = {
-    "open":
+  $scope.statuses = [
     {
+      "name": "Open",
       "color": "green",
       "jira_statuses": ['To Do', 'In Progress']
     },
-    "closed":
     {
+      "name": "Closed",
       "color": "red",
       "jira_statuses": ['Done']
     }
-  };
+  ];
 
   $scope.tickets = null;
   $scope.getTickets = function() {
     TicketsFactory.getTickets().then(function(tickets) {
       $scope.tickets = [];
-      $.each($scope.statuses, function(status_name, status) {
-        $scope.tickets[status_name] = $.grep(tickets, function(ticket) {
+      $.each($scope.statuses, function(index, status) {
+        $scope.tickets[status.name] = $.grep(tickets, function(ticket) {
           return (!($.inArray(ticket.attrs.fields.status.name, status.jira_statuses)));
         });
       });
