@@ -49,6 +49,7 @@
               %p.tiny
                 = pluralize(role.users.count, 'member')
                 = link_to 'Rename?', '#', 'data-toggle' => "modal", 'data-target' => "#renameRole#{role.id}"
+                = link_to 'Delete?', support_role_path(role), :data => { confirm: 'Are you sure?', method: :delete}
               %div
                 - for user in role.users
                   %a{href: support_user_path(user)}
