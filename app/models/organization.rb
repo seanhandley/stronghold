@@ -2,6 +2,7 @@ class Organization < ActiveRecord::Base
   after_save :generate_reference, :on => :create
 
   validates :name, length: {minimum: 1}, allow_blank: false
+  validates :reference, :uniqueness => true
 
   has_many :users
   has_many :roles
