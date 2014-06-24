@@ -50,17 +50,22 @@
                     %i.fa.fa-trash-o
               %h2.panel-title
                 %i.fa.fa-key
-                = link_to role.name, "#role_#{role.id}", 'data-toggle' => 'collapse', 'data-parent' => '#accordionRoles'
+                = role.name
               - unless role.power_user?
                 %p.tiny
                   %a{'href' => '#', 'data-toggle' => "modal", 'data-target' => "#renameRole#{role.id}"}
                     Rename?
               %p.tiny
                 = pluralize(role.users.count, 'member')
-              %div
+              .user-images
                 - for user in role.users
                   %a{href: support_user_path(user)}
                     = gravatar_image_tag(user.email, title: user.name, alt: user.name)
+              .view-permissions
+                %h3
+                  %a.toggle-panel{'href' => "#role_#{role.id}", 'data-toggle' => 'collapse', 'data-parent' => '#accordionRoles'}
+                    %i.fa.fa-angle-double-down
+                    %i.fa.fa-angle-double-up.hide
            
             .panel-collapse.collapse{:id => "role_#{role.id}"}
               .panel-body

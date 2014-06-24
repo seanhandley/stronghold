@@ -30,9 +30,18 @@ $ ->
     e.preventDefault()
     $(this).tab('show')
 
-  $('div.panel-heading').click (e) ->
-    el = $(this).find("a[data-toggle='collapse']").attr('href')
+  $('a.toggle-panel').click (e) ->
+    el = $(this).attr('href')
     $(el).collapse('toggle')
+
+  $.each $('a.toggle-panel'), (e) ->
+    $($(this).attr('href')).on 'hidden.bs.collapse', () ->
+      $(this).closest('.panel').find('i.fa.fa-angle-double-up').addClass('hide')
+      $(this).closest('.panel').find('i.fa.fa-angle-double-down').removeClass('hide')
+
+    $($(this).attr('href')).on 'shown.bs.collapse', () ->
+      $(this).closest('.panel').find('i.fa.fa-angle-double-down').addClass('hide')
+      $(this).closest('.panel').find('i.fa.fa-angle-double-up').removeClass('hide')
 
   $('#invite_role_ids').select2();
 
