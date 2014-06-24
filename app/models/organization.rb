@@ -13,6 +13,11 @@ class Organization < ActiveRecord::Base
 
   private
 
+  def generate_reference
+    return nil if reference
+    generate_reference_step(name.parameterize.gsub('-','').upcase.slice(0,8), 0)
+  end
+
   def generate_reference_step(ref, count)
     new_ref = "#{ref}#{count == 0 ? '' : count }"
     if Organization.all.collect(&:reference).include?(new_ref)
@@ -20,11 +25,6 @@ class Organization < ActiveRecord::Base
     else
       update_column(:reference, new_ref)
     end
-  end
-
-  def generate_reference
-    return nil if reference
-    generate_reference_step(name.parameterize.gsub('-','').upcase.slice(0,8), 0)
   end
 
 end
