@@ -18,7 +18,6 @@ class Support::RolesController < SupportBaseController
   def update
     renamed = @role.name != role_params[:name]
     @role.update!(role_params)
-    puts renamed.inspect
     respond_to do |format|
       format.js {
         if renamed
@@ -39,6 +38,14 @@ class Support::RolesController < SupportBaseController
       respond_to do |format|
         format.js { render :template => "shared/dialog_errors", :locals => {:object => @role } }
       end
+    end
+  end
+
+  def destroy
+    if @role.destroy
+      redirect_to support_roles_path(tab: 'roles')
+    else
+      redirect_to support_roles_path(tab: 'roles'), notice: @role.errors.full_messages.join
     end
   end
 
