@@ -14,7 +14,7 @@
 
     %div{:'ng-init' => 'getTickets()', :'ng-show' => "!!tickets"}
       %tabset
-        %tab{:'ng-repeat' => "(status, status_object) in statuses", :heading => "{{status}}"}
+        %tab{:'ng-repeat' => "status in statuses | orderBy:'-name'", :heading => '{{status.name}}'}
           = render partial: 'shared/tickets_list'
 
   .col-xs-6

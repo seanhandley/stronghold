@@ -3,9 +3,9 @@
     %th.status-head
     %th
       Ticket
-  %tbody{:'ng-repeat' => ("ticket in tickets[status]")}
+  %tbody{:'ng-repeat' => ("ticket in tickets[status.name]")}
     %tr
       %td.status
-        %i.fa.fa-circle{:style => "color: {{statuses[status].color;}}"}
+        %i.fa.fa-circle{:style => "color: {{status.color;}}"}
       %td
         =link_to "({{ticket.attrs.key}}) {{ticket.attrs.fields.summary}}", "", {:'ng-click' => 'showTicket(ticket)'}
