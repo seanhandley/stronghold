@@ -1,1 +1,1 @@
-var stronghold = angular.module("stronghold", []);
+var stronghold = angular.module("stronghold", ['ui.bootstrap']);
