@@ -1,21 +1,35 @@
-.container-fluid{:'ng-controller' => "TicketsController"}
-  .col-xs-6
+.container-fluid{:'ng-controller' => "TicketsController", :'ng-init' => 'getTickets()'}
 
-    .some-info{:'ng-hide' => "!!tickets"}
-      %p
-        %i.fa.fa-refresh.fa-spin.fa-5x
-      %p
-        Loading tickets...
-
+  .col-xs-12
     .page-controls
       %button.btn.btn-primary.btn-xs
         %i.fa.fa-edit
         New Ticket
 
-    %div{:'ng-init' => 'getTickets()', :'ng-show' => "!!tickets"}
+  .col-xs-6
+
+    .some-info{:'ng-hide' => "countTickets() != null"}
+      %p
+        %i.fa.fa-refresh.fa-spin.fa-5x
+      %p
+        Loading tickets...
+
+    .some-info{:'ng-show' => "countTickets() == 0"}
+      %p
+        %i.fa.fa-square-o.fa-5x
+      %p
+        No tickets &mdash; click &ldquo;New Ticket&rdquo;.
+
+    %div{:'ng-show' => "countTickets() > 0"}
       %tabset
         %tab{:'ng-repeat' => "status in statuses | orderBy:'-name'", :heading => '{{status.name}}'}
           = render partial: 'shared/tickets_list'
 
   .col-xs-6
-    = render partial: 'shared/ticket'
+    .some-info.ticket{:'ng-hide' => "selectedTicket"}
+      %p
+        %i.fa.fa-info-circle.fa-5x
+      %p
+        Select a ticket.
+    %div{:'ng-show' => "selectedTicket"}
+      = render partial: 'shared/ticket'
