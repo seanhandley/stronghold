@@ -13,12 +13,12 @@ stronghold.controller('TicketsController', function($scope, TicketsFactory) {
   $scope.statuses = [
     {
       "name": "Open",
-      "color": "green",
+      "color": "#00CC00",
       "jira_statuses": ['To Do', 'In Progress']
     },
     {
       "name": "Closed",
-      "color": "red",
+      "color": "#CC0000",
       "jira_statuses": ['Done']
     }
   ];
@@ -37,12 +37,25 @@ stronghold.controller('TicketsController', function($scope, TicketsFactory) {
   }
 
   $scope.countTickets = function() {
-    if ($scope.tickets == null) return null;
     var t = 0;
-    for (var index in $scope.tickets) {
-      t += $scope.tickets[index].length;
+    if ($scope.tickets != null) {
+      for (var index in $scope.tickets) {
+        t += $scope.tickets[index].length;
+      }
     }
     return t;
+  }
+
+  $scope.hasTickets = function() {
+    var x = ($scope.countTickets() > 0);
+    console.log("htc: " + $scope.countTickets());
+    console.log(x);
+    return x;
+    //return ($scope.countTickets() != null || $scope.countTickets() > 0);
+  }
+
+  $scope.isLoading = function() {
+    return ($scope.tickets == null);
   }
 
   $scope.selectedTicket = null;
