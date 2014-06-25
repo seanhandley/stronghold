@@ -6,30 +6,31 @@
         %i.fa.fa-edit
         New Ticket
 
-  .col-xs-6
-
-    .some-info{:'ng-hide' => "countTickets() != null"}
+  .col-xs-12
+    .some-info{:'ng-show' => "isLoading()"}
       %p
-        %i.fa.fa-refresh.fa-spin.fa-5x
+        %i.fa.fa-refresh.fa-spin
       %p
         Loading tickets...
-
-    .some-info{:'ng-show' => "countTickets() == 0"}
+    .some-info{:'ng-show' => "!isLoading() && !hasTickets()"}
       %p
-        %i.fa.fa-square-o.fa-5x
+        %i.fa.fa-square-o
       %p
-        No tickets &mdash; click &ldquo;New Ticket&rdquo;.
+        There are no tickets.
+      %p
+        Click &ldquo;New Ticket&rdquo;.
 
-    %div{:'ng-show' => "countTickets() > 0"}
+  .col-xs-6
+    %div{:'ng-show' => "hasTickets()"}
       %tabset
         %tab{:'ng-repeat' => "status in statuses | orderBy:'-name'", :heading => '{{status.name}}'}
           = render partial: 'shared/tickets_list'
 
   .col-xs-6
-    .some-info.ticket{:'ng-hide' => "selectedTicket"}
+    .some-info.ticket{:'ng-show' => "!selectedTicket && !isLoading() && hasTickets()"}
       %p
-        %i.fa.fa-info-circle.fa-5x
+        %i.fa.fa-info-circle
       %p
         Select a ticket.
-    %div{:'ng-show' => "selectedTicket"}
+    %div{:'ng-show' => "selectedTicket && !isLoading()"}
       = render partial: 'shared/ticket'
