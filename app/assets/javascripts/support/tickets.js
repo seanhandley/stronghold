@@ -1,9 +1,13 @@
 stronghold.factory('TicketsFactory', function($http) {
   return {
     getTickets: function() {
-      return $http.get('/support/api/tickets/').then(function(result) {
-        return result.data;
-      });
+
+      var allHandler = function(response) {
+        return (response.statusText == "OK" ? response.data : null)
+      }
+
+      return $http.get('/support/api/tickets/').then(allHandler, allHandler);
+
     }
   };
 });
@@ -27,12 +31,15 @@ stronghold.controller('TicketsController', function($scope, TicketsFactory) {
   $scope.getTickets = function() {
     TicketsFactory.getTickets().then(function(tickets) {
       $scope.tickets = [];
-      $.each($scope.statuses, function(index, status) {
-        $scope.tickets[status.name] = $.grep(tickets, function(ticket) {
-          //return false;
-          return (!($.inArray(ticket.attrs.fields.status.name, status.jira_statuses)));
+      $scope.hasFailed = (tickets == null);
+      if (!($scope.hasFailed)) {
+        $.each($scope.statuses, function(index, status) {
+          $scope.tickets[status.name] = $.grep(tickets, function(ticket) {
+            //return false;
+            return (!($.inArray(ticket.attrs.fields.status.name, status.jira_statuses)));
+          });
         });
-      });
+      }
     });
   }
 
@@ -47,11 +54,7 @@ stronghold.controller('TicketsController', function($scope, TicketsFactory) {
   }
 
   $scope.hasTickets = function() {
-    var x = ($scope.countTickets() > 0);
-    console.log("htc: " + $scope.countTickets());
-    console.log(x);
-    return x;
-    //return ($scope.countTickets() != null || $scope.countTickets() > 0);
+    return ($scope.countTickets() > 0);
   }
 
   $scope.isLoading = function() {
