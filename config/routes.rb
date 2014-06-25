@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     resources :instances
     resources :users
     resources :roles
+    delete 'role/:role_id/user/:user_id', :controller => 'role_users', :action => 'destroy', :as => 'role_user'
     resources :invites, only: [:create]
   end
 
