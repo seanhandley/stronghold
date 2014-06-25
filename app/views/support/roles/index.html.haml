@@ -58,9 +58,16 @@
               %p.tiny
                 = pluralize(role.users.count, 'member')
               .user-images
+                %span.new-user
+                  %a{href: support_users_path}
+                    %i.fa.fa-plus
                 - for user in role.users
-                  %a{href: support_user_path(user)}
-                    = gravatar_image_tag(user.email, title: user.name, alt: user.name)
+                  %span.image{title: 'Remove from role?'}
+                    %a{href: support_role_user_path(role, user), data: { method: 'delete'}}
+                      = gravatar_image_tag(user.email, title: 'Delete?', alt: user.name)
+                  
+
+
               .view-permissions
                 %h3
                   %a.toggle-panel{'href' => "#role_#{role.id}", 'data-toggle' => 'collapse', 'data-parent' => '#accordionRoles'}

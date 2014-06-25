@@ -42,6 +42,28 @@ div.panel-body {
 
 div.panel .user-images {
   margin-bottom: 5px;
+  margin-top: -30px;
+  margin-left: -8px;
+}
+
+div.panel .user-images span.image{
+  cursor: pointer;
+}
+
+div.panel .user-images span.image:after{
+  content: "×";
+  position: relative;
+  top: 7px;
+  right: -17px;
+  text-align: right;
+  font-size: 44px;
+  margin-left: -15px;
+  margin-right: -15px;
+  opacity: 0.0;
+}
+
+div.panel .user-images span:hover:after{
+  opacity: 0.7;
 }
 
 .select-roles {
@@ -91,3 +113,14 @@ div.panel .user-images {
 .view-permissions a:hover, .view-permissions a:active {
   opacity: 1.0;
 }
+
+span.new-user {
+  display: inline-block;
+  height: 30px;
+  width: 30px;
+  font-size: 22px;
+  text-align: center;
+  line-height: 30px;
+  vertical-align: middle;
+}
+
