@@ -1,10 +1,18 @@
 .container-fluid{:'ng-controller' => "TicketsController", :'ng-init' => 'getTickets()'}
 
-  .col-xs-12
+  .col-xs-12{}
     .page-controls
       %button.btn.btn-primary.btn-xs
         %i.fa.fa-edit
         New Ticket
+
+    .some-info{:'ng-show' => "hasFailed"}
+      %p
+        %i.fa.fa-warning
+      %p
+        Great Scott! Our ticket system is down.
+      %p
+        Our engineers have already fired up the DeLorean &mdash; please check back later.
 
   .col-xs-12
     .some-info{:'ng-show' => "isLoading()"}
@@ -12,7 +20,8 @@
         %i.fa.fa-refresh.fa-spin
       %p
         Loading tickets...
-    .some-info{:'ng-show' => "!isLoading() && !hasTickets()"}
+
+    .some-info{:'ng-show' => "!hasFailed && !isLoading() && !hasTickets()"}
       %p
         %i.fa.fa-square-o
       %p
