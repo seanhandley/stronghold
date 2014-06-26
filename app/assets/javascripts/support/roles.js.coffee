@@ -57,3 +57,5 @@ $ ->
 
   $('a[data-toggle="tab"]').on 'shown.bs.tab', (e) ->
     window.history.replaceState('', '', 'roles?tab=' + $(e.target).data('name'))
+
+  $('.user-images span.image').tooltip({})
