@@ -1,8 +1,35 @@
 .ticket
+  %div.btn-group
+    %button.btn.btn-primary.dropdown-toggle{:'data-toggle' => "dropdown", :type => "button"}
+      %i.fa.fa-circle{:style => "color: {{selectedTicket.status.color;}}"}
+      Status: {{selectedTicket.status.name}}
+      %span.caret
+    %ul.dropdown-menu{:role => "menu"}
+      %li
+        %a
+          Open
+      %li
+        %a
+          Closed
+  %div.btn-group
+    %button.btn
+      %i.fa.fa-comment
+      Comment
+  </div>
+
   %h1 ({{selectedTicket.attrs.key}}) {{selectedTicket.attrs.fields.summary}}
-  %h4 Description
+  %h3 Description
   %p {{selectedTicket.attrs.fields.description}}
-  %h4 Comments
-  %div{:'ng-repeat' => ("comment in selectedTicket.comments")}
-    %div
-      Hello, World.
+  %h3 Comments
+  %ul.media-list
+    %li.media
+      %a.pull-left
+        %img{:src => "http://dummyimage.com/64/666/fff.png&text=%26%2332;"}
+      %div.media-body
+        %h4.media-heading
+          Media heading
+        Hello, World. Hello, World. Hello, World.
+
+  //%div{:'ng-repeat' => ("comment in selectedTicket.comments")}
+  //  %div
+  //    Hello, World.
