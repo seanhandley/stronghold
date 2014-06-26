@@ -14,6 +14,7 @@ class User < ActiveRecord::Base
   end
 
   def name
-    "#{first_name} #{last_name}".strip
+    name = "#{first_name} #{last_name}".strip
+    name.blank? ? email : name
   end
 end
