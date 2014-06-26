@@ -38,6 +38,10 @@ stronghold.controller('TicketsController', function($scope, TicketsFactory) {
             //return false;
             return (!($.inArray(ticket.attrs.fields.status.name, status.jira_statuses)));
           });
+          $.each($scope.tickets[status.name], function(index, ticket) {
+            //console.log(ticket);
+            ticket.status = status;
+          });          
         });
       }
     });
