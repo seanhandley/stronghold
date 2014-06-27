@@ -1,10 +1,10 @@
 class Support::RoleUsersController < SupportBaseController
 
-  skip_authorization_check
-
-  before_filter :get_role_user
+  load_and_authorize_resource class_name: 'Role'
 
   def destroy
+    @role_user = RoleUser.where(destroy_params).first
+    @role_user.current_user = current_user
     if @role_user.destroy
       redirect_to support_roles_path(tab: 'roles')
     else
@@ -12,10 +12,24 @@ class Support::RoleUsersController < SupportBaseController
     end
   end
 
+  def create
+    @role_user = RoleUser.new(create_params)
+    if @role_user.save
+      javascript_redirect_to support_roles_path(tab: 'roles')
+    else
+      respond_to do |format|
+        format.js { render :template => "shared/dialog_errors", :locals => {:object => @role_user} }
+      end
+    end
+  end
+
   private
 
-  def get_role_user
-    @role_user = RoleUser.where(role_id: params[:role_id], user_id: params[:user_id]).first
-    @role_user.current_user = current_user
+  def create_params
+    params.require(:role_user).permit(:user_id, :role_id)
+  end
+
+  def destroy_params
+    params.permit(:user_id, :role_id)
   end
 end
