@@ -26,4 +26,8 @@ class TestUser < Minitest::Test
     refute_equal User.make(password: 'foo').password_digest,
                  User.make(password: 'foo').password_digest
   end
+
+  def teardown
+    DatabaseCleaner.clean  
+  end
 end
