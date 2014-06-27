@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   belongs_to :organization
 
   validates :email, :uniqueness => true
+  validates :email, :presence => true
 
   def has_permission?(permission)
     power_user? || roles.collect(&:permissions).flatten.include?(permission)
