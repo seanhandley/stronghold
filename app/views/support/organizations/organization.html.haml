@@ -7,4 +7,4 @@
       %label Organization Name
       = f.text_field :name, class: "form-control"
 
-    = submit_tag 'Save', class: 'btn btn-primary'
+    = submit_tag 'Save', class: 'btn btn-primary', data: { disable_with: 'Saving...' }
