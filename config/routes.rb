@@ -3,8 +3,9 @@ Rails.application.routes.draw do
   namespace :support do
     root :to => 'dashboard#index'
     resources :instances
-    resources :organizations
-    resources :users, only: [:index, :update]
+    resources :organizations, only: [:update]
+    get '/edit_organization', :controller => 'organizations', :action => 'index', :as => 'edit_organization'
+    resources :users, only: [:update]
     get '/profile', :controller => 'users', :action => 'index'
     resources :roles
     delete 'role/:role_id/user/:user_id', :controller => 'role_users', :action => 'destroy', :as => 'remove_role_user'
