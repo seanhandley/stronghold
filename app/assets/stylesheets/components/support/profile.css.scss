@@ -1,0 +1,23 @@
+.container.profile {
+  width: 50%;
+  float: left;
+}
+
+.profile-image {
+  margin-right: 120px;
+  float: right;
+}
+
+@media only screen and (max-width: 650px), only screen and (max-device-width: 650px) {
+  .profile-image {
+    float: none;
+    margin-bottom: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+  }
+
+  .container.profile {
+    width: 100%;
+  }
+}
