@@ -7,12 +7,13 @@ class Support::UsersController < SupportBaseController
   end
 
   def index
+    @user = current_user
     render template: 'support/users/profile'
   end
 
   def update
     check_user
-    if current_user.update!(update_params)
+    if current_user.update(update_params)
       javascript_redirect_to support_profile_path
     else
       respond_to do |format|

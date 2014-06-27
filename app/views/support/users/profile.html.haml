@@ -1,10 +1,10 @@
 %h3 Edit Profile
 
-= gravatar_image_tag(current_user.email, :gravatar => { :size => 180 }, class: 'img-circle profile-image')
+= gravatar_image_tag(@user.email, :gravatar => { :size => 180 }, class: 'img-circle profile-image')
 
 .container.profile
-  = form_for current_user, url: support_user_path(current_user), :html => {:role => 'form'}, remote: true do |f|
-    = javascript_error_messages_for(current_user)
+  = form_for @user, url: support_user_path(@user), :html => {:role => 'form'}, remote: true do |f|
+    = javascript_error_messages_for(@user)
     .form-group
       %label First Name
       = f.text_field :first_name, class: "form-control"
