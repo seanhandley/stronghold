@@ -2,11 +2,28 @@ stronghold.factory('TicketsFactory', function($http) {
   return {
     getTickets: function() {
 
-      var allHandler = function(response) {
-        return (response.statusText == "OK" ? response.data : null)
+      var successHandler = function(response) {
+        if (response.statusText != "OK") return null;
+        console.log(response.data);
+        return response.data;
+        var tickets = [];
+        $.each(response.data, function(index, jiraIssue) {
+          tickets.push(
+            {
+              "test_property": "test_value",
+              "something": "something_else"
+            }
+          );
+        });
+        console.log(tickets);
+        return tickets;
       }
 
-      return $http.get('/support/api/tickets/').then(allHandler, allHandler);
+      var errorHandler = function(response) {
+        return null;
+      }
+
+      return $http.get('/support/api/tickets/').then(successHandler, errorHandler);
 
     }
   };
