@@ -7,8 +7,20 @@ class RoleUser < ActiveRecord::Base
   belongs_to :user
 
   before_destroy :check_destroyable
+  before_save :check_presence
+
+  validates :role, :user, presence: true
 
   private
+
+  def check_presence
+    if RoleUser.where(role_id: role.id, user_id: user.id).present?
+      errors.add(:base, "User already has this role assigned.")
+      return false
+    else
+      return true   
+    end
+  end
 
   def check_destroyable
     if role.power_user? && user.id == current_user.id

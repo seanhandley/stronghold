@@ -44,6 +44,7 @@ $ ->
       $(this).closest('.panel').find('i.fa.fa-angle-double-up').removeClass('hide')
 
   $('#invite_role_ids').select2();
+  $('.select-user').select2();
 
   $('#inviteUser #invite_email').keyup (e) ->
     state = validateEmail($(this))
