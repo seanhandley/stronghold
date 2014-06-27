@@ -1,0 +1,25 @@
+.modal.fade#inviteUser{'tabindex' => "-1", 'role' => "dialog", 'aria-labelledby' => "inviteUser", 'aria-hidden' => "true"}
+  .modal-dialog
+    .modal-content
+      = form_for @new_invite, url: url_for(controller: 'support/invites', action: 'create'), :remote => true do |f|
+        .modal-header
+          %button{'type' => "button", 'class' => "close", 'data-dismiss' => "modal", 'aria-hidden' => "true"}
+            &times;
+          %h4.modal-title#inviteUser
+            %i.fa.fa-envelope
+            Invite User
+          %p Please enter an email address and at least one role.
+        .modal-body
+          = javascript_error_messages_for(@new_invite)
+          .input-group.has-warning
+            %span.input-group-addon
+              %i.fa.fa-envelope
+            = f.text_field :email, placeholder: 'E-mail address', class: "form-control", autofocus: true
+          .input-group.has-warning
+            %span.input-group-addon
+              %i.fa.fa-key
+            = f.select :role_ids, roles_for_select(current_user.organization), {}, class: "select-roles", multiple: true, placeholder: 'Assign at least one role'
+        .modal-footer
+          %button.btn.btn-default{'data-toggle' => "modal", 'data-dismiss' => "modal"}
+            Cancel
+          = f.submit 'Invite', class: 'btn btn-primary', id: 'submit'

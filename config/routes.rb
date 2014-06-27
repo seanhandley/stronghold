@@ -1,8 +1,5 @@
 Rails.application.routes.draw do
 
-  get '/css', :controller => 'support/dashboard', :action => 'css'
-  get '/components', :controller => 'support/dashboard', :action => 'components'
-
   namespace :support do
     root :to => 'dashboard#index'
     resources :instances
@@ -14,9 +11,15 @@ Rails.application.routes.draw do
         resources :comments, only: [:create, :update, :destroy]
       end
     end
+    delete 'role/:role_id/user/:user_id', :controller => 'role_users', :action => 'destroy', :as => 'remove_role_user'
+    resources :role_users, only: [:create]
+    resources :invites, only: [:create]
   end
 
   resources :sessions
+
+  get 'signup/:token', :controller => 'signups', :action => 'edit', :as => 'signup_begin'
+  post 'signup/:token', :controller => 'signups', :action => 'update', :as => 'signup_complete'
 
   get 'sign_in', :controller => 'sessions', :action => 'new'
 

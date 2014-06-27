@@ -13,8 +13,18 @@
 
 ActiveRecord::Schema.define(version: 20140610095433) do
 
-  create_table "foos", force: true do |t|
-    t.string   "name"
+  create_table "invites", force: true do |t|
+    t.string   "email"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.datetime "completed_at"
+    t.string   "token"
+    t.integer  "organization_id"
+  end
+
+  create_table "invites_roles", force: true do |t|
+    t.integer  "role_id"
+    t.integer  "invite_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -31,7 +41,8 @@ ActiveRecord::Schema.define(version: 20140610095433) do
     t.text     "permissions"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "power_user",  default: false
+    t.boolean  "power_user",      default: false
+    t.integer  "organization_id"
   end
 
   create_table "roles_users", force: true do |t|

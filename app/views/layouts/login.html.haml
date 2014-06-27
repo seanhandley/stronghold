@@ -13,6 +13,8 @@
 %body
   #wrap
     .container#login
+      = image_tag 'logo_text_only.png', class: 'login-logo'
+      #flashes= display_flash
       = yield
     .push
   = render partial: 'shared/footer'

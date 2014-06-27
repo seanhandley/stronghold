@@ -1,3 +1,5 @@
+@import "settings";
+
 div.tab-content {
   padding: 5px;
   border: 0px;
@@ -21,10 +23,82 @@ div.tab-content {
   background-color: #fff;
 }
 
-div.panel-heading {
-  cursor: pointer;
+div.panel {
+  margin-bottom: 5px;
+  margin-top: 5px;
 }
 
 div.panel-heading a {
   text-decoration: none;
 }
+
+div.panel-heading {
+  padding-bottom: 0px;
+}
+
+div.panel-body {
+  padding-top: 0px;
+}
+
+div.panel .user-images span.image{
+  cursor: pointer;
+}
+
+.select-roles, .select-user {
+  width: 480px;
+}
+
+.select2-search-field {
+  width: 480px;
+}
+
+.modal#inviteUser .input-group {
+  margin: 5px;
+}
+
+.modal#inviteUser input[type=text] {
+  width: 480px;
+}
+
+.select2-container-multi .select2-choices, ul.select2-choices {
+  height: 20px;
+  color: #555555;
+  background-color: white;
+  background-image: none;
+  border: 1px solid #cccccc;
+  border-radius: 2px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+}
+
+.view-permissions {
+  text-align: center;
+  margin: 0px;
+}
+
+.view-permissions h3 {
+  margin: 0px;
+}
+
+.view-permissions a {
+  color: $headings-color;
+  opacity: 0.6;
+}
+
+.view-permissions a:hover, .view-permissions a:active {
+  opacity: 1.0;
+}
+
+span.new-user {
+  display: inline-block;
+  height: 30px;
+  width: 30px;
+  font-size: 22px;
+  text-align: center;
+  line-height: 30px;
+  vertical-align: middle;
+}
+
