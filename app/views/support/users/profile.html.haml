@@ -1,0 +1,22 @@
+%h3 Edit Profile
+
+= gravatar_image_tag(@user.email, :gravatar => { :size => 180 }, class: 'img-circle profile-image')
+
+.container.profile
+  = form_for @user, url: support_user_path(@user), :html => {:role => 'form'}, remote: true do |f|
+    = javascript_error_messages_for(@user)
+    .form-group
+      %label First Name
+      = f.text_field :first_name, class: "form-control"
+    .form-group
+      %label Last Name
+      = f.text_field :last_name, class: "form-control"
+    .form-group
+      %label E-Mail
+      = f.email_field :email, class: "form-control"
+      %span.help-block
+        To set your profile image, create a
+        = link_to 'Gravatar', 'https://gravatar.com'
+        account using this e-mail address.
+
+    = submit_tag 'Save', class: 'btn btn-primary'
