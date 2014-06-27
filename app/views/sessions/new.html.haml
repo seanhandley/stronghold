@@ -1,7 +1,3 @@
-= image_tag 'logo_text_only.png', class: 'login-logo'
-
-#flashes= display_flash
-
 %h3 Log In
 
 = form_for(User.new, :url => sessions_path, :method => :post, :html => {:role => 'form'}) do |f|

@@ -1,0 +1,22 @@
+.modal.fade{'id' => "addRoleUser#{role.id}", 'tabindex' => "-1", 'role' => "dialog", 'aria-labelledby' => "addRoleUser", 'aria-hidden' => "true"}
+  .modal-dialog
+    .modal-content
+      = form_for RoleUser.new, url: support_role_users_path, remote: true do |f|
+        .modal-header
+          %button{'type' => "button", 'class' => "close", 'data-dismiss' => "modal", 'aria-hidden' => "true"}
+            &times;
+          %h4.modal-title#addRoleUser
+            %i.fa.fa-key
+            = "Add User to #{role.name} role"
+          %p Please choose a user to add to this role
+        .modal-body
+          = javascript_error_messages_for(f.object)
+          = f.hidden_field :role_id, value: role.id
+          .input-group
+            %span.input-group-addon
+              %i.fa.fa-user
+            = f.select :user_id, users_for_select(role), {}, class: "select-user", placeholder: 'Select a user'
+        .modal-footer
+          %button.btn.btn-default{'data-toggle' => "modal", 'data-dismiss' => "modal"}
+            Cancel
+          = f.submit 'Add', class: 'btn btn-primary'

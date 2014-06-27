@@ -16,3 +16,26 @@ Role.blueprint do
   permissions { [] }
   power_user  { false }
 end
+
+Organization.blueprint do
+  name { Faker::Company.name }
+end
+
+Invite.blueprint do
+  email { Faker::Internet.email }
+  organization { Organization.make! }
+  roles { [Role.make!] }
+end
+
+Invite.blueprint(:power_user) do
+  email { Faker::Internet.email }
+  organization { nil }
+  roles { [] }
+end
+
+Invite.blueprint(:expired) do
+  email { Faker::Internet.email }
+  organization { Organization.make! }
+  roles { [Role.make!] }
+  created_at { Time.now - 7.days }
+end

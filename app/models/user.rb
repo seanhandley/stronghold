@@ -3,6 +3,8 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :roles
   belongs_to :organization
 
+  validates :email, :uniqueness => true
+
   def has_permission?(permission)
     power_user? || roles.collect(&:permissions).flatten.include?(permission)
   end
@@ -12,6 +14,7 @@ class User < ActiveRecord::Base
   end
 
   def name
-    "#{first_name} #{last_name}".strip
+    name = "#{first_name} #{last_name}".strip
+    name.blank? ? email : name
   end
 end
