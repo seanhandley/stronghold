@@ -23,7 +23,7 @@
     .container
       %h3.organisation
         = image_tag 'bbc.png'
-        BBC Media City
+        = current_user.organization.name
       #flashes= display_flash
       = yield
       .push

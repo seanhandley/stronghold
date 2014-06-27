@@ -1,4 +1,19 @@
 .nav-profile
-  = gravatar_image_tag('sean.handley@datacentred.co.uk', :class => 'img-circle nav-profile')
-  %span.caret
-/= link_to 'Log out', session_path(current_user), :method => :delete, data: { confirm: "Log out?" }
+  .dropdown
+    %div{'class' => "dropdown-toggle", 'data-toggle' => "dropdown"}
+      = gravatar_image_tag(current_user.email, :class => 'img-circle nav-profile')
+      %span.caret
+    %ul{'class' => "dropdown-menu pull-right", 'role' => "menu"}
+      %li
+        %a{:href => '#'} 
+          %i.fa.fa-user
+          My Details
+      %li
+        %a{:href => '#'} 
+          %i.fa.fa-suitcase
+          Company Details
+      %li.divider
+      %li
+        %a{:href => session_path(current_user), data: { confirm: "Log out?", :method => :delete }} 
+          %i.fa.fa-sign-out
+          Log out
