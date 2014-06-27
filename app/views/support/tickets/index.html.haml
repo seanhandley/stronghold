@@ -1,12 +1,14 @@
 .container-fluid{:'ng-controller' => "TicketsController", :'ng-init' => 'getTickets()'}
 
-  .col-xs-12{}
-    .page-controls
-      %button.btn.btn-primary
-        %i.fa.fa-edit
-        New Ticket
+  .col-xs-12{:'ng-show' => "isLoading()"}
+    .some-info
+      %p
+        %i.fa.fa-refresh.fa-spin
+      %p
+        Loading tickets...
 
-    .some-info{:'ng-show' => "hasFailed"}
+  .col-xs-12{:'ng-show' => "hasFailed"}
+    .some-info{}
       %p
         %i.fa.fa-warning
       %p
@@ -14,32 +16,32 @@
       %p
         Our engineers have already fired up the DeLorean &mdash; please check back later.
 
-  .col-xs-12
-    .some-info{:'ng-show' => "isLoading()"}
-      %p
-        %i.fa.fa-refresh.fa-spin
-      %p
-        Loading tickets...
+  %div{:'ng-show' => "!hasFailed"}
+    .col-xs-12{:'ng-show' => "!isLoading()"}
+      .page-controls
+        %button.btn.btn-primary
+          %i.fa.fa-edit
+          New Ticket
 
-    .some-info{:'ng-show' => "!hasFailed && !isLoading() && !hasTickets()"}
-      %p
-        %i.fa.fa-square-o
-      %p
-        There are no tickets.
-      %p
-        Click &ldquo;New Ticket&rdquo;.
+      .some-info{:'ng-show' => "!isLoading() && !hasTickets()"}
+        %p
+          %i.fa.fa-square-o
+        %p
+          There are no tickets.
+        %p
+          Click &ldquo;New Ticket&rdquo;.
 
-  .col-xs-6
-    %div{:'ng-show' => "hasTickets()"}
-      %tabset
-        %tab{:'ng-repeat' => "status in statuses | orderBy:'-name'", :heading => '{{status.name}}'}
-          = render partial: 'shared/tickets_list'
+    .col-xs-6
+      %div{:'ng-show' => "hasTickets()"}
+        %tabset
+          %tab{:'ng-repeat' => "status in statuses | orderBy:'-name'", :heading => '{{status.name}}'}
+            = render partial: 'shared/tickets_list'
 
-  .col-xs-6
-    .some-info.ticket{:'ng-show' => "!selectedTicket && !isLoading() && hasTickets()"}
-      %p
-        %i.fa.fa-info-circle
-      %p
-        Select a ticket.
-    %div{:'ng-show' => "selectedTicket && !isLoading()"}
-      = render partial: 'shared/ticket'
+    .col-xs-6
+      .some-info.ticket{:'ng-show' => "!selectedTicket && !isLoading() && hasTickets()"}
+        %p
+          %i.fa.fa-info-circle
+        %p
+          Select a ticket.
+      %div{:'ng-show' => "selectedTicket && !isLoading()"}
+        = render partial: 'shared/ticket'
