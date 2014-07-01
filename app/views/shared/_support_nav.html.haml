@@ -5,13 +5,14 @@
       %span.caret
     %ul{'class' => "dropdown-menu pull-right", 'role' => "menu"}
       %li
-        %a{:href => '#'} 
+        %a{:href => support_profile_path}
           %i.fa.fa-user
           My Details
-      %li
-        %a{:href => '#'} 
-          %i.fa.fa-suitcase
-          Company Details
+      - if current_user.power_user?
+        %li
+          %a{:href => support_edit_organization_path} 
+            %i.fa.fa-suitcase
+            Company Details
       %li.divider
       %li
         %a{:href => session_path(current_user), data: { confirm: "Log out?", :method => :delete }} 
