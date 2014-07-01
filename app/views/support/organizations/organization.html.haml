@@ -1,0 +1,10 @@
+%h3 Edit Organization Details
+
+.container.profile
+  = form_for @organization, url: support_organization_path(@organization), :html => {:role => 'form'}, remote: true do |f|
+    = javascript_error_messages_for(@organization)
+    .form-group
+      %label Organization Name
+      = f.text_field :name, class: "form-control"
+
+    = submit_tag 'Save', class: 'btn btn-primary', data: { disable_with: 'Saving...' }

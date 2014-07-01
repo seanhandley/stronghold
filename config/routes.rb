@@ -3,7 +3,10 @@ Rails.application.routes.draw do
   namespace :support do
     root :to => 'dashboard#index'
     resources :instances
-    resources :users
+    resources :organizations, only: [:update]
+    get '/edit_organization', :controller => 'organizations', :action => 'index', :as => 'edit_organization'
+    resources :users, only: [:update]
+    get '/profile', :controller => 'users', :action => 'index'
     resources :roles
     get 'tickets', :controller => 'tickets', :action => 'index'
     namespace :api, defaults: {format: :json} do
