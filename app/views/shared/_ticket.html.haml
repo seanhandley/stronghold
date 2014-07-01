@@ -4,13 +4,10 @@
       %i.fa.fa-circle{:style => "color: {{selectedTicket.status.color;}}"}
       Status: {{selectedTicket.status.name}}
       %span.caret
-    %ul.dropdown-menu{:role => "menu"}
-      %li
-        %a
-          Open
-      %li
-        %a
-          Closed
+    %ul.dropdown-menu{:'id' => "statusDropdown", :role => "menu"}
+      %li{:'ng-repeat' => "status in statuses"}
+        %a{:'status-name' => "{{status.name}}"}
+          {{status.name}}
   %div.btn-group
     %button.btn
       %i.fa.fa-pencil
