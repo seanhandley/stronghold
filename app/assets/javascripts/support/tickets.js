@@ -35,12 +35,14 @@ stronghold.controller('TicketsController', function($scope, TicketsFactory) {
     {
       "name": "Open",
       "color": "#00CC00",
-      "jira_statuses": ['To Do', 'In Progress']
+      "jira_statuses": ['To Do', 'In Progress'],
+      "primary_jira_status": 0
     },
     {
       "name": "Closed",
       "color": "#CC0000",
-      "jira_statuses": ['Done']
+      "jira_statuses": ['Done'],
+      "primary_jira_status": 0
     }
   ];
 
@@ -53,7 +55,7 @@ stronghold.controller('TicketsController', function($scope, TicketsFactory) {
         $.each($scope.statuses, function(index, status) {
           $scope.tickets[status.name] = $.grep(tickets, function(ticket) {
             //return false;
-            return (!($.inArray(ticket.attrs.fields.status.name, status.jira_statuses)));
+            return ($.inArray(ticket.attrs.fields.status.name, status.jira_statuses) >= 0);
           });
           $.each($scope.tickets[status.name], function(index, ticket) {
             //console.log(ticket);
@@ -67,9 +69,7 @@ stronghold.controller('TicketsController', function($scope, TicketsFactory) {
   $scope.countTickets = function() {
     var t = 0;
     if ($scope.tickets != null) {
-      for (var index in $scope.tickets) {
-        t += $scope.tickets[index].length;
-      }
+      for (var index in $scope.tickets) t += $scope.tickets[index].length;
     }
     return t;
   }
@@ -87,4 +87,19 @@ stronghold.controller('TicketsController', function($scope, TicketsFactory) {
     $scope.selectedTicket = ticket;
   }
 
+});
+
+$(document).ready(function() {
+  $("#statusDropdown a").click(function() {
+    var element = $(this);
+    var status = null;
+    var scope = angular.element(element).scope();
+    scope.$apply(function(){
+      status = $.grep(scope.statuses, function(value) {
+        //console.log(element.attr("status-name") + ", " + value.name);
+        return(value.name == element.attr("status-name"));
+      })[0];
+    });
+    console.log("Change JIRA status to be " + status.jira_statuses[status.primary_jira_status]);
+  });
 });
