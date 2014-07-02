@@ -12,9 +12,10 @@ function Status(name, color) {
   this.color = color;
   this.jira_statuses = [];
   this.primary_jira_status = 0;
-  this.addJiraStatus = function(jira_status) {
-    jira_statuses.pop(jira_status);
-  }
+}
+
+Status.prototype.addJiraStatus = function(jira_status) {
+  this.jira_statuses.push(jira_status);
 }
 
 function Person(name, picture) {

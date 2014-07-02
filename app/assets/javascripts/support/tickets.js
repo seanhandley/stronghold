@@ -5,14 +5,17 @@ stronghold.factory('StatusesFactory', function() {
       var openStatus = new Status();
       openStatus.name = "Open";
       openStatus.color = "#00CC00";
-      openStatus.jira_statuses = ['To Do', 'In Progress'];
+      openStatus.addJiraStatus('To Do');
+      openStatus.addJiraStatus('In Progress');
       //"Closed" Status
       var closedStatus = new Status();
       closedStatus.name = "Closed";
       closedStatus.color = "#CC0000";
-      closedStatus.jira_statuses = ['Done'];
+      closedStatus.addJiraStatus('Done');
       //Return Statuses
-      return [openStatus, closedStatus];
+      var statuses = [openStatus, closedStatus];
+      console.log(statuses);
+      return statuses;
     }
   };
 });
