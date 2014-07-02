@@ -7,6 +7,10 @@ function Ticket(reference, title, description, status, person, comments) {
   this.comments = (comments || []);
 }
 
+Ticket.prototype.changeStatus = function(status) {
+  this.status = (status || null);
+}
+
 function Status(name, color) {
   this.name = name;
   this.color = color;
@@ -27,4 +31,9 @@ function Comment(person, content, time) {
   this.person = (person || new Person());
   this.content = (content || "Bacon ipsum dolor sit amet turkey salami meatball tail, boudin beef pig pastrami bresaola capicola kevin spare ribs rump swine.");
   this.time = (time || moment());
+}
+
+Comment.prototype.printTime = function() {
+  console.log(this.time);
+  return this.time.format("dddd, MMMM Do YYYY");
 }

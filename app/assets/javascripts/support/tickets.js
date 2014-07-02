@@ -43,8 +43,8 @@ stronghold.factory('TicketsFactory', function($http) {
 
           //Comment Simulation
           newTicket.comments = [
-            new Comment(null, "This rocks!", moment("2013-25-12")),
-            new Comment(null, "This sucks.", moment("2013-26-12"))
+            new Comment(null, "This rocks!", moment([2013, 11, 25])),
+            new Comment(null, "This sucks.", moment([2013, 11, 27]))
           ];
 
           //Debug
