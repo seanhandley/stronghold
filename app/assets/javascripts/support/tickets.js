@@ -29,11 +29,26 @@ stronghold.factory('TicketsFactory', function($http) {
         var tickets = [];
         $.each(response.data, function(index, rubyTicket) {
 
+          //Debug
+          //console.log(rubyTicket);
+
           //Fresh Ticket
           var newTicket = new Ticket();
 
           //Current Backend Bodges
           newTicket.jira_status = "Done";
+          newTicket.reference = rubyTicket.attrs.key;
+          newTicket.title = rubyTicket.attrs.fields.summary;
+          newTicket.description = rubyTicket.attrs.fields.description;
+
+          //Comment Simulation
+          newTicket.comments = [
+            new Comment(null, "This rocks!", moment("2013-25-12")),
+            new Comment(null, "This sucks.", moment("2013-26-12"))
+          ];
+
+          //Debug
+          console.log(newTicket);
 
           //Push
           tickets.push(newTicket);

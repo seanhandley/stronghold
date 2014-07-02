@@ -20,7 +20,7 @@ Status.prototype.addJiraStatus = function(jira_status) {
 
 function Person(name, picture) {
   this.name = (name || "Somebody");
-  this.picture = (picture || "hhttp://jadaradix.com/binaries/lego-hair.jpg");
+  this.picture = (picture || "http://jadaradix.com/binaries/lego-hair.jpg");
 }
 
 function Comment(person, content, time) {
