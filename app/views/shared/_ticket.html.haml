@@ -30,4 +30,7 @@
         %div.media-body
           %h4.media-heading
             {{comment.person.name}}
-          {{comment.content}}
+          %p
+            {{comment.printTime()}}
+          %p
+            {{comment.content}}
