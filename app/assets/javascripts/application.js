@@ -18,3 +18,4 @@
 //= require_tree .
 //= require bootstrap
 //= require select2
+//= require moment

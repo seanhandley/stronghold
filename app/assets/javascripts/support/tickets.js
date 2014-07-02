@@ -1,21 +1,41 @@
+stronghold.factory('StatusesFactory', function() {
+  return {
+    getStatuses: function() {
+      //"Open" Status
+      var openStatus = new Status();
+      openStatus.name = "Open";
+      openStatus.color = "#00CC00";
+      openStatus.jira_statuses = ['To Do', 'In Progress'];
+      //"Closed" Status
+      var closedStatus = new Status();
+      closedStatus.name = "Closed";
+      closedStatus.color = "#CC0000";
+      closedStatus.jira_statuses = ['Done'];
+      //Return Statuses
+      return [openStatus, closedStatus];
+    }
+  };
+});
+
 stronghold.factory('TicketsFactory', function($http) {
   return {
     getTickets: function() {
 
       var successHandler = function(response) {
         if (response.statusText != "OK") return null;
-        console.log(response.data);
-        return response.data;
         var tickets = [];
-        $.each(response.data, function(index, jiraIssue) {
-          tickets.push(
-            {
-              "test_property": "test_value",
-              "something": "something_else"
-            }
-          );
+        $.each(response.data, function(index, rubyTicket) {
+
+          //Fresh Ticket
+          var newTicket = new Ticket();
+
+          //Current Backend Bodges
+          newTicket.jira_status = "Done";
+
+          //Push
+          tickets.push(newTicket);
+
         });
-        console.log(tickets);
         return tickets;
       }
 
@@ -29,40 +49,27 @@ stronghold.factory('TicketsFactory', function($http) {
   };
 });
 
-stronghold.controller('TicketsController', function($scope, TicketsFactory) {
+stronghold.controller('TicketsController', function($scope, TicketsFactory, StatusesFactory) {
 
-  $scope.statuses = [
-    {
-      "name": "Open",
-      "color": "#00CC00",
-      "jira_statuses": ['To Do', 'In Progress'],
-      "primary_jira_status": 0
-    },
-    {
-      "name": "Closed",
-      "color": "#CC0000",
-      "jira_statuses": ['Done'],
-      "primary_jira_status": 0
-    }
-  ];
+  $scope.statuses = StatusesFactory.getStatuses();
 
   $scope.tickets = null;
   $scope.getTickets = function() {
     TicketsFactory.getTickets().then(function(tickets) {
       $scope.tickets = [];
       $scope.hasFailed = (tickets == null);
-      if (!($scope.hasFailed)) {
-        $.each($scope.statuses, function(index, status) {
-          $scope.tickets[status.name] = $.grep(tickets, function(ticket) {
-            //return false;
-            return ($.inArray(ticket.attrs.fields.status.name, status.jira_statuses) >= 0);
-          });
-          $.each($scope.tickets[status.name], function(index, ticket) {
-            //console.log(ticket);
-            ticket.status = status;
-          });          
+      if ($scope.hasFailed) return;
+      $.each(tickets, function(index, ticket) {
+        var applicableStatuses = $.grep($scope.statuses, function(status) {
+          return ($.inArray(ticket.jira_status, status.jira_statuses) >= 0);
         });
-      }
+        ticket.status = applicableStatuses[0];
+      });
+      $.each($scope.statuses, function(index, status) {
+        $scope.tickets[status.name] = $.grep(tickets, function(ticket) {
+          return (ticket.status.name == status.name);
+        });
+      });
     });
   }
 
