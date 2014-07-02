@@ -18,9 +18,9 @@
       Comment
   </div>
 
-  %h1 ({{selectedTicket.attrs.key}}) {{selectedTicket.attrs.fields.summary}}
+  %h1 ({{selectedTicket.reference}}) {{selectedTicket.title}}
   %h3 Description
-  %p {{selectedTicket.attrs.fields.description}}
+  %p {{selectedTicket.description}}
   %h3 Comments
   %ul.media-list
     %li.media

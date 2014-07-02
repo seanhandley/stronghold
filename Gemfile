@@ -35,3 +35,4 @@ end
 
 gem 'rails-assets-angular'
 gem 'rails-assets-angular-resource'
+gem 'momentjs-rails'
