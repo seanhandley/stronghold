@@ -14,7 +14,6 @@ stronghold.factory('StatusesFactory', function() {
       closedStatus.addJiraStatus('Done');
       //Return Statuses
       var statuses = [openStatus, closedStatus];
-      console.log(statuses);
       return statuses;
     }
   };
@@ -48,7 +47,7 @@ stronghold.factory('TicketsFactory', function($http) {
           ];
 
           //Debug
-          console.log(newTicket);
+          //console.log(newTicket);
 
           //Push
           tickets.push(newTicket);
@@ -72,7 +71,7 @@ stronghold.controller('TicketsController', function($scope, TicketsFactory, Stat
   $scope.statuses = StatusesFactory.getStatuses();
 
   $scope.tickets = null;
-  $scope.getTickets = function() {
+  $scope.populateTickets = function() {
     TicketsFactory.getTickets().then(function(tickets) {
       $scope.tickets = [];
       $scope.hasFailed = (tickets == null);
@@ -83,20 +82,33 @@ stronghold.controller('TicketsController', function($scope, TicketsFactory, Stat
         });
         ticket.status = applicableStatuses[0];
       });
-      $.each($scope.statuses, function(index, status) {
-        $scope.tickets[status.name] = $.grep(tickets, function(ticket) {
-          return (ticket.status.name == status.name);
-        });
-      });
+      $scope.tickets = tickets;
     });
   }
 
+  $scope.getTickets = function(status) {
+    if ($scope.tickets == null) return [];
+    return $.grep($scope.tickets, function(ticket) {
+      return (ticket.status.name == status.name);
+    });
+  }
+
+  // $scope.getTickets = function(status) {
+  //   if ($scope.tickets == null) {
+  //     $scope.ticketsByStatus[status.name] = null;
+  //   } else {
+  //     $scope.ticketsByStatus[status.name] = $.grep($scope.tickets, function(ticket) {
+  //       return (ticket.status.name == status.name);
+  //     });
+  //   }
+  // }
+
   $scope.countTickets = function() {
-    var t = 0;
-    if ($scope.tickets != null) {
-      for (var index in $scope.tickets) t += $scope.tickets[index].length;
-    }
-    return t;
+    if ($scope.tickets == null) return 0;
+    return $scope.tickets.length;
+    //var t = 0;
+    //for (var index in $scope.tickets) t += $scope.tickets[index].length;
+    //return t;
   }
 
   $scope.hasTickets = function() {
@@ -125,6 +137,6 @@ $(document).ready(function() {
         return(value.name == element.attr("status-name"));
       })[0];
     });
-    console.log("Change JIRA status to be " + status.jira_statuses[status.primary_jira_status]);
+    //console.log("Change JIRA status to be " + status.jira_statuses[status.primary_jira_status]);
   });
 });

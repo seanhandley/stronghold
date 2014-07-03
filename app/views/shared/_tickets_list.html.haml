@@ -3,7 +3,7 @@
     %th.status-head
     %th
       Ticket
-  %tbody{:'ng-repeat' => ("ticket in tickets[status.name]")}
+  %tbody{:'ng-repeat' => "ticket in getTickets(status)"}
     %tr
       %td.status
         %i.fa.fa-circle{:style => "color: {{status.color;}}"}
