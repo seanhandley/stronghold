@@ -1,4 +1,7 @@
 class Invite < ActiveRecord::Base
+
+  audited only: [:email]
+
   after_create :generate_token
 
   validates :email, length: {minimum: 5}, allow_blank: false

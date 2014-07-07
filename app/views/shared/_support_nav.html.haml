@@ -12,7 +12,11 @@
         %li
           %a{:href => support_edit_organization_path} 
             %i.fa.fa-suitcase
-            Company Details
+            My Organization
+        %li
+          %a{:href => support_audits_path} 
+            %i.fa.fa-history
+            Audit
       %li.divider
       %li
         %a{:href => session_path(current_user), data: { confirm: "Log out?", :method => :delete }} 

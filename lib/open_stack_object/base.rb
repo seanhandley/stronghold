@@ -1,4 +1,5 @@
 require 'fog'
+require 'audited-activerecord'
 
 module OpenStackObject
 
@@ -14,6 +15,8 @@ module OpenStackObject
   # Note: Debugging can be carried out by calling self.send(:obj).inspect
   #
   class Base
+    include ActiveModel::Model
+
     def initialize(obj)
       @obj = obj
     end
@@ -48,6 +51,10 @@ module OpenStackObject
     def destroy
       obj.destroy
     end
+
+    def [](key); self.send(key); end
+    def destroyed?; false ; end
+    def new_record?; false ; end
 
     class << self
 
@@ -88,12 +95,27 @@ module OpenStackObject
         new conn.send(collection_name).create(args)
       end
 
+      def primary_key; :id; end
+
+      def inherited(subclass)
+        subclass.define_singleton_method(:base_class) { subclass }
+      end
+
       private
 
       def conn
         "Fog::#{object_name.to_s.titleize}".constantize.new(OPENSTACK_ARGS)
       end
 
+    end
+
+    protected
+
+    def audit(action)
+      Audited::Adapters::ActiveRecord::Audit.create auditable: self, action: action, comment: self.name,
+                   user: Authorization.current_user,
+                   organization_id: Authorization.current_user.organization_id,
+                   audited_changes: Hash[(@@attributes + ['id']).collect{|d| [d.to_s,self.send(d.to_sym)]}]
     end
 
     private

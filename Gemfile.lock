@@ -1,3 +1,14 @@
+GIT
+  remote: https://github.com/collectiveidea/audited.git
+  revision: 8533f6490223f8f7f9027442cb90fec962450100
+  tag: v4.0.0.rc1
+  specs:
+    audited (4.0.0.rc1)
+      rails-observers (~> 0.1.2)
+    audited-activerecord (4.0.0.rc1)
+      activerecord (~> 4.0)
+      audited (= 4.0.0.rc1)
+
 GEM
   remote: https://rubygems.org/
   remote: https://rails-assets.org/
@@ -125,6 +136,8 @@ GEM
       rails-assets-jquery (>= 1.7.1)
     rails-assets-select2-bootstrap-css (1.3.1)
       rails-assets-select2 (>= 3.3.2, < 4)
+    rails-observers (0.1.2)
+      activemodel (~> 4.0)
     railties (4.1.1)
       actionpack (= 4.1.1)
       activesupport (= 4.1.1)
@@ -184,21 +197,25 @@ GEM
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
+    verbs (2.1.4)
+      activesupport (>= 2.3.4)
+      i18n
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  audited-activerecord!
   bcrypt (~> 3.1.7)
   bootstrap-sass (~> 3.1.1)
   cancancan (~> 1.8)
   coffee-rails (~> 4.0.0)
-  database_cleaner
+  database_cleaner (~> 0.8.0)
   faker
   fog (~> 1.22.0)
-  font-awesome-sass
+  font-awesome-sass (~> 4.1.0)
   gravatar_image_tag (~> 1.2.0)
-  haml
+  haml (~> 4.0.5)
   jbuilder (~> 2.0)
   jira-ruby (~> 0.1.10)
   jquery-rails
@@ -207,13 +224,14 @@ DEPENDENCIES
   mysql2
   rails (= 4.1.1)
   rails-assets-normalize-css
-  rails-assets-select2
-  rails-assets-select2-bootstrap-css
+  rails-assets-select2 (~> 3.5.0)
+  rails-assets-select2-bootstrap-css (~> 1.3.1)
   sass-rails (~> 4.0.3)
   sdoc (~> 0.4.0)
-  sidekiq
+  sidekiq (~> 2.15.0)
   spring
   therubyracer
   turbolinks
   uglifier (>= 1.3.0)
-  unicorn
+  unicorn (~> 4.8.3)
+  verbs (~> 2.1.4)
