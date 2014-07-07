@@ -1,7 +1,7 @@
 class RoleUser < ActiveRecord::Base
-  self.table_name = 'roles_users'
+  audited :associated_with => :role
 
-  attr_accessor :current_user
+  self.table_name = 'roles_users'
 
   belongs_to :role
   belongs_to :user
@@ -23,7 +23,7 @@ class RoleUser < ActiveRecord::Base
   end
 
   def check_destroyable
-    if role.power_user? && user.id == current_user.id
+    if role.power_user? && user.id == Authorization.current_user.id
       errors.add(:base, "You can't remove yourself from the #{role.name} role. Please request another user with the right privileges removes you.")
       return false
     elsif user.roles.count == 1

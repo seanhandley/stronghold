@@ -6,4 +6,6 @@ class ApplicationController < ActionController::Base
   def javascript_redirect_to(path)
     render js: "window.location.replace('#{path}')"
   end
+
+  def current_section; end
 end

@@ -4,7 +4,6 @@ class Support::RoleUsersController < SupportBaseController
 
   def destroy
     @role_user = RoleUser.where(destroy_params).first
-    @role_user.current_user = current_user
     if @role_user.destroy
       redirect_to support_roles_path(tab: 'roles')
     else
