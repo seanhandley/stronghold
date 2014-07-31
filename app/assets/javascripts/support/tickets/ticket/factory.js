@@ -1,32 +1,29 @@
-stronghold.factory('TicketsFactory', function($http) {
+supportAngularJSApp.factory('TicketsFactory', function($http) {
   return {
     getTickets: function() {
 
       var successHandler = function(response) {
         if (response.statusText != "OK") return null;
         var tickets = [];
-        $.each(response.data, function(index, rubyTicket) {
-
-          //Debug
-          //console.log(rubyTicket);
+        $.each(response.data, function(index, responseTicket) {
 
           //Fresh Ticket
           var newTicket = new Ticket();
 
-          //Current Backend Bodges
-          newTicket.jira_status = rubyTicket.attrs.fields.status.name;
-          newTicket.reference = rubyTicket.attrs.key;
-          newTicket.title = rubyTicket.attrs.fields.summary;
-          newTicket.description = rubyTicket.attrs.fields.description;
+          //Current Backend Alignment
+          newTicket.jira_status = responseTicket.attrs.fields.status.name;
+          newTicket.reference = responseTicket.attrs.key;
+          newTicket.title = responseTicket.attrs.fields.summary;
+          newTicket.description = responseTicket.attrs.fields.description;
 
           //Comment Simulation
           newTicket.comments = [
             new Comment(null, "This rocks!", moment([2013, 11, 25])),
-            new Comment(null, "This sucks.", moment([2013, 11, 27]))
+            new Comment(null, "This sucks.", moment([2013, 11, 27])),
           ];
 
           //Debug
-          //console.log(newTicket);
+          console.log(newTicket.comments);
 
           //Push
           tickets.push(newTicket);

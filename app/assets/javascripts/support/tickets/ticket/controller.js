@@ -1,4 +1,4 @@
-stronghold.controller('TicketsController', function($scope, TicketsFactory, StatusesFactory) {
+supportAngularJSApp.controller('TicketsController', function($scope, TicketsFactory, StatusesFactory) {
 
   $scope.statuses = StatusesFactory.getStatuses();
 
