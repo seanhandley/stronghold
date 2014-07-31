@@ -1,4 +1,4 @@
-stronghold.factory('StatusesFactory', function() {
+supportAngularJSApp.factory('StatusesFactory', function() {
   return {
     getStatuses: function() {
       //"Open" Status
