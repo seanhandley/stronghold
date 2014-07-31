@@ -3,10 +3,11 @@ supportAngularJSApp.factory('TicketsFactory', function($http) {
     getTickets: function() {
 
       var successHandler = function(response) {
-        if (response.statusText != "OK") return null;
-        var tickets = [];
-        $.each(response.data, function(index, responseTicket) {
 
+        if (response.statusText != "OK") return null;
+
+        var tickets = [];
+        angular.forEach(response.data, function(responseTicket, index){
           //Fresh Ticket
           var newTicket = new Ticket();
 
@@ -29,6 +30,7 @@ supportAngularJSApp.factory('TicketsFactory', function($http) {
           tickets.push(newTicket);
 
         });
+
         return tickets;
       }
 
