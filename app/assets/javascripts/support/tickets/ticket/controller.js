@@ -8,7 +8,7 @@ supportAngularJSApp.controller('TicketsController', function($scope, TicketsFact
       $scope.tickets = [];
       $scope.hasFailed = (tickets == null);
       if ($scope.hasFailed) return;
-      $.each(tickets, function(index, ticket) {
+      angular.forEach(tickets, function(ticket, index){
         var applicableStatuses = $.grep($scope.statuses, function(status) {
           return ($.inArray(ticket.jira_status, status.jira_statuses) >= 0);
         });
