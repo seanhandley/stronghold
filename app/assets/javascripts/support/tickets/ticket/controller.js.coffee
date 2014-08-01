@@ -13,8 +13,7 @@ supportAngularJSApp.controller "TicketsController", ($scope, TicketsFactory, Sta
         ticket.status = applicableStatuses[0]
 
       $scope.tickets = tickets
-      return
-
+      tickets
     return
 
   $scope.getTickets = (status) ->
@@ -35,5 +34,3 @@ supportAngularJSApp.controller "TicketsController", ($scope, TicketsFactory, Sta
   $scope.selectedTicket = null
   $scope.showTicket = (ticket) ->
     $scope.selectedTicket = ticket
-
-  return
