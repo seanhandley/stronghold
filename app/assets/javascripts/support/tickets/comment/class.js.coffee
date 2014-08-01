@@ -1,5 +1,5 @@
-@Comment = (person = new Person(), content = "", time = moment()) ->
-  this.person = person
+@Comment = (email = "nobody@datacentred.co.uk", content = "", time = moment()) ->
+  this.email = email
   this.content = content
   console.log(this.content)
   this.time = time

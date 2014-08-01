@@ -26,7 +26,8 @@
     %ul.media-list
       %li.media{:'ng-repeat' => ("comment in selectedTicket.comments")}
         %a.pull-left
-          %img{:'ng-src' => "{{comment.person.picture}}"}
+          = gravatar_image_tag("{{comment.email}}", :class => 'img-circle')
+          //%img{:'ng-src' => "{{comment.person.picture}}"}
         %div.media-body
           %h4.media-heading
             {{comment.person.name}}
