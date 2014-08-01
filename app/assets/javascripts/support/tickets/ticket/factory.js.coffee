@@ -28,9 +28,6 @@ supportAngularJSApp.factory "TicketsFactory", ($http) ->
           )
         ]
 
-        #Debug
-        console.log newTicket.comments
-
         #Push
         tickets.push newTicket
 
