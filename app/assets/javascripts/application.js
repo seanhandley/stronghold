@@ -15,6 +15,7 @@
 //= require js-routes
 //= require angular
 //= require angular-resource
+//= require angular-bootstrap
 //= require_tree .
 //= require bootstrap
 //= require select2
