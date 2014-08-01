@@ -1,1 +1,0 @@
-window.supportAngularJSApp = angular.module('stronghold', ['ui.bootstrap'])

@@ -1,4 +1,4 @@
-supportAngularJSApp.factory "StatusesFactory", ->
+angularJS.factory "StatusesFactory", ->
   getStatuses: ->
 
     #"Open" Status

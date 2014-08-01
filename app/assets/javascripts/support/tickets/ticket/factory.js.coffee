@@ -1,4 +1,4 @@
-supportAngularJSApp.factory "TicketsFactory", ($http) ->
+angularJS.factory "TicketsFactory", ($http) ->
   getTickets: ->
     successHandler = (response) ->
       return null unless response.statusText is "OK"

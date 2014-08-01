@@ -36,7 +36,7 @@
         %div{:'ng-show' => "hasTickets()"}
           %tabset
             %tab{:'ng-repeat' => "status in statuses | orderBy:'-name'", :heading => '{{status.name}}'}
-              = render partial: 'shared/tickets_list'
+              = render partial: 'tickets_list'
 
       .col-xs-6
         .some-info.ticket{:'ng-hide' => "selectedTicket || !hasTickets()"}
@@ -45,4 +45,4 @@
           %p
             Select a ticket.
         %div{:'ng-show' => "selectedTicket"}
-          = render partial: 'shared/ticket'
+          = render partial: 'ticket'
