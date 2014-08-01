@@ -31,6 +31,6 @@
           %h4.media-heading
             {{comment.person.name}}
           %p
-            {{comment.getTime()}}
+            {{comment.time | momentDateTime}}
           %p
             {{comment.content}}

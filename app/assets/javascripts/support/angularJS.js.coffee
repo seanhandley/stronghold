@@ -1,0 +1,1 @@
+window.angularJS = angular.module('angularJS', ['ui.bootstrap', 'angularJS.filters'])
