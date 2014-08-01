@@ -2,7 +2,7 @@
   this.person = person
   this.content = content
   this.time = time
-  return
+  return this
 
 @Comment.prototype.printTime = () ->
-  return this.time.format("dddd, MMMM Do YYYY")
+  this.time.format("dddd, MMMM Do YYYY")

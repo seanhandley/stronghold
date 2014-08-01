@@ -5,7 +5,7 @@
   this.status = status
   this.person = person
   this.comments = comments
-  return
+  return this
 
 @Ticket.prototype.changeStatus = () ->
   this.status = status
