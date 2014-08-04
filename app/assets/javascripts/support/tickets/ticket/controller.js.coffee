@@ -18,6 +18,7 @@ angularJS.controller "TicketsController", [
               $.inArray(ticket.jira_status, status.jira_statuses) >= 0
             ticket.status = applicableStatuses[0]
           $scope.tickets = tickets
+          $scope.showTicket()
           tickets
 
       doPopulateTickets()
@@ -39,8 +40,14 @@ angularJS.controller "TicketsController", [
     $scope.isLoading = ->
       not $scope.tickets?
 
-    $scope.selectedTicket = null
-    $scope.showTicket = (ticket) ->
-      $scope.selectedTicket = ticket
+    $scope.selectedTicketIndex = -1
+    $scope.showTicket = (ticketIndex) ->
+      ticketIndex = $scope.selectedTicketIndex if ticketIndex is `undefined`
+      ticketIndex = -1 if $scope.tickets[ticketIndex] is `undefined`
+      if ticketIndex > -1
+        $scope.selectedTicket = $scope.tickets[ticketIndex]
+      else
+        $scope.selectedTicket = null
+      $scope.selectedTicketIndex = ticketIndex
 
 ]

@@ -4,7 +4,7 @@ angularJS.factory "TicketsFactory", ($http) ->
 
     successHandler = (response) ->
       return null unless response.statusText is "OK"
-      console.log(response.status)
+
       tickets = []
       angular.forEach response.data, (responseTicket, index) ->
 
@@ -37,6 +37,7 @@ angularJS.factory "TicketsFactory", ($http) ->
       tickets
 
     errorHandler = (response) ->
+      console.log("2: " + response.status.toString())
       null
 
     $http.get("/support/api/tickets/").then successHandler, errorHandler
