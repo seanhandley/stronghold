@@ -1,7 +1,10 @@
 angularJS.factory "TicketsFactory", ($http) ->
+
   getTickets: ->
+
     successHandler = (response) ->
       return null unless response.statusText is "OK"
+      console.log(response.status)
       tickets = []
       angular.forEach response.data, (responseTicket, index) ->
 

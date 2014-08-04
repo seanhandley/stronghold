@@ -1,34 +1,46 @@
-angularJS.controller "TicketsController", ($scope, TicketsFactory, StatusesFactory) ->
-  $scope.statuses = StatusesFactory.getStatuses()
-  $scope.tickets = null
-  $scope.populateTickets = ->
-    TicketsFactory.getTickets().then (tickets) ->
-      $scope.tickets = []
-      $scope.hasFailed = (not (tickets?))
-      return if $scope.hasFailed
-      angular.forEach tickets, (ticket, index) ->
-        applicableStatuses = $.grep $scope.statuses, (status) ->
-          $.inArray(ticket.jira_status, status.jira_statuses) >= 0
-        ticket.status = applicableStatuses[0]
-      $scope.tickets = tickets
-      tickets
-    return
+angularJS.controller "TicketsController", [
+  "$scope",
+  "$interval",
+  "TicketsFactory",
+  "StatusesFactory",
+  ($scope, $interval, TicketsFactory, StatusesFactory) ->
+    $scope.statuses = StatusesFactory.getStatuses()
+    $scope.tickets = null
+    $scope.populateTickets = ->
 
-  $scope.getTickets = (status) ->
-    return [] unless $scope.tickets?
-    $.grep $scope.tickets, (ticket) ->
-      ticket.status.name is status.name
+      doPopulateTickets = ->
+        TicketsFactory.getTickets().then (tickets) ->
+          $scope.tickets = []
+          $scope.hasFailed = (not (tickets?))
+          return if $scope.hasFailed
+          angular.forEach tickets, (ticket, index) ->
+            applicableStatuses = $.grep $scope.statuses, (status) ->
+              $.inArray(ticket.jira_status, status.jira_statuses) >= 0
+            ticket.status = applicableStatuses[0]
+          $scope.tickets = tickets
+          tickets
 
-  $scope.countTickets = ->
-    return 0 unless $scope.tickets?
-    $scope.tickets.length
+      doPopulateTickets()
+      doPopulateTicketsPromise = $interval(doPopulateTickets, 5000)
+      return
 
-  $scope.hasTickets = ->
-    $scope.countTickets() > 0
+    $scope.getTickets = (status) ->
+      return [] unless $scope.tickets?
+      $.grep $scope.tickets, (ticket) ->
+        ticket.status.name is status.name
 
-  $scope.isLoading = ->
-    not $scope.tickets?
+    $scope.countTickets = ->
+      return 0 unless $scope.tickets?
+      $scope.tickets.length
 
-  $scope.selectedTicket = null
-  $scope.showTicket = (ticket) ->
-    $scope.selectedTicket = ticket
+    $scope.hasTickets = ->
+      $scope.countTickets() > 0
+
+    $scope.isLoading = ->
+      not $scope.tickets?
+
+    $scope.selectedTicket = null
+    $scope.showTicket = (ticket) ->
+      $scope.selectedTicket = ticket
+
+]
