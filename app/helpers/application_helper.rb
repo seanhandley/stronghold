@@ -8,4 +8,8 @@ module ApplicationHelper
   def javascript_error_messages_for(obj)
     content_tag(:div, :class => "errors#{obj.id}") { '' }
   end
+
+  def javascript_success_messages_for(obj)
+    content_tag(:div, :class => "success#{obj.id}") { '' }
+  end
 end
