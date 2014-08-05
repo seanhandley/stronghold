@@ -5,8 +5,9 @@ class TestUserRoles < Minitest::Test
     @user  = User.make
     @role  = Role.make
     @role2 = Role.make
-    @role_user  = RoleUser.create(user: @user, role: @role, current_user: @user)
-    @role_user2 = RoleUser.create(user: @user, role: @role2, current_user: @user)
+    Authorization.current_user = @user
+    @role_user  = RoleUser.create(user: @user, role: @role)
+    @role_user2 = RoleUser.create(user: @user, role: @role2)
   end
 
   def test_user_cannot_be_assigned_same_role_twice

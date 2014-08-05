@@ -3,18 +3,26 @@
     %div{'class' => "dropdown-toggle", 'data-toggle' => "dropdown"}
       = gravatar_image_tag(current_user.email, :class => 'img-circle nav-profile')
       %span.caret
-    %ul{'class' => "dropdown-menu pull-right", 'role' => "menu"}
+    %ul{'class' => "dropdown-menu dropdown-menu-right", 'role' => "menu"}
       %li
         %a{:href => support_profile_path}
-          %i.fa.fa-user
+          %span.nav-menu-icon
+            %i.fa.fa-user
           My Details
       - if current_user.power_user?
         %li
-          %a{:href => support_edit_organization_path} 
-            %i.fa.fa-suitcase
-            Company Details
+          %a{:href => support_edit_organization_path}
+            %span.nav-menu-icon
+              %i.fa.fa-briefcase
+            My Organization
+        %li
+          %a{:href => support_audits_path} 
+            %span.nav-menu-icon
+              %i.fa.fa-history
+            Audit Log
       %li.divider
       %li
-        %a{:href => session_path(current_user), data: { confirm: "Log out?", :method => :delete }} 
-          %i.fa.fa-sign-out
+        %a{:href => session_path(current_user), data: { confirm: "Log out?", :method => :delete }}
+          %span.nav-menu-icon
+            %i.fa.fa-sign-out
           Log out

@@ -2,10 +2,6 @@ class Support::UsersController < SupportBaseController
 
   skip_authorization_check
 
-  def current_section
-    'roles'
-  end
-
   def index
     @user = current_user
     render template: 'support/users/profile'
