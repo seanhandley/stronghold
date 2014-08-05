@@ -1,24 +1,8 @@
 require 'jira'
 
-class SupportTicket
+class JiraIssue
 
   attr_accessor :id, :title, :description
-
-  def initialize(obj)
-    @obj = obj
-  end
-
-  def id
-    @obj.key
-  end
-
-  def title
-    @obj.summary
-  end
-
-  def description
-    @obj.description
-  end
 
   def self.create(params)
     issue = self.project.client.Issue.build
@@ -37,7 +21,7 @@ class SupportTicket
   class << self
 
     def all(reference)
-      return project.issues.select do |issue|
+      project.issues.select do |issue|
         (issue.fields['labels'].first == reference)
       end
     end
