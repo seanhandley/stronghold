@@ -6,5 +6,8 @@
     .form-group
       %label Organization Name
       = f.text_field :name, class: "form-control"
+    .form-group
+      %label Time Zone
+      = f.time_zone_select :time_zone, nil, {include_blank: false}, {class: "form-control"}
 
     = submit_tag 'Save', class: 'btn btn-primary', data: { disable_with: 'Saving...' }

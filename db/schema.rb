@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140613150956) do
+ActiveRecord::Schema.define(version: 20140805064643) do
 
   create_table "invites", force: true do |t|
     t.string   "email"
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(version: 20140613150956) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "time_zone",  default: "London", null: false
   end
 
   create_table "roles", force: true do |t|
