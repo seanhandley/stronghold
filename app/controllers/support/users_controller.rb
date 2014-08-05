@@ -10,7 +10,9 @@ class Support::UsersController < SupportBaseController
   def update
     check_user
     if current_user.update(update_params)
-      javascript_redirect_to support_profile_path
+      respond_to do |format|
+        format.js { render :template => "shared/dialog_success", :locals => {message: 'Changes saved', object: current_user } }
+      end
     else
       respond_to do |format|
         format.js { render :template => "shared/dialog_errors", :locals => {:object => current_user } }

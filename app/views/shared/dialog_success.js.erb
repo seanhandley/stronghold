@@ -1,0 +1,11 @@
+$('.errorExplanation').remove();
+$('form *').removeClass('withError')
+
+<% 
+content = "<div class='successMessage'><h3>#{message}</h3>"
+%>
+
+$('.successMessage').remove();
+$('.success<%="#{object.id}"%>').before('<%= raw "#{escape_javascript content}" %>');
+
+$('form input:password').val('')
