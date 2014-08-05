@@ -5,7 +5,7 @@ class Support::Api::TicketsController < SupportBaseController
   def index
     respond_to do |format|
       format.json {
-        render :json => current_user.organization.tickets.all
+        render :json => current_user.organization.tickets
       }
       format.html
     end
@@ -14,7 +14,7 @@ class Support::Api::TicketsController < SupportBaseController
   def show
     respond_to do |format|
       format.json {
-        render :json => current_user.organization.tickets.some_ticket(params[:id]).to_json
+        render :json => current_user.organization.ticket(params[:id])
       }
     end
   end
