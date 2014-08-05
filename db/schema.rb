@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140804161106) do
+ActiveRecord::Schema.define(version: 20140805142648) do
 
   create_table "audits", force: true do |t|
     t.string   "auditable_id"
@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(version: 20140804161106) do
   add_index "audits", ["associated_id", "associated_type"], name: "associated_index", using: :btree
   add_index "audits", ["auditable_id", "auditable_type"], name: "auditable_index", using: :btree
   add_index "audits", ["created_at"], name: "index_audits_on_created_at", using: :btree
+  add_index "audits", ["organization_id"], name: "index_audits_on_organization_id", using: :btree
   add_index "audits", ["user_id", "user_type"], name: "user_index", using: :btree
 
   create_table "invites", force: true do |t|
