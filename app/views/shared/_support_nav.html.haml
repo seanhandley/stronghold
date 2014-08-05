@@ -11,12 +11,12 @@
       - if current_user.power_user?
         %li
           %a{:href => support_edit_organization_path} 
-            %i.fa.fa-suitcase
+            %i.fa.fa-briefcase
             My Organization
         %li
           %a{:href => support_audits_path} 
             %i.fa.fa-history
-            Audit
+            Audit Log
       %li.divider
       %li
         %a{:href => session_path(current_user), data: { confirm: "Log out?", :method => :delete }} 
