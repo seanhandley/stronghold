@@ -1,4 +1,7 @@
 class Role < ActiveRecord::Base
+  audited :associated_with => :organization, except: [:organization_id, :power_user]
+  has_associated_audits
+
   has_and_belongs_to_many :users
   belongs_to :organization
   before_destroy :check_users, :check_power

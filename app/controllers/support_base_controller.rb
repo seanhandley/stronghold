@@ -1,6 +1,7 @@
 class SupportBaseController < ApplicationController
 
   before_filter :current_user, :authenticate_user!
+  before_filter { Authorization.current_user = current_user }
   around_filter :user_time_zone, :if => :current_user
 
   helper_method :current_section
