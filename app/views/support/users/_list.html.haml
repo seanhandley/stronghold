@@ -1,0 +1,47 @@
+.page-controls
+  %button.btn.btn-primary.btn-xs{'data-toggle' => "modal", 'data-target' => "#inviteUser"}
+    %i.fa.fa-envelope
+    Invite new user
+- if open_invites.any?
+  %h3
+    Pending Invites
+    = "(#{@open_invites.count})"
+  %table.table
+    %thead
+      %th
+        %i.fa.fa-envelope
+      %th
+        E-Mail
+      %th
+        Roles
+    %tbody
+      - open_invites.each do |invite|
+        %tr
+          %td= gravatar_image_tag(invite.email, title: invite.email, alt: invite.email)
+          %td= invite.email
+          %td= invite.roles.collect(&:name).join ", "
+
+%h3
+  Users
+  = "(#{@users.count})"
+%table.table
+  %thead
+    %th
+      %i.fa.fa-user
+    %th
+      Name
+    %th
+      E-Mail
+    %th
+      Roles
+  %tbody
+    - users.each do |user|
+      %tr
+        %td= gravatar_image_tag(user.email, title: user.name, alt: user.name)
+        %td= link_to user.name, "#user_#{user.id}", 'data-toggle' => 'collapse', 'data-parent' => '#accordionUsers'
+        %td= link_to user.email, "mailto:#{user.email}"
+        %td
+          %i.fa.fa-key
+          = list_of_roles(user)
+
+= render partial: 'support/users/invite_user'

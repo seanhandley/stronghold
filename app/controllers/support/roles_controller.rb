@@ -12,8 +12,6 @@ class Support::RolesController < SupportBaseController
     @roles = @organization.roles
     @users = @organization.users
     @open_invites = @organization.invites.select(&:can_register?)
-    @new_role = Role.new
-    @new_invite = Invite.new
   end
 
   def update
