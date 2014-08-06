@@ -13,6 +13,28 @@
         %button.btn.btn-primary.btn-xs{'data-toggle' => "modal", 'data-target' => "#inviteUser"}
           %i.fa.fa-envelope
           Invite new user
+      %h3
+        Pending Invites
+        = "(#{@open_invites.count})"
+      - if @open_invites.any?
+        %table.table
+          %thead
+            %th
+              %i.fa.fa-envelope
+            %th
+              E-Mail
+            %th
+              Roles
+          %tbody
+            - @open_invites.each do |invite|
+              %tr
+                %td= gravatar_image_tag(invite.email, title: invite.email, alt: invite.email)
+                %td= invite.email
+                %td= invite.roles.collect(&:name).join ", "
+
+      %h3
+        Users
+        = "(#{@users.count})"
       %table.table
         %thead
           %th
