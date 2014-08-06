@@ -1,6 +1,6 @@
 require 'jira'
 
-class JiraIssue
+class JiraBridge
 
   attr_accessor :id, :title, :description
 
@@ -20,7 +20,7 @@ class JiraIssue
 
   class << self
 
-    def all(reference)
+    def issues(reference)
       project.issues.select do |issue|
         (issue.fields['labels'].first == reference)
       end

@@ -9,30 +9,10 @@ class Organization < ActiveRecord::Base
   has_many :invites
 
   def tickets
-    jiraIssues = Rails.cache.fetch("organization_#{@reference}_tickets", expires_in: 1.seconds) do
-      JiraIssue.all reference
+    issues = Rails.cache.fetch("organization_#{@reference}_issues", expires_in: 20.seconds) do
+      JiraBridge.issues reference
     end
-    tickets = []
-    jiraIssues.each do |jiraIssue|
-      ticket = OrganizationTicket.new(reference: jiraIssue.attrs['key'])
-      ticket.title = jiraIssue.attrs['fields']['summary']
-      ticket.description = jiraIssue.attrs['fields']['description']
-      ticket.jira_status = jiraIssue.attrs['fields']['status']['name']
-      tickets.push(ticket)
-    end
-    tickets
-  end
-
-  def ticket(key)
-    tickets.select do |ticket|
-      [
-        (ticket.key == key)
-      ].first
-    end
-  end
-
-  def create_ticket(params)
-    JiraIssue.create params.merge(reference: @reference)
+    issues.collect { |issue| Ticket.new(issue.attrs) }
   end
 
   private
