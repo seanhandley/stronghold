@@ -17,8 +17,8 @@ angularJS.controller "TicketsController", [
             applicableStatuses = $.grep $scope.statuses, (status) ->
               $.inArray(ticket.jira_status, status.jira_statuses) >= 0
             ticket.status = applicableStatuses[0]
+            console.log(ticket)
           $scope.tickets = tickets
-          console.log(tickets)
           $scope.showTicket()
           tickets
 
