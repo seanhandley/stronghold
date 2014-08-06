@@ -1,7 +1,7 @@
 .modal.fade#inviteUser{'tabindex' => "-1", 'role' => "dialog", 'aria-labelledby' => "inviteUser", 'aria-hidden' => "true"}
   .modal-dialog
     .modal-content
-      = form_for @new_invite, url: url_for(controller: 'support/invites', action: 'create'), :remote => true do |f|
+      = form_for new_invite, url: url_for(controller: 'support/invites', action: 'create'), :remote => true do |f|
         .modal-header
           %button{'type' => "button", 'class' => "close", 'data-dismiss' => "modal", 'aria-hidden' => "true"}
             &times;
@@ -10,7 +10,7 @@
             Invite User
           %p Please enter an email address and at least one role.
         .modal-body
-          = javascript_error_messages_for(@new_invite)
+          = javascript_error_messages_for(new_invite)
           .input-group.has-warning
             %span.input-group-addon
               %i.fa.fa-envelope

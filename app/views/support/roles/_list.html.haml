@@ -1,0 +1,7 @@
+.panel-group#accordionRoles
+  .page-controls
+    %button.btn.btn-primary.btn-xs{'data-toggle' => "modal", 'data-target' => "#createRole"}
+      %i.fa.fa-key
+      Add New Role
+  - roles.each do |role|
+    = render partial: 'view', locals: {role: role}
