@@ -5,3 +5,5 @@
       Add New Role
   - roles.each do |role|
     = render partial: 'view', locals: {role: role}
+    
+= render partial: 'form', locals: {role: @new_role, form_path: support_roles_path, verb: 'Create', id: 'createRole'}
