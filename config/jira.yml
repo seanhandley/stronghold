@@ -1,6 +1,9 @@
 default: &default
   username: stronghold
-  url: 'https://datacentred.atlassian.net'
+  password: ''
+  base_url: 'http://datacentred.atlassian.net'
+  auth_path: '/rest/auth/1/session/'
+  api_path: '/rest/api/latest/'
 
 development:
   <<: *default
