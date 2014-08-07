@@ -20,7 +20,7 @@ class Organization < ActiveRecord::Base
   def generate_reference
     return nil if reference
     generate_reference_step(name.parameterize.gsub('-','').upcase.slice(0,8), 0)
-    t = OpenStack::Tenant.create name: reference, enabled: true
+    t = OpenStack::Tenant.create name: reference, enabled: true, description: "Customer: #{name}"
     update_column(:tenant_id, t.id)
   end
 
