@@ -1,6 +1,5 @@
 module OpenStack
   class Instance < OpenStackObject::Server
-
     attributes :name, :state, :all_addresses
 
     methods :reboot, :wait_for
@@ -20,6 +19,7 @@ module OpenStack
         wait_for { ready? }
         reload
       end
+      audit('start')
     end
 
     def stop
@@ -28,6 +28,7 @@ module OpenStack
         wait_for { state.downcase == 'suspended' }
         reload
       end
+      audit('stop')
     end
 
     def pause
@@ -36,6 +37,7 @@ module OpenStack
         wait_for { state.downcase == 'paused' }
         reload
       end
+      audit('pause')
     end
 
     def destroy
@@ -46,6 +48,7 @@ module OpenStack
           s.release_address(address['id'])
         end
       end
+      audit('destroy')
       super
     end
 

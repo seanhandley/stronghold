@@ -1,4 +1,7 @@
 class Organization < ActiveRecord::Base
+  audited
+  has_associated_audits
+
   after_save :generate_reference, :on => :create
 
   validates :name, length: {minimum: 1}, allow_blank: false

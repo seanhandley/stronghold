@@ -1,0 +1,23 @@
+%h3 Audit Log
+.container-fluid
+  %table.table.table-striped
+    %thead
+      %tr
+        %th
+        %th Date
+        %th Time
+        %th User
+        %th Action
+    %tbody
+      - @audits.each do |audit|
+        %tr
+          %td
+            = gravatar_image_tag(audit.user ? audit.user.email : '')
+          %td
+            = short_date(audit.created_at)
+          %td
+            = long_time(audit.created_at)
+          %td
+            = audit.user ? audit.user.name : 'SYSTEM'
+          %td
+            = render partial: "support/audits/table/#{audit.auditable_type.underscore}", locals: { audit: audit }

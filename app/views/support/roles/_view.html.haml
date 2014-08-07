@@ -1,0 +1,31 @@
+- unless role.power_user?
+  = render partial: 'form', locals: {role: role, form_path: support_role_path(role), verb: 'Rename', id: "renameRole#{role.id}"}
+.panel.panel-default
+  .panel-heading
+    - unless role.power_user?
+      .pull-right
+        %a{'href' => support_role_path(role), :data => { confirm: "Delete the #{role.name} role?", method: :delete}}
+          %i.fa.fa-trash-o
+    %h2.panel-title
+      %i.fa.fa-key
+      = role.name
+    - unless role.power_user?
+      %p.tiny
+        %a{'href' => '#', 'data-toggle' => "modal", 'data-target' => "#renameRole#{role.id}"}
+          Rename?
+    %p.tiny
+      = pluralize(role.users.count, 'member')
+    = render partial: 'support/users/images', locals: {role: role}
+
+    .view-permissions
+      %h3
+        %a.toggle-panel{'href' => "#role_#{role.id}", 'data-toggle' => 'collapse', 'data-parent' => '#accordionRoles'}
+          %i.fa.fa-angle-double-down
+          %i.fa.fa-angle-double-up.hide
+ 
+  .panel-collapse.collapse{:id => "role_#{role.id}"}
+    .panel-body
+      - if role.power_user?
+        This is the owners' group - owners can see and do everything.
+      - else
+        = render partial: 'permissions', locals: {role: role}
