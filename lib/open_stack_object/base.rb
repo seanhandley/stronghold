@@ -55,6 +55,18 @@ module OpenStackObject
     def [](key); self.send(key); end
     def destroyed?; false ; end
     def new_record?; false ; end
+    # Update a given OpenStack object
+    #
+    # @param [Hash] args a hash of arguments for updating the object
+    # @raise [OpenStackObject::Error] if the object cannot be updated
+    # @return [OpenStackObject::Base] Updated object
+    def update(args)
+      obj.update(args)
+      args.each do |k,v|
+        obj.send("#{k.to_sym}=", v)
+      end
+      self
+    end
 
     class << self
 
@@ -105,6 +117,14 @@ module OpenStackObject
 
       def conn
         "Fog::#{object_name.to_s.titleize}".constantize.new(OPENSTACK_ARGS)
+        args = OPENSTACK_ARGS
+        username = "#{Authorization.current_user.organization.reference}_#{Authorization.current_user.email}"
+        password = '87654321'
+        tenant   = Authorization.current_user.organization.reference
+        args.merge!(:openstack_username => username,
+                   :openstack_api_key  => password,
+                   :openstack_tenant   => tenant)
+        "Fog::#{object_name.to_s.titleize}".constantize.new(args)
       end
 
     end
