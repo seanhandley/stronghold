@@ -36,6 +36,12 @@ ActiveRecord::Schema.define(version: 20140805142648) do
   add_index "audits", ["organization_id"], name: "index_audits_on_organization_id", using: :btree
   add_index "audits", ["user_id", "user_type"], name: "user_index", using: :btree
 
+  create_table "foos", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "invites", force: true do |t|
     t.string   "email"
     t.datetime "created_at"
