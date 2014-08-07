@@ -5,6 +5,7 @@
 .container.profile
   = form_for @user, url: support_user_path(@user), :html => {:role => 'form'}, remote: true do |f|
     = javascript_error_messages_for(@user)
+    = javascript_success_messages_for(@user)
     .form-group
       %label First Name
       = f.text_field :first_name, class: "form-control"
@@ -18,5 +19,11 @@
         To set your profile image, create a
         = link_to 'Gravatar', 'https://gravatar.com'
         account using this e-mail address.
+    .form-group
+      %label Password
+      = f.password_field :password, class: "form-control"
+    .form-group
+      %label Password confirmation
+      = f.password_field :password_confirmation, class: "form-control"
 
     = submit_tag 'Save', class: 'btn btn-primary', data: { disable_with: 'Saving...' }

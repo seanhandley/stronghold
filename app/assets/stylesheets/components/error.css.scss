@@ -33,3 +33,14 @@ div.errorExplanation h3 {
 div.errorExplanation a.close {
   color: #fff; 
 }
+
+div.successMessage {
+  padding: 1px 5px 5px 5px;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+div.successMessage h3 {
+  color: $brand-success;
+  font-size: 16px;
+}

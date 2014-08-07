@@ -27,7 +27,7 @@ class Support::OrganizationsController < SupportBaseController
   private
 
   def update_params
-    params.require(:organization).permit(:name)
+    params.require(:organization).permit(:name, :time_zone)
   end
 
   def check_organization

@@ -1,0 +1,9 @@
+.user-images
+  %span.new-user
+    %a{'href' => '', 'data-toggle' => "modal", 'data-target' => "#addRoleUser#{role.id}"}
+      %i.fa.fa-plus
+  = render partial: 'support/roles_users/form', locals: { role: role }
+  - for user in role.users
+    %span.image{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => "Remove #{user.name}?"}
+      %a{href: support_remove_role_user_path(role, user), data: { method: 'delete', confirm: "Remove #{user.name} from #{role.name}?"}}
+        = gravatar_image_tag(user.email, title: '', alt: user.name)
