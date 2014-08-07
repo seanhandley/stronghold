@@ -20,6 +20,7 @@ module OpenStack
         reload
       end
       audit('start')
+      self
     end
 
     def stop
@@ -29,6 +30,7 @@ module OpenStack
         reload
       end
       audit('stop')
+      self
     end
 
     def pause
@@ -38,6 +40,7 @@ module OpenStack
         reload
       end
       audit('pause')
+      self
     end
 
     def destroy
@@ -48,8 +51,8 @@ module OpenStack
           s.release_address(address['id'])
         end
       end
-      super
       audit('destroy')
+      super
     end
 
   end
