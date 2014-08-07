@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140807105107) do
+ActiveRecord::Schema.define(version: 20140807193320) do
 
   create_table "audits", force: true do |t|
     t.string   "auditable_id"
@@ -85,6 +85,7 @@ ActiveRecord::Schema.define(version: 20140807105107) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "organization_id"
+    t.string   "openstack_id"
   end
 
 end
