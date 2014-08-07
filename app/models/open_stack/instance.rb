@@ -1,8 +1,6 @@
 module OpenStack
   class Instance < OpenStackObject::Server
-    attributes :name, :state, :all_addresses, :tenant_id, :user_id, :host_id,
-               :metadata, :personality, :progress, :created, :updated, :key_name,
-               :os_ext_srv_attr_host
+    attributes :name, :state, :all_addresses, :tenant_id, :user_id
 
     methods :reboot, :wait_for
 
@@ -50,8 +48,8 @@ module OpenStack
           s.release_address(address['id'])
         end
       end
-      audit('destroy')
       super
+      audit('destroy')
     end
 
   end
