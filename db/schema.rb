@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140805142648) do
+ActiveRecord::Schema.define(version: 20140807105107) do
 
   create_table "audits", force: true do |t|
     t.string   "auditable_id"
@@ -58,6 +58,7 @@ ActiveRecord::Schema.define(version: 20140805142648) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "time_zone",  default: "London", null: false
+    t.string   "tenant_id"
   end
 
   create_table "roles", force: true do |t|
