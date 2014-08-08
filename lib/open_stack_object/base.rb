@@ -1,6 +1,6 @@
 require 'fog'
 require 'audited-activerecord'
-require_relative '../active_record_fake_model'
+require_relative '../active_record/fake_model'
 
 module OpenStackObject
 
