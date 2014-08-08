@@ -1,14 +1,14 @@
-angularJS.factory "StatusesFactory", ->
-  getStatuses: ->
+angularJS.factory "TicketStatusFactory", ->
+  getTicketStatuses: ->
 
     #"Open" Status
-    openStatus = new Status "Open", "#00CC00"
-    openStatus.addJiraStatus "To Do"
-    openStatus.addJiraStatus "In Progress"
+    openTicketStatus = new TicketStatus "Open", "#00CC00"
+    openTicketStatus.addJiraStatus "To Do"
+    openTicketStatus.addJiraStatus "In Progress"
 
     #"Closed" Status
-    closedStatus = new Status "Closed", "#CC0000"
-    closedStatus.addJiraStatus "Done"
+    closedTicketStatus = new TicketStatus "Closed", "#CC0000"
+    closedTicketStatus.addJiraStatus "Done"
 
     #Return Statuses
-    statuses = [openStatus, closedStatus]
+    ticketStatuses = [openTicketStatus, closedTicketStatus]

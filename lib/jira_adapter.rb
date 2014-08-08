@@ -14,10 +14,10 @@ class JiraAdapter
 
     @connection = Faraday.new
     @connection.basic_auth(@settings['username'], @settings['password'])
-    url = @settings['base_url'] + 'search/?jql=project=ST&fields=*all'
+    url = @settings['base_url'] + 'search/?jql=project=' + @settings['project'] + '&fields=*all'
     response = @connection.get url
     responseBody = JSON.parse response.body
-    return [responseBody]
+    return responseBody['issues']
 
   end
 

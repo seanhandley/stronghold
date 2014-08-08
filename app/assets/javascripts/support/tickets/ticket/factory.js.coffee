@@ -1,4 +1,4 @@
-angularJS.factory "TicketsFactory", ($http) ->
+angularJS.factory "TicketFactory", ($http) ->
 
   getTickets: ->
 

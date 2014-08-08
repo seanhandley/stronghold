@@ -1,10 +1,10 @@
 class Ticket
 
-  def initialize(jira_attrs = {})
-    @reference = jira_attrs['key']
-    @title = jira_attrs['fields']['summary']
-    @description = jira_attrs['fields']['description']
-    @jira_status = jira_attrs['fields']['status']['name']
+  def initialize(jira_issue = {})
+    @reference = jira_issue['key']
+    @title = jira_issue['fields']['summary']
+    @description = jira_issue['fields']['description']
+    @jira_status = jira_issue['fields']['status']['name']
   end
 
   attr_accessor :reference

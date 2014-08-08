@@ -1,10 +1,10 @@
-@Status = (name, color) ->
+@TicketStatus = (name, color) ->
   this.name = name
   this.color = color
   this.jira_statuses = []
   this.primary_jira_status = 0
   this
 
-@Status.prototype.addJiraStatus = (jira_status) ->
+@TicketStatus.prototype.addJiraStatus = (jira_status) ->
   this.jira_statuses.push(jira_status)
   this
