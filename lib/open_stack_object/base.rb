@@ -122,7 +122,7 @@ module OpenStackObject
           password = '87654321'
           tenant   = Authorization.current_user.organization.reference
           args.merge!(:openstack_username => username,
-                   :openstack_api_key  => password,
+                   :openstack_api_key  => password, # Also accepts :openstack_auth_token
                    :openstack_tenant   => tenant)
         end
         "Fog::#{object_name.to_s.titleize}".constantize.new(args)
