@@ -1,15 +1,15 @@
 angularJS.controller "TicketsController", [
   "$scope",
   "$interval",
-  "TicketsFactory",
-  "StatusesFactory",
-  ($scope, $interval, TicketsFactory, StatusesFactory) ->
-    $scope.statuses = StatusesFactory.getStatuses()
+  "TicketFactory",
+  "TicketStatusFactory",
+  ($scope, $interval, TicketFactory, TicketStatusFactory) ->
+    $scope.statuses = TicketStatusFactory.getTicketStatuses()
     $scope.tickets = null
     $scope.populateTickets = ->
 
       doPopulateTickets = ->
-        TicketsFactory.getTickets().then (tickets) ->
+        TicketFactory.getTickets().then (tickets) ->
           $scope.tickets = []
           $scope.hasFailed = (not (tickets?))
           return if $scope.hasFailed
@@ -23,7 +23,7 @@ angularJS.controller "TicketsController", [
           tickets
 
       doPopulateTickets()
-      doPopulateTicketsPromise = $interval(doPopulateTickets, 5000)
+      doPopulateTicketsPromise = $interval(doPopulateTickets, 20 * 1000)
       return
 
     $scope.getTickets = (status) ->

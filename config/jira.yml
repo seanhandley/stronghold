@@ -2,6 +2,7 @@ default: &default
   username: stronghold
   password: ''
   base_url: 'https://datacentred.atlassian.net/rest/api/2/'
+  project: 'ST'
 
 development:
   <<: *default
