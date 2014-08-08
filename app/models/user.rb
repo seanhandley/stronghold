@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  audited except: [:password_digest, :organization_id]
+  audited only: [:first_name, :last_name, :email]
 
   has_secure_password
   encrypt_with_public_key :api_key,
