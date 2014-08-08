@@ -18,8 +18,8 @@ class Organization < ActiveRecord::Base
 
   def tickets
     Rails.cache.fetch("organization_#{@reference}_jira_issues", expires_in: 20.seconds) do
-      # @jira_adapter.issues(reference)
       @jira_adapter.issues(reference).collect do |jira_issue|
+        # jira_issue
         Ticket.new(jira_issue)
       end
     end
