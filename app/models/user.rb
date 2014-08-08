@@ -2,6 +2,9 @@ class User < ActiveRecord::Base
   audited except: [:password_digest, :organization_id]
 
   has_secure_password
+  encrypt_with_public_key :api_key,
+    :key_pair => Rails.root.join('config','keypair.pem')
+
   has_and_belongs_to_many :roles
   belongs_to :organization
 
