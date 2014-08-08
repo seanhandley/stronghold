@@ -13,14 +13,8 @@ angularJS.controller "TicketsController", [
           $scope.tickets = []
           $scope.hasFailed = (not (tickets?))
           return if $scope.hasFailed
-          angular.forEach tickets, (ticket, index) ->
-            applicableStatuses = $.grep $scope.statuses, (status) ->
-              $.inArray(ticket.jira_status, status.jira_statuses) >= 0
-            ticket.status = applicableStatuses[0]
-            console.log(ticket)
           $scope.tickets = tickets
           $scope.showTicket()
-          tickets
 
       doPopulateTickets()
       doPopulateTicketsPromise = $interval(doPopulateTickets, 20 * 1000)
@@ -50,5 +44,6 @@ angularJS.controller "TicketsController", [
       else
         $scope.selectedTicket = null
       $scope.selectedTicketIndex = ticketIndex
+      $scope.tickets
 
 ]
