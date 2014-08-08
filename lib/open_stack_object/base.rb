@@ -1,5 +1,6 @@
 require 'fog'
 require 'audited-activerecord'
+require_relative '../active_record_fake_model'
 
 module OpenStackObject
 
@@ -16,6 +17,7 @@ module OpenStackObject
   #
   class Base
     include ActiveModel::Model
+    include ActiveRecord::FakeModel
 
     def initialize(obj)
       @obj = obj
@@ -52,9 +54,6 @@ module OpenStackObject
       obj.destroy
     end
 
-    def [](key); self.send(key); end
-    def destroyed?; false ; end
-    def new_record?; false ; end
     # Update a given OpenStack object
     #
     # @param [Hash] args a hash of arguments for updating the object
@@ -105,12 +104,6 @@ module OpenStackObject
       # @return [OpenStackObject::Base] Newly created object
       def create(args)
         new conn.send(collection_name).create(args)
-      end
-
-      def primary_key; :id; end
-
-      def inherited(subclass)
-        subclass.define_singleton_method(:base_class) { subclass }
       end
 
       private
