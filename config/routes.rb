@@ -8,11 +8,9 @@ Rails.application.routes.draw do
     resources :users, only: [:update]
     get '/profile', :controller => 'users', :action => 'index'
     resources :roles
-    get 'tickets', :controller => 'tickets', :action => 'index'
+    get '/tickets', :controller => 'tickets', :action => 'index'
     namespace :api, defaults: {format: :json} do
-      resources :tickets, only: [:index, :show] do
-        resources :comments, only: [:create, :update, :destroy]
-      end
+      resources :tickets, only: [:index, :x]
     end
     delete 'role/:role_id/user/:user_id', :controller => 'role_users', :action => 'destroy', :as => 'remove_role_user'
     resources :role_users, only: [:create]
