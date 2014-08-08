@@ -116,14 +116,15 @@ module OpenStackObject
       private
 
       def conn
-        "Fog::#{object_name.to_s.titleize}".constantize.new(OPENSTACK_ARGS)
         args = OPENSTACK_ARGS
-        username = "#{Authorization.current_user.organization.reference}_#{Authorization.current_user.email}"
-        password = '87654321'
-        tenant   = Authorization.current_user.organization.reference
-        args.merge!(:openstack_username => username,
+        if Authorization.current_user.present?
+          username = "#{Authorization.current_user.organization.reference}_#{Authorization.current_user.email}"
+          password = '87654321'
+          tenant   = Authorization.current_user.organization.reference
+          args.merge!(:openstack_username => username,
                    :openstack_api_key  => password,
                    :openstack_tenant   => tenant)
+        end
         "Fog::#{object_name.to_s.titleize}".constantize.new(args)
       end
 
