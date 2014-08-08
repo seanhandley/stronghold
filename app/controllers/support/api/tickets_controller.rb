@@ -11,11 +11,12 @@ class Support::Api::TicketsController < SupportBaseController
     end
   end
 
-  def show
+  def x
     respond_to do |format|
       format.json {
-        render :json => current_user.organization.ticket(params[:id])
+        render :json => "xyzxyz"
       }
+      format.html
     end
   end
 

@@ -11,10 +11,6 @@ class Ticket
     end
   end
 
-  attr_accessor :reference
-  attr_accessor :title
-  attr_accessor :description
-  attr_accessor :jira_status
-  attr_accessor :comments
+  attr_accessor :reference, :title, :description, :jira_status, :comments
 
 end
