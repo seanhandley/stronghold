@@ -3,11 +3,11 @@ module AuditsHelper
     details = ''
     if audit.action == 'update'
       details = audit.audited_changes.collect do |k,v|
-        "#{k.capitalize.humanize} is now '#{r(v[1])}' (was '#{r(v[0])}')"
+        "#{t(k.underscore.to_sym).capitalize.humanize} #{t(:is_now)} '#{r(v[1])}' (#{t(:used_to_be)} '#{r(v[0])}')"
       end.join '. '
     else
       details = audit.audited_changes.collect do |k,v|
-        "'#{k.capitalize.humanize}': '#{r(v)}'"
+        "'#{t(k.underscore.to_sym).capitalize.humanize}': '#{r(v)}'"
       end.join ', '
     end
     details += '.'
