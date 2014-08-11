@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
   validates :email, :presence => true
   validate :password_complexity
 
-  before_save :set_os_user
+  before_save :set_os_user, unless: -> { Rails.env.test? }
 
   def has_permission?(permission)
     power_user? || roles.collect(&:permissions).flatten.include?(permission)
