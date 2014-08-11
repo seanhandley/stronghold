@@ -16,9 +16,7 @@ class Support::Api::TicketsController < SupportBaseController
     reference = current_user.organization.tickets.create(params[:title], params[:description])
     respond_to do |format|
       format.json {
-        render :json => {
-          "reference" => reference
-        }
+        render :json => reference
       }
     end
   end
