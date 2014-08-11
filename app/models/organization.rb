@@ -3,7 +3,6 @@ class Organization < ActiveRecord::Base
   has_associated_audits
 
   after_save :generate_reference, :on => :create
-  after_initialize :init_jira_adapter
 
   validates :name, length: {minimum: 1}, allow_blank: false
   validates :reference, :uniqueness => true
@@ -12,17 +11,13 @@ class Organization < ActiveRecord::Base
   has_many :roles
   has_many :invites
 
-  def init_jira_adapter
-    @jira_adapter = JiraAdapter.new
-  end
+  tickets = nil
 
   def tickets
-    Rails.cache.fetch("organization_#{@reference}_jira_issues", expires_in: 20.seconds) do
-      @jira_adapter.issues(reference).collect do |jira_issue|
-        # jira_issue
-        Ticket.new(jira_issue)
-      end
+    if @tickets.nil?
+      @tickets = Tickets.new(reference)
     end
+    @tickets
   end
 
   private
