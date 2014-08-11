@@ -7,15 +7,15 @@
             &times;
           %h4.modal-title#addRole
             %i.fa.fa-key
-            = "#{verb} Role"
-          %p Give the role a name that describes its responsibilities.
+            = title
+          %p= t(:role_directions)
         .modal-body
           = javascript_error_messages_for(role)
           .input-group
             %span.input-group-addon
               %i.fa.fa-key
-            = f.text_field :name, placeholder: 'Name', class: "form-control", autofocus: true
+            = f.text_field :name, placeholder: t(:name), class: "form-control", autofocus: true
         .modal-footer
           %button.btn.btn-default{'data-toggle' => "modal", 'data-dismiss' => "modal"}
-            Cancel
-          = submit_tag verb, class: 'btn btn-primary', id: 'submit'
+            = t(:cancel)
+          = submit_tag title, class: 'btn btn-primary', id: 'submit'
