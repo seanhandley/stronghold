@@ -58,6 +58,7 @@ ActiveRecord::Schema.define(version: 20140805142648) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "time_zone",  default: "London", null: false
+    t.string   "locale",     default: "en",     null: false
   end
 
   create_table "roles", force: true do |t|
