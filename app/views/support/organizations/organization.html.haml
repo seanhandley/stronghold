@@ -1,13 +1,13 @@
-%h3 Edit Organization Details
+%h3= t(:edit_organization_details)
 
 .container.profile
   = form_for @organization, url: support_organization_path(@organization), :html => {:role => 'form'}, remote: true do |f|
     = javascript_error_messages_for(@organization)
     .form-group
-      %label Organization Name
+      %label= t(:organization_name)
       = f.text_field :name, class: "form-control"
     .form-group
-      %label Time Zone
+      %label= t(:time_zone)
       = f.time_zone_select :time_zone, nil, {include_blank: false}, {class: "form-control"}
 
-    = submit_tag 'Save', class: 'btn btn-primary', data: { disable_with: 'Saving...' }
+    = submit_tag t(:save), class: 'btn btn-primary', data: { disable_with: t(:saving) }

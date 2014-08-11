@@ -1,19 +1,19 @@
 .page-controls
   %button.btn.btn-primary.btn-xs{'data-toggle' => "modal", 'data-target' => "#inviteUser"}
     %i.fa.fa-envelope
-    Invite new user
+    = t(:invite_new_user)
 - if open_invites.any?
   %h3
-    Pending Invites
+    = t(:pending_invites)
     = "(#{@open_invites.count})"
   %table.table
     %thead
       %th
         %i.fa.fa-envelope
       %th
-        E-Mail
+        = t(:email)
       %th
-        Roles
+        = t(:roles)
     %tbody
       - open_invites.each do |invite|
         %tr
@@ -22,18 +22,18 @@
           %td= invite.roles.collect(&:name).join ", "
 
 %h3
-  Users
+  = t(:users)
   = "(#{@users.count})"
 %table.table
   %thead
     %th
       %i.fa.fa-user
     %th
-      Name
+      = t(:name)
     %th
-      E-Mail
+      = t(:email)
     %th
-      Roles
+      = t(:roles)
   %tbody
     - users.each do |user|
       %tr
