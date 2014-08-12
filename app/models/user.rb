@@ -28,11 +28,15 @@ class User < ActiveRecord::Base
     name.blank? ? email : name
   end
 
+  def openstack_username
+    "#{organization.reference}_#{email}"
+  end
+
   private
 
   def password_complexity
     if password.present? && password.length < 8
-      errors.add(:base,  I18n.t(:password_too_short))
+      errors.add(:base, I18n.t(:password_too_short))
     end
   end
 
