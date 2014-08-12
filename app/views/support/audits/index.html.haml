@@ -1,13 +1,13 @@
-%h3 Audit Log
+%h3= t(:audit_log)
 .container-fluid
   %table.table.table-striped
     %thead
       %tr
         %th
-        %th Date
-        %th Time
-        %th User
-        %th Action
+        %th= t(:date)
+        %th= t(:time)
+        %th= t(:user)
+        %th= t(:action)
     %tbody
       - @audits.each do |audit|
         %tr
@@ -18,6 +18,6 @@
           %td
             = long_time(audit.created_at)
           %td
-            = audit.user ? audit.user.name : 'SYSTEM'
+            = audit.user ? audit.user.name : t(:system).upcase
           %td
             = render partial: "support/audits/table/#{audit.auditable_type.underscore}", locals: { audit: audit }

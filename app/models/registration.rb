@@ -13,17 +13,17 @@ class Registration
 
   def process!
     if !invite.can_register?
-      errors.add :base, 'Signup token is not valid'
+      errors.add :base, I18n.t(:signup_token_not_valid)
     elsif password != confirm_password
-      errors.add :base,  'Passwords do not match'
+      errors.add :base,  I18n.t(:passwords_dont_match)
     elsif password.length < 8
-      errors.add :base,  'Password is too short'
+      errors.add :base,  I18n.t(:password_too_short)
     elsif invite.power_invite? && organization_name.blank?
-      errors.add :base, 'Organization name is blank'
+      errors.add :base, I18n.t(:organization_name_is_blank)
     else
       if invite.power_invite?
         @organization = Organization.create(name: organization_name)
-        @owners = @organization.roles.create name: 'Owners', power_user: true
+        @owners = @organization.roles.create name: I18n.t(:owners), power_user: true
       else
         @organization = invite.organization
       end
