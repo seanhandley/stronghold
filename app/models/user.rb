@@ -45,10 +45,12 @@ class User < ActiveRecord::Base
                 tenant_id: organization.tenant_id,
                 enabled: true
               }
-    params[:password] = password if password.present?
     if new_record?
+      new_key = SecureRandom.hex
+      self.api_key = new_key
+      params[:password] = new_key
       u = OpenStack::User.create params
-      update_column(:openstack_id, u.id)
+      self.openstack_id = u.id
     else
       u = OpenStack::User.find_all_by(:id, openstack_id)[0]
       u.update params
