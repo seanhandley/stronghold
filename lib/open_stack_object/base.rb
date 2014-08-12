@@ -109,7 +109,7 @@ module OpenStackObject
       private
 
       def conn
-        args = OPENSTACK_ARGS
+        args = OPENSTACK_ARGS.dup
         if Authorization.current_user.present?
           username = Authorization.current_user.openstack_username
           password = Authorization.current_user.api_key.decrypt(Rails.application.secrets.strongbox_passphrase)
