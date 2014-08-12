@@ -26,7 +26,7 @@ class User < ActiveRecord::Base
 
   def password_complexity
     if password.present? && password.length < 8
-      errors.add(:base,  'Password is too short')
+      errors.add(:base,  I18n.t(:password_too_short))
     end
   end
 end
