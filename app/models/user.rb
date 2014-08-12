@@ -52,8 +52,10 @@ class User < ActiveRecord::Base
       u = OpenStack::User.create params
       self.openstack_id = u.id
     else
-      u = OpenStack::User.find_all_by(:id, openstack_id)[0]
-      u.update params
+      # Needs to be an admin user to change identity details
+      #
+      # u = OpenStack::User.find_all_by(:id, openstack_id)[0]
+      # u.update params
     end
   end
 
