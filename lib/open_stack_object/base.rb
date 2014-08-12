@@ -111,8 +111,8 @@ module OpenStackObject
       def conn
         args = OPENSTACK_ARGS
         if Authorization.current_user.present?
-          username = "#{Authorization.current_user.organization.reference}_#{Authorization.current_user.email}"
-          password = '87654321'
+          username = Authorization.current_user.openstack_username
+          password = Authorization.current_user.api_key.decrypt(Rails.application.secrets.strongbox_passphrase)
           tenant   = Authorization.current_user.organization.reference
           args.merge!(:openstack_username => username,
                    :openstack_api_key  => password, # Also accepts :openstack_auth_token
