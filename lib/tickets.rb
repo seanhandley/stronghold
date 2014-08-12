@@ -24,7 +24,7 @@ class Tickets
     end
   end
 
-  def create(title, description)
+  def create(title, description, email)
 
     title = "[title]" if title.nil?
     description = "[description]" if description.nil?
@@ -40,10 +40,12 @@ class Tickets
           "name": "Bug"
         },
         "reporter": {
-          "name": "james.garner"
+          "name": "issues",
+          "email": "' + email + '"
         },
         "assignee": {
-          "name": "james.garner"
+          "name": "issues",
+          "email": ""
         },
         "labels": [
           "' + @reference + '"
@@ -54,8 +56,24 @@ class Tickets
 
     response = @connection.post url, json
     responseBody = JSON.parse response.body
+    responseBody
     responseBody['key']
 
+  end
+
+  def add_comment(reference)
+    url = @settings['base_url'] + 'issue/' + reference + '/comment'
+    json = '{
+      "body": "test",
+      "author": {
+        "name": "issues"
+      }
+    }'
+    response = @connection.post url, json
+    responseBody = JSON.parse response.body
+    responseBody
+    # url
+    # "Comment Added for " + reference + "!"
   end
 
 end
