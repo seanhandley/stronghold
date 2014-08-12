@@ -34,3 +34,7 @@ group :test do
   gem 'faker'
   gem 'machinist'
 end
+
+group :development do
+  gem 'i18n_yaml_sorter'
+end

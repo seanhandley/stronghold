@@ -22,14 +22,14 @@ class Role < ActiveRecord::Base
 
   def check_users
     if users.present?
-      errors.add(:base, 'You cannot remove a role which has users assigned to it')
+      errors.add(:base, I18n.t(:role_has_users_assigned))
       false
     end
   end
 
   def check_power
     if power_user?
-      errors.add(:base, 'This is a power user group and may not be removed')
+      errors.add(:base, I18n.t(:cannot_remove_power_user_group))
       false
     end  
   end
