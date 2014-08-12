@@ -7,16 +7,16 @@
             &times;
           %h4.modal-title#addRoleUser
             %i.fa.fa-key
-            = "Add User to #{role.name} role"
-          %p Please choose a user to add to this role
+            = "#{t(:add_user_to_role)} '#{role.name}'"
+          %p= t(:please_choose_a_user)
         .modal-body
           = javascript_error_messages_for(f.object)
           = f.hidden_field :role_id, value: role.id
           .input-group
             %span.input-group-addon
               %i.fa.fa-user
-            = f.select :user_id, users_for_select(role), {}, class: "select-user", placeholder: 'Select a user'
+            = f.select :user_id, users_for_select(role), {}, class: "select-user", placeholder: t(:select_a_user)
         .modal-footer
           %button.btn.btn-default{'data-toggle' => "modal", 'data-dismiss' => "modal"}
-            Cancel
-          = f.submit 'Add', class: 'btn btn-primary'
+            = t(:cancel)
+          = f.submit t(:add), class: 'btn btn-primary'

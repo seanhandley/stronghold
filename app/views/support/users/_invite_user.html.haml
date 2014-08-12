@@ -7,19 +7,19 @@
             &times;
           %h4.modal-title#inviteUser
             %i.fa.fa-envelope
-            Invite User
-          %p Please enter an email address and at least one role.
+            = t(:invite_user)
+          %p= t(:please_email_and_one_role)
         .modal-body
           = javascript_error_messages_for(f.object)
           .input-group.has-warning
             %span.input-group-addon
               %i.fa.fa-envelope
-            = f.text_field :email, placeholder: 'E-mail address', class: "form-control", autofocus: true
+            = f.text_field :email, placeholder: t(:email), class: "form-control", autofocus: true
           .input-group.has-warning
             %span.input-group-addon
               %i.fa.fa-key
-            = f.select :role_ids, roles_for_select(current_user.organization), {}, class: "select-roles", multiple: true, placeholder: 'Assign at least one role'
+            = f.select :role_ids, roles_for_select(current_user.organization), {}, class: "select-roles", multiple: true, placeholder: t(:assign_at_least_one_role)
         .modal-footer
           %button.btn.btn-default{'data-toggle' => "modal", 'data-dismiss' => "modal"}
-            Cancel
-          = f.submit 'Invite', class: 'btn btn-primary', id: 'submit'
+            = t(:cancel)
+          = f.submit t(:invite), class: 'btn btn-primary', id: 'submit'
