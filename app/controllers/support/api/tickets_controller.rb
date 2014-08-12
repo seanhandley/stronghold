@@ -23,7 +23,7 @@ class Support::Api::TicketsController < SupportBaseController
 
   def add_comment
     reference = params[:ticket_id]
-    response = current_user.organization.tickets.add_comment(reference)
+    response = current_user.organization.tickets.add_comment(reference, params[:text])
     respond_to do |format|
       format.json {
         render :json => response

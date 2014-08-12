@@ -61,10 +61,10 @@ class Tickets
 
   end
 
-  def add_comment(reference)
+  def add_comment(reference, text)
     url = @settings['base_url'] + 'issue/' + reference + '/comment'
     json = '{
-      "body": "test",
+      "body": "' + text + '",
       "author": {
         "name": "issues"
       }
