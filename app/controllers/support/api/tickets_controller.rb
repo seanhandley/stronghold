@@ -13,10 +13,20 @@ class Support::Api::TicketsController < SupportBaseController
   end
 
   def create
-    reference = current_user.organization.tickets.create(params[:title], params[:description])
+    reference = current_user.organization.tickets.create(params[:title], params[:description], current_user.email)
     respond_to do |format|
       format.json {
         render :json => reference
+      }
+    end
+  end
+
+  def add_comment
+    reference = params[:ticket_id]
+    response = current_user.organization.tickets.add_comment(reference)
+    respond_to do |format|
+      format.json {
+        render :json => response
       }
     end
   end
