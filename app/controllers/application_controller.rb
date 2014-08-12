@@ -7,5 +7,7 @@ class ApplicationController < ActionController::Base
     render js: "window.location.replace('#{path}')"
   end
 
+  before_action { Authorization.current_user = nil }
+
   def current_section; end
 end
