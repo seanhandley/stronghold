@@ -3,11 +3,14 @@ module AuditsHelper
     details = ''
     if audit.action == 'update'
       details = audit.audited_changes.collect do |k,v|
-        "#{t(k.underscore.to_sym).capitalize.humanize} #{t(:is_now)} '#{r(v[1])}' (#{t(:used_to_be)} '#{r(v[0])}')"
+        previous_val = try_translate_permissions(k,v[0])
+        current_val  = try_translate_permissions(k,v[1])
+        "#{t(k.underscore.to_sym).capitalize.humanize} #{t(:is_now)} '#{current_val}' (#{t(:used_to_be)} '#{previous_val}')"
       end.join '. '
     else
       details = audit.audited_changes.collect do |k,v|
-        "'#{t(k.underscore.to_sym).capitalize.humanize}': '#{r(v)}'"
+        val = try_translate_permissions(k,v)
+        "'#{t(k.underscore.to_sym).capitalize.humanize}': '#{val}'"
       end.join ', '
     end
     details += '.'
@@ -27,5 +30,16 @@ module AuditsHelper
       'text-info'
     end
       
+  end
+
+  def try_translate_permissions(k,v)
+    if k.underscore.to_sym == :permissions
+      vals = [v].flatten.map do |v|
+        t("can_#{v.underscore.gsub('.','_').to_sym}", default: v)
+      end
+      r(vals)
+    else
+      r(v)
+    end
   end
 end
