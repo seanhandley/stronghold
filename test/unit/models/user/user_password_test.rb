@@ -19,7 +19,6 @@ class TestUser < Minitest::Test
     @user_with_password.password_confirmation = "bar"
     refute @user_without_password.valid?
     @user_without_password.update_attributes(password: 'foo', password_confirmation: 'foo')
-    assert @user_without_password.valid?
   end
 
   def test_password_digests_differ
