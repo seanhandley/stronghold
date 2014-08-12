@@ -8,21 +8,21 @@
         %a{:href => support_profile_path}
           %span.nav-menu-icon
             %i.fa.fa-user
-          My Details
+          = t(:my_details)
       - if current_user.power_user?
         %li
           %a{:href => support_edit_organization_path}
             %span.nav-menu-icon
               %i.fa.fa-briefcase
-            My Organization
+            = t(:my_organisation)
         %li
           %a{:href => support_audits_path} 
             %span.nav-menu-icon
               %i.fa.fa-history
-            Audit Log
+            = t(:audit_log)
       %li.divider
       %li
         %a{:href => session_path(current_user), data: { confirm: "Log out?", :method => :delete }}
           %span.nav-menu-icon
             %i.fa.fa-sign-out
-          Log out
+          = t(:logout)

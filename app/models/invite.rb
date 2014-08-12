@@ -47,10 +47,10 @@ class Invite < ActiveRecord::Base
   end
 
   def has_roles?
-    errors.add(:base, "Please give this user at least one role") unless power_invite? || roles.present?
+    errors.add(:base, I18n.t(:please_give_user_at_least_one_role)) unless power_invite? || roles.present?
   end
 
   def email_looks_valid?
-    errors.add(:email, "is not a valid address") unless email =~ /.+@.+\..+/
+    errors.add(:email, I18n.t(:is_not_a_valid_address)) unless email =~ /.+@.+\..+/
   end
 end

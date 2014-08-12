@@ -2,8 +2,8 @@
   .page-controls
     %button.btn.btn-primary.btn-xs{'data-toggle' => "modal", 'data-target' => "#createRole"}
       %i.fa.fa-key
-      Add New Role
+      = t(:add_new_role)
   - roles.each do |role|
     = render partial: 'view', locals: {role: role}
     
-= render partial: 'form', locals: {role: Role.new, form_path: support_roles_path, verb: 'Create', id: 'createRole'}
+= render partial: 'form', locals: {role: Role.new, form_path: support_roles_path, title: t(:create_role), id: 'createRole'}

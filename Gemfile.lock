@@ -86,6 +86,7 @@ GEM
       tilt
     hike (1.2.3)
     i18n (0.6.9)
+    i18n_yaml_sorter (0.2.0)
     jbuilder (2.0.7)
       activesupport (>= 3.0.0, < 5)
       multi_json (~> 1.2)
@@ -216,6 +217,7 @@ DEPENDENCIES
   font-awesome-sass (~> 4.1.0)
   gravatar_image_tag (~> 1.2.0)
   haml (~> 4.0.5)
+  i18n_yaml_sorter
   jbuilder (~> 2.0)
   jira-ruby (~> 0.1.10)
   jquery-rails
