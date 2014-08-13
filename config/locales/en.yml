@@ -59,6 +59,7 @@ en:
   my_organisation: "My Organisation"
   name: "Name"
   networking: "Networking"
+  logged_out_after_inactivity: "You were logged out automatically after a period of inactivity"
   organization_name: "Organization Name"
   organization_name_is_blank: "Organization name is blank"
   owners: "Owners"

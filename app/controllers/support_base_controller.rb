@@ -43,7 +43,7 @@ class SupportBaseController < ApplicationController
   def timeout_session!
     if (Time.now - Time.parse(session[:created_at])) > SESSION_TIMEOUT.minutes
       session[:user_id] = nil
-      redirect_to sign_in_path
+      redirect_to sign_in_path, notice: t(:logged_out_after_inactivity)
     else
       session[:created_at] = Time.now
     end
