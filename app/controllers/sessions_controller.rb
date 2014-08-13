@@ -12,6 +12,7 @@ class SessionsController < ApplicationController
     @user = User.find_by_email(params[:user][:email])
     if @user and params[:user][:password].present? and @user.authenticate(params[:user][:password])
       session[:user_id] = @user.id
+      session[:created_at] = Time.now
       redirect_to support_root_path
     else
       flash.now.alert = "Invalid credentials. Please try again."
