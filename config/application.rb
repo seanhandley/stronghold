@@ -21,5 +21,7 @@ module Stronghold
     config.i18n.default_locale = :en
 
     config.autoload_paths += %W(#{config.root}/lib)
+
+    config.logger = ::Logger.new(STDOUT)
   end
 end
