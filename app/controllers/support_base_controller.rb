@@ -1,6 +1,6 @@
 class SupportBaseController < ApplicationController
 
-  before_filter :current_user, :authenticate_user!
+  before_filter :current_user, :authenticate_user!, :timeout_session!
   before_filter { Authorization.current_user = current_user }
   around_filter :user_time_zone, :if => :current_user
   before_action :set_locale
@@ -35,6 +35,15 @@ class SupportBaseController < ApplicationController
   def authenticate_user!
     unless current_user
       redirect_to sign_in_path
+    end
+  end
+
+  def timeout_session!
+    if (Time.now - Time.parse(session[:created_at])) > 1.minutes
+      session[:user_id] = nil
+      redirect_to sign_in_path
+    else
+      session[:created_at] = Time.now
     end
   end
 end
