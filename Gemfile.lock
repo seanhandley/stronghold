@@ -226,7 +226,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jira-ruby (~> 0.1.10)
   jquery-rails
-  logstasher
+  logstasher (~> 0.5.3)
   machinist
   minitest-rails
   mysql2
