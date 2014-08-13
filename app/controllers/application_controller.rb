@@ -10,4 +10,5 @@ class ApplicationController < ActionController::Base
   before_action { Authorization.current_user = nil }
 
   def current_section; end
+  def current_user; end
 end
