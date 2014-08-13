@@ -1,6 +1,6 @@
 module OpenStack
   class Instance < OpenStackObject::Server
-    attributes :name, :state, :all_addresses
+    attributes :name, :state, :all_addresses, :tenant_id, :user_id
 
     methods :reboot, :wait_for
 
@@ -20,6 +20,7 @@ module OpenStack
         reload
       end
       audit('start')
+      self
     end
 
     def stop
@@ -29,6 +30,7 @@ module OpenStack
         reload
       end
       audit('stop')
+      self
     end
 
     def pause
@@ -38,6 +40,7 @@ module OpenStack
         reload
       end
       audit('pause')
+      self
     end
 
     def destroy
