@@ -8,4 +8,5 @@ class ApplicationController < ActionController::Base
   end
 
   def current_section; end
+  def current_user; end
 end
