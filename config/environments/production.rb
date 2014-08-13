@@ -46,7 +46,7 @@ Rails.application.configure do
   config.log_level = :info
   config.logger = ActiveSupport::Logger.new("/var/log/rails/stronghold/production.log")
   config.logstasher.enabled = true
-  config.logstasher.logger_path = "/var/log/rails/stronghold/"
+  config.logstasher.logger_path = "/var/log/rails/stronghold/logstash_production.log"
 
   # Prepend all log lines with the following tags.
   # config.log_tags = [ :subdomain, :uuid ]
