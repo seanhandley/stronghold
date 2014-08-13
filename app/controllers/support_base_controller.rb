@@ -21,6 +21,8 @@ class SupportBaseController < ApplicationController
 
   def set_locale
     I18n.locale = current_user.present? ? current_user.organization.locale.to_sym : I18n.default_locale
+  rescue I18n::InvalidLocale
+    I18n.locale = I18n.default_locale
   end
 
   def user_time_zone(&block)
