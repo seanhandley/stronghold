@@ -28,6 +28,7 @@ gem 'sidekiq', '~> 2.15.0'
 gem 'database_cleaner', '~> 0.8.0'
 gem 'audited-activerecord', git: 'https://github.com/collectiveidea/audited.git', tag: 'v4.0.0.rc1'
 gem 'verbs', '~> 2.1.4'
+gem 'logstasher', '~> 0.5.3'
 
 group :test do
   gem 'minitest-rails'
