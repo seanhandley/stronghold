@@ -1,19 +1,6 @@
 .ticket
   %div.btn-group
-    %button.btn.btn-primary.dropdown-toggle{:'data-toggle' => "dropdown", :type => "button"}
-      %i.fa.fa-circle{:style => "color: {{selectedTicket.status.color;}}"}
-      Status: {{selectedTicket.status.name}}
-      %span.caret
-    %ul.dropdown-menu{:'id' => "statusDropdown", :role => "menu"}
-      %li{:'ng-repeat' => "status in statuses"}
-        %a{:'status-name' => "{{status.name}}"}
-          {{status.name}}
-  %div.btn-group
-    %button.btn
-      %i.fa.fa-pencil
-      Edit
-  %div.btn-group
-    %button.btn
+    %button.btn{'data-target' => '#newComment', 'data-toggle' => 'modal'}
       %i.fa.fa-comment
       Comment
 
@@ -33,3 +20,20 @@
             {{comment.time | momentDateTime}}
           %p
             {{comment.content}}
+
+.modal.fade{'id' => 'newComment', 'tabindex' => "-1", 'role' => "dialog", 'aria-labelledby' => 'newComment', 'aria-hidden' => "true"}
+  .modal-dialog
+    .modal-content
+      = form_for '' do |f|
+        .modal-header
+          Comment
+        .modal-body
+          .input-group
+            %span.input-group-addon
+              %i.fa.fa-comment
+            = f.text_field :comment, placeholder: 'Comment', class: "form-control", autofocus: true
+        .modal-footer
+          %button.btn{'data-toggle' => "modal", 'data-dismiss' => "modal"}
+            Cancel
+          %button.btn.btn-primary
+            Submit

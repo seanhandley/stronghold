@@ -7,6 +7,7 @@
   this.comments = comments
   this
 
-@Ticket.prototype.changeStatus = () ->
+@Ticket.prototype.changeStatus = (status) ->
+  console.log("change status to " + status)
   this.status = status
   this
