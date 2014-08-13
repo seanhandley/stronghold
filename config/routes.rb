@@ -11,7 +11,7 @@ Rails.application.routes.draw do
     get '/tickets', :controller => 'tickets', :action => 'index'
     namespace :api, defaults: {format: :json} do
       resources :tickets, only: [:index, :create] do
-        resources :comments, :controller => "tickets", :action => "add_comment", only: [:create]
+        resources :comments, :controller => "ticket_comments", only: [:create, :destroy]
       end
     end
     delete 'role/:role_id/user/:user_id', :controller => 'role_users', :action => 'destroy', :as => 'remove_role_user'
