@@ -1,0 +1,8 @@
+development:
+  timeout: 129600
+
+test:
+  timeout: 129600
+
+production:
+  timeout: 10
