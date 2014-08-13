@@ -61,8 +61,8 @@ class Tickets
 
   end
 
-  def add_comment(reference, text)
-    url = @settings['base_url'] + 'issue/' + reference + '/comment'
+  def create_comment(issue_reference, text)
+    url = @settings['base_url'] + 'issue/' + issue_reference + '/comment'
     json = '{
       "body": "' + text + '",
       "author": {
@@ -72,8 +72,12 @@ class Tickets
     response = @connection.post url, json
     responseBody = JSON.parse response.body
     responseBody
-    # url
-    # "Comment Added for " + reference + "!"
+  end
+
+  def destroy_comment(issue_reference, comment_id)
+    url = @settings['base_url'] + 'issue/' + issue_reference + '/comment/' + comment_id
+    response = @connection.delete url
+    (response.body.length == 0)
   end
 
 end
