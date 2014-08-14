@@ -1,6 +1,6 @@
 .ticket
   %div.btn-group
-    %button.btn{'data-target' => '#newComment', 'data-toggle' => 'modal'}
+    %button.btn{:'ng-click' => "commentDialogShow()"}
       %i.fa.fa-comment
       Comment
 
@@ -24,16 +24,15 @@
 .modal.fade{'id' => 'newComment', 'tabindex' => "-1", 'role' => "dialog", 'aria-labelledby' => 'newComment', 'aria-hidden' => "true"}
   .modal-dialog
     .modal-content
-      = form_for '' do |f|
-        .modal-header
-          Comment
-        .modal-body
-          .input-group
-            %span.input-group-addon
-              %i.fa.fa-comment
-            = f.text_field :comment, placeholder: 'Comment', class: "form-control", autofocus: true
-        .modal-footer
-          %button.btn{'data-toggle' => "modal", 'data-dismiss' => "modal"}
-            Cancel
-          %button.btn.btn-primary
-            Submit
+      .modal-header
+        Comment
+      .modal-body
+        .input-group
+          %span.input-group-addon
+            %i.fa.fa-comment
+          = text_area_tag :comment, nil, placeholder: 'Comment', class: "form-control", autofocus: true
+      .modal-footer
+        %button.btn{:'ng-click' => 'commentDialogCancel()'}
+          Cancel
+        %button.btn.btn-primary{:'ng-click' => 'commentDialogSubmit(selectedTicket)'}
+          Submit
