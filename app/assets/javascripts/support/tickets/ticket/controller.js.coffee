@@ -1,9 +1,10 @@
 angularJS.controller "TicketsController", [
+  "$http",
   "$scope",
   "$interval",
   "TicketFactory",
   "TicketStatusFactory",
-  ($scope, $interval, TicketFactory, TicketStatusFactory) ->
+  ($http, $scope, $interval, TicketFactory, TicketStatusFactory) ->
     $scope.statuses = TicketStatusFactory.getTicketStatuses()
     $scope.tickets = null
     $scope.populateTickets = ->
@@ -45,5 +46,40 @@ angularJS.controller "TicketsController", [
         $scope.selectedTicket = null
       $scope.selectedTicketIndex = ticketIndex
       $scope.tickets
+
+    $scope.commentDialogShow = ->
+      $("#comment").val("")
+      $("#newComment").on("shown.bs.modal", () -> 
+        $("#comment").focus()
+      )
+      $("#newComment").modal('show')
+      false
+
+    $scope.commentDialogHide = -> 
+      $('#newComment').modal('hide')
+      false
+
+    $scope.commentDialogSubmit = (ticket) ->
+      comment = $("#comment").val()
+      console.log(ticket)
+      successHandler = (response) ->
+        console.log(response.data)
+        ticket.comments.push(new TicketComment(response.data.updateAuthor.emailAddress, response.data.body, null))
+        $scope.commentDialogHide()
+      errorHandler = (response) ->
+        # handle gracefully
+      request = $http({
+        method: "post",
+        url: "/support/api/tickets/" + ticket.reference + "/comments/",
+        data: {
+          "text": comment
+        }
+      })
+      request.then successHandler, errorHandler
+
+    $scope.commentDialogCancel = ->
+      console.log("cancel")
+      $scope.commentDialogHide()
+      false
 
 ]
