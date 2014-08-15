@@ -60,6 +60,8 @@ angularJS.controller "TicketsController", [
       commentTextArea = $("#newComment textarea")
       commentSubmitButton = $($("#newComment button.btn-primary")[0])
       commentTextArea.val("")
+      commentSubmitButton.html("Submit")
+      commentSubmitButton.removeClass("disabled")
       $("#newComment").on("shown.bs.modal", () -> 
         commentTextArea.focus()
       )
@@ -72,11 +74,11 @@ angularJS.controller "TicketsController", [
 
     $scope.commentDialogSubmit = (ticket) ->
       console.log(ticket)
-      commentTextArea = $("#newComment textarea")
+      commentTextArea = $($("#newComment textarea"))
       commentSubmitButton = $($("#newComment button.btn-primary")[0])
       commentSubmitButton.html("Submitting...")
+      commentSubmitButton.addClass("disabled")
       allHandler = () ->
-        commentSubmitButton.html("Submit")
         $scope.commentDialogHide()
       successHandler = (response) ->
         console.log(response.data)
