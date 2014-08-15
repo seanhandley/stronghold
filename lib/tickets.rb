@@ -66,7 +66,7 @@ class Tickets
     json = '{
       "body": "' + text + '",
       "author": {
-        "name": "' + @settings['jira_user'] + '"
+        "name": "' + @settings['user'] + '"
       }
     }'
     response = @connection.post url, json
