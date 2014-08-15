@@ -36,15 +36,20 @@ angularJS.controller "TicketsController", [
     $scope.isLoading = ->
       not $scope.tickets?
 
-    $scope.selectedTicketIndex = -1
-    $scope.showTicket = (ticketIndex) ->
-      ticketIndex = $scope.selectedTicketIndex if ticketIndex is `undefined`
-      ticketIndex = -1 if $scope.tickets[ticketIndex] is `undefined`
-      if ticketIndex > -1
-        $scope.selectedTicket = $scope.tickets[ticketIndex]
+    $scope.getTicketByReference = (reference) ->
+      return (
+        $.grep $scope.tickets, (ticket) ->
+          ticket.reference == reference
+      )[0]
+
+    $scope.selectedTicketReference = -1
+    $scope.showTicket = (ticketReference) ->
+      ticketReference = $scope.selectedTicketReference if ticketReference is `undefined`
+      if ticketReference != null
+        $scope.selectedTicket = $scope.getTicketByReference(ticketReference)
       else
         $scope.selectedTicket = null
-      $scope.selectedTicketIndex = ticketIndex
+      $scope.selectedTicketReference = ticketReference
       $scope.tickets
 
     $scope.commentDialogShow = ->
