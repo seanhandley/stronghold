@@ -9,17 +9,20 @@
   %p {{selectedTicket.description}}
   %h3 Comments
   %div.comments
-    %ul.media-list
-      %li.media{:'ng-repeat' => ("comment in selectedTicket.comments")}
-        %a.pull-left
-          = gravatar_image_tag("{{comment.email}}", :class => 'img-circle')
-        %div.media-body
-          %h4.media-heading
-            {{comment.email}}
-          %p
-            {{comment.time | momentDateTime}}
-          %p
-            {{comment.content}}
+    %div{:'ng-show' => "hasComments(selectedTicket)"}
+      %ul.media-list
+        %li.media{:'ng-repeat' => ("comment in selectedTicket.comments")}
+          %a.pull-left
+            = gravatar_image_tag("{{comment.email}}", :class => 'img-circle')
+          %div.media-body
+            %h4.media-heading
+              {{comment.email}}
+            %p
+              {{comment.time | momentDateTime}}
+            %p
+              {{comment.content}}
+    %div{:'ng-show' => "!hasComments(selectedTicket)"}
+      There are no comments. Sorry.
 
 .modal.fade{'id' => 'newComment', 'tabindex' => "-1", 'role' => "dialog", 'aria-labelledby' => 'newComment', 'aria-hidden' => "true"}
   .modal-dialog
