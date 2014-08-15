@@ -33,6 +33,10 @@ angularJS.controller "TicketsController", [
     $scope.hasTickets = ->
       $scope.countTickets() > 0
 
+    $scope.hasComments = (ticket) ->
+      return false if !ticket?
+      (ticket.comments.length > 0)
+
     $scope.isLoading = ->
       not $scope.tickets?
 
@@ -53,9 +57,11 @@ angularJS.controller "TicketsController", [
       $scope.tickets
 
     $scope.commentDialogShow = ->
-      $("#comment").val("")
+      commentTextArea = $("#newComment textarea")
+      commentSubmitButton = $($("#newComment button.btn-primary")[0])
+      commentTextArea.val("")
       $("#newComment").on("shown.bs.modal", () -> 
-        $("#comment").focus()
+        commentTextArea.focus()
       )
       $("#newComment").modal('show')
       false
@@ -65,19 +71,27 @@ angularJS.controller "TicketsController", [
       false
 
     $scope.commentDialogSubmit = (ticket) ->
-      comment = $("#comment").val()
       console.log(ticket)
+      commentTextArea = $("#newComment textarea")
+      commentSubmitButton = $($("#newComment button.btn-primary")[0])
+      commentSubmitButton.html("Submitting...")
+      allHandler = () ->
+        commentSubmitButton.html("Submit")
+        $scope.commentDialogHide()
       successHandler = (response) ->
         console.log(response.data)
+        if (response.data.errorMessages)
+          errorHandler()
+          return
         ticket.comments.push(new TicketComment(response.data.updateAuthor.emailAddress, response.data.body, null))
-        $scope.commentDialogHide()
+        allHandler()
       errorHandler = (response) ->
-        # handle gracefully
+        allHandler()
       request = $http({
         method: "post",
         url: "/support/api/tickets/" + ticket.reference + "/comments/",
         data: {
-          "text": comment
+          "text": commentTextArea.val()
         }
       })
       request.then successHandler, errorHandler
