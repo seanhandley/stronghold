@@ -3,6 +3,6 @@ $ ->
 
   # Workaround for display bug with the navpills
   $('.dropdown').on 'shown.bs.dropdown', ->
-    $('.nav-tabs').addClass 'hide'
+    $('#user-role-tabs').addClass 'hide'
   $('.dropdown').on 'hidden.bs.dropdown', ->
-    $('.nav-tabs').removeClass 'hide'
+    $('#user-role-tabs').removeClass 'hide'
