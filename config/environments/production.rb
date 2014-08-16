@@ -44,8 +44,10 @@ Rails.application.configure do
 
   # Set to :debug to see everything in the log.
   config.log_level = :info
-  config.logger = ActiveSupport::Logger.new("/var/log/rails/stronghold/production.log")
-
+  config.logger = ::Logger.new("/var/log/rails/stronghold/production.log")
+  config.logstasher.enabled = true
+  config.logstasher.logger = ::Logger.new("/var/log/rails/stronghold/logstash_production.log")
+  config.logstasher.log_controller_parameters = true
 
   # Prepend all log lines with the following tags.
   # config.log_tags = [ :subdomain, :uuid ]

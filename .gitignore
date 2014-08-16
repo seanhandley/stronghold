@@ -20,3 +20,4 @@ app/assets/.DS_Store
 app/assets/images/.DS_Store
 app/assets/javascripts/.DS_Store
 app/assets/stylesheets/.DS_Store
+config/keypair.pem

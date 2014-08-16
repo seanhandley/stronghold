@@ -6,7 +6,7 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-organization = Organization.create(reference: 'dc456', name: 'BBC')
+organization = Organization.create(name: 'BBC')
 
 user = organization.users.create(email: 'support@datacentred.co.uk', password: 'llama123',
             first_name: 'Testy', last_name: 'Tester')

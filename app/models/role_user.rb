@@ -15,7 +15,7 @@ class RoleUser < ActiveRecord::Base
 
   def check_presence
     if RoleUser.where(role_id: role.id, user_id: user.id).present?
-      errors.add(:base, "User already has this role assigned.")
+      errors.add(:base, I18n.t(:user_already_has_role_assigned))
       return false
     else
       return true   
@@ -24,10 +24,10 @@ class RoleUser < ActiveRecord::Base
 
   def check_destroyable
     if role.power_user? && user.id == Authorization.current_user.id
-      errors.add(:base, "You can't remove yourself from the #{role.name} role. Please request another user with the right privileges removes you.")
+      errors.add(:base, I18n.t(:cant_remove_self_from_role))
       return false
     elsif user.roles.count == 1
-      errors.add(:base, "A user needs at least one role. Please assign them another before removing them from the #{role.name} role.")
+      errors.add(:base, I18n.t(:user_needs_at_least_one_role))
       return false
     end
     return true
