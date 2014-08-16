@@ -29,7 +29,8 @@ gem 'database_cleaner', '~> 0.8.0'
 gem 'audited-activerecord', git: 'https://github.com/collectiveidea/audited.git', tag: 'v4.0.0.rc1'
 gem 'verbs', '~> 2.1.4'
 gem 'faraday', '~> 0.9.0'
-gem 'faraday_middleware'
+gem 'strongbox', '~> 0.7.0'
+gem 'logstasher', '~> 0.5.3'
 
 group :test do
   gem 'minitest-rails'
@@ -41,3 +42,7 @@ gem 'rails-assets-angular'
 gem 'rails-assets-angular-resource'
 gem 'rails-assets-angular-bootstrap'
 gem 'momentjs-rails'
+
+group :development do
+  gem 'i18n_yaml_sorter'
+end

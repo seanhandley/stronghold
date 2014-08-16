@@ -1,9 +1,8 @@
 %i.fa.fa-user{class: audit_colour(audit)}
-= audit.audited_objects['User'].name
-was
-= audit.action == 'create' ? 'added to' : 'removed from'
 - if audit.audited_objects['Role']
-  the role
-  = "'#{audit.audited_objects['Role'].name}'."
+  = t(:role)
+  = "'#{audit.audited_objects['Role'].name}': "
+  = audit.action == 'create' ? t(:user_was_added) : t(:user_was_removed)
+  = "('#{audit.audited_objects['User'].name}')"
 - else
-  a role which has subsequently been removed.
+  = t(:role_subsequently_removed)

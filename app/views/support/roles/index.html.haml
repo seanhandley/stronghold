@@ -2,10 +2,10 @@
   %ul.nav.nav-tabs#user-role-tabs
     %li{'class' => active_tab?('users')}
       %a{:href => '#users', 'data-toggle' => 'tab', 'data-name' => 'users'}
-        Users
+        = t(:users)
     %li{'class' => active_tab?('roles')}
       %a{:href => '#roles', 'data-toggle' => 'tab', 'data-name' => 'roles'}
-        Roles
+        = t(:roles)
 
   .tab-content
     .tab-pane#users{'class' => active_tab?('users')}

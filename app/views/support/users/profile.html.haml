@@ -1,4 +1,4 @@
-%h3 Edit Profile
+%h3= t(:edit_profile)
 
 = gravatar_image_tag(@user.email, :gravatar => { :size => 180 }, class: 'img-circle profile-image')
 
@@ -7,23 +7,21 @@
     = javascript_error_messages_for(@user)
     = javascript_success_messages_for(@user)
     .form-group
-      %label First Name
+      %label= t(:first_name)
       = f.text_field :first_name, class: "form-control"
     .form-group
-      %label Last Name
+      %label= t(:last_name)
       = f.text_field :last_name, class: "form-control"
     .form-group
-      %label E-Mail
+      %label= t(:email)
       = f.email_field :email, class: "form-control"
       %span.help-block
-        To set your profile image, create a
-        = link_to 'Gravatar', 'https://gravatar.com'
-        account using this e-mail address.
+        = t(:gravatar_instructions).html_safe
     .form-group
-      %label Password
+      %label= t(:password)
       = f.password_field :password, class: "form-control"
     .form-group
-      %label Password confirmation
+      %label= t(:password_confirmation)
       = f.password_field :password_confirmation, class: "form-control"
 
-    = submit_tag 'Save', class: 'btn btn-primary', data: { disable_with: 'Saving...' }
+    = submit_tag t(:save), class: 'btn btn-primary', data: { disable_with: t(:saving) }

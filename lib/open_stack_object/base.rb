@@ -1,5 +1,6 @@
 require 'fog'
 require 'audited-activerecord'
+require_relative '../active_record/fake_model'
 
 module OpenStackObject
 
@@ -16,6 +17,7 @@ module OpenStackObject
   #
   class Base
     include ActiveModel::Model
+    include ActiveRecord::FakeModel
 
     def initialize(obj)
       @obj = obj
@@ -52,9 +54,18 @@ module OpenStackObject
       obj.destroy
     end
 
-    def [](key); self.send(key); end
-    def destroyed?; false ; end
-    def new_record?; false ; end
+    # Update a given OpenStack object
+    #
+    # @param [Hash] args a hash of arguments for updating the object
+    # @raise [OpenStackObject::Error] if the object cannot be updated
+    # @return [OpenStackObject::Base] Updated object
+    def update(args)
+      obj.update(args)
+      args.each do |k,v|
+        obj.send("#{k.to_sym}=", v)
+      end
+      self
+    end
 
     class << self
 
@@ -95,16 +106,19 @@ module OpenStackObject
         new conn.send(collection_name).create(args)
       end
 
-      def primary_key; :id; end
-
-      def inherited(subclass)
-        subclass.define_singleton_method(:base_class) { subclass }
-      end
-
       private
 
       def conn
-        "Fog::#{object_name.to_s.titleize}".constantize.new(OPENSTACK_ARGS)
+        args = OPENSTACK_ARGS.dup
+        if Authorization.current_user.present?
+          username = Authorization.current_user.openstack_username
+          password = Authorization.current_user.api_key.decrypt(Rails.application.secrets.strongbox_passphrase)
+          tenant   = Authorization.current_user.organization.reference
+          args.merge!(:openstack_username => username,
+                   :openstack_api_key  => password, # Also accepts :openstack_auth_token
+                   :openstack_tenant   => tenant)
+        end
+        "Fog::#{object_name.to_s.titleize}".constantize.new(args)
       end
 
     end

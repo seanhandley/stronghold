@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140805142648) do
+ActiveRecord::Schema.define(version: 20140811095355) do
 
   create_table "audits", force: true do |t|
     t.string   "auditable_id"
@@ -36,12 +36,6 @@ ActiveRecord::Schema.define(version: 20140805142648) do
   add_index "audits", ["organization_id"], name: "index_audits_on_organization_id", using: :btree
   add_index "audits", ["user_id", "user_type"], name: "user_index", using: :btree
 
-  create_table "foos", force: true do |t|
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "invites", force: true do |t|
     t.string   "email"
     t.datetime "created_at"
@@ -64,6 +58,8 @@ ActiveRecord::Schema.define(version: 20140805142648) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "time_zone",  default: "London", null: false
+    t.string   "tenant_id"
+    t.string   "locale",     default: "en",     null: false
   end
 
   create_table "roles", force: true do |t|
@@ -90,6 +86,10 @@ ActiveRecord::Schema.define(version: 20140805142648) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "organization_id"
+    t.string   "openstack_id"
+    t.binary   "api_key"
+    t.binary   "api_key_key"
+    t.binary   "api_key_iv"
   end
 
 end
