@@ -31,13 +31,13 @@
           %p
             Click &ldquo;New Ticket&rdquo;.
 
-      .col-xs-6
+      .col-xs-3
         %div{:'ng-show' => "hasTickets()"}
           %tabset
             %tab{:'ng-repeat' => "status in statuses | orderBy:'-name'", :heading => '{{status.name}}'}
               = render partial: 'tickets_list'
 
-      .col-xs-6
+      .col-xs-9
         .some-info.ticket{:'ng-hide' => "selectedTicket || !hasTickets()"}
           %p
             %i.fa.fa-info-circle
