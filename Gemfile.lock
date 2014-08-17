@@ -150,6 +150,10 @@ GEM
     rails-assets-angular (1.2.22)
     rails-assets-angular-bootstrap (0.11.0)
       rails-assets-angular (>= 1)
+    rails-assets-angular-gravatar (0.2.1)
+      rails-assets-angular (~> 1.2.0)
+    rails-assets-angular-md5 (0.1.7)
+      rails-assets-angular
     rails-assets-angular-resource (1.2.22)
       rails-assets-angular (= 1.2.22)
     rails-assets-angular-sanitize (1.2.22)
@@ -256,6 +260,8 @@ DEPENDENCIES
   rails (= 4.1.4)
   rails-assets-angular
   rails-assets-angular-bootstrap
+  rails-assets-angular-gravatar
+  rails-assets-angular-md5
   rails-assets-angular-resource
   rails-assets-angular-sanitize
   rails-assets-normalize-css
