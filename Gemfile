@@ -31,6 +31,7 @@ gem 'verbs', '~> 2.1.4'
 gem 'faraday', '~> 0.9.0'
 gem 'strongbox', '~> 0.7.0'
 gem 'logstasher', '~> 0.5.3'
+gem 'redcarpet'
 
 group :test do
   gem 'minitest-rails'
@@ -41,6 +42,7 @@ end
 gem 'rails-assets-angular'
 gem 'rails-assets-angular-resource'
 gem 'rails-assets-angular-bootstrap'
+gem 'rails-assets-angular-sanitize'
 gem 'momentjs-rails'
 
 group :development do
