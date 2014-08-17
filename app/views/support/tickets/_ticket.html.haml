@@ -13,7 +13,7 @@
       %ul.media-list
         %li.media{:'ng-repeat' => ("comment in selectedTicket.comments")}
           %a.pull-left
-            = gravatar_image_tag("{{comment.email}}", :class => 'img-circle')
+            %img.img-circle{'gravatar-src-once' => "comment.email"}
           %div.media-body
             %h4.media-heading
               {{comment.email}}
@@ -21,7 +21,7 @@
               {{comment.time | momentDateTime}}
             %p{'ng-bind-html' => "comment.content"}
     %div{:'ng-show' => "!hasComments(selectedTicket)"}
-      There are no comments. Sorry.
+      There are no comments yet.
 
 .modal.fade{'id' => 'newComment', 'tabindex' => "-1", 'role' => "dialog", 'aria-labelledby' => 'newComment', 'aria-hidden' => "true"}
   .modal-dialog

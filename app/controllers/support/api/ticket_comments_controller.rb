@@ -5,7 +5,7 @@ class Support::Api::TicketCommentsController < SupportBaseController
 
   def create
     issue_reference = params[:ticket_id]
-    response = current_user.organization.tickets.create_comment(issue_reference, params[:text])
+    response = current_user.organization.tickets.create_comment(issue_reference, params[:text], current_user.email)
     respond_to do |format|
       format.json {
         render :json => response

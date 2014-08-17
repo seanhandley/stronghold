@@ -1,1 +1,1 @@
-window.angularJS = angular.module('angularJS', ['ui.bootstrap', 'angularJS.filters', 'ngSanitize'])
+window.angularJS = angular.module('angularJS', ['ui.bootstrap', 'angularJS.filters', 'ngSanitize', 'ui.gravatar'])
