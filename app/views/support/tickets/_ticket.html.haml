@@ -1,13 +1,17 @@
 .ticket
-  %div.btn-group
-    %button.btn{:'ng-click' => "commentDialogShow()"}
-      %i.fa.fa-comment
-      Comment
 
   %h1 ({{selectedTicket.reference}}) {{selectedTicket.title}}
   %h3 Description
   %p{'ng-bind-html' => "selectedTicket.description"}
+
   %h3 Comments
+  %hr
+
+  %div.btn-group#comment-button
+    %button.btn.btn-default{:'ng-click' => "commentDialogShow()"}
+      %i.fa.fa-comment
+      Add Comment?
+
   %div.comments
     %div{:'ng-show' => "hasComments(selectedTicket)"}
       %ul.media-list
