@@ -9,3 +9,9 @@
         %i.fa.fa-circle{:style => "color: {{status.color;}}"}
       %td
         =link_to "({{ticket.reference}}) {{ticket.title}}", "", {:'ng-click' => 'showTicket(ticket.reference)'}
+  %tbody{:'ng-hide' => "getTickets(status).length > 0"}
+    %tr
+      %td
+      %td
+        %em
+          No tickets
