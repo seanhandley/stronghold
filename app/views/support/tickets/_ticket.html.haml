@@ -1,5 +1,9 @@
 .ticket
 
+  %button.btn.btn-primary.pull-right
+    %i.fa.fa-edit
+    New Ticket
+
   %h1 ({{selectedTicket.reference}}) {{selectedTicket.title}}
   %h3 Description
   %p{'ng-bind-html' => "selectedTicket.description"}
