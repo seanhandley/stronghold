@@ -6,7 +6,7 @@
 
   %h1 ({{selectedTicket.reference}}) {{selectedTicket.title}}
   %h3 Description
-  %p {{selectedTicket.description}}
+  %p{'ng-bind-html' => "selectedTicket.description"}
   %h3 Comments
   %div.comments
     %div{:'ng-show' => "hasComments(selectedTicket)"}
@@ -19,8 +19,7 @@
               {{comment.email}}
             %p
               {{comment.time | momentDateTime}}
-            %p
-              {{comment.content}}
+            %p{'ng-bind-html' => "comment.content"}
     %div{:'ng-show' => "!hasComments(selectedTicket)"}
       There are no comments. Sorry.
 

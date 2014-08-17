@@ -16,6 +16,7 @@
 //= require angular
 //= require angular-resource
 //= require angular-bootstrap
+//= require angular-sanitize
 //= require_tree .
 //= require bootstrap
 //= require select2

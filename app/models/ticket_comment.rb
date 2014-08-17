@@ -1,9 +1,10 @@
 class TicketComment
+  include TicketsHelper
 
   def initialize(jira_comment = {})
     @id = jira_comment['id']
     @email = jira_comment['author']['emailAddress']
-    @content = jira_comment['body']
+    @content = markdown jira_comment['body']
     @time = jira_comment['updated']
   end
 
