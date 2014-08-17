@@ -62,13 +62,13 @@ class Tickets
 
   def create_comment(issue_reference, text)
     url = @settings['base_url'] + 'issue/' + issue_reference + '/comment'
-    json = '{
-      "body": "' + text + '",
-      "author": {
-        "name": "' + @settings['user'] + '"
+    comment = {
+      "body" => text,
+      "author" => {
+        "name" => @settings['user']
       }
-    }'
-    response = @connection.post url, json
+    }
+    response = @connection.post url, comment.to_json
     responseBody = JSON.parse response.body
     responseBody
   end
