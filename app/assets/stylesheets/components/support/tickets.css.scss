@@ -8,7 +8,6 @@
 .some-info {
   color: $headings-color;
   background-color: #eee;
-  margin-bottom: 8px;
   p {
     margin: 0;
     padding: 4px 0 4px 0;
@@ -20,6 +19,14 @@
     font-size: 500%;
     color: $brand-primary;
   }
+}
+
+.space-after {
+  margin-bottom: 8px;
+}
+
+.clear-fix {
+  clear: both;
 }
 
 button > i.fa {
