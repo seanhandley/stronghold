@@ -11,3 +11,5 @@ OPENSTACK_ARGS = {
 
 Excon.defaults[:write_timeout] = 10
 Excon.defaults[:read_timeout] = 10
+
+SyncWithOpenStack = false
