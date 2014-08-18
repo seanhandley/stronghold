@@ -5,17 +5,34 @@ angularJS.controller "TicketsController", [
   "TicketFactory",
   "TicketStatusFactory",
   ($http, $scope, $interval, TicketFactory, TicketStatusFactory) ->
+
     $scope.statuses = TicketStatusFactory.getTicketStatuses()
-    $scope.tickets = null
+    $scope.tickets = []
+
+    $scope.isLoading = false
+
     $scope.populateTickets = ->
 
       doPopulateTickets = ->
-        TicketFactory.getTickets().then (tickets) ->
-          $scope.tickets = []
-          $scope.hasFailed = (not (tickets?))
-          return if $scope.hasFailed
-          $scope.tickets = tickets
-          $scope.showTicket()
+        $scope.isLoading = true
+        async.waterfall([
+          (next) ->
+            setTimeout(next, 500)
+            return
+          (next) ->
+            TicketFactory.getTickets().then (tickets) ->
+              $scope.tickets = [] if ($scope.tickets == `null`)
+              $scope.isLoading = false
+              setTimeout(next(null, tickets), 500)
+            return
+          (tickets, next) ->
+            $scope.hasFailed = (not (tickets?))
+            if (not $scope.hasFailed)
+              $scope.tickets = tickets
+              $scope.showTicket()
+            $scope.$apply()
+            return
+        ])
 
       doPopulateTickets()
       doPopulateTicketsPromise = $interval(doPopulateTickets, 20 * 1000)
@@ -27,7 +44,6 @@ angularJS.controller "TicketsController", [
         ticket.status.name is status.name
 
     $scope.countTickets = ->
-      return 0 unless $scope.tickets?
       $scope.tickets.length
 
     $scope.hasTickets = ->
@@ -36,9 +52,6 @@ angularJS.controller "TicketsController", [
     $scope.hasComments = (ticket) ->
       return false if !ticket?
       (ticket.comments.length > 0)
-
-    $scope.isLoading = ->
-      not $scope.tickets?
 
     $scope.getTicketByReference = (reference) ->
       return (
@@ -54,7 +67,7 @@ angularJS.controller "TicketsController", [
       else
         $scope.selectedTicket = null
       $scope.selectedTicketReference = ticketReference
-      $scope.tickets
+      $scope.selectedTicket
 
     $scope.commentDialogShow = ->
       commentTextArea = $("#newComment textarea")
@@ -85,7 +98,7 @@ angularJS.controller "TicketsController", [
         if (response.data.errorMessages)
           errorHandler()
           return
-        ticket.comments.push(new TicketComment(response.data.updateAuthor.emailAddress, response.data.body, null))
+        $scope.populateTickets()
         allHandler()
       errorHandler = (response) ->
         allHandler()

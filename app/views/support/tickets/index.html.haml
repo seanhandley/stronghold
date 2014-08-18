@@ -1,24 +1,24 @@
 .container-fluid{:'ng-controller' => "TicketsController", :'ng-init' => 'populateTickets()'}
-  .col-xs-12{:'ng-show' => "isLoading()"}
+  .col-xs-12{:'ng-show' => "isLoading"}
     .some-info
       %p
         %i.fa.fa-refresh.fa-spin
       %p
         Loading tickets...
 
-  %div{:'ng-hide' => "isLoading()"}
+  %div
     .col-xs-12{:'ng-show' => "hasFailed"}
       .some-info{}
         %p
           %i.fa.fa-warning
         %p
-          Can't load your support tickets right now.
+          We can't load your support tickets right now.
         %p
-          &mdash; Please check back later.
+          Please check back later.
 
     %div{:'ng-hide' => "hasFailed"}
 
-      .col-xs-12{:'ng-hide' => "isLoading()"}
+      .col-xs-12{:'ng-hide' => "isLoading"}
 
         .some-info{:'ng-hide' => "hasTickets()"}
           %p
