@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
   validates :password, :presence => true, :on => :create
   validate :password_complexity
 
-  before_save :set_os_user, unless: -> { Rails.env.test? }
+  before_save :set_os_user, if: -> { SyncWithOpenStack }
 
   def has_permission?(permission)
     power_user? || roles.collect(&:permissions).flatten.include?(permission)
