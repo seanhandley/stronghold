@@ -1,7 +1,7 @@
 !!!
 %html
   %head
-  %title Datacentred
+  %title DataCentred Sign Up
   = favicon_link_tag 'favicon.ico'
   = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
   = javascript_include_tag 'application', 'data-turbolinks-track' => true
@@ -10,11 +10,13 @@
   %meta{'http-equiv' => 'X-UA-Compatible', 'content' => 'IE=edge'}
   %meta{'name' => 'viewport', 'content' => 'width=device-width, initial-scale=1'}
 
-%body
+%body.sign-up
   #wrap
-    .container#login
-      = image_tag 'logo_text_only.png', class: 'login-logo'
-      #flashes= display_flash
+    .container
+      %h1
+        = image_tag 'logo_small.png', class: 'logo'
+        Almost there...
+    .container#sign-in
       = yield
     .push
   = render partial: 'shared/footer'

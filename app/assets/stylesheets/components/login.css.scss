@@ -1,4 +1,4 @@
-.container#login {
+.container#sign-in {
   width: 480px;
   height: 480px;
   overflow: auto;
@@ -8,7 +8,7 @@
   top: 0; left: 0; bottom: 0; right: 0;
 }
 
-img.login-logo {
+img.sign-in-logo {
   height: auto;
   width: 240px;
   margin-left: auto;
@@ -17,7 +17,7 @@ img.login-logo {
 }
 
 @media only screen and (max-width: 480px), only screen and (max-device-width: 480px) {
-  .container#login {
+  .container#sign-in {
     width: 260px;
   }
 }

@@ -1,6 +1,6 @@
 class SignupsController < ApplicationController
 
-  layout 'login'
+  layout 'sign-in'
 
   before_filter :find_invite
 

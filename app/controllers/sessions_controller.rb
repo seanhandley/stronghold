@@ -1,6 +1,6 @@
 class SessionsController < ApplicationController
 
-  layout 'login'
+  layout 'sign-in'
   
   def new
     respond_to do |wants|
