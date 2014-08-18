@@ -4,7 +4,7 @@
     %th
       Ticket
   %tbody{:'ng-repeat' => "ticket in getTickets(status)"}
-    %tr
+    %tr{:'class' => 'ticket', :'ng-class' => '{selected: ticket == selectedTicket}'}
       %td.status
         %i.fa.fa-circle{:style => "color: {{status.color;}}"}
       %td

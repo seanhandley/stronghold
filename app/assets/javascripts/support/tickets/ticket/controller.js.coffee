@@ -17,13 +17,13 @@ angularJS.controller "TicketsController", [
         $scope.isLoading = true
         async.waterfall([
           (next) ->
-            setTimeout(next, 500)
+            setTimeout(next, 1000)
             return
           (next) ->
             TicketFactory.getTickets().then (tickets) ->
               $scope.tickets = [] if ($scope.tickets == `null`)
               $scope.isLoading = false
-              setTimeout(next(null, tickets), 500)
+              setTimeout(next(null, tickets), 1000)
             return
           (tickets, next) ->
             $scope.hasFailed = (not (tickets?))
