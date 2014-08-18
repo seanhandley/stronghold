@@ -1,6 +1,6 @@
 .container-fluid{:'ng-controller' => "TicketsController", :'ng-init' => 'populateTickets()'}
   .col-xs-12{:'ng-show' => "isLoading"}
-    .some-info
+    .some-info.space-after
       %p
         %i.fa.fa-refresh.fa-spin
       %p
@@ -8,7 +8,7 @@
 
   %div
     .col-xs-12{:'ng-show' => "hasFailed"}
-      .some-info{}
+      .some-info.space-after
         %p
           %i.fa.fa-warning
         %p
@@ -18,9 +18,15 @@
 
     %div{:'ng-hide' => "hasFailed"}
 
-      .col-xs-12{:'ng-hide' => "isLoading"}
+      .col-xs-12.space-after
+        %div.clear-fix{:'ng-hide' => "isLoading"}
+          %button.btn.btn-primary.pull-right
+            %i.fa.fa-edit
+            New Ticket
 
-        .some-info{:'ng-hide' => "hasTickets()"}
+      .col-xs-12.space-after{:'ng-hide' => "isLoading"}
+
+        .some-info.clear-fix.space-after{:'ng-hide' => "hasTickets()"}
           %p
             %i.fa.fa-square-o
           %p
@@ -35,7 +41,7 @@
               = render partial: 'tickets_list'
 
       .col-xs-9
-        .some-info.ticket{:'ng-hide' => "selectedTicket || !hasTickets()"}
+        .some-info.space-after.ticket{:'ng-hide' => "selectedTicket || !hasTickets()"}
           %p
             %i.fa.fa-info-circle
           %p
