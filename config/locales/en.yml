@@ -52,7 +52,7 @@ en:
   language: "Language"
   last_name: "Last Name"
   log_out: "Log Out"
-  logged_out_after_inactivity: "You were logged out automatically after a period of inactivity"
+  signed_out_after_inactivity: "You were signed out automatically after a period of inactivity"
   member: "member"
   members: "Members"
   metrics: "Metrics"

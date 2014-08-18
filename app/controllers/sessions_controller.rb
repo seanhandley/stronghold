@@ -23,7 +23,7 @@ class SessionsController < ApplicationController
   def destroy
     session[:user_id] = nil if session[:user_id]
     respond_to do |wants|
-      wants.html { redirect_to sign_in_path, :notice => "You have been logged out." }
+      wants.html { redirect_to sign_in_path, :notice => "You have been signed out." }
     end
   end
 
