@@ -104,3 +104,5 @@ en:
   was_started: "was started"
   was_stopped: "was stopped"
   was_updated: "was updated"
+  ticket_comment_directions: "Write a comment for this ticket."
+  submit: "Submit"
