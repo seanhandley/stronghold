@@ -95,7 +95,6 @@ angularJS.controller "TicketsController", [
       allHandler = () ->
         $scope.ticketDialogHide()
       successHandler = (response) ->
-        console.log(response.data)
         if (response.data.errorMessages)
           errorHandler()
           return
@@ -133,7 +132,7 @@ angularJS.controller "TicketsController", [
       $('#newComment').modal('hide')
       false
 
-    $scope.commentDialogSubmit = (ticket) ->
+    $scope.commentDialogSubmit = ->
       commentTextArea = $("#new_comment_text")
       commentSubmitButton = $($("#newComment button.btn-primary")[0])
       commentSubmitButton.html("Submitting...")
@@ -141,7 +140,6 @@ angularJS.controller "TicketsController", [
       allHandler = () ->
         $scope.commentDialogHide()
       successHandler = (response) ->
-        console.log(response.data)
         if (response.data.errorMessages)
           errorHandler()
           return
@@ -151,7 +149,7 @@ angularJS.controller "TicketsController", [
         allHandler()
       request = $http({
         method: "post",
-        url: "/support/api/tickets/" + ticket.reference + "/comments/",
+        url: "/support/api/tickets/" + $scope.selectedTicket.reference + "/comments/",
         data: {
           "text": commentTextArea.val()
         }
@@ -161,5 +159,32 @@ angularJS.controller "TicketsController", [
     $scope.commentDialogCancel = ->
       $scope.commentDialogHide()
       false
+
+    $scope.changeStatus = (status) ->
+      url = "/support/api/tickets/" + $scope.selectedTicket.reference + "/"
+      data = {
+        "jira_status": status.jira_statuses[status.primary_jira_status]
+      }
+      allHandler = () ->
+        console.log("all")
+      successHandler = (response) ->
+        if (response && response.data.errorMessages)
+          errorHandler()
+          return
+        $scope.selectedTicket.status = status
+        console.log("success")
+        allHandler()
+      errorHandler = (response) ->
+        console.log("error")
+        allHandler()
+      console.log("patch to: " + url)
+      console.log(data)
+      # request = $http({
+      #   method: "patch",
+      #   url: url
+      #   data: data
+      # })
+      successHandler(null)
+      # request.then successHandler, errorHandler
 
 ]
