@@ -1,8 +1,18 @@
 .ticket
 
-  %button.btn.btn-primary.pull-right{:'ng-click' => "ticketDialogShow()"}
-    %i.fa.fa-edit
-    New Ticket
+  %div.btn-group.pull-right
+    %button.btn.btn-primary.pull-right{:'ng-click' => "ticketDialogShow()"}
+      %i.fa.fa-edit
+      New Ticket
+  %div.btn-group.pull-right
+    %button.btn.btn-default.dropdown-toggle{:type => "button", :'id' => "statusDropdown", :'data-toggle' => "dropdown", :'dropdown-toggle' => ""}
+      %i.fa.fa-circle{:style => "color: {{selectedTicket.status.color;}}"}
+      Status: {{selectedTicket.status.name}}
+      %span.caret
+    %ul.dropdown-menu{:role => "menu"}
+      %li{:'ng-repeat' => "status in statuses"}
+        %a{:'href' => "", :'ng-click' => "changeStatus(status)"}
+          {{status.name}}
 
   %h1 ({{selectedTicket.reference}}) {{selectedTicket.title}}
   %h3 Description
@@ -49,5 +59,5 @@
       .modal-footer
         %button.btn.btn-default{:'ng-click' => 'commentDialogCancel()'}
           = t(:cancel)
-        %button.btn.btn-primary{:'ng-click' => 'commentDialogSubmit(selectedTicket)'}
+        %button.btn.btn-primary{:'ng-click' => 'commentDialogSubmit()'}
           = t(:submit)
