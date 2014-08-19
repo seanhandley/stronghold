@@ -20,7 +20,7 @@
 
       .col-xs-12.space-after
         %div.clear-fix{:'ng-hide' => "isLoading"}
-          %button.btn.btn-primary.pull-right
+          %button.btn.btn-primary.pull-right{:'ng-click' => "ticketDialogShow()"}
             %i.fa.fa-edit
             New Ticket
 
@@ -48,3 +48,25 @@
             == Select a ticket, or #{link_to 'create a new one?',''}
         %div{:'ng-show' => "selectedTicket"}
           = render partial: 'ticket'
+
+.modal.fade{'id' => 'newTicket', 'tabindex' => "-1", 'role' => "dialog", 'aria-labelledby' => 'newTicket', 'aria-hidden' => "true"}
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button{'type' => "button", 'class' => "close", 'data-dismiss' => "modal", 'aria-hidden' => "true"}
+          &times;
+        %h4.modal-title
+          %i.fa.fa-comment
+          New Ticket
+        %p= t(:ticket_comment_directions)
+      .modal-body
+        .input-group
+          %span.input-group-addon
+            %i.fa.fa-comment
+          = text_field_tag :new_ticket_title, nil, placeholder: 'Ticket Title', class: "form-control", autofocus: true
+          = text_area_tag :new_ticket_description, nil, placeholder: 'Ticket Description', class: "form-control"
+      .modal-footer
+        %button.btn.btn-default{:'ng-click' => 'ticketDialogCancel()'}
+          = t(:cancel)
+        %button.btn.btn-primary{:'ng-click' => 'ticketDialogSubmit()'}
+          = t(:submit)
