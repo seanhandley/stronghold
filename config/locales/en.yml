@@ -27,7 +27,7 @@ en:
   audit_log: "Audit Log"
   billing: "Billing"
   can_instances_modify: "Can modify instances"
-  can_instances_read: "Can tead instances"
+  can_instances_read: "Can read instances"
   can_roles_invite: "Can invite users"
   can_roles_modify: "Can modify roles"
   can_roles_read: "Can read roles"
