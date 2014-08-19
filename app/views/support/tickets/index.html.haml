@@ -49,24 +49,27 @@
         %div{:'ng-show' => "selectedTicket"}
           = render partial: 'ticket'
 
-.modal.fade{'id' => 'newTicket', 'tabindex' => "-1", 'role' => "dialog", 'aria-labelledby' => 'newTicket', 'aria-hidden' => "true"}
-  .modal-dialog
-    .modal-content
-      .modal-header
-        %button{'type' => "button", 'class' => "close", 'data-dismiss' => "modal", 'aria-hidden' => "true"}
-          &times;
-        %h4.modal-title
-          %i.fa.fa-comment
-          New Ticket
-        %p= t(:ticket_comment_directions)
-      .modal-body
-        .input-group
-          %span.input-group-addon
-            %i.fa.fa-comment
-          = text_field_tag :new_ticket_title, nil, placeholder: 'Ticket Title', class: "form-control", autofocus: true
-          = text_area_tag :new_ticket_description, nil, placeholder: 'Ticket Description', class: "form-control"
-      .modal-footer
-        %button.btn.btn-default{:'ng-click' => 'ticketDialogCancel()'}
-          = t(:cancel)
-        %button.btn.btn-primary{:'ng-click' => 'ticketDialogSubmit()'}
-          = t(:submit)
+  .modal.fade{'id' => 'newTicket', 'tabindex' => "-1", 'role' => "dialog", 'aria-labelledby' => 'newTicket', 'aria-hidden' => "true"}
+    .modal-dialog
+      .modal-content
+        .modal-header
+          %button{'type' => "button", 'class' => "close", 'data-dismiss' => "modal", 'aria-hidden' => "true"}
+            &times;
+          %h4.modal-title
+            %i.fa.fa-circle
+            New Ticket
+          %p= t(:ticket_directions)
+        .modal-body
+          .input-group
+            %span.input-group-addon
+              %i.fa.fa-comment
+            = text_field_tag :new_ticket_title, nil, placeholder: 'Ticket Title', class: "form-control", autofocus: true
+          .input-group
+            %span.input-group-addon
+              %i.fa.fa-comment
+            = text_area_tag :new_ticket_description, nil, placeholder: 'Ticket Description', class: "form-control"
+        .modal-footer
+          %button.btn.btn-default{:'ng-click' => 'ticketDialogCancel()'}
+            = t(:cancel)
+          %button.btn.btn-primary{:'ng-click' => 'ticketDialogSubmit()'}
+            = t(:submit)
