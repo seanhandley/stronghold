@@ -22,7 +22,7 @@
   
     .container
       %h3.organisation
-        = image_tag 'bbc.png'
+        -# = image_tag 'bbc.png'
         = current_user.organization.name
       #flashes= display_flash
       = yield
