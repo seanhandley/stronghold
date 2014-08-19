@@ -18,12 +18,6 @@
 
     %div{:'ng-hide' => "hasFailed"}
 
-      .col-xs-12.space-after
-        %div.clear-fix{:'ng-hide' => "isLoading"}
-          %button.btn.btn-primary.pull-right{:'ng-click' => "ticketDialogShow()"}
-            %i.fa.fa-edit
-            New Ticket
-
       .col-xs-12.space-after{:'ng-hide' => "isLoading"}
 
         .some-info.clear-fix.space-after{:'ng-hide' => "hasTickets()"}
@@ -32,7 +26,7 @@
           %p
             There are no tickets.
           %p
-            Click &ldquo;New Ticket&rdquo;.
+            %a{:href => '', :'ng-click' => 'ticketDialogShow()'} Create a new ticket
 
       .col-xs-3
         %div{:'ng-show' => "hasTickets()"}
@@ -45,7 +39,9 @@
           %p
             %i.fa.fa-info-circle
           %p
-            == Select a ticket, or #{link_to 'create a new one?',''}
+            == Select a ticket, or
+            %a{:href => '', :'ng-click' => 'ticketDialogShow()'} create a new one
+            ==.
         %div{:'ng-show' => "selectedTicket"}
           = render partial: 'ticket'
 
