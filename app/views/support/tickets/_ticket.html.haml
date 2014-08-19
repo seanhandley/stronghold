@@ -33,7 +33,7 @@
       .modal-header
         %button{'type' => "button", 'class' => "close", 'data-dismiss' => "modal", 'aria-hidden' => "true"}
           &times;
-        %h4.modal-title#addRole
+        %h4.modal-title
           %i.fa.fa-comment
           New Comment
         %p= t(:ticket_comment_directions)
@@ -41,7 +41,7 @@
         .input-group
           %span.input-group-addon
             %i.fa.fa-comment
-          = text_area_tag :comment, nil, placeholder: 'Comment', class: "form-control", autofocus: true
+          = text_area_tag :new_comment_text, nil, placeholder: 'Comment', class: "form-control", autofocus: true
       .modal-footer
         %button.btn.btn-default{:'ng-click' => 'commentDialogCancel()'}
           = t(:cancel)

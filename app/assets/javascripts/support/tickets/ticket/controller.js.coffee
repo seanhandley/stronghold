@@ -69,8 +69,56 @@ angularJS.controller "TicketsController", [
       $scope.selectedTicketReference = ticketReference
       $scope.selectedTicket
 
+    $scope.ticketDialogShow = ->
+      ticketTitleInput = $("#new_ticket_title")
+      ticketDescriptionTextArea = $("#new_ticket_description")
+      ticketSubmitButton = $($("#newTicket button.btn-primary")[0])
+      ticketDescriptionTextArea.val("")
+      ticketSubmitButton.html("Submit")
+      ticketSubmitButton.removeClass("disabled")
+      $("#newTicket").on("shown.bs.modal", () -> 
+        ticketTitleInput.focus()
+      )
+      $("#newTicket").modal('show')
+      false
+
+    $scope.ticketDialogHide = ->
+      $('#newTicket').modal('hide')
+      false
+
+    $scope.ticketDialogSubmit = ->
+      ticketTitleInput = $("#new_ticket_title")
+      ticketDescriptionTextArea = $("#new_ticket_description")
+      ticketSubmitButton = $($("#newTicket button.btn-primary")[0])
+      ticketSubmitButton.html("Submitting...")
+      ticketSubmitButton.addClass("disabled")
+      allHandler = () ->
+        $scope.ticketDialogHide()
+      successHandler = (response) ->
+        console.log(response.data)
+        if (response.data.errorMessages)
+          errorHandler()
+          return
+        $scope.populateTickets()
+        allHandler()
+      errorHandler = (response) ->
+        allHandler()
+      request = $http({
+        method: "post",
+        url: "/support/api/tickets/",
+        data: {
+          "title": ticketTitleInput.val(),
+          "description": ticketDescriptionTextArea.val()
+        }
+      })
+      request.then successHandler, errorHandler
+
+    $scope.ticketDialogCancel = ->
+      $scope.ticketDialogHide()
+      false
+
     $scope.commentDialogShow = ->
-      commentTextArea = $("#newComment textarea")
+      commentTextArea = $("#new_comment_text")
       commentSubmitButton = $($("#newComment button.btn-primary")[0])
       commentTextArea.val("")
       commentSubmitButton.html("Submit")
@@ -86,8 +134,7 @@ angularJS.controller "TicketsController", [
       false
 
     $scope.commentDialogSubmit = (ticket) ->
-      console.log(ticket)
-      commentTextArea = $($("#newComment textarea"))
+      commentTextArea = $("#new_comment_text")
       commentSubmitButton = $($("#newComment button.btn-primary")[0])
       commentSubmitButton.html("Submitting...")
       commentSubmitButton.addClass("disabled")
@@ -112,7 +159,6 @@ angularJS.controller "TicketsController", [
       request.then successHandler, errorHandler
 
     $scope.commentDialogCancel = ->
-      console.log("cancel")
       $scope.commentDialogHide()
       false
 
