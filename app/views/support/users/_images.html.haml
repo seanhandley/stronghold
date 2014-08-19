@@ -6,4 +6,4 @@
   - for user in role.users
     %span.image{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => "#{t(:remove)} #{user.name}?"}
       %a{href: support_remove_role_user_path(role, user), data: { method: 'delete', confirm: "#{t(:remove)} #{user.name}?"}}
-        = gravatar_image_tag(user.email, title: '', alt: user.name)
+        = gravatar_image_tag(user.email, title: '', alt: user.name, class: 'img-circle')

@@ -17,7 +17,7 @@
     %tbody
       - open_invites.each do |invite|
         %tr
-          %td= gravatar_image_tag(invite.email, title: invite.email, alt: invite.email)
+          %td= gravatar_image_tag(invite.email, title: invite.email, alt: invite.email, class: 'img-circle')
           %td= invite.email
           %td= invite.roles.collect(&:name).join ", "
 
