@@ -15,7 +15,7 @@
     .top-nav
       .container
         %a{href: support_root_path, class: 'back-to-dash' }
-          = image_tag 'logo_small.png', class: 'logo'
+          .logo
         = render partial: 'shared/top_menu' unless request.url == support_root_url
         .context-nav= render partial: 'shared/support_nav'
       
