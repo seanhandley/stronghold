@@ -4,7 +4,7 @@
   margin-top: 10px;
   margin-left: auto;
   margin-right: auto;
-  width: 70%;
+  width: 60%;
   text-align: center;
 }
 
@@ -50,8 +50,25 @@ i.top-menu-icon {
   width: auto;
 }
 
+.logo {
+  float: left;
+  margin-right: 10px;
+  margin-top: 8px;
+  background-image: url(/assets/logo_long.png);
+  height: 37px;
+  width: 138px;
+}
+
 @media only screen and (max-width: 480px), only screen and (max-device-width: 480px) {
   .top-menu {
     opacity: 0.0;
+  }
+}
+
+@media only screen and (max-width: 720px), only screen and (max-device-width: 720px) {
+  .logo {
+    background-image: url(/assets/logo_small.png);
+      height: 30px;
+      width: 30px;
   }
 }
