@@ -54,7 +54,7 @@ i.top-menu-icon {
   float: left;
   margin-right: 10px;
   margin-top: 8px;
-  background-image: url(/assets/logo_long.png);
+  background-image: url(<%= asset_path 'logo_long.png' %>);
   height: 37px;
   width: 138px;
 }
@@ -67,7 +67,7 @@ i.top-menu-icon {
 
 @media only screen and (max-width: 720px), only screen and (max-device-width: 720px) {
   .logo {
-    background-image: url(/assets/logo_small.png);
+    background-image: url(<%= asset_path 'logo_long.png' %>);
       height: 30px;
       width: 30px;
   }
