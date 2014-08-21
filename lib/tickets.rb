@@ -14,8 +14,8 @@ class Tickets
   def all
     url = @settings['base_url'] + 'search/?jql=project=' + @settings['project'] + ' AND labels in ("' + @reference + '")&fields=*all'
     response = @connection.get url
-    responseBody = JSON.parse response.body
-    responseBody['issues'].collect do |jira_issue|
+    response_body = JSON.parse response.body
+    response_body['issues'].collect do |jira_issue|
       Ticket.new(jira_issue)
       # jira_issue
     end
@@ -52,9 +52,9 @@ class Tickets
     }'
 
     response = @connection.post url, json
-    responseBody = JSON.parse response.body
-    responseBody
-    responseBody['key']
+    response_body = JSON.parse response.body
+    response_body
+    response_body['key']
 
   end
 
@@ -65,14 +65,35 @@ class Tickets
       "body" => text
     }
     response = @connection.post url, comment.to_json
-    responseBody = JSON.parse response.body
-    responseBody
+    response_body = JSON.parse response.body
+    response_body
   end
 
   def destroy_comment(issue_reference, comment_id)
     url = @settings['base_url'] + 'issue/' + issue_reference + '/comment/' + comment_id
     response = @connection.delete url
     (response.body.length == 0)
+  end
+
+  def change_status(issue_reference, status)
+    url = @settings['base_url'] + 'issue/' + issue_reference + '/transitions?expand=transitions.fields'
+    transitions_response = @connection.get url
+    transitions = JSON.parse transitions_response.body
+    transitions = transitions['transitions']
+    status_transition = transitions.select {|transition|
+      transition['to']['name'] == status
+    }.first
+    return nil if status_transition == nil
+    transition_id = status_transition['id']
+    change = {
+      "transition" => {
+        "id" => transition_id
+      }
+    }
+    change_response = @connection.post url, change.to_json
+    return ""
+    # change_response_body = JSON.parse change_response.body
+    # status_transition
   end
 
 end
