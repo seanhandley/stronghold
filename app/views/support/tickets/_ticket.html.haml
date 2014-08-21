@@ -49,13 +49,13 @@
           &times;
         %h4.modal-title
           %i.fa.fa-comment
-          New Comment
+          Add A Comment
         %p= t(:ticket_comment_directions)
       .modal-body
         .input-group
           %span.input-group-addon
             %i.fa.fa-comment
-          = text_area_tag :new_comment_text, nil, placeholder: 'Comment', class: "form-control", autofocus: true
+          = text_area_tag :new_comment_text, nil, placeholder: "What's on your mind?", class: "form-control", autofocus: true
       .modal-footer
         %button.btn.btn-default{:'ng-click' => 'commentDialogCancel()'}
           = t(:cancel)
