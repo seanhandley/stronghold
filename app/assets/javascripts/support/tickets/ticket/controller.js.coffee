@@ -13,8 +13,7 @@ angularJS.controller "TicketsController", [
 
     $scope.populateTickets = ->
 
-      doPopulateTickets = ->
-        $scope.isLoading = true
+      doPopulateTickets = (callback) ->
         async.waterfall([
           (next) ->
             setTimeout(next, 1000)
@@ -22,7 +21,6 @@ angularJS.controller "TicketsController", [
           (next) ->
             TicketFactory.getTickets().then (tickets) ->
               $scope.tickets = [] if ($scope.tickets == `null`)
-              $scope.isLoading = false
               setTimeout(next(null, tickets), 1000)
             return
           (tickets, next) ->
@@ -31,10 +29,16 @@ angularJS.controller "TicketsController", [
               $scope.tickets = tickets
               $scope.showTicket()
             $scope.$apply()
+            callback()
             return
         ])
 
-      doPopulateTickets()
+      $scope.isLoading = true
+      $scope.$apply()
+      doPopulateTickets(() ->
+        $scope.isLoading = false
+        $scope.$apply()
+      )
       doPopulateTicketsPromise = $interval(doPopulateTickets, 20 * 1000)
       return
 
