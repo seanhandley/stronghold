@@ -21,4 +21,14 @@ class Support::Api::TicketsController < SupportBaseController
     end
   end
 
+  def update
+    issue_reference = params[:id]
+    status = params[:status]
+    respond_to do |format|
+      format.json {
+        render :json => current_user.organization.tickets.change_status(issue_reference, status)
+      }
+    end
+  end
+
 end

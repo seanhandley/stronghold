@@ -39,7 +39,7 @@ angularJS.controller "TicketsController", [
         $scope.isLoading = false
         $scope.$apply()
       )
-      doPopulateTicketsPromise = $interval(doPopulateTickets, 20 * 1000)
+      doPopulateTicketsPromise = $interval(doPopulateTickets(null), 20 * 1000)
       return
 
     $scope.getTickets = (status) ->
@@ -167,28 +167,23 @@ angularJS.controller "TicketsController", [
     $scope.changeStatus = (status) ->
       url = "/support/api/tickets/" + $scope.selectedTicket.reference + "/"
       data = {
-        "jira_status": status.jira_statuses[status.primary_jira_status]
+        "status": status.jira_statuses[status.primary_jira_status]
       }
       allHandler = () ->
-        console.log("all")
+        # ...
       successHandler = (response) ->
         if (response && response.data.errorMessages)
           errorHandler()
           return
         $scope.selectedTicket.status = status
-        console.log("success")
         allHandler()
       errorHandler = (response) ->
-        console.log("error")
         allHandler()
-      console.log("patch to: " + url)
-      console.log(data)
-      # request = $http({
-      #   method: "patch",
-      #   url: url
-      #   data: data
-      # })
-      successHandler(null)
-      # request.then successHandler, errorHandler
+      request = $http({
+        method: "patch",
+        url: url
+        data: data
+      })
+      request.then successHandler, errorHandler
 
 ]
