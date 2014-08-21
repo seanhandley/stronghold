@@ -59,11 +59,11 @@
           .input-group
             %span.input-group-addon
               %i.fa.fa-comment
-            = text_field_tag :new_ticket_title, nil, placeholder: 'Ticket Title', class: "form-control", autofocus: true
+            = text_field_tag :new_ticket_title, nil, placeholder: 'Give a quick summary of the issue', class: "form-control", autofocus: true
           .input-group
             %span.input-group-addon
               %i.fa.fa-comment
-            = text_area_tag :new_ticket_description, nil, placeholder: 'Ticket Description', class: "form-control"
+            = text_area_tag :new_ticket_description, nil, placeholder: 'Now, tell us all the details...', class: "form-control", rows: 12
         .modal-footer
           %button.btn.btn-default{:'ng-click' => 'ticketDialogCancel()'}
             = t(:cancel)
