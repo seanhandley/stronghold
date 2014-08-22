@@ -45,6 +45,7 @@ gem 'rails-assets-angular-resource'
 gem 'rails-assets-angular-bootstrap'
 gem 'rails-assets-angular-sanitize'
 gem 'rails-assets-angular-gravatar'
+gem 'rails-assets-angular-animate'
 gem 'rails-assets-angular-md5'
 gem 'momentjs-rails'
 

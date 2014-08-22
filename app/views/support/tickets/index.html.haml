@@ -1,6 +1,6 @@
 .container-fluid{:'ng-controller' => "TicketsController", :'ng-init' => 'populateTickets()'}
-  .col-xs-12{:'ng-show' => "isLoading"}
-    .some-info.space-after
+  .col-xs-12
+    .some-info.space-after.animate-show{:'ng-show' => "isLoading"}
       %p
         %i.fa.fa-refresh.fa-spin
       %p
