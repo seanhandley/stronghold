@@ -8,9 +8,12 @@ angularJS.factory "TicketFactory", ($http, TicketStatusFactory) ->
           applicableStatuses = $.grep TicketStatusFactory.getTicketStatuses(), (status) ->
             $.inArray(ticket.jira_status, status.jira_statuses) >= 0
           ticket.status = applicableStatuses[0]
-          backupTickets = ticket.comments.slice() # copy
+          console.log(ticket)
+          ticket.time_created = moment(ticket.time_created)
+          ticket.time_updated = moment(ticket.time_updated)
+          backupTicketComments = ticket.comments.slice() # copy
           ticket.comments = []
-          angular.forEach backupTickets, (comment, index) ->
+          angular.forEach backupTicketComments, (comment, index) ->
             newComment = new TicketComment comment.email, comment.content, moment(comment.time)
             ticket.comments.push(newComment)
         response.data

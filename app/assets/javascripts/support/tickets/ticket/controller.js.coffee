@@ -11,36 +11,35 @@ angularJS.controller "TicketsController", [
 
     $scope.isLoading = false
 
+    $scope.doPopulateTickets = (callback) ->
+      console.log("working")
+      async.waterfall([
+        (next) ->
+          setTimeout(next, 1000)
+          return
+        (next) ->
+          TicketFactory.getTickets().then (tickets) ->
+            $scope.tickets = [] if ($scope.tickets == `null`)
+            setTimeout(next(null, tickets), 1000)
+          return
+        (tickets, next) ->
+          $scope.hasFailed = (not (tickets?))
+          if (not $scope.hasFailed)
+            $scope.tickets = tickets
+            $scope.showTicket()
+          $scope.$apply()
+          callback() if callback
+          return
+      ])
+
     $scope.populateTickets = ->
-
-      doPopulateTickets = (callback) ->
-        console.log("working")
-        async.waterfall([
-          (next) ->
-            setTimeout(next, 1000)
-            return
-          (next) ->
-            TicketFactory.getTickets().then (tickets) ->
-              $scope.tickets = [] if ($scope.tickets == `null`)
-              setTimeout(next(null, tickets), 1000)
-            return
-          (tickets, next) ->
-            $scope.hasFailed = (not (tickets?))
-            if (not $scope.hasFailed)
-              $scope.tickets = tickets
-              $scope.showTicket()
-            $scope.$apply()
-            callback() if callback
-            return
-        ])
-
       $scope.isLoading = true
       $scope.$apply()
-      doPopulateTickets(() ->
+      $scope.doPopulateTickets(() ->
         $scope.isLoading = false
         $scope.$apply()
       )
-      doPopulateTicketsPromise = $interval(doPopulateTickets, 10 * 1000)
+      doPopulateTicketsPromise = $interval($scope.doPopulateTickets, 10 * 1000)
       return
 
     $scope.getTickets = (status) ->
@@ -103,7 +102,7 @@ angularJS.controller "TicketsController", [
         if (response.data.errorMessages)
           errorHandler()
           return
-        $scope.populateTickets()
+        $scope.doPopulateTickets()
         allHandler()
       errorHandler = (response) ->
         allHandler()
@@ -148,7 +147,7 @@ angularJS.controller "TicketsController", [
         if (response.data.errorMessages)
           errorHandler()
           return
-        $scope.populateTickets()
+        $scope.doPopulateTickets()
         allHandler()
       errorHandler = (response) ->
         allHandler()

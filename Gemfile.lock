@@ -150,6 +150,8 @@ GEM
       railties (= 4.1.4)
       sprockets-rails (~> 2.0)
     rails-assets-angular (1.2.22)
+    rails-assets-angular-animate (1.2.22)
+      rails-assets-angular (= 1.2.22)
     rails-assets-angular-bootstrap (0.11.0)
       rails-assets-angular (>= 1)
     rails-assets-angular-gravatar (0.2.1)
@@ -262,6 +264,7 @@ DEPENDENCIES
   mysql2
   rails (= 4.1.4)
   rails-assets-angular
+  rails-assets-angular-animate
   rails-assets-angular-bootstrap
   rails-assets-angular-gravatar
   rails-assets-angular-md5
