@@ -19,6 +19,7 @@
 //= require angular-sanitize
 //= require angular-md5
 //= require angular-gravatar
+//= require angular-animate
 //= require_tree .
 //= require bootstrap
 //= require select2

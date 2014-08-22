@@ -8,6 +8,8 @@
 .some-info {
   color: $headings-color;
   background-color: #eee;
+  overflow-y: hidden;
+  max-height: 500px;
   p {
     margin: 0;
     padding: 4px 0 4px 0;
@@ -19,6 +21,16 @@
     font-size: 500%;
     color: $brand-primary;
   }
+}
+
+.animate-show.ng-hide {
+  transition-property: all;
+  transition-duration: .5s;
+  transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+}
+
+.animate-show.ng-hide {
+  max-height: 0;
 }
 
 .space-after {

@@ -16,6 +16,9 @@
 
   %h1 ({{selectedTicket.reference}}) {{selectedTicket.title}}
   %h3 Description
+  %p
+    %em
+      Created: {{selectedTicket.time_created | momentDateTime}}; Updated: {{selectedTicket.time_updated | momentDateTime}}
   %p{'ng-bind-html' => "selectedTicket.description"}
 
   %h3 Comments
