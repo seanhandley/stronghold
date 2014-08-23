@@ -91,6 +91,8 @@ GEM
     haml (4.0.5)
       tilt
     hike (1.2.3)
+    honeybadger (1.7.0)
+      json
     i18n (0.6.11)
     i18n_yaml_sorter (0.2.0)
     inflecto (0.0.2)
@@ -253,6 +255,7 @@ DEPENDENCIES
   font-awesome-sass (~> 4.1.0)
   gravatar_image_tag (~> 1.2.0)
   haml (~> 4.0.5)
+  honeybadger (~> 1.7.0)
   i18n_yaml_sorter
   jbuilder (~> 2.0)
   jira-ruby (~> 0.1.11)
