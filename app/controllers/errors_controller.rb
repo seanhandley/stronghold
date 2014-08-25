@@ -10,4 +10,8 @@ class ErrorsController < ApplicationController
     render :status => 500, :formats => [:html]
   end
 
+  def boom
+    1 / 0
+  end
+
 end
