@@ -1,4 +1,4 @@
-.container-fluid{:'ng-controller' => "TicketsController", :'ng-init' => 'populateTickets()'}
+.container-fluid#tickets-container{:'ng-controller' => "TicketsController", :'ng-init' => 'populateTickets()', :'data-permanent-reference' => @reference}
   .col-xs-12
     .some-info.space-after.animate-show{:'ng-show' => "isLoading"}
       %p

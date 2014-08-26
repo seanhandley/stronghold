@@ -8,7 +8,7 @@ Rails.application.routes.draw do
     resources :users, only: [:update]
     get '/profile', :controller => 'users', :action => 'index'
     resources :roles
-    get '/tickets', :controller => 'tickets', :action => 'index'
+    resources :tickets, only: [:index, :show]
     namespace :api, defaults: {format: :json} do
       resources :tickets, only: [:index, :create, :update] do
         resources :comments, :controller => "ticket_comments", only: [:create, :destroy]

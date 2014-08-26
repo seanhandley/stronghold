@@ -35,6 +35,12 @@ angularJS.controller "TicketsController", [
       $scope.isLoading = true
       $scope.$apply()
       $scope.doPopulateTickets(() ->
+        permanentTicketReference = $("#tickets-container").attr("data-permanent-reference")
+        $scope.showTicket(permanentTicketReference) if permanentTicketReference?
+        $(window).on "popstate", (e) ->
+          if e.originalEvent.state isnt null
+            window.location = location.href
+          return
         $scope.isLoading = false
         $scope.$apply()
         return
@@ -76,6 +82,8 @@ angularJS.controller "TicketsController", [
         $scope.selectedTicket = null
       $scope.selectedTicketReference = ticketReference
       $scope.selectedTicket
+      history.pushState({}, '', ticketReference)
+      return
 
     $scope.ticketDialogShow = ->
       ticketTitleInput = $("#new_ticket_title")
@@ -170,6 +178,8 @@ angularJS.controller "TicketsController", [
       false
 
     $scope.changeStatus = (status) ->
+      statusDropdownSpan = $("#statusDropdown > span").not(".caret")
+      statusDropdownSpan.html("Changing...")
       url = "/support/api/tickets/" + $scope.selectedTicket.reference + "/"
       data = {
         "status": status.jira_statuses[status.primary_jira_status]
