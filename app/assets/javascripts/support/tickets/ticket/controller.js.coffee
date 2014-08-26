@@ -12,7 +12,6 @@ angularJS.controller "TicketsController", [
     $scope.isLoading = false
 
     $scope.doPopulateTickets = (callback) ->
-      console.log("working")
       async.waterfall([
         (next) ->
           setTimeout(next, 1000)
