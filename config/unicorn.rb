@@ -19,6 +19,10 @@ listen "/home/rails/stronghold/tmp/.unicorn.sock", :backlog => 64
 # nuke workers after 30 seconds instead of 60 seconds (the default)
 timeout 30
 
+# set log paths
+stderr_path "/var/log/rails/stronghold/unicorn.stderr.log"
+stdout_path "/var/log/rails/stronghold/unicorn.stdout.log"
+
 # combine Ruby 2.0.0dev or REE with "preload_app true" for memory savings
 # http://rubyenterpriseedition.com/faq.html#adapt_apps_for_cow
 preload_app true
