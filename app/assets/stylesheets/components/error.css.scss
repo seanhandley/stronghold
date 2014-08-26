@@ -25,6 +25,20 @@ div.errorExplanation {
   font-size: 14px;
 }
 
+div#flash {
+  margin-bottom: 10px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+div#flash p.alert {
+  color: $brand-warning;
+}
+
+div#flash p.notice {
+  color: $brand-success;
+}
+
 div.errorExplanation h3 {
   color: #fff;
   font-size: 12px;
