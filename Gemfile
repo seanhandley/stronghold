@@ -31,8 +31,10 @@ gem 'verbs', '~> 2.1.4'
 gem 'faraday', '~> 0.9.0'
 gem 'strongbox', '~> 0.7.0'
 gem 'logstasher', '~> 0.5.3'
-gem 'redcarpet'
-gem 'async-rails'
+gem 'redcarpet', '~> 3.1.2'
+gem 'async-rails', '~> 0.9.0'
+gem 'newrelic_rpm', '~> 3.9.2'
+gem 'honeybadger', '~> 1.7.0'
 
 group :test do
   gem 'minitest-rails'
