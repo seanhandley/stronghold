@@ -2,6 +2,7 @@ class Support::Api::TicketsController < SupportBaseController
 
   skip_authorization_check
   skip_before_action :verify_authenticity_token
+  newrelic_ignore_apdex only: [:index]
 
   def index
     respond_to do |format|
