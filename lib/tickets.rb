@@ -27,29 +27,25 @@ class Tickets
     description = "[description]" if description.nil?
 
     url = @settings['base_url'] + 'issue'
-    json = '{
-      "fields": {
-        "project": {
-          "key": "' + @settings['project'] + '"
+    json = {
+      "fields" => {
+        "project" => {
+          "key" => @settings['project']
         },
-        "summary": "' + title + '",
-        "issuetype": {
-          "name": "Bug"
+        "issuetype" => {
+          "name" => "Bug"
         },
-        "reporter": {
-          "name": "issues",
-          "email": "' + email + '"
+        "summary" => title,
+        "reporter" => {
+          "name" => "issues",
         },
-        "assignee": {
-          "name": "issues",
-          "email": ""
+        "assignee" => {
+          "name" => "issues",
         },
-        "labels": [
-          "' + @reference + '"
-        ],
-        "description": "' + description + '"
+        "labels" => [@reference],
+        "description" => description
       }
-    }'
+    }.to_json
 
     response = @connection.post url, json
     response_body = JSON.parse response.body
