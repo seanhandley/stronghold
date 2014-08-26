@@ -6,4 +6,9 @@ class Mailer < ActionMailer::Base
     @invite = Invite.find(invite_id)
     mail(:to => @invite.email, :subject => "Welcome to DataCentred")
   end
+
+  def reset(reset_id)
+    @reset = Reset.find(reset_id)
+    mail(:to => @reset.email, :subject => "Reset your password")
+  end
 end

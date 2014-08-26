@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   end
 
   resources :sessions, only: [:create, :destroy, :new]
+  resources :resets, only: [:create, :new, :show, :update]
 
   get 'signup/:token', :controller => 'signups', :action => 'edit', :as => 'signup_begin'
   post 'signup/:token', :controller => 'signups', :action => 'update', :as => 'signup_complete'
