@@ -77,15 +77,18 @@ before_fork do |server, worker|
   # helps (but does not completely) prevent identical, repeated signals
   # from being lost when the receiving process is busy.
   # sleep 1
+
+  # Attempt to open and hold a file open, locked in read only mode. This file
+  # will remain locked so long as the master or children are running which
+  # allows upstart to detect when the process exits.
+  f = File.open("#{server.config[:pid]}.lock", 'w')
+  exit unless f.flock(File::LOCK_SH)
 end
 
 after_fork do |server, worker|
   # per-process listener ports for debugging/admin/migrations
   # addr = "127.0.0.1:#{9293 + worker.nr}"
   # server.listen(addr, :tries => -1, :delay => 5, :tcp_nopush => true)
-
-  f = File.open("#{server.config[:pid]}.lock", 'w')
-  exit unless f.flock(File::LOCK_SH)
 
   # the following is *required* for Rails + "preload_app true",
   defined?(ActiveRecord::Base) and
