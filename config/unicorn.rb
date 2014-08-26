@@ -42,11 +42,14 @@ before_fork do |server, worker|
   defined?(ActiveRecord::Base) and
     ActiveRecord::Base.connection.disconnect!
 
-  # Attempt to open and hold a file open, locked in read only mode. This file
-  # will remain locked so long as the master or children are running which
-  # allows upstart to detect when the process exits.
-  f = File.open("/home/rails/stronghold/tmp/unicorn.pid.lock", 'w')
-  exit unless f.flock(File::LOCK_SH)
+  old_pid = ENV["TEMP_PATH"] + '/pids/unicorn.pid.oldbin'
+  if File.exists?(old_pid) && server.pid != old_pid
+    begin
+      Process.kill("QUIT", File.read(old_pid).to_i)
+    rescue Errno::ENOENT, Errno::ESRCH
+      # someone else did our job for us
+    end
+  end
 end
 
 after_fork do |server, worker|
