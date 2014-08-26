@@ -10,3 +10,4 @@
     = f.password_field :password, :class => "form-control",
                        :id => "inputPassword", :placeholder => "Enter Password"
   = f.submit 'Sign In', :class => 'btn btn-primary'
+  .pull-right= link_to 'Reset Password?', new_reset_path
