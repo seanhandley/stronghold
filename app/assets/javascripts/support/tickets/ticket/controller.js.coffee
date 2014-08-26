@@ -78,6 +78,7 @@ angularJS.controller "TicketsController", [
       ticketDescriptionTextArea = $("#new_ticket_description")
       ticketSubmitButton = $($("#newTicket button.btn-primary")[0])
       ticketDescriptionTextArea.val("")
+      ticketTitleInput.val("")
       ticketSubmitButton.html("Submit")
       ticketSubmitButton.removeClass("disabled")
       $("#newTicket").on("shown.bs.modal", () -> 
