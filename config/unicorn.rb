@@ -45,7 +45,7 @@ before_fork do |server, worker|
   # Attempt to open and hold a file open, locked in read only mode. This file
   # will remain locked so long as the master or children are running which
   # allows upstart to detect when the process exits.
-  f = File.open("#{server.config[:pid]}.lock", 'w')
+  f = File.open("/home/rails/stronghold/tmp/unicorn.pid.lock", 'w')
   exit unless f.flock(File::LOCK_SH)
 end
 
