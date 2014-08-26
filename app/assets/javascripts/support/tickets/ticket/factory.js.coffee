@@ -11,7 +11,7 @@ angularJS.factory "TicketFactory", ($http, TicketStatusFactory) ->
           # Comments
           comments = []
           angular.forEach ticket.comments, (comment, index) ->
-            newComment = new TicketComment comment.email, comment.content, moment(comment.time)
+            newComment = new TicketComment comment.email, comment.content, comment.time
             comments.push(newComment)
           # Ticket
           newTicket = new Ticket(
@@ -21,8 +21,8 @@ angularJS.factory "TicketFactory", ($http, TicketStatusFactory) ->
             applicableStatuses[0],
             "e-mail",
             comments,
-            moment(ticket.time_created),
-            moment(ticket.time_updated)
+            ticket.time_created,
+            ticket.time_updated
           )
           tickets.push(newTicket)
         tickets
