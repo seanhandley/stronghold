@@ -6,6 +6,11 @@ class Support::TicketsController < SupportBaseController
     'tickets'
   end
 
+  def show
+    @reference = params[:id]
+    render :index
+  end
+
   def index
   end
 
