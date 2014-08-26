@@ -92,7 +92,7 @@ Rails.application.configure do
       :password => 'aoz21e56ef'
   }
 
-  config.action_mailer.default_url_options = { :host => 'rails01.sal01.datacentred.co.uk' }
+  config.action_mailer.default_url_options = { :host => 'my.datacentred.io' }
 
   # Error handling
   config.exceptions_app = self.routes
