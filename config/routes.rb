@@ -20,7 +20,7 @@ Rails.application.routes.draw do
     resources :audits, only: [:index]
   end
 
-  resources :sessions, only: [:create, :destroy, :new]
+  resources :sessions, only: [:create, :destroy, :new, :index]
   resources :resets, only: [:create, :new, :show, :update]
 
   get 'signup/:token', :controller => 'signups', :action => 'edit', :as => 'signup_begin'
