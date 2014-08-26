@@ -82,6 +82,7 @@ en:
   save: "Save"
   saving: "Saving..."
   select_a_user: "Select a user"
+  sign_out: "Sign out"
   signed_out_after_inactivity: "You were signed out automatically after a period of inactivity"
   signup_token_not_valid: "Token is not valid"
   storage: "Storage"
