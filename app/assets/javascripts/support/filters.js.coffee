@@ -1,4 +1,10 @@
-angular.module("angularJS.filters", []).filter "momentDateTime", [->
+# angular.module("angularJS.filters", []).filter "momentDateTime", [->
+#   (time) ->
+#     console.log(time)
+#     time.calendar()
+# ]
+
+angular.module("angularJS.filters", []).filter "momentDateTime", ->
   (time) ->
-    time.calendar()
-]
+    return if !time
+    moment(time).calendar()
