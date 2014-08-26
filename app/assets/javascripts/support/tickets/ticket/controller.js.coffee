@@ -18,7 +18,7 @@ angularJS.controller "TicketsController", [
           return
         (next) ->
           TicketFactory.getTickets().then (tickets) ->
-            $scope.tickets = [] if ($scope.tickets == `null`)
+            tickets = [] if (tickets == `null`)
             setTimeout(next(null, tickets), 1000)
           return
         (tickets, next) ->
@@ -27,7 +27,6 @@ angularJS.controller "TicketsController", [
             $scope.tickets = tickets
             $scope.showTicket()
           $scope.$apply()
-          console.log($scope.tickets)
           dCallback() if dCallback
           return
       ])
