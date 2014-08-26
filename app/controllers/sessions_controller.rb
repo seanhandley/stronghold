@@ -8,6 +8,10 @@ class SessionsController < ApplicationController
       wants.html
     end
   end
+
+  def index
+    redirect_to root_path
+  end
   
   def create
     @user = User.find_by_email(params[:user][:email])
