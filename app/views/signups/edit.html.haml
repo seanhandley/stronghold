@@ -18,4 +18,10 @@
       %label Organization name
       = text_field_tag :organization_name, @registration.organization_name, class: 'form-control'
 
+  .form-group
+    %label
+      I confirm I have read and accept the
+      = link_to 'DataCentred privacy policy', 'http://datacentred.co.uk/privacy-policy/', target: '_blank'
+    = check_box_tag :privacy, @registration.privacy, @registration.privacy
+  
   = submit_tag 'Continue →', class: 'btn btn-primary'

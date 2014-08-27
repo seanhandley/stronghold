@@ -2,17 +2,20 @@ class Registration
   include ActiveModel::Validations
 
   attr_reader :invite, :password, :confirm_password,
-              :organization, :organization_name, :user
+              :organization, :organization_name, :user, :privacy
 
   def initialize(invite, params)
     @invite            = invite
     @password          = params[:password]
     @confirm_password  = params[:confirm_password]
     @organization_name = params[:organization_name]
+    @privacy           = params[:privacy]
   end
 
   def process!
-    if !invite.can_register?
+    if @privacy.blank?
+      errors.add :base, I18n.t(:must_agree_to_privacy)
+    elsif !invite.can_register?
       errors.add :base, I18n.t(:signup_token_not_valid)
     elsif password != confirm_password
       errors.add :base,  I18n.t(:passwords_dont_match)

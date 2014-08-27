@@ -22,7 +22,7 @@
             = t(:audit_log)
       %li.divider
       %li
-        %a{:href => session_path(current_user), data: { confirm: "Log out?", :method => :delete }}
+        %a{:href => session_path(current_user), data: { confirm: "#{t(:sign_out)}?", :method => :delete }}
           %span.nav-menu-icon
             %i.fa.fa-sign-out
-          = t(:logout)
+          = t(:sign_out)
