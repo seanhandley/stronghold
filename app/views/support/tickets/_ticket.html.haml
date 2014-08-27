@@ -18,6 +18,9 @@
   %h1 ({{selectedTicket.reference}}) {{selectedTicket.title}}
   %p
     %em
+      By {{selectedTicket.email}}
+  %p
+    %em
       Created: {{selectedTicket.time_created | momentDateTime}};
       Updated: {{selectedTicket.time_updated | momentDateTime}}
   %h3 Description

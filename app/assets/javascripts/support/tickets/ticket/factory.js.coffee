@@ -20,12 +20,13 @@ angularJS.factory "TicketFactory", ($http, TicketStatusFactory) ->
           ticket.title,
           ticket.description,
           applicableStatuses[0],
-          "e-mail",
+          ticket.email,
           comments,
           ticket.time_created,
           ticket.time_updated
         )
         tickets.push(newTicket)
+      console.log(tickets)
       tickets
 
     errorHandler = (response) ->
