@@ -2,6 +2,7 @@ require 'faraday'
 
 class Tickets
   include TicketsHelper
+  include ActionView::Helpers::TextHelper
 
   def initialize(reference)
     @reference = reference
@@ -50,7 +51,7 @@ class Tickets
 
     response = @connection.post url, json
     response_body = JSON.parse response.body
-    audit(response_body['key'], 'create', {title: title, description: description})
+    audit(response_body['key'], 'create', {title: title, description: truncate_for_audit(description)})
     response_body['key']
 
   end
@@ -63,7 +64,7 @@ class Tickets
     }
     response = @connection.post url, comment.to_json
     response_body = JSON.parse response.body
-    audit(issue_reference, 'comment', {content: text.sub(/\[\[USERNAME:(.+)\]\]\n\n/,'')})
+    audit(issue_reference, 'comment', {content: truncate_for_audit(text.sub(/\[\[USERNAME:(.+)\]\]\n\n/,''))})
     response_body
   end
 
@@ -113,4 +114,7 @@ class Tickets
     end
   end
 
+  def truncate_for_audit(content)
+    truncate(content, omission: '...', separator: '', length: 300)
+  end
 end
