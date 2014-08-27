@@ -51,7 +51,7 @@ class Tickets
 
     response = @connection.post url, json
     response_body = JSON.parse response.body
-    audit(response_body['key'], 'create', {title: title, description: truncate_for_audit(description)})
+    audit(response_body['key'], 'create', {title: title, description: truncate_for_audit(description.sub(/\[\[USERNAME:(.+)\]\]\n\n/,''))})
     response_body['key']
 
   end
