@@ -1,11 +1,16 @@
 class SessionsController < ApplicationController
 
   layout 'sign-in'
+  before_filter :check_for_user, except: [:destroy]
   
   def new
     respond_to do |wants|
       wants.html
     end
+  end
+
+  def index
+    redirect_to root_path
   end
   
   def create
@@ -25,6 +30,12 @@ class SessionsController < ApplicationController
     respond_to do |wants|
       wants.html { redirect_to sign_in_path, :notice => "You have been signed out." }
     end
+  end
+
+  private
+
+  def check_for_user
+    raise ActionController::RoutingError.new('Not Found') if current_user
   end
 
 end

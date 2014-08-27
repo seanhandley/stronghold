@@ -1,0 +1,17 @@
+%h3
+  %i.fa.fa-lock
+  Please enter a secure password
+
+= form_tag({url: reset_path(@reset.token)}, method: :put, 'role' => 'form', remote: true) do
+
+  = javascript_error_messages_for(@reset)
+  = javascript_success_messages_for(@reset)
+
+  .form-group
+    %label Password
+    = password_field_tag :password, @password, class: 'form-control'
+  .form-group
+    %label Repeat Password
+    = password_field_tag :confirm_password, @confirm_password, class: 'form-control'
+
+  = submit_tag 'Continue →', class: 'btn btn-primary'
