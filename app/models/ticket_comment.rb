@@ -3,7 +3,7 @@ class TicketComment
 
   def initialize(jira_comment = {})
     @id = jira_comment['id']
-    @email, @content = extract_username(jira_comment)
+    @email, @content = extract_comment_email(jira_comment)
     @time = jira_comment['updated']
   end
 
