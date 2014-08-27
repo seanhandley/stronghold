@@ -34,14 +34,12 @@ angularJS.controller "TicketsController", [
     $scope.populateTickets = ->
       $scope.isLoading = true
       $scope.$apply()
+      permanentTicketReference = $("#tickets-container").attr("data-permanent-reference")
+      $scope.showTicket(permanentTicketReference) if permanentTicketReference?
+      $(window).on "popstate", (e) ->
+        if e.originalEvent.state isnt null
+          window.location = location.href
       $scope.doPopulateTickets(() ->
-        permanentTicketReference = $("#tickets-container").attr("data-permanent-reference")
-        $scope.showTicket(permanentTicketReference) if permanentTicketReference?
-        # history.pushState({}, '', '')
-        $(window).on "popstate", (e) ->
-          if e.originalEvent.state isnt null
-            window.location = location.href
-          return
         $scope.isLoading = false
         $scope.$apply()
         return
@@ -83,8 +81,6 @@ angularJS.controller "TicketsController", [
       else
         $scope.selectedTicket = null
       history.pushState({}, '', $scope.selectedTicketReference)
-      console.log("pushed:")
-      console.log($scope.selectedTicketReference)
       $scope.selectedTicket
       return
 
