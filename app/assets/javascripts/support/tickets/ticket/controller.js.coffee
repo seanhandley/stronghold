@@ -114,8 +114,11 @@ angularJS.controller "TicketsController", [
         if (response.data.errorMessages)
           errorHandler()
           return
-        $scope.doPopulateTickets()
-        allHandler()
+        newTicketReference = response.data
+        $scope.doPopulateTickets(() ->
+          $scope.showTicket(newTicketReference)
+          allHandler()
+        )
       errorHandler = (response) ->
         allHandler()
       request = $http({
