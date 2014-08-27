@@ -31,7 +31,7 @@ div#flash {
   font-weight: bold;
 }
 
-div#flash p.alert {
+div#flash p.alert, div#flash p.error {
   color: $brand-warning;
 }
 

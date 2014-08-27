@@ -24,9 +24,9 @@ class SignupsController < ApplicationController
 
   def update_params
     if !@invite.organization
-      params.permit(:organization_name, :password, :confirm_password)
+      params.permit(:organization_name, :password, :confirm_password, :privacy)
     else
-      params.permit(:password, :confirm_password)
+      params.permit(:password, :confirm_password, :privacy)
     end
   end
 
