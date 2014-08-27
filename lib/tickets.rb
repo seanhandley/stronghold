@@ -1,6 +1,7 @@
 require 'faraday'
 
 class Tickets
+  include TicketsHelper
 
   def initialize(reference)
     @reference = reference
@@ -49,7 +50,7 @@ class Tickets
 
     response = @connection.post url, json
     response_body = JSON.parse response.body
-    response_body
+    audit(response_body['key'], 'create', {title: title, description: description})
     response_body['key']
 
   end
@@ -62,6 +63,7 @@ class Tickets
     }
     response = @connection.post url, comment.to_json
     response_body = JSON.parse response.body
+    audit(issue_reference, 'comment', {content: text.sub(/\[\[USERNAME:(.+)\]\]\n\n/,'')})
     response_body
   end
 
@@ -87,9 +89,28 @@ class Tickets
       }
     }
     change_response = @connection.post url, change.to_json
+    audit(issue_reference, 'update_status', {reference: issue_reference, status: display_status(status)})
     return ""
     # change_response_body = JSON.parse change_response.body
     # status_transition
+  end
+
+  private
+
+  def audit(id, action, params)
+    Audited::Adapters::ActiveRecord::Audit.create auditable_id: id, auditable_type: 'Ticket', action: action,
+                 user: Authorization.current_user,
+                 organization_id: Authorization.current_user.organization_id,
+                 audited_changes: params.stringify_keys!
+  end
+
+  def display_status(status)
+    case status
+    when 'To Do'
+      'Open'
+    when 'Done'
+      'Closed'
+    end
   end
 
 end
