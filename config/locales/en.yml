@@ -60,6 +60,7 @@ en:
   member: "member"
   members: "Members"
   metrics: "Metrics"
+  must_agree_to_privacy: "You must agree to the privacy policy"
   my_details: "My Details"
   my_organisation: "My Organisation"
   name: "Name"
