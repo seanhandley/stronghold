@@ -25,7 +25,7 @@ angularJS.controller "TicketsController", [
           $scope.hasFailed = (not (tickets?))
           if (not $scope.hasFailed)
             $scope.tickets = tickets
-            $scope.showTicket()
+            $scope.showTicket(null)
           $scope.$apply()
           dCallback() if dCallback
           return
@@ -37,6 +37,7 @@ angularJS.controller "TicketsController", [
       $scope.doPopulateTickets(() ->
         permanentTicketReference = $("#tickets-container").attr("data-permanent-reference")
         $scope.showTicket(permanentTicketReference) if permanentTicketReference?
+        # history.pushState({}, '', '')
         $(window).on "popstate", (e) ->
           if e.originalEvent.state isnt null
             window.location = location.href
@@ -73,16 +74,18 @@ angularJS.controller "TicketsController", [
           ticket.reference == reference
       )[0]
 
-    $scope.selectedTicketReference = -1
+    $scope.selectedTicketReference = null
     $scope.showTicket = (ticketReference) ->
-      ticketReference = $scope.selectedTicketReference if ticketReference is `undefined`
+      ticketReference = $scope.selectedTicketReference if ticketReference is `null`
       if ticketReference != null
         $scope.selectedTicket = $scope.getTicketByReference(ticketReference)
+        $scope.selectedTicketReference = ticketReference
       else
         $scope.selectedTicket = null
-      $scope.selectedTicketReference = ticketReference
+      history.pushState({}, '', $scope.selectedTicketReference)
+      console.log("pushed:")
+      console.log($scope.selectedTicketReference)
       $scope.selectedTicket
-      history.pushState({}, '', ticketReference)
       return
 
     $scope.ticketDialogShow = ->
