@@ -80,7 +80,7 @@ angularJS.controller "TicketsController", [
         $scope.selectedTicketReference = ticketReference
       else
         $scope.selectedTicket = null
-      history.popState({reference: ticketReference}, '', ticketReference)
+      history.replaceState({reference: ticketReference}, '', ticketReference)
       $scope.$apply()
       return
 
