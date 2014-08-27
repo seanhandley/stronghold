@@ -4,7 +4,7 @@ class Ticket
   def initialize(jira_issue = {})
     @reference = jira_issue['key']
     @title = jira_issue['fields']['summary']
-    @description = markdown jira_issue['fields']['description']
+    @email, @description = extract_issue_email(jira_issue)
     @jira_status = jira_issue['fields']['status']['name']
     @time_created = jira_issue['fields']['created']
     @time_updated = jira_issue['fields']['updated']

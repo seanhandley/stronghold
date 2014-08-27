@@ -27,6 +27,7 @@ class Tickets
 
     title = "[title]" if title.nil?
     description = "[description]" if description.nil?
+    description = "[[USERNAME:#{email}]]\n\n" + description
 
     url = @settings['base_url'] + 'issue'
     json = {
@@ -56,9 +57,9 @@ class Tickets
 
   end
 
-  def create_comment(issue_reference, text, username)
+  def create_comment(issue_reference, text, email)
     url = @settings['base_url'] + 'issue/' + issue_reference + '/comment'
-    text = "[[USERNAME:#{username}]]\n\n" + text
+    text = "[[USERNAME:#{email}]]\n\n" + text
     comment = {
       "body" => text
     }
