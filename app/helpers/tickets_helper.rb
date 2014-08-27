@@ -43,4 +43,14 @@ module TicketsHelper
     }
     Redcarpet::Markdown.new(renderer, extensions).render(text).html_safe
   end
+
+  def extract_username(comment)
+    comment['body'].gsub!("\r",'')
+    m = comment['body'].match(/\[\[USERNAME:(.+)\]\]\n\n/)
+    if m == nil
+      return [jira_comment['author']['emailAddress'], markdown(comment['body'])]
+    else
+      return [m[1], markdown(comment['body'].sub(m[0],''))]
+    end
+  end
 end
