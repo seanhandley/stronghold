@@ -1,6 +1,5 @@
-@TicketStatus = (name, color) ->
+@TicketStatus = (name) ->
   this.name = name
-  this.color = color
   this.jira_statuses = []
   this.primary_jira_status = 0
   this
