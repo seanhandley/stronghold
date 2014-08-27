@@ -37,8 +37,8 @@ angularJS.controller "TicketsController", [
       permanentTicketReference = $("#tickets-container").attr("data-permanent-reference")
       $scope.showTicket(permanentTicketReference) if permanentTicketReference?
       $(window).on "popstate", (e) ->
-        if e.originalEvent.state isnt null
-          window.location = location.href
+        if e.state
+          $scope.showTicket(e.state.reference)
       $scope.doPopulateTickets(() ->
         $scope.isLoading = false
         $scope.$apply()
@@ -80,8 +80,8 @@ angularJS.controller "TicketsController", [
         $scope.selectedTicketReference = ticketReference
       else
         $scope.selectedTicket = null
-      history.pushState({}, '', $scope.selectedTicketReference)
-      $scope.selectedTicket
+      history.popState({reference: ticketReference}, '', ticketReference)
+      $scope.$apply()
       return
 
     $scope.ticketDialogShow = ->
