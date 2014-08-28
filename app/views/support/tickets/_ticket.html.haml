@@ -6,7 +6,7 @@
       New Ticket
   %div.btn-group.pull-right
     %button.btn.btn-default.dropdown-toggle{:type => "button", :'id' => "statusDropdown", :'data-toggle' => "dropdown", :'dropdown-toggle' => ""}
-      %i.fa.fa-circle{:'ng-class' => "selectedTicket.status.name"}
+      %i.fa.fa-question-circle.big-icon{:'ng-class' => "selectedTicket.status.name"}
       %span
         Status: {{selectedTicket.status.name}}
       %span.caret
@@ -16,13 +16,16 @@
           {{status.name}}
 
   %h1 ({{selectedTicket.reference}}) {{selectedTicket.title}}
-  %p
-    %em
-      By {{selectedTicket.email}}
-  %p
-    %em
-      Created: {{selectedTicket.time_created | momentDateTime}};
-      Updated: {{selectedTicket.time_updated | momentDateTime}}
+  %ul.media-list
+    %li.media
+      %a.pull-left.gravatar
+        %img.img-circle{'gravatar-src' => "selectedTicket.email"}
+      %div.media-body
+        %h4.media-heading
+          {{selectedTicket.email}}
+        %p
+          %em
+            Created: {{selectedTicket.time_created | momentDateTime}}; Updated: {{selectedTicket.time_updated | momentDateTime}}
   %h3 Description
   %p{'ng-bind-html' => "selectedTicket.description"}
 
@@ -38,8 +41,8 @@
     %div{:'ng-show' => "hasComments(selectedTicket)"}
       %ul.media-list
         %li.media{:'ng-repeat' => ("comment in selectedTicket.comments")}
-          %a.pull-left
-            %img.img-circle{'gravatar-src-once' => "comment.email"}
+          %a.pull-left.gravatar
+            %img.img-circle{'gravatar-src' => "comment.email"}
           %div.media-body
             %h4.media-heading
               {{comment.email}}

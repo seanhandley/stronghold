@@ -57,9 +57,9 @@ button > i.fa {
   margin-left: 4px;
 }
 
-div.comments a.pull-left img {
-  width: 64px;
-  height: 64px;
+a.gravatar img {
+  width: 72px;
+  height: 72px;
 }
 
 #comment-button {
@@ -68,4 +68,8 @@ div.comments a.pull-left img {
 
 .ticket.selected {
   background-color: #eee;
+}
+
+.big-icon {
+  font-size: 150%;
 }
