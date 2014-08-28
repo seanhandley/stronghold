@@ -14,6 +14,8 @@ class Ticket
       # jira_comment
       TicketComment.new(jira_comment)
     end
+  rescue
+    # object will stay empty
   end
 
   def self.find(params)

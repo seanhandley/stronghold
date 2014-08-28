@@ -23,8 +23,8 @@ class Tickets
     end
   end
 
-  def create(title, description, email)
-
+  def create(params)
+    title, description, email = params[:title], params[:description], Authorization.current_user.email
     title = "[title]" if title.nil?
     description = "[description]" if description.nil?
     description = "[[USERNAME:#{email}]]\n\n" + description
@@ -57,7 +57,8 @@ class Tickets
 
   end
 
-  def create_comment(issue_reference, text, email)
+  def create_comment(params)
+    issue_reference, text, email = params[:ticket_id], params[:text], Authorization.current_user.email
     url = @settings['base_url'] + 'issue/' + issue_reference + '/comment'
     text = "[[USERNAME:#{email}]]\n\n" + text
     comment = {
@@ -69,13 +70,14 @@ class Tickets
     response_body
   end
 
-  def destroy_comment(issue_reference, comment_id)
-    url = @settings['base_url'] + 'issue/' + issue_reference + '/comment/' + comment_id
-    response = @connection.delete url
-    (response.body.length == 0)
-  end
+  # def destroy_comment(issue_reference, comment_id)
+  #   url = @settings['base_url'] + 'issue/' + issue_reference + '/comment/' + comment_id
+  #   response = @connection.delete url
+  #   (response.body.length == 0)
+  # end
 
-  def change_status(issue_reference, status)
+  def change_status(params)
+    issue_reference, status = params[:id], params[:status]
     url = @settings['base_url'] + 'issue/' + issue_reference + '/transitions?expand=transitions.fields'
     transitions_response = @connection.get url
     transitions = JSON.parse transitions_response.body
