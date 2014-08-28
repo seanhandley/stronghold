@@ -1,8 +1,12 @@
 .page-controls
-  %button.btn.btn-primary{'data-toggle' => "modal", 'data-target' => "#inviteUser"}
-    %i.fa.fa-envelope
-    = t(:invite_new_user)
-- if open_invites.any?
+  - if can? :modify, Invite
+    %button.btn.btn-primary{'data-toggle' => "modal", 'data-target' => "#inviteUser"}
+      %i.fa.fa-envelope
+      = t(:invite_new_user)
+  - else
+    &nbsp;
+
+- if open_invites.any? && can?(:modify, Invite)
   %h3
     = t(:pending_invites)
     = "(#{@open_invites.count})"

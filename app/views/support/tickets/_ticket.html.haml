@@ -1,19 +1,25 @@
 .ticket
 
-  %div.btn-group.pull-right
-    %button.btn.btn-primary.pull-right{:'ng-click' => "ticketDialogShow()"}
-      %i.fa.fa-edit
-      New Ticket
-  %div.btn-group.pull-right
-    %button.btn.btn-default.dropdown-toggle{:type => "button", :'id' => "statusDropdown", :'data-toggle' => "dropdown", :'dropdown-toggle' => ""}
+  - if can? :modify, Ticket
+    %div.btn-group.pull-right
+      %button.btn.btn-primary.pull-right{:'ng-click' => "ticketDialogShow()"}
+        %i.fa.fa-edit
+        New Ticket
+    %div.btn-group.pull-right
+      %button.btn.btn-default.dropdown-toggle{:type => "button", :'id' => "statusDropdown", :'data-toggle' => "dropdown", :'dropdown-toggle' => ""}
+        %i.fa.fa-circle{:'ng-class' => "selectedTicket.status.name"}
+        %span
+          Status: {{selectedTicket.status.name}}
+        %span.caret
+      %ul.dropdown-menu{:role => "menu"}
+        %li{:'ng-repeat' => "status in statuses"}
+          %a{:'href' => "", :'ng-click' => "changeStatus(status)"}
+            {{status.name}}
+  - else
+    %div.btn-group.pull-right
       %i.fa.fa-circle{:'ng-class' => "selectedTicket.status.name"}
-      %span
-        Status: {{selectedTicket.status.name}}
-      %span.caret
-    %ul.dropdown-menu{:role => "menu"}
-      %li{:'ng-repeat' => "status in statuses"}
-        %a{:'href' => "", :'ng-click' => "changeStatus(status)"}
-          {{status.name}}
+        %span
+          Status: {{selectedTicket.status.name}}
 
   %h1 ({{selectedTicket.reference}}) {{selectedTicket.title}}
   %p
@@ -29,10 +35,11 @@
   %h3 Comments
   %hr
 
-  %div.btn-group#comment-button
-    %button.btn.btn-default{:'ng-click' => "commentDialogShow()"}
-      %i.fa.fa-comment
-      Add Comment
+  - if can? :modify, Ticket
+    %div.btn-group#comment-button
+      %button.btn.btn-default{:'ng-click' => "commentDialogShow()"}
+        %i.fa.fa-comment
+        Add Comment
 
   %div.comments
     %div{:'ng-show' => "hasComments(selectedTicket)"}

@@ -25,8 +25,9 @@
             %i.fa.fa-square-o
           %p
             There are no tickets.
-          %p
-            %a{:href => '', :'ng-click' => 'ticketDialogShow()'} Create a new ticket
+          - if can? :modify, Ticket
+            %p
+              %a{:href => '', :'ng-click' => 'ticketDialogShow()'} Create a new ticket
 
       .col-xs-3
         %div{:'ng-show' => "hasTickets()"}
@@ -39,9 +40,12 @@
           %p
             %i.fa.fa-info-circle
           %p
-            == Select a ticket, or
-            %a{:href => '', :'ng-click' => 'ticketDialogShow()'} create a new one
-            ==.
+            - if can? :modify, Ticket
+              Select a ticket, or
+              %a{:href => '', :'ng-click' => 'ticketDialogShow()'} create a new one
+              \.
+            - else
+              Select a ticket.
         %div{:'ng-show' => "selectedTicket"}
           = render partial: 'ticket'
 

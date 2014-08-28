@@ -1,6 +1,6 @@
 class Support::TicketsController < SupportBaseController
 
-  skip_authorization_check
+  load_and_authorize_resource :class_name => 'Ticket'
 
   def ensure_trailing_slash
     redirect_to url_for(params = :trailing_slash => true), :status => 301 unless trailing_slash?
