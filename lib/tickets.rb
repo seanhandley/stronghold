@@ -97,7 +97,6 @@ class Tickets
     }
     change_response = @connection.post url, change.to_json
     audit(issue_reference, 'update_status', {reference: issue_reference, status: display_status(status)})
-    Hipchat.notify('Support', "#{Authorization.current_user.email} set ticket <a href=\"https://datacentred.atlassian.net/browse/#{response_body['key']}\">#{response_body['key']}</a> to #{display_status(status)}")
 
     return ""
     # change_response_body = JSON.parse change_response.body
