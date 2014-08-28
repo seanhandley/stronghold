@@ -16,14 +16,15 @@
       .container
         %a{href: support_root_path, class: 'back-to-dash' }
           .logo
-        = render partial: 'shared/top_menu' unless request.url == support_root_url
+        = render partial: 'shared/top_menu'
         .context-nav= render partial: 'shared/support_nav'
       
   
     .container
-      %h3.organisation
-        -# = image_tag 'bbc.png'
-        = current_user.organization.name
+      - unless request.url == support_root_url
+        %h3.organisation
+          -# = image_tag 'bbc.png'
+          = current_user.organization.name
       #flashes= display_flash
       = yield
       .push
