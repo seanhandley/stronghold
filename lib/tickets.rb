@@ -68,7 +68,7 @@ class Tickets
     response = @connection.post url, comment.to_json
     response_body = JSON.parse response.body
     audit(issue_reference, 'comment', {content: truncate_for_audit(text.sub(/\[\[USERNAME:(.+)\]\]\n\n/,''))})
-    Hipchat.notify('Support', "#{Authorization.current_user.email} replied to ticket <a href=\"https://datacentred.atlassian.net/browse/#{response_body['key']}\">#{response_body['key']}</a>: #{text}")
+    Hipchat.notify('Support', "#{Authorization.current_user.email} replied to ticket <a href=\"https://datacentred.atlassian.net/browse/#{response_body['key']}\">#{response_body['key']}</a>: #{truncate_for_audit(text.sub(/\[\[USERNAME:(.+)\]\]\n\n/,''))}")
 
     response_body
   end
