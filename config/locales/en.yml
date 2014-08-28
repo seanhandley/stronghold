@@ -34,6 +34,7 @@ en:
   can_tickets_read: "Can view support tickets"
   cancel: "Cancel"
   cannot_remove_power_user_group: "This is a power user group and may not be removed"
+  cant_add_self_to_role: "You can't add yourself to this role. Please request another user with the right privileges adds you."
   cant_remove_self_from_role: "You can't remove yourself from this role. Please request another user with the right privileges removes you."
   colo: "Colo"
   content: "Content"
