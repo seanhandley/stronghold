@@ -7,8 +7,6 @@ angularJS.factory "TicketFactory", ($http, TicketStatusFactory) ->
         return null
       tickets = []
       angular.forEach response.data, (ticket, index) ->
-        applicableStatuses = $.grep TicketStatusFactory.getTicketStatuses(), (status) ->
-          $.inArray(ticket.jira_status, status.jira_statuses) >= 0
         # Comments
         comments = []
         angular.forEach ticket.comments, (comment, index) ->
@@ -19,14 +17,14 @@ angularJS.factory "TicketFactory", ($http, TicketStatusFactory) ->
           ticket.reference,
           ticket.title,
           ticket.description,
-          applicableStatuses[0],
+          ticket.jira_status,
+          null,
           ticket.email,
           comments,
           ticket.time_created,
           ticket.time_updated
         )
         tickets.push(newTicket)
-      console.log(tickets)
       tickets
 
     errorHandler = (response) ->

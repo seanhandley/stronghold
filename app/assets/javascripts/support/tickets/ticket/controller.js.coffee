@@ -11,15 +11,27 @@ angularJS.controller "TicketsController", [
 
     $scope.isLoading = false
 
-    $scope.doPopulateTickets = (dCallback = false) ->
+    $scope.doPopulateTickets = (dCallback = false, takeTime = false) ->
       async.waterfall([
         (next) ->
-          setTimeout(next, 1000)
+          if takeTime
+            setTimeout(next, 1000)
+          else
+            next()
           return
         (next) ->
           TicketFactory.getTickets().then (tickets) ->
             tickets = [] if (tickets == `null`)
-            setTimeout(next(null, tickets), 1000)
+
+            angular.forEach tickets, (ticket, index) ->
+              applicableStatuses = $.grep $scope.statuses, (status) ->
+                $.inArray(ticket.jira_status, status.jira_statuses) >= 0
+              ticket.status = applicableStatuses[0]
+
+            if takeTime
+               setTimeout(next(null, tickets), 1000)
+            else
+               next(null, tickets)
           return
         (tickets, next) ->
           $scope.hasFailed = (not (tickets?))
@@ -34,22 +46,27 @@ angularJS.controller "TicketsController", [
     $scope.populateTickets = ->
       $scope.isLoading = true
       $scope.$apply()
-      permanentTicketReference = $("#tickets-container").attr("data-permanent-reference")
-      $scope.showTicket(permanentTicketReference) if permanentTicketReference?
       $(window).on "popstate", (e) ->
         if e.state
           $scope.showTicket(e.state.reference)
       $scope.doPopulateTickets(() ->
         $scope.isLoading = false
         $scope.$apply()
+        permanentTicketReference = $("#tickets-container").attr("data-permanent-reference")
+        $scope.showTicket(permanentTicketReference) if permanentTicketReference?
         return
-      )
+      , true)
       doPopulateTicketsPromise = $interval(
         () ->
-          $scope.doPopulateTickets()
+          $scope.doPopulateTickets(null, false)
         , 10 * 1000
       )
       return
+
+    $scope.isStatusActiveByName = (name) ->
+      statuses = $.grep $scope.statuses, (status) ->
+        status.name is name
+      statuses[0].active
 
     $scope.getTickets = (status) ->
       return [] unless $scope.tickets?
@@ -78,6 +95,10 @@ angularJS.controller "TicketsController", [
       if ticketReference != null
         $scope.selectedTicket = $scope.getTicketByReference(ticketReference)
         $scope.selectedTicketReference = ticketReference
+        if $scope.selectedTicket isnt `undefined`
+          applicableStatuses = $.grep $scope.statuses, (status) ->
+            ($scope.selectedTicket.status.name == status.name)
+        applicableStatuses[0].active = true
       else
         $scope.selectedTicket = null
       history.replaceState({reference: ticketReference}, '', ticketReference)
@@ -118,7 +139,7 @@ angularJS.controller "TicketsController", [
         $scope.doPopulateTickets(() ->
           $scope.showTicket(newTicketReference)
           allHandler()
-        )
+        , false)
       errorHandler = (response) ->
         allHandler()
       request = $http({
@@ -162,7 +183,7 @@ angularJS.controller "TicketsController", [
         if (response.data.errorMessages)
           errorHandler()
           return
-        $scope.doPopulateTickets()
+        $scope.doPopulateTickets(null, false)
         allHandler()
       errorHandler = (response) ->
         allHandler()
