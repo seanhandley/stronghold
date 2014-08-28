@@ -25,6 +25,12 @@ angularJS.factory "TicketFactory", ($http, TicketStatusFactory) ->
           ticket.time_updated
         )
         tickets.push(newTicket)
+      tickets.sort((a, b) ->
+        if a.time_updated > b.time_updated
+          -1
+        else
+          1
+      )
       tickets
 
     errorHandler = (response) ->

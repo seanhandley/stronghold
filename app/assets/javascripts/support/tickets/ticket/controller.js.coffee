@@ -63,10 +63,13 @@ angularJS.controller "TicketsController", [
       )
       return
 
-    $scope.isStatusActiveByName = (name) ->
+    $scope.getStatusByName = (name) ->
       statuses = $.grep $scope.statuses, (status) ->
         status.name is name
-      statuses[0].active
+      statuses[0]
+
+    $scope.isStatusActiveByName = (name) ->
+      $scope.getStatusByName(name).active
 
     $scope.getTickets = (status) ->
       return [] unless $scope.tickets?
@@ -208,12 +211,16 @@ angularJS.controller "TicketsController", [
         "status": status.jira_statuses[status.primary_jira_status]
       }
       allHandler = () ->
-        # ...
+        setTimeout(() ->
+          $scope.$apply()
+        , 100)
+        
       successHandler = (response) ->
         if (response && response.data.errorMessages)
           errorHandler()
           return
         $scope.selectedTicket.status = status
+        $scope.getStatusByName(status.name).active = true
         allHandler()
       errorHandler = (response) ->
         allHandler()
