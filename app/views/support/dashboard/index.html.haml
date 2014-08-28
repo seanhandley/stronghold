@@ -1,37 +1,22 @@
-.container-fluid
-  .row
-    .col-md-3.col-xs-6
-      %a{href: support_instances_path, class: 'dashboard-link'}
-        .dashboard-option
-          %i.dashboard-icon.fa.fa-rocket
-          %h4 instances
-    .col-md-3.col-xs-6
-      .dashboard-option.dashboard-option-disabled
-        %i.dashboard-icon.fa.fa-database
-        %h4 storage
-    .col-md-3.col-xs-6
-      .dashboard-option.dashboard-option-disabled
-        %i.dashboard-icon.fa.fa-sitemap
-        %h4 network
-    .col-md-3.col-xs-6
-      .dashboard-option.dashboard-option-disabled
-        = image_tag('server.svg', class: 'dashboard-option')
-        %h4 colo
-  .row
-    .col-md-3.col-xs-6
-      %a{href: support_roles_path, class: 'dashboard-link'}
-        .dashboard-option
-          %i.dashboard-icon.fa.fa-users
-          %h4 users/roles
-    .col-md-3.col-xs-6
-      .dashboard-option.dashboard-option-disabled
-        %i.dashboard-icon.fa.fa-life-ring
-        %h4 support
-    .col-md-3.col-xs-6
-      .dashboard-option.dashboard-option-disabled
-        %i.dashboard-icon.fa.fa-money
-        %h4 billing
-    .col-md-3.col-xs-6
-      .dashboard-option.dashboard-option-disabled
-        %i.dashboard-icon.fa.fa-dashboard
-        %h4 stats
+&nbsp;
+.jumbotron.bg-info
+  %h3
+    = image_tag 'logo_small.png'
+    Welcome
+  %p== This is the DataCentred online control panel for #{current_user.organization.name}.
+  %p Here you can:
+  %ul
+    %li
+      Raise tickets to our support team
+      %span.label.label-success Available
+    %li
+      View billing information about your account with us
+      %span.label.label-info Coming soon
+    %li
+      See usage data
+      %span.label.label-info Coming soon
+    %li
+      Configure and control instances and volumes
+      %span.label.label-info Coming soon
+
+  %em== This site is under active development - if you have any questions or issues, please report them via the #{link_to 'Support Tickets', support_tickets_path} section.
