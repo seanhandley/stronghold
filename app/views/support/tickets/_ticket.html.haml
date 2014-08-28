@@ -35,14 +35,14 @@
   %h3 Description
   %p{'ng-bind-html' => "selectedTicket.description"}
 
-  %h3 Comments
+  %h3 Replies
   %hr
 
   - if can? :modify, Ticket
     %div.btn-group#comment-button
       %button.btn.btn-default{:'ng-click' => "commentDialogShow()"}
         %i.fa.fa-comment
-        Add Comment
+        Add Reply
 
   %div.comments
     %div{:'ng-show' => "hasComments(selectedTicket)"}
@@ -58,7 +58,7 @@
                 {{comment.time | momentDateTime}}
             %p{'ng-bind-html' => "comment.content"}
     %div{:'ng-show' => "!hasComments(selectedTicket)"}
-      There are no comments yet.
+      There are no replies yet.
 
 .modal.fade{'id' => 'newComment', 'tabindex' => "-1", 'role' => "dialog", 'aria-labelledby' => 'newComment', 'aria-hidden' => "true"}
   .modal-dialog
@@ -68,7 +68,7 @@
           &times;
         %h4.modal-title
           %i.fa.fa-comment
-          Add A Comment
+          Add A Reply
         %p= t(:ticket_comment_directions)
       .modal-body
         .input-group
