@@ -33,7 +33,7 @@ div.panel-heading a {
 }
 
 div.panel-heading {
-  padding-bottom: 0px;
+  padding-bottom: 10px;
 }
 
 div.panel-body {
@@ -76,8 +76,13 @@ div.panel .user-images span.image{
 }
 
 .view-permissions {
-  text-align: center;
   margin: 0px;
+  float: right;
+  text-align: right;
+}
+
+.view-permissions p.toggle-panel {
+  margin-top: 55px;
 }
 
 .view-permissions h3 {
