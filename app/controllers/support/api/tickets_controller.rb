@@ -14,7 +14,7 @@ class Support::Api::TicketsController < SupportBaseController
   end
 
   def create
-    reference = current_user.organization.tickets.create(params[:title], params[:description], current_user.email)
+    reference = current_user.organization.tickets.create(create_params)
     respond_to do |format|
       format.json {
         render :json => reference
@@ -23,13 +23,21 @@ class Support::Api::TicketsController < SupportBaseController
   end
 
   def update
-    issue_reference = params[:id]
-    status = params[:status]
     respond_to do |format|
       format.json {
-        render :json => current_user.organization.tickets.change_status(issue_reference, status)
+        render :json => current_user.organization.tickets.change_status(update_params)
       }
     end
+  end
+
+  private
+
+  def create_params
+    params.permit(:title, :description)
+  end
+
+  def update_params
+    params.permit(:id, :status)
   end
 
 end
