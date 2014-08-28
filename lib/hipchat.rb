@@ -3,7 +3,7 @@ require 'hipchat'
 class Hipchat
   def self.notify(room, message)
     if HIPCHAT_NOTIFICATIONS_ENABLED
-      client[room].send('JIRA', message)  
+      client[room].send('JIRA', message, :notify => true)  
     end
   end
 
