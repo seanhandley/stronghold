@@ -1,7 +1,6 @@
 class Support::Api::TicketCommentsController < SupportBaseController
 
   load_and_authorize_resource :class => "Ticket"
-  skip_before_action :verify_authenticity_token
 
   def create
     issue_reference = params[:ticket_id]
