@@ -7,7 +7,7 @@
         New Ticket
     %div.btn-group.pull-right
       %button.btn.btn-default.dropdown-toggle{:type => "button", :'id' => "statusDropdown", :'data-toggle' => "dropdown", :'dropdown-toggle' => ""}
-        %i.fa.fa-circle{:'ng-class' => "selectedTicket.status.name"}
+        %i.fa.fa-tag{:'ng-class' => "selectedTicket.status.name"}
         %span
           Status: {{selectedTicket.status.name}}
         %span.caret

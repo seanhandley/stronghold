@@ -32,7 +32,7 @@
       .col-xs-3
         %div{:'ng-show' => "hasTickets()"}
           %tabset
-            %tab{:'ng-repeat' => "status in statuses | orderBy:'-name'", :heading => '{{status.name}}'}
+            %tab{:'ng-repeat' => "status in statuses | orderBy:'-name'", :heading => '{{status.name}}', :active => 'status.active'}
               = render partial: 'tickets_list'
 
       .col-xs-9
