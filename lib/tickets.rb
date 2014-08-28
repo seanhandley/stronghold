@@ -53,6 +53,7 @@ class Tickets
     response = @connection.post url, json
     response_body = JSON.parse response.body
     audit(response_body['key'], 'create', {title: title, description: truncate_for_audit(description.sub(/\[\[USERNAME:(.+)\]\]\n\n/,''))})
+    Hipchat.notify('Support', "New ticket <a href=\"https://datacentred.atlassian.net/browse/#{response_body['key']}\">#{response_body['key']}</a> created by #{Authorization.current_user.email}: #{title}")
     response_body['key']
 
   end
