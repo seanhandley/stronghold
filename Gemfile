@@ -35,6 +35,7 @@ gem 'redcarpet', '~> 3.1.2'
 gem 'async-rails', '~> 0.9.0'
 gem 'newrelic_rpm', '~> 3.9.2'
 gem 'honeybadger', '~> 1.7.0'
+gem 'hipchat', '~> 1.3.0'
 
 group :test do
   gem 'minitest-rails'
