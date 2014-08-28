@@ -73,7 +73,7 @@ class TestRegistrationValidations < Minitest::Test
     registration = Registration.new(@power_invite, @valid_params)
     registration.process!
     role = registration.organization.roles.first 
-    assert_equal 'Owners', role.name
+    assert_equal 'Administrators', role.name
     assert role.power_user?
     assert_equal registration.user.roles.first.id, role.id
   end
