@@ -246,7 +246,7 @@ DEPENDENCIES
   audited-activerecord!
   bcrypt (~> 3.1.7)
   bootstrap-sass (~> 3.1.1)
-  cancancan (~> 1.8)
+  cancancan (~> 1.9.2)
   coffee-rails (~> 4.0.0)
   database_cleaner (~> 0.8.0)
   faker
