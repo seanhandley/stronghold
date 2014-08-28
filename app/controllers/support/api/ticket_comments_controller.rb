@@ -1,6 +1,6 @@
 class Support::Api::TicketCommentsController < SupportBaseController
 
-  skip_authorization_check
+  load_and_authorize_resource :class => "Ticket"
   skip_before_action :verify_authenticity_token
 
   def create

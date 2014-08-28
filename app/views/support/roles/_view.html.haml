@@ -3,13 +3,14 @@
 .panel.panel-default
   .panel-heading
     - unless role.power_user?
-      .pull-right
-        %a{'href' => support_role_path(role), :data => { confirm: "#{t(:delete_the_role)} '#{role.name}'?", method: :delete}}
-          %i.fa.fa-trash-o
+      - if can? :modify, Role
+        .pull-right
+          %a{'href' => support_role_path(role), :data => { confirm: "#{t(:delete_the_role)} '#{role.name}'?", method: :delete}}
+            %i.fa.fa-trash-o
     %h2.panel-title
       %i.fa.fa-key
       = role.power_user? ? t(:owners) : role.name
-    - unless role.power_user?
+    - if !role.power_user? && can?(:modify, Role)
       %p.tiny
         %a{'href' => '#', 'data-toggle' => "modal", 'data-target' => "#renameRole#{role.id}"}
           = t(:rename)

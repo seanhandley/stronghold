@@ -1,6 +1,8 @@
 class Ticket
   include TicketsHelper
 
+  attr_accessor :reference, :title, :description, :jira_status, :comments
+
   def initialize(jira_issue = {})
     @reference = jira_issue['key']
     @title = jira_issue['fields']['summary']
@@ -14,6 +16,8 @@ class Ticket
     end
   end
 
-  attr_accessor :reference, :title, :description, :jira_status, :comments
+  def self.find(params)
+    nil
+  end
 
 end
