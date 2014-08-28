@@ -2,6 +2,7 @@ class Support::Api::TicketsController < SupportBaseController
 
   load_and_authorize_resource :class => "Ticket"
   newrelic_ignore_apdex only: [:index]
+  skip_before_filter :timeout_session!, only: [:index]
 
   def index
     respond_to do |format|
