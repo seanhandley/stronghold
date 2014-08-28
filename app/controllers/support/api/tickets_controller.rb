@@ -1,6 +1,5 @@
 class Support::Api::TicketsController < SupportBaseController
 
-  skip_before_action :verify_authenticity_token
   load_and_authorize_resource :class => "Ticket"
   newrelic_ignore_apdex only: [:index]
 
