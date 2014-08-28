@@ -6,7 +6,7 @@
   %tbody{:'ng-repeat' => "ticket in getTickets(status)"}
     %tr{:'class' => 'ticket', :'ng-class' => '{selected: ticket == selectedTicket}'}
       %td.status
-        %i.fa.fa-circle{:'ng-class' => "status.name"}
+        %i.fa.fa-question-circle.big-icon{:'ng-class' => "status.name"}
       %td
         =link_to "({{ticket.reference}}) {{ticket.title}}", "", {:'ng-click' => 'showTicket(ticket.reference)'}
   %tbody{:'ng-hide' => "getTickets(status).length > 0"}

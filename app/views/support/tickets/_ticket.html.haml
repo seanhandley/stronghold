@@ -22,13 +22,16 @@
           Status: {{selectedTicket.status.name}}
 
   %h1 ({{selectedTicket.reference}}) {{selectedTicket.title}}
-  %p
-    %em
-      By {{selectedTicket.email}}
-  %p
-    %em
-      Created: {{selectedTicket.time_created | momentDateTime}};
-      Updated: {{selectedTicket.time_updated | momentDateTime}}
+  %ul.media-list
+    %li.media
+      %a.pull-left.gravatar
+        %img.img-circle{'gravatar-src' => "selectedTicket.email"}
+      %div.media-body
+        %h4.media-heading
+          {{selectedTicket.email}}
+        %p
+          %em
+            Created: {{selectedTicket.time_created | momentDateTime}}; Updated: {{selectedTicket.time_updated | momentDateTime}}
   %h3 Description
   %p{'ng-bind-html' => "selectedTicket.description"}
 
@@ -45,8 +48,8 @@
     %div{:'ng-show' => "hasComments(selectedTicket)"}
       %ul.media-list
         %li.media{:'ng-repeat' => ("comment in selectedTicket.comments")}
-          %a.pull-left
-            %img.img-circle{'gravatar-src-once' => "comment.email"}
+          %a.pull-left.gravatar
+            %img.img-circle{'gravatar-src' => "comment.email"}
           %div.media-body
             %h4.media-heading
               {{comment.email}}
