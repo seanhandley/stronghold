@@ -18,16 +18,27 @@ class Tickets
     response = @connection.get url
     response_body = JSON.parse response.body
     response_body['issues'].collect do |jira_issue|
-      Ticket.new(jira_issue)
       # jira_issue
+      reference = jira_issue['key']
+      title = jira_issue['fields']['summary']
+      email, description = extract_issue_email(jira_issue)
+      status = jatus_to_status(jira_issue['fields']['status']['name'])
+      new_ticket = Ticket.new(
+        reference,
+        title,
+        email,
+        description,
+        status
+      )
+      new_ticket.comments = jira_issue['fields']['comment']['comments'].collect do |jira_comment|
+        # jira_comment
+        TicketComment.new(jira_comment)
+      end
+      new_ticket
     end
   end
 
-  def create(params)
-    title, description, email = params[:title], params[:description], Authorization.current_user.email
-    title = "[title]" if title.nil?
-    description = "[description]" if description.nil?
-    description = "[[USERNAME:#{email}]]\n\n" + description
+  def create(title, description, email)
 
     url = @settings['base_url'] + 'issue'
     json = {
@@ -46,30 +57,31 @@ class Tickets
           "name" => "issues",
         },
         "labels" => [@reference],
-        "description" => description
+        "description" => "[[USERNAME:#{email}]]\n\n" + description
       }
     }.to_json
 
     response = @connection.post url, json
     response_body = JSON.parse response.body
-    audit(response_body['key'], 'create', {title: title, description: truncate_for_audit(description.sub(/\[\[USERNAME:(.+)\]\]\n\n/,''))})
-    Hipchat.notify('Support', "New ticket <a href=\"https://datacentred.atlassian.net/browse/#{response_body['key']}\">#{response_body['key']}</a> created by #{Authorization.current_user.email}: #{truncate_for_audit(title)}")
-    response_body['key']
+    reference = response_body['key']
+    title = truncate_for_audit(title)
+    truncate_for_audit(description)
+    audit(reference, 'create', {title: title, description: description})
+    Hipchat.notify('Support', "New ticket <a href=\"https://datacentred.atlassian.net/browse/#{reference}\">#{reference}</a> created by #{email}: #{title}")
+    reference
 
   end
 
-  def create_comment(params)
-    issue_reference, text, email = params[:ticket_id], params[:text], Authorization.current_user.email
-    url = @settings['base_url'] + 'issue/' + issue_reference + '/comment'
-    text = "[[USERNAME:#{email}]]\n\n" + text
+  def create_comment(reference, text, email)
+    url = @settings['base_url'] + 'issue/' + reference + '/comment'
     comment = {
-      "body" => text
+      "body" => "[[USERNAME:#{email}]]\n\n" + text
     }
     response = @connection.post url, comment.to_json
     response_body = JSON.parse response.body
-    audit(issue_reference, 'comment', {content: truncate_for_audit(text.sub(/\[\[USERNAME:(.+)\]\]\n\n/,''))})
-    Hipchat.notify('Support', "#{Authorization.current_user.email} replied to ticket <a href=\"https://datacentred.atlassian.net/browse/#{issue_reference}\">#{issue_reference}</a>: #{truncate_for_audit(text.sub(/\[\[USERNAME:(.+)\]\]\n\n/,''))}")
-
+    text = truncate_for_audit(text)
+    audit(reference, 'comment', {content: text})
+    Hipchat.notify('Support', "#{email} replied to ticket <a href=\"https://datacentred.atlassian.net/browse/#{reference}\">#{reference}</a>: #{text}")
     response_body
   end
 
@@ -79,9 +91,8 @@ class Tickets
   #   (response.body.length == 0)
   # end
 
-  def change_status(params)
-    issue_reference, status = params[:id], params[:status]
-    url = @settings['base_url'] + 'issue/' + issue_reference + '/transitions?expand=transitions.fields'
+  def change_status(reference, status)
+    url = @settings['base_url'] + 'issue/' + reference + '/transitions?expand=transitions.fields'
     transitions_response = @connection.get url
     transitions = JSON.parse transitions_response.body
     transitions = transitions['transitions']
@@ -96,7 +107,7 @@ class Tickets
       }
     }
     change_response = @connection.post url, change.to_json
-    audit(issue_reference, 'update_status', {reference: issue_reference, status: display_status(status)})
+    audit(reference, 'update_status', {reference: reference, status: status})
 
     return ""
     # change_response_body = JSON.parse change_response.body
@@ -112,12 +123,21 @@ class Tickets
                  audited_changes: params.stringify_keys!
   end
 
-  def display_status(status)
+  def jatus_to_status(status)
     case status
-    when 'To Do'
-      'Open'
-    when 'Done'
-      'Closed'
+      when 'To Do', 'In Progress'
+        'Open'
+      when 'Done'
+        'Closed'
+    end
+  end
+
+  def status_to_jatus(jatus)
+    case jatus
+      when 'Open'
+        'To Do'
+      when 'Closed'
+        'Done'
     end
   end
 
