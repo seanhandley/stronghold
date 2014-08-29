@@ -34,6 +34,8 @@ class Tickets
         # jira_comment
         TicketComment.new(jira_comment)
       end
+      new_ticket.time_created = jira_issue['fields']['created']
+      new_ticket.time_updated = jira_issue['fields']['updated']
       new_ticket
     end
   end
