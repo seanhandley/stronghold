@@ -67,7 +67,7 @@ en:
   networking: "Networking"
   organization_name: "Organization Name"
   organization_name_is_blank: "Organization name is blank"
-  owners: "Administrators"
+  owners: "Administrator"
   owners_group_description: "This is the administrators' group - members can see and do everything."
   password: "Password"
   password_confirmation: "Password Confirmation"
