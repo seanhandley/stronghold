@@ -17,7 +17,7 @@
 
     %h2.panel-title
       %i.fa.fa-key
-      = role.power_user? ? t(:owners) : role.name
+      = role.name
     - if !role.power_user? && can?(:modify, Role)
       %p.tiny
         %a{'href' => '#', 'data-toggle' => "modal", 'data-target' => "#renameRole#{role.id}"}
