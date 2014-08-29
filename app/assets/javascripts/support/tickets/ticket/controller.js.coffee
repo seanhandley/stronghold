@@ -22,12 +22,6 @@ angularJS.controller "TicketsController", [
         (next) ->
           TicketFactory.getTickets().then (tickets) ->
             tickets = [] if (tickets == `null`)
-
-            angular.forEach tickets, (ticket, index) ->
-              applicableStatuses = $.grep $scope.statuses, (status) ->
-                $.inArray(ticket.jira_status, status.jira_statuses) >= 0
-              ticket.status = applicableStatuses[0]
-
             if takeTime
                setTimeout(next(null, tickets), 1000)
             else
@@ -71,10 +65,10 @@ angularJS.controller "TicketsController", [
     $scope.isStatusActiveByName = (name) ->
       $scope.getStatusByName(name).active
 
-    $scope.getTickets = (status) ->
+    $scope.getTicketsByStatus = (status) ->
       return [] unless $scope.tickets?
       $.grep $scope.tickets, (ticket) ->
-        ticket.status.name is status.name
+        ticket.status_name is status.name
 
     $scope.countTickets = ->
       $scope.tickets.length
@@ -99,9 +93,7 @@ angularJS.controller "TicketsController", [
         $scope.selectedTicket = $scope.getTicketByReference(ticketReference)
         $scope.selectedTicketReference = ticketReference
         if $scope.selectedTicket isnt `undefined`
-          applicableStatuses = $.grep $scope.statuses, (status) ->
-            ($scope.selectedTicket.status.name == status.name)
-        applicableStatuses[0].active = true
+          $scope.getStatusByName($scope.selectedTicket.status_name).active = true
       else
         $scope.selectedTicket = null
       history.replaceState({reference: ticketReference}, '', ticketReference)
@@ -203,24 +195,24 @@ angularJS.controller "TicketsController", [
       $scope.commentDialogHide()
       false
 
-    $scope.changeStatus = (status) ->
+    $scope.changeStatus = (status_name) ->
       statusDropdownSpan = $("#statusDropdown > span").not(".caret")
       statusDropdownSpan.html("Changing...")
       url = "/support/api/tickets/" + $scope.selectedTicket.reference + "/"
       data = {
-        "status": status.jira_statuses[status.primary_jira_status]
+        "status": status_name
       }
       allHandler = () ->
         setTimeout(() ->
           $scope.$apply()
         , 100)
-        
+
       successHandler = (response) ->
         if (response && response.data.errorMessages)
           errorHandler()
           return
-        $scope.selectedTicket.status = status
-        $scope.getStatusByName(status.name).active = true
+        $scope.selectedTicket.status_name = status_name
+        $scope.getStatusByName(status_name).active = true
         allHandler()
       errorHandler = (response) ->
         allHandler()
