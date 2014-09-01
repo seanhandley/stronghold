@@ -1,18 +1,18 @@
 class Ticket
   include TicketsHelper
 
-  attr_accessor :reference, :title, :email, :description, :time_created, :time_updated, :comments
+  include ActiveModel::Validations
+  validates :title, :description, length: {minimum: 1}, allow_blank: false
 
-  def initialize(reference, title, email, description, status_name)
-    @reference = reference
+  attr_accessor :reference, :title, :email, :description, :time_created, :time_updated, :comments, :status_name
+
+  def initialize(title, description)
     @title = title
-    @email = email
     @description = description
+    @email = Authorization.current_user.email
     @time_created = nil
     @time_updated = nil
     @comments = []
-    @status_name = status_name
-    rescue
   end
 
   def self.find(params)

@@ -127,6 +127,7 @@ angularJS.controller "TicketsController", [
       allHandler = () ->
         $scope.ticketDialogHide()
       successHandler = (response) ->
+        console.log(response.data)
         if (response.data.errorMessages)
           errorHandler()
           return

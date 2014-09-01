@@ -24,12 +24,12 @@ class Tickets
       email, description = extract_issue_email(jira_issue)
       status = jatus_to_status(jira_issue['fields']['status']['name'])
       new_ticket = Ticket.new(
-        reference,
         title,
-        email,
         description,
-        status
       )
+      new_ticket.reference = reference
+      new_ticket.email = email
+      new_ticket.status_name = status
       new_ticket.comments = jira_issue['fields']['comment']['comments'].collect do |jira_comment|
         # jira_comment
         TicketComment.new(jira_comment)
@@ -40,7 +40,7 @@ class Tickets
     end
   end
 
-  def create(title, description, email)
+  def create(ticket)
 
     url = @settings['base_url'] + 'issue'
     json = {
@@ -51,7 +51,7 @@ class Tickets
         "issuetype" => {
           "name" => "Bug"
         },
-        "summary" => title,
+        "summary" => ticket.title,
         "reporter" => {
           "name" => "issues",
         },
@@ -59,23 +59,23 @@ class Tickets
           "name" => "issues",
         },
         "labels" => [@reference],
-        "description" => "[[USERNAME:#{email}]]\n\n" + description
+        "description" => "[[USERNAME:#{ticket.email}]]\n\n" + ticket.description
       }
     }.to_json
 
     response = @connection.post url, json
     response_body = JSON.parse response.body
     reference = response_body['key']
-    title = truncate_for_audit(title)
-    truncate_for_audit(description)
+    title = truncate_for_audit(ticket.title)
+    description = truncate_for_audit(ticket.description)
     audit(reference, 'create', {title: title, description: description})
-    Hipchat.notify('Support', "New ticket <a href=\"https://datacentred.atlassian.net/browse/#{reference}\">#{reference}</a> created by #{email}: #{title}")
+    Hipchat.notify('Support', "New ticket <a href=\"https://datacentred.atlassian.net/browse/#{reference}\">#{reference}</a> created by #{ticket.email}: #{title}")
     reference
 
   end
 
-  def create_comment(reference, text, email)
-    url = @settings['base_url'] + 'issue/' + reference + '/comment'
+  def create_comment(ticket_reference, text, email)
+    url = @settings['base_url'] + 'issue/' + ticket_reference + '/comment'
     comment = {
       "body" => "[[USERNAME:#{email}]]\n\n" + text
     }
@@ -83,7 +83,7 @@ class Tickets
     response_body = JSON.parse response.body
     text = truncate_for_audit(text)
     audit(reference, 'comment', {content: text})
-    Hipchat.notify('Support', "#{email} replied to ticket <a href=\"https://datacentred.atlassian.net/browse/#{reference}\">#{reference}</a>: #{text}")
+    Hipchat.notify('Support', "#{email} replied to ticket <a href=\"https://datacentred.atlassian.net/browse/#{ticket_reference}\">#{ticket_reference}</a>: #{text}")
     response_body
   end
 
@@ -94,6 +94,7 @@ class Tickets
   # end
 
   def change_status(reference, status)
+    status = status_to_jatus(status)
     url = @settings['base_url'] + 'issue/' + reference + '/transitions?expand=transitions.fields'
     transitions_response = @connection.get url
     transitions = JSON.parse transitions_response.body
@@ -110,10 +111,6 @@ class Tickets
     }
     change_response = @connection.post url, change.to_json
     audit(reference, 'update_status', {reference: reference, status: status})
-
-    return ""
-    # change_response_body = JSON.parse change_response.body
-    # status_transition
   end
 
   private
