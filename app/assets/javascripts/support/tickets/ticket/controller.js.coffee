@@ -6,6 +6,11 @@ angularJS.controller "TicketsController", [
   "TicketStatusFactory",
   ($http, $scope, $interval, TicketFactory, TicketStatusFactory) ->
 
+    $scope.clearErrors = () ->
+      $scope.errors = []
+
+    $scope.errors = []
+
     $scope.statuses = TicketStatusFactory.getTicketStatuses()
     $scope.tickets = []
 
@@ -22,7 +27,6 @@ angularJS.controller "TicketsController", [
         (next) ->
           TicketFactory.getTickets().then (tickets) ->
             tickets = [] if (tickets == `null`)
-            console.log(tickets)
             if takeTime
                setTimeout(next(null, tickets), 1000)
             else
@@ -103,13 +107,12 @@ angularJS.controller "TicketsController", [
       return
 
     $scope.ticketDialogShow = ->
+      $scope.clearErrors()
       ticketTitleInput = $("#new_ticket_title")
       ticketDescriptionTextArea = $("#new_ticket_description")
       ticketSubmitButton = $($("#newTicket button.btn-primary")[0])
       ticketDescriptionTextArea.val("")
       ticketTitleInput.val("")
-      ticketSubmitButton.html("Submit")
-      ticketSubmitButton.removeClass("disabled")
       $("#newTicket").on("shown.bs.modal", () -> 
         ticketTitleInput.focus()
       )
@@ -127,17 +130,20 @@ angularJS.controller "TicketsController", [
       ticketSubmitButton.html("Submitting...")
       ticketSubmitButton.addClass("disabled")
       allHandler = () ->
-        $scope.ticketDialogHide()
+        ticketSubmitButton.html("Submit")
+        ticketSubmitButton.removeClass("disabled")
       successHandler = (response) ->
-        console.log(response.data)
-        if (response.data.errorMessages)
-          errorHandler()
-          return
-        newTicketReference = response.data
-        $scope.doPopulateTickets(() ->
-          $scope.showTicket(newTicketReference)
-          allHandler()
-        , false)
+        if response.data.errors
+          $scope.errors = response.data.errors
+        else
+          newTicketReference = response.data
+          $scope.doPopulateTickets(() ->
+            $scope.showTicket(newTicketReference)
+            allHandler()
+          , false)
+          $scope.ticketDialogHide()
+        allHandler()
+        return
       errorHandler = (response) ->
         allHandler()
       request = $http({
@@ -155,11 +161,10 @@ angularJS.controller "TicketsController", [
       false
 
     $scope.commentDialogShow = ->
+      $scope.clearErrors()
       commentTextArea = $("#new_comment_text")
       commentSubmitButton = $($("#newComment button.btn-primary")[0])
       commentTextArea.val("")
-      commentSubmitButton.html("Submit")
-      commentSubmitButton.removeClass("disabled")
       $("#newComment").on("shown.bs.modal", () -> 
         commentTextArea.focus()
       )
@@ -176,13 +181,16 @@ angularJS.controller "TicketsController", [
       commentSubmitButton.html("Submitting...")
       commentSubmitButton.addClass("disabled")
       allHandler = () ->
-        $scope.commentDialogHide()
+        commentSubmitButton.html("Submit")
+        commentSubmitButton.removeClass("disabled")
       successHandler = (response) ->
-        if (response.data.errorMessages)
-          errorHandler()
-          return
-        $scope.doPopulateTickets(null, false)
+        if (response.data.errors)
+          $scope.errors = response.data.errors
+        else
+          $scope.doPopulateTickets(null, false)
+          $scope.commentDialogHide()
         allHandler()
+        return
       errorHandler = (response) ->
         allHandler()
       request = $http({

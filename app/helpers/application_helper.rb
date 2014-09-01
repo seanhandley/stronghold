@@ -1,4 +1,5 @@
 module ApplicationHelper
+
   def display_flash
     flashes = flash.collect do |key,msg|
         content_tag :div, content_tag(:p, h(msg), :class => key), :id => 'flash'
@@ -12,4 +13,17 @@ module ApplicationHelper
   def javascript_success_messages_for(obj)
     content_tag(:div, :class => "success#{obj.id}") { '' }
   end
+
+  def get_model_errors(model)
+    errors = model.errors.messages.collect do |field, message|
+      {
+        "field" => field,
+        "message" => message[0]
+      }
+    end
+    return {
+      "errors" => errors
+    }
+  end
+
 end

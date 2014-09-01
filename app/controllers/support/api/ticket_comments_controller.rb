@@ -1,5 +1,7 @@
 class Support::Api::TicketCommentsController < SupportBaseController
 
+  include ApplicationHelper
+
   load_and_authorize_resource :class => "TicketComment"
 
   def create
@@ -7,10 +9,14 @@ class Support::Api::TicketCommentsController < SupportBaseController
       :ticket_reference => create_params[:ticket_id],
       :text => create_params[:text]
     )
-    response = current_user.organization.tickets.create_comment(ticket_comment)
+    response = {}
+    if ticket_comment.valid?
+      response = current_user.organization.tickets.create_comment(ticket_comment)
+    else
+      response = get_model_errors(ticket_comment)
+    end
     respond_to do |format|
       format.json {
-        # render :json => ticket_comment
         render :json => response
       }
     end

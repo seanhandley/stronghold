@@ -1,5 +1,7 @@
 class TicketComment
-  include TicketsHelper
+
+  include ActiveModel::Validations
+  validates :text, length: {minimum: 1}, allow_blank: false
 
   attr_accessor :ticket_reference, :id, :email, :text, :time
 

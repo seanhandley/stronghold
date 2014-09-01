@@ -60,6 +60,7 @@
             New Ticket
           %p= t(:ticket_directions)
         .modal-body
+          = render partial: 'shared/model_errors'
           .input-group
             %span.input-group-addon
               %i.fa.fa-tag

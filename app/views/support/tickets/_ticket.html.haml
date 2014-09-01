@@ -71,6 +71,7 @@
           Add A Reply
         %p= t(:ticket_comment_directions)
       .modal-body
+        = render partial: 'shared/model_errors'
         .input-group
           %span.input-group-addon
             %i.fa.fa-comment
