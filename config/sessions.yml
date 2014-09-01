@@ -4,5 +4,8 @@ development:
 test:
   timeout: 129600
 
+staging:
+  timeout: 129600
+
 production:
   timeout: 10
