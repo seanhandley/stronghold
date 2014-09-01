@@ -1,4 +1,6 @@
-class Support::Api::TicketsController < SupportBaseController
+class Support::Api::TicketsController < SupportBaseController#
+
+  include ApplicationHelper
 
   newrelic_ignore_apdex only: [:index]
   skip_before_filter :timeout_session!, only: [:index]
@@ -15,12 +17,16 @@ class Support::Api::TicketsController < SupportBaseController
 
   def create
     ticket = Ticket.new(create_params)
-    # Validation goes here (looking good)
-    reference = current_user.organization.tickets.create(ticket)
+    response = {}
+    if ticket.valid?
+      ticket.reference = current_user.organization.tickets.create(ticket)
+      response = ticket.reference
+    else
+      response = get_model_errors(ticket)
+    end
     respond_to do |format|
       format.json {
-        # render :json => reference
-        render :json => reference
+        render :json => response
       }
     end
   end

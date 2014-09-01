@@ -1,5 +1,4 @@
 class Ticket
-  include TicketsHelper
 
   include ActiveModel::Validations
   validates :title, :description, length: {minimum: 1}, allow_blank: false
