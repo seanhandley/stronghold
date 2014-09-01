@@ -6,9 +6,9 @@ class Ticket
 
   attr_accessor :reference, :title, :email, :description, :time_created, :time_updated, :comments, :status_name
 
-  def initialize(title, description)
-    @title = title
-    @description = description
+  def initialize(params)
+    @title = params[:title]
+    @description = params[:description]
     @email = Authorization.current_user.email
     @time_created = nil
     @time_updated = nil

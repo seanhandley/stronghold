@@ -23,16 +23,19 @@ class Tickets
       title = jira_issue['fields']['summary']
       email, description = extract_issue_email(jira_issue)
       status = jatus_to_status(jira_issue['fields']['status']['name'])
-      new_ticket = Ticket.new(
-        title,
-        description,
-      )
+      new_ticket = Ticket.new(title: title, description: description)
       new_ticket.reference = reference
       new_ticket.email = email
       new_ticket.status_name = status
       new_ticket.comments = jira_issue['fields']['comment']['comments'].collect do |jira_comment|
-        # jira_comment
-        TicketComment.new(jira_comment)
+        email, text = extract_comment_email(jira_comment)
+        TicketComment.new(
+          :ticket_reference => new_ticket.reference,
+          :id => jira_comment['id'],
+          :email => email,
+          :text => text,
+          :time => jira_comment['updated']
+        )
       end
       new_ticket.time_created = jira_issue['fields']['created']
       new_ticket.time_updated = jira_issue['fields']['updated']
@@ -74,16 +77,16 @@ class Tickets
 
   end
 
-  def create_comment(ticket_reference, text, email)
-    url = @settings['base_url'] + 'issue/' + ticket_reference + '/comment'
+  def create_comment(ticket_comment)
+    url = @settings['base_url'] + 'issue/' + ticket_comment.ticket_reference + '/comment'
     comment = {
-      "body" => "[[USERNAME:#{email}]]\n\n" + text
+      "body" => "[[USERNAME:#{ticket_comment.email}]]\n\n" + ticket_comment.text
     }
     response = @connection.post url, comment.to_json
     response_body = JSON.parse response.body
-    text = truncate_for_audit(text)
-    audit(reference, 'comment', {content: text})
-    Hipchat.notify('Support', "#{email} replied to ticket <a href=\"https://datacentred.atlassian.net/browse/#{ticket_reference}\">#{ticket_reference}</a>: #{text}")
+    text = truncate_for_audit(ticket_comment.text)
+    audit(ticket_comment.ticket_reference, 'comment', {content: text})
+    Hipchat.notify('Support', "#{ticket_comment.email} replied to ticket <a href=\"https://datacentred.atlassian.net/browse/#{ticket_comment.ticket_reference}\">#{ticket_comment.ticket_reference}</a>: #{text}")
     response_body
   end
 
