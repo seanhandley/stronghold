@@ -9,7 +9,7 @@
         %i.fa.fa-tag.big-icon{:'ng-class' => "status.name"}
       %td
         =link_to "({{ticket.reference}}) {{ticket.title}}", "", {:'ng-click' => 'showTicket(ticket.reference)'}
-  %tbody{:'ng-hide' => "getTickets(status).length > 0"}
+  %tbody{:'ng-hide' => "getTicketsByStatus(status).length > 0"}
     %tr
       %td
       %td

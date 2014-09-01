@@ -13,7 +13,7 @@
         %span.caret
       %ul.dropdown-menu{:role => "menu"}
         %li{:'ng-repeat' => "status in statuses"}
-          %a{:'href' => "", :'ng-click' => "changeStatus(status)"}
+          %a{:'href' => "", :'ng-click' => "changeStatus(status.name)"}
             {{status.name}}
   - else
     %div.btn-group.pull-right

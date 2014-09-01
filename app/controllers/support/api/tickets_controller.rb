@@ -1,8 +1,8 @@
 class Support::Api::TicketsController < SupportBaseController
 
-  load_and_authorize_resource :class => "Ticket"
   newrelic_ignore_apdex only: [:index]
   skip_before_filter :timeout_session!, only: [:index]
+  skip_authorization_check
 
   def index
     respond_to do |format|
@@ -14,9 +14,15 @@ class Support::Api::TicketsController < SupportBaseController
   end
 
   def create
-    reference = current_user.organization.tickets.create(create_params)
+    ticket = Ticket.new(
+      create_params[:title],
+      create_params[:description]
+    )
+    # Validation goes here (looking good)
+    reference = current_user.organization.tickets.create(ticket)
     respond_to do |format|
       format.json {
+        # render :json => reference
         render :json => reference
       }
     end
@@ -25,7 +31,10 @@ class Support::Api::TicketsController < SupportBaseController
   def update
     respond_to do |format|
       format.json {
-        render :json => current_user.organization.tickets.change_status(update_params)
+        render :json => current_user.organization.tickets.change_status(
+          update_params[:id],
+          update_params[:status]
+        )
       }
     end
   end
