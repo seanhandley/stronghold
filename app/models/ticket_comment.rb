@@ -1,14 +1,14 @@
 class TicketComment
   include TicketsHelper
 
-  def initialize(jira_comment = {})
-    @id = jira_comment['id']
-    @email, @content = extract_comment_email(jira_comment)
-    @time = jira_comment['updated']
-  end
+  attr_accessor :ticket_reference, :id, :email, :text, :time
 
-  attr_accessor :id
-  attr_accessor :email
-  attr_accessor :content
+  def initialize(params)
+    @ticket_reference = params[:ticket_reference]
+    @id = params[:id]
+    @email = Authorization.current_user.email
+    @text = params[:text]
+    @time = params[:time]
+  end
 
 end

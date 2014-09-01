@@ -2,7 +2,7 @@ class Support::Api::TicketsController < SupportBaseController
 
   newrelic_ignore_apdex only: [:index]
   skip_before_filter :timeout_session!, only: [:index]
-  skip_authorization_check
+  load_and_authorize_resource :class => "Ticket"
 
   def index
     respond_to do |format|
@@ -14,10 +14,7 @@ class Support::Api::TicketsController < SupportBaseController
   end
 
   def create
-    ticket = Ticket.new(
-      create_params[:title],
-      create_params[:description]
-    )
+    ticket = Ticket.new(create_params)
     # Validation goes here (looking good)
     reference = current_user.organization.tickets.create(ticket)
     respond_to do |format|
@@ -42,7 +39,7 @@ class Support::Api::TicketsController < SupportBaseController
   private
 
   def create_params
-    params.permit(:title, :description)
+    params.require(:ticket).permit(:title, :description)
   end
 
   def update_params

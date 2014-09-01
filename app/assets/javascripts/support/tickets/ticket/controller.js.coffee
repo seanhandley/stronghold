@@ -22,6 +22,7 @@ angularJS.controller "TicketsController", [
         (next) ->
           TicketFactory.getTickets().then (tickets) ->
             tickets = [] if (tickets == `null`)
+            console.log(tickets)
             if takeTime
                setTimeout(next(null, tickets), 1000)
             else
