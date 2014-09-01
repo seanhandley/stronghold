@@ -41,6 +41,8 @@ group :test do
   gem 'minitest-rails'
   gem 'faker'
   gem 'machinist'
+  gem 'capybara'
+  gem 'poltergeist'
 end
 
 gem 'rails-assets-angular'

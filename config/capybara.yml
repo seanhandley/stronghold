@@ -1,0 +1,3 @@
+url: http://rails01.sal01.datacentred.co.uk
+username: capybara@datacentred.co.uk
+password: # Load from secrets.yml
