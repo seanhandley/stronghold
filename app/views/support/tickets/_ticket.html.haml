@@ -56,7 +56,7 @@
             %p
               %em
                 {{comment.time | momentDateTime}}
-            %p{'ng-bind-html' => "comment.content"}
+            %p{'ng-bind-html' => "comment.text"}
     %div{:'ng-show' => "!hasComments(selectedTicket)"}
       There are no replies yet.
 
