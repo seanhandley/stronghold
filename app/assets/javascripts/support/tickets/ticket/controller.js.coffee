@@ -32,20 +32,21 @@ angularJS.controller "TicketsController", [
           if (not $scope.hasFailed)
             $scope.tickets = tickets
             $scope.showTicket(null)
-          $scope.$apply()
+          $scope.$apply() if !$scope.$$phase
+
           dCallback() if dCallback
           return
       ])
 
     $scope.populateTickets = ->
       $scope.isLoading = true
-      $scope.$apply()
+      $scope.$apply() if !$scope.$$phase
       $(window).on "popstate", (e) ->
         if e.state
           $scope.showTicket(e.state.reference)
       $scope.doPopulateTickets(() ->
         $scope.isLoading = false
-        $scope.$apply()
+        $scope.$apply() if !$scope.$$phase
         permanentTicketReference = $("#tickets-container").attr("data-permanent-reference")
         $scope.showTicket(permanentTicketReference) if permanentTicketReference?
         return
@@ -97,7 +98,7 @@ angularJS.controller "TicketsController", [
       else
         $scope.selectedTicket = null
       history.replaceState({reference: ticketReference}, '', ticketReference)
-      $scope.$apply()
+      $scope.$apply() if !$scope.$$phase
       return
 
     $scope.ticketDialogShow = ->
@@ -205,7 +206,7 @@ angularJS.controller "TicketsController", [
       }
       allHandler = () ->
         setTimeout(() ->
-          $scope.$apply()
+          $scope.$apply() if !$scope.$$phase
         , 100)
 
       successHandler = (response) ->
