@@ -1,12 +1,16 @@
 class Support::Api::TicketCommentsController < SupportBaseController
 
-  load_and_authorize_resource :class => "Ticket"
+  load_and_authorize_resource :class => "TicketComment"
 
   def create
-    issue_reference = params[:ticket_id]
-    response = current_user.organization.tickets.create_comment(create_params)
+    ticket_comment = TicketComment.new(
+      :ticket_reference => create_params[:ticket_id],
+      :text => create_params[:text]
+    )
+    response = current_user.organization.tickets.create_comment(ticket_comment)
     respond_to do |format|
       format.json {
+        # render :json => ticket_comment
         render :json => response
       }
     end
