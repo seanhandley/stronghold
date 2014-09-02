@@ -6,16 +6,8 @@ class Support::DashboardController < SupportBaseController
     'dashboard'
   end
 
-  def css
-    
-  end
-
-  def components
-    
-  end
-
   def index
-    redirect_to support_roles_path
+    
   end
 
 end

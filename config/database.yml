@@ -13,6 +13,11 @@ test:
   <<: *default
   database: stronghold_test
 
+staging:
+  <<: *default
+  database: stronghold_staging
+  password: <%= ENV["DB_PASSWORD"] %>
+
 production:
   <<: *default
   database: stronghold_production

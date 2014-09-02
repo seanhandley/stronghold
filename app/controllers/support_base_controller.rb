@@ -29,11 +29,6 @@ class SupportBaseController < ApplicationController
     Time.use_zone(current_user.organization.time_zone, &block)
   end
 
-  def current_user
-    @current_user ||= User.find(session[:user_id]) if session[:user_id]
-  end
-  helper_method :current_user
-
   def authenticate_user!
     unless current_user
       redirect_to sign_in_path
@@ -41,11 +36,15 @@ class SupportBaseController < ApplicationController
   end
 
   def timeout_session!
-    if (Time.now - Time.parse(session[:created_at])) > SESSION_TIMEOUT.minutes
-      session[:user_id] = nil
-      redirect_to sign_in_path, notice: t(:logged_out_after_inactivity)
-    else
-      session[:created_at] = Time.now
+    if session
+      session[:created_at] = Time.now unless session[:created_at]
+
+      if (Time.now - Time.parse(session[:created_at])) > SESSION_TIMEOUT.minutes
+        session[:user_id] = nil
+        redirect_to sign_in_path, notice: t(:signed_out_after_inactivity)
+      else
+        session[:created_at] = Time.now
+      end
     end
   end
 end

@@ -1,12 +1,13 @@
-%h3 Log In
+%h3 Sign In
 
 = form_for(User.new, :url => sessions_path, :method => :post, :html => {:role => 'form'}) do |f|
   .form-group
-    %label{'for' => "exampleInputEmail1"} Email address
+    %label{'for' => "exampleInputEmail1"} E-mail Address
     = f.email_field :email, :class => "form-control",
-                    :id => "exampleInputEmail1", :placeholder => "Enter email"
+                    :id => "inputEmail", :placeholder => "Enter E-mail", :autofocus => ''
   .form-group
     %label{'for' => "exampleInputPassword1"} Password
     = f.password_field :password, :class => "form-control",
-                       :id => "exampleInputPassword1", :placeholder => "Enter Password"
-  = f.submit 'Log In', :class => 'btn btn-primary'
+                       :id => "inputPassword", :placeholder => "Enter Password"
+  = f.submit 'Sign In', :class => 'btn btn-primary'
+  .pull-right= link_to 'Reset Password?', new_reset_path

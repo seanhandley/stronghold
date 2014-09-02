@@ -1,0 +1,79 @@
+@import "settings";
+
+.status-head, .status {
+  width: 32px;
+  text-align: right;
+}
+
+.fa.Open {
+  color: #00CC00;
+}
+
+.fa.Closed {
+  color: #CC0000;
+}
+
+.some-info {
+  color: $headings-color;
+  background-color: #eee;
+  overflow-y: hidden;
+  max-height: 500px;
+  p {
+    margin: 0;
+    padding: 4px 0 4px 0;
+    line-height: 32px;
+    text-align: center;
+  }
+  p:first-child {
+    line-height: 96px;
+    font-size: 500%;
+    color: $brand-primary;
+  }
+}
+
+.animate-show.ng-hide {
+  transition-property: all;
+  transition-duration: .5s;
+  transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+}
+
+.animate-show.ng-hide {
+  max-height: 0;
+}
+
+.space-after {
+  margin-bottom: 8px;
+}
+
+.clear-fix {
+  clear: both;
+}
+
+button > i.fa {
+  padding-right: 4px;
+}
+
+.btn-group.pull-right {
+  margin-left: 4px;
+}
+
+a.gravatar img {
+  width: 72px;
+  height: 72px;
+}
+
+#comment-button {
+  margin-bottom: 20px;
+}
+
+.ticket.selected {
+  background-color: #eee;
+}
+
+.big-icon {
+  font-size: 150%;
+}
+
+.media-body p img {
+  max-width: 100%;
+}

@@ -11,7 +11,7 @@ organization = Organization.create(name: 'BBC')
 user = organization.users.create(email: 'support@datacentred.co.uk', password: 'llama123',
             first_name: 'Testy', last_name: 'Tester')
 
-role = Role.create(organization: organization, name: 'Owners', permissions: Permissions.user.keys, power_user: true)
+role = Role.create(organization: organization, name: 'Administrator', permissions: Permissions.user.keys, power_user: true)
 
 user.roles << role
 user.save!

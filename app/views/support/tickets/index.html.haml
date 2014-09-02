@@ -1,0 +1,76 @@
+.container-fluid#tickets-container{:'ng-controller' => "TicketsController", :'ng-init' => 'populateTickets()', :'data-permanent-reference' => @reference}
+  .col-xs-12
+    .some-info.space-after.animate-show{:'ng-show' => "isLoading"}
+      %p
+        %i.fa.fa-refresh.fa-spin
+      %p
+        Loading tickets...
+
+  %div
+    .col-xs-12{:'ng-show' => "hasFailed"}
+      .some-info.space-after
+        %p
+          %i.fa.fa-warning
+        %p
+          We can't load your support tickets right now.
+        %p
+          Please check back later.
+
+    %div{:'ng-hide' => "hasFailed"}
+
+      .col-xs-12.space-after{:'ng-hide' => "isLoading"}
+
+        .some-info.clear-fix.space-after{:'ng-hide' => "hasTickets()"}
+          %p
+            %i.fa.fa-square-o
+          %p
+            There are no tickets.
+          - if can? :modify, Ticket
+            %p
+              %a{:href => '', :'ng-click' => 'ticketDialogShow()'} Create a new ticket
+
+      .col-xs-3
+        %div{:'ng-show' => "hasTickets()"}
+          %tabset
+            %tab{:'ng-repeat' => "status in statuses | orderBy:'-name'", :heading => '{{status.name}}', :active => 'status.active'}
+              = render partial: 'tickets_list'
+
+      .col-xs-9
+        .some-info.space-after.ticket{:'ng-hide' => "selectedTicket || !hasTickets()"}
+          %p
+            %i.fa.fa-info-circle
+          %p
+            - if can? :modify, Ticket
+              Select a ticket, or
+              %a{:href => '', :'ng-click' => 'ticketDialogShow()'} create a new one
+              \.
+            - else
+              Select a ticket.
+        %div{:'ng-show' => "selectedTicket"}
+          = render partial: 'ticket'
+
+  .modal.fade{'id' => 'newTicket', 'tabindex' => "-1", 'role' => "dialog", 'aria-labelledby' => 'newTicket', 'aria-hidden' => "true"}
+    .modal-dialog
+      .modal-content
+        .modal-header
+          %button{'type' => "button", 'class' => "close", 'data-dismiss' => "modal", 'aria-hidden' => "true"}
+            &times;
+          %h4.modal-title
+            %i.fa.fa-circle
+            New Ticket
+          %p= t(:ticket_directions)
+        .modal-body
+          = render partial: 'shared/model_errors'
+          .input-group
+            %span.input-group-addon
+              %i.fa.fa-tag
+            = text_field_tag :new_ticket_title, nil, placeholder: 'Give a quick summary of the issue', class: "form-control", autofocus: true
+          .input-group
+            %span.input-group-addon
+              %i.fa.fa-edit
+            = text_area_tag :new_ticket_description, nil, placeholder: 'Now, tell us all the details...', class: "form-control", rows: 12
+        .modal-footer
+          %button.btn.btn-default{:'ng-click' => 'ticketDialogCancel()'}
+            = t(:cancel)
+          %button.btn.btn-primary{:'ng-click' => 'ticketDialogSubmit()'}
+            = t(:submit)

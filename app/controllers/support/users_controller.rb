@@ -23,7 +23,7 @@ class Support::UsersController < SupportBaseController
   private
 
   def update_params
-    params.require(:user).permit(:first_name, :last_name, :email,
+    params.require(:user).permit(:first_name, :last_name,
                                  :password, :password_confirmation)
   end
 

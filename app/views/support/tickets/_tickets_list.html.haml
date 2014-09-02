@@ -1,0 +1,17 @@
+%table.table
+  %thead
+    %th.status-head
+    %th
+      Ticket
+  %tbody{:'ng-repeat' => "ticket in getTicketsByStatus(status)"}
+    %tr{:'class' => 'ticket', :'ng-class' => '{selected: ticket == selectedTicket}'}
+      %td.status
+        %i.fa.fa-tag.big-icon{:'ng-class' => "status.name"}
+      %td
+        =link_to "({{ticket.reference}}) {{ticket.title}}", "", {:'ng-click' => 'showTicket(ticket.reference)'}
+  %tbody{:'ng-hide' => "getTicketsByStatus(status).length > 0"}
+    %tr
+      %td
+      %td
+        %em
+          No tickets

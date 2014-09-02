@@ -1,6 +1,6 @@
 class SignupsController < ApplicationController
 
-  layout 'login'
+  layout 'sign-in'
 
   before_filter :find_invite
 
@@ -12,6 +12,7 @@ class SignupsController < ApplicationController
     @registration = Registration.new(@invite, update_params)
     if @registration.process!
       session[:user_id] = @registration.user.id
+      session[:created_at] = Time.now
       redirect_to support_root_path, notice: 'Welcome!'
     else
       flash[:error] = @registration.errors.full_messages.join('<br>')
@@ -23,9 +24,9 @@ class SignupsController < ApplicationController
 
   def update_params
     if !@invite.organization
-      params.permit(:organization_name, :password, :confirm_password)
+      params.permit(:organization_name, :password, :confirm_password, :privacy)
     else
-      params.permit(:password, :confirm_password)
+      params.permit(:password, :confirm_password, :privacy)
     end
   end
 

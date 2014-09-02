@@ -6,5 +6,5 @@
       .controls
         - for key, perms in permissions
           %label.checkbox
-            = check_box_tag 'role[permissions][]', key, role.permissions.include?(key), :id => "permission-#{key}", :class => 'role-permission', :disabled => role.power_user? ? true : false
+            = check_box_tag 'role[permissions][]', key, role.permissions.include?(key), :id => "permission-#{key}", :class => 'role-permission', :disabled => can?(:modify, Role) ? false : true
             = "#{perms[:description]}?"

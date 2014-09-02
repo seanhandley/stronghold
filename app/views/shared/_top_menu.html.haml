@@ -1,4 +1,18 @@
 .top-menu
+  - if can? :read, Role
+    %a{href: support_roles_path}
+      .top-menu-option{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => t(:users_slash_roles), 'class' => (current_section == 'roles' ? 'selected' : '')}
+        %i.top-menu-icon.fa.fa-users
+  - else
+    .top-menu-option.top-menu-option-disabled{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => t(:users_slash_roles)}
+      %i.top-menu-icon.fa.fa-users
+  - if can? :read, Ticket
+    %a{href: support_tickets_path}
+      .top-menu-option{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => t(:support_tickets), 'class' => (current_section == 'tickets' ? 'selected' : '')}
+        %i.top-menu-icon.fa.fa-life-ring
+  - else
+    .top-menu-option.top-menu-option-disabled{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => t(:support_tickets)}
+      %i.top-menu-icon.fa.fa-life-ring
   .top-menu-option.top-menu-option-disabled{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => t(:instances)}
     %i.top-menu-icon.fa.fa-rocket
   .top-menu-option.top-menu-option-disabled{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => t(:storage)}
@@ -7,11 +21,6 @@
     %i.top-menu-icon.fa.fa-sitemap
   .top-menu-option.top-menu-option-disabled{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => t(:colo)}
     = image_tag('server.svg')
-  .top-menu-option{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => t(:users_slash_roles), 'class' => (current_section == 'roles' ? 'selected' : '')}
-    %a{href: support_roles_path}
-      %i.top-menu-icon.fa.fa-users
-  .top-menu-option.top-menu-option-disabled{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => t(:support)}
-    %i.top-menu-icon.fa.fa-life-ring
   .top-menu-option.top-menu-option-disabled{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => t(:billing)}
     %i.top-menu-icon.fa.fa-money
   .top-menu-option.top-menu-option-disabled{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => t(:metrics)}

@@ -1,6 +1,6 @@
 class Support::RoleUsersController < SupportBaseController
 
-  load_and_authorize_resource class_name: 'Role'
+  load_and_authorize_resource class_name: 'RoleUser'
 
   def destroy
     @role_user = RoleUser.where(destroy_params).first

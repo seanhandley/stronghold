@@ -33,7 +33,7 @@ div.panel-heading a {
 }
 
 div.panel-heading {
-  padding-bottom: 0px;
+  padding-bottom: 10px;
 }
 
 div.panel-body {
@@ -65,18 +65,24 @@ div.panel .user-images span.image{
   color: #555555;
   background-color: white;
   background-image: none;
+  background: none;
   border: 1px solid #cccccc;
   border-radius: 2px;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-box-shadow: none;
+  box-shadow: none;
   -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
   -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
   transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
 }
 
 .view-permissions {
-  text-align: center;
   margin: 0px;
+  float: right;
+  text-align: right;
+}
+
+.view-permissions p.toggle-panel {
+  margin-top: 55px;
 }
 
 .view-permissions h3 {
