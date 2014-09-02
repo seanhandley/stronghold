@@ -53,14 +53,19 @@ angularJS.controller "TicketsController", [
         $scope.isLoading = false
         $scope.$apply() if !$scope.$$phase
         permanentTicketReference = $("#tickets-container").attr("data-permanent-reference")
-        $scope.showTicket(permanentTicketReference) if permanentTicketReference?
+        if permanentTicketReference?
+          $scope.showTicket(permanentTicketReference)
+          ticket = $scope.getTicketByReference(permanentTicketReference)
+          angular.forEach $scope.statuses, (status) ->
+            status.active = false
+          $scope.getStatusByName(ticket.status_name).active = true
+          $scope.$apply() if !$scope.$$phase
         return
-      , true)
+      , true, true)
       doPopulateTicketsPromise = $interval(
         () ->
           $scope.doPopulateTickets(null, false)
-        , 10 * 1000
-      )
+        , 10 * 1000, false)
       return
 
     $scope.getStatusByName = (name) ->
@@ -98,8 +103,6 @@ angularJS.controller "TicketsController", [
       if ticketReference != null
         $scope.selectedTicket = $scope.getTicketByReference(ticketReference)
         $scope.selectedTicketReference = ticketReference
-        if $scope.selectedTicket isnt `undefined`
-          $scope.getStatusByName($scope.selectedTicket.status_name).active = true
       else
         $scope.selectedTicket = null
       history.replaceState({reference: ticketReference}, '', ticketReference)
