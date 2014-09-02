@@ -11,8 +11,13 @@ class Organization < ActiveRecord::Base
   has_many :roles
   has_many :invites
 
+  tickets = nil
+
   def tickets
-    OrganizationTickets.new(reference)
+    if @tickets.nil?
+      @tickets = Tickets.new(reference)
+    end
+    @tickets
   end
 
   private

@@ -8,13 +8,20 @@ Rails.application.routes.draw do
     resources :users, only: [:update]
     get '/profile', :controller => 'users', :action => 'index'
     resources :roles
+    resources :tickets, only: [:index, :show]
+    namespace :api, defaults: {format: :json} do
+      resources :tickets, only: [:index, :create, :update] do
+        resources :comments, :controller => "ticket_comments", only: [:create]
+      end
+    end
     delete 'role/:role_id/user/:user_id', :controller => 'role_users', :action => 'destroy', :as => 'remove_role_user'
     resources :role_users, only: [:create]
     resources :invites, only: [:create]
     resources :audits, only: [:index]
   end
 
-  resources :sessions
+  resources :sessions, only: [:create, :destroy, :new, :index]
+  resources :resets, only: [:create, :new, :show, :update]
 
   get 'signup/:token', :controller => 'signups', :action => 'edit', :as => 'signup_begin'
   post 'signup/:token', :controller => 'signups', :action => 'update', :as => 'signup_complete'

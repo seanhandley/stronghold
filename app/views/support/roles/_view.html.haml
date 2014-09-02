@@ -2,14 +2,23 @@
   = render partial: 'form', locals: {role: role, form_path: support_role_path(role), title: t(:rename_role), id: "renameRole#{role.id}"}
 .panel.panel-default
   .panel-heading
-    - unless role.power_user?
-      .pull-right
-        %a{'href' => support_role_path(role), :data => { confirm: "#{t(:delete_the_role)} '#{role.name}'?", method: :delete}}
-          %i.fa.fa-trash-o
+
+    .view-permissions
+      - unless role.power_user?
+        - if can? :modify, Role
+          %a{'href' => support_role_path(role), :data => { confirm: "#{t(:delete_the_role)} '#{role.name}'?", method: :delete}}
+            %i.fa.fa-trash-o
+      %p.toggle-panel
+        %a.toggle-panel{'href' => "#role_#{role.id}", 'data-toggle' => 'collapse', 'data-parent' => '#accordionRoles'}
+          %i.fa.fa-lock
+            View Permissions
+          %i.fa.fa-unlock.hide
+            Hide Permissions
+
     %h2.panel-title
       %i.fa.fa-key
-      = role.power_user? ? t(:owners) : role.name
-    - unless role.power_user?
+      = role.name
+    - if !role.power_user? && can?(:modify, Role)
       %p.tiny
         %a{'href' => '#', 'data-toggle' => "modal", 'data-target' => "#renameRole#{role.id}"}
           = t(:rename)
@@ -17,15 +26,13 @@
       = pluralize(role.users.count, t(:member))
     = render partial: 'support/users/images', locals: {role: role}
 
-    .view-permissions
-      %h3
-        %a.toggle-panel{'href' => "#role_#{role.id}", 'data-toggle' => 'collapse', 'data-parent' => '#accordionRoles'}
-          %i.fa.fa-angle-double-down
-          %i.fa.fa-angle-double-up.hide
+
+
  
   .panel-collapse.collapse{:id => "role_#{role.id}"}
     .panel-body
       - if role.power_user?
+        %br
         = t(:owners_group_description)
       - else
         = render partial: 'permissions', locals: {role: role}

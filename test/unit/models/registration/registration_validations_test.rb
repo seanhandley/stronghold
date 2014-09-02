@@ -8,7 +8,8 @@ class TestRegistrationValidations < Minitest::Test
     @password = SecureRandom.base64(16)
     @valid_params = { password: @password,
                       confirm_password: @password,
-                      organization_name: 'Test' }
+                      organization_name: 'Test',
+                      privacy: 'on' }
   end
 
 
@@ -72,7 +73,6 @@ class TestRegistrationValidations < Minitest::Test
     registration = Registration.new(@power_invite, @valid_params)
     registration.process!
     role = registration.organization.roles.first 
-    assert_equal 'Owners', role.name
     assert role.power_user?
     assert_equal registration.user.roles.first.id, role.id
   end
@@ -87,6 +87,13 @@ class TestRegistrationValidations < Minitest::Test
     registration = Registration.new(@invite, @valid_params)
     assert registration.process!
     refute registration.process!
+  end
+
+  def test_registration_cannot_occur_unless_privacy_is_agreed
+    registration = Registration.new(@power_invite,
+                                    @valid_params.merge(privacy: ''))
+    refute registration.process!
+    assert registration.errors.present?      
   end
 
   def teardown

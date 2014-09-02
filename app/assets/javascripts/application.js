@@ -12,7 +12,16 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
+//= require js-routes
+//= require angular
+//= require angular-resource
+//= require angular-bootstrap
+//= require angular-sanitize
+//= require angular-md5
+//= require angular-gravatar
+//= require angular-animate
 //= require_tree .
 //= require bootstrap
 //= require select2
+//= require moment
+//= require async

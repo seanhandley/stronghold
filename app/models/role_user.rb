@@ -7,7 +7,7 @@ class RoleUser < ActiveRecord::Base
   belongs_to :user
 
   before_destroy :check_destroyable
-  before_save :check_presence
+  before_save :check_presence, :check_addable
 
   validates :role, :user, presence: true
 
@@ -20,6 +20,14 @@ class RoleUser < ActiveRecord::Base
     else
       return true   
     end
+  end
+
+  def check_addable
+    if role.power_user? && user.id == Authorization.current_user.id
+      errors.add(:base, I18n.t(:cant_add_self_to_role))
+      return false
+    end
+    return true
   end
 
   def check_destroyable

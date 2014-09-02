@@ -1,8 +1,11 @@
 .panel-group#accordionRoles
   .page-controls
-    %button.btn.btn-primary.btn-xs{'data-toggle' => "modal", 'data-target' => "#createRole"}
-      %i.fa.fa-key
-      = t(:add_new_role)
+    - if can? :modify, Role
+      %button.btn.btn-primary{'data-toggle' => "modal", 'data-target' => "#createRole"}
+        %i.fa.fa-key
+        = t(:add_new_role)
+    - else
+      &nbsp;
   - roles.each do |role|
     = render partial: 'view', locals: {role: role}
     

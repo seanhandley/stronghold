@@ -1,10 +1,10 @@
 !!!
-%html
+%html{'ng-app' => "angularJS"}
   %head
-  %title Datacentred Dashboard
+  %title DataCentred Dashboard
   = favicon_link_tag 'favicon.ico'
   = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
-  = javascript_include_tag 'application', 'data-turbolinks-track' => true
+  = javascript_include_tag 'application'#, 'data-turbolinks-track' => true
   = csrf_meta_tags
   %meta{'charset' => "utf-8"}
   %meta{'http-equiv' => 'X-UA-Compatible', 'content' => 'IE=edge'}
@@ -15,15 +15,16 @@
     .top-nav
       .container
         %a{href: support_root_path, class: 'back-to-dash' }
-          = image_tag 'logo_small.png', class: 'logo'
-        = render partial: 'shared/top_menu' unless request.url == support_root_url
+          .logo
+        = render partial: 'shared/top_menu'
         .context-nav= render partial: 'shared/support_nav'
       
   
     .container
-      %h3.organisation
-        = image_tag 'bbc.png'
-        = current_user.organization.name
+      - unless request.url == support_root_url
+        %h3.organisation
+          -# = image_tag 'bbc.png'
+          = current_user.organization.name
       #flashes= display_flash
       = yield
       .push

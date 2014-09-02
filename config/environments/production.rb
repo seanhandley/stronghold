@@ -40,7 +40,7 @@ Rails.application.configure do
   # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for nginx
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  # config.force_ssl = true
+  config.force_ssl = true
 
   # Set to :debug to see everything in the log.
   config.log_level = :info
@@ -92,6 +92,12 @@ Rails.application.configure do
       :password => 'aoz21e56ef'
   }
 
+  config.action_mailer.default_url_options = { :host => 'my.datacentred.io' }
+
   # Error handling
   config.exceptions_app = self.routes
+
+  # Prevent Angular conflicts
+  config.assets.js_compressor = Uglifier.new(mangle: false)
+
 end
