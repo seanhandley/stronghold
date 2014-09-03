@@ -16,7 +16,6 @@ test:
 staging:
   <<: *default
   database: stronghold_staging
-  password: <%= ENV["DB_PASSWORD"] %>
 
 production:
   <<: *default
