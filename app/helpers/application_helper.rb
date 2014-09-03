@@ -21,9 +21,7 @@ module ApplicationHelper
         "message" => message[0]
       }
     end
-    return {
-      "errors" => errors
-    }
+    return errors
   end
 
 end

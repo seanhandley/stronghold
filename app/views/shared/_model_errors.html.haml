@@ -1,5 +1,8 @@
 .errorExplanation{:'ng-show' => "errors"}
-  %a.close.error-close{:'ng-click' => "clearErrors()"}
-  %h3 The following errors occured:
+  %p
+    The following errors occured:
   %ul
     %li{:'ng-repeat' => "error in errors"} Field '{{error.field}}'' {{error.message}}
+.errorExplanation{:'ng-show' => "staticError"}
+  %p
+    {{staticError}}

@@ -7,12 +7,15 @@ angularJS.controller "TicketsController", [
   ($http, $scope, $interval, TicketFactory, TicketStatusFactory) ->
 
     $scope.clearErrors = () ->
+      $scope.staticError = null
       $scope.errors = []
 
+    $scope.staticError = null
     $scope.errors = []
 
     $scope.statuses = TicketStatusFactory.getTicketStatuses()
-    $scope.tickets = []
+    $scope.tickets = null
+    $scope.hasFailed = null
 
     $scope.isLoading = false
 
@@ -26,7 +29,6 @@ angularJS.controller "TicketsController", [
           return
         (next) ->
           TicketFactory.getTickets().then (tickets) ->
-            tickets = [] if (tickets == `null`)
             if takeTime
                setTimeout(next(null, tickets), 1000)
             else
@@ -38,7 +40,6 @@ angularJS.controller "TicketsController", [
             $scope.tickets = tickets
             $scope.showTicket(null)
           $scope.$apply() if !$scope.$$phase
-
           dCallback() if dCallback
           return
       ])
@@ -52,6 +53,7 @@ angularJS.controller "TicketsController", [
       $scope.doPopulateTickets(() ->
         $scope.isLoading = false
         $scope.$apply() if !$scope.$$phase
+        return if $scope.tickets is null
         permanentTicketReference = $("#tickets-container").attr("data-permanent-reference")
         if permanentTicketReference?
           $scope.showTicket(permanentTicketReference)
@@ -82,6 +84,7 @@ angularJS.controller "TicketsController", [
         ticket.status_name is status.name
 
     $scope.countTickets = ->
+      return 0 if $scope.tickets is null
       $scope.tickets.length
 
     $scope.hasTickets = ->
@@ -136,10 +139,10 @@ angularJS.controller "TicketsController", [
         ticketSubmitButton.html("Submit")
         ticketSubmitButton.removeClass("disabled")
       successHandler = (response) ->
-        if response.data.errors
-          $scope.errors = response.data.errors
+        if not response.data.success
+          $scope.errors = response.data.message
         else
-          newTicketReference = response.data
+          newTicketReference = response.data.message
           $scope.doPopulateTickets(() ->
             $scope.showTicket(newTicketReference)
             allHandler()
@@ -148,7 +151,9 @@ angularJS.controller "TicketsController", [
         allHandler()
         return
       errorHandler = (response) ->
+        $scope.staticError = "I couldn't submit your ticket. Sorry. (HTTP 500)"
         allHandler()
+        return
       request = $http({
         method: "post",
         url: "/support/api/tickets/",
@@ -187,15 +192,17 @@ angularJS.controller "TicketsController", [
         commentSubmitButton.html("Submit")
         commentSubmitButton.removeClass("disabled")
       successHandler = (response) ->
-        if (response.data.errors)
-          $scope.errors = response.data.errors
+        if not response.data.success
+          $scope.errors = response.data.message
         else
           $scope.doPopulateTickets(null, false)
           $scope.commentDialogHide()
         allHandler()
         return
       errorHandler = (response) ->
+        $scope.staticError = "I couldn't submit your reply. Sorry. (HTTP 500)"
         allHandler()
+        return
       request = $http({
         method: "post",
         url: "/support/api/tickets/" + $scope.selectedTicket.reference + "/comments/",
@@ -222,14 +229,16 @@ angularJS.controller "TicketsController", [
         , 100)
 
       successHandler = (response) ->
-        if (response && response.data.errorMessages)
+        if not response.data.success
           errorHandler()
           return
         $scope.selectedTicket.status_name = status_name
         $scope.getStatusByName(status_name).active = true
         allHandler()
+        return
       errorHandler = (response) ->
         allHandler()
+        return
       request = $http({
         method: "patch",
         url: url
