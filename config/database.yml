@@ -16,6 +16,7 @@ test:
 staging:
   <<: *default
   database: stronghold_staging
+  password: root
 
 production:
   <<: *default
