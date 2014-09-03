@@ -142,7 +142,7 @@ angularJS.controller "TicketsController", [
         if not response.data.success
           $scope.errors = response.data.message
         else
-          newTicketReference = response.data
+          newTicketReference = response.data.message
           $scope.doPopulateTickets(() ->
             $scope.showTicket(newTicketReference)
             allHandler()

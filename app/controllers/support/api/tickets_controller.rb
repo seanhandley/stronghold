@@ -19,7 +19,7 @@ class Support::Api::TicketsController < SupportBaseController#
     ticket = Ticket.new(create_params)
     response = {
       :success => ticket.valid?,
-      :message => ""
+      :message => nil
     }
     if ticket.valid?
       response["message"] = current_user.organization.tickets.create(ticket)

@@ -11,7 +11,7 @@ class Support::Api::TicketCommentsController < SupportBaseController
     )
     response = {
       :success => ticket_comment.valid?,
-      :message => ""
+      :message => nil
     }
     if ticket_comment.valid?
       response["message"] = current_user.organization.tickets.create_comment(ticket_comment)
