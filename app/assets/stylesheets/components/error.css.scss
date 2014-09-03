@@ -19,11 +19,13 @@ div.error-page {
 
 div.errorExplanation {
   background-color: $brand-warning;
-  padding: 5px;
-  padding-bottom: 10px;
+  padding: 10px;
   color: #fff;
   margin-bottom: 10px;
   font-size: 14px;
+  p {
+    margin: 0;
+  }
 }
 
 div#flash {
