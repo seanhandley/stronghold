@@ -6,14 +6,14 @@ class Support::Api::TicketsController < SupportBaseController#
   skip_before_filter :timeout_session!, only: [:index]
   load_and_authorize_resource :class => "Ticket"
 
-  # def index
-  #   respond_to do |format|
-  #     format.json {
-  #       render :json => current_user.organization.tickets.all
-  #     }
-  #     format.html
-  #   end
-  # end
+  def index
+    respond_to do |format|
+      format.json {
+        render :json => current_user.organization.tickets.all
+      }
+      format.html
+    end
+  end
 
   def create
     ticket = Ticket.new(create_params)
