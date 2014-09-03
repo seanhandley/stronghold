@@ -1,6 +1,6 @@
 class Support::Api::TicketCommentsController < SupportBaseController
 
-  include ApplicationHelper
+  # include ApplicationHelper
 
   load_and_authorize_resource :class => "TicketComment"
 
@@ -9,11 +9,14 @@ class Support::Api::TicketCommentsController < SupportBaseController
       :ticket_reference => create_params[:ticket_id],
       :text => create_params[:text]
     )
-    response = {}
+    response = {
+      success => ticket_comment.valid?,
+      message => ""
+    }
     if ticket_comment.valid?
-      response = current_user.organization.tickets.create_comment(ticket_comment)
+      response.message = current_user.organization.tickets.create_comment(ticket_comment)
     else
-      response = get_model_errors(ticket_comment)
+      response.message = get_model_errors(ticket_comment)
     end
     respond_to do |format|
       format.json {
