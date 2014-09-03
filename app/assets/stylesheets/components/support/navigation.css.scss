@@ -37,23 +37,14 @@ div.context-nav {
   vertical-align: middle;
 }
 
-div.nav-profile {
-  cursor: pointer;
+div.context-nav button {
+  margin-top: 3px;
+  padding: 5px 10px 5px 10px;
+}
+
+div.context-nav i {
+  min-width: 16px;
+  margin-right: 6px;
+  text-align: right;
   opacity: 0.8;
-}
-
-div.nav-profile:hover, div.nav-profile:active {
-  opacity: 1.0;
-}
-
-img.nav-profile {
-  //border: solid 1px #444;
-}
-
-.top-nav .dropdown-menu {
-  margin: 6px 0 0;
-}
-span.nav-menu-icon {
-  width: 20px;
-  float: left;
 }
