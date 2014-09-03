@@ -1,28 +1,41 @@
-.nav-profile
-  .dropdown
-    %div{'class' => "dropdown-toggle", 'data-toggle' => "dropdown"}
+%div.btn-group.pull-right
+  %button.btn.btn-default.dropdown-toggle{:type => "button", :'data-toggle' => "dropdown", :'dropdown-toggle' => ""}
+    %span
       = gravatar_image_tag(current_user.email, :class => 'img-circle nav-profile')
-      %span.caret
-    %ul{'class' => "dropdown-menu dropdown-menu-right", 'role' => "menu"}
-      %li
-        %a{:href => support_profile_path}
-          %span.nav-menu-icon
-            %i.fa.fa-user
-          = t(:my_details)
-      - if current_user.power_user?
-        %li
-          %a{:href => support_edit_organization_path}
-            %span.nav-menu-icon
-              %i.fa.fa-briefcase
-            = t(:my_organisation)
-        %li
-          %a{:href => support_audits_path} 
-            %span.nav-menu-icon
-              %i.fa.fa-history
-            = t(:audit_log)
-      %li.divider
-      %li
-        %a{:href => session_path(current_user), data: { confirm: "#{t(:sign_out)}?", :method => :delete }}
-          %span.nav-menu-icon
-            %i.fa.fa-sign-out
-          = t(:sign_out)
+    %span.caret
+  %ul.dropdown-menu{:role => "menu"}
+    %li
+      %a{:href => support_profile_path}
+        %i.fa.fa-user
+        = t(:my_details)
+    %li
+      %a{:href => support_audits_path}
+        %i.fa.fa-briefcase
+        = t(:my_organisation)
+    %li
+      %a{:href => support_edit_organization_path}
+        %i.fa.fa-history
+        = t(:audit_log)
+    %li.divider
+    %li
+      %a{:href => session_path(current_user), data: { confirm: "#{t(:sign_out)}?", :method => :delete }}
+        %i.fa.fa-sign-out
+        = t(:sign_out)
+
+-# .nav-profile
+-#   .dropdown
+-#     %div{'class' => "dropdown-toggle", 'data-toggle' => "dropdown"}
+-#       = gravatar_image_tag(current_user.email, :class => 'img-circle nav-profile')
+-#       %span.caret
+-#     %ul{'class' => "dropdown-menu dropdown-menu-right", 'role' => "menu"}
+-#         %li
+-#           %a{:href => support_audits_path}
+-#             %span.nav-menu-icon
+-#               %i.fa.fa-history
+-#             = t(:audit_log)
+-#       %li.divider
+-#       %li
+-#         %a{:href => session_path(current_user), data: { confirm: "#{t(:sign_out)}?", :method => :delete }}
+-#           %span.nav-menu-icon
+-#             %i.fa.fa-sign-out
+-#           = t(:sign_out)
