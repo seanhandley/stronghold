@@ -1,6 +1,6 @@
 class Support::Api::TicketCommentsController < SupportBaseController
 
-  # include ApplicationHelper
+  include ApplicationHelper
 
   load_and_authorize_resource :class => "TicketComment"
 

@@ -1,6 +1,6 @@
 class Support::Api::TicketsController < SupportBaseController#
 
-  # include ApplicationHelper
+  include ApplicationHelper
 
   newrelic_ignore_apdex only: [:index]
   skip_before_filter :timeout_session!, only: [:index]
