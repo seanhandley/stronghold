@@ -10,13 +10,13 @@ class Support::Api::TicketCommentsController < SupportBaseController
       :text => create_params[:text]
     )
     response = {
-      success => ticket_comment.valid?,
-      message => ""
+      :success => ticket_comment.valid?,
+      :message => ""
     }
     if ticket_comment.valid?
-      response.message = current_user.organization.tickets.create_comment(ticket_comment)
+      response["message"] = current_user.organization.tickets.create_comment(ticket_comment)
     else
-      response.message = get_model_errors(ticket_comment)
+      response["message"] = get_model_errors(ticket_comment)
     end
     respond_to do |format|
       format.json {

@@ -18,13 +18,13 @@ class Support::Api::TicketsController < SupportBaseController#
   def create
     ticket = Ticket.new(create_params)
     response = {
-      success => ticket.valid?,
-      message => ""
+      :success => ticket.valid?,
+      :message => ""
     }
     if ticket.valid?
-      response.message = current_user.organization.tickets.create(ticket)
+      response["message"] = current_user.organization.tickets.create(ticket)
     else
-      response.message = get_model_errors(ticket)
+      response["message"] = get_model_errors(ticket)
     end
     respond_to do |format|
       format.json {
