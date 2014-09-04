@@ -6,12 +6,14 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-organization = Organization.create(name: 'BBC')
+if ['test','development'].include?(Rails.env)
+  organization = Organization.create(name: 'BBC')
 
-user = organization.users.create(email: 'support@datacentred.co.uk', password: 'llama123',
-            first_name: 'Testy', last_name: 'Tester')
+  user = organization.users.create(email: 'support@datacentred.co.uk', password: 'llama123',
+              first_name: 'Testy', last_name: 'Tester')
 
-role = Role.create(organization: organization, name: 'Administrator', permissions: Permissions.user.keys, power_user: true)
+  role = Role.create(organization: organization, name: 'Administrator', permissions: Permissions.user.keys, power_user: true)
 
-user.roles << role
-user.save!
+  user.roles << role
+  user.save!
+end
