@@ -16,7 +16,9 @@ worker_processes 2
 # we use a shorter backlog for quicker failover when busy
 listen "/var/run/rails/stronghold/unicorn.sock", :backlog => 64
 
-unless ENV['RAILS_ENV'] == 'production'
+environment = ENV['RACK_ENV'] || ENV['RAILS_ENV'] || 'production'
+
+unless environment == 'production'
   pid "/var/run/rails/stronghold/unicorn.pid"
 end
 
