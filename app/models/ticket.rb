@@ -11,7 +11,7 @@ class Ticket
     @email = Authorization.current_user.email
     @time_created = nil
     @time_updated = nil
-    @comments = [] 
+    @comments = []
   end
 
   def self.find(params)
