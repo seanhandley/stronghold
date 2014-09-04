@@ -62,3 +62,7 @@ group :development do
   gem 'capistrano-bundler', '~> 1.1.2'
   gem 'net-ssh', '~> 2.8.0'
 end
+
+group :production do 
+  gem 'unicorn-worker-killer'
+end
