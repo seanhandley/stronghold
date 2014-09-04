@@ -13,4 +13,8 @@ class TicketComment
     @time = params[:time]
   end
 
+  def user
+    User.find_by email: @email
+  end
+
 end
