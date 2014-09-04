@@ -16,11 +16,11 @@ worker_processes 2
 # we use a shorter backlog for quicker failover when busy
 listen "/var/run/rails/stronghold/unicorn.sock", :backlog => 64
 
-environment = ENV['RACK_ENV'] || ENV['RAILS_ENV'] || 'production'
+# environment = ENV['RACK_ENV'] || ENV['RAILS_ENV'] || 'production'
 
-unless environment == 'production'
-  pid "/var/run/rails/stronghold/unicorn.pid"
-end
+# unless environment == 'production'
+#   pid "/var/run/rails/stronghold/unicorn.pid"
+# end
 
 # nuke workers after 30 seconds instead of 60 seconds (the default)
 timeout 30
