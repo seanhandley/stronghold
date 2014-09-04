@@ -25,7 +25,7 @@ class Tickets
       status = jatus_to_status(jira_issue['fields']['status']['name'])
       new_ticket = Ticket.new(title: title, description: description)
       new_ticket.reference = reference
-      new_ticket.email = ticket_email
+      new_ticket.set_email(ticket_email)
       new_ticket.status_name = status
       new_ticket.comments = jira_issue['fields']['comment']['comments'].collect do |jira_comment|
         comment_email, text = extract_comment_email(jira_comment)

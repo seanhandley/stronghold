@@ -24,4 +24,9 @@ module ApplicationHelper
     return errors
   end
 
+  def email_to_display_name(email)
+    user = User.find_by email: email
+    (user.present? ? user.name : email)
+  end
+
 end
