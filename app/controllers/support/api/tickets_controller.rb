@@ -1,4 +1,4 @@
-class Support::Api::TicketsController < SupportBaseController#
+class Support::Api::TicketsController < SupportBaseController
 
   include ApplicationHelper
 
@@ -16,11 +16,11 @@ class Support::Api::TicketsController < SupportBaseController#
   end
 
   def create
-    ticket = Ticket.new(create_params)
     response = {
       :success => ticket.valid?,
       :message => nil
     }
+    ticket = Ticket.new(create_params)
     if ticket.valid?
       response["message"] = current_user.organization.tickets.create(ticket)
     else

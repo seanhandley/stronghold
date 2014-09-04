@@ -1,5 +1,6 @@
 class TicketComment
 
+  include ApplicationHelper
   include ActiveModel::Validations
   validates :text, length: {minimum: 1}, allow_blank: false
 
@@ -8,9 +9,14 @@ class TicketComment
   def initialize(params)
     @ticket_reference = params[:ticket_reference]
     @id = params[:id]
-    @email = params[:email]
+    set_email(params[:email])
     @text = params[:text]
     @time = params[:time]
+  end
+
+  def set_email(email)
+    @email = email
+    @display_name = email_to_display_name(email)
   end
 
 end
