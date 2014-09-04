@@ -56,8 +56,6 @@ before_fork do |server, worker|
   end
 end
 
-end
-
 after_fork do |server, worker|
   # per-process listener ports for debugging/admin/migrations
   # addr = "127.0.0.1:#{9293 + worker.nr}"
