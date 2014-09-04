@@ -7,7 +7,8 @@ class Support::Api::TicketCommentsController < SupportBaseController
   def create
     ticket_comment = TicketComment.new(
       :ticket_reference => create_params[:ticket_id],
-      :text => create_params[:text]
+      :text => create_params[:text],
+      :email => Authorization.current_user.email
     )
     response = {
       :success => ticket_comment.valid?,

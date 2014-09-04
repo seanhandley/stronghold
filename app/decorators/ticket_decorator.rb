@@ -1,13 +1,27 @@
 class TicketDecorator < ApplicationDecorator
 
-  def decorate
-    user = User.find_by email: model.email
-    hash = {}
-    model.instance_variables.each {|var| hash[var.to_s.delete("@")] = model.instance_variable_get(var) }
+  def get_display_name(hash)
+    display_name = hash["email"]
+    user = User.find_by email: hash["email"]
     if (user.present?)
-      hash["display_name"] = user.name
-    else
-      hash["display_name"] = model.email
+      display_name = user.name
+    end
+    display_name
+  end
+
+  def thing_to_hash(thing)
+    hash = {}
+    thing.instance_variables.each {|var| hash[var.to_s.delete("@")] = thing.instance_variable_get(var) }
+    hash
+  end
+
+  def decorate
+    hash = thing_to_hash(model)
+    hash["display_name"] = get_display_name(hash)
+    hash["comments"] = model.comments.collect do |comment|
+      comment = thing_to_hash(comment)
+      comment["display_name"] = get_display_name(comment)
+      comment
     end
     hash
   end
