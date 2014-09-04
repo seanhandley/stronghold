@@ -101,7 +101,7 @@ angularJS.controller "TicketsController", [
       )[0]
 
     $scope.selectedTicketReference = null
-    $scope.showTicket = (ticketReference, userClicked = false) ->
+    $scope.showTicket = (ticketReference) ->
       ticketReference = $scope.selectedTicketReference if ticketReference is `null`
       if ticketReference != null
         $scope.selectedTicket = $scope.getTicketByReference(ticketReference)
@@ -110,7 +110,6 @@ angularJS.controller "TicketsController", [
         $scope.selectedTicket = null
       history.replaceState({reference: ticketReference}, '', ticketReference)
       $scope.$apply() if !$scope.$$phase
-      $("html, body").animate({ scrollTop: 0 }, "slow") if userClicked
       return
 
     $scope.ticketDialogShow = ->

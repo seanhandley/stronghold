@@ -21,18 +21,18 @@ class Tickets
       # jira_issue
       reference = jira_issue['key']
       title = jira_issue['fields']['summary']
-      ticket_email, description = extract_issue_email(jira_issue)
+      email, description = extract_issue_email(jira_issue)
       status = jatus_to_status(jira_issue['fields']['status']['name'])
       new_ticket = Ticket.new(title: title, description: description)
       new_ticket.reference = reference
-      new_ticket.set_email(ticket_email)
+      new_ticket.email = email
       new_ticket.status_name = status
       new_ticket.comments = jira_issue['fields']['comment']['comments'].collect do |jira_comment|
-        comment_email, text = extract_comment_email(jira_comment)
+        email, text = extract_comment_email(jira_comment)
         TicketComment.new(
           :ticket_reference => new_ticket.reference,
           :id => jira_comment['id'],
-          :email => comment_email,
+          :email => email,
           :text => text,
           :time => jira_comment['updated']
         )
