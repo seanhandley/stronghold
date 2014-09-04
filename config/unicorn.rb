@@ -15,10 +15,7 @@ worker_processes 2
 # listen on both a Unix domain socket and a TCP port,
 # we use a shorter backlog for quicker failover when busy
 listen "/var/run/rails/stronghold/unicorn.sock", :backlog => 64
-
-unless ENV['RAILS_ENV'] == 'production'
-  pid "/var/run/rails/stronghold/unicorn.pid"
-end
+pid "/var/run/rails/stronghold/unicorn.pid"
 
 # nuke workers after 30 seconds instead of 60 seconds (the default)
 timeout 30
@@ -46,6 +43,18 @@ before_fork do |server, worker|
   # as there's no need for the master process to hold a connection
   defined?(ActiveRecord::Base) and
     ActiveRecord::Base.connection.disconnect!
+
+  # Before forking, kill the master process that belongs to the .oldbin PID.
+  # This enables 0 downtime.
+  old_pid = "/var/run/rails/stronghold/unicorn.pid"
+  if File.exists?(old_pid) && server.pid != old_pid
+    begin
+      Process.kill("QUIT", File.read(old_pid).to_i)
+    rescue Errno::ENOENT, Errno::ESRCH
+      # someone else did our job for us
+    end
+  end
+end
 
 end
 
