@@ -15,12 +15,7 @@ worker_processes 2
 # listen on both a Unix domain socket and a TCP port,
 # we use a shorter backlog for quicker failover when busy
 listen "/var/run/rails/stronghold/unicorn.sock", :backlog => 64
-
-# environment = ENV['RACK_ENV'] || ENV['RAILS_ENV'] || 'production'
-
-# unless environment == 'production'
-#   pid "/var/run/rails/stronghold/unicorn.pid"
-# end
+pid "/var/run/rails/stronghold/unicorn.pid"
 
 # nuke workers after 30 seconds instead of 60 seconds (the default)
 timeout 30
