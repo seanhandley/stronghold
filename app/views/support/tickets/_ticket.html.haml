@@ -28,7 +28,7 @@
         %img.img-circle{'gravatar-src' => "selectedTicket.email"}
       %div.media-body
         %h4.media-heading
-          {{selectedTicket.email}}
+          {{selectedTicket.display_name}}
         %p
           %em
             Created: {{selectedTicket.time_created | momentDateTime}}; Updated: {{selectedTicket.time_updated | momentDateTime}}
