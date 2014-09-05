@@ -8,7 +8,7 @@ class TicketComment
   def initialize(params)
     @ticket_reference = params[:ticket_reference]
     @id = params[:id]
-    @email = Authorization.current_user.email
+    @email = params[:email]
     @text = params[:text]
     @time = params[:time]
   end
