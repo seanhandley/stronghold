@@ -1,12 +1,13 @@
 class TicketDecorator < ApplicationDecorator
 
   def get_display_name(hash)
-    display_name = hash["email"]
     user = User.find_by email: hash["email"]
     if (user.present?)
-      display_name = user.name
+      user.name
+    else
+      email_start = hash["email"].split("@")[0]
+      email_start.gsub(".", " ").titleize
     end
-    display_name
   end
 
   def thing_to_hash(thing)
