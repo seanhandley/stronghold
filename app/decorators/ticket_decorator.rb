@@ -1,11 +1,13 @@
 class TicketDecorator < ApplicationDecorator
 
   def user(hash)
+    puts hash["email"].inspect
     User.find_by email: hash["email"]
   end
 
   def staff?(hash)
-    user(hash).staff?
+    u = user(hash)
+    u.present? ? u.staff? : false
   end
 
   def display_name(hash)
@@ -26,11 +28,11 @@ class TicketDecorator < ApplicationDecorator
   def decorate
     ticket = thing_to_hash model
     ticket["display_name"] = display_name ticket
-    ticket["staff"] = true if staff?(ticket)
-    ticket["comments"] = ticket.comments.collect do |comment|
+    ticket["staff"] = staff?(ticket)
+    ticket["comments"] = ticket["comments"].collect do |comment|
       comment = thing_to_hash comment
       comment["display_name"] = display_name comment
-      comment["staff"] = true if staff?(comment)
+      comment["staff"] = staff?(comment)
       comment
     end
     ticket

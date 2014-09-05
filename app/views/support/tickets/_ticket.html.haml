@@ -53,6 +53,8 @@
           %div.media-body
             %h4.media-heading
               {{comment.display_name}}
+              %span.label.label-info{:'ng-show' => "comment.staff"}
+                Staff
             %p
               %em
                 {{comment.time | momentDateTime}}
