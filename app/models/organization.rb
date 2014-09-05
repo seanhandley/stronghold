@@ -13,6 +13,10 @@ class Organization < ActiveRecord::Base
 
   tickets = nil
 
+  def staff?
+    (reference == STAFF_REFERENCE)
+  end
+
   def tickets
     if @tickets.nil?
       @tickets = Tickets.new(reference)
