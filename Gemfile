@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 source 'https://rails-assets.org'
 
-gem 'rails', '4.1.4'
+gem 'rails', '4.1.5'
 gem 'mysql2'
 gem 'sass-rails', '~> 4.0.3'
 gem 'uglifier', '>= 1.3.0'
@@ -61,4 +61,8 @@ group :development do
   gem 'capistrano-rbenv', '~> 2.0'
   gem 'capistrano-bundler', '~> 1.1.2'
   gem 'net-ssh', '~> 2.8.0'
+end
+
+group :production do 
+  gem 'unicorn-worker-killer'
 end
