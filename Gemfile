@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 source 'https://rails-assets.org'
 
-gem 'rails', '4.1.5'
+gem 'rails', '4.1.4'
 gem 'mysql2'
 gem 'sass-rails', '~> 4.0.3'
 gem 'uglifier', '>= 1.3.0'
@@ -22,8 +22,6 @@ gem 'fog', '~> 1.22.0'
 gem 'gravatar_image_tag', '~> 1.2.0'
 gem 'jira-ruby', '~> 0.1.11'
 gem 'js-routes'
-gem 'rails-assets-select2', '~> 3.5.0'
-gem 'rails-assets-select2-bootstrap-css', '~> 1.3.1'
 gem 'sidekiq', '~> 2.15.0'
 gem 'database_cleaner', '~> 0.8.0'
 gem 'audited-activerecord', git: 'https://github.com/collectiveidea/audited.git', tag: 'v4.0.0.rc1'
@@ -36,6 +34,7 @@ gem 'async-rails', '~> 0.9.0'
 gem 'newrelic_rpm', '~> 3.9.2'
 gem 'honeybadger', '~> 1.7.0'
 gem 'hipchat', '~> 1.3.0'
+gem "select2-rails"
 
 group :test do
   gem 'minitest-rails'
