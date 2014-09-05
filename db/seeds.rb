@@ -7,7 +7,7 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 if ['test','development'].include?(Rails.env)
-  organization = Organization.create(name: 'BBC')
+  organization = Organization.create(name: 'DataCentred', reference: STAFF_REFERENCE)
 
   user = organization.users.create(email: 'support@datacentred.co.uk', password: 'llama123',
               first_name: 'Testy', last_name: 'Tester')
