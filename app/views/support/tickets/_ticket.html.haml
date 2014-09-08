@@ -28,7 +28,7 @@
         %img.img-circle{'gravatar-src' => "selectedTicket.email"}
       %div.media-body
         %h4.media-heading
-          {{selectedTicket.email}}
+          {{selectedTicket.display_name}}
         %p
           %em
             Created: {{selectedTicket.time_created | momentDateTime}}; Updated: {{selectedTicket.time_updated | momentDateTime}}
@@ -52,7 +52,9 @@
             %img.img-circle{'gravatar-src' => "comment.email"}
           %div.media-body
             %h4.media-heading
-              {{comment.email}}
+              {{comment.display_name}}
+              %span.label.label-info{:'ng-show' => "comment.staff"}
+                Staff
             %p
               %em
                 {{comment.time | momentDateTime}}
