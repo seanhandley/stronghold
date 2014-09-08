@@ -7,9 +7,12 @@ class Support::Api::TicketsController < SupportBaseController#
   load_and_authorize_resource :class => "Ticket"
 
   def index
+    tickets = current_user.organization.tickets.all.collect do |ticket|
+      TicketDecorator.new(ticket).decorate
+    end
     respond_to do |format|
       format.json {
-        render :json => current_user.organization.tickets.all
+        render :json => tickets
       }
       format.html
     end

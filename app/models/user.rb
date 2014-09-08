@@ -15,6 +15,10 @@ class User < ActiveRecord::Base
 
   before_save :set_os_user, if: -> { SyncWithOpenStack }
 
+  def staff?
+    organization.staff?
+  end
+
   def has_permission?(permission)
     power_user? || roles.collect(&:permissions).flatten.include?(permission)
   end
