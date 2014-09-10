@@ -24,7 +24,7 @@ gem 'jira-ruby', '~> 0.1.11'
 gem 'js-routes'
 gem 'sidekiq', '~> 3.2.4'
 gem 'database_cleaner', '~> 0.8.0'
-gem "audited-activerecord", "~> 4.0"
+gem 'audited-activerecord', git: 'https://github.com/collectiveidea/audited.git', tag: 'v4.0.0.rc1'
 gem 'verbs', '~> 2.1.4'
 gem 'faraday', '~> 0.9.0'
 gem 'strongbox', '~> 0.7.0'
