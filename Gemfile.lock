@@ -1,14 +1,3 @@
-GIT
-  remote: https://github.com/collectiveidea/audited.git
-  revision: 8533f6490223f8f7f9027442cb90fec962450100
-  tag: v4.0.0.rc1
-  specs:
-    audited (4.0.0.rc1)
-      rails-observers (~> 0.1.2)
-    audited-activerecord (4.0.0.rc1)
-      activerecord (~> 4.0)
-      audited (= 4.0.0.rc1)
-
 GEM
   remote: https://rubygems.org/
   remote: https://rails-assets.org/
@@ -42,6 +31,11 @@ GEM
     arel (5.0.1.20140414130214)
     async-rails (0.9.0)
       railties (>= 3.1)
+    audited (4.0.0)
+      rails-observers (~> 0.1.2)
+    audited-activerecord (4.0.0)
+      activerecord (~> 4.0)
+      audited (= 4.0.0)
     bcrypt (3.1.7)
     bootstrap-sass (3.1.1.1)
       sass (~> 3.2)
@@ -283,7 +277,7 @@ PLATFORMS
 
 DEPENDENCIES
   async-rails (~> 0.9.0)
-  audited-activerecord!
+  audited-activerecord (~> 4.0)
   bcrypt (~> 3.1.7)
   bootstrap-sass (~> 3.1.1)
   cancancan (~> 1.9.2)
