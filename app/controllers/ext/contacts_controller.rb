@@ -33,4 +33,8 @@ class Ext::ContactsController < ActionController::Base
       }
     end
   end
+
+  def current_user
+    nil
+  end
 end
