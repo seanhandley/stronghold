@@ -1,5 +1,8 @@
 # See http://sirportly.com/docs/admin/advanced-features/customer-data-sources
 class Ext::ContactsController < ActionController::Base
+
+  skip_authorization_check
+
   def find
     if find_params[:type] == "email" && user = User.find_by_email(find_params[:data])
       success UserDecorator.new(user).as_sirportly_data
