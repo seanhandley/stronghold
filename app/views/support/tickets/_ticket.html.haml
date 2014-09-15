@@ -31,7 +31,7 @@
           {{selectedTicket.display_name}}
         %p
           %em
-            Created: {{selectedTicket.time_created | momentDateTime}}; Updated: {{selectedTicket.time_updated | momentDateTime}}
+            Created: {{selectedTicket.created_at | momentDateTime}}; Updated: {{selectedTicket.updated_at | momentDateTime}}
   %h3 Description
   %p{'ng-bind-html' => "selectedTicket.description"}
 

@@ -11,17 +11,8 @@ class Organization < ActiveRecord::Base
   has_many :roles
   has_many :invites
 
-  tickets = nil
-
   def staff?
     (reference == STAFF_REFERENCE)
-  end
-
-  def tickets
-    if @tickets.nil?
-      @tickets = Tickets.new(reference)
-    end
-    @tickets
   end
 
   private

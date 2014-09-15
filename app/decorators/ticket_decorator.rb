@@ -1,41 +1,24 @@
 class TicketDecorator < ApplicationDecorator
 
-  def user(hash)
-    puts hash["email"].inspect
-    User.find_by email: hash["email"]
+  def staff?
+    model.user ? model.user.staff? : false
   end
 
-  def staff?(hash)
-    u = user(hash)
-    u.present? ? u.staff? : false
-  end
-
-  def display_name(hash)
-    if user(hash).present?
-      user(hash).name
+  def display_name
+    if model.user.present?
+      model.user.name
     else
-      email_start = hash["email"].split("@")[0]
+      email_start = model.user.email.split("@")[0]
       email_start.gsub(".", " ").titleize
     end
   end
 
-  def thing_to_hash(thing)
-    hash = {}
-    thing.instance_variables.each {|var| hash[var.to_s.delete("@")] = thing.instance_variable_get(var) }
-    hash
-  end
-
   def decorate
-    ticket = thing_to_hash model
-    ticket["display_name"] = display_name ticket
-    ticket["staff"] = staff?(ticket)
-    ticket["comments"] = ticket["comments"].collect do |comment|
-      comment = thing_to_hash comment
-      comment["display_name"] = display_name comment
-      comment["staff"] = staff?(comment)
-      comment
+    ticket = model.as_hash.merge(display_name: display_name, staff: staff?)
+    comments = [ticket[:comments]].flatten.compact.collect do |c|
+      c.merge(display_name: display_name, staff: staff?)
     end
-    ticket
+    ticket.merge(comments: comments)
   end
 
 end
