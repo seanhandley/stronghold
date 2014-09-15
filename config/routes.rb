@@ -20,6 +20,10 @@ Rails.application.routes.draw do
     resources :audits, only: [:index]
   end
 
+  namespace :ext do
+    post '/contacts/find', :controller => 'contacts', :action => 'find'
+  end
+
   resources :sessions, only: [:create, :destroy, :new, :index]
   resources :resets, only: [:create, :new, :show, :update]
 
