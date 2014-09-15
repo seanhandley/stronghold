@@ -15,7 +15,7 @@ class Ext::ContactsController < ActionController::Base
   private
 
   def find_params
-    params.require(:contact).permit(:type, :data)
+    params.permit(:type, :data)
   end
 
   def fail
