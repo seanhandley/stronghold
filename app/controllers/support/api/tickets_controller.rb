@@ -7,12 +7,12 @@ class Support::Api::TicketsController < SupportBaseController#
   load_and_authorize_resource :class => "Ticket"
 
   def index
-    tickets = current_user.organization.tickets.all.collect do |ticket|
-      TicketDecorator.new(ticket).decorate
+    @tickets = TicketAdapter.all.collect do |t|
+      TicketDecorator.new(t).decorate
     end
     respond_to do |format|
       format.json {
-        render :json => tickets
+        render :json => @tickets
       }
       format.html
     end
@@ -25,7 +25,7 @@ class Support::Api::TicketsController < SupportBaseController#
       :message => nil
     }
     if ticket.valid?
-      response["message"] = current_user.organization.tickets.create(ticket)
+      response["message"] = TicketAdapter.create(ticket)
     else
       response["message"] = get_model_errors(ticket)
     end
@@ -39,7 +39,7 @@ class Support::Api::TicketsController < SupportBaseController#
   def update
     respond_to do |format|
       format.json {
-        render :json => current_user.organization.tickets.change_status(
+        render :json => TicketAdapter.change_status(
           update_params[:id],
           update_params[:status]
         )
