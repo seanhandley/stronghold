@@ -1,0 +1,14 @@
+default: &default
+  domain: https://helpdesk.datacentred.io
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+staging:
+  <<: *default
+
+production:
+  <<: *default
