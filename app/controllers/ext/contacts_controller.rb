@@ -5,33 +5,16 @@ class Ext::ContactsController < ActionController::Base
 
   def find
     if find_params[:type] == "email" && user = User.find_by_email(find_params[:data])
-      success UserDecorator.new(user).as_sirportly_data
+      render json: UserDecorator.new(user).as_sirportly_data.to_json
     else
-      fail
+      render json: nil.to_json, status: :not_found    
     end
-
   end
 
   private
 
   def find_params
     params.permit(:type, :data)
-  end
-
-  def fail
-    respond_to do |format|
-      format.json {
-        render json: nil.to_json, status: :not_found    
-      }
-    end
-  end
-
-  def success(user)
-    respond_to do |format|
-      format.json {
-        render json: user.to_json
-      }
-    end
   end
 
   def current_user
