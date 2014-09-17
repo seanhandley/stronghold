@@ -8,8 +8,8 @@ class TicketAdapter
     def all
       total_pages = SIRPORTLY.request("tickets/contact", contact: Authorization.current_user.id)["pagination"]["pages"]
       (1..total_pages).collect do |page|
-        SIRPORTLY.request("tickets/contact", contact: Authorization.current_user.id, page: page)["records"].map do |t|
-          head, *tail = SIRPORTLY.request("ticket_updates/all", ticket: t['reference'])
+        SIRPORTLY.request("tickets/contact", contact: Authorization.current_user.id, page: page)["records"].sort_by{|t| t['updated_at']}.map do |t|
+          head, *tail = SIRPORTLY.request("ticket_updates/all", ticket: t['reference']).sort_by{|t| t['posted_at']}
           updates = tail.map do |u|
             unless u['private']
               TicketComment.new(ticket_reference: t['reference'], id: u['id'],
