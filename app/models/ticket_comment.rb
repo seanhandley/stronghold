@@ -3,7 +3,7 @@ class TicketComment
   include ActiveModel::Validations
   validates :text, length: {minimum: 1}, allow_blank: false
 
-  attr_accessor :ticket_reference, :id, :email, :text, :time, :as_hash
+  attr_accessor :ticket_reference, :id, :email, :text, :time, :as_hash, :staff
 
   def initialize(params)
     @as_hash          = params.dup
@@ -12,6 +12,7 @@ class TicketComment
     @email            = params[:email]
     @text             = params[:text]
     @time             = params[:time]
+    @staff            = params[:staff]
   end
 
 end
