@@ -44,12 +44,4 @@ module TicketsHelper
     Redcarpet::Markdown.new(renderer, extensions).render(text).html_safe
   end
 
-  def extract_name_from_ticket(t)
-    f = t['customer']['first_name']
-    s = t['customer']['last_name']
-    return "#{f} #{s}" if f.present? && s.present?
-    return f if f.present?
-    return t['customer']['email']
-  end
-
 end

@@ -25,7 +25,7 @@ class TicketAdapter
                      created_at: Time.parse(t['submitted_at']),
                      updated_at: Time.parse(t['updated_at']),
                      email: t['customer_contact_method']['data'],
-                     name: extract_name_from_ticket(t),
+                     name: t['customer']['name'],
                      status: t['status'])
         end
       end.flatten
