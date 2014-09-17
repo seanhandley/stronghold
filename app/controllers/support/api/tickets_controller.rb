@@ -19,7 +19,7 @@ class Support::Api::TicketsController < SupportBaseController#
   end
 
   def create
-    ticket = Ticket.new(create_params)
+    ticket = Ticket.new(create_params.merge(name: Authorization.current_user.name, email: Authorization.current_user.email))
     response = {
       :success => ticket.valid?,
       :message => nil

@@ -2,7 +2,7 @@ class Ticket
   include ActiveModel::Validations
   
   attr_accessor :reference, :title,  :description, :created_at, :updated_at,
-                :comments,  :status, :user, :as_hash
+                :comments,  :status, :name, :email, :as_hash
 
   validates :title, :description, length: {minimum: 1}, allow_blank: false
 
@@ -14,10 +14,10 @@ class Ticket
     @updated_at  = params[:updated_at]
     @comments    = params[:comments] || []
     @email       = params[:email]
-    @user        = params[:user] || Authorization.current_user
+    @name        = params[:name]
     @status      = params[:status]
     @as_hash     = params.dup.merge(comments: @comments.map{|c| c.as_hash },
-                                    user: @user.as_hash, status_name: status_name)
+                                    status_name: status_name)
   end
 
   def self.find(params)
