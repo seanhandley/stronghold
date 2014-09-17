@@ -6,7 +6,7 @@ class TicketAdapter
 
   class << self
     def all
-      Rails.cache.fetch("tickets_#{Authorization.current_user.id}", expires_in: 5.minutes) { fetch_all }
+      Rails.cache.fetch("tickets_#{Authorization.current_user.id}", expires_in: 30.seconds) { fetch_all }
     end
 
     def create(ticket)
