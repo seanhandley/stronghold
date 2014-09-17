@@ -9,10 +9,12 @@ class TicketAdapter
       SIRPORTLY.request("tickets/contact", contact: Authorization.current_user.id, page: page)["records"].map do |t|
         head, *tail = SIRPORTLY.request("ticket_updates/all", ticket: t['reference'])
         updates = tail.map do |u|
-          TicketComment.new(ticket_reference: t['reference'], id: u['id'],
-                            email: u['from_address'], text: markdown(u['message']),
-                            time: Time.parse(u['posted_at']))
-        end
+          unless u['private']
+            TicketComment.new(ticket_reference: t['reference'], id: u['id'],
+                              email: u['from_address'], text: markdown(u['message']),
+                              time: Time.parse(u['posted_at']))
+          end
+        end.compact
         description = (head ? head['message'] : nil)
         Ticket.new(comments: updates, description: markdown(description),
                    reference: t['reference'], title: t['subject'],
