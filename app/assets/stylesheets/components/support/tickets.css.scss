@@ -87,10 +87,14 @@ div#new-ticket .input-group {
   padding-bottom: 1px;
   width: 90%;
   border-radius: 10px;
-  background-color: #ddd;
+  background-color: $brand-primary-fade;
   padding-left: 15px;
   position: relative;
   margin-top: 15px;
+}
+
+.user-callout.staff {
+  background-color: #ddd;
 }
 
 h4.department-ref {
@@ -102,12 +106,16 @@ h4.department-ref {
   position: absolute;
   border-style: solid;
   border-width: 0 10px 10px;
-  border-color: #ddd transparent;
+  border-color: $brand-primary-fade transparent;
   display: block;
   width: 0;
   z-index: 1;
   top: -10px;
   left: 12px;
+}
+
+.user-callout.staff:after {
+  border-color: #ddd transparent;
 }
 
 p.timestamp {
