@@ -19,6 +19,10 @@ class User < ActiveRecord::Base
     organization.staff?
   end
 
+  def as_hash
+    { email: email }
+  end
+
   def has_permission?(permission)
     power_user? || roles.collect(&:permissions).flatten.include?(permission)
   end

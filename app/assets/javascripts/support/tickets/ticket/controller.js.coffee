@@ -117,9 +117,11 @@ angularJS.controller "TicketsController", [
       $scope.clearErrors()
       ticketTitleInput = $("#new_ticket_title")
       ticketDescriptionTextArea = $("#new_ticket_description")
+      ticketDepartmentSelect = $("#new_ticket_department")
       ticketSubmitButton = $($("#newTicket button.btn-primary")[0])
       ticketDescriptionTextArea.val("")
       ticketTitleInput.val("")
+      ticketDepartmentSelect.val("")
       $("#newTicket").on("shown.bs.modal", () -> 
         ticketTitleInput.focus()
       )
@@ -133,6 +135,7 @@ angularJS.controller "TicketsController", [
     $scope.ticketDialogSubmit = ->
       ticketTitleInput = $("#new_ticket_title")
       ticketDescriptionTextArea = $("#new_ticket_description")
+      ticketDepartmentSelect = $("#new_ticket_department")
       ticketSubmitButton = $($("#newTicket button.btn-primary")[0])
       ticketSubmitButton.html("Submitting...")
       ticketSubmitButton.addClass("disabled")
@@ -160,7 +163,8 @@ angularJS.controller "TicketsController", [
         url: "/support/api/tickets/",
         data: {
           "title": ticketTitleInput.val(),
-          "description": ticketDescriptionTextArea.val()
+          "description": ticketDescriptionTextArea.val(),
+          "department": ticketDepartmentSelect.val()
         }
       })
       request.then successHandler, errorHandler

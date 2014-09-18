@@ -77,3 +77,43 @@ a.gravatar img {
 .media-body p img {
   max-width: 100%;
 }
+
+div#new-ticket .input-group {
+  margin-bottom: 5px;
+}
+
+.user-callout {
+  padding-top: 10px;
+  padding-bottom: 1px;
+  width: 90%;
+  border-radius: 10px;
+  background-color: #ddd;
+  padding-left: 15px;
+  position: relative;
+  margin-top: 15px;
+}
+
+h4.department-ref {
+  margin-bottom: 30px;
+}
+
+.user-callout:after {
+  content: '';
+  position: absolute;
+  border-style: solid;
+  border-width: 0 10px 10px;
+  border-color: #ddd transparent;
+  display: block;
+  width: 0;
+  z-index: 1;
+  top: -10px;
+  left: 12px;
+}
+
+p.timestamp {
+  text-align: right;
+  width: 90%;
+  font-size: 10px;
+  padding-top: 5px;
+  padding-right: 10px;
+}

@@ -12,7 +12,7 @@
 
 %body
   #wrap
-    .top-nav
+    .top-nav.navbar.navbar-default.navbar-fixed-top
       .container
         %a{href: support_root_path, class: 'back-to-dash' }
           .logo
@@ -20,14 +20,14 @@
         .context-nav
           = render partial: 'shared/support_nav'
       
-  
-    .container
-      - unless request.url == support_root_url
-        %h3.organisation
-          -# = image_tag 'bbc.png'
-          = current_user.organization.name
-      #flashes= display_flash
-      = yield
-      .push
+    %div.page-body
+      .container
+        - unless request.url == support_root_url
+          %h3.organisation
+            -# = image_tag 'bbc.png'
+            = current_user.organization.name
+        #flashes= display_flash
+        = yield
+        .push
 = render partial: 'shared/footer'
 = render partial: 'shared/ga'
