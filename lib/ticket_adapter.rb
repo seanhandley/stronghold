@@ -20,18 +20,16 @@ class TicketAdapter
             end
           end.compact
           description = (head ? head['message'] : nil)
-          unless t['department']['private']
-            Ticket.new(comments: updates, description: markdown(description),
-                       reference: t['reference'], title: t['subject'],
-                       created_at: Time.parse(t['submitted_at']),
-                       updated_at: Time.parse(t['updated_at']),
-                       email: t['customer_contact_method']['data'],
-                       name: t['customer']['name'],
-                       status: t['status'],
-                       department: t['department']['name'])
-          end
+          Ticket.new(comments: updates, description: markdown(description),
+                     reference: t['reference'], title: t['subject'],
+                     created_at: Time.parse(t['submitted_at']),
+                     updated_at: Time.parse(t['updated_at']),
+                     email: t['customer_contact_method']['data'],
+                     name: t['customer']['name'],
+                     status: t['status'],
+                     department: t['department']['name'])
         end
-      end.flatten.compact
+      end.flatten
     rescue Sirportly::Errors::NotFound
       return []
     end

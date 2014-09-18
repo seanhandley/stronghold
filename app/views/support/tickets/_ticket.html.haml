@@ -21,7 +21,16 @@
         %span
           Status: {{selectedTicket.status_name}}
 
-  %h1 ({{selectedTicket.reference}}) {{selectedTicket.title}}
+  %h1 {{selectedTicket.title}}
+  %h4.department-ref
+    %span.label.label-success
+      %i.fa.fa-users
+      {{selectedTicket.department}}
+    &nbsp;
+    %span.label.label-primary
+      %i.fa.fa-tag
+      {{selectedTicket.reference}}
+    
   %ul.media-list
     %li.media
       %a.pull-left.gravatar
@@ -32,11 +41,11 @@
         %p
           %em
             Created: {{selectedTicket.created_at | momentDateTime}}; Updated: {{selectedTicket.updated_at | momentDateTime}}
-  %h3 Description
-  %p{'ng-bind-html' => "selectedTicket.description"}
+        %hr
+        %p{'ng-bind-html' => "selectedTicket.description"}
+        %hr
 
   %h3 Replies
-  %hr
 
   - if can? :modify, Ticket
     %div.btn-group#comment-button
