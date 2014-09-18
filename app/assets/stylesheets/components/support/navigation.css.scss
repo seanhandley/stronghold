@@ -17,11 +17,10 @@ nav span.choice a:hover {
 }
 
 div.top-nav {
-  background: #eee;
+  background: rgba(240, 240, 240, 0.95);
   border-bottom: 1px solid #ccc;
   margin-bottom: 10px;
   min-height: 47px;
-  opacity: 0.95;
 }
 
 h3.organisation {
@@ -48,4 +47,8 @@ div.context-nav i {
   margin-right: 6px;
   text-align: right;
   opacity: 0.8;
+}
+
+ul.dropdown-menu {
+  opacity: 1.0 !important;
 }
