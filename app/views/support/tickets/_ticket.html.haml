@@ -63,7 +63,7 @@
               %span.badge{:'ng-show' => "comment.staff"}
                 %i.fa.fa-shield
                 Staff
-            .user-callout{'ng-bind-html' => "comment.text"}
+            .user-callout{'ng-bind-html' => "comment.text", 'ng-class' => "comment.staff ? 'staff' : ''"}
             %p.timestamp
               %em
                 {{comment.time | momentDateTime}}
