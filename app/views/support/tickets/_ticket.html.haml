@@ -38,10 +38,10 @@
       %div.media-body
         %h4.media-heading
           {{selectedTicket.name}}
-        %p
-          %em
-            Created: {{selectedTicket.created_at | momentDateTime}}; Updated: {{selectedTicket.updated_at | momentDateTime}}
         .user-callout{'ng-bind-html' => "selectedTicket.description"}
+        %p.timestamp
+          %em
+            {{selectedTicket.created_at | momentDateTime}}
 
   %h3 Replies
 
@@ -65,10 +65,10 @@
               %span.badge{:'ng-show' => "comment.staff"}
                 %i.fa.fa-shield
                 Staff
-            %p
+            .user-callout{'ng-bind-html' => "comment.text"}
+            %p.timestamp
               %em
                 {{comment.time | momentDateTime}}
-            .user-callout{'ng-bind-html' => "comment.text"}
         %hr
     %div{:'ng-show' => "!hasComments(selectedTicket)"}
       There are no replies yet.
