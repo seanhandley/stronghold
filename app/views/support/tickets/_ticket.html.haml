@@ -21,24 +21,30 @@
         %span
           Status: {{selectedTicket.status_name}}
 
-  %h1 ({{selectedTicket.reference}}) {{selectedTicket.title}}
+  %h1 {{selectedTicket.title}}
+  %h4.department-ref
+    %span.label.label-success
+      %i.fa.fa-users
+      {{selectedTicket.department}}
+    &nbsp;
+    %span.label.label-primary
+      %i.fa.fa-tag
+      {{selectedTicket.reference}}
+    
   %ul.media-list
     %li.media
       %a.pull-left.gravatar
         %img.img-circle{'gravatar-src' => "selectedTicket.email"}
       %div.media-body
         %h4.media-heading
-          {{selectedTicket.display_name}}
-        %p
+          {{selectedTicket.name}}
+        .user-callout{'ng-bind-html' => "selectedTicket.description"}
+        %p.timestamp
           %em
-            Created: {{selectedTicket.time_created | momentDateTime}}; Updated: {{selectedTicket.time_updated | momentDateTime}}
-  %h3 Description
-  %p{'ng-bind-html' => "selectedTicket.description"}
-
-  %h3 Replies
-  %hr
+            {{selectedTicket.created_at | momentDateTime}}
 
   - if can? :modify, Ticket
+    %hr
     %div.btn-group#comment-button
       %button.btn.btn-default{:'ng-click' => "commentDialogShow()"}
         %i.fa.fa-comment
@@ -52,13 +58,16 @@
             %img.img-circle{'gravatar-src' => "comment.email"}
           %div.media-body
             %h4.media-heading
-              {{comment.display_name}}
-              %span.label.label-info{:'ng-show' => "comment.staff"}
-                Staff
+              {{comment.name}}
             %p
+              %span.badge{:'ng-show' => "comment.staff"}
+                %i.fa.fa-shield
+                Staff
+            .user-callout{'ng-bind-html' => "comment.text"}
+            %p.timestamp
               %em
                 {{comment.time | momentDateTime}}
-            %p{'ng-bind-html' => "comment.text"}
+        %hr
     %div{:'ng-show' => "!hasComments(selectedTicket)"}
       There are no replies yet.
 
