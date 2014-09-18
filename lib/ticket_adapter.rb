@@ -45,7 +45,6 @@ class TicketAdapter
       }
       new_ticket = SIRPORTLY.create_ticket(properties)
       update = new_ticket.post_update(:message => ticket.description, :customer => Authorization.current_user.id)
-      # Hipchat.notify('Support', "New ticket <a href=\"https://datacentred.atlassian.net/browse/#{reference}\">#{reference}</a> created by #{ticket.email}: #{title}")
       Rails.cache.clear("tickets_#{Authorization.current_user.id}")
       new_ticket.reference
     end
@@ -54,14 +53,14 @@ class TicketAdapter
       ticket  = SIRPORTLY.ticket(comment.ticket_reference)
       comment = ticket.post_update(:message => comment.text, :customer => Authorization.current_user.id)
       Rails.cache.clear("tickets_#{Authorization.current_user.id}")
-      #Hipchat.notify('Support', "#{ticket_comment.email} replied to ticket <a href=\"https://datacentred.atlassian.net/browse/#{ticket_comment.ticket_reference}\">#{ticket_comment.ticket_reference}</a>: #{text}")
       ""
     end
 
     def change_status(reference, status)
       ticket = SIRPORTLY.ticket(reference)
-      ticket.update(:status => status.downcase == 'open' ? 'New' : 'Resolved')
+      ticket.update(:status => status.downcase == 'open' ? 'New' : 'Resolved')      
       Rails.cache.clear("tickets_#{Authorization.current_user.id}")
+      Hipchat.notify('Support', "#{Authorization.current_user.name} has set ticket <a href=\"https://helpdesk.datacentred.io/staff/tickets/#{reference}\">#{reference}</a> to #{status}".)
     end
 
   end
