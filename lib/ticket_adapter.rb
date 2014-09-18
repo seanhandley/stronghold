@@ -20,23 +20,32 @@ class TicketAdapter
             end
           end.compact
           description = (head ? head['message'] : nil)
-          Ticket.new(comments: updates, description: markdown(description),
-                     reference: t['reference'], title: t['subject'],
-                     created_at: Time.parse(t['submitted_at']),
-                     updated_at: Time.parse(t['updated_at']),
-                     email: t['customer_contact_method']['data'],
-                     name: t['customer']['name'],
-                     status: t['status'])
+          unless t['department']['private']
+            Ticket.new(comments: updates, description: markdown(description),
+                       reference: t['reference'], title: t['subject'],
+                       created_at: Time.parse(t['submitted_at']),
+                       updated_at: Time.parse(t['updated_at']),
+                       email: t['customer_contact_method']['data'],
+                       name: t['customer']['name'],
+                       status: t['status'],
+                       department: t['department']['name'])
+          end
         end
-      end.flatten
+      end.flatten.compact
     rescue Sirportly::Errors::NotFound
       return []
+    end
+
+    def departments
+      SIRPORTLY.brands.select do |b|
+        b.name.downcase == 'datacentred'
+      end.first.departments.reject(&:private).collect(&:name)
     end
 
     def create(ticket)
       properties = {
         :brand => 'DataCentred',
-        :department => 'Support',
+        :department => ticket.department,
         :status => 'New',
         :priority => 'Normal',
         :subject => ticket.title,

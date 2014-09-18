@@ -59,12 +59,16 @@
             %i.fa.fa-circle
             New Ticket
           %p= t(:ticket_directions)
-        .modal-body
+        .modal-body#new-ticket
           = render partial: 'shared/model_errors'
           .input-group
             %span.input-group-addon
+              %i.fa.fa-users
+            = select_tag :new_ticket_department, options_for_select(@departments), class: "form-control", autofocus: true, prompt: "Choose a department"
+          .input-group
+            %span.input-group-addon
               %i.fa.fa-tag
-            = text_field_tag :new_ticket_title, nil, placeholder: 'Give a quick summary of the issue', class: "form-control", autofocus: true
+            = text_field_tag :new_ticket_title, nil, placeholder: 'Give a quick summary', class: "form-control"
           .input-group
             %span.input-group-addon
               %i.fa.fa-edit

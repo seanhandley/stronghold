@@ -2,7 +2,8 @@ class Ticket
   include ActiveModel::Validations
   
   attr_accessor :reference, :title,  :description, :created_at, :updated_at,
-                :comments,  :status, :name, :email, :as_hash
+                :comments,  :status, :name, :email, :department,
+                :as_hash
 
   validates :title, :description, length: {minimum: 1}, allow_blank: false
 
@@ -10,6 +11,7 @@ class Ticket
     @reference   = params[:reference]
     @title       = params[:title]
     @description = params[:description]
+    @department  = params[:department]
     @created_at  = params[:created_at]
     @updated_at  = params[:updated_at]
     @comments    = params[:comments] || []
