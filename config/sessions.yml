@@ -8,4 +8,4 @@ staging:
   timeout: 129600
 
 production:
-  timeout: 10
+  timeout: 60
