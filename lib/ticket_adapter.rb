@@ -60,7 +60,7 @@ class TicketAdapter
       ticket = SIRPORTLY.ticket(reference)
       ticket.update(:status => status.downcase == 'open' ? 'New' : 'Resolved')      
       Rails.cache.clear("tickets_#{Authorization.current_user.id}")
-      Hipchat.notify('Support', "#{Authorization.current_user.name} has set ticket <a href=\"https://helpdesk.datacentred.io/staff/tickets/#{reference}\">#{reference}</a> to #{status}.")
+      Hipchat.notify('Support', "<strong>#{Authorization.current_user.name}</strong> has updated ticket status (<a href=\"https://helpdesk.datacentred.io/staff/tickets/#{reference}\">#{reference}</a>) to #{status}.")
     end
 
   end
