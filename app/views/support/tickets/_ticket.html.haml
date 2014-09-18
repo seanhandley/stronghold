@@ -41,13 +41,12 @@
         %p
           %em
             Created: {{selectedTicket.created_at | momentDateTime}}; Updated: {{selectedTicket.updated_at | momentDateTime}}
-        %hr
-        %p{'ng-bind-html' => "selectedTicket.description"}
-        %hr
+        .user-callout{'ng-bind-html' => "selectedTicket.description"}
 
   %h3 Replies
 
   - if can? :modify, Ticket
+    %hr
     %div.btn-group#comment-button
       %button.btn.btn-default{:'ng-click' => "commentDialogShow()"}
         %i.fa.fa-comment
@@ -62,12 +61,15 @@
           %div.media-body
             %h4.media-heading
               {{comment.name}}
-              %span.label.label-info{:'ng-show' => "comment.staff"}
+            %p
+              %span.badge{:'ng-show' => "comment.staff"}
+                %i.fa.fa-shield
                 Staff
             %p
               %em
                 {{comment.time | momentDateTime}}
-            %p{'ng-bind-html' => "comment.text"}
+            .user-callout{'ng-bind-html' => "comment.text"}
+        %hr
     %div{:'ng-show' => "!hasComments(selectedTicket)"}
       There are no replies yet.
 
