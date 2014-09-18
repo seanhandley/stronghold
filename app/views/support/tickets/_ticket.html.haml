@@ -43,8 +43,6 @@
           %em
             {{selectedTicket.created_at | momentDateTime}}
 
-  %h3 Replies
-
   - if can? :modify, Ticket
     %hr
     %div.btn-group#comment-button
