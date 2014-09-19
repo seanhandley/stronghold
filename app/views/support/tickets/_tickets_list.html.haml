@@ -2,7 +2,6 @@
   %thead
     %th.status-head
     %th
-      Ticket
   %tbody{:'ng-repeat' => "ticket in getTicketsByStatus(status)"}
     %tr{:'class' => 'ticket', :'ng-class' => '{selected: ticket == selectedTicket}'}
       %td.status
