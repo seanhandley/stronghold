@@ -22,5 +22,8 @@ module Stronghold
 
     config.autoload_paths += %W(#{config.root}/lib)
 
+    # Enables New Relic to do cool things with GC stats
+    GC::Profiler.enable
+
   end
 end
