@@ -5,7 +5,9 @@ class Ticket
                 :comments,  :status, :name, :email, :department,
                 :as_hash
 
-  validates :title, :description, length: {minimum: 1}, allow_blank: false
+  validates :title,       length: {minimum: 1, maximum: 200}, allow_blank: false
+  validates :description, length: {minimum: 1}, allow_blank: false
+  validates :department, :presence => true
 
   def initialize(params)
     @reference   = params[:reference]
