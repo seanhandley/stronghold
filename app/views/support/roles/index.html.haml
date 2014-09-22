@@ -13,3 +13,5 @@
 
     .tab-pane#roles{'class' => active_tab?('roles')}
       = render partial: 'list', locals: { roles: @roles }
+
+= pagination @users

@@ -10,7 +10,7 @@ class Support::RolesController < SupportBaseController
 
   def index
     @roles = @organization.roles
-    @users = @organization.users
+    @users = @organization.users.page params[:page]
     @open_invites = @organization.invites.select(&:can_register?)
   end
 
