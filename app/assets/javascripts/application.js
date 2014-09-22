@@ -20,6 +20,7 @@
 //= require angular-md5
 //= require angular-gravatar
 //= require angular-animate
+//= require angular-infinite-scroll
 //= require_tree .
 //= require bootstrap
 //= require select2

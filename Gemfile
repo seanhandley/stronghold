@@ -54,6 +54,7 @@ gem 'rails-assets-angular-sanitize', '~> 1.2.24'
 gem 'rails-assets-angular-gravatar', '~> 0.2.1'
 gem 'rails-assets-angular-animate', '~> 1.2.24'
 gem 'rails-assets-angular-md5', '~> 0.1.7'
+gem 'rails-assets-angular-infinite-scroll', '~> 0.0.1'
 
 group :development do
   gem 'i18n_yaml_sorter', '~> 0.2.0'
