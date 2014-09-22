@@ -7,7 +7,7 @@ class Support::Api::TicketsController < SupportBaseController#
   load_and_authorize_resource :class => "Ticket"
 
   def index
-    @tickets = TicketAdapter.all.collect do |t|
+    @tickets = TicketAdapter.all(params[:page]).collect do |t|
       TicketDecorator.new(t).decorate
     end
     respond_to do |format|

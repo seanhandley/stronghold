@@ -5,31 +5,28 @@ class TicketAdapter
   extend ActionView::Helpers::TextHelper
 
   class << self
-    def all
-      total_pages = SIRPORTLY.request("tickets/contact", contact: Authorization.current_user.id)["pagination"]["pages"]
-      (1..total_pages).collect do |page|
-        SIRPORTLY.request("tickets/contact", contact: Authorization.current_user.id, page: page)["records"].sort_by{|t| t['updated_at']}.map do |t|
-          head, *tail = SIRPORTLY.request("ticket_updates/all", ticket: t['reference']).sort_by{|t| t['posted_at']}
-          updates = tail.map do |u|
-            unless u['private']
-              TicketComment.new(ticket_reference: t['reference'], id: u['id'],
-                                email: u['from_address'], text: markdown(u['message']),
-                                time: Time.parse(u['posted_at']),
-                                staff: (u['author']["type"] == "User"),
-                                name: u['from_name'])
-            end
-          end.compact
-          description = (head ? head['message'] : nil)
-          Ticket.new(comments: updates, description: markdown(description),
-                     reference: t['reference'], title: t['subject'],
-                     created_at: Time.parse(t['submitted_at']),
-                     updated_at: Time.parse(t['updated_at']),
-                     email: t['customer_contact_method']['data'],
-                     name: t['customer']['name'],
-                     status: t['status'],
-                     department: t['department']['name'])
-        end
-      end.flatten
+    def all(page=1)
+      SIRPORTLY.request("tickets/contact", contact: Authorization.current_user.id, page: page)["records"].sort_by{|t| t['updated_at']}.map do |t|
+        head, *tail = SIRPORTLY.request("ticket_updates/all", ticket: t['reference']).sort_by{|t| t['posted_at']}
+        updates = tail.map do |u|
+          unless u['private']
+            TicketComment.new(ticket_reference: t['reference'], id: u['id'],
+                              email: u['from_address'], text: markdown(u['message']),
+                              time: Time.parse(u['posted_at']),
+                              staff: (u['author']["type"] == "User"),
+                              name: u['from_name'])
+          end
+        end.compact
+        description = (head ? head['message'] : nil)
+        Ticket.new(comments: updates, description: markdown(description),
+                   reference: t['reference'], title: t['subject'],
+                   created_at: Time.parse(t['submitted_at']),
+                   updated_at: Time.parse(t['updated_at']),
+                   email: t['customer_contact_method']['data'],
+                   name: t['customer']['name'],
+                   status: t['status'],
+                   department: t['department']['name'])
+      end
     rescue Sirportly::Errors::NotFound
       return []
     end
