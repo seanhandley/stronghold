@@ -21,3 +21,4 @@
             = audit.user ? audit.user.name : t(:system).upcase
           %td
             = render partial: "support/audits/table/#{audit.auditable_type.underscore}", locals: { audit: audit }
+= pagination @audits

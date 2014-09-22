@@ -26,6 +26,7 @@ gem 'honeybadger', '~> 1.7.0'
 gem 'hipchat', '~> 1.3.0'
 gem 'sirportly', '~> 1.3.6'
 gem 'kaminari', '~> 0.16.1'
+gem 'bootstrap-kaminari-views', '~> 0.0.5'
 
 group :test do
   gem 'minitest-rails'
