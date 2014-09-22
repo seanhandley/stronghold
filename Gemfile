@@ -34,20 +34,17 @@ group :test do
   gem 'poltergeist'
 end
 
-group :assets do
-  gem "select2-rails", '~> 3.5.9.1'
-  gem 'font-awesome-sass', '~> 4.1.0'
-  gem 'bootstrap-sass', '~> 3.1.1'
-  gem 'rails-assets-normalize-css'
-  gem 'jquery-rails', '~> 3.1.2'
-  gem 'sass-rails', '~> 4.0.3'
-  gem 'uglifier', '>= 1.3.0'
-  gem 'coffee-rails', '~> 4.0.0'
-  gem 'therubyracer', '~> 0.12.1', platforms: :ruby
-  gem 'momentjs-rails', '~> 2.8.3'
-end
-
-# Gems from Rails Assets must be declared *outside* assets group
+# Assets gems
+gem "select2-rails", '~> 3.5.9.1'
+gem 'font-awesome-sass', '~> 4.1.0'
+gem 'bootstrap-sass', '~> 3.1.1'
+gem 'rails-assets-normalize-css'
+gem 'jquery-rails', '~> 3.1.2'
+gem 'sass-rails', '~> 4.0.3'
+gem 'uglifier', '>= 1.3.0'
+gem 'coffee-rails', '~> 4.0.0'
+gem 'therubyracer', '~> 0.12.1', platforms: :ruby
+gem 'momentjs-rails', '~> 2.8.3'
 gem 'rails-assets-angular', '~> 1.2.24'
 gem 'rails-assets-angular-resource', '~> 1.2.24'
 gem 'rails-assets-angular-bootstrap', '~> 0.11.0'
