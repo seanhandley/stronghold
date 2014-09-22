@@ -133,6 +133,9 @@ GEM
       railties (>= 3.2)
       sprockets-rails
     json (1.8.1)
+    kaminari (0.16.1)
+      actionpack (>= 3.0.0)
+      activesupport (>= 3.0.0)
     kgio (2.9.2)
     libv8 (3.16.14.7)
     logstash-event (1.1.5)
@@ -297,6 +300,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails (~> 3.1.2)
   js-routes (~> 0.9.9)
+  kaminari (~> 0.16.1)
   logstasher (~> 0.5.3)
   machinist
   minitest-rails
