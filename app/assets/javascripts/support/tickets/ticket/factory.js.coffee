@@ -1,6 +1,6 @@
 angularJS.factory "TicketFactory", ($http, TicketStatusFactory) ->
 
-  getTickets: ->
+  getTickets: (page=1) ->
 
     successHandler = (response) ->
       if response.status is not 200
@@ -16,4 +16,4 @@ angularJS.factory "TicketFactory", ($http, TicketStatusFactory) ->
     errorHandler = (response) ->
       null
 
-    $http.get("/support/api/tickets/").then successHandler, errorHandler
+    $http.get("/support/api/tickets?page=" + page).then successHandler, errorHandler
