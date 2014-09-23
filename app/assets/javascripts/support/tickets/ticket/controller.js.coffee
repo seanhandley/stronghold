@@ -18,6 +18,17 @@ angularJS.controller "TicketsController", [
     $scope.hasFailed = null
 
     $scope.isLoading = false
+    $scope.page = 1
+
+    $scope.loadMoreTickets = () ->
+      $scope.page += 1
+      fetchTickets()
+
+    $scope.fetchTickets = () ->
+      tickets = []
+      for n in [1..$scope.page]
+        tickets += TicketFactory.getTickets(n)
+      [].concat tickets
 
     $scope.doPopulateTickets = (dCallback = false, takeTime = false) ->
       async.waterfall([
@@ -28,7 +39,7 @@ angularJS.controller "TicketsController", [
             next()
           return
         (next) ->
-          TicketFactory.getTickets().then (tickets) ->
+          $scope.fetchTickets().then (tickets) ->
             if takeTime
                setTimeout(next(null, tickets), 1000)
             else
