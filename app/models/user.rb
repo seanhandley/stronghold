@@ -19,6 +19,10 @@ class User < ActiveRecord::Base
     organization.staff?
   end
 
+  def unique_id
+    "stronghold_#{id}"
+  end
+
   def as_hash
     { email: email }
   end

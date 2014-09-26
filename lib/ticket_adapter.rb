@@ -6,7 +6,7 @@ class TicketAdapter
 
   class << self
     def all(page=1)
-      SIRPORTLY.request("tickets/contact", contact: "stronghold_#{Authorization.current_user.id}", page: page)["records"].sort_by{|t| t['updated_at']}.map do |t|
+      SIRPORTLY.request("tickets/contact", contact: Authorization.current_user.unique_id}, page: page)["records"].sort_by{|t| t['updated_at']}.map do |t|
         head, *tail = SIRPORTLY.request("ticket_updates/all", ticket: t['reference']).sort_by{|t| t['posted_at']}
         updates = tail.map do |u|
           unless u['private']
@@ -48,14 +48,14 @@ class TicketAdapter
         :email => ticket.email
       }
       new_ticket = SIRPORTLY.create_ticket(properties)
-      update = new_ticket.post_update(:message => ticket.description, :customer => Authorization.current_user.id)
+      update = new_ticket.post_update(:message => ticket.description, :customer => Authorization.current_user.unique_id)
       Rails.cache.clear("tickets_#{Authorization.current_user.id}")
       new_ticket.reference
     end
 
     def create_comment(comment)
       ticket  = SIRPORTLY.ticket(comment.ticket_reference)
-      comment = ticket.post_update(:message => comment.text, :customer => Authorization.current_user.id)
+      comment = ticket.post_update(:message => comment.text, :customer => Authorization.current_user.unique_id)
       Rails.cache.clear("tickets_#{Authorization.current_user.id}")
       ""
     end
