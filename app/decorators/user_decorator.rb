@@ -1,7 +1,7 @@
 class UserDecorator < ApplicationDecorator
   def as_sirportly_data
     {
-      reference: "stronghold_#{model.id}",
+      reference: model.unqiue_id,
       contact_methods: {
         email: [
           model.email
