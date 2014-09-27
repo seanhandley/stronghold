@@ -32,9 +32,11 @@ class TicketAdapter
     end
 
     def departments
-      SIRPORTLY.brands.select do |b|
-        b.name.downcase == 'datacentred'
-      end.first.departments.reject(&:private).collect(&:name)
+      Raile.cache.fetch("stronghold_departments", expires_in: 1.day) do
+        SIRPORTLY.brands.select do |b|
+          b.name.downcase == 'datacentred'
+        end.first.departments.reject(&:private).collect(&:name)
+      end
     end
 
     def create(ticket)
@@ -49,21 +51,18 @@ class TicketAdapter
       }
       new_ticket = SIRPORTLY.create_ticket(properties)
       update = new_ticket.post_update(:message => ticket.description, :customer => Authorization.current_user.unique_id)
-      Rails.cache.clear("tickets_#{Authorization.current_user.id}")
       new_ticket.reference
     end
 
     def create_comment(comment)
       ticket  = SIRPORTLY.ticket(comment.ticket_reference)
       comment = ticket.post_update(:message => comment.text, :customer => Authorization.current_user.unique_id)
-      Rails.cache.clear("tickets_#{Authorization.current_user.id}")
       ""
     end
 
     def change_status(reference, status)
       ticket = SIRPORTLY.ticket(reference)
       ticket.update(:status => status.downcase == 'open' ? 'New' : 'Resolved')      
-      Rails.cache.clear("tickets_#{Authorization.current_user.id}")
       Hipchat.notify('Sirportly', 'Support', "<strong>#{Authorization.current_user.name}</strong> has updated ticket status (<a href=\"https://helpdesk.datacentred.io/staff/tickets/#{reference}\">#{reference}</a>) to #{status}.")
     end
 
