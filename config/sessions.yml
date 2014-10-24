@@ -1,11 +1,11 @@
 development:
-  timeout: 129600
+  timeout: 60
 
 test:
-  timeout: 129600
+  timeout: 60
 
 staging:
-  timeout: 129600
+  timeout: 60
 
 production:
   timeout: 60

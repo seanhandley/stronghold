@@ -15,6 +15,11 @@ module OpenStackObject
       def self.object_name     ; :identity ; end
     end
 
+    class Role < Base
+      def self.collection_name ; :roles    ; end
+      def self.object_name     ; :identity ; end
+    end
+
     class Volume < Base
       def self.collection_name ; :volumes  ; end
       def self.object_name     ; :compute  ; end   
