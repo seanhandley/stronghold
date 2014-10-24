@@ -30,7 +30,8 @@ class Reset < ActiveRecord::Base
     elsif password.length < 8
       errors.add :base,  I18n.t(:password_too_short)
     else
-      user.update_attributes(password: password)
+      os_user = OpenStack::User.find(user.uuid)
+      os_user.update(password: password)
       update_column(:completed_at, Time.now)
       return true
     end

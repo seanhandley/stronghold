@@ -1,0 +1,23 @@
+.container#sign-in
+
+  %h1
+    %i.fa.fa-briefcase
+    New Customer
+
+  = form_tag(admin_customers_path, 'role' => 'form') do
+    .form-group
+      %label Organization Name
+      = text_field_tag :organization_name, @customer.organization_name, class: 'form-control'
+    .form-group
+      %label Administrator E-Mail
+      = email_field_tag :email, @customer.email, class: 'form-control'
+    .form-group
+      %label Colo-only?
+      = check_box_tag :colo_only, true, @customer.colo_only, class: 'form-control'
+      %p.help-block This will create all tenants with zero quotas
+    .form-group
+      %label Extra tenants?
+      = text_field_tag :extra_tenants, @customer.extra_tenants, class: 'form-control'
+      %p.help-block Comma separate i.e "Tenant 1, Tenant 2"
+
+    = submit_tag 'Continue →', class: 'btn btn-primary'

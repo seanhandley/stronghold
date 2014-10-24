@@ -7,9 +7,12 @@ class Organization < ActiveRecord::Base
   validates :name, length: {minimum: 1}, allow_blank: false
   validates :reference, :uniqueness => true
 
-  has_many :users
-  has_many :roles
-  has_many :invites
+  has_many :users, dependent: :destroy
+  has_many :roles, dependent: :destroy
+  has_many :invites, dependent: :destroy
+  has_many :tenants, dependent: :destroy
+
+  belongs_to :primary_tenant, class_name: 'Tenant'
 
   def staff?
     (reference == STAFF_REFERENCE)
@@ -19,11 +22,7 @@ class Organization < ActiveRecord::Base
 
   def generate_reference
     return nil if reference
-    generate_reference_step(name.parameterize.gsub('-','').upcase.slice(0,8), 0)
-    if SyncWithOpenStack
-      t = OpenStack::Tenant.create name: reference, enabled: true, description: "Customer: #{name}"
-      update_column(:tenant_id, t.id)
-    end
+    generate_reference_step(name.parameterize.gsub('-','').downcase.slice(0,18), 0)
   end
 
   def generate_reference_step(ref, count)
@@ -32,6 +31,8 @@ class Organization < ActiveRecord::Base
       generate_reference_step(ref, (count+1))
     else
       update_column(:reference, new_ref)
+      t = tenants.create name: "primary"
+      update_column(:primary_tenant_id, t.id)
     end
   end
 

@@ -7,12 +7,14 @@ class ApplicationController < ActionController::Base
     render js: "window.location.replace('#{path}')"
   end
 
+  def current_section; end
+  helper_method :current_section
+
   before_action { Authorization.current_user = nil }
 
-  def current_section; end
-  
   def current_user
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
   end
   helper_method :current_user
+
 end
