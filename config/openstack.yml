@@ -1,5 +1,5 @@
 default: &default
-  auth_url: "http://controller0.sal01.datacentred.co.uk:5000/v2.0/tokens"
+  auth_url: "https://compute.datacentred.io:5000/v2.0/tokens"
 
 development:
   <<: *default

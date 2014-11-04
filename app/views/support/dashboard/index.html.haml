@@ -3,20 +3,6 @@
   %h3
     = image_tag 'logo_small.png'
     Welcome
-  %p== This is the DataCentred online control panel for #{current_user.organization.name}.
-  %p Here you can:
-  %ul
-    %li
-      Raise tickets to our support team
-      %span.label.label-success Available
-    %li
-      View billing information about your account with us
-      %span.label.label-info Coming soon
-    %li
-      See usage data
-      %span.label.label-info Coming soon
-    %li
-      Configure and control instances and volumes
-      %span.label.label-info Coming soon
+  %p== This is the DataCentred online control panel.
 
-  %em== This site is under active development - if you have any questions or issues, please report them via the #{link_to 'Support Tickets', support_tickets_path} section.
+  %em== If you have any questions or issues, please report them via the #{link_to 'Support Tickets', support_tickets_path} section.

@@ -58,3 +58,11 @@ class MockResponse
     {body: {'conflictingRequest' => {'message' => 'Error!'}}.to_json}
   end
 end
+
+module OpenStack
+  class Role
+    def self.all
+      [OpenStruct.new(:name => '_member_', :id => 'foo')]
+    end
+  end
+end

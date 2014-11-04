@@ -5,12 +5,12 @@ class SignupsController < ApplicationController
   before_filter :find_invite
 
   def edit  
-    @registration = Registration.new(nil,{})  
+    @registration = RegistrationGenerator.new(nil,{})  
   end
 
   def update
-    @registration = Registration.new(@invite, update_params)
-    if @registration.process!
+    @registration = RegistrationGenerator.new(@invite, update_params)
+    if @registration.generate!
       session[:user_id] = @registration.user.id
       session[:created_at] = Time.now
       redirect_to support_root_path, notice: 'Welcome!'
@@ -23,11 +23,7 @@ class SignupsController < ApplicationController
   private
 
   def update_params
-    if !@invite.organization
-      params.permit(:organization_name, :password, :confirm_password, :privacy)
-    else
-      params.permit(:password, :confirm_password, :privacy)
-    end
+    params.permit(:password, :confirm_password, :privacy)
   end
 
   def find_invite

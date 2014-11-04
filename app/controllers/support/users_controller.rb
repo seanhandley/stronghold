@@ -11,7 +11,14 @@ class Support::UsersController < SupportBaseController
     check_user
     if current_user.update(update_params)
       respond_to do |format|
-        format.js { render :template => "shared/dialog_success", :locals => {message: 'Changes saved', object: current_user } }
+        format.js {
+          if update_params[:password].present?
+            reset_session
+            javascript_redirect_to support_root_path
+          else
+            render :template => "shared/dialog_success", :locals => {message: 'Changes saved', object: current_user }
+          end
+        }
       end
     else
       respond_to do |format|

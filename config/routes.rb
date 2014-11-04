@@ -24,6 +24,14 @@ Rails.application.routes.draw do
     post '/contacts/find', :controller => 'contacts', :action => 'find'
   end
 
+  # TODO: Add subnets to lib/admin_constraint.rb
+  #constraints AdminConstraint.new do
+    namespace :admin do
+      root :to => 'dashboard#index'
+      resources :customers, only: [:new, :create]
+    end
+  #end
+
   resources :sessions, only: [:create, :destroy, :new, :index]
   resources :resets, only: [:create, :new, :show, :update]
 
