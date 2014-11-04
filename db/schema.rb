@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140826152654) do
+ActiveRecord::Schema.define(version: 20141104101011) do
 
   create_table "audits", force: true do |t|
     t.string   "auditable_id"
@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(version: 20140826152654) do
     t.datetime "completed_at"
     t.string   "token"
     t.integer  "organization_id"
+    t.boolean  "power_invite",    default: false, null: false
   end
 
   create_table "invites_roles", force: true do |t|
@@ -57,9 +58,9 @@ ActiveRecord::Schema.define(version: 20140826152654) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "time_zone",  default: "London", null: false
-    t.string   "tenant_id"
-    t.string   "locale",     default: "en",     null: false
+    t.string   "time_zone",         default: "London", null: false
+    t.string   "locale",            default: "en",     null: false
+    t.integer  "primary_tenant_id"
   end
 
   create_table "resets", force: true do |t|
@@ -86,18 +87,26 @@ ActiveRecord::Schema.define(version: 20140826152654) do
     t.datetime "updated_at"
   end
 
+  create_table "tenants", force: true do |t|
+    t.string  "name"
+    t.string  "uuid"
+    t.integer "organization_id"
+  end
+
+  create_table "user_tenant_roles", force: true do |t|
+    t.integer "user_id"
+    t.integer "tenant_id"
+    t.string  "role_uuid"
+  end
+
   create_table "users", force: true do |t|
     t.string   "email"
     t.string   "first_name"
     t.string   "last_name"
-    t.string   "password_digest"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "organization_id"
-    t.string   "openstack_id"
-    t.binary   "api_key"
-    t.binary   "api_key_key"
-    t.binary   "api_key_iv"
+    t.string   "uuid"
   end
 
 end

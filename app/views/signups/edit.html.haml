@@ -10,14 +10,6 @@
     %label Repeat Password
     = password_field_tag :confirm_password, @registration.confirm_password, class: 'form-control'
 
-  - unless @invite.organization
-    %h3
-      %i.fa.fa-suitcase
-      Please name your organization
-    .form-group
-      %label Organization name
-      = text_field_tag :organization_name, @registration.organization_name, class: 'form-control'
-
   .form-group
     %label
       I confirm I have read and accept the

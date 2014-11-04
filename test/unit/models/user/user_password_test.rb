@@ -21,11 +21,6 @@ class TestUser < Minitest::Test
     @user_without_password.update_attributes(password: 'foo', password_confirmation: 'foo')
   end
 
-  def test_password_digests_differ
-    refute_equal User.make(password: 'foo').password_digest,
-                 User.make(password: 'foo').password_digest
-  end
-
   def teardown
     DatabaseCleaner.clean  
   end

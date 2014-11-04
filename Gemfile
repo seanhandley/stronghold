@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 source 'https://rails-assets.org'
 
-gem 'rails', '4.1.6'
+gem 'rails', '4.1.7'
 gem 'mysql2', '~> 0.3.16'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0',  group: :doc
@@ -17,8 +17,6 @@ gem 'database_cleaner', '~> 0.8.0'
 gem 'audited-activerecord', git: 'https://github.com/collectiveidea/audited.git', tag: 'v4.0.0.rc1'
 gem 'verbs', '~> 2.1.4'
 gem 'faraday', '~> 0.9.0'
-gem 'strongbox', '~> 0.7.0'
-gem 'logstasher', '~> 0.5.3'
 gem 'redcarpet', '~> 3.1.2'
 gem 'async-rails', '~> 0.9.0'
 gem 'newrelic_rpm', '~> 3.9.2'
@@ -27,6 +25,7 @@ gem 'hipchat', '~> 1.3.0'
 gem 'sirportly', '~> 1.3.6'
 gem 'kaminari', '~> 0.16.1'
 gem 'bootstrap-kaminari-views', '~> 0.0.5'
+gem 'dalli', '~> 2.7.2'
 
 group :test do
   gem 'minitest-rails'
@@ -34,6 +33,7 @@ group :test do
   gem 'machinist'
   gem 'capybara'
   gem 'poltergeist'
+  gem 'simplecov'
 end
 
 # Assets gems

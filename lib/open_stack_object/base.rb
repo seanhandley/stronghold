@@ -93,7 +93,7 @@ module OpenStackObject
       # @param [String] id the ID of the item
       # @return [OpenStackObject::Base] Object with this ID, otherwise nil
       def find(id)
-        result = conn.send(collection_name).get(id)
+        result = [conn.send(collection_name).find {|s| s.id == id}].flatten.first
         result ? new(result) : nil
       end
 
@@ -111,14 +111,17 @@ module OpenStackObject
       def conn
         args = OPENSTACK_ARGS.dup
         if Authorization.current_user.present?
-          username = Authorization.current_user.openstack_username
-          password = Authorization.current_user.api_key.decrypt(Rails.application.secrets.strongbox_passphrase)
-          tenant   = Authorization.current_user.organization.reference
-          args.merge!(:openstack_username => username,
-                   :openstack_api_key  => password, # Also accepts :openstack_auth_token
-                   :openstack_tenant   => tenant)
+          username   = Authorization.current_user.email
+          tenant     = Authorization.current_user.organization.primary_tenant.reference
+          token      = Authorization.current_user.token
+          args.merge!(:openstack_username   => username,
+                      :openstack_auth_token => token,
+                      :openstack_tenant     => tenant,
+                      :openstack_api_key    => nil)
         end
         "Fog::#{object_name.to_s.titleize}".constantize.new(args)
+      rescue NameError
+        raise ArgumentError, "Invalid credentials"
       end
 
     end
@@ -195,7 +198,12 @@ module OpenStackObject
     end
 
     def api_error_message(e)
-      JSON.parse(e.response.data[:body])['conflictingRequest']['message']
+      body = JSON.parse(e.response.data[:body])
+      if body['conflictingRequest']
+        return body['conflictingRequest']['message']
+      else
+        return body['error']['message']
+      end
     end
 
   end
