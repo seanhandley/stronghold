@@ -4,7 +4,8 @@ class SignupsController < ApplicationController
 
   before_filter :find_invite
 
-  def edit  
+  def edit
+    reset_session
     @registration = RegistrationGenerator.new(nil,{})  
   end
 
