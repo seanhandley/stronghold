@@ -1,3 +1,7 @@
+- @users.each do |user|
+  = javascript_error_messages_for(user)
+  = javascript_success_messages_for(user)
+  
 .page-controls
   - if can? :modify, Invite
     %button.btn.btn-primary{'data-toggle' => "modal", 'data-target' => "#inviteUser"}
@@ -38,6 +42,7 @@
       = t(:email)
     %th
       = t(:roles)
+    %th
   %tbody
     - users.each do |user|
       %tr
@@ -47,5 +52,10 @@
         %td
           %i.fa.fa-key
           = list_of_roles(user)
+        %td
+          - if can?(:modify, User) && user.id != current_user.id
+            %a{href: support_user_path(user), data: { remote: true, method: :delete, confirm: "Are you sure?"}}
+              %i.fa.fa-trash-o
+
 
 = render partial: 'support/users/invite_user'

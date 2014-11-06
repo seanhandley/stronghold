@@ -5,7 +5,7 @@ Rails.application.routes.draw do
     resources :instances
     resources :organizations, only: [:update]
     get '/edit_organization', :controller => 'organizations', :action => 'index', :as => 'edit_organization'
-    resources :users, only: [:update]
+    resources :users, only: [:update, :destroy]
     get '/profile', :controller => 'users', :action => 'index'
     resources :roles
     resources :tickets, only: [:index, :show]
