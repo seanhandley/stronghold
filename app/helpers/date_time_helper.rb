@@ -11,7 +11,7 @@ module DateTimeHelper
   end
 
   def am_pm_time(time)
-    time.strftime("%I:%M%p")
+    time.strftime("%I:%M%p %Z")
   end
 
   def long_time(time)
