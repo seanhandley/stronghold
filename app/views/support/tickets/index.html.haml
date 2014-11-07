@@ -63,16 +63,38 @@
           = render partial: 'shared/model_errors'
           .input-group
             %span.input-group-addon
-              %i.fa.fa-users
+              %i.fa.fa-folder
             = select_tag :new_ticket_department, options_for_select(@departments), class: "form-control", autofocus: true, prompt: "Choose a department"
-          .input-group
-            %span.input-group-addon
-              %i.fa.fa-tag
-            = text_field_tag :new_ticket_title, nil, placeholder: 'Give a quick summary', class: "form-control"
-          .input-group
-            %span.input-group-addon
-              %i.fa.fa-edit
-            = text_area_tag :new_ticket_description, nil, placeholder: 'Now, tell us all the details...', class: "form-control", rows: 12
+          #access-request-fields.hide
+            .input-group
+              %span.input-group-addon
+                %i.fa.fa-users
+              = text_field_tag :visitor_names, nil, placeholder: 'Visitor name(s)', class: "form-control"
+            .input-group
+              %span.input-group-addon
+                %i.fa.fa-edit
+              = text_area_tag :reason_for_visit, nil, placeholder: 'Please describe the nature of the visit', class: "form-control", rows: 4
+            .input-group
+              %span.input-group-addon
+                %i.fa.fa-calendar
+              = date_select :ticket, :date, {}, class: "form-control form-control-thirds"
+            .input-group
+              %span.input-group-addon
+                %i.fa.fa-clock-o
+              = time_select :ticket, :date, {ignore_date: true, time_separator: ''}, class: "form-control form-control-halves"
+            .input-group
+              %span.input-group-addon
+                %i.fa.fa-exclamation
+              = select_tag :priority, options_for_select(@priorities), class: "form-control", prompt: "Choose a priority"
+          #other-issues-fields.hide
+            .input-group
+              %span.input-group-addon
+                %i.fa.fa-tag
+              = text_field_tag :new_ticket_title, nil, placeholder: 'Give a quick summary', class: "form-control"
+            .input-group
+              %span.input-group-addon
+                %i.fa.fa-edit
+              = text_area_tag :new_ticket_description, nil, placeholder: 'Now, tell us all the details...', class: "form-control", rows: 12
         .modal-footer
           %button.btn.btn-default{:'ng-click' => 'ticketDialogCancel()'}
             = t(:cancel)

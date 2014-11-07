@@ -40,6 +40,11 @@ en:
   content: "Content"
   create_role: "Create Role"
   date: "Date"
+  date:
+    order:
+        - :day
+        - :month
+        - :year
   delete_the_role: "Delete the role"
   description: "Description"
   edit_organization_details: "Edit Organization Details"
