@@ -50,7 +50,7 @@ class Support::Api::TicketsController < SupportBaseController#
   private
 
   def create_params
-    params.require(:ticket).permit(:title, :description, :department)
+    params.require(:ticket).permit(:title, :description, :department, :priority)
   end
 
   def update_params

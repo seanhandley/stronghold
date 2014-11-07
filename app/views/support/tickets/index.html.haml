@@ -68,7 +68,7 @@
           .input-group
             %span.input-group-addon
               %i.fa.fa-exclamation
-            = select_tag :priority, options_for_select(@priorities), class: "form-control", prompt: "Choose a priority"
+            = select_tag :new_ticket_priority, options_for_select(@priorities), class: "form-control", prompt: "Choose a priority"
           %p.help-block Please only use the 'Emergency' priority setting in critical circumstances.
           #access-request-fields.hide
             .input-group
