@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141104101011) do
+ActiveRecord::Schema.define(version: 20141107115947) do
 
   create_table "audits", force: true do |t|
     t.string   "auditable_id"
@@ -61,6 +61,19 @@ ActiveRecord::Schema.define(version: 20141104101011) do
     t.string   "time_zone",         default: "London", null: false
     t.string   "locale",            default: "en",     null: false
     t.integer  "primary_tenant_id"
+  end
+
+  create_table "organizations_products", force: true do |t|
+    t.integer  "organization_id"
+    t.integer  "product_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "products", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "resets", force: true do |t|
