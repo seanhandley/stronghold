@@ -41,7 +41,7 @@ class TicketAdapter
 
     def priorities
       Rails.cache.fetch("stronghold_priorities", expires_in: 1.day) do
-        SIRPORTLY.priorities.collect(&:name).sort
+        SIRPORTLY.priorities.collect(&:name)
       end
     end
 
@@ -50,7 +50,7 @@ class TicketAdapter
         :brand => 'DataCentred',
         :department => ticket.department,
         :status => 'New',
-        :priority => 'Normal',
+        :priority => ticket.priority,
         :subject => ticket.title,
         :name => ticket.name,
         :email => ticket.email

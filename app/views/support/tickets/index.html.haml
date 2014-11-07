@@ -65,6 +65,11 @@
             %span.input-group-addon
               %i.fa.fa-folder
             = select_tag :new_ticket_department, options_for_select(@departments), class: "form-control", autofocus: true, prompt: "Choose a department"
+          .input-group
+            %span.input-group-addon
+              %i.fa.fa-exclamation
+            = select_tag :priority, options_for_select(@priorities), class: "form-control", prompt: "Choose a priority"
+          %p.help-block Please only use the 'Emergency' priority setting in critical circumstances.
           #access-request-fields.hide
             .input-group
               %span.input-group-addon
@@ -82,10 +87,6 @@
               %span.input-group-addon
                 %i.fa.fa-clock-o
               = time_select :ticket, :date, {ignore_date: true, time_separator: ''}, class: "form-control form-control-halves"
-            .input-group
-              %span.input-group-addon
-                %i.fa.fa-exclamation
-              = select_tag :priority, options_for_select(@priorities), class: "form-control", prompt: "Choose a priority"
           #other-issues-fields.hide
             .input-group
               %span.input-group-addon
