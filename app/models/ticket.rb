@@ -5,9 +5,9 @@ class Ticket
                 :comments,  :status, :name, :email, :department, :priority,
                 :as_hash
 
-  validates :title,       length: {minimum: 1, maximum: 200}, allow_blank: false
-  validates :description, length: {minimum: 1}, allow_blank: false
-  validates :department, :presence => true
+  validates :title,       length: {minimum: 1, maximum: 200}, allow_blank: false, unless: :access_request?
+  validates :description, length: {minimum: 1}, allow_blank: false, unless: :access_request?
+  validates :department, :priority, :presence => true
 
   def initialize(params)
     @reference   = params[:reference]
@@ -27,6 +27,10 @@ class Ticket
 
   def self.find(params)
     nil
+  end
+
+  def access_request?
+    department == "Access Requests"
   end
 
   def status_name

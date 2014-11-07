@@ -136,6 +136,7 @@ angularJS.controller "TicketsController", [
       ticketTitleInput = $("#new_ticket_title")
       ticketDescriptionTextArea = $("#new_ticket_description")
       ticketDepartmentSelect = $("#new_ticket_department")
+      ticketPrioritySelect = $("#new_ticket_priority")
       ticketSubmitButton = $($("#newTicket button.btn-primary")[0])
       ticketSubmitButton.html("Submitting...")
       ticketSubmitButton.addClass("disabled")
@@ -164,7 +165,8 @@ angularJS.controller "TicketsController", [
         data: {
           "title": ticketTitleInput.val(),
           "description": ticketDescriptionTextArea.val(),
-          "department": ticketDepartmentSelect.val()
+          "department": ticketDepartmentSelect.val(),
+          "priority": ticketPrioritySelect.val()
         }
       })
       request.then successHandler, errorHandler
