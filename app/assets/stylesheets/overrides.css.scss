@@ -27,3 +27,15 @@ input[type="checkbox"] {
 p {
   word-wrap: break-word;
 }
+
+.form-control-thirds {
+    min-width: 0 !important;
+    width: 33.33% !important;
+    display: inline !important;
+}
+
+.form-control-halves {
+    min-width: 0 !important;
+    width: 50% !important;
+    display: inline !important;
+}
