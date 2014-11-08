@@ -35,7 +35,7 @@ class TicketAdapter
       Rails.cache.fetch("stronghold_departments", expires_in: 1.day) do
         SIRPORTLY.brands.select do |b|
           b.name.downcase == 'datacentred'
-        end.first.departments.reject(&:private).collect(&:name).push('Access Requests').sort
+        end.first.departments.reject(&:private).collect(&:name).sort
       end
     end
 
