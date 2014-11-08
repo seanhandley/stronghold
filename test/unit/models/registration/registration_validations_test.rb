@@ -8,7 +8,8 @@ class TestRegistrationValidations < Minitest::Test
     @password = SecureRandom.base64(16)
     @valid_params = { password: @password,
                       confirm_password: @password,
-                      privacy: 'on' }
+                      privacy: 'on', first_name: 'test',
+                      last_name: 'test' }
   end
 
 
