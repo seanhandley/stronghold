@@ -2,13 +2,16 @@ class RegistrationGenerator
   include ActiveModel::Validations
 
   attr_reader :invite, :password, :confirm_password,
-              :organization, :user, :privacy
+              :organization, :user, :privacy,
+              :first_name, :last_name
 
   def initialize(invite, params)
     @invite            = invite
     @password          = params[:password]
     @confirm_password  = params[:confirm_password]
     @privacy           = params[:privacy]
+    @first_name        = params[:first_name]
+    @last_name         = params[:last_name]
   end
 
   def generate!
@@ -16,6 +19,8 @@ class RegistrationGenerator
       errors.add :base, I18n.t(:must_agree_to_privacy)
     elsif !invite.can_register?
       errors.add :base, I18n.t(:signup_token_not_valid)
+    elsif first_name.blank? || last_name.blank?
+      errors.add :base, I18n.t(:must_provide_first_name_and_last_name)
     elsif password != confirm_password
       errors.add :base,  I18n.t(:passwords_dont_match)
     elsif password.length < 8
@@ -28,7 +33,7 @@ class RegistrationGenerator
 
       roles = (invite.roles + [@owners]).flatten.compact
       @user = @organization.users.create email: invite.email, password: password,
-                                         roles: roles
+                                         roles: roles, first_name: first_name, last_name: last_name
 
       if invite.power_invite?
         member_uuid = OpenStack::Role.all.select{|r| r.name == '_member_'}.first.id

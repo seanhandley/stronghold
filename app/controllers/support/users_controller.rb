@@ -1,7 +1,7 @@
 class Support::UsersController < SupportBaseController
 
-  authorize_resource class_name: 'User'
-  skip_authorization_check :only => [:index, :update]
+  skip_authorization_check
+  authorize_resource class_name: 'User', only: [:destroy]
 
   def index
     @user = current_user
