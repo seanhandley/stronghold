@@ -24,7 +24,8 @@ class SignupsController < ApplicationController
   private
 
   def update_params
-    params.permit(:password, :confirm_password, :privacy)
+    params.permit(:password, :confirm_password, :privacy,
+                  :first_name, :last_name)
   end
 
   def find_invite
