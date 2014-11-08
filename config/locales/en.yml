@@ -66,6 +66,7 @@ en:
   members: "Members"
   metrics: "Metrics"
   must_agree_to_privacy: "You must agree to the privacy policy"
+  must_provide_first_name_and_last_name: "You must enter a first name and last name"
   my_details: "My Details"
   my_organisation: "My Organisation"
   name: "Name"

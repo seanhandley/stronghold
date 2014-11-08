@@ -10,7 +10,9 @@ class User::Ability
 
     # Roles
     can :read, Role if user.has_permission?('roles.read')
+    can :read, User if user.has_permission?('roles.read')
     can :modify, Role if user.has_permission?('roles.modify')
+    can :modify, User if user.has_permission?('roles.modify')
     can :modify, RoleUser if user.has_permission?('roles.modify')
     can :modify, Invite if user.has_permission?('roles.modify')
 
