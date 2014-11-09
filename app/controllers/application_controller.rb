@@ -13,7 +13,9 @@ class ApplicationController < ActionController::Base
   before_action { Authorization.current_user = nil }
 
   def current_user
-    @current_user ||= User.find(session[:user_id]) if session[:user_id]
+    @current_user ||= User.find_by_id(session[:user_id]) if session[:user_id]
+    reset_session unless @current_user
+    @current_user
   end
   helper_method :current_user
 
