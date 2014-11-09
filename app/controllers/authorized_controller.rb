@@ -11,16 +11,23 @@ class AuthorizedController < ApplicationController
   end
 
   rescue_from CanCan::AccessDenied do |exception|
-    redirect_to support_root_url, :alert => exception.message
+    redirect_to_root
   end
 
   rescue_from OpenStackObject::InvalidCredentialsError do |exception|
     notify_honeybadger(exception)
     reset_session
-    redirect_to sign_in_url
+    redirect_to_root
   end
 
   private
+
+  def redirect_to_root
+    respond_to do |format|
+      format.js   { javascript_redirect_to support_root_url }
+      format.html { redirect_to support_root_url, :alert => exception.message }
+    end
+  end
 
   def set_locale
     I18n.locale = current_user.present? ? current_user.organization.locale.to_sym : I18n.default_locale
