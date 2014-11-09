@@ -18,7 +18,7 @@ class User::Ability
 
     # Tickets
     # can :read, Ticket if user.has_permission?('tickets.read')
-    can :modify, Ticket if user.has_permission?('tickets.modify')
+    can :modify, Ticket if user.has_permission?('tickets.modify') || user.has_permission?('access_requests.modify')
 
     ## Power User can do everything
     can :modify, :all if user.power_user?
