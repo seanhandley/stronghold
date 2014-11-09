@@ -14,6 +14,12 @@ class AuthorizedController < ApplicationController
     redirect_to support_root_url, :alert => exception.message
   end
 
+  rescue_from OpenStackObject::InvalidCredentialsError do |exception|
+    notify_honeybadger(exception)
+    reset_session
+    redirect_to sign_in_url
+  end
+
   private
 
   def set_locale

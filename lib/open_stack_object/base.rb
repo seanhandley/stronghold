@@ -121,7 +121,7 @@ module OpenStackObject
         end
         "Fog::#{object_name.to_s.titleize}".constantize.new(args)
       rescue NameError
-        raise ArgumentError, "Invalid credentials"
+        raise InvalidCredentialsError, "Invalid credentials"
       end
 
     end
