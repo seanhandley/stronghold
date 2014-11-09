@@ -17,7 +17,7 @@ class User::Ability
     can :modify, Invite if user.has_permission?('roles.modify')
 
     # Tickets
-    can :read, Ticket if user.has_permission?('tickets.read')
+    # can :read, Ticket if user.has_permission?('tickets.read')
     can :modify, Ticket if user.has_permission?('tickets.modify')
 
     ## Power User can do everything
