@@ -70,3 +70,8 @@ img.dashboard-option {
   height: 84px;
   width: auto;
 }
+
+.not-yet-enabled div {
+  opacity: 0.0 !important;
+  cursor: initial !important;
+}
