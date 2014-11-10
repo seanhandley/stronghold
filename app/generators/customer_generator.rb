@@ -23,7 +23,7 @@ class CustomerGenerator
         uuid = @organization.tenants.create(name: tenant).uuid
         OpenStack::Tenant.find(uuid).zero_quotas if @colo_only
       end
-      create_default_network(@organization)
+      create_default_network(@organization) unless @colo_only
       @invite = Invite.create! email: @email, power_invite: true, organization: @organization
       Mailer.signup(@invite.id).deliver
       return true
@@ -34,7 +34,7 @@ class CustomerGenerator
   private
 
   def create_default_network(organization)
-    organization.tenants.collect(&:uuid).each |tenant_id|
+    organization.tenants.collect(&:uuid).each do |tenant_id|
       n = OpenStack::Network.create name: 'default', tenant_id: tenant_id
       s = OpenStack::Subnet.create name: 'default', cidr: '192.168.0.0/24',
                                    network_id: n.id, ip_version: 4
