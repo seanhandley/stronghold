@@ -17,15 +17,15 @@ class AuthorizedController < ApplicationController
   rescue_from OpenStackObject::InvalidCredentialsError do |exception|
     notify_honeybadger(exception)
     reset_session
-    redirect_to_root
+    redirect_to_root(exception)
   end
 
   private
 
-  def redirect_to_root
+  def redirect_to_root(exception=nil)
     respond_to do |format|
       format.js   { javascript_redirect_to support_root_url }
-      format.html { redirect_to support_root_url, :alert => exception.message }
+      format.html { redirect_to support_root_url, :alert => exception ? exception.message : nil }
     end
   end
 
