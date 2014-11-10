@@ -8,7 +8,6 @@ module ActiveRecord
           args.merge!(:openstack_username   => email,
                       :openstack_tenant     => organization.primary_tenant.reference,
                       :openstack_api_key    => password)
-          Rails.logger.info args.inspect
           Fog::Identity.new(args).unscoped_token
         rescue NameError => e # Thrown when credentials are invalid
           Rails.logger.info e.inspect

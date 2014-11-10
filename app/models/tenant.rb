@@ -10,7 +10,7 @@ class Tenant < ActiveRecord::Base
   has_many :users, :through => :user_tenant_roles
 
   def reference
-    organization.staff? ? "openstack" : "#{organization.reference}_#{name}"
+    organization.staff? ? "datacentred" : "#{organization.reference}_#{name}"
   end
 
   def keystone_params
