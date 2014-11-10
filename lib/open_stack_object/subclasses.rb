@@ -30,10 +30,25 @@ module OpenStackObject
       def self.object_name     ; :compute ; end   
     end
 
+    class Network < Base
+      def self.collection_name ; :networks ; end
+      def self.object_name     ; :network  ; end
+    end
+
+    class Port < Base
+      def self.collection_name ; :ports    ; end
+      def self.object_name     ; :network  ; end
+    end
+
     class Subnet < Base
       def self.collection_name ; :subnets ; end
       def self.object_name     ; :network ; end
     end
+
+    class Router < Base
+      def self.collection_name ; :routers ; end
+      def self.object_name     ; :network ; end
+    end      
 
     class Resource < Base
       def self.collection_name ; :resources ; end
