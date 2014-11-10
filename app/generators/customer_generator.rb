@@ -23,7 +23,7 @@ class CustomerGenerator
         uuid = @organization.tenants.create(name: tenant).uuid
         OpenStack::Tenant.find(uuid).zero_quotas if @colo_only
       end
-      create_default_network(@organization)
+      create_default_network(@organization) unless @colo_only
       @invite = Invite.create! email: @email, power_invite: true, organization: @organization
       Mailer.signup(@invite.id).deliver
       return true
