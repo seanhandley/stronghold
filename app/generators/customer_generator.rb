@@ -34,7 +34,7 @@ class CustomerGenerator
   private
 
   def create_default_network(organization)
-    organization.tenants.collect(&:uuid).each |tenant_id|
+    organization.tenants.collect(&:uuid).each do |tenant_id|
       n = OpenStack::Network.create name: 'default', tenant_id: tenant_id
       s = OpenStack::Subnet.create name: 'default', cidr: '192.168.0.0/24',
                                    network_id: n.id, ip_version: 4
