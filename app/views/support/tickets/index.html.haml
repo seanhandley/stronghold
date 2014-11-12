@@ -74,7 +74,8 @@
             .input-group
               %span.input-group-addon
                 %i.fa.fa-users
-              = text_field_tag :visitor_names, nil, placeholder: 'Visitor name(s)', class: "form-control"
+              .ui-widget
+                = text_field_tag :visitor_names, nil, placeholder: 'Visitor name(s)', :class => "form-control autocomplete-field", 'data-autocomplete-options' => current_user.organization.users.collect(&:name).to_json
             .input-group
               %span.input-group-addon
                 %i.fa.fa-edit
