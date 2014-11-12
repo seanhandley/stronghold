@@ -82,11 +82,11 @@
             .input-group
               %span.input-group-addon
                 %i.fa.fa-calendar
-              = date_select :ticket, :date, {}, class: "form-control form-control-thirds"
+              = date_select :ticket, :date, {:start_year => Date.today.year, default: 1.days.from_now}, class: "form-control form-control-thirds"
             .input-group
               %span.input-group-addon
                 %i.fa.fa-clock-o
-              = time_select :ticket, :date, {ignore_date: true, time_separator: ''}, class: "form-control form-control-halves"
+              = time_select :ticket, :date, {ignore_date: true, time_separator: '', minute_step: 15}, class: "form-control form-control-halves"
           #other-issues-fields.hide
             .input-group
               %span.input-group-addon
