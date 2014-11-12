@@ -18,14 +18,20 @@ class TicketAdapter
           end
         end.compact
         description = (head ? head['message'] : nil)
-        Ticket.new(comments: updates, description: markdown(description),
+        params = { comments: updates, description: markdown(description),
                    reference: t['reference'], title: t['subject'],
                    created_at: Time.parse(t['submitted_at']),
                    updated_at: Time.parse(t['updated_at']),
                    email: t['customer_contact_method']['data'],
                    name: t['customer']['name'],
                    status: t['status'],
-                   department: t['department']['name'])
+                   department: t['department']['name']}
+        if(t['department']['name'] == 'Access Requests')
+          fields = SIRPORTLY.request("tickets/ticket", ticket: t['reference'])['custom_fields']
+          params.merge!(visitor_names: fields["visitor_names"], date_of_visit: fields["date_of_visit"],
+                        time_of_visit: fields["time_of_visit"])
+        end
+        Ticket.new(params)
       end
     rescue Sirportly::Errors::NotFound
       return []
@@ -53,8 +59,14 @@ class TicketAdapter
         :priority => ticket.priority,
         :subject => ticket.title,
         :name => ticket.name,
-        :email => ticket.email
+        :email => ticket.email,
       }
+      if ticket.department == "Access Requests"
+        properties.merge!({'custom[visitor_names]' => ticket.visitor_names,
+        'custom[nature_of_visit]' => ticket.nature_of_visit,
+        'custom[date_of_visit]'   => ticket.date_of_visit,
+        'custom[time_of_visit]'   => ticket.time_of_visit})
+      end
       new_ticket = SIRPORTLY.create_ticket(properties)
       update = new_ticket.post_update(:message => ticket.description, :customer => Authorization.current_user.unique_id)
       new_ticket.reference
