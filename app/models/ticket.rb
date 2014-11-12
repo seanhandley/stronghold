@@ -48,8 +48,6 @@ class Ticket
   private
 
   def date_time_of_visit
-    puts @time_of_visit
-    puts @date_of_visit
     time_valid, date_valid = true, true
     begin
       Date.parse(@date_of_visit)
@@ -67,6 +65,11 @@ class Ticket
 
     errors.add(:time_of_visit, "is not a valid time") unless time_valid
     errors.add(:date_of_visit, "is not a valid date") unless date_valid
+    if time_valid && date_valid
+       unless DateTime.parse("#{@date_of_visit} #{@time_of_visit}").future?
+         errors.add("Date/Time", "is not in the future")
+       end
+    end
   end
 
 end
