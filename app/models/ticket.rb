@@ -9,13 +9,14 @@ class Ticket
   validates :title,       length: {minimum: 1, maximum: 200}, allow_blank: false, unless: :access_request?
   validates :description, length: {minimum: 1}, allow_blank: false, unless: :access_request?
   validates :department, :priority, :presence => true
-  validates :visitor_names, :nature_of_visit, :date_of_visit, :time_of_visit, length: {minimum: 1}, allow_blank: false, if: :access_request?
+  validates :visitor_names, :nature_of_visit, length: {minimum: 1}, allow_blank: false, if: :access_request?
+  validate :date_time_of_visit, if: :access_request?
 
   def initialize(params)
     @reference       = params[:reference]  
-    @description     = params[:description]
     @department      = params[:department]
     @title           = access_request? ? 'Access Request' : params[:title]
+    @description     = access_request? ? params[:nature_of_visit] : params[:description]
     @priority        = params[:priority]
     @created_at      = params[:created_at]
     @updated_at      = params[:updated_at]
@@ -42,6 +43,30 @@ class Ticket
   def status_name
     return 'Open' unless @status
     @status['status_type'] == 1 ? 'Closed' : 'Open'
+  end
+
+  private
+
+  def date_time_of_visit
+    puts @time_of_visit
+    puts @date_of_visit
+    time_valid, date_valid = true, true
+    begin
+      Date.parse(@date_of_visit)
+      date_valid = false unless @date_of_visit.split('/').all?{|e| e.to_i > 0 }
+    rescue ArgumentError
+      date_valid = false
+    end
+
+    begin
+      Time.parse(@time_of_visit)
+      time_valid = false unless @time_of_visit.split(':').all?{|e| e != 'null' }
+    rescue ArgumentError
+      time_valid = false
+    end
+
+    errors.add(:time_of_visit, "is not a valid time") unless time_valid
+    errors.add(:date_of_visit, "is not a valid date") unless date_valid
   end
 
 end
