@@ -23,6 +23,7 @@ class TicketAdapter
                    created_at: Time.parse(t['submitted_at']),
                    updated_at: Time.parse(t['updated_at']),
                    email: t['customer_contact_method']['data'],
+                   priority: t['priority']['name'],
                    name: t['customer']['name'],
                    status: t['status'],
                    department: t['department']['name']}
