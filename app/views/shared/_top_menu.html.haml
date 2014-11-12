@@ -13,15 +13,16 @@
   - else
     .top-menu-option.top-menu-option-disabled{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => t(:support_tickets)}
       %i.top-menu-icon.fa.fa-life-ring
-  .top-menu-option.top-menu-option-disabled{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => t(:instances)}
-    %i.top-menu-icon.fa.fa-rocket
-  .top-menu-option.top-menu-option-disabled{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => t(:storage)}
-    %i.top-menu-icon.fa.fa-database
-  .top-menu-option.top-menu-option-disabled{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => t(:networking)}
-    %i.top-menu-icon.fa.fa-sitemap
-  .top-menu-option.top-menu-option-disabled{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => t(:colo)}
-    = image_tag('server.svg')
-  .top-menu-option.top-menu-option-disabled{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => t(:billing)}
-    %i.top-menu-icon.fa.fa-money
-  .top-menu-option.top-menu-option-disabled{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => t(:metrics)}
-    %i.top-menu-icon.fa.fa-dashboard
+  .not-yet-enabled
+    .top-menu-option.top-menu-option-disabled{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => t(:instances)}
+      %i.top-menu-icon.fa.fa-rocket
+    .top-menu-option.top-menu-option-disabled{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => t(:storage)}
+      %i.top-menu-icon.fa.fa-database
+    .top-menu-option.top-menu-option-disabled{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => t(:networking)}
+      %i.top-menu-icon.fa.fa-sitemap
+    .top-menu-option.top-menu-option-disabled{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => t(:colo)}
+      = image_tag('server.svg')
+    .top-menu-option.top-menu-option-disabled{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => t(:billing)}
+      %i.top-menu-icon.fa.fa-money
+    .top-menu-option.top-menu-option-disabled{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => t(:metrics)}
+      %i.top-menu-icon.fa.fa-dashboard
