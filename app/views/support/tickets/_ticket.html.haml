@@ -31,9 +31,9 @@
       %i.fa.fa-tag
       {{selectedTicket.reference}}
     &nbsp;
-    %span.label.label-warning
+    %span.label{:'ng-class' => "selectedTicket.priority"}
       %i.fa.fa-exclamation
-      {{selectedTicket.priority}}
+      {{selectedTicket.priority}} Priority
     
   %ul.media-list
     %li.media
