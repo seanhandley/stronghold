@@ -2,7 +2,7 @@
   %p
     The following errors occured:
   %ul
-    %li{:'ng-repeat' => "error in errors"} Field '{{error.field}}'' {{error.message}}
+    %li{:'ng-repeat' => "error in errors"} {{error.field.split('_').join(' ') | capitalize:true}} {{error.message}}
 .errorExplanation{:'ng-show' => "staticError"}
   %p
     {{staticError}}

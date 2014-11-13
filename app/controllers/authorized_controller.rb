@@ -1,3 +1,5 @@
+require 'open_stack_object'
+
 class AuthorizedController < ApplicationController
   before_filter :current_user, :authenticate_user!, :timeout_session!
   before_filter { Authorization.current_user = current_user }

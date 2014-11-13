@@ -13,6 +13,7 @@ class Permissions
         # Support Tickets
         #'tickets.read' => { :description => I18n.t(:can_tickets_read), :group => I18n.t(:tickets) },
         'tickets.modify' => { :description => I18n.t(:can_tickets_modify), :group => I18n.t(:tickets) },
+        'access_requests.modify' => { :description => I18n.t(:can_access_requests_modify), :group => I18n.t(:access_requests) },
 
       }
     end

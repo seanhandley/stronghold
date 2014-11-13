@@ -11,6 +11,7 @@ class Organization < ActiveRecord::Base
   has_many :roles, dependent: :destroy
   has_many :invites, dependent: :destroy
   has_many :tenants, dependent: :destroy
+  has_and_belongs_to_many :products
 
   belongs_to :primary_tenant, class_name: 'Tenant'
 
