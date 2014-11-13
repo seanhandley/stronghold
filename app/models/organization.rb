@@ -20,7 +20,7 @@ class Organization < ActiveRecord::Base
   end
 
   def colo?
-    products.collect(&:name).include? 'Colo'
+    products.collect(&:name).include? 'Colocation'
   end
 
   private
