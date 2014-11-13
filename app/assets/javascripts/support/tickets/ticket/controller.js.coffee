@@ -118,10 +118,26 @@ angularJS.controller "TicketsController", [
       ticketTitleInput = $("#new_ticket_title")
       ticketDescriptionTextArea = $("#new_ticket_description")
       ticketDepartmentSelect = $("#new_ticket_department")
+      ticketVisitorNames = $("#visitor_names")
+      ticketPrioritySelect = $("#new_ticket_priority")
+      ticketReasonForVisit = $("#reason_for_visit")
+      ticketDateMinutes = $('#ticket_date_5i')
+      ticketDateHours = $('#ticket_date_4i')
+      ticketDateDay = $('#ticket_date_3i')
+      ticketDateMonth = $('#ticket_date_2i')
+      ticketDateYear = $('#ticket_date_1i')
       ticketSubmitButton = $($("#newTicket button.btn-primary")[0])
       ticketDescriptionTextArea.val("")
       ticketTitleInput.val("")
       ticketDepartmentSelect.val("")
+      ticketVisitorNames.val("")
+      ticketReasonForVisit.val("")
+      ticketDateMinutes.val("00")
+      ticketPrioritySelect.val("Normal")
+      # ticketDateHours.val("")
+      # ticketDateDay.val("")
+      # ticketDateMonth.val("")
+      # ticketDateYear.val("")
       $("#newTicket").on("shown.bs.modal", () -> 
         ticketTitleInput.focus()
       )
@@ -136,6 +152,14 @@ angularJS.controller "TicketsController", [
       ticketTitleInput = $("#new_ticket_title")
       ticketDescriptionTextArea = $("#new_ticket_description")
       ticketDepartmentSelect = $("#new_ticket_department")
+      ticketPrioritySelect = $("#new_ticket_priority")
+      ticketVisitorNames = $("#visitor_names")
+      ticketReasonForVisit = $("#reason_for_visit")
+      ticketDateMinutes = $('#ticket_date_5i')
+      ticketDateHours = $('#ticket_date_4i')
+      ticketDateDay = $('#ticket_date_3i')
+      ticketDateMonth = $('#ticket_date_2i')
+      ticketDateYear = $('#ticket_date_1i')
       ticketSubmitButton = $($("#newTicket button.btn-primary")[0])
       ticketSubmitButton.html("Submitting...")
       ticketSubmitButton.addClass("disabled")
@@ -164,7 +188,12 @@ angularJS.controller "TicketsController", [
         data: {
           "title": ticketTitleInput.val(),
           "description": ticketDescriptionTextArea.val(),
-          "department": ticketDepartmentSelect.val()
+          "department": ticketDepartmentSelect.val(),
+          "priority": ticketPrioritySelect.val(),
+          "visitor_names": ticketVisitorNames.val(),
+          "nature_of_visit": ticketReasonForVisit.val(),
+          "time_of_visit": ticketDateHours.val() + ":" + ticketDateMinutes.val(),
+          "date_of_visit": ticketDateDay.val() + '/' + ticketDateMonth.val() + '/' + ticketDateYear.val(),
         }
       })
       request.then successHandler, errorHandler

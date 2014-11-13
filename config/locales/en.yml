@@ -19,6 +19,7 @@
 # To learn more, please read the Rails Internationalization guide
 # available at http://guides.rubyonrails.org/i18n.html.
 en:
+  access_requests: "Access Requests"
   action: "Action"
   add: "Add"
   add_new_role: "Add New Role"
@@ -26,6 +27,7 @@ en:
   assign_at_least_one_role: "Assign at least one role"
   audit_log: "Audit Log"
   billing: "Billing"
+  can_access_requests_modify: "Can raise and modify access requests"
   can_instances_modify: "Can modify instances"
   can_instances_read: "Can read instances"
   can_roles_modify: "Can modify roles and invite users"
@@ -39,7 +41,12 @@ en:
   colo: "Colo"
   content: "Content"
   create_role: "Create Role"
-  date: "Date"
+  date_word: "Date"
+  date:
+    order:
+        - :day
+        - :month
+        - :year
   delete_the_role: "Delete the role"
   description: "Description"
   edit_organization_details: "Edit Organization Details"
