@@ -71,7 +71,7 @@
             = select_tag :new_ticket_priority, options_for_select(@priorities), class: "form-control", prompt: "Choose a priority"
           %p.help-block
             Please only use the 'Emergency' priority setting in critical circumstances.
-            = link_to 'More Info', '#', 'data-container' => "body", 'data-toggle' => "popover", 'data-placement' => "right", 'data-trigger' => "hover focus", 'data-content' => "Low: 1 working day<br>Normal: 4 working hours<br>High: 1 working hour<br>Emergency: 15 minutes, 24/7"
+            = link_to 'More Info', '#', 'data-container' => "body", 'data-toggle' => "popover", 'data-placement' => "right", 'data-trigger' => "hover focus", 'data-content' => "<strong>Response Times</strong><br><br>Low: 1 working day<br>Normal: 4 working hours<br>High: 1 working hour<br>Emergency: 15 minutes, 24/7"
             \.
           #access-request-fields.hide
             .input-group
