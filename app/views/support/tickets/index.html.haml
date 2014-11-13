@@ -63,16 +63,43 @@
           = render partial: 'shared/model_errors'
           .input-group
             %span.input-group-addon
-              %i.fa.fa-users
+              %i.fa.fa-folder
             = select_tag :new_ticket_department, options_for_select(@departments), class: "form-control", autofocus: true, prompt: "Choose a department"
           .input-group
             %span.input-group-addon
-              %i.fa.fa-tag
-            = text_field_tag :new_ticket_title, nil, placeholder: 'Give a quick summary', class: "form-control"
-          .input-group
-            %span.input-group-addon
-              %i.fa.fa-edit
-            = text_area_tag :new_ticket_description, nil, placeholder: 'Now, tell us all the details...', class: "form-control", rows: 12
+              %i.fa.fa-exclamation
+            = select_tag :new_ticket_priority, options_for_select(@priorities), class: "form-control", prompt: "Choose a priority"
+          %p.help-block
+            Please only use the 'Emergency' priority setting in critical circumstances.
+            = link_to 'More Info', '#', 'data-container' => "body", 'data-toggle' => "popover", 'data-placement' => "right", 'data-trigger' => "hover focus", 'data-content' => "<strong>Response Times</strong><br><br>Low: 1 working day<br>Normal: 4 working hours<br>High: 1 working hour<br>Emergency: 15 minutes, 24/7"
+            \.
+          #access-request-fields.hide
+            .input-group
+              %span.input-group-addon
+                %i.fa.fa-users
+              .ui-widget
+                = text_field_tag :visitor_names, nil, placeholder: 'Visitor name(s)', :class => "form-control autocomplete-field", 'data-autocomplete-options' => current_user.organization.users.collect(&:name).to_json
+            .input-group
+              %span.input-group-addon
+                %i.fa.fa-edit
+              = text_area_tag :reason_for_visit, nil, placeholder: 'Please describe the nature of the visit', class: "form-control", rows: 4
+            .input-group
+              %span.input-group-addon
+                %i.fa.fa-calendar
+              = date_select :ticket, :date, {:start_year => Date.today.year, default: 1.days.from_now}, class: "form-control form-control-thirds"
+            .input-group
+              %span.input-group-addon
+                %i.fa.fa-clock-o
+              = time_select :ticket, :date, {ignore_date: true, time_separator: '', minute_step: 15}, class: "form-control form-control-halves"
+          #other-issues-fields.hide
+            .input-group
+              %span.input-group-addon
+                %i.fa.fa-tag
+              = text_field_tag :new_ticket_title, nil, placeholder: 'Give a quick summary', class: "form-control"
+            .input-group
+              %span.input-group-addon
+                %i.fa.fa-edit
+              = text_area_tag :new_ticket_description, nil, placeholder: 'Now, tell us all the details...', class: "form-control", rows: 12
         .modal-footer
           %button.btn.btn-default{:'ng-click' => 'ticketDialogCancel()'}
             = t(:cancel)
