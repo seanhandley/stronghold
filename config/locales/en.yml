@@ -41,7 +41,7 @@ en:
   colo: "Colo"
   content: "Content"
   create_role: "Create Role"
-  date: "Date"
+  date_word: "Date"
   date:
     order:
         - :day
