@@ -7,8 +7,8 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 if ['test','development'].include?(Rails.env)
-  Tenant.skip_callback(:create, :after, :after_action)
-  User.skip_callback(:create, :after, :after_action)
+  Tenant.skip_callback(:create, :after, :create_object)
+  User.skip_callback(:create, :after, :create_object)
 
   organization = Organization.create(name: 'DataCentred', reference: STAFF_REFERENCE)
   tenant = Tenant.create(name: 'datacentred', uuid: 'ed4431814d0a40dc8f10f5ac046267e9', organization: organization)
