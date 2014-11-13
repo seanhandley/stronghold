@@ -30,4 +30,8 @@ if ['test','development'].include?(Rails.env)
     user.save!
   end
   
+  Product.create! name: 'Compute'
+  Product.create! name: 'Storage'
+  Product.create! name: 'Colocation'
+  
 end
