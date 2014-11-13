@@ -29,9 +29,5 @@ if ['test','development'].include?(Rails.env)
     user.roles << role
     user.save!
   end
-
-  Product.create! name: 'Compute'
-  Product.create! name: 'Storage'
-  Product.create! name: 'Colocation'
   
 end
