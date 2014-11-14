@@ -42,9 +42,6 @@ class CustomerGenerator
       external_network = Fog::Network.new(OPENSTACK_ARGS).networks.select{|n| n.router_external == true }.first
       r = Fog::Network.new(OPENSTACK_ARGS).routers.create name: 'default', tenant_id: tenant_id,
                                    external_gateway_info: external_network.id
-      # Fog::Network.new(OPENSTACK_ARGS).ports.create name: 'default', network_id: n.id, device_id: r.id, 
-      #                        tenant_id: tenant_id, fixed_ips: [{:subnet_id => s.id, :ip_address => '192.168.0.1'}],
-      #                        device_owner: 'network:router_interface'
       Fog::Network.new(OPENSTACK_ARGS).add_router_interface(r.id, s.id)
 
     end
