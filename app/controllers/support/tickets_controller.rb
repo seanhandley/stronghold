@@ -30,7 +30,7 @@ class Support::TicketsController < SupportBaseController
   def get_departments_and_priorities
     @departments = TicketAdapter.departments
     @priorities  = TicketAdapter.priorities
-    unless current_user.has_permission? 'access_requests.modify'
+    unless current_user.organization.colo? && current_user.has_permission?('access_requests.modify')
       @departments -= ['Access Requests']
     end
 
