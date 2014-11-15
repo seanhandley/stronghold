@@ -2,6 +2,7 @@ class Admin::CustomersController < AdminBaseController
 
   def new
     @customer = CustomerGenerator.new
+    @products = Product.all
   end
 
   def create
@@ -18,6 +19,6 @@ class Admin::CustomersController < AdminBaseController
 
   def create_params
     params.permit(:organization_name, :email,
-                  :colo_only, :extra_tenants)
+                  :products => [], :extra_tenants)
   end
 end
