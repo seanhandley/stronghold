@@ -19,6 +19,10 @@ class Organization < ActiveRecord::Base
     (reference == STAFF_REFERENCE)
   end
 
+  def colo?
+    products.collect(&:name).include? 'Colocation'
+  end
+
   private
 
   def generate_reference
