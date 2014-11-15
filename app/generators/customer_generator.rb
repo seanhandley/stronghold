@@ -1,12 +1,12 @@
 class CustomerGenerator
   include ActiveModel::Validations
 
-  attr_reader :organization_name, :email, :colo_only, :extra_tenants
+  attr_reader :organization_name, :email, :products, :extra_tenants
 
   def initialize(params={})
     @organization_name = params[:organization_name]
     @email             = params[:email]
-    @colo_only         = params[:colo_only]
+    @products          = params[:products]
     @extra_tenants     = params[:extra_tenants]
   end
 
@@ -19,11 +19,15 @@ class CustomerGenerator
       errors.add :base, "Email already exists in the system"
     else
       @organization = Organization.create! name: @organization_name
+      @products.each do |_, product_id|
+        @organization.products << Product.find(product_id)
+      end
+      @organization.save!
       @extra_tenants.split(',').map(&:strip).map(&:downcase).uniq.each do |tenant|
         uuid = @organization.tenants.create(name: tenant).uuid
-        OpenStack::Tenant.find(uuid).zero_quotas if @colo_only
+        OpenStack::Tenant.find(uuid).zero_quotas if colo_only?
       end
-      create_default_network(@organization) unless @colo_only
+      create_default_network(@organization) unless colo_only?
       @invite = Invite.create! email: @email, power_invite: true, organization: @organization
       Mailer.signup(@invite.id).deliver
       return true
@@ -32,6 +36,10 @@ class CustomerGenerator
   end
 
   private
+
+  def colo_only?
+    products.keys.include?'Colocation' && products.count == 1
+  end
 
   def create_default_network(organization)
     organization.tenants.collect(&:uuid).each do |tenant_id|
