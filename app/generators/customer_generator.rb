@@ -23,7 +23,7 @@ class CustomerGenerator
         uuid = @organization.tenants.create(name: tenant).uuid
         OpenStack::Tenant.find(uuid).zero_quotas if @colo_only
       end
-      # create_default_network(@organization) unless @colo_only
+      create_default_network(@organization) unless @colo_only
       @invite = Invite.create! email: @email, power_invite: true, organization: @organization
       Mailer.signup(@invite.id).deliver
       return true
@@ -35,14 +35,15 @@ class CustomerGenerator
 
   def create_default_network(organization)
     organization.tenants.collect(&:uuid).each do |tenant_id|
-      n = OpenStack::Network.create name: 'default', tenant_id: tenant_id
-      s = OpenStack::Subnet.create name: 'default', cidr: '192.168.0.0/24',
-                                   network_id: n.id, ip_version: 4
-      external_network = OpenStack::Network.all.select{|n| n.router_external == true }.first
-      r = OpenStack::Router.create name: 'default', tenant_id: tenant_id,
+      n = Fog::Network.new(OPENSTACK_ARGS).networks.create name: 'default', tenant_id: tenant_id
+      s = Fog::Network.new(OPENSTACK_ARGS).subnets.create name: 'default', cidr: '192.168.0.0/24',
+                                   network_id: n.id, ip_version: 4, dns_nameservers: ['8.8.8.8', '8.8.4.4'],
+                                   tenant_id: tenant_id
+      external_network = Fog::Network.new(OPENSTACK_ARGS).networks.select{|n| n.router_external == true }.first
+      r = Fog::Network.new(OPENSTACK_ARGS).routers.create name: 'default', tenant_id: tenant_id,
                                    external_gateway_info: external_network.id
-      OpenStack::Port.create name: 'default', network_id: n.id, device_id: r.id, 
-                             tenant_id: tenant_id
+      Fog::Network.new(OPENSTACK_ARGS).add_router_interface(r.id, s.id)
+
     end
   end
 end

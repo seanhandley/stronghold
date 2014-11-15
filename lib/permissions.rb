@@ -15,7 +15,7 @@ class Permissions
         'tickets.modify' => { :description => I18n.t(:can_tickets_modify), :group => I18n.t(:tickets) },
 
       }
-      if Authorization.current_user.organization.colo?
+      if Authorization.current_user && Authorization.current_user.organization.colo?
         perms.merge!({'access_requests.modify' => { :description => I18n.t(:can_access_requests_modify), :group => I18n.t(:access_requests) }})
       end
       return perms
