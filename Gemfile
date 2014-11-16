@@ -34,6 +34,8 @@ group :test do
   gem 'capybara'
   gem 'poltergeist'
   gem 'simplecov'
+  gem 'webmock'
+  gem 'vcr'
 end
 
 # Assets gems
