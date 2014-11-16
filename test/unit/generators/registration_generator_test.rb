@@ -49,23 +49,29 @@ class TestRegistrationGenerator < Minitest::Test
   end
 
   def test_power_invite_creates_owners_role_and_adds_user
-    registration = RegistrationGenerator.new(@power_invite, @valid_params)
-    registration.generate!
-    role = registration.organization.roles.first 
-    assert role.power_user?
-    assert_equal registration.user.roles.first.id, role.id
+    VCR.use_cassette('registration_valid_params') do
+      registration = RegistrationGenerator.new(@power_invite, @valid_params)
+      registration.generate!
+      role = registration.organization.roles.first 
+      assert role.power_user?
+      assert_equal registration.user.roles.first.id, role.id
+    end
   end
 
-  def test_registration_marks_invite_as_complete  
-    registration = RegistrationGenerator.new(@invite, @valid_params)
-    registration.generate!
-    refute registration.invite.can_register?
+  def test_registration_marks_invite_as_complete
+    VCR.use_cassette('registration_valid_params') do
+      registration = RegistrationGenerator.new(@invite, @valid_params)
+      registration.generate!
+      refute registration.invite.can_register?
+    end
   end
 
   def test_registration_cannot_occur_twice
-    registration = RegistrationGenerator.new(@invite, @valid_params)
-    assert registration.generate!
-    refute registration.generate!
+    VCR.use_cassette('registration_valid_params') do
+      registration = RegistrationGenerator.new(@invite, @valid_params)
+      assert registration.generate!
+      refute registration.generate!
+    end
   end
 
   def test_registration_cannot_occur_unless_privacy_is_agreed
