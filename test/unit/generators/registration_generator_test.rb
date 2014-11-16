@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class TestRegistrationValidations < Minitest::Test
+class TestRegistrationGenerator < Minitest::Test
   def setup
     @invite = Invite.make!
     @power_invite = Invite.make!(:power_user)
