@@ -7,7 +7,7 @@ require "rails/test_help"
 require "minitest/rails"
 require File.expand_path(File.dirname(__FILE__) + '/blueprints')
 require 'database_cleaner'
-require 'webmock'
+require 'webmock/minitest'
 require 'vcr'
 
 VCR.configure do |c|
@@ -19,6 +19,13 @@ OPENSTACK_ARGS[:openstack_api_key]  = 'foo' unless OPENSTACK_ARGS[:openstack_api
 OPENSTACK_ARGS[:openstack_username] = 'bar' unless OPENSTACK_ARGS[:openstack_username]
 
 DatabaseCleaner.strategy = :truncation
+
+class UserNoCallbacks < User
+  skip_callback :create, :after, :create_object
+  skip_callback :update, :after, :update_object
+  skip_callback :destroy, :after, :delete_object
+  skip_callback :save, :after, :update_password
+end
 
 # To add Capybara feature tests add `gem "minitest-rails-capybara"`
 # to the test group in the Gemfile and uncomment the following:
