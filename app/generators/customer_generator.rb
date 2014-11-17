@@ -26,27 +26,39 @@ class CustomerGenerator
     elsif @products.any? {|p| !Product.all.map(&:id).include?(p.to_i)}
       errors.add :base, "Products invalid"
     else
+      error = nil
       ActiveRecord::Base.transaction do
-        @organization = Organization.create! name: @organization_name
-        @products.each do |product_id|
-          @organization.products << Product.find(product_id)
+        begin
+          create_customer
+        rescue StandardError => e
+          error = e
+          raise ActiveRecord::Rollback
         end
-        @organization.save!
-        OpenStack::Tenant.find(@organization.primary_tenant.uuid).zero_quotas if colo_only?
-        @extra_tenants.split(',').map(&:strip).map(&:downcase).uniq.each do |tenant|
-          uuid = @organization.tenants.create(name: tenant).uuid
-          OpenStack::Tenant.find(uuid).zero_quotas if colo_only?
-        end
-        create_default_network(@organization) unless colo_only?
-        @invite = Invite.create! email: @email, power_invite: true, organization: @organization
-        Mailer.signup(@invite.id).deliver
-        return true
       end
+
+      raise error if error
+      return true
     end 
     false
   end
 
   private
+
+  def create_customer
+    @organization = Organization.create! name: @organization_name
+    @products.each do |product_id|
+      @organization.products << Product.find(product_id)
+    end
+    @organization.save!
+    OpenStack::Tenant.find(@organization.primary_tenant.uuid).zero_quotas if colo_only?
+    @extra_tenants.split(',').map(&:strip).map(&:downcase).uniq.each do |tenant|
+      uuid = @organization.tenants.create(name: tenant).uuid
+      OpenStack::Tenant.find(uuid).zero_quotas if colo_only?
+    end
+    create_default_network(@organization) unless colo_only?
+    @invite = Invite.create! email: @email, power_invite: true, organization: @organization
+    Mailer.signup(@invite.id).deliver
+  end
 
   def colo_only?
     products.collect{|p| Product.find(p).name}.include?('Colocation') && products.count == 1
