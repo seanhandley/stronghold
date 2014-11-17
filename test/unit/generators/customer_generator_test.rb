@@ -60,10 +60,10 @@ class TestCustomerGenerator < Minitest::Test
   end
 
   def test_creates_extra_tenants
-    # VCR.use_cassette('customer_generator_valid_multiple_tenants') do
-    #   CustomerGenerator.new(@valid_params.merge(extra_tenants: 'foo,bar')).generate!
-    #   assert_equal 3, Organization.first.tenants.count
-    # end  
+    VCR.use_cassette('customer_generator_valid_multiple_tenants') do
+      CustomerGenerator.new(@valid_params.merge(extra_tenants: 'foo,bar')).generate!
+      assert_equal 3, Organization.first.tenants.count
+    end  
   end
 
   def test_invite_is_created
