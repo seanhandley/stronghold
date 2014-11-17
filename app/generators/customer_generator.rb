@@ -23,7 +23,7 @@ class CustomerGenerator
       errors.add :base, "Email already exists in the system"
     elsif @products.none?
       errors.add :base, "Select at least one product"
-    elsif @products.any? {|p| !Product.all.map(&:id).include?(p)}
+    elsif @products.any? {|p| !Product.all.map(&:id).include?(p.to_i)}
       errors.add :base, "Products invalid"
     else
       @organization = Organization.create! name: @organization_name
