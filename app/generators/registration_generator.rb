@@ -26,23 +26,25 @@ class RegistrationGenerator
     elsif password.length < 8
       errors.add :base,  I18n.t(:password_too_short)
     else
-      @organization = invite.organization
-      if invite.power_invite?
-        @owners = @organization.roles.create name: I18n.t(:owners), power_user: true
-      end
-
-      roles = (invite.roles + [@owners]).flatten.compact
-      @user = @organization.users.create email: invite.email, password: password,
-                                         roles: roles, first_name: first_name, last_name: last_name
-
-      if invite.power_invite?
-        member_uuid = OpenStack::Role.all.select{|r| r.name == '_member_'}.first.id
-        @organization.tenants.select{|t| t.id != @organization.primary_tenant.id}.each do |tenant|
-          UserTenantRole.create user: @user, tenant: tenant, role_uuid: member_uuid
+      ActiveRecord::Base.transaction do
+        @organization = invite.organization
+        if invite.power_invite?
+          @owners = @organization.roles.create name: I18n.t(:owners), power_user: true
         end
+
+        roles = (invite.roles + [@owners]).flatten.compact
+        @user = @organization.users.create email: invite.email, password: password,
+                                           roles: roles, first_name: first_name, last_name: last_name
+
+        if invite.power_invite?
+          member_uuid = OpenStack::Role.all.select{|r| r.name == '_member_'}.first.id
+          @organization.tenants.select{|t| t.id != @organization.primary_tenant.id}.each do |tenant|
+            UserTenantRole.create user: @user, tenant: tenant, role_uuid: member_uuid
+          end
+        end
+        @invite.complete!
+        return true
       end
-      @invite.complete!
-      return true
     end 
     false
   end
