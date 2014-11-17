@@ -1,0 +1,110 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://compute.datacentred.io:5000/v2.0/tokens
+    body:
+      encoding: UTF-8
+      string: '{"auth":{"passwordCredentials":{"username":"stronghold","password":"sLWB94kcryfbpJ"},"tenantName":"datacentred"}}'
+    headers:
+      User-Agent:
+      - fog/1.24.0
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      Vary:
+      - X-Auth-Token
+      X-Distribution:
+      - Ubuntu
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '8295'
+      Date:
+      - Sun, 16 Nov 2014 18:55:50 GMT
+      Strict-Transport-Security:
+      - max-age=60
+    body:
+      encoding: UTF-8
+      string: '{"access": {"token": {"issued_at": "2014-11-16T18:55:50.567050", "expires":
+        "2014-11-16T19:55:50Z", "id": "MIIOpwYJKoZIhvcNAQcCoIIOmDCCDpQCAQExDTALBglghkgBZQMEAgEwggz1BgkqhkiG9w0BBwGgggzmBIIM4nsiYWNjZXNzIjogeyJ0b2tlbiI6IHsiaXNzdWVkX2F0IjogIjIwMTQtMTEtMTZUMTg6NTU6NTAuNTY3MDUwIiwgImV4cGlyZXMiOiAiMjAxNC0xMS0xNlQxOTo1NTo1MFoiLCAiaWQiOiAicGxhY2Vob2xkZXIiLCAidGVuYW50IjogeyJkZXNjcmlwdGlvbiI6ICJzdGFmZiB0ZW5hbnQiLCAiZW5hYmxlZCI6IHRydWUsICJpZCI6ICJlZDQ0MzE4MTRkMGE0MGRjOGYxMGY1YWMwNDYyNjdlOSIsICJuYW1lIjogImRhdGFjZW50cmVkIn19LCAic2VydmljZUNhdGFsb2ciOiBbeyJlbmRwb2ludHMiOiBbeyJhZG1pblVSTCI6ICJodHRwczovL2NvbXB1dGUuZGF0YWNlbnRyZWQuaW86ODc3NC92Mi9lZDQ0MzE4MTRkMGE0MGRjOGYxMGY1YWMwNDYyNjdlOSIsICJyZWdpb24iOiAic2FsMDEiLCAiaW50ZXJuYWxVUkwiOiAiaHR0cHM6Ly9jb21wdXRlLmRhdGFjZW50cmVkLmlvOjg3NzQvdjIvZWQ0NDMxODE0ZDBhNDBkYzhmMTBmNWFjMDQ2MjY3ZTkiLCAiaWQiOiAiMDY5OTk1MTA0ZGJmNDFiNDg4YzkzYjVjM2YzZDRmMmIiLCAicHVibGljVVJMIjogImh0dHBzOi8vY29tcHV0ZS5kYXRhY2VudHJlZC5pbzo4Nzc0L3YyL2VkNDQzMTgxNGQwYTQwZGM4ZjEwZjVhYzA0NjI2N2U5In1dLCAiZW5kcG9pbnRzX2xpbmtzIjogW10sICJ0eXBlIjogImNvbXB1dGUiLCAibmFtZSI6ICJub3ZhIn0sIHsiZW5kcG9pbnRzIjogW3siYWRtaW5VUkwiOiAiaHR0cHM6Ly9jb21wdXRlLmRhdGFjZW50cmVkLmlvOjk2OTYiLCAicmVnaW9uIjogInNhbDAxIiwgImludGVybmFsVVJMIjogImh0dHBzOi8vY29tcHV0ZS5kYXRhY2VudHJlZC5pbzo5Njk2IiwgImlkIjogIjBkNTk4NDVjZWE0NDRhNmNhYzZiNGMzMGU3ZTdlMWU1IiwgInB1YmxpY1VSTCI6ICJodHRwczovL2NvbXB1dGUuZGF0YWNlbnRyZWQuaW86OTY5NiJ9XSwgImVuZHBvaW50c19saW5rcyI6IFtdLCAidHlwZSI6ICJuZXR3b3JrIiwgIm5hbWUiOiAibmV1dHJvbiJ9LCB7ImVuZHBvaW50cyI6IFt7ImFkbWluVVJMIjogImh0dHBzOi8vY29tcHV0ZS5kYXRhY2VudHJlZC5pbzo4Nzc2L3YyL2VkNDQzMTgxNGQwYTQwZGM4ZjEwZjVhYzA0NjI2N2U5IiwgInJlZ2lvbiI6ICJzYWwwMSIsICJpbnRlcm5hbFVSTCI6ICJodHRwczovL2NvbXB1dGUuZGF0YWNlbnRyZWQuaW86ODc3Ni92Mi9lZDQ0MzE4MTRkMGE0MGRjOGYxMGY1YWMwNDYyNjdlOSIsICJpZCI6ICIwMTUzZmQwMDMyNGI0YzJjYjcyZjk3MDQ1MzM3MTAwYSIsICJwdWJsaWNVUkwiOiAiaHR0cHM6Ly9jb21wdXRlLmRhdGFjZW50cmVkLmlvOjg3NzYvdjIvZWQ0NDMxODE0ZDBhNDBkYzhmMTBmNWFjMDQ2MjY3ZTkifV0sICJlbmRwb2ludHNfbGlua3MiOiBbXSwgInR5cGUiOiAidm9sdW1ldjIiLCAibmFtZSI6ICJjaW5kZXJ2MiJ9LCB7ImVuZHBvaW50cyI6IFt7ImFkbWluVVJMIjogImh0dHBzOi8vY29tcHV0ZS5kYXRhY2VudHJlZC5pbzo5MjkyIiwgInJlZ2lvbiI6ICJzYWwwMSIsICJpbnRlcm5hbFVSTCI6ICJodHRwczovL2NvbXB1dGUuZGF0YWNlbnRyZWQuaW86OTI5MiIsICJpZCI6ICIxZTcxN2RkNDljYjk0ODQ3YWE0ZjRhNDY5NDI4YzYwMCIsICJwdWJsaWNVUkwiOiAiaHR0cHM6Ly9jb21wdXRlLmRhdGFjZW50cmVkLmlvOjkyOTIifV0sICJlbmRwb2ludHNfbGlua3MiOiBbXSwgInR5cGUiOiAiaW1hZ2UiLCAibmFtZSI6ICJnbGFuY2UifSwgeyJlbmRwb2ludHMiOiBbeyJhZG1pblVSTCI6ICJodHRwczovL2NvbXB1dGUuZGF0YWNlbnRyZWQuaW86ODc3NyIsICJyZWdpb24iOiAic2FsMDEiLCAiaW50ZXJuYWxVUkwiOiAiaHR0cHM6Ly9jb21wdXRlLmRhdGFjZW50cmVkLmlvOjg3NzciLCAiaWQiOiAiOTkyZjIxNjhhMjNjNGM0Yjg3N2QzMWZiY2JhMmFjMDgiLCAicHVibGljVVJMIjogImh0dHBzOi8vY29tcHV0ZS5kYXRhY2VudHJlZC5pbzo4Nzc3In1dLCAiZW5kcG9pbnRzX2xpbmtzIjogW10sICJ0eXBlIjogIm1ldGVyaW5nIiwgIm5hbWUiOiAiY2VpbG9tZXRlciJ9LCB7ImVuZHBvaW50cyI6IFt7ImFkbWluVVJMIjogImh0dHBzOi8vY29tcHV0ZS5kYXRhY2VudHJlZC5pbzo4Nzc2L3YxL2VkNDQzMTgxNGQwYTQwZGM4ZjEwZjVhYzA0NjI2N2U5IiwgInJlZ2lvbiI6ICJzYWwwMSIsICJpbnRlcm5hbFVSTCI6ICJodHRwczovL2NvbXB1dGUuZGF0YWNlbnRyZWQuaW86ODc3Ni92MS9lZDQ0MzE4MTRkMGE0MGRjOGYxMGY1YWMwNDYyNjdlOSIsICJpZCI6ICIwYTkyNDllYWZkMTQ0OGEyOWJmODY3ZDc1ZmFlMTY3NyIsICJwdWJsaWNVUkwiOiAiaHR0cHM6Ly9jb21wdXRlLmRhdGFjZW50cmVkLmlvOjg3NzYvdjEvZWQ0NDMxODE0ZDBhNDBkYzhmMTBmNWFjMDQ2MjY3ZTkifV0sICJlbmRwb2ludHNfbGlua3MiOiBbXSwgInR5cGUiOiAidm9sdW1lIiwgIm5hbWUiOiAiY2luZGVyIn0sIHsiZW5kcG9pbnRzIjogW3siYWRtaW5VUkwiOiAiaHR0cHM6Ly9jb21wdXRlLmRhdGFjZW50cmVkLmlvOjg3NzMvdjIvQWRtaW4iLCAicmVnaW9uIjogInNhbDAxIiwgImludGVybmFsVVJMIjogImh0dHBzOi8vY29tcHV0ZS5kYXRhY2VudHJlZC5pbzo4NzczL3YyL0Nsb3VkIiwgImlkIjogImJhNDMzOTc5NDRmMjQ1NjFiYTM3NDdlNzlmOGU5YWJiIiwgInB1YmxpY1VSTCI6ICJodHRwczovL2NvbXB1dGUuZGF0YWNlbnRyZWQuaW86ODc3My92Mi9DbG91ZCJ9XSwgImVuZHBvaW50c19saW5rcyI6IFtdLCAidHlwZSI6ICJlYzIiLCAibmFtZSI6ICJub3ZhX2VjMiJ9LCB7ImVuZHBvaW50cyI6IFt7ImFkbWluVVJMIjogImh0dHBzOi8vY29tcHV0ZS5kYXRhY2VudHJlZC5pbzozNTM1Ny92Mi4wIiwgInJlZ2lvbiI6ICJzYWwwMSIsICJpbnRlcm5hbFVSTCI6ICJodHRwczovL2NvbXB1dGUuZGF0YWNlbnRyZWQuaW86NTAwMC92Mi4wIiwgImlkIjogIjBmYWJhMjhlZTY0YzQ5ZjU5ZmM4MjczZjM2M2Q1MWU2IiwgInB1YmxpY1VSTCI6ICJodHRwczovL2NvbXB1dGUuZGF0YWNlbnRyZWQuaW86NTAwMC92Mi4wIn1dLCAiZW5kcG9pbnRzX2xpbmtzIjogW10sICJ0eXBlIjogImlkZW50aXR5IiwgIm5hbWUiOiAia2V5c3RvbmUifV0sICJ1c2VyIjogeyJ1c2VybmFtZSI6ICJzdHJvbmdob2xkIiwgInJvbGVzX2xpbmtzIjogW10sICJpZCI6ICI4ZjI4MzZiNTY0YzY0ZjZmYjdlNzk0NWMxMmIxOTY4ZSIsICJyb2xlcyI6IFt7Im5hbWUiOiAiYWRtaW4ifSwgeyJuYW1lIjogIl9tZW1iZXJfIn1dLCAibmFtZSI6ICJzdHJvbmdob2xkIn0sICJtZXRhZGF0YSI6IHsiaXNfYWRtaW4iOiAwLCAicm9sZXMiOiBbIjE2NmY3MWRlZTBkZDRiNWJiNGRiZmRiYTcwM2U0YTMwIiwgIjlmZTJmZjllZTQzODRiMTg5NGE5MDg3OGQzZTkyYmFiIl19fX0xggGFMIIBgQIBATBcMFcxCzAJBgNVBAYTAlVTMQ4wDAYDVQQIDAVVbnNldDEOMAwGA1UEBwwFVW5zZXQxDjAMBgNVBAoMBVVuc2V0MRgwFgYDVQQDDA93d3cuZXhhbXBsZS5jb20CAQEwCwYJYIZIAWUDBAIBMA0GCSqGSIb3DQEBAQUABIIBAAHjypIY3rWsvkYntIHEmoDjRaD5lKD3Dq54mPu63C-gMgAJgeGT+bBL+OmzLu9Z2hcXBhdy2I4xABc9hPxQwfvZxsjJEwJoZk88Tej1tc9lb6oFG4R-9ok0FqIAHXLZBKIW6A0e6w9DD2bVwTmFhVqSR36d+6sMTRPTo6OF-uB5ZtK-ZTMzkN70GRUAYW+7tiaOGz7vQdsII30uZQZQWjXEyxizq-+mWOnDy3nAIgItUzUkk83PqFmL4MMzXIDSfTm26lLxziWNUSJiIfOwioQVgahxxWaW0byfPr2CUHyvfCLl1ggA2t+xBTntakde51vS2TJUQ-BfJ2z5kMXRS9E=",
+        "tenant": {"description": "staff tenant", "enabled": true, "id": "ed4431814d0a40dc8f10f5ac046267e9",
+        "name": "datacentred"}}, "serviceCatalog": [{"endpoints": [{"adminURL": "https://compute.datacentred.io:8774/v2/ed4431814d0a40dc8f10f5ac046267e9",
+        "region": "sal01", "internalURL": "https://compute.datacentred.io:8774/v2/ed4431814d0a40dc8f10f5ac046267e9",
+        "id": "069995104dbf41b488c93b5c3f3d4f2b", "publicURL": "https://compute.datacentred.io:8774/v2/ed4431814d0a40dc8f10f5ac046267e9"}],
+        "endpoints_links": [], "type": "compute", "name": "nova"}, {"endpoints": [{"adminURL":
+        "https://compute.datacentred.io:9696", "region": "sal01", "internalURL": "https://compute.datacentred.io:9696",
+        "id": "0d59845cea444a6cac6b4c30e7e7e1e5", "publicURL": "https://compute.datacentred.io:9696"}],
+        "endpoints_links": [], "type": "network", "name": "neutron"}, {"endpoints":
+        [{"adminURL": "https://compute.datacentred.io:8776/v2/ed4431814d0a40dc8f10f5ac046267e9",
+        "region": "sal01", "internalURL": "https://compute.datacentred.io:8776/v2/ed4431814d0a40dc8f10f5ac046267e9",
+        "id": "0153fd00324b4c2cb72f97045337100a", "publicURL": "https://compute.datacentred.io:8776/v2/ed4431814d0a40dc8f10f5ac046267e9"}],
+        "endpoints_links": [], "type": "volumev2", "name": "cinderv2"}, {"endpoints":
+        [{"adminURL": "https://compute.datacentred.io:9292", "region": "sal01", "internalURL":
+        "https://compute.datacentred.io:9292", "id": "1e717dd49cb94847aa4f4a469428c600",
+        "publicURL": "https://compute.datacentred.io:9292"}], "endpoints_links": [],
+        "type": "image", "name": "glance"}, {"endpoints": [{"adminURL": "https://compute.datacentred.io:8777",
+        "region": "sal01", "internalURL": "https://compute.datacentred.io:8777", "id":
+        "992f2168a23c4c4b877d31fbcba2ac08", "publicURL": "https://compute.datacentred.io:8777"}],
+        "endpoints_links": [], "type": "metering", "name": "ceilometer"}, {"endpoints":
+        [{"adminURL": "https://compute.datacentred.io:8776/v1/ed4431814d0a40dc8f10f5ac046267e9",
+        "region": "sal01", "internalURL": "https://compute.datacentred.io:8776/v1/ed4431814d0a40dc8f10f5ac046267e9",
+        "id": "0a9249eafd1448a29bf867d75fae1677", "publicURL": "https://compute.datacentred.io:8776/v1/ed4431814d0a40dc8f10f5ac046267e9"}],
+        "endpoints_links": [], "type": "volume", "name": "cinder"}, {"endpoints":
+        [{"adminURL": "https://compute.datacentred.io:8773/v2/Admin", "region": "sal01",
+        "internalURL": "https://compute.datacentred.io:8773/v2/Cloud", "id": "ba43397944f24561ba3747e79f8e9abb",
+        "publicURL": "https://compute.datacentred.io:8773/v2/Cloud"}], "endpoints_links":
+        [], "type": "ec2", "name": "nova_ec2"}, {"endpoints": [{"adminURL": "https://compute.datacentred.io:35357/v2.0",
+        "region": "sal01", "internalURL": "https://compute.datacentred.io:5000/v2.0",
+        "id": "0faba28ee64c49f59fc8273f363d51e6", "publicURL": "https://compute.datacentred.io:5000/v2.0"}],
+        "endpoints_links": [], "type": "identity", "name": "keystone"}], "user": {"username":
+        "stronghold", "roles_links": [], "id": "8f2836b564c64f6fb7e7945c12b1968e",
+        "roles": [{"name": "admin"}, {"name": "_member_"}], "name": "stronghold"},
+        "metadata": {"is_admin": 0, "roles": ["166f71dee0dd4b5bb4dbfdba703e4a30",
+        "9fe2ff9ee4384b1894a90878d3e92bab"]}}}'
+    http_version: 
+  recorded_at: Sun, 16 Nov 2014 18:55:50 GMT
+- request:
+    method: get
+    uri: https://compute.datacentred.io:35357/v2.0//OS-KSADM/roles
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog/1.24.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token:
+      - MIIOpwYJKoZIhvcNAQcCoIIOmDCCDpQCAQExDTALBglghkgBZQMEAgEwggz1BgkqhkiG9w0BBwGgggzmBIIM4nsiYWNjZXNzIjogeyJ0b2tlbiI6IHsiaXNzdWVkX2F0IjogIjIwMTQtMTEtMTZUMTg6NTU6NTAuNTY3MDUwIiwgImV4cGlyZXMiOiAiMjAxNC0xMS0xNlQxOTo1NTo1MFoiLCAiaWQiOiAicGxhY2Vob2xkZXIiLCAidGVuYW50IjogeyJkZXNjcmlwdGlvbiI6ICJzdGFmZiB0ZW5hbnQiLCAiZW5hYmxlZCI6IHRydWUsICJpZCI6ICJlZDQ0MzE4MTRkMGE0MGRjOGYxMGY1YWMwNDYyNjdlOSIsICJuYW1lIjogImRhdGFjZW50cmVkIn19LCAic2VydmljZUNhdGFsb2ciOiBbeyJlbmRwb2ludHMiOiBbeyJhZG1pblVSTCI6ICJodHRwczovL2NvbXB1dGUuZGF0YWNlbnRyZWQuaW86ODc3NC92Mi9lZDQ0MzE4MTRkMGE0MGRjOGYxMGY1YWMwNDYyNjdlOSIsICJyZWdpb24iOiAic2FsMDEiLCAiaW50ZXJuYWxVUkwiOiAiaHR0cHM6Ly9jb21wdXRlLmRhdGFjZW50cmVkLmlvOjg3NzQvdjIvZWQ0NDMxODE0ZDBhNDBkYzhmMTBmNWFjMDQ2MjY3ZTkiLCAiaWQiOiAiMDY5OTk1MTA0ZGJmNDFiNDg4YzkzYjVjM2YzZDRmMmIiLCAicHVibGljVVJMIjogImh0dHBzOi8vY29tcHV0ZS5kYXRhY2VudHJlZC5pbzo4Nzc0L3YyL2VkNDQzMTgxNGQwYTQwZGM4ZjEwZjVhYzA0NjI2N2U5In1dLCAiZW5kcG9pbnRzX2xpbmtzIjogW10sICJ0eXBlIjogImNvbXB1dGUiLCAibmFtZSI6ICJub3ZhIn0sIHsiZW5kcG9pbnRzIjogW3siYWRtaW5VUkwiOiAiaHR0cHM6Ly9jb21wdXRlLmRhdGFjZW50cmVkLmlvOjk2OTYiLCAicmVnaW9uIjogInNhbDAxIiwgImludGVybmFsVVJMIjogImh0dHBzOi8vY29tcHV0ZS5kYXRhY2VudHJlZC5pbzo5Njk2IiwgImlkIjogIjBkNTk4NDVjZWE0NDRhNmNhYzZiNGMzMGU3ZTdlMWU1IiwgInB1YmxpY1VSTCI6ICJodHRwczovL2NvbXB1dGUuZGF0YWNlbnRyZWQuaW86OTY5NiJ9XSwgImVuZHBvaW50c19saW5rcyI6IFtdLCAidHlwZSI6ICJuZXR3b3JrIiwgIm5hbWUiOiAibmV1dHJvbiJ9LCB7ImVuZHBvaW50cyI6IFt7ImFkbWluVVJMIjogImh0dHBzOi8vY29tcHV0ZS5kYXRhY2VudHJlZC5pbzo4Nzc2L3YyL2VkNDQzMTgxNGQwYTQwZGM4ZjEwZjVhYzA0NjI2N2U5IiwgInJlZ2lvbiI6ICJzYWwwMSIsICJpbnRlcm5hbFVSTCI6ICJodHRwczovL2NvbXB1dGUuZGF0YWNlbnRyZWQuaW86ODc3Ni92Mi9lZDQ0MzE4MTRkMGE0MGRjOGYxMGY1YWMwNDYyNjdlOSIsICJpZCI6ICIwMTUzZmQwMDMyNGI0YzJjYjcyZjk3MDQ1MzM3MTAwYSIsICJwdWJsaWNVUkwiOiAiaHR0cHM6Ly9jb21wdXRlLmRhdGFjZW50cmVkLmlvOjg3NzYvdjIvZWQ0NDMxODE0ZDBhNDBkYzhmMTBmNWFjMDQ2MjY3ZTkifV0sICJlbmRwb2ludHNfbGlua3MiOiBbXSwgInR5cGUiOiAidm9sdW1ldjIiLCAibmFtZSI6ICJjaW5kZXJ2MiJ9LCB7ImVuZHBvaW50cyI6IFt7ImFkbWluVVJMIjogImh0dHBzOi8vY29tcHV0ZS5kYXRhY2VudHJlZC5pbzo5MjkyIiwgInJlZ2lvbiI6ICJzYWwwMSIsICJpbnRlcm5hbFVSTCI6ICJodHRwczovL2NvbXB1dGUuZGF0YWNlbnRyZWQuaW86OTI5MiIsICJpZCI6ICIxZTcxN2RkNDljYjk0ODQ3YWE0ZjRhNDY5NDI4YzYwMCIsICJwdWJsaWNVUkwiOiAiaHR0cHM6Ly9jb21wdXRlLmRhdGFjZW50cmVkLmlvOjkyOTIifV0sICJlbmRwb2ludHNfbGlua3MiOiBbXSwgInR5cGUiOiAiaW1hZ2UiLCAibmFtZSI6ICJnbGFuY2UifSwgeyJlbmRwb2ludHMiOiBbeyJhZG1pblVSTCI6ICJodHRwczovL2NvbXB1dGUuZGF0YWNlbnRyZWQuaW86ODc3NyIsICJyZWdpb24iOiAic2FsMDEiLCAiaW50ZXJuYWxVUkwiOiAiaHR0cHM6Ly9jb21wdXRlLmRhdGFjZW50cmVkLmlvOjg3NzciLCAiaWQiOiAiOTkyZjIxNjhhMjNjNGM0Yjg3N2QzMWZiY2JhMmFjMDgiLCAicHVibGljVVJMIjogImh0dHBzOi8vY29tcHV0ZS5kYXRhY2VudHJlZC5pbzo4Nzc3In1dLCAiZW5kcG9pbnRzX2xpbmtzIjogW10sICJ0eXBlIjogIm1ldGVyaW5nIiwgIm5hbWUiOiAiY2VpbG9tZXRlciJ9LCB7ImVuZHBvaW50cyI6IFt7ImFkbWluVVJMIjogImh0dHBzOi8vY29tcHV0ZS5kYXRhY2VudHJlZC5pbzo4Nzc2L3YxL2VkNDQzMTgxNGQwYTQwZGM4ZjEwZjVhYzA0NjI2N2U5IiwgInJlZ2lvbiI6ICJzYWwwMSIsICJpbnRlcm5hbFVSTCI6ICJodHRwczovL2NvbXB1dGUuZGF0YWNlbnRyZWQuaW86ODc3Ni92MS9lZDQ0MzE4MTRkMGE0MGRjOGYxMGY1YWMwNDYyNjdlOSIsICJpZCI6ICIwYTkyNDllYWZkMTQ0OGEyOWJmODY3ZDc1ZmFlMTY3NyIsICJwdWJsaWNVUkwiOiAiaHR0cHM6Ly9jb21wdXRlLmRhdGFjZW50cmVkLmlvOjg3NzYvdjEvZWQ0NDMxODE0ZDBhNDBkYzhmMTBmNWFjMDQ2MjY3ZTkifV0sICJlbmRwb2ludHNfbGlua3MiOiBbXSwgInR5cGUiOiAidm9sdW1lIiwgIm5hbWUiOiAiY2luZGVyIn0sIHsiZW5kcG9pbnRzIjogW3siYWRtaW5VUkwiOiAiaHR0cHM6Ly9jb21wdXRlLmRhdGFjZW50cmVkLmlvOjg3NzMvdjIvQWRtaW4iLCAicmVnaW9uIjogInNhbDAxIiwgImludGVybmFsVVJMIjogImh0dHBzOi8vY29tcHV0ZS5kYXRhY2VudHJlZC5pbzo4NzczL3YyL0Nsb3VkIiwgImlkIjogImJhNDMzOTc5NDRmMjQ1NjFiYTM3NDdlNzlmOGU5YWJiIiwgInB1YmxpY1VSTCI6ICJodHRwczovL2NvbXB1dGUuZGF0YWNlbnRyZWQuaW86ODc3My92Mi9DbG91ZCJ9XSwgImVuZHBvaW50c19saW5rcyI6IFtdLCAidHlwZSI6ICJlYzIiLCAibmFtZSI6ICJub3ZhX2VjMiJ9LCB7ImVuZHBvaW50cyI6IFt7ImFkbWluVVJMIjogImh0dHBzOi8vY29tcHV0ZS5kYXRhY2VudHJlZC5pbzozNTM1Ny92Mi4wIiwgInJlZ2lvbiI6ICJzYWwwMSIsICJpbnRlcm5hbFVSTCI6ICJodHRwczovL2NvbXB1dGUuZGF0YWNlbnRyZWQuaW86NTAwMC92Mi4wIiwgImlkIjogIjBmYWJhMjhlZTY0YzQ5ZjU5ZmM4MjczZjM2M2Q1MWU2IiwgInB1YmxpY1VSTCI6ICJodHRwczovL2NvbXB1dGUuZGF0YWNlbnRyZWQuaW86NTAwMC92Mi4wIn1dLCAiZW5kcG9pbnRzX2xpbmtzIjogW10sICJ0eXBlIjogImlkZW50aXR5IiwgIm5hbWUiOiAia2V5c3RvbmUifV0sICJ1c2VyIjogeyJ1c2VybmFtZSI6ICJzdHJvbmdob2xkIiwgInJvbGVzX2xpbmtzIjogW10sICJpZCI6ICI4ZjI4MzZiNTY0YzY0ZjZmYjdlNzk0NWMxMmIxOTY4ZSIsICJyb2xlcyI6IFt7Im5hbWUiOiAiYWRtaW4ifSwgeyJuYW1lIjogIl9tZW1iZXJfIn1dLCAibmFtZSI6ICJzdHJvbmdob2xkIn0sICJtZXRhZGF0YSI6IHsiaXNfYWRtaW4iOiAwLCAicm9sZXMiOiBbIjE2NmY3MWRlZTBkZDRiNWJiNGRiZmRiYTcwM2U0YTMwIiwgIjlmZTJmZjllZTQzODRiMTg5NGE5MDg3OGQzZTkyYmFiIl19fX0xggGFMIIBgQIBATBcMFcxCzAJBgNVBAYTAlVTMQ4wDAYDVQQIDAVVbnNldDEOMAwGA1UEBwwFVW5zZXQxDjAMBgNVBAoMBVVuc2V0MRgwFgYDVQQDDA93d3cuZXhhbXBsZS5jb20CAQEwCwYJYIZIAWUDBAIBMA0GCSqGSIb3DQEBAQUABIIBAAHjypIY3rWsvkYntIHEmoDjRaD5lKD3Dq54mPu63C-gMgAJgeGT+bBL+OmzLu9Z2hcXBhdy2I4xABc9hPxQwfvZxsjJEwJoZk88Tej1tc9lb6oFG4R-9ok0FqIAHXLZBKIW6A0e6w9DD2bVwTmFhVqSR36d+6sMTRPTo6OF-uB5ZtK-ZTMzkN70GRUAYW+7tiaOGz7vQdsII30uZQZQWjXEyxizq-+mWOnDy3nAIgItUzUkk83PqFmL4MMzXIDSfTm26lLxziWNUSJiIfOwioQVgahxxWaW0byfPr2CUHyvfCLl1ggA2t+xBTntakde51vS2TJUQ-BfJ2z5kMXRS9E=
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      Vary:
+      - X-Auth-Token
+      X-Distribution:
+      - Ubuntu
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '209'
+      Date:
+      - Sun, 16 Nov 2014 18:55:51 GMT
+      Strict-Transport-Security:
+      - max-age=60
+    body:
+      encoding: UTF-8
+      string: '{"roles": [{"id": "166f71dee0dd4b5bb4dbfdba703e4a30", "name": "admin"},
+        {"enabled": "True", "description": "Default role for project membership",
+        "name": "_member_", "id": "9fe2ff9ee4384b1894a90878d3e92bab"}]}'
+    http_version: 
+  recorded_at: Sun, 16 Nov 2014 18:55:51 GMT
+recorded_with: VCR 2.9.3
