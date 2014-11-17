@@ -1,13 +1,17 @@
 class CustomerGenerator
   include ActiveModel::Validations
 
-  attr_reader :organization_name, :email, :colo_only, :extra_tenants
+  attr_reader :organization_name, :email, :products, :extra_tenants
 
   def initialize(params={})
     @organization_name = params[:organization_name]
     @email             = params[:email]
-    @colo_only         = params[:colo_only]
     @extra_tenants     = params[:extra_tenants]
+    if params[:organization] && params[:organization][:product_ids]
+      @products = params[:organization][:product_ids].select(&:present?)
+    else
+      @products = []
+    end
   end
 
   def generate!
@@ -17,13 +21,22 @@ class CustomerGenerator
       errors.add :base, "Must provide a valid email address"
     elsif User.find_by_email(@email).present?
       errors.add :base, "Email already exists in the system"
+    elsif @products.none?
+      errors.add :base, "Select at least one product"
+    elsif @products.any? {|p| !Product.all.map(&:id).include?(p)}
+      errors.add :base, "Products invalid"
     else
       @organization = Organization.create! name: @organization_name
+      @products.each do |product_id|
+        @organization.products << Product.find(product_id)
+      end
+      @organization.save!
+      OpenStack::Tenant.find(@organization.primary_tenant.uuid).zero_quotas if colo_only?
       @extra_tenants.split(',').map(&:strip).map(&:downcase).uniq.each do |tenant|
         uuid = @organization.tenants.create(name: tenant).uuid
-        OpenStack::Tenant.find(uuid).zero_quotas if @colo_only
+        OpenStack::Tenant.find(uuid).zero_quotas if colo_only?
       end
-      create_default_network(@organization) unless @colo_only
+      create_default_network(@organization) unless colo_only?
       @invite = Invite.create! email: @email, power_invite: true, organization: @organization
       Mailer.signup(@invite.id).deliver
       return true
@@ -32,6 +45,10 @@ class CustomerGenerator
   end
 
   private
+
+  def colo_only?
+    products.collect{|p| Product.find(p).name}.include?('Colocation') && products.count == 1
+  end
 
   def create_default_network(organization)
     organization.tenants.collect(&:uuid).each do |tenant_id|
