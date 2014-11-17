@@ -20,6 +20,13 @@ OPENSTACK_ARGS[:openstack_username] = 'bar' unless OPENSTACK_ARGS[:openstack_use
 
 DatabaseCleaner.strategy = :truncation
 
+class UserNoCallbacks < User
+  skip_callback :create, :after, :create_object
+  skip_callback :update, :after, :update_object
+  skip_callback :destroy, :after, :delete_object
+  skip_callback :save, :after, :update_password
+end
+
 # To add Capybara feature tests add `gem "minitest-rails-capybara"`
 # to the test group in the Gemfile and uncomment the following:
 # require "minitest/rails/capybara"
