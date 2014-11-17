@@ -4,7 +4,7 @@ class Tenant < ActiveRecord::Base
   validates :organization, :presence => true
   validates :name, length: {minimum: 1}, allow_blank: false
 
-  syncs_with_keystone as: 'OpenStack::Tenant', actions: [:create]
+  syncs_with_keystone as: 'OpenStack::Tenant', actions: [:create, :destroy]
 
   has_many :user_tenant_roles
   has_many :users, :through => :user_tenant_roles
