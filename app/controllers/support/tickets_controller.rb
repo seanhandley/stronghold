@@ -8,7 +8,7 @@ class Support::TicketsController < SupportBaseController
   end
 
   def trailing_slash?
-    request.env['REQUEST_URI'].match(/[^\?]+/).to_s.last == '/'
+    request.original_url.match(/[^\?]+/).to_s.last == '/'
   end
 
   before_filter :ensure_trailing_slash, :only => :index
