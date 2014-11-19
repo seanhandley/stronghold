@@ -2,15 +2,17 @@ require 'test_helper'
 
 class Billing::InstanceTest < Minitest::Test
   def setup
-    @test_tenant = '1c483a77bbe44afcaf3a1d098a1a897f'
+    @test_tenant_id = '1c483a77bbe44afcaf3a1d098a1a897f'
   end
 
   def test_thing
-    VCR.use_cassette('instances_billable_hours') do
-      end_time = Date.parse('2014-11-14 14:18:00')
-      [1, 2, 3].each do |n|
-        puts Billing::Instance.billable_hours(@test_tenant, 'm1.tiny', '', end_time - n.hours, end_time)
-      end
+    VCR.use_cassette('instance_samples') do
+      end_time = DateTime.parse('2014-11-18 12:05:00')
+      samples = Billing::Instance.samples(@test_tenant_id, end_time - 3.hours, end_time)
+      assert_equal 3, samples.keys.count
+      assert_equal 34, samples.values[0].count
+      assert_equal 6, samples.values[1].count
+      assert_equal 10, samples.values[2].count
     end
   end
 
