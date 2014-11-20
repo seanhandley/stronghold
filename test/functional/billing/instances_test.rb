@@ -14,7 +14,7 @@ class Billing::InstancesTest < Minitest::Test
 
 
   def teardown
-    
+    DatabaseCleaner.clean
   end
 
 end
