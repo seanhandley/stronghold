@@ -26,6 +26,7 @@ gem 'sirportly', '~> 1.3.6'
 gem 'kaminari', '~> 0.16.1'
 gem 'bootstrap-kaminari-views', '~> 0.0.5'
 gem 'dalli', '~> 2.7.2'
+gem 'clockwork'
 
 group :test do
   gem 'minitest-rails'
