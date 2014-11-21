@@ -22,6 +22,12 @@ Organization.blueprint do
   name { Faker::Company.name }
 end
 
+Tenant.blueprint do
+  organization { Organization.make! }
+  name { Faker::Company.name }
+  uuid { '1c483a77bbe44afcaf3a1d098a1a897f' }
+end
+
 Invite.blueprint do
   email { Faker::Internet.email }
   organization { Organization.make! }
