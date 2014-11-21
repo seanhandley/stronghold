@@ -2,18 +2,16 @@ module Billing
   module Instances
 
     def self.sync!
-      to_time = nil
-      Time.use_zone('London') { to = Time.now }
       ActiveRecord::Base.transaction do
         from = Billing::Sync.last.completed_at
-        to   = Time.now
+        to   = Time.zone.now
         Tenant.all.each do |tenant|
           next unless tenant.uuid
           fetch_samples(tenant.uuid, from, to).each do |instance_id, samples|
             create_new_states(tenant.uuid, instance_id, samples)
           end
         end
-        Billing::Sync.create completed_at: DateTime.now
+        Billing::Sync.create completed_at: Time.zone.now
       end
     end
 
