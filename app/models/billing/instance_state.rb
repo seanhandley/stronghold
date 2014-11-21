@@ -4,6 +4,5 @@ module Billing
 
     belongs_to :billing_instance, :class_name => "Billing::Instance", :foreign_key => 'instance_id'
 
-    validates :message_id, :uniqueness => true
   end
 end
