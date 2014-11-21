@@ -1,14 +1,12 @@
 module Billing
   module Instances
-    # example_instance = { id: 'foo', name: 'bar', flavor: 1, image_id: 'baz', tenant_id: 'qux'}
-    # { flavor: instance.flavor['id'], image: instance.image['id'] }
-    # example_state    = { instance_id: 'foo', recorded_at: '2014-11-18 12:34:29', active: true}
 
     def self.sync!
       ActiveRecord::Base.transaction do
         from = Billing::Sync.last.completed_at
         to   = DateTime.now
         Tenant.all.each do |tenant|
+          next unless tenant.uuid
           fetch_samples(tenant.uuid, from, to).each do |instance_id, samples|
             create_new_states(tenant.uuid, instance_id, samples)
           end
@@ -30,14 +28,14 @@ module Billing
 
     def self.seconds(instance, from, to)
       states = instance.instance_states.where(:recorded_at => from..to).order('recorded_at')
-      previous_state = instance.instance_states.where('recorded_at < ?', from).order('recorded_at').limit(1)
+      previous_state = instance.instance_states.where('recorded_at < ?', from).order('recorded_at DESC').limit(1).first
 
       if states.any?
         if states.count > 1
           start = 0
 
-          if previous_state.any?
-            if billable?(previous_state.first.state)
+          if previous_state
+            if billable?(previous_state.state)
               start = (states.first.recorded_at - from)
             end
           end
@@ -68,7 +66,7 @@ module Billing
           end
         end
       else
-        if billable?(previous_state.first.state)
+        if previous_state && billable?(previous_state.state)
           return (to - from).round
         else
           return 0
