@@ -29,8 +29,18 @@ module Billing
 
     def self.seconds(instance, from, to)
       states = instance.instance_states.where(:recorded_at => from..to).order('recorded_at')
+      previous_state = instance.instance_states.where('recorded_at < ?', from).order('recorded_at').limit(1)
+
+      start = 0
+
+      if previous_state.any?
+        if billable?(previous_state.first.state)
+          start = (states.first.recorded_at - from)
+        end
+      end
+
       previous = states.first
-      states.collect do |state|
+      middle = states.collect do |state|
         difference = 0
         if billable?(previous.state)
           difference = state.recorded_at - previous.recorded_at
@@ -38,14 +48,22 @@ module Billing
         previous = state
         difference
       end.sum
+
+      ending = 0
+
+      if(billable?(states.last.state))
+        ending = (to - states.last.recorded_at)
+      end
+
+      if instance.id == 49
+        puts states.collect(&:state)
+      end
+
+      return (start + middle + ending).round
     end
 
     def self.billable?(state)
       !["building", "stopped", "shutoff", "deleted"].include?(state.downcase)
-    end
-
-    def self.create_billing_instance_if_absent(tenant_id, instance_id)
-
     end
 
     def self.fetch_samples(tenant_id, from, to)
