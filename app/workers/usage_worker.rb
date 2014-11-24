@@ -2,6 +2,6 @@ class UsageWorker
   include Sidekiq::Worker
 
   def perform
-    Billing::Instances.sync!
+    Billing.sync!
   end
 end
