@@ -1,0 +1,5 @@
+dependencies:
+  pre:
+    - sudo apt-add-repository -y 'deb http://ppa.launchpad.net/ondrej/mysql-experimental/ubuntu precise main' 
+    - sudo apt-get update 
+    - DEBIAN_FRONTEND=noninteractive sudo apt-get install -y mysql-server-5.6
