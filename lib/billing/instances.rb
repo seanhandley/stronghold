@@ -93,6 +93,13 @@ module Billing
       unless Billing::Instance.find_by_instance_id(instance_id)
         Billing::Instance.create(instance_id: instance_id, tenant_id: tenant_id, name: first_sample_metadata["display_name"],
                                  flavor_id: flavor_id, image_id: first_sample_metadata["image_ref_url"].split('/').last)
+        unless samples.any? {|s| s['resource_metadata']['event_type']}
+          # This is a new instance and we don't know its current state.
+          # Attempt to find out
+          if(os_instance = Fog::Compute.new(OPENSTACK_ARGS).servers.get(instance_id))
+            instance.instance_states.create recorded_at: DateTime.now, state: os_instance.state.downcase
+          end
+        end
       end
       unless Billing::InstanceFlavor.find_by_flavor_id(flavor_id)
         os_flavor = OpenStack::Flavor.find(flavor_id)
