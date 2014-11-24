@@ -19,7 +19,13 @@ module Billing
       instances = Billing::Instance.where(:tenant_id => tenant_id).to_a.compact
       total = instances.inject({}) do |usage, instance|
         usage[instance.instance_id] = {billable_seconds: seconds(instance, from, to),
-                                       name: instance.name, flavor_id: instance.flavor_id,
+                                       name: instance.name, flavor: {
+                                         flavor_id: instance.flavor_id,
+                                         name: instance.instance_flavor.name,
+                                         vcpus_count: instance.instance_flavor.vcpus,
+                                         vcpus_count: instance.instance_flavor.vcpus,
+                                         ram_mb: instance.instance_flavor.ram,
+                                         root_disk_gb: instance.instance_flavor.disk},
                                        image_id: instance.image_id}
         usage
       end
@@ -91,13 +97,14 @@ module Billing
       first_sample_metadata = samples.first['resource_metadata']
       flavor_id = first_sample_metadata["instance_flavor_id"] ? first_sample_metadata["instance_flavor_id"] : first_sample_metadata["flavor.id"]
       unless Billing::Instance.find_by_instance_id(instance_id)
-        Billing::Instance.create(instance_id: instance_id, tenant_id: tenant_id, name: first_sample_metadata["display_name"],
+        instance = Billing::Instance.create(instance_id: instance_id, tenant_id: tenant_id, name: first_sample_metadata["display_name"],
                                  flavor_id: flavor_id, image_id: first_sample_metadata["image_ref_url"].split('/').last)
         unless samples.any? {|s| s['resource_metadata']['event_type']}
           # This is a new instance and we don't know its current state.
           # Attempt to find out
           if(os_instance = Fog::Compute.new(OPENSTACK_ARGS).servers.get(instance_id))
-            instance.instance_states.create recorded_at: DateTime.now, state: os_instance.state.downcase
+            instance.instance_states.create recorded_at: DateTime.now, state: os_instance.state.downcase,
+                                            event_name: 'ping'
           end
         end
       end
@@ -110,7 +117,8 @@ module Billing
       samples.collect do |s|
         if s['resource_metadata']['event_type']
           Billing::InstanceState.create instance_id: billing_instance_id, recorded_at: s['recorded_at'],
-                                        state: s['resource_metadata']['state'] ? s['resource_metadata']['state'].downcase : 'active'
+                                        state: s['resource_metadata']['state'] ? s['resource_metadata']['state'].downcase : 'active',
+                                        event_name: s['resource_metadata']['event_type']
         end
       end
     end
