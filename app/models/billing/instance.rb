@@ -3,5 +3,7 @@ module Billing
     self.table_name = "billing_instances"
 
     has_many :instance_states
+    belongs_to :instance_flavor, :class_name => "Billing::InstanceFlavor",
+               :primary_key => 'flavor_id', :foreign_key => 'flavor_id'
   end
 end
