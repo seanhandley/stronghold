@@ -1,0 +1,8 @@
+module Billing
+  class VolumeState < ActiveRecord::Base
+    self.table_name = "billing_volume_states"
+
+    belongs_to :billing_volume, :class_name => "Billing::Volume", :foreign_key => 'volume_id'
+
+  end
+end
