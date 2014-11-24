@@ -88,11 +88,16 @@ module Billing
     end
 
     def self.create_new_states(tenant_id, instance_id, samples)
+      first_sample_metadata = samples.first['resource_metadata']
+      flavor_id = first_sample_metadata["instance_flavor_id"] ? first_sample_metadata["instance_flavor_id"] : first_sample_metadata["flavor.id"]
       unless Billing::Instance.find_by_instance_id(instance_id)
-        first_sample_metadata = samples.first['resource_metadata']
-        flavor_id = first_sample_metadata["instance_flavor_id"] ? first_sample_metadata["instance_flavor_id"] : first_sample_metadata["flavor.id"]
-        instance = Billing::Instance.create(instance_id: instance_id, tenant_id: tenant_id, name: first_sample_metadata["display_name"],
+        Billing::Instance.create(instance_id: instance_id, tenant_id: tenant_id, name: first_sample_metadata["display_name"],
                                  flavor_id: flavor_id, image_id: first_sample_metadata["image_ref_url"].split('/').last)
+      end
+      unless Billing::InstanceFlavor.find_by_flavor_id(flavor_id)
+        os_flavor = OpenStack::Flavor.find(flavor_id)
+        Billing::InstanceFlavor.create(flavor_id: flavor_id, name: os_flavor.name,
+                                       ram: os_flavor.ram, disk: os_flavor.disk, vcpus: os_flavor.vcpus)
       end
       billing_instance_id = Billing::Instance.find_by_instance_id(instance_id).id
       samples.collect do |s|
