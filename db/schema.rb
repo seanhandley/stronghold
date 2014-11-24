@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141124120726) do
+ActiveRecord::Schema.define(version: 20141124132053) do
 
   create_table "audits", force: true do |t|
     t.string   "auditable_id"
@@ -62,6 +62,20 @@ ActiveRecord::Schema.define(version: 20141124120726) do
 
   create_table "billing_syncs", force: true do |t|
     t.datetime "completed_at", limit: 3
+    t.datetime "started_at",   limit: 3
+  end
+
+  create_table "billing_volume_states", force: true do |t|
+    t.datetime "recorded_at", limit: 3
+    t.string   "event_name"
+    t.integer  "size"
+    t.integer  "volume_id"
+  end
+
+  create_table "billing_volumes", force: true do |t|
+    t.string "volume_id"
+    t.string "name"
+    t.string "tenant_id"
   end
 
   create_table "invites", force: true do |t|
