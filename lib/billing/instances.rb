@@ -4,7 +4,7 @@ module Billing
     def self.sync!(from, to)
       Tenant.all.each do |tenant|
         next unless tenant.uuid
-        fetch_samples(tenant.uuid, from, to).each do |instance_id, samples|
+        Billing.fetch_samples(tenant.uuid, "instance", from, to).each do |instance_id, samples|
           create_new_states(tenant.uuid, instance_id, samples)
         end
       end
@@ -77,15 +77,6 @@ module Billing
 
     def self.billable?(state)
       !["building", "stopped", "shutoff", "deleted"].include?(state.downcase)
-    end
-
-    def self.fetch_samples(tenant_id, from, to)
-      timestamp_format = "%Y-%m-%dT%H:%M:%S"
-      options = [{'field' => 'timestamp', 'op' => 'ge', 'value' => from.strftime(timestamp_format)},
-                 {'field' => 'timestamp', 'op' => 'lt', 'value' => to.strftime(timestamp_format)},
-                 {'field' => 'project_id', 'value' => tenant_id, 'op' => 'eq'}]
-      tenant_samples = Fog::Metering.new(OPENSTACK_ARGS).get_samples("instance", options).body
-      tenant_samples.group_by{|s| s['resource_id']}
     end
 
     def self.create_new_states(tenant_id, instance_id, samples)
