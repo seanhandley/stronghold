@@ -4,7 +4,7 @@ module Billing
     def self.sync!(from, to)
       Tenant.all.each do |tenant|
         next unless tenant.uuid
-        fetch_samples(tenant.uuid, from, to).each do |volume_id, samples|
+        Billing.fetch_samples(tenant.uuid, "volume", from, to).each do |volume_id, samples|
           create_new_states(tenant.uuid, volume_id, samples)
         end
       end
@@ -13,11 +13,11 @@ module Billing
     def self.usage(tenant_id, from, to)
       volumes = Billing::Volume.where(:tenant_id => tenant_id).to_a.compact
       total = volumes.inject({}) do |usage, volume|
-        usage[volume.volume_id] = { billable_seconds: gigabyte_seconds(volume, from, to),
+        usage[volume.volume_id] = { gigabyte_seconds: gigabyte_seconds(volume, from, to),
                                     name: volume.name}
         usage
       end
-      total.select{|k,v| v[:billable_seconds] > 0}
+      total.select{|k,v| v[:gigabyte_seconds] > 0}
     end
 
     def self.gigabyte_seconds(volume, from, to)
@@ -29,16 +29,18 @@ module Billing
           start = 0
 
           if previous_state
-            if billable?(previous_state.state)
+            if billable?(previous_state.event_name)
               start = (states.first.recorded_at - from)
+              start *= states.first.size
             end
           end
 
           previous = states.first
           middle = states.collect do |state|
             difference = 0
-            if billable?(previous.state)
+            if billable?(previous.event_name)
               difference = state.recorded_at - previous.recorded_at
+              difference *= state.size
             end
             previous = state
             difference
@@ -46,22 +48,23 @@ module Billing
 
           ending = 0
 
-          if(billable?(states.last.state))
+          if(billable?(states.last.event_name))
             ending = (to - states.last.recorded_at)
+            ending *= states.last.size
           end
 
           return (start + middle + ending).round
         else
           # Only one sample for this period
-          if billable?(states.first.state)
-            return (to - from).round
+          if billable?(states.first.event_name)
+            return ((to - from) * states.first.size).round
           else
             return 0
           end
         end
       else
-        if previous_state && billable?(previous_state.state)
-          return (to - from).round
+        if previous_state && billable?(previous_state.event_name)
+          return ((to - from) * previous_state.size).round
         else
           return 0
         end
@@ -70,15 +73,6 @@ module Billing
 
     def self.billable?(event)
       event != 'volume.delete.end'
-    end
-
-    def self.fetch_samples(tenant_id, from, to)
-      timestamp_format = "%Y-%m-%dT%H:%M:%S"
-      options = [{'field' => 'timestamp', 'op' => 'ge', 'value' => from.strftime(timestamp_format)},
-                 {'field' => 'timestamp', 'op' => 'lt', 'value' => to.strftime(timestamp_format)},
-                 {'field' => 'project_id', 'value' => tenant_id, 'op' => 'eq'}]
-      tenant_samples = Fog::Metering.new(OPENSTACK_ARGS).get_samples("volume", options).body
-      tenant_samples.group_by{|s| s['resource_id']}
     end
 
     def self.create_new_states(tenant_id, volume_id, samples)
