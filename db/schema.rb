@@ -39,11 +39,13 @@ ActiveRecord::Schema.define(version: 20141126170411) do
   create_table "billing_floating_ip_states", force: true do |t|
     t.integer  "floating_ip_id"
     t.string   "event_name"
+    t.string   "port"
     t.datetime "recorded_at",    limit: 3
   end
 
   create_table "billing_floating_ips", force: true do |t|
     t.string "floating_ip_id"
+    t.string "address"
     t.string "tenant_id"
   end
 

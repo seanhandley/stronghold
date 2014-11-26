@@ -9,6 +9,7 @@ module Billing
       to   = Time.zone.now
       Billing::Instances.sync!(from, to)
       Billing::Volumes.sync!(from, to)
+      Billing::FloatingIps.sync!(from, to)
       Billing::Sync.create started_at: started_at, completed_at: Time.zone.now
     end
   end
