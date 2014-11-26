@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141124132053) do
+ActiveRecord::Schema.define(version: 20141126170411) do
 
   create_table "audits", force: true do |t|
     t.string   "auditable_id"
@@ -35,6 +35,17 @@ ActiveRecord::Schema.define(version: 20141124132053) do
   add_index "audits", ["created_at"], name: "index_audits_on_created_at", using: :btree
   add_index "audits", ["organization_id"], name: "index_audits_on_organization_id", using: :btree
   add_index "audits", ["user_id", "user_type"], name: "user_index", using: :btree
+
+  create_table "billing_floating_ip_states", force: true do |t|
+    t.integer  "floating_ip_id"
+    t.string   "event_name"
+    t.datetime "recorded_at",    limit: 3
+  end
+
+  create_table "billing_floating_ips", force: true do |t|
+    t.string "floating_ip_id"
+    t.string "tenant_id"
+  end
 
   create_table "billing_instance_flavors", force: true do |t|
     t.string  "flavor_id"
