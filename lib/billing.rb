@@ -4,13 +4,13 @@ module Billing
 
   def self.sync!
     ActiveRecord::Base.transaction do
-      started_at = Time.zone.now
       from = Billing::Sync.last.started_at
       to   = Time.zone.now
-      Billing::Instances.sync!(from, to)
-      Billing::Volumes.sync!(from, to)
-      Billing::FloatingIps.sync!(from, to)
-      Billing::Sync.create started_at: started_at, completed_at: Time.zone.now
+      sync = Billing::Sync.create started_at: Time.zone.now
+      Billing::Instances.sync!(from, to, sync)
+      Billing::Volumes.sync!(from, to, sync)
+      Billing::FloatingIps.sync!(from, to, sync)
+      sync.update_attributes(completed_at: Time.zone.now)
     end
   end
 

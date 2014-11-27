@@ -1,19 +1,19 @@
 module Billing
   module FloatingIps
 
-    def self.sync!(from, to)
+    def self.sync!(from, to, sync)
       Tenant.all.each do |tenant|
         next unless tenant.uuid
         Billing.fetch_samples(tenant.uuid, "ip.floating", from, to).each do |ip_id, samples|
-          create_new_states(tenant.uuid, ip_id, samples)
+          create_new_states(tenant.uuid, ip_id, samples, sync)
         end
       end
     end
 
     def self.usage(tenant_id, from, to)
-      ips = Billing::FloatingIp.where(:tenant_id => tenant_id).to_a.compact
+      ips = Billing::Ip.where(:tenant_id => tenant_id).to_a.compact
       total = ips.inject({}) do |usage, ip|
-        usage[ip.floating_ip_id] = { billable_seconds: seconds(ip, from, to),
+        usage[ip.ip_id] = { billable_seconds: seconds(ip, from, to),
                                      address: ip.address}
         usage
       end
@@ -21,8 +21,8 @@ module Billing
     end
 
     def self.seconds(ip, from, to)
-      states = ip.floating_ip_states.where(:recorded_at => from..to).order('recorded_at')
-      previous_state = ip.floating_ip_states.where('recorded_at < ?', from).order('recorded_at DESC').limit(1).first
+      states = ip.ip_states.where(:recorded_at => from..to).order('recorded_at')
+      previous_state = ip.ip_states.where('recorded_at < ?', from).order('recorded_at DESC').limit(1).first
 
       if states.any?
         if states.count > 1
@@ -72,26 +72,28 @@ module Billing
       state.port.downcase != 'none'
     end
 
-    def self.create_new_states(tenant_id, ip_id, samples)
+    def self.create_new_states(tenant_id, ip_id, samples, sync)
       first_sample_metadata = samples.first['resource_metadata']
-      unless Billing::FloatingIp.find_by_floating_ip_id(ip_id)
-        ip = Billing::FloatingIp.create(floating_ip_id: ip_id, tenant_id: tenant_id,
+      unless Billing::Ip.find_by_ip_id(ip_id)
+        ip = Billing::Ip.create(ip_id: ip_id, tenant_id: tenant_id,
                                         address: first_sample_metadata["floating_ip_address"])
         unless samples.any? {|s| s['resource_metadata']['event_type']}
           # This is a new volume and we don't know its current size
           # Attempt to find out
-          if(os_volume = Fog::Network.new(OPENSTACK_ARGS).floating_ips.get(ip_id))
-            ip.floating_ip_states.create recorded_at: DateTime.now, port: os_volume.port_id,
-                                         event_name: 'ping'
+          if(os_volume = Fog::Network.new(OPENSTACK_ARGS).ips.get(ip_id))
+            ip.ip_states.create recorded_at: DateTime.now, port: os_volume.port_id,
+                                         event_name: 'ping', billing_sync: sync,
+                                         message_id: SecureRandom.hex
           end
         end
       end
-      billing_floating_ip_id = Billing::FloatingIp.find_by_floating_ip_id(ip_id).id
+      billing_ip_id = Billing::Ip.find_by_ip_id(ip_id).id
       samples.collect do |s|
         if s['resource_metadata']['event_type']
-          Billing::FloatingIpState.create floating_ip_id: billing_floating_ip_id, recorded_at: s['recorded_at'],
+          Billing::IpState.create ip_id: billing_ip_id, recorded_at: s['recorded_at'],
                                       port: s['resource_metadata']['port_id'],
-                                      event_name: s['resource_metadata']['event_type']
+                                      event_name: s['resource_metadata']['event_type'], billing_sync: sync,
+                                      message_id: s['message_id']
         end
       end
     end
