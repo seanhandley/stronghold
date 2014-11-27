@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141126170411) do
+ActiveRecord::Schema.define(version: 20141127105634) do
 
   create_table "audits", force: true do |t|
     t.string   "auditable_id"
@@ -36,19 +36,6 @@ ActiveRecord::Schema.define(version: 20141126170411) do
   add_index "audits", ["organization_id"], name: "index_audits_on_organization_id", using: :btree
   add_index "audits", ["user_id", "user_type"], name: "user_index", using: :btree
 
-  create_table "billing_floating_ip_states", force: true do |t|
-    t.integer  "floating_ip_id"
-    t.string   "event_name"
-    t.string   "port"
-    t.datetime "recorded_at",    limit: 3
-  end
-
-  create_table "billing_floating_ips", force: true do |t|
-    t.string "floating_ip_id"
-    t.string "address"
-    t.string "tenant_id"
-  end
-
   create_table "billing_instance_flavors", force: true do |t|
     t.string  "flavor_id"
     t.string  "name"
@@ -63,6 +50,7 @@ ActiveRecord::Schema.define(version: 20141126170411) do
     t.string   "state"
     t.string   "message_id"
     t.string   "event_name"
+    t.integer  "sync_id"
   end
 
   create_table "billing_instances", force: true do |t|
@@ -70,6 +58,21 @@ ActiveRecord::Schema.define(version: 20141126170411) do
     t.string "name"
     t.string "flavor_id"
     t.string "image_id"
+    t.string "tenant_id"
+  end
+
+  create_table "billing_ip_states", force: true do |t|
+    t.integer  "ip_id"
+    t.string   "event_name"
+    t.string   "port"
+    t.datetime "recorded_at", limit: 3
+    t.string   "message_id"
+    t.integer  "sync_id"
+  end
+
+  create_table "billing_ips", force: true do |t|
+    t.string "ip_id"
+    t.string "address"
     t.string "tenant_id"
   end
 
@@ -83,6 +86,8 @@ ActiveRecord::Schema.define(version: 20141126170411) do
     t.string   "event_name"
     t.integer  "size"
     t.integer  "volume_id"
+    t.string   "message_id"
+    t.integer  "sync_id"
   end
 
   create_table "billing_volumes", force: true do |t|
