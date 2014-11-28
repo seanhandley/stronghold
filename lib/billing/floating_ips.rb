@@ -80,8 +80,8 @@ module Billing
         unless samples.any? {|s| s['resource_metadata']['event_type']}
           # This is a new volume and we don't know its current size
           # Attempt to find out
-          if(os_volume = Fog::Network.new(OPENSTACK_ARGS).ips.get(ip_id))
-            ip.ip_states.create recorded_at: DateTime.now, port: os_volume.port_id,
+          if(os_ip = Fog::Network.new(OPENSTACK_ARGS).ips.get(ip_id))
+            ip.ip_states.create recorded_at: DateTime.now, port: os_ip.port_id,
                                          event_name: 'ping', billing_sync: sync,
                                          message_id: SecureRandom.hex
           end
