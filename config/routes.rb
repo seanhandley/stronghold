@@ -29,6 +29,7 @@ Rails.application.routes.draw do
     namespace :admin do
       root :to => 'dashboard#index'
       resources :customers, only: [:new, :create]
+      resources :usage, only: [:new, :create]
     end
   #end
 

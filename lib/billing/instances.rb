@@ -1,11 +1,11 @@
 module Billing
   module Instances
 
-    def self.sync!(from, to)
+    def self.sync!(from, to, sync)
       Tenant.all.each do |tenant|
         next unless tenant.uuid
         Billing.fetch_samples(tenant.uuid, "instance", from, to).each do |instance_id, samples|
-          create_new_states(tenant.uuid, instance_id, samples)
+          create_new_states(tenant.uuid, instance_id, samples, sync)
         end
       end
     end
@@ -13,7 +13,7 @@ module Billing
     def self.usage(tenant_id, from, to)
       instances = Billing::Instance.where(:tenant_id => tenant_id).to_a.compact
       total = instances.inject({}) do |usage, instance|
-        usage[instance.instance_id] = {billable_seconds: seconds(instance, from, to),
+        usage[instance.name] = {billable_seconds: seconds(instance, from, to),
                                        name: instance.name, flavor: {
                                          flavor_id: instance.flavor_id,
                                          name: instance.instance_flavor.name,
@@ -79,7 +79,7 @@ module Billing
       !["building", "stopped", "shutoff", "deleted"].include?(state.downcase)
     end
 
-    def self.create_new_states(tenant_id, instance_id, samples)
+    def self.create_new_states(tenant_id, instance_id, samples, sync)
       first_sample_metadata = samples.first['resource_metadata']
       flavor_id = first_sample_metadata["instance_flavor_id"] ? first_sample_metadata["instance_flavor_id"] : first_sample_metadata["flavor.id"]
       unless Billing::Instance.find_by_instance_id(instance_id)
@@ -90,7 +90,8 @@ module Billing
           # Attempt to find out
           if(os_instance = Fog::Compute.new(OPENSTACK_ARGS).servers.get(instance_id))
             instance.instance_states.create recorded_at: DateTime.now, state: os_instance.state.downcase,
-                                            event_name: 'ping'
+                                            event_name: 'ping', billing_sync: sync,
+                                            message_id: SecureRandom.hex
           end
         end
       end
@@ -104,7 +105,8 @@ module Billing
         if s['resource_metadata']['event_type']
           Billing::InstanceState.create instance_id: billing_instance_id, recorded_at: s['recorded_at'],
                                         state: s['resource_metadata']['state'] ? s['resource_metadata']['state'].downcase : 'active',
-                                        event_name: s['resource_metadata']['event_type']
+                                        event_name: s['resource_metadata']['event_type'], billing_sync: sync,
+                                        message_id: s['message_id']
         end
       end
     end

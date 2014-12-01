@@ -1,7 +1,7 @@
 module Billing
   module Volumes
 
-    def self.sync!(from, to)
+    def self.sync!(from, to, sync)
       Tenant.all.each do |tenant|
         next unless tenant.uuid
         Billing.fetch_samples(tenant.uuid, "volume", from, to).each do |volume_id, samples|
@@ -75,7 +75,7 @@ module Billing
       event != 'volume.delete.end'
     end
 
-    def self.create_new_states(tenant_id, volume_id, samples)
+    def self.create_new_states(tenant_id, volume_id, samples, sync)
       first_sample_metadata = samples.first['resource_metadata']
       unless Billing::Volume.find_by_volume_id(volume_id)
         volume = Billing::Volume.create(volume_id: volume_id, tenant_id: tenant_id, name: first_sample_metadata["display_name"])
@@ -84,7 +84,8 @@ module Billing
           # Attempt to find out
           if(os_volume = Fog::Volume.new(OPENSTACK_ARGS).volumes.get(volume_id))
             volume.volume_states.create recorded_at: DateTime.now, size: os_volume.size,
-                                            event_name: 'ping'
+                                            event_name: 'ping', billing_sync: sync,
+                                            message_id: SecureRandom.hex
           end
         end
       end
@@ -93,7 +94,8 @@ module Billing
         if s['resource_metadata']['event_type']
           Billing::VolumeState.create volume_id: billing_volume_id, recorded_at: s['recorded_at'],
                                       size: s['resource_metadata']['size'],
-                                      event_name: s['resource_metadata']['event_type']
+                                      event_name: s['resource_metadata']['event_type'], billing_sync: sync,
+                                      message_id: s['message_id']
         end
       end
     end
