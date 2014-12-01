@@ -22,36 +22,42 @@
     %h2 Instance Usage
     - @instance_results.each do |tenant, instances|
       %h3= tenant
-      %table.table
-        %thead
-          %tr
-            %th Name
-            %th Uptime
-            %th Number of Cores
-            %th RAM
-            %th Root Disk
-            %th Image ID
-        %tbody
-          - instances.each do |_, results|
+      - if instances.values.any?
+        %table.table
+          %thead
             %tr
-              %td= results[:name]
-              %td= "#{number_with_delimiter(results[:billable_seconds], :delimiter => ',')} seconds"
-              %td= "#{results[:flavor][:vcpus_count]} cores"
-              %td= "#{results[:flavor][:ram_mb]} MB"
-              %td= "#{results[:flavor][:root_disk_gb]} GB"
-              %td= results[:image_id]
+              %th Name
+              %th Uptime
+              %th Number of Cores
+              %th RAM
+              %th Root Disk
+              %th Image ID
+          %tbody
+            - instances.each do |_, results|
+              %tr
+                %td= results[:name]
+                %td= "#{number_with_delimiter(results[:billable_seconds], :delimiter => ',')} seconds"
+                %td= "#{results[:flavor][:vcpus_count]} cores"
+                %td= "#{results[:flavor][:ram_mb]} MB"
+                %td= "#{results[:flavor][:root_disk_gb]} GB"
+                %td= results[:image_id]
+      - else
+        No instance data for this period.
 
   - if @volume_results
     %h2 Volume Usage
     - @volume_results.each do |tenant, volumes|
       %h3= tenant
-      %table.table
-        %thead
-          %tr
-            %th Name
-            %th Gigabyte/Seconds
-        %tbody
-          - volumes.each do |_, results|
+      - if volumes.values.any?
+        %table.table
+          %thead
             %tr
-              %td= results[:name]
-              %td= "#{number_with_delimiter(results[:gigabyte_seconds], :delimiter => ',')}"
+              %th Name
+              %th Gigabyte/Seconds
+          %tbody
+            - volumes.each do |_, results|
+              %tr
+                %td= results[:name]
+                %td= "#{number_with_delimiter(results[:gigabyte_seconds], :delimiter => ',')}"
+      - else
+        No volume data for this period.
