@@ -54,4 +54,4 @@
           - volumes.each do |_, results|
             %tr
               %td= results[:name]
-              %td= "#{number_with_delimiter(results[:gigabyte_seconds], :delimiter => ',')} seconds"
+              %td= "#{number_with_delimiter(results[:gigabyte_seconds], :delimiter => ',')}"
