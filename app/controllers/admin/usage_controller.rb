@@ -9,7 +9,7 @@ class Admin::UsageController < AdminBaseController
   end
 
   def create
-    @from_date, @to_date = [:from, :to].collect{|key| DateTime.civil(*create_params[key].sort.map(&:last).map(&:to_i))}.collect{|d| Time.parse(d.to_s)}
+    @from_date, @to_date = [:from, :to].collect{|key| DateTime.civil(*create_params[key].sort.map(&:last).map(&:to_i))}.collect{|d| Time.zone.parse(d.to_s)}
     if (@organization = Organization.find(create_params[:organization]))
       @instance_results = usage('Billing::Instances', @organization, @from_date, @to_date)
       @volume_results = usage('Billing::Volumes', @organization, @from_date, @to_date)
