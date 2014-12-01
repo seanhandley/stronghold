@@ -1,0 +1,59 @@
+.container
+
+  %h1
+    %i.fa.fa-area-chart
+    Usage Data
+
+  = form_tag(admin_usage_index_path, 'role' => 'form') do
+    .form-group
+      %label Organization
+      = select_tag :organization, options_for_select(@organizations, selected: params[:organization]), class: 'form-control'
+    .form-group
+      %label From Date
+      = datetime_select :from, nil, default: @from_date, class: 'form-control'
+    .form-group
+      %label To Date
+      = datetime_select :to, nil, default: @to_date, class: 'form-control'
+
+    = submit_tag 'Generate →', class: 'btn btn-primary'
+
+
+  - if @instance_results
+    %h2 Instance Usage
+    - @instance_results.each do |tenant, instances|
+      %h3= tenant
+      %table.table
+        %thead
+          %tr
+            %th Name
+            %th Uptime
+            %th Number of Cores
+            %th RAM
+            %th Root Disk
+            %th Image ID
+        %tbody
+          - instances.each do |_, results|
+            %tr
+              %td= results[:name]
+              %td= "#{number_with_delimiter(results[:billable_seconds], :delimiter => ',')} seconds"
+              %td= "#{results[:flavor][:vcpus_count]} cores"
+              %td= "#{results[:flavor][:ram_mb]} MB"
+              %td= "#{results[:flavor][:root_disk_gb]} GB"
+              %td= results[:image_id]
+
+  - if @volume_results
+    %h2 Volume Usage
+    - @volume_results.each do |tenant, volumes|
+      %h3= tenant
+      %table.table
+        %thead
+          %tr
+            %th Name
+            %th Uptime
+            %th Size
+        %tbody
+          - volumes.each do |_, results|
+            %tr
+              %td= results[:name]
+              %td= "#{number_with_delimiter(results[:billable_seconds], :delimiter => ',')} seconds"
+              %td= "#{results[:size]} GB"

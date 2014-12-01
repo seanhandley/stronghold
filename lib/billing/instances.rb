@@ -13,7 +13,7 @@ module Billing
     def self.usage(tenant_id, from, to)
       instances = Billing::Instance.where(:tenant_id => tenant_id).to_a.compact
       total = instances.inject({}) do |usage, instance|
-        usage[instance.instance_id] = {billable_seconds: seconds(instance, from, to),
+        usage[instance.name] = {billable_seconds: seconds(instance, from, to),
                                        name: instance.name, flavor: {
                                          flavor_id: instance.flavor_id,
                                          name: instance.instance_flavor.name,
