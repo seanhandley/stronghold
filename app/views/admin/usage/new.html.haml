@@ -49,11 +49,9 @@
         %thead
           %tr
             %th Name
-            %th Uptime
-            %th Size
+            %th Gigabyte/Seconds
         %tbody
           - volumes.each do |_, results|
             %tr
               %td= results[:name]
-              %td= "#{number_with_delimiter(results[:billable_seconds], :delimiter => ',')} seconds"
-              %td= "#{results[:size]} GB"
+              %td= "#{number_with_delimiter(results[:gigabyte_seconds], :delimiter => ',')} seconds"
