@@ -6,7 +6,7 @@ class InstancesTest < Minitest::Test
     @first_sync = Billing::Sync.create(started_at:   Time.parse('2014-11-19 18:20:47'),
                                        completed_at: Time.parse('2014-11-19 18:20:47'))
     VCR.use_cassette('instance_sync') do
-      Billing::Instances.sync!(Time.parse('2014-11-19 14:00:00'), Time.parse('2014-11-21 23:00:00'))
+      Billing::Instances.sync!(Time.parse('2014-11-19 14:00:00'), Time.parse('2014-11-21 23:00:00'), @first_sync)
     end
   end
 
