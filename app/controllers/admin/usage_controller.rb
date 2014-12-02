@@ -5,7 +5,7 @@ class Admin::UsageController < AdminBaseController
   def new
     @results = {}
     @from_date = Time.zone.now.last_month.beginning_of_month
-    @to_date = Time.zone.now.last_month.end_of_month
+    @to_date = Time.zone.now.beginning_of_month
   end
 
   def create
