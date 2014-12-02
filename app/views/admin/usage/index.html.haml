@@ -23,7 +23,7 @@
     - @instance_results.each do |tenant, instances|
       %h3= tenant
       - if instances.values.any?
-        %table.table
+        %table.table.table-hover
           %thead
             %tr
               %th Name
@@ -49,7 +49,7 @@
     - @volume_results.each do |tenant, volumes|
       %h3= tenant
       - if volumes.values.any?
-        %table.table
+        %table.table.table-hover
           %thead
             %tr
               %th Name
