@@ -27,19 +27,19 @@
           %thead
             %tr
               %th Name
-              %th Uptime
+              %th Uptime (hours)
               %th Number of Cores
-              %th RAM
-              %th Root Disk
+              %th RAM (GB)
+              %th Root Disk (GB)
               %th Image ID
           %tbody
             - instances.each do |_, results|
               %tr
                 %td= results[:name]
-                %td= "#{number_with_delimiter(results[:billable_seconds], :delimiter => ',')} seconds"
-                %td= "#{results[:flavor][:vcpus_count]} cores"
-                %td= "#{results[:flavor][:ram_mb]} MB"
-                %td= "#{results[:flavor][:root_disk_gb]} GB"
+                %td= number_with_delimiter((results[:billable_seconds] / 360.0).round(2), :delimiter => ',')
+                %td= results[:flavor][:vcpus_count]
+                %td= (results[:flavor][:ram_mb] / 1024.0).round(2)
+                %td= results[:flavor][:root_disk_gb]
                 %td= results[:image_id]
       - else
         No instance data for this period.
@@ -53,11 +53,11 @@
           %thead
             %tr
               %th Name
-              %th Gigabyte/Seconds
+              %th Terabyte/Hours
           %tbody
             - volumes.each do |_, results|
               %tr
                 %td= results[:name]
-                %td= "#{number_with_delimiter(results[:gigabyte_seconds], :delimiter => ',')}"
+                %td= number_with_delimiter(((results[:gigabyte_seconds] / 360.0) / 1024.0).round(2), :delimiter => ',')
       - else
         No volume data for this period.
