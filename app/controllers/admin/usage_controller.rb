@@ -2,7 +2,7 @@ class Admin::UsageController < AdminBaseController
 
   before_filter :get_organizations
 
-  def new
+  def index
     @results = {}
     @from_date = Time.zone.now.last_month.beginning_of_month
     @to_date = Time.zone.now.beginning_of_month
@@ -14,7 +14,7 @@ class Admin::UsageController < AdminBaseController
       @instance_results = usage('Billing::Instances', @organization, @from_date, @to_date)
       @volume_results = usage('Billing::Volumes', @organization, @from_date, @to_date)
     end
-    render :new
+    render :index
   end
 
   private
