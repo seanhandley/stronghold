@@ -5,5 +5,7 @@ module Billing
     validates :address, :tenant_id, presence: true
 
     has_many :ip_states
+
+    scope :active, -> { where(active: true) }
   end
 end

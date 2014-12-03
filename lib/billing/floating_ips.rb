@@ -7,6 +7,7 @@ module Billing
         Billing.fetch_samples(tenant.uuid, "ip.floating", from, to).each do |ip_id, samples|
           create_new_states(tenant.uuid, ip_id, samples, sync)
         end
+        reap_old_floating_ips(sync)
       end
     end
 
@@ -54,7 +55,7 @@ module Billing
         else
           # Only one sample for this period
           if billable?(states.first)
-            return (to - from).round
+            return (to - states.first.recorded_at).round
           else
             return 0
           end
@@ -69,7 +70,7 @@ module Billing
     end
 
     def self.billable?(state)
-      state.port.downcase != 'none'
+      state.event_name != 'floatingip.destroy.end'
     end
 
     def self.create_new_states(tenant_id, ip_id, samples, sync)
@@ -94,6 +95,18 @@ module Billing
                                       port: s['resource_metadata']['port_id'],
                                       event_name: s['resource_metadata']['event_type'], billing_sync: sync,
                                       message_id: s['message_id']
+        end
+      end
+    end
+
+    def self.reap_old_floating_ips(sync)
+      Billing::Ip.active.each do |ip|
+        unless Fog::Network.new(OPENSTACK_ARGS).floating_ips.get(ip.ip_id)
+          Billing::IpState.create ip_id: ip.id, recorded_at: Time.zone.now,
+                                  port: 'None',
+                                  event_name: 'floatingip.destroy.end', billing_sync: sync,
+                                  message_id: SecureRandom.hex
+          ip.update_attributes(active: false)
         end
       end
     end
