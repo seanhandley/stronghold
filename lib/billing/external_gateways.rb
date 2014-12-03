@@ -3,25 +3,25 @@ module Billing
 
     def self.sync!(from, to, sync)
       Tenant.all.each do |tenant|
-        fetch_router_samples(tenant.uuid, from, to).each do |ip_id, samples|
-          create_new_states(ip_id, samples, sync)
+        fetch_samples(tenant.uuid, from, to).each do |router_id, samples|
+          create_new_states(router_id, samples, sync)
         end
       end
     end
 
     def self.usage(tenant_id, from, to)
-      ips = Billing::ExternalGateway.where(:tenant_id => tenant_id).to_a.compact
-      total = ips.inject({}) do |usage, ip|
-        usage[ip.ip_id] = { billable_seconds: seconds(ip, from, to),
-                                     address: ip.address}
+      routers = Billing::ExternalGateway.where(:tenant_id => tenant_id).to_a.compact
+      total = routers.inject({}) do |usage, router|
+        usage[router.router_id] = { billable_seconds: seconds(router, from, to),
+                                     address: router.address}
         usage
       end
       total.select{|k,v| v[:billable_seconds] > 0}
     end
 
-    def self.seconds(ip, from, to)
-      states = ip.ip_states.where(:recorded_at => from..to).order('recorded_at')
-      previous_state = ip.ip_states.where('recorded_at < ?', from).order('recorded_at DESC').limit(1).first
+    def self.seconds(router, from, to)
+      states = router.external_gateway_states.where(:recorded_at => from..to).order('recorded_at')
+      previous_state = router.external_gateway_states.where('recorded_at < ?', from).order('recorded_at DESC').limit(1).first
 
       if states.any?
         if states.count > 1
@@ -68,20 +68,20 @@ module Billing
     end
 
     def self.billable?(state)
-      state.port.downcase != 'none'
+      state.external_network_id.present?
     end
 
-    def self.create_new_states(ip_id, samples, sync)
+    def self.create_new_states(router_id, samples, sync)
       first_sample_metadata = samples.first['resource_metadata']
-      unless Billing::ExternalGateway.find_by_ip_id(ip_id)
-        ip = Billing::ExternalGateway.create(ip_id: ip_id, tenant_id: first_sample_metadata['tenant_id'],
+      unless Billing::ExternalGateway.find_by_router_id(router_id)
+        router = Billing::ExternalGateway.create(router_id: router_id, tenant_id: first_sample_metadata['tenant_id'],
                                         address: samples.first['inferred_address'])
       end
-      if(billing_ip = Billing::ExternalGateway.find_by_ip_id(ip_id))
+      if(billing_external_gateway = Billing::ExternalGateway.find_by_router_id(router_id))
         samples.collect do |s|
           if s['resource_metadata']['event_type']
-            Billing::ExternalGatewayState.create ip_id: billing_ip.id, recorded_at: s['recorded_at'],
-                                        port: s['resource_metadata']['external_gateway_info.network_id'],
+            Billing::ExternalGatewayState.create external_gateway_id: billing_external_gateway.id, recorded_at: s['recorded_at'],
+                                        external_network_id: s['resource_metadata']['external_gateway_info.network_id'],
                                         event_name: s['resource_metadata']['event_type'], billing_sync: sync,
                                         message_id: s['message_id']
           end
@@ -89,40 +89,20 @@ module Billing
       end
     end
 
-    def self.fetch_port_samples(from, to)
-      ext_nets    = Fog::Network.new(OPENSTACK_ARGS).networks.select{|n| n.router_external == true}.collect(&:id)
-      ext_subnets = Fog::Network.new(OPENSTACK_ARGS).subnets.select{|s| ext_nets.include?(s.network_id)}.collect(&:id)
+    def self.fetch_samples(tenant_id, from, to)
       timestamp_format = "%Y-%m-%dT%H:%M:%S"
       options = [{'field' => 'timestamp', 'op' => 'ge', 'value' => from.strftime(timestamp_format)},
                  {'field' => 'timestamp', 'op' => 'lt', 'value' => to.strftime(timestamp_format)}]
-      tenant_samples = Fog::Metering.new(OPENSTACK_ARGS).get_samples("port", options).body
-      tenant_samples.select do |p|
-        p['resource_metadata']['device_id'].present? &&
-        ext_nets.include?(p['resource_metadata']['network_id'])
-      end
-    end
-
-    def self.fetch_router_samples(tenant_id, from, to)
-      timestamp_format = "%Y-%m-%dT%H:%M:%S"
-      options = [{'field' => 'timestamp', 'op' => 'ge', 'value' => from.strftime(timestamp_format)},
-                 {'field' => 'timestamp', 'op' => 'lt', 'value' => to.strftime(timestamp_format)},
-                 {'field' => 'project_id', 'op' => 'eq', 'value' => tenant_id}]
       tenant_samples = Fog::Metering.new(OPENSTACK_ARGS).get_samples("router", options).body
+      tenant_samples = tenant_samples.select{|s| s['resource_metadata']['tenant_id'] == tenant_id}
 
-      ips = fetch_port_samples(from, to).inject({}) do |acc, sample|
-        acc[sample['resource_metadata']['device_id']] = extract_address(sample)
-        acc
+      tenant_samples = tenant_samples.collect do |s|
+        gateways = Fog::Network.new(OPENSTACK_ARGS).ports.all(device_id: s['resource_id'], device_owner: 'network:router_gateway')
+        address = gateways.any? ? gateways.first : ''
+        s.merge('inferred_address' => address.fixed_ips.first['ip_address'])
       end
-
-      tenant_samples = tenant_samples.collect{|s| s.merge('inferred_address' => ips[s['resource_id']]) }
-      puts tenant_samples.inspect
 
       tenant_samples.group_by{|s| s['resource_id']}
-    end
-
-    def self.extract_address(data)
-      data = data['resource_metadata']["fixed_ips"].gsub!("u'","'").gsub!("'","\"")
-      JSON.parse(data[2...-2])['ip_address']
     end
 
   end

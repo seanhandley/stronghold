@@ -13,6 +13,7 @@ class Admin::UsageController < AdminBaseController
       @instance_results = usage('Billing::Instances', @organization, @from_date, @to_date)
       @volume_results = usage('Billing::Volumes', @organization, @from_date, @to_date)
       @floating_ip_results = usage('Billing::FloatingIps', @organization, @from_date, @to_date)
+      @external_gateway_results = usage('Billing::ExternalGateways', @organization, @from_date, @to_date)
     end
     render :index
   end
