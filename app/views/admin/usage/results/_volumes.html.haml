@@ -1,0 +1,17 @@
+- if volume_results
+  %h2 Volume Usage
+  - volume_results.each do |tenant, volumes|
+    %h3= tenant
+    - if volumes.values.any?
+      %table.table.table-hover
+        %thead
+          %tr
+            %th Name
+            %th Terabyte/Hours
+        %tbody
+          - volumes.each do |_, results|
+            %tr
+              %td= results[:name]
+              %td= number_with_delimiter((((results[:gigabyte_seconds] / 60.0) / 60.0) / 1024.0).round(2), :delimiter => ',')
+    - else
+      No volume data for this period.
