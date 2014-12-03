@@ -1,0 +1,25 @@
+- if instance_results
+  %h2 Instance Usage
+  - instance_results.each do |tenant, instances|
+    %h3= tenant
+    - if instances.values.any?
+      %table.table.table-hover
+        %thead
+          %tr
+            %th Name
+            %th Uptime (hours)
+            %th Number of Cores
+            %th RAM (GB)
+            %th Root Disk (GB)
+            %th Image ID
+        %tbody
+          - instances.each do |_, results|
+            %tr
+              %td= results[:name]
+              %td= number_with_delimiter(((results[:billable_seconds] / 60.0) / 60.0).round(2), :delimiter => ',')
+              %td= results[:flavor][:vcpus_count]
+              %td= (results[:flavor][:ram_mb] / 1024.0).round(2)
+              %td= results[:flavor][:root_disk_gb]
+              %td= results[:image_id]
+    - else
+      No instance data for this period.
