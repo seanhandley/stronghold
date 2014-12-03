@@ -96,9 +96,10 @@ module Billing
         end
       end
       unless Billing::InstanceFlavor.find_by_flavor_id(flavor_id)
-        os_flavor = OpenStack::Flavor.find(flavor_id)
-        Billing::InstanceFlavor.create(flavor_id: flavor_id, name: os_flavor.name,
-                                       ram: os_flavor.ram, disk: os_flavor.disk, vcpus: os_flavor.vcpus)
+        if(os_flavor = OpenStack::Flavor.find(flavor_id))
+          Billing::InstanceFlavor.create(flavor_id: flavor_id, name: os_flavor.name,
+                                         ram: os_flavor.ram, disk: os_flavor.disk, vcpus: os_flavor.vcpus)
+        end
       end
       billing_instance_id = Billing::Instance.find_by_instance_id(instance_id).id
       samples.collect do |s|

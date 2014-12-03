@@ -17,6 +17,6 @@
 
     = submit_tag 'Generate →', class: 'btn btn-primary'
 
-  = render partial: 'admin/usage/results/instances',      locals: { instance_results:      @instance_results    }
-  = render partial: 'admin/usage/results/volumes',        locals: { volume_results:        @volume_results      }
-  = render partial: 'admin/usage/results/ips',            locals: { floating_ip_results:   @floating_ip_results }
+  = render partial: 'admin/usage/results/instances',      locals: { instance_results:      @instance_results            }
+  = render partial: 'admin/usage/results/volumes',        locals: { volume_results:        @volume_results              }
+  = render partial: 'admin/usage/results/ips',            locals: { floating_ip_results:   @floating_ip_results,                                                                external_gateway_results: @external_gateway_results }
