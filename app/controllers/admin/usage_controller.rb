@@ -3,7 +3,6 @@ class Admin::UsageController < AdminBaseController
   before_filter :get_organizations
 
   def index
-    @results = {}
     @from_date = Time.zone.now.last_month.beginning_of_month
     @to_date = Time.zone.now.beginning_of_month
   end
@@ -13,6 +12,7 @@ class Admin::UsageController < AdminBaseController
     if (@organization = Organization.find(create_params[:organization]))
       @instance_results = usage('Billing::Instances', @organization, @from_date, @to_date)
       @volume_results = usage('Billing::Volumes', @organization, @from_date, @to_date)
+      @floating_ip_results = usage('Billing::FloatingIps', @organization, @from_date, @to_date)
     end
     render :index
   end

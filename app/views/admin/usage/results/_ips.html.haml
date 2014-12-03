@@ -1,0 +1,18 @@
+- if floating_ip_results
+  %h2 IP Usage
+  %h3 Floating IPs
+  - floating_ip_results.each do |tenant, ips|
+    %h3= tenant
+    - if ips.values.any?
+      %table.table.table-hover
+        %thead
+          %tr
+            %th Address
+            %th Uptime (hours)
+        %tbody
+          - ips.each do |_, results|
+            %tr
+              %td= results[:address]
+              %td= ((results[:billable_seconds] / 60.0) / 60.0).round(2)
+    - else
+      No floating IP data for this period.
