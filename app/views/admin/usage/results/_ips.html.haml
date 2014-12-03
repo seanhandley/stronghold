@@ -8,11 +8,11 @@
         %thead
           %tr
             %th Address
-            %th Uptime (hours)
+            %th Hours Usage
         %tbody
           - ips.each do |_, results|
             %tr
               %td= results[:address]
-              %td= ((results[:billable_seconds] / 60.0) / 60.0).round(2)
+              %td= ((results[:billable_seconds] / 60.0) / 60.0).ceil
     - else
       No floating IP data for this period.
