@@ -5,7 +5,7 @@ module Billing
       Tenant.all.each do |tenant|
         next unless tenant.uuid
         Billing.fetch_samples(tenant.uuid, "volume", from, to).each do |volume_id, samples|
-          create_new_states(tenant.uuid, volume_id, samples)
+          create_new_states(tenant.uuid, volume_id, samples, sync)
         end
       end
     end
