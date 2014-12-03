@@ -13,14 +13,14 @@ module Billing
     def self.usage(tenant_id, from, to)
       volumes = Billing::Volume.where(:tenant_id => tenant_id).to_a.compact
       total = volumes.inject({}) do |usage, volume|
-        usage[volume.volume_id] = { gigabyte_seconds: gigabyte_seconds(volume, from, to),
+        usage[volume.volume_id] = { terabyte_hours: terabyte_hours(volume, from, to),
                                     name: volume.name}
         usage
       end
-      total.select{|k,v| v[:gigabyte_seconds] > 0}
+      total.select{|k,v| v[:terabyte_hours] > 0}
     end
 
-    def self.gigabyte_seconds(volume, from, to)
+    def self.terabyte_hours(volume, from, to)
       states = volume.volume_states.where(:recorded_at => from..to).order('recorded_at')
       previous_state = volume.volume_states.where('recorded_at < ?', from).order('recorded_at DESC').limit(1).first
 
@@ -30,8 +30,8 @@ module Billing
 
           if previous_state
             if billable?(previous_state.event_name)
-              start = (states.first.recorded_at - from)
-              start *= states.first.size
+              start = seconds_to_whole_hours(states.first.recorded_at - from)
+              start *= gigabytes_to_terabytes(states.first.size)
             end
           end
 
@@ -39,8 +39,8 @@ module Billing
           middle = states.collect do |state|
             difference = 0
             if billable?(previous.event_name)
-              difference = state.recorded_at - previous.recorded_at
-              difference *= state.size
+              difference = seconds_to_whole_hours(state.recorded_at - previous.recorded_at)
+              difference *= gigabytes_to_terabytes(state.size)
             end
             previous = state
             difference
@@ -49,22 +49,22 @@ module Billing
           ending = 0
 
           if(billable?(states.last.event_name))
-            ending = (to - states.last.recorded_at)
-            ending *= states.last.size
+            ending = seconds_to_whole_hours(to - states.last.recorded_at)
+            ending *= gigabytes_to_terabytes(states.last.size)
           end
 
-          return (start + middle + ending).round
+          return (start + middle + ending).round(2)
         else
           # Only one sample for this period
           if billable?(states.first.event_name)
-            return ((to - from) * states.first.size).round
+            return (seconds_to_whole_hours(to - from) * gigabytes_to_terabytes(states.first.size)).round(2)
           else
             return 0
           end
         end
       else
         if previous_state && billable?(previous_state.event_name)
-          return ((to - from) * previous_state.size).round
+          return (seconds_to_whole_hours(to - from) * gigabytes_to_terabytes(previous_state.size)).round(2)
         else
           return 0
         end
@@ -73,6 +73,14 @@ module Billing
 
     def self.billable?(event)
       event != 'volume.delete.end'
+    end
+
+    def self.seconds_to_whole_hours(seconds)
+      ((seconds / 60.0) / 60.0).ceil
+    end
+
+    def self.gigabytes_to_terabytes(gigabytes)
+      (gigabytes / 1024.0).round(2)
     end
 
     def self.create_new_states(tenant_id, volume_id, samples, sync)
