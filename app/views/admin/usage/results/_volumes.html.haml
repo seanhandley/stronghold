@@ -7,11 +7,11 @@
         %thead
           %tr
             %th Name
-            %th Terabyte/Hours
+            %th Terabyte Hours
         %tbody
           - volumes.each do |_, results|
             %tr
               %td= results[:name]
-              %td= number_with_delimiter((((results[:gigabyte_seconds] / 60.0) / 60.0) / 1024.0).round(2), :delimiter => ',')
+              %td= number_with_delimiter((((results[:gigabyte_seconds] / 60.0) / 60.0) / 1024.0).ceil, :delimiter => ',')
     - else
       No volume data for this period.

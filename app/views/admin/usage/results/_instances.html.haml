@@ -7,7 +7,7 @@
         %thead
           %tr
             %th Name
-            %th Uptime (hours)
+            %th Hours Usage
             %th Number of Cores
             %th RAM (GB)
             %th Root Disk (GB)
@@ -16,7 +16,7 @@
           - instances.each do |_, results|
             %tr
               %td= results[:name]
-              %td= number_with_delimiter(((results[:billable_seconds] / 60.0) / 60.0).round(2), :delimiter => ',')
+              %td= number_with_delimiter(((results[:billable_seconds] / 60.0) / 60.0).ceil, :delimiter => ',')
               %td= results[:flavor][:vcpus_count]
               %td= (results[:flavor][:ram_mb] / 1024.0).round(2)
               %td= results[:flavor][:root_disk_gb]
