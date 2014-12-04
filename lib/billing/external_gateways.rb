@@ -3,7 +3,7 @@ module Billing
 
     def self.sync!(from, to, sync)
       Tenant.all.each do |tenant|
-        fetch_samples(tenant.uuid, from, to).each do |router_id, samples|
+        fetch_router_samples(tenant.uuid, from, to).each do |router_id, samples|
           create_new_states(router_id, samples, sync)
         end
       end
@@ -89,7 +89,7 @@ module Billing
       end
     end
 
-    def self.fetch_samples(tenant_id, from, to)
+    def self.fetch_router_samples(tenant_id, from, to)
       timestamp_format = "%Y-%m-%dT%H:%M:%S"
       options = [{'field' => 'timestamp', 'op' => 'ge', 'value' => from.strftime(timestamp_format)},
                  {'field' => 'timestamp', 'op' => 'lt', 'value' => to.strftime(timestamp_format)}]
