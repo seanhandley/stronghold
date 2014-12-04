@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141204122505) do
+ActiveRecord::Schema.define(version: 20141204134415) do
 
   create_table "audits", force: true do |t|
     t.string   "auditable_id"
@@ -56,7 +56,7 @@ ActiveRecord::Schema.define(version: 20141204122505) do
   create_table "billing_image_states", force: true do |t|
     t.datetime "recorded_at", limit: 3
     t.string   "event_name"
-    t.integer  "size"
+    t.float    "size",        limit: 24
     t.integer  "image_id"
     t.integer  "sync_id"
     t.string   "message_id"
