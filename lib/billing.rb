@@ -11,6 +11,7 @@ module Billing
       Billing::Volumes.sync!(from, to, sync)
       Billing::FloatingIps.sync!(from, to, sync)
       Billing::ExternalGateways.sync!(from, to, sync)
+      Billing::Images.sync!(from, to, sync)
       sync.update_attributes(completed_at: Time.zone.now)
       #raise ActiveRecord::Rollback
     end
