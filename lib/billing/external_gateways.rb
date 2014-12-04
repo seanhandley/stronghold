@@ -13,7 +13,7 @@ module Billing
       routers = Billing::ExternalGateway.where(:tenant_id => tenant_id).to_a.compact
       total = routers.inject({}) do |usage, router|
         usage[router.router_id] = { billable_seconds: seconds(router, from, to),
-                                     address: router.address}
+                                     name: router.name}
         usage
       end
       total.select{|k,v| v[:billable_seconds] > 0}
@@ -75,7 +75,7 @@ module Billing
       first_sample_metadata = samples.first['resource_metadata']
       unless Billing::ExternalGateway.find_by_router_id(router_id)
         router = Billing::ExternalGateway.create(router_id: router_id, tenant_id: first_sample_metadata['tenant_id'],
-                                        address: samples.first['inferred_address'])
+                                                 name: first_sample_metadata['name'])
       end
       if(billing_external_gateway = Billing::ExternalGateway.find_by_router_id(router_id))
         samples.collect do |s|
@@ -83,7 +83,7 @@ module Billing
             Billing::ExternalGatewayState.create external_gateway_id: billing_external_gateway.id, recorded_at: s['recorded_at'],
                                         external_network_id: s['resource_metadata']['external_gateway_info.network_id'],
                                         event_name: s['resource_metadata']['event_type'], billing_sync: sync,
-                                        message_id: s['message_id']
+                                        message_id: s['message_id'], address: s['inferred_address']
           end
         end
       end
