@@ -80,7 +80,7 @@ module Billing
     end
 
     def self.kilobytes_to_terabytes(kilobytes)
-      (((kilobytes / 1024.0) / 1024.0) / 1024.0).round(2)
+      (((kilobytes / 1024.0) / 1024.0) / 1024.0)
     end
 
     def self.create_new_states(tenant_id, image_id, samples, sync)
