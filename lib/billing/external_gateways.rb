@@ -98,11 +98,14 @@ module Billing
 
       tenant_samples = tenant_samples.collect do |s|
         gateways = Fog::Network.new(OPENSTACK_ARGS).ports.all(device_id: s['resource_id'], device_owner: 'network:router_gateway')
-        address = gateways.any? ? gateways.first : ''
-        s.merge('inferred_address' => address.fixed_ips.first['ip_address'])
+        address = gateways.any? ? gateways.first : nil
+        if address
+          s.merge('inferred_address' => address.fixed_ips.first['ip_address'])
+        end
+        s
       end
 
-      tenant_samples.group_by{|s| s['resource_id']}
+      tenant_samples.compact.group_by{|s| s['resource_id']}
     end
 
   end
