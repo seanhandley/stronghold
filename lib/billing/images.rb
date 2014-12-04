@@ -31,7 +31,7 @@ module Billing
           if previous_state
             if billable?(previous_state.event_name)
               start = seconds_to_whole_hours(states.first.recorded_at - from)
-              start *= kilobytes_to_terabytes(states.first.size)
+              start *= states.first.size
             end
           end
 
@@ -40,7 +40,7 @@ module Billing
             difference = 0
             if billable?(previous.event_name)
               difference = seconds_to_whole_hours(state.recorded_at - previous.recorded_at)
-              difference *= kilobytes_to_terabytes(state.size)
+              difference *= state.size
             end
             previous = state
             difference
@@ -50,21 +50,21 @@ module Billing
 
           if(billable?(states.last.event_name))
             ending = seconds_to_whole_hours(to - states.last.recorded_at)
-            ending *= kilobytes_to_terabytes(states.last.size)
+            ending *= states.last.size
           end
 
           return (start + middle + ending).round(2)
         else
           # Only one sample for this period
           if billable?(states.first.event_name)
-            return (seconds_to_whole_hours(to - from) * kilobytes_to_terabytes(states.first.size)).round(2)
+            return (seconds_to_whole_hours(to - from) * states.first.size).round(2)
           else
             return 0
           end
         end
       else
         if previous_state && billable?(previous_state.event_name)
-          return (seconds_to_whole_hours(to - from) * kilobytes_to_terabytes(previous_state.size)).round(2)
+          return (seconds_to_whole_hours(to - from) * previous_state.size).round(2)
         else
           return 0
         end
@@ -91,7 +91,7 @@ module Billing
           # This is a new image and we don't know its current size
           # Attempt to find out
           if(os_image = Fog::Image.new(OPENSTACK_ARGS).images.get(image_id))
-            image.image_states.create recorded_at: DateTime.now, size: os_image.size,
+            image.image_states.create recorded_at: DateTime.now, size: kilobytes_to_terabytes(os_image.size),
                                             event_name: 'ping', billing_sync: sync,
                                             message_id: SecureRandom.hex
           end
@@ -101,7 +101,7 @@ module Billing
       samples.collect do |s|
         if s['resource_metadata']['event_type']
           Billing::ImageState.create image_id: billing_image_id, recorded_at: s['recorded_at'],
-                                      size: s['resource_metadata']['size'],
+                                      size: kilobytes_to_terabytes(s['resource_metadata']['size']),
                                       event_name: s['resource_metadata']['event_type'], billing_sync: sync,
                                       message_id: s['message_id']
         end
