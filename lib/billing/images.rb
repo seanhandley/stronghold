@@ -91,7 +91,7 @@ module Billing
           # This is a new image and we don't know its current size
           # Attempt to find out
           if(os_image = Fog::Image.new(OPENSTACK_ARGS).images.get(image_id))
-            image.image_states.create recorded_at: DateTime.now, size: kilobytes_to_terabytes(os_image.size),
+            image.image_states.create recorded_at: DateTime.now, size: kilobytes_to_terabytes(os_image.size.to_i),
                                             event_name: 'ping', billing_sync: sync,
                                             message_id: SecureRandom.hex
           end
@@ -101,7 +101,7 @@ module Billing
       samples.collect do |s|
         if s['resource_metadata']['event_type']
           Billing::ImageState.create image_id: billing_image_id, recorded_at: s['recorded_at'],
-                                      size: kilobytes_to_terabytes(s['resource_metadata']['size']),
+                                      size: kilobytes_to_terabytes(s['resource_metadata']['size'].to_i),
                                       event_name: s['resource_metadata']['event_type'], billing_sync: sync,
                                       message_id: s['message_id']
         end
