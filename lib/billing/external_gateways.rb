@@ -53,7 +53,7 @@ module Billing
         else
           # Only one sample for this period
           if billable?(states.first)
-            return (to - from).round
+            return (to - states.first.recorded_at).round
           else
             return 0
           end
