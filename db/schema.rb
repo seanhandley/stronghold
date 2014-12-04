@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141203122234) do
+ActiveRecord::Schema.define(version: 20141204100053) do
 
   create_table "audits", force: true do |t|
     t.string   "auditable_id"
@@ -43,12 +43,14 @@ ActiveRecord::Schema.define(version: 20141203122234) do
     t.datetime "recorded_at",         limit: 3
     t.integer  "sync_id"
     t.string   "message_id"
+    t.string   "address"
   end
 
   create_table "billing_external_gateways", force: true do |t|
     t.string "router_id"
     t.string "address"
     t.string "tenant_id"
+    t.string "name"
   end
 
   create_table "billing_instance_flavors", force: true do |t|
