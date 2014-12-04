@@ -17,19 +17,19 @@
     - else
       No floating IP data for this period.
 
-  %h3 Router Gateways
+  %h3 External Gateways
   - external_gateway_results.each do |tenant, ips|
     %h3= tenant
     - if ips.values.any?
       %table.table.table-hover
         %thead
           %tr
-            %th Address
-            %th Hours Usage
+            %th Router Name
+            %th Hours Connected to External Network
         %tbody
           - ips.each do |_, results|
             %tr
-              %td= results[:address]
+              %td= results[:name]
               %td= ((results[:billable_seconds] / 60.0) / 60.0).ceil
     - else
       No floating IP data for this period.
