@@ -16,7 +16,7 @@ module Billing
         { terabyte_hours: terabyte_hours(volume, from, to),
                                     name: volume.name}
       end
-      volumes.select{|k,v| v[:terabyte_hours] > 0}
+      volumes.select{|v| v[:terabyte_hours] > 0}
     end
 
     def self.terabyte_hours(volume, from, to)
