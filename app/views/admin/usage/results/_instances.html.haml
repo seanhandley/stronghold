@@ -34,5 +34,6 @@
               %td== #{number_with_delimiter(instances.map{|i| ((i[:billable_seconds] / 60.0) / 60.0).ceil}.sum, :delimiter => ',')} hours
             %tr
               %td &nbsp;
+              %td &nbsp;
     - else
       No instance data for this period.
