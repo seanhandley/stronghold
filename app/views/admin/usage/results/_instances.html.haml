@@ -4,23 +4,15 @@
     %h3= tenant
     - if instances.any?
       %table.table.table-hover
-        %thead
-          %tr
-            %th Name
-            %th Hours Usage
-            %th Number of Cores
-            %th RAM (GB)
-            %th Root Disk (GB)
-            %th Image ID
         %tbody
           - instances.group_by{|i| i[:flavor][:flavor_id]}.each do |_, instances|
             %tr.highlight
               %td= instances.first[:flavor][:name]
-              %td
-              %td
-              %td
-              %td
-              %td
+              %td Hours Usage
+              %td Number of Cores
+              %td RAM (GB)
+              %td Root Disk (GB)
+              %td Image ID
             - instances.each do |instance|
               %tr
                 %td= instance[:name]
