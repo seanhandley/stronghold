@@ -13,9 +13,9 @@
             %th Root Disk (GB)
             %th Image ID
         %tbody
-          - instances.group_by{|i| i[:flavor][:name]}.each do |flavor, instances|
+          - instances.group_by{|i| i[:flavor][:flavor_id]}.each do |_, instances|
             %tr.highlight
-              %td= flavor
+              %td= instances.first[:flavor][:name]
               %td
               %td
               %td
@@ -30,7 +30,7 @@
                 %td= instance[:flavor][:root_disk_gb]
                 %td= instance[:image_id]
             %tr.highlight
-              %td== Total #{flavor}:
+              %td== Total #{instances.first[:flavor][:name]}:
               %td== #{number_with_delimiter(instances.map{|i| ((i[:billable_seconds] / 60.0) / 60.0).ceil}.sum, :delimiter => ',')} hours
             %tr
               %td &nbsp;
