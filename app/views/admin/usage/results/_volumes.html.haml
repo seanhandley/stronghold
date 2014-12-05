@@ -13,7 +13,7 @@
             %tr
               %td= volume[:name]
               %td= number_with_delimiter(volume[:terabyte_hours], :delimiter => ',')
-          %tr.highlight
+          %tr.highlight.bottomline
             %td Total:
             %td= number_with_delimiter(volumes.collect{|v| v[:terabyte_hours]}.sum.round(2), :delimiter => ',')
     - else

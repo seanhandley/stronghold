@@ -13,7 +13,7 @@
             %tr
               %td= image[:name]
               %td= number_with_delimiter(image[:terabyte_hours], :delimiter => ',')
-          %tr.highlight
+          %tr.highlight.bottomline
             %td Total:
             %td= number_with_delimiter(images.collect{|v| v[:terabyte_hours]}.sum.round(2), :delimiter => ',')
     - else
