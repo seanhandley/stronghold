@@ -12,12 +12,11 @@ module Billing
 
     def self.usage(tenant_id, from, to)
       images = Billing::Image.where(:tenant_id => tenant_id).to_a.compact
-      total = images.inject({}) do |usage, image|
-        usage[image.image_id] = { terabyte_hours: terabyte_hours(image, from, to),
+      images = images.collect do |image|
+        { terabyte_hours: terabyte_hours(image, from, to),
                                   name: image.name}
-        usage
       end
-      total.select{|k,v| v[:terabyte_hours] > 0}
+      images.select{|i| i[:terabyte_hours] > 0}
     end
 
     def self.terabyte_hours(image, from, to)
