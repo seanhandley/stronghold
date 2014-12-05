@@ -64,6 +64,10 @@ table tr.highlight {
   background: #eee;
 }
 
+table tr.bottomline {
+  border-top: solid 1px #000;
+}
+
 table tr.highlight td {
   font-weight: bold;
 }
