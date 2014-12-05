@@ -1,6 +1,13 @@
 module Billing
   module FloatingIps
 
+    def self.fetch_ip_quotas(organization)
+      organization.tenants.inject({}) do |acc, tenant|
+        acc[tenant.name] = Fog::Compute.new(OPENSTACK_ARGS).get_quota(tenant.uuid).body['quota_set']['floating_ips']
+        acc
+      end
+    end
+
     def self.sync!(from, to, sync)
       Tenant.all.each do |tenant|
         next unless tenant.uuid

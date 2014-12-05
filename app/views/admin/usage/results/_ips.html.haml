@@ -1,21 +1,15 @@
 - if floating_ip_results
   %h2 IP Usage
   %h3 Floating IPs
-  - floating_ip_results.each do |tenant, ips|
+  - floating_ip_results.each do |tenant, quota|
     %h3= tenant
-    - if ips.values.any?
-      %table.table.table-hover
-        %thead
-          %tr
-            %th Address
-            %th Hours Usage
-        %tbody
-          - ips.each do |_, results|
-            %tr
-              %td= results[:address]
-              %td= ((results[:billable_seconds] / 60.0) / 60.0).ceil
-    - else
-      No floating IP data for this period.
+    %table.table.table-hover
+      %thead
+        %tr
+          %th Floating IP Quota
+      %tbody
+        %tr
+          %td== #{quota} floating IPs
 
   %h3 External Gateways
   - external_gateway_results.each do |tenant, ips|
