@@ -2,7 +2,7 @@
   %h2 Instance Usage
   - instance_results.each do |tenant, instances|
     %h3= tenant
-    - if instances.values.any?
+    - if instances.any?
       %table.table.table-hover
         %thead
           %tr
@@ -13,13 +13,19 @@
             %th Root Disk (GB)
             %th Image ID
         %tbody
-          - instances.each do |_, results|
-            %tr
-              %td= results[:name]
-              %td= number_with_delimiter(((results[:billable_seconds] / 60.0) / 60.0).ceil, :delimiter => ',')
-              %td= results[:flavor][:vcpus_count]
-              %td= (results[:flavor][:ram_mb] / 1024.0).round(2)
-              %td= results[:flavor][:root_disk_gb]
-              %td= results[:image_id]
+          - instances.group_by{|i| i[:flavor][:name]}.each do |flavor, instances|
+            %tr.strong
+              %td= flavor
+            - instances.each do |instance|
+              %tr
+                %td= instance[:name]
+                %td= number_with_delimiter(((instance[:billable_seconds] / 60.0) / 60.0).ceil, :delimiter => ',')
+                %td= instance[:flavor][:vcpus_count]
+                %td= (instance[:flavor][:ram_mb] / 1024.0).round(2)
+                %td= instance[:flavor][:root_disk_gb]
+                %td= instance[:image_id]
+            %tr.strong
+              %td== Total #{flavor}:
+              %td= number_with_delimiter(instances.map{|i| ((i[:billable_seconds] / 60.0) / 60.0).ceil}.sum, :delimiter => ',')
     - else
       No instance data for this period.
