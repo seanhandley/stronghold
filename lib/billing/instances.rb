@@ -12,8 +12,8 @@ module Billing
 
     def self.usage(tenant_id, from, to)
       instances = Billing::Instance.where(:tenant_id => tenant_id).to_a.compact
-      total = instances.inject({}) do |usage, instance|
-        usage[instance.name] = {billable_seconds: seconds(instance, from, to),
+      instances = instances.collect do |instance|
+        {billable_seconds: seconds(instance, from, to),
                                        name: instance.name, flavor: {
                                          flavor_id: instance.flavor_id,
                                          name: instance.instance_flavor.name,
@@ -22,9 +22,8 @@ module Billing
                                          ram_mb: instance.instance_flavor.ram,
                                          root_disk_gb: instance.instance_flavor.disk},
                                        image_id: instance.image_id}
-        usage
       end
-      total.select{|k,v| v[:billable_seconds] > 0}
+      instances.select{|i| i[:billable_seconds] > 0}
     end
 
     def self.seconds(instance, from, to)
