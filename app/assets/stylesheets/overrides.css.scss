@@ -60,6 +60,10 @@ p {
   background-color: #A3A3A3;
 }
 
-table tr.strong td {
+table tr.highlight {
+  background: #eee;
+}
+
+table tr.highlight td {
   font-weight: bold;
 }

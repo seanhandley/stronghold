@@ -14,8 +14,13 @@
             %th Image ID
         %tbody
           - instances.group_by{|i| i[:flavor][:name]}.each do |flavor, instances|
-            %tr.strong
+            %tr.highlight
               %td= flavor
+              %td
+              %td
+              %td
+              %td
+              %td
             - instances.each do |instance|
               %tr
                 %td= instance[:name]
@@ -24,8 +29,8 @@
                 %td= (instance[:flavor][:ram_mb] / 1024.0).round(2)
                 %td= instance[:flavor][:root_disk_gb]
                 %td= instance[:image_id]
-            %tr.strong
+            %tr.highlight
               %td== Total #{flavor}:
-              %td= number_with_delimiter(instances.map{|i| ((i[:billable_seconds] / 60.0) / 60.0).ceil}.sum, :delimiter => ',')
+              %td== #{number_with_delimiter(instances.map{|i| ((i[:billable_seconds] / 60.0) / 60.0).ceil}.sum, :delimiter => ',')} hours
     - else
       No instance data for this period.
