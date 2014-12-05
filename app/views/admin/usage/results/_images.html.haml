@@ -15,6 +15,6 @@
               %td= number_with_delimiter(image[:terabyte_hours], :delimiter => ',')
           %tr.highlight
             %td Total:
-            %td= number_with_delimiter(images.collect{|v| v[:terabyte_hours]}.sum, :delimiter => ',')
+            %td= number_with_delimiter(images.collect{|v| v[:terabyte_hours]}.sum.round(2), :delimiter => ',')
     - else
       No image data for this period.
