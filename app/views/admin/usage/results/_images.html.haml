@@ -2,16 +2,19 @@
   %h2 Image Usage
   - image_results.each do |tenant, images|
     %h3= tenant
-    - if images.values.any?
+    - if images.any?
       %table.table.table-hover
         %thead
           %tr
             %th Name
             %th Terabyte Hours
         %tbody
-          - images.each do |_, results|
+          - images.each do |image|
             %tr
-              %td= results[:name]
-              %td= number_with_delimiter(results[:terabyte_hours], :delimiter => ',')
+              %td= image[:name]
+              %td= number_with_delimiter(image[:terabyte_hours], :delimiter => ',')
+          %tr.highlight
+            %td Total:
+            %td= number_with_delimiter(images.collect{|v| v[:terabyte_hours]}.sum, :delimiter => ',')
     - else
       No image data for this period.
