@@ -12,12 +12,11 @@ module Billing
 
     def self.usage(tenant_id, from, to)
       volumes = Billing::Volume.where(:tenant_id => tenant_id).to_a.compact
-      total = volumes.inject({}) do |usage, volume|
-        usage[volume.volume_id] = { terabyte_hours: terabyte_hours(volume, from, to),
+      volumes = volumes.collect do |volume|
+        { terabyte_hours: terabyte_hours(volume, from, to),
                                     name: volume.name}
-        usage
       end
-      total.select{|k,v| v[:terabyte_hours] > 0}
+      volumes.select{|k,v| v[:terabyte_hours] > 0}
     end
 
     def self.terabyte_hours(volume, from, to)
