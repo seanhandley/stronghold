@@ -36,6 +36,6 @@
               %td= ((results[:billable_seconds] / 60.0) / 60.0).ceil
           %tr.highlight.bottomline
             %td Total:
-            %td= ((ips.values.collect{|ip| ip[:billable_seconds]}.sum / 60.0) / 60.0).ceil
+            %td= ips.values.collect{|ip| ((ip[:billable_seconds] / 60.0) / 60.0).ceil}.sum
     - else
       No floating IP data for this period.
