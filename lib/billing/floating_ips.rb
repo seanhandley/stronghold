@@ -1,28 +1,22 @@
 module Billing
   module FloatingIps
 
-    def self.fetch_ip_quotas(organization)
-      organization.tenants.inject({}) do |acc, tenant|
-        acc[tenant.name] = Fog::Compute.new(OPENSTACK_ARGS).get_quota(tenant.uuid).body['quota_set']['floating_ips']
-        acc
-      end
-    end
-
     def self.sync!(from, to, sync)
       Tenant.all.each do |tenant|
         next unless tenant.uuid
         Billing.fetch_samples(tenant.uuid, "ip.floating", from, to).each do |ip_id, samples|
           create_new_states(tenant.uuid, ip_id, samples, sync)
         end
-        reap_old_floating_ips(sync)
       end
     end
 
     def self.usage(tenant_id, from, to)
       ips = Billing::Ip.where(:tenant_id => tenant_id).to_a.compact
+      quota = Fog::Compute.new(OPENSTACK_ARGS).get_quota(tenant_id).body['quota_set']['floating_ips']
       total = ips.inject({}) do |usage, ip|
         usage[ip.ip_id] = { billable_seconds: seconds(ip, from, to),
-                                     address: ip.address}
+                                     address: ip.address,
+                                     quota: quota}
         usage
       end
       total.select{|k,v| v[:billable_seconds] > 0}
@@ -77,7 +71,7 @@ module Billing
     end
 
     def self.billable?(state)
-      state.event_name != 'floatingip.destroy.end'
+      state.port != "None"
     end
 
     def self.create_new_states(tenant_id, ip_id, samples, sync)
@@ -102,18 +96,6 @@ module Billing
                                       port: s['resource_metadata']['port_id'],
                                       event_name: s['resource_metadata']['event_type'], billing_sync: sync,
                                       message_id: s['message_id']
-        end
-      end
-    end
-
-    def self.reap_old_floating_ips(sync)
-      Billing::Ip.active.each do |ip|
-        unless Fog::Network.new(OPENSTACK_ARGS).floating_ips.get(ip.ip_id)
-          Billing::IpState.create ip_id: ip.id, recorded_at: Time.zone.now,
-                                  port: 'None',
-                                  event_name: 'floatingip.destroy.end', billing_sync: sync,
-                                  message_id: SecureRandom.hex
-          ip.update_attributes(active: false)
         end
       end
     end

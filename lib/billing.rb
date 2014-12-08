@@ -9,9 +9,7 @@ module Billing
       sync = Billing::Sync.create started_at: Time.zone.now
       Billing::Instances.sync!(from, to, sync)
       Billing::Volumes.sync!(from, to, sync)
-      # We now pull the quota and bill based on that
-      # To do: Remove floating IP code
-      # Billing::FloatingIps.sync!(from, to, sync)
+      Billing::FloatingIps.sync!(from, to, sync)
       Billing::ExternalGateways.sync!(from, to, sync)
       Billing::Images.sync!(from, to, sync)
       sync.update_attributes(completed_at: Time.zone.now)

@@ -13,7 +13,7 @@ class Admin::UsageController < AdminBaseController
         @instance_results = usage('Billing::Instances', @organization, @from_date, @to_date)
         @volume_results = usage('Billing::Volumes', @organization, @from_date, @to_date)
         @image_results = usage('Billing::Images', @organization, @from_date, @to_date)
-        @floating_ip_results = Billing::FloatingIps.fetch_ip_quotas(@organization)
+        @floating_ip_results = usage('Billing::FloatingIps', @organization, @from_date, @to_date)
         @external_gateway_results = usage('Billing::ExternalGateways', @organization, @from_date, @to_date)
       end
     rescue ArgumentError => e
