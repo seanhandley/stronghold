@@ -1,7 +1,7 @@
 - if instance_results
   %h2 Instance Usage
   - instance_results.each do |tenant, instances|
-    %h3= tenant
+    %h3== #{tenant} project
     - if instances.any?
       %table.table.table-hover
         %tbody

@@ -1,7 +1,7 @@
 - if volume_results
   %h2 Volume Usage
   - volume_results.each do |tenant, volumes|
-    %h3= tenant
+    %h3== #{tenant} project
     - if volumes.any?
       %table.table.table-hover
         %thead
