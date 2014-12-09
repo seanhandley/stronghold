@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
   authenticates_with_keystone
   syncs_with_keystone as: 'OpenStack::User', actions: [:create, :destroy]
   after_save :update_password
+  after_create :generate_ec2_credentials
 
   has_and_belongs_to_many :roles
   belongs_to :organization
@@ -62,6 +63,15 @@ class User < ActiveRecord::Base
   def update_password
     if password
       OpenStack::User.update_password uuid, password
+    end
+  end
+
+  def generate_ec2_credentials
+    unless Rails.env.test?
+      organization.tenants.each do |tenant|
+        credential = Fog::Identity.new(OPENSTACK_ARGS).create_ec2_credential(uuid, tenant.uuid).body['credential']
+        Ceph::UserKey.create 'uid' => tenant.uuid, 'access-key' => credential['access'], 'secret-key' => credential['secret']
+      end
     end
   end
 
