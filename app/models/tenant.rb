@@ -5,6 +5,7 @@ class Tenant < ActiveRecord::Base
   validates :name, length: {minimum: 1}, allow_blank: false
 
   syncs_with_keystone as: 'OpenStack::Tenant', actions: [:create, :destroy]
+  syncs_with_ceph     as: 'Ceph::User',        actions: [:create, :destroy]
 
   has_many :user_tenant_roles
   has_many :users, :through => :user_tenant_roles
@@ -17,6 +18,10 @@ class Tenant < ActiveRecord::Base
     { name: reference, enabled: true,
       description: "Customer: #{organization.name}, Project: #{name}" 
     }
+  end
+
+  def ceph_params
+    { 'uid' => uuid, 'display-name' => name}
   end
 
 end

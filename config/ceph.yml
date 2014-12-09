@@ -1,0 +1,14 @@
+default: &default
+  api_url: "storage.datacentred.io"
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+staging:
+  <<: *default
+
+production:
+  <<: *default

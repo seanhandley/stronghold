@@ -26,7 +26,8 @@ gem 'sirportly', '~> 1.3.6'
 gem 'kaminari', '~> 0.16.1'
 gem 'bootstrap-kaminari-views', '~> 0.0.5'
 gem 'dalli', '~> 2.7.2'
-gem 'clockwork'
+gem 'clockwork', '~> 1.1.0'
+gem 'aws-s3', git: 'https://github.com/datacentred/aws-s3.git'
 
 group :test do
   gem 'minitest-rails'
