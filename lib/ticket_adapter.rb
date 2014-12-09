@@ -61,6 +61,7 @@ class TicketAdapter
         :subject => ticket.title,
         :name => ticket.name,
         :email => ticket.email,
+        'custom[organization_name]' => Authorization.current_user.organization.name
       }
       if ticket.department == "Access Requests"
         properties.merge!({'custom[visitor_names]' => ticket.visitor_names,
