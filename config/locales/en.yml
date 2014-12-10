@@ -109,7 +109,12 @@ en:
   ticket_comment_directions: "Write a reply to this ticket."
   ticket_directions: "Give the details for this ticket."
   tickets: "Support tickets"
-  time: "Time"
+  time_word: "Time"
+  time:
+     formats:
+       default: "%Y/%m/%d"
+       short: "%b %d"
+       long: "%B %d, %Y"
   time_zone: "Time Zone"
   title: "Title"
   used_to_be: "was"
