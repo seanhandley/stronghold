@@ -49,7 +49,7 @@ namespace :deploy do
   desc 'Restart application'
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
-      execute :sudo, "service unicorn_stronghold reload"
+      execute :sudo, "service unicorn_stronghold restart"
     end
   end
 

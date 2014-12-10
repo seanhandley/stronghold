@@ -17,26 +17,26 @@ module ActiveRecord
     end
 
     def self.syncs_with_keystone(params)
-      define_method :create_object do
+      define_method :create_openstack_object do
         raise ArgumentError, 'Model must define keystone_params' unless respond_to?(:keystone_params)
         o = params[:as].constantize.create keystone_params
         update_column(:uuid, o.id)
       end
 
-      define_method :delete_object do
+      define_method :delete_openstack_object do
         params[:as].constantize.find(uuid).destroy
       end
 
-      define_method :update_object do
+      define_method :update_openstack_object do
         raise ArgumentError, 'Model must define keystone_params' unless respond_to?(:keystone_params)
         params[:as].constantize.find(uuid).update keystone_params
       end
 
       self.class_eval do
         unless Rails.env.test?
-          after_create(:create_object)             if params[:actions].include? :create
-          after_destroy(:delete_object)            if params[:actions].include? :destroy
-          after_update(:update_object)             if params[:actions].include? :update
+          after_create(:create_openstack_object)             if params[:actions].include? :create
+          after_destroy(:delete_openstack_object)            if params[:actions].include? :destroy
+          after_update(:update_openstack_object)             if params[:actions].include? :update
         end
       end
     end
