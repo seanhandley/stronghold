@@ -10,10 +10,10 @@
       = select_tag :organization, options_for_select(@organizations, selected: params[:organization]), class: 'form-control'
     .form-group
       %label From Date
-      = datetime_select :from, nil, default: @from_date, class: 'form-control'
+      = datetime_select :from, nil, default: @from_date, class: 'form-control', minute_step: 15
     .form-group
       %label To Date
-      = datetime_select :to, nil, default: @to_date, class: 'form-control'
+      = datetime_select :to, nil, default: @to_date, class: 'form-control', minute_step: 15
 
     = submit_tag 'Generate →', class: 'btn btn-primary'
 
