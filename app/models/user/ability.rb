@@ -2,6 +2,7 @@ class User::Ability
   include CanCan::Ability
 
   def initialize(user)
+    return unless user
     alias_action :new, :create, :edit, :update, :destroy, :read, :index, :to => :modify
 
     # Instances
@@ -22,6 +23,12 @@ class User::Ability
 
     ## Power User can do everything
     can :modify, :all if user.power_user?
+
+    # Rails Admin
+    if user.staff?
+      can :access, :rails_admin
+      can :dashboard
+    end
 
   end
 end
