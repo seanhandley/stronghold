@@ -28,6 +28,7 @@ gem 'bootstrap-kaminari-views', '~> 0.0.5'
 gem 'dalli', '~> 2.7.2'
 gem 'clockwork', '~> 1.1.0'
 gem 'aws-s3', git: 'https://github.com/datacentred/aws-s3.git'
+gem 'rails_admin', '~> 0.6.5'
 
 group :test do
   gem 'minitest-rails'
