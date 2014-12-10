@@ -16,10 +16,17 @@ namespace :stronghold do
         credentials = Fog::Identity.new(OPENSTACK_ARGS).list_ec2_credentials(user.uuid).body['credentials']
         tenants_with_creds = credentials.collect{|c| c['tenant_id']}
         organization.tenants.each do |tenant|
-          next if tenants_with_creds.include?(tenant.uuid)
-          credential = Fog::Identity.new(OPENSTACK_ARGS).create_ec2_credential(user.uuid, tenant.uuid).body['credential']
-          Ceph::UserKey.create 'uid' => tenant.uuid, 'access-key' => credential['access'], 'secret-key' => credential['secret']
-          puts "Added an EC2 credential for tenant #{tenant.reference} for user #{user.name}"
+          unless tenants_with_creds.include?(tenant.uuid)
+            credential = Fog::Identity.new(OPENSTACK_ARGS).create_ec2_credential(user.uuid, tenant.uuid).body['credential']
+            puts "Created new EC2 credential for tenant #{tenant.reference} for user #{user.name}"
+          else
+            credential = credentials.select{|c| c['tenant_id'] == tenant.uuid}.first
+          end
+          keys = Ceph::User.exists?('uid' => tenant.uuid)['keys'].collect{|k| k['access']}
+          unless keys.include?(credential['access'])
+            Ceph::UserKey.create 'uid' => tenant.uuid, 'access-key' => credential['access'], 'secret-key' => credential['secret']
+            puts "Added EC2 credential to Ceph for tenant #{tenant.reference} for user #{user.name}"
+          end
         end
       end
       puts 'OK'
