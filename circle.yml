@@ -3,5 +3,5 @@ dependencies:
     - sudo rm -rf /var/lib/apt/lists/*
     - sudo apt-add-repository -y 'deb http://ppa.launchpad.net/ondrej/mysql-experimental/ubuntu precise main' 
     - sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4F4EA0AAE5267A6C
-    - sudo apt-get update 
+    - sudo apt-get update ; true
     - DEBIAN_FRONTEND=noninteractive sudo apt-get install -y mysql-server-5.6
