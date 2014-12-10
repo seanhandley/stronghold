@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  mount RailsAdmin::Engine => '/data', as: 'rails_admin'
   namespace :support do
     root :to => 'dashboard#index'
     resources :instances
