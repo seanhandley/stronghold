@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141204134415) do
+ActiveRecord::Schema.define(version: 20141210140714) do
 
   create_table "audits", force: true do |t|
     t.string   "auditable_id"
@@ -46,6 +46,9 @@ ActiveRecord::Schema.define(version: 20141204134415) do
     t.string   "address"
   end
 
+  add_index "billing_external_gateway_states", ["external_gateway_id"], name: "external_gateway_states", using: :btree
+  add_index "billing_external_gateway_states", ["sync_id"], name: "external_gateway_syncs", using: :btree
+
   create_table "billing_external_gateways", force: true do |t|
     t.string "router_id"
     t.string "address"
@@ -61,6 +64,9 @@ ActiveRecord::Schema.define(version: 20141204134415) do
     t.integer  "sync_id"
     t.string   "message_id"
   end
+
+  add_index "billing_image_states", ["image_id"], name: "image_states", using: :btree
+  add_index "billing_image_states", ["sync_id"], name: "image_syncs", using: :btree
 
   create_table "billing_images", force: true do |t|
     t.string "image_id"
@@ -85,6 +91,9 @@ ActiveRecord::Schema.define(version: 20141204134415) do
     t.integer  "sync_id"
   end
 
+  add_index "billing_instance_states", ["instance_id"], name: "instance_states", using: :btree
+  add_index "billing_instance_states", ["sync_id"], name: "instance_syncs", using: :btree
+
   create_table "billing_instances", force: true do |t|
     t.string "instance_id"
     t.string "name"
@@ -92,6 +101,8 @@ ActiveRecord::Schema.define(version: 20141204134415) do
     t.string "image_id"
     t.string "tenant_id"
   end
+
+  add_index "billing_instances", ["flavor_id"], name: "instance_flavors", using: :btree
 
   create_table "billing_ip_states", force: true do |t|
     t.integer  "ip_id"
@@ -101,6 +112,9 @@ ActiveRecord::Schema.define(version: 20141204134415) do
     t.string   "message_id"
     t.integer  "sync_id"
   end
+
+  add_index "billing_ip_states", ["ip_id"], name: "ip_states", using: :btree
+  add_index "billing_ip_states", ["sync_id"], name: "ip_syncs", using: :btree
 
   create_table "billing_ips", force: true do |t|
     t.string  "ip_id"
@@ -122,6 +136,9 @@ ActiveRecord::Schema.define(version: 20141204134415) do
     t.string   "message_id"
     t.integer  "sync_id"
   end
+
+  add_index "billing_volume_states", ["sync_id"], name: "volume_syncs", using: :btree
+  add_index "billing_volume_states", ["volume_id"], name: "volume_states", using: :btree
 
   create_table "billing_volumes", force: true do |t|
     t.string "volume_id"
