@@ -6,3 +6,9 @@ include Clockwork
 every(30.minutes, 'usage_sync') do
   UsageWorker.perform_async
 end
+
+module Clockwork
+  error_handler do |error|
+    Honeybadger.notify(error)
+  end
+end
