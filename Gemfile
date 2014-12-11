@@ -29,6 +29,7 @@ gem 'dalli', '~> 2.7.2'
 gem 'clockwork', '~> 1.1.0'
 gem 'aws-s3', git: 'https://github.com/datacentred/aws-s3.git'
 gem 'rails_admin', '~> 0.6.5'
+gem 'sinatra', '>= 1.3.0', :require => nil
 
 group :test do
   gem 'minitest-rails'
