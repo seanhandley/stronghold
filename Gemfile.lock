@@ -193,6 +193,8 @@ GEM
     rack-pjax (0.8.0)
       nokogiri (~> 1.5)
       rack (~> 1.1)
+    rack-protection (1.5.3)
+      rack
     rack-test (0.6.2)
       rack (>= 1.0)
     rails (4.1.7)
@@ -274,6 +276,10 @@ GEM
       multi_json (~> 1.0)
       simplecov-html (~> 0.8.0)
     simplecov-html (0.8.0)
+    sinatra (1.4.5)
+      rack (~> 1.4)
+      rack-protection (~> 1.4)
+      tilt (~> 1.3, >= 1.3.4)
     sirportly (1.3.6)
       multipart-post (~> 2.0.0)
     spring (1.1.3)
@@ -378,6 +384,7 @@ DEPENDENCIES
   select2-rails (~> 3.5.9.1)
   sidekiq (~> 3.2.4)
   simplecov
+  sinatra (>= 1.3.0)
   sirportly (~> 1.3.6)
   spring (~> 1.1.3)
   therubyracer (~> 0.12.1)
