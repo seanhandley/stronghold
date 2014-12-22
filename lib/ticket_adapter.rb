@@ -39,7 +39,7 @@ class TicketAdapter
         rescue Sirportly::Errors::NotFound
           next
         end
-      end.flatten.compact
+      end.flatten.compact.sort_by{|t| t.created_at}
     end
 
     def departments
