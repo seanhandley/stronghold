@@ -77,7 +77,7 @@ class TestCustomerGenerator < Minitest::Test
   def test_mailer_is_asked_to_deliver_invite
     VCR.use_cassette('customer_generator_valid') do      
       mailer = MiniTest::Mock.new
-      mailer.expect(:deliver, true)
+      mailer.expect(:deliver_later, true)
       Mailer.stub(:signup, mailer) do
         CustomerGenerator.new(@valid_params).generate!
         assert mailer.verify

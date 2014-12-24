@@ -13,7 +13,7 @@ class ResetsController < ApplicationController
     end
     # Only actually send the mail if it's a real user
     if @reset.user_exists?
-      MailWorker.perform_async(:reset, @reset.id)
+      MailJob.perform_later('reset', @reset.id)
     end
     respond_to do |format|
       format.js { render :template => "shared/dialog_success",

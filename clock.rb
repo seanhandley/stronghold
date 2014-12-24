@@ -5,7 +5,7 @@ include Clockwork
 
 if Rails.env.production?
   every(30.minutes, 'usage_sync') do
-    UsageWorker.perform_async
+    UsageJob.perform_later
   end
 end
 
