@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 source 'https://rails-assets.org'
 
-gem 'rails', '4.1.7'
+gem 'rails', '4.2'
 gem 'mysql2', '~> 0.3.16'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0',  group: :doc
@@ -9,7 +9,7 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'unicorn', '~> 4.8.3'
 gem 'haml', '~> 4.0.5'
 gem 'cancancan', '~> 1.9.2'
-gem 'fog', '~> 1.22.0'
+gem 'fog', '~> 1.27.0'
 gem 'gravatar_image_tag', '~> 1.2.0'
 gem 'js-routes', '~> 0.9.9'
 gem 'sidekiq', '~> 3.2.4'
@@ -30,6 +30,7 @@ gem 'clockwork', '~> 1.1.0'
 gem 'aws-s3', git: 'https://github.com/datacentred/aws-s3.git'
 gem 'rails_admin', '~> 0.6.5'
 gem 'sinatra', '>= 1.3.0'
+gem 'responders', '~> 2.0'
 
 group :test do
   gem 'minitest-rails'
@@ -71,6 +72,7 @@ group :development do
   gem 'capistrano-bundler', '~> 1.1.2'
   gem 'net-ssh', '~> 2.8.0'
   gem 'spring', '~> 1.1.3'
+  gem 'web-console', '~> 2.0' 
 end
 
 group :production do 
