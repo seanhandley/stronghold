@@ -9,7 +9,7 @@ class Support::InvitesController < SupportBaseController
 
     @invite = current_user.organization.invites.create(create_params)
     if @invite.save
-      MailWorker.perform_async(:signup, @invite.id)
+      MailJob.perform_later('signup', @invite.id)
       javascript_redirect_to support_roles_path
     else
       respond_to do |format|
