@@ -9,7 +9,7 @@ module ActiveRecord
                       :openstack_tenant     => organization.primary_tenant.reference,
                       :openstack_api_key    => password)
           Fog::Identity.new(args).unscoped_token
-        rescue NameError => e # Thrown when credentials are invalid
+        rescue Excon::Errors::Unauthorized, NameError => e # Thrown when credentials are invalid
           Rails.logger.info e.inspect
           return false
         end
