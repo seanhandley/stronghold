@@ -24,3 +24,6 @@ app/assets/stylesheets/.DS_Store
 
 # Include pow configuration
 /.powenv
+
+# Env vars for API tokens, passwords, etc
+.defaults
