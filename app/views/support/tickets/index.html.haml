@@ -49,7 +49,7 @@
         %div{:'ng-show' => "selectedTicket"}
           = render partial: 'ticket'
 
-  .modal.fade{'id' => 'newTicket', 'tabindex' => "-1", 'role' => "dialog", 'aria-labelledby' => 'newTicket', 'aria-hidden' => "true"}
+  .modal.fade{'id' => 'newTicket', 'tabindex' => "-1", 'role' => "dialog", 'aria-labelledby' => 'newTicket', 'aria-hidden' => "true", 'data-backdrop' => 'static'}
     .modal-dialog
       .modal-content
         .modal-header

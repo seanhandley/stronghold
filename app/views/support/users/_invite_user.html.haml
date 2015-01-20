@@ -1,4 +1,4 @@
-.modal.fade#inviteUser{'tabindex' => "-1", 'role' => "dialog", 'aria-labelledby' => "inviteUser", 'aria-hidden' => "true"}
+.modal.fade#inviteUser{'tabindex' => "-1", 'role' => "dialog", 'aria-labelledby' => "inviteUser", 'aria-hidden' => "true", 'data-backdrop' => 'static'}
   .modal-dialog
     .modal-content
       = form_for Invite.new, url: url_for(controller: 'support/invites', action: 'create'), :remote => true do |f|
