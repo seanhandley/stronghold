@@ -1,7 +1,7 @@
 class Permissions
   class << self
     def user
-      {
+      perms = {
         # Instances
         # 'instances.read' => { :description => I18n.t(:can_instances_read), :group => I18n.t(:instances) },
         # 'instances.modify' => { :description => I18n.t(:can_instances_modify), :group => I18n.t(:instances) },
@@ -11,10 +11,14 @@ class Permissions
         'roles.modify' => { :description => I18n.t(:can_roles_modify), :group => I18n.t(:roles) },
 
         # Support Tickets
-        'tickets.read' => { :description => I18n.t(:can_tickets_read), :group => I18n.t(:tickets) },
+        #'tickets.read' => { :description => I18n.t(:can_tickets_read), :group => I18n.t(:tickets) },
         'tickets.modify' => { :description => I18n.t(:can_tickets_modify), :group => I18n.t(:tickets) },
 
       }
+      if Authorization.current_user && Authorization.current_user.organization.colo?
+        perms.merge!({'access_requests.modify' => { :description => I18n.t(:can_access_requests_modify), :group => I18n.t(:access_requests) }})
+      end
+      return perms
     end
   end
 end

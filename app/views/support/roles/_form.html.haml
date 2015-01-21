@@ -1,4 +1,4 @@
-.modal.fade{'id' => id, 'tabindex' => "-1", 'role' => "dialog", 'aria-labelledby' => id, 'aria-hidden' => "true"}
+.modal.fade{'id' => id, 'tabindex' => "-1", 'role' => "dialog", 'aria-labelledby' => id, 'aria-hidden' => "true", 'data-backdrop' => 'static'}
   .modal-dialog
     .modal-content
       = form_for role, url: form_path, :remote => true do |f|

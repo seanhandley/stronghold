@@ -28,7 +28,7 @@ class Role < ActiveRecord::Base
   end
 
   def check_power
-    if power_user?
+    if power_user? && users.any?
       errors.add(:base, I18n.t(:cannot_remove_power_user_group))
       false
     end  

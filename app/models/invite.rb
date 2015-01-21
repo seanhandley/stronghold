@@ -5,6 +5,7 @@ class Invite < ActiveRecord::Base
   after_create :generate_token
 
   validates :email, length: {minimum: 5}, allow_blank: false
+  validates :organization, :presence => true
   validate :has_roles?
   validate :email_looks_valid?
 
@@ -25,10 +26,6 @@ class Invite < ActiveRecord::Base
 
   def expires_at
     persisted? ? created_at + 72.hours : Time.now + 72.hours
-  end
-
-  def power_invite?
-    organization.blank?
   end
 
   private

@@ -14,10 +14,16 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
+coverage/
 .DS_Store
 app/.DS_Store
 app/assets/.DS_Store
 app/assets/images/.DS_Store
 app/assets/javascripts/.DS_Store
 app/assets/stylesheets/.DS_Store
-config/keypair.pem
+
+# Include pow configuration
+/.powenv
+
+# Env vars for API tokens, passwords, etc
+.defaults

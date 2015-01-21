@@ -1,0 +1,20 @@
+- if volume_results
+  %h2 Volume Usage
+  - volume_results.each do |tenant, volumes|
+    %h3== #{tenant} project
+    - if volumes.any?
+      %table.table.table-hover
+        %thead
+          %tr
+            %th Name
+            %th Terabyte Hours
+        %tbody
+          - volumes.each do |volume|
+            %tr
+              %td= volume[:name]
+              %td= number_with_delimiter(volume[:terabyte_hours], :delimiter => ',')
+          %tr.highlight.bottomline
+            %td Total:
+            %td= number_with_delimiter(volumes.collect{|v| v[:terabyte_hours]}.sum.round(2), :delimiter => ',')
+    - else
+      No volume data for this period.

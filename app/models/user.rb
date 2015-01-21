@@ -1,19 +1,23 @@
 class User < ActiveRecord::Base
   audited only: [:first_name, :last_name, :email]
 
-  has_secure_password
-  encrypt_with_public_key :api_key,
-    :key_pair => Rails.root.join('config','keypair.pem')
+  attr_accessor :password, :password_confirmation, :token
+
+  authenticates_with_keystone
+  syncs_with_keystone as: 'OpenStack::User', actions: [:create, :destroy]
+  after_save :update_password
+  after_create :generate_ec2_credentials
 
   has_and_belongs_to_many :roles
   belongs_to :organization
+  has_many :user_tenant_roles, dependent: :destroy
+  has_many :tenants, :through => :user_tenant_roles
 
   validates :email, :uniqueness => true
-  validates :email, :presence => true
+  validates :email, :organization_id, :presence => true
+  validates :first_name, :last_name, length: {minimum: 1}, allow_blank: false
   validates :password, :presence => true, :on => :create
-  validate :password_complexity
-
-  before_save :set_os_user, if: -> { SyncWithOpenStack }
+  validate :password_complexity, :on => :create
 
   def staff?
     organization.staff?
@@ -21,6 +25,18 @@ class User < ActiveRecord::Base
 
   def as_hash
     { email: email }
+  end
+
+  def unique_id
+    "stronghold_#{id}"
+  end
+
+  def keystone_params
+    { email: email, name: email,
+      tenant_id: organization.primary_tenant.uuid,
+      enabled: true,
+      password: password
+    }
   end
 
   def has_permission?(permission)
@@ -36,10 +52,6 @@ class User < ActiveRecord::Base
     name.blank? ? email : name
   end
 
-  def openstack_username
-    "#{organization.reference}_#{email}"
-  end
-
   private
 
   def password_complexity
@@ -48,22 +60,18 @@ class User < ActiveRecord::Base
     end
   end
 
-  def set_os_user
-    params =  { email: email, name: "#{organization.reference}_#{email}",
-                tenant_id: organization.tenant_id,
-                enabled: true
-              }
-    if new_record?
-      new_key = SecureRandom.hex
-      self.api_key = new_key
-      params[:password] = new_key
-      u = OpenStack::User.create params
-      self.openstack_id = u.id
-    else
-      # Needs to be an admin user to change identity details
-      #
-      # u = OpenStack::User.find_all_by(:id, openstack_id)[0]
-      # u.update params
+  def update_password
+    if password
+      OpenStack::User.update_password uuid, password
+    end
+  end
+
+  def generate_ec2_credentials
+    unless Rails.env.test?
+      organization.tenants.each do |tenant|
+        credential = Fog::Identity.new(OPENSTACK_ARGS).create_ec2_credential(uuid, tenant.uuid).body['credential']
+        Ceph::UserKey.create 'uid' => tenant.uuid, 'access-key' => credential['access'], 'secret-key' => credential['secret']
+      end
     end
   end
 

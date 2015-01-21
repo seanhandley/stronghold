@@ -1,0 +1,20 @@
+- if image_results
+  %h2 Image Usage
+  - image_results.each do |tenant, images|
+    %h3== #{tenant} project
+    - if images.any?
+      %table.table.table-hover
+        %thead
+          %tr
+            %th Name
+            %th Terabyte Hours
+        %tbody
+          - images.each do |image|
+            %tr
+              %td= image[:name]
+              %td= number_with_delimiter(image[:terabyte_hours], :delimiter => ',')
+          %tr.highlight.bottomline
+            %td Total:
+            %td= number_with_delimiter(images.collect{|v| v[:terabyte_hours]}.sum.round(2), :delimiter => ',')
+    - else
+      No image data for this period.

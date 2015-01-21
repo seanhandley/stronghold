@@ -1,6 +1,7 @@
 require 'machinist/active_record'
 
 User.blueprint do
+  organization { Organization.make! }
   email      { Faker::Internet.email }
   first_name { Faker::Name.first_name }
   last_name  { Faker::Name.last_name }
@@ -21,6 +22,12 @@ Organization.blueprint do
   name { Faker::Company.name }
 end
 
+Tenant.blueprint do
+  organization { Organization.make! }
+  name { Faker::Company.name }
+  uuid { '1c483a77bbe44afcaf3a1d098a1a897f' }
+end
+
 Invite.blueprint do
   email { Faker::Internet.email }
   organization { Organization.make! }
@@ -29,7 +36,8 @@ end
 
 Invite.blueprint(:power_user) do
   email { Faker::Internet.email }
-  organization { nil }
+  organization { Organization.make! }
+  power_invite { true }
   roles { [] }
 end
 
@@ -38,4 +46,19 @@ Invite.blueprint(:expired) do
   organization { Organization.make! }
   roles { [Role.make!] }
   created_at { Time.now - 7.days }
+end
+
+Product.blueprint(:compute) do
+  id { 1 }
+  name { 'Compute' }
+end
+
+Product.blueprint(:storage) do
+  id { 2 }
+  name { 'Storage' }
+end
+
+Product.blueprint(:colocation) do
+  id { 3 }
+  name { 'Colocation' }
 end

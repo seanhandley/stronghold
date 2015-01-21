@@ -1,11 +1,17 @@
 Rails.application.routes.draw do
 
+  require 'sidekiq/web'
+  require_relative "../lib/constraints/staff_constraint"
+  mount Sidekiq::Web => '/queue', :constraints => StaffConstraint.new
+
+  mount RailsAdmin::Engine => '/data', as: 'rails_admin'
+
   namespace :support do
     root :to => 'dashboard#index'
     resources :instances
     resources :organizations, only: [:update]
     get '/edit_organization', :controller => 'organizations', :action => 'index', :as => 'edit_organization'
-    resources :users, only: [:update]
+    resources :users, only: [:update, :destroy]
     get '/profile', :controller => 'users', :action => 'index'
     resources :roles
     resources :tickets, only: [:index, :show]
@@ -23,6 +29,15 @@ Rails.application.routes.draw do
   namespace :ext do
     post '/contacts/find', :controller => 'contacts', :action => 'find'
   end
+
+  # TODO: Add subnets to lib/admin_constraint.rb
+  #constraints AdminConstraint.new do
+    namespace :admin do
+      root :to => 'dashboard#index'
+      resources :customers, only: [:new, :create]
+      resources :usage, only: [:index, :create]
+    end
+  #end
 
   resources :sessions, only: [:create, :destroy, :new, :index]
   resources :resets, only: [:create, :new, :show, :update]

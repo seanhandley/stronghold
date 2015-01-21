@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140826152654) do
+ActiveRecord::Schema.define(version: 20141210140714) do
 
   create_table "audits", force: true do |t|
     t.string   "auditable_id"
@@ -36,6 +36,116 @@ ActiveRecord::Schema.define(version: 20140826152654) do
   add_index "audits", ["organization_id"], name: "index_audits_on_organization_id", using: :btree
   add_index "audits", ["user_id", "user_type"], name: "user_index", using: :btree
 
+  create_table "billing_external_gateway_states", force: true do |t|
+    t.integer  "external_gateway_id"
+    t.string   "event_name"
+    t.string   "external_network_id"
+    t.datetime "recorded_at",         limit: 3
+    t.integer  "sync_id"
+    t.string   "message_id"
+    t.string   "address"
+  end
+
+  add_index "billing_external_gateway_states", ["external_gateway_id"], name: "external_gateway_states", using: :btree
+  add_index "billing_external_gateway_states", ["sync_id"], name: "external_gateway_syncs", using: :btree
+
+  create_table "billing_external_gateways", force: true do |t|
+    t.string "router_id"
+    t.string "address"
+    t.string "tenant_id"
+    t.string "name"
+  end
+
+  create_table "billing_image_states", force: true do |t|
+    t.datetime "recorded_at", limit: 3
+    t.string   "event_name"
+    t.float    "size",        limit: 24
+    t.integer  "image_id"
+    t.integer  "sync_id"
+    t.string   "message_id"
+  end
+
+  add_index "billing_image_states", ["image_id"], name: "image_states", using: :btree
+  add_index "billing_image_states", ["sync_id"], name: "image_syncs", using: :btree
+
+  create_table "billing_images", force: true do |t|
+    t.string "image_id"
+    t.string "name"
+    t.string "tenant_id"
+  end
+
+  create_table "billing_instance_flavors", force: true do |t|
+    t.string  "flavor_id"
+    t.string  "name"
+    t.integer "ram"
+    t.integer "disk"
+    t.integer "vcpus"
+  end
+
+  create_table "billing_instance_states", force: true do |t|
+    t.integer  "instance_id"
+    t.datetime "recorded_at", limit: 3
+    t.string   "state"
+    t.string   "message_id"
+    t.string   "event_name"
+    t.integer  "sync_id"
+  end
+
+  add_index "billing_instance_states", ["instance_id"], name: "instance_states", using: :btree
+  add_index "billing_instance_states", ["sync_id"], name: "instance_syncs", using: :btree
+
+  create_table "billing_instances", force: true do |t|
+    t.string "instance_id"
+    t.string "name"
+    t.string "flavor_id"
+    t.string "image_id"
+    t.string "tenant_id"
+  end
+
+  add_index "billing_instances", ["flavor_id"], name: "instance_flavors", using: :btree
+
+  create_table "billing_ip_states", force: true do |t|
+    t.integer  "ip_id"
+    t.string   "event_name"
+    t.string   "port"
+    t.datetime "recorded_at", limit: 3
+    t.string   "message_id"
+    t.integer  "sync_id"
+  end
+
+  add_index "billing_ip_states", ["ip_id"], name: "ip_states", using: :btree
+  add_index "billing_ip_states", ["sync_id"], name: "ip_syncs", using: :btree
+
+  create_table "billing_ips", force: true do |t|
+    t.string  "ip_id"
+    t.string  "address"
+    t.string  "tenant_id"
+    t.boolean "active",    default: true, null: false
+  end
+
+  create_table "billing_syncs", force: true do |t|
+    t.datetime "completed_at", limit: 3
+    t.datetime "started_at",   limit: 3
+  end
+
+  create_table "billing_volume_states", force: true do |t|
+    t.datetime "recorded_at", limit: 3
+    t.string   "event_name"
+    t.integer  "size"
+    t.integer  "volume_id"
+    t.string   "message_id"
+    t.integer  "sync_id"
+  end
+
+  add_index "billing_volume_states", ["sync_id"], name: "volume_syncs", using: :btree
+  add_index "billing_volume_states", ["volume_id"], name: "volume_states", using: :btree
+
+  create_table "billing_volumes", force: true do |t|
+    t.string "volume_id"
+    t.string "name"
+    t.string "tenant_id"
+  end
+
   create_table "invites", force: true do |t|
     t.string   "email"
     t.datetime "created_at"
@@ -43,6 +153,7 @@ ActiveRecord::Schema.define(version: 20140826152654) do
     t.datetime "completed_at"
     t.string   "token"
     t.integer  "organization_id"
+    t.boolean  "power_invite",    default: false, null: false
   end
 
   create_table "invites_roles", force: true do |t|
@@ -57,9 +168,22 @@ ActiveRecord::Schema.define(version: 20140826152654) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "time_zone",  default: "London", null: false
-    t.string   "tenant_id"
-    t.string   "locale",     default: "en",     null: false
+    t.string   "time_zone",         default: "London", null: false
+    t.string   "locale",            default: "en",     null: false
+    t.integer  "primary_tenant_id"
+  end
+
+  create_table "organizations_products", force: true do |t|
+    t.integer  "organization_id"
+    t.integer  "product_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "products", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "resets", force: true do |t|
@@ -86,18 +210,26 @@ ActiveRecord::Schema.define(version: 20140826152654) do
     t.datetime "updated_at"
   end
 
+  create_table "tenants", force: true do |t|
+    t.string  "name"
+    t.string  "uuid"
+    t.integer "organization_id"
+  end
+
+  create_table "user_tenant_roles", force: true do |t|
+    t.integer "user_id"
+    t.integer "tenant_id"
+    t.string  "role_uuid"
+  end
+
   create_table "users", force: true do |t|
     t.string   "email"
     t.string   "first_name"
     t.string   "last_name"
-    t.string   "password_digest"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "organization_id"
-    t.string   "openstack_id"
-    t.binary   "api_key"
-    t.binary   "api_key_key"
-    t.binary   "api_key_iv"
+    t.string   "uuid"
   end
 
 end

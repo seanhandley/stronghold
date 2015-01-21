@@ -4,19 +4,17 @@
 
 = form_tag({url: signup_complete_path(@invite.token)}, 'role' => 'form') do
   .form-group
+    %label First Name
+    = text_field_tag :first_name, @registration.first_name, class: 'form-control'
+  .form-group
+    %label Last Name
+    = text_field_tag :last_name, @registration.last_name, class: 'form-control'
+  .form-group
     %label Password
     = password_field_tag :password, @registration.password, class: 'form-control'
   .form-group
     %label Repeat Password
     = password_field_tag :confirm_password, @registration.confirm_password, class: 'form-control'
-
-  - unless @invite.organization
-    %h3
-      %i.fa.fa-suitcase
-      Please name your organization
-    .form-group
-      %label Organization name
-      = text_field_tag :organization_name, @registration.organization_name, class: 'form-control'
 
   .form-group
     %label

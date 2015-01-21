@@ -28,12 +28,6 @@ class TestOpenStackObject < Minitest::Test
     assert_equal 'Error!', @foo.send(:api_error_message, MockError.new)
   end
 
-  def test_to_s_and_inspect
-    [:to_s, :inspect].each do |sym|
-      assert_equal "#<Foo:mock_id @foo=\"test\", @bar=\"test\">", @foo.send(sym)
-    end
-  end
-
   def test_method_all_wraps_results
     Foo.all.each{|f| assert f.class.to_s == 'Foo'}
   end

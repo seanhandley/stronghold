@@ -35,7 +35,7 @@ set :deploy_to, '/home/rails/stronghold/'
 # set :keep_releases, 5
 
 set :rbenv_type, :user # or :system, depends on your rbenv setup
-set :rbenv_ruby, '2.1.2'
+set :rbenv_ruby, '2.2.0'
 set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rbenv_ruby)} #{fetch(:rbenv_path)}/bin/rbenv exec"
 set :rbenv_map_bins, %w{rake gem bundle ruby rails}
 set :rbenv_roles, :all # default value
@@ -49,7 +49,7 @@ namespace :deploy do
   desc 'Restart application'
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
-      execute :sudo, "service unicorn_stronghold reload"
+      execute :sudo, "service unicorn_stronghold restart"
     end
   end
 

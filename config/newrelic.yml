@@ -17,6 +17,10 @@ common: &default_settings
   # New Relic service.
   license_key: '83ba2c9ca5b87c7bd935ad160cd3e34b1d4104c7'
 
+  # When to start up, and when not to
+  autostart:
+    blacklisted_rake_tasks: 'stronghold:sync_with_ceph'
+
   # Agent Enabled (Ruby/Rails Only)
   # Use this setting to force the agent to run or not run.
   # Default is 'auto' which means the agent will install and run only

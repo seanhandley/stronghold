@@ -1,0 +1,31 @@
+- if instance_results
+  %h2 Instance Usage
+  - instance_results.each do |tenant, instances|
+    %h3== #{tenant} project
+    - if instances.any?
+      %table.table.table-hover
+        %tbody
+          - instances.group_by{|i| i[:flavor][:flavor_id]}.each do |_, instances|
+            %tr.highlight
+              %td= instances.first[:flavor][:name]
+              %td Hours Usage
+              %td Number of Cores
+              %td RAM (GB)
+              %td Root Disk (GB)
+              %td Image ID
+            - instances.each do |instance|
+              %tr
+                %td= instance[:name]
+                %td= number_with_delimiter(((instance[:billable_seconds] / 60.0) / 60.0).ceil, :delimiter => ',')
+                %td= instance[:flavor][:vcpus_count]
+                %td= (instance[:flavor][:ram_mb] / 1024.0).round(2)
+                %td= instance[:flavor][:root_disk_gb]
+                %td= instance[:image_id]
+            %tr.highlight.bottomline
+              %td== Total #{instances.first[:flavor][:name]}:
+              %td== #{number_with_delimiter(instances.map{|i| ((i[:billable_seconds] / 60.0) / 60.0).ceil}.sum, :delimiter => ',')} hours
+            %tr
+              %td &nbsp;
+              %td &nbsp;
+    - else
+      No instance data for this period.
