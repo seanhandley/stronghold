@@ -27,6 +27,7 @@ class AuthorizedController < ApplicationController
   def redirect_to_root(exception=nil)
     respond_to do |format|
       format.js   { javascript_redirect_to support_root_url }
+      format.json   { javascript_redirect_to support_root_url }
       format.html { redirect_to support_root_url, :alert => exception ? exception.message : nil }
     end
   end
