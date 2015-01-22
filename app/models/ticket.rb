@@ -42,7 +42,7 @@ class Ticket
 
   def status_name
     return 'Open' unless @status
-    @status['status_type'] == 1 ? 'Closed' : 'Open'
+    @status == 1 ? 'Closed' : 'Open'
   end
 
   private
