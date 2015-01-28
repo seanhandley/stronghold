@@ -6,40 +6,50 @@ class TicketAdapter
 
   class << self
     def all(page=1)
-      Authorization.current_user.organization.users.collect(&:unique_id).collect do |unique_id|
-        begin
-          SIRPORTLY.request("tickets/contact", contact: unique_id, page: page)["records"].sort_by{|t| t['updated_at']}.map do |t|
-            head, *tail = SIRPORTLY.request("ticket_updates/all", ticket: t['reference']).sort_by{|t| t['posted_at']}
-            updates = tail.map do |u|
-              unless u['private']
-                TicketComment.new(ticket_reference: t['reference'], id: u['id'],
-                                  email: u['from_address'], text: markdown(u['message']),
-                                  time: Time.parse(u['posted_at']),
-                                  staff: (u['author']["type"] == "User"),
-                                  name: u['from_name'])
-              end
-            end.compact
-            description = (head ? head['message'] : nil)
-            params = { comments: updates, description: markdown(description),
-                       reference: t['reference'], title: t['subject'],
-                       created_at: Time.parse(t['submitted_at']),
-                       updated_at: Time.parse(t['updated_at']),
-                       email: t['customer_contact_method']['data'],
-                       priority: t['priority']['name'],
-                       name: t['customer']['name'],
-                       status: t['status'],
-                       department: t['department']['name']}
-            if(t['department']['name'] == 'Access Requests')
-              fields = SIRPORTLY.request("tickets/ticket", ticket: t['reference'])['custom_fields']
-              params.merge!(visitor_names: fields["visitor_names"], date_of_visit: fields["date_of_visit"],
-                            time_of_visit: fields["time_of_visit"])
+      tickets = []
+      limit = 15
+      page = page.to_i
+      offset = page > 1 ? ((page - 1) * limit) : nil
+      limit = [offset, limit].compact
+      columns = %w{reference subject submitted_at updated_at
+                   contact_methods.data priorities.name
+                   contacts.name statuses.status_type departments.name
+                   custom_field.visitor_names
+                   custom_field.date_of_visit
+                   custom_field.time_of_visit
+                  }
+      spql = "SELECT #{columns.join(',')} FROM tickets WHERE contacts.company = \"#{Authorization.current_user.organization.reference}\" GROUP BY submitted_at ORDER BY submitted_at DESC LIMIT #{limit.join(',')}"
+      SIRPORTLY.request("tickets/spql", spql: spql)["results"].map{|t| Hash[columns.zip(t)]}.map do |t|
+        Thread.new do
+          head, *tail = SIRPORTLY.request("ticket_updates/all", ticket: t['reference']).sort_by{|t| t['posted_at']}
+          updates = tail.map do |u|
+            unless u['private']
+              TicketComment.new(ticket_reference: t['reference'], id: u['id'],
+                                email: u['from_address'], text: markdown(u['message']),
+                                time: Time.parse(u['posted_at']),
+                                staff: (u['author']["type"] == "User"),
+                                name: u['from_name'])
             end
-            Ticket.new(params)
+          end.compact
+          description = (head ? head['message'] : nil)
+          params = { comments: updates, description: markdown(description),
+                     reference: t['reference'], title: t['subject'],
+                     created_at: Time.parse(t['submitted_at']),
+                     updated_at: Time.parse(t['updated_at']),
+                     email: t['contact_methods.data'],
+                     priority: t['priorities.name'],
+                     name: t['contacts.name'],
+                     status: t['statuses.status_type'],
+                     department: t['departments.name']}
+          if(t['departments.name'] == 'Access Requests')
+            params.merge!(visitor_names: t["custom_field.visitor_names"],
+                          date_of_visit: t["custom_field.date_of_visit"],
+                          time_of_visit: t["custom_field.time_of_visit"])
           end
-        rescue Sirportly::Errors::NotFound
-          next
+          tickets.push(Ticket.new(params))
         end
-      end.flatten.compact.sort_by{|t| t.updated_at}
+      end.each(&:join)
+      tickets.sort_by{|t| t.created_at}.reverse
     end
 
     def departments
