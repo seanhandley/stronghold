@@ -3,6 +3,17 @@ filters = angular.module("filters", [])
 filters.filter "momentDateTime", ->
   (time) ->
     return if !time
+    moment.lang 'en', {
+        'calendar' : {
+            'lastDay' : 'Do MMMM YYYY',
+            'sameDay' : 'h:mmA',
+            'nextDay' : 'Do MMMM YYYY',
+            'lastWeek' : 'Do MMMM YYYY',
+            'nextWeek' : 'Do MMMM YYYY',
+            'sameElse' : 'Do MMMM YYYY'
+       }
+    }
+    
     moment(time).calendar()
 
 filters.filter "lowerCaseStart", ->
