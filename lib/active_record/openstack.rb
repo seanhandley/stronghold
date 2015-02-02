@@ -34,9 +34,9 @@ module ActiveRecord
 
       self.class_eval do
         unless Rails.env.test?
-          after_create(:create_openstack_object)             if params[:actions].include? :create
-          after_destroy(:delete_openstack_object)            if params[:actions].include? :destroy
-          after_update(:update_openstack_object)             if params[:actions].include? :update
+          after_create(:create_openstack_object)              if params[:actions].include? :create
+          before_destroy(:delete_openstack_object)            if params[:actions].include? :destroy
+          after_update(:update_openstack_object)              if params[:actions].include? :update
         end
       end
     end
