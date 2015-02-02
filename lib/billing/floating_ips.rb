@@ -12,7 +12,7 @@ module Billing
 
     def self.usage(tenant_id, from, to)
       ips = Billing::Ip.where(:tenant_id => tenant_id).to_a.compact
-      quota = Fog::Compute.new(OPENSTACK_ARGS).get_quota(tenant_id).body['quota_set']['floating_ips']
+      quota = Fog::Network.new(OPENSTACK_ARGS).get_quota(tenant_id).body['quota']['floatingip']
       total = ips.inject({}) do |usage, ip|
         usage[ip.ip_id] = { billable_seconds: seconds(ip, from, to),
                                      address: ip.address,
