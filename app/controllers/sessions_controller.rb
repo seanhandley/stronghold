@@ -23,7 +23,7 @@ class SessionsController < ApplicationController
       redirect_to support_root_path
     else
       flash.now.alert = "Invalid credentials. Please try again."
-      Rails.logger.error "Invalid login: #{params[:user].inspect}. Token=#{token.inspect}"
+      Rails.logger.error "Invalid login: #{params[:user][:email]}. Token=#{token.inspect}"
       render :new
     end
   end
