@@ -19,10 +19,11 @@ class SessionsController < ApplicationController
     if @user and params[:user][:password].present? and (token = @user.authenticate(params[:user][:password])) and token
       session[:token]      = token
       session[:user_id]    = @user.id
-      session[:created_at] = Time.now
+      session[:created_at] = Time.zone.now
       redirect_to support_root_path
     else
       flash.now.alert = "Invalid credentials. Please try again."
+      Rails.logger.error "Invalid login: #{params[:user].inspect}. Token=#{token.inspect}"
       render :new
     end
   end
