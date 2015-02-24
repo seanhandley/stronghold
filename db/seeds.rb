@@ -7,13 +7,14 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 if ['test','development'].include?(Rails.env)
-  Tenant.skip_callback(:create, :after, :create_object)
-  User.skip_callback(:create, :after, :create_object)
+  Tenant.skip_callback(:create, :after, :create_openstack_object)
+  User.skip_callback(:create, :after, :create_openstack_object)
   User.skip_callback(:save, :after, :update_password)
 
   organization = Organization.create(name: 'DataCentred', reference: STAFF_REFERENCE)
   tenant = Tenant.create(name: 'datacentred', uuid: 'ed4431814d0a40dc8f10f5ac046267e9', organization: organization)
-  organization.update_column(:primary_tenant_id, tenant.id)
+  organization.primary_tenant_id = tenant.id
+  organization.save!
 
   users = [{id: 1, email: 'sean.handley@datacentred.co.uk', first_name: 'Sean', last_name: 'Handley', uuid: '1677558442d74ee69f12d04fbadf7c39'},
            {id: 5, email: 'dariush.marsh@datacentred.co.uk', first_name: 'Dariush', last_name: 'Marsh', uuid: 'ddf34f7dcde2431f94ad8b973ced9e9b'},
