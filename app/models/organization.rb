@@ -15,12 +15,19 @@ class Organization < ActiveRecord::Base
 
   belongs_to :primary_tenant, class_name: 'Tenant'
 
+  scope :paying, -> { where(paying: true) }
+  scope :trial,  -> { where(paying: false) }
+
   def staff?
     (reference == STAFF_REFERENCE)
   end
 
   def colo?
     products.collect(&:name).include? 'Colocation'
+  end
+
+  def storage?
+    products.collect(&:name).include? 'Storage'
   end
 
   private
