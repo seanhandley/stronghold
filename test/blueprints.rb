@@ -45,7 +45,7 @@ Invite.blueprint(:expired) do
   email { Faker::Internet.email }
   organization { Organization.make! }
   roles { [Role.make!] }
-  created_at { Time.now - 7.days }
+  created_at { Time.now - 14.days }
 end
 
 Product.blueprint(:compute) do

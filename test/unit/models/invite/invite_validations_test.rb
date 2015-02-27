@@ -58,7 +58,7 @@ class TestInviteValidations < Minitest::Test
   end
 
   def test_expiry_is_creation_time_plus_72_hours
-    assert_equal (@invite.created_at + 72.hours).utc.to_s, @invite.expires_at.utc.to_s
+    assert_equal (@invite.created_at + 7.days).utc.to_s, @invite.expires_at.utc.to_s
   end
 
   def teardown
