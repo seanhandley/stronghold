@@ -8,7 +8,8 @@ module Reports
     end
 
     def contents
-      Organization.all.collect do |organization|
+      return {} unless Organization.cloud.any?
+      Organization.cloud.collect do |organization|
         instances = organization.tenants.collect do |tenant|
           Billing::Instances.usage(tenant.uuid, from, to)
         end.flatten

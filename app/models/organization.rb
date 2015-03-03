@@ -17,6 +17,7 @@ class Organization < ActiveRecord::Base
 
   scope :paying, -> { where('started_paying_at is not null') }
   scope :trial,  -> { where(started_paying_at: nil) }
+  scope :cloud,  -> { all.select(&:cloud?) }
 
   def staff?
     (reference == STAFF_REFERENCE)
@@ -28,6 +29,14 @@ class Organization < ActiveRecord::Base
 
   def storage?
     products.collect(&:name).include? 'Storage'
+  end
+
+  def compute?
+    products.collect(&:name).include? 'Compute'
+  end
+
+  def cloud?
+    compute? || storage?
   end
 
   def paying?
