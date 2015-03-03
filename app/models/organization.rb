@@ -43,6 +43,10 @@ class Organization < ActiveRecord::Base
     !!started_paying_at
   end
 
+  def admin_users
+    users.select(&:admin?)
+  end
+
   private
 
   def generate_reference

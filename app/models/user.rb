@@ -23,6 +23,10 @@ class User < ActiveRecord::Base
     organization.staff?
   end
 
+  def admin?
+    roles.any?(&:power_user?)
+  end
+
   def as_hash
     { email: email }
   end
