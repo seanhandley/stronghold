@@ -15,8 +15,8 @@ class Organization < ActiveRecord::Base
 
   belongs_to :primary_tenant, class_name: 'Tenant'
 
-  scope :paying, -> { where(paying: true) }
-  scope :trial,  -> { where(paying: false) }
+  scope :paying, -> { where('started_paying_at is not null') }
+  scope :trial,  -> { where(started_paying_at: nil) }
 
   def staff?
     (reference == STAFF_REFERENCE)
@@ -28,6 +28,10 @@ class Organization < ActiveRecord::Base
 
   def storage?
     products.collect(&:name).include? 'Storage'
+  end
+
+  def paying?
+    !!started_paying_at
   end
 
   private
