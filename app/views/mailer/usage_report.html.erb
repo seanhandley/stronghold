@@ -15,7 +15,7 @@
   <!-- <h2>Customer Usage</h2> -->
   <% for entry in @organization_data %>
     <h3><%= entry[:name] %></h3>
-    <strong>Admin Contacts:</strong> <%= entry[:contacts].join(', ') %>
+    <strong>Admin Contact:</strong> <%= entry[:contacts].first %>
     <p>
       <strong>VCPU:</strong> <%= number_with_delimiter(entry[:vcpu_hours].round(1), :delimiter => ',') %> hours<br/>
       <strong>RAM:</strong> <%= number_with_delimiter(entry[:ram_tb_hours].round(1), :delimiter => ',') %> TBh<br/>

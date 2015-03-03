@@ -6,7 +6,7 @@ Week beginning <%= @from.beginning_of_week.to_date.strftime("%A #{@from.day.ordi
 <% for entry in @organization_data %>
   <%= entry[:name] %>
 
-  Admin Contacts: <%= entry[:contacts].join(', ') %>
+  Admin Contact: <%= entry[:contacts].first %>
 
   VCPU: <%= number_with_delimiter(entry[:vcpu_hours].round(1), :delimiter => ',') %> hours
   RAM: <%= number_with_delimiter(entry[:ram_tb_hours].round(1), :delimiter => ',') %> TBh
