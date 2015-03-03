@@ -4,7 +4,7 @@ module Ceph
     def self.kilobytes_for(tenant_id)
       response = get uid: tenant_id, stats: true
       response.collect do |r|
-        r['usage']['rgw.main']["size_kb_actual"]
+        (r['usage'] && r['usage']['rgw.main']) ? r['usage']['rgw.main']["size_kb_actual"] : 0
       end.sum
     end
 
