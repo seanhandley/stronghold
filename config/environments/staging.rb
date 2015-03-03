@@ -85,8 +85,8 @@ Rails.application.configure do
       :address => 'smtp.deliverhq.com',
       :domain => 'datacentred.co.uk',
       :authentication => :cram_md5,
-      :user_name => 'mfkfxyw9k9',
-      :password => 'aoz21e56ef'
+      :user_name => 'yvnkigkbn5',
+      :password => '7y7qh820t4'
   }
 
   config.action_mailer.default_url_options = { :host => 'rails01.sal01.datacentred.co.uk' }
