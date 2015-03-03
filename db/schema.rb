@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150227162136) do
+ActiveRecord::Schema.define(version: 20150303094923) do
 
   create_table "audits", force: :cascade do |t|
     t.string   "auditable_id",    limit: 255
@@ -178,7 +178,7 @@ ActiveRecord::Schema.define(version: 20150227162136) do
     t.string   "time_zone",         limit: 255, default: "London", null: false
     t.string   "locale",            limit: 255, default: "en",     null: false
     t.integer  "primary_tenant_id", limit: 4
-    t.boolean  "paying",            limit: 1,   default: false,    null: false
+    t.datetime "started_paying_at"
   end
 
   create_table "organizations_products", force: :cascade do |t|
