@@ -38,6 +38,7 @@ module Reports
 
         {
           :name => organization.name,
+          :contacts => organization.admin_users.collect(&:email),
           :vcpu_hours => ((vcpu_seconds / 60.0) / 60.0),
           :ram_tb_hours => ((ram_tb_seconds / 60.0) / 60.0),
           :openstack_tb_hours => openstack_tb_hours,

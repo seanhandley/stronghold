@@ -15,11 +15,12 @@
   <!-- <h2>Customer Usage</h2> -->
   <% for entry in @organization_data %>
     <h3><%= entry[:name] %></h3>
+    <strong>Admin Contacts:</strong> <%= entry[:contacts].join(', ') %>
     <p>
-      <strong>VCPU:</strong> <%= number_with_delimiter(entry[:vcpu_hours].round(3), :delimiter => ',') %> hours<br/>
-      <strong>RAM:</strong> <%= number_with_delimiter(entry[:ram_tb_hours].round(3), :delimiter => ',') %> TBh<br/>
-      <strong>OpenStack Storage:</strong> <%= number_with_delimiter(entry[:openstack_tb_hours].round(3), :delimiter => ',') %> TBh<br/>
-      <strong>Ceph Storage:</strong> <%= number_with_delimiter(entry[:ceph_tb_hours].round(3), :delimiter => ',') %> TBh<br/>
+      <strong>VCPU:</strong> <%= number_with_delimiter(entry[:vcpu_hours].round(1), :delimiter => ',') %> hours<br/>
+      <strong>RAM:</strong> <%= number_with_delimiter(entry[:ram_tb_hours].round(1), :delimiter => ',') %> TBh<br/>
+      <strong>OpenStack Storage:</strong> <%= number_with_delimiter(entry[:openstack_tb_hours].round(1), :delimiter => ',') %> TBh<br/>
+      <strong>Ceph Storage:</strong> <%= number_with_delimiter(entry[:ceph_tb_hours].round(1), :delimiter => ',') %> TBh<br/>
     </p>
     <p><strong>Paying?</strong> <%= entry[:paying] ? '✔' : '✘' %></p>
     <p>&nbsp;</p>
