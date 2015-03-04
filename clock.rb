@@ -12,6 +12,10 @@ if Rails.env.production? || Rails.env.staging?
     UsageReportJob.perform_later
   end
 
+  every(1.day, 'usage_sanity', :at => '04:00') do
+    UsageSanityJob.perform_later
+  end
+
 end
 
 module Clockwork
