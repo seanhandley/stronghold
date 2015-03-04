@@ -1,0 +1,13 @@
+<link rel="stylesheet" href="/application.css">
+<div id="container">
+  <p>The following items are active in the usage data but no longer present on OpenStack.</p>
+  
+  <% if @data[:missing_instances].present? %>
+    <h3>Instances</h3>
+    <p>
+    <% @data[:missing_instances].each do |k,v| %>
+      <%= "#{v} (#{k})" %><br/>
+    <% end %>
+    </p>
+  <% end %>
+</div>
