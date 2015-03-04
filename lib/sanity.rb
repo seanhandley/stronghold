@@ -20,12 +20,13 @@ module Sanity
       live_routers.include? router.router_id
     end
 
-    {
+    results = {
       missing_instances: Hash[missing_instances.collect{|i| [i.instance_id, i.name]}],
       missing_volumes: Hash[missing_volumes.collect{|i| [i.volume_id, i.name]}],
       missing_images: Hash[missing_images.collect{|i| [i.image_id, i.name]}],
       missing_routers: Hash[missing_routers.collect{|i| [i.router_id, i.name]}]
     }
+    results.merge(:sane => results.values.none?(&:present?))
   end
 
   def self.notify!(data)
