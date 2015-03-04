@@ -10,7 +10,7 @@ module Billing
 
     def active?
       latest_state = image_states.order('recorded_at').last
-      latest_state ? Billing::Images.billable?(latest_state.state) : true
+      latest_state ? Billing::Images.billable?(latest_state.event) : true
     end
   end
 end
