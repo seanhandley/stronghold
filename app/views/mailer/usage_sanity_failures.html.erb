@@ -2,12 +2,14 @@
 <div id="container">
   <p>The following items are active in the usage data but no longer present on OpenStack.</p>
   
-  <% if @data[:missing_instances].present? %>
-    <h3>Instances</h3>
-    <p>
-    <% @data[:missing_instances].each do |k,v| %>
-      <%= "#{v} (#{k})" %><br/>
+  <% for key in @keys %>
+    <% if @data["missing_#{key}".to_sym].present? %>
+      <h3><%= key.titleize %></h3>
+      <p>
+      <% @data["missing_#{key}".to_sym].each do |k,v| %>
+        <%= "#{v} (#{k})" %><br/>
+      <% end %>
+      </p>
     <% end %>
-    </p>
   <% end %>
 </div>
