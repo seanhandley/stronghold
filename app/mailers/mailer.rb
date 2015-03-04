@@ -24,6 +24,7 @@ class Mailer < ActionMailer::Base
 
   def usage_sanity_failures(data)
     @data = data
+    @keys = ['instances', 'volumes', 'images', 'routers']
     mail(:to => "devops@datacentred.co.uk", :subject => 'Usage Sanity Check Failures')
   end
 end

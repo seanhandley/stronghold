@@ -1,10 +1,12 @@
 The following items are active in the usage data but no longer present on OpenStack.
 
-<% if @data[:missing_instances].present? %>
-  Instances
+<% for key in @keys %>
+  <% if @data["missing_#{key}".to_sym].present? %>
+    <%= key.titleize %>
 
-  <% @data[:missing_instances].each do |k,v| %>
-    <%= "#{v} (#{k})" %>
+    <% @data["missing_#{key}".to_sym].each do |k,v| %>
+      <%= "#{v} (#{k})" %>
+    <% end %>
+   
   <% end %>
-
 <% end %>
