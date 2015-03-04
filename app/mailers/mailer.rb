@@ -21,4 +21,9 @@ class Mailer < ActionMailer::Base
 
     mail(:to => "usage@datacentred.co.uk", :subject => "Weekly Platform Usage")
   end
+
+  def usage_sanity_failures(data)
+    @data = data
+    mail(:to => "devops@datacentred.co.uk", :subject => 'Usage Sanity Check Failures')
+  end
 end
