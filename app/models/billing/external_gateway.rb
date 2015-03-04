@@ -10,7 +10,7 @@ module Billing
 
     def active?
       latest_state = external_gateway_states.order('recorded_at').last
-      latest_state ? Billing::ExternalGateways.billable?(latest_state.state) : true
+      latest_state ? Billing::ExternalGateways.billable?(latest_state) : true
     end
   end
 end
