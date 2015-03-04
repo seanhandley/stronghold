@@ -10,7 +10,7 @@ module Billing
 
     def active?
       latest_state = volume_states.order('recorded_at').last
-      latest_state ? Billing::Volumes.billable?(latest_state.event) : true
+      latest_state ? Billing::Volumes.billable?(latest_state.event_name) : true
     end
   end
 end
