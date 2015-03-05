@@ -24,7 +24,8 @@ module Billing
     end
 
     def current_state
-      terminated_at ? 'deleted' : instance_states.last.state
+      return 'terminated' if terminated_at
+      Instances.billable?(instance_states.last.state) ? 'active' : 'stopped'
     end
   end
 end
