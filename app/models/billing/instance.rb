@@ -20,7 +20,7 @@ module Billing
     end
 
     def first_booted_at
-      instance_states.where(state: 'active').first.recorded_at
+      instance_states.where(state: 'active').first.try(:recorded_at) { nil }
     end
   end
 end
