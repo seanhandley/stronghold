@@ -18,8 +18,8 @@
                 %td.line_entry= instance[:name]
                 %td.line_entry= instance[:uuid]
                 %td.line_entry= instance[:first_booted_at]
-                %td.line_entry= instance[:current_state]
-                %td.line_entry= instance[:terminated_at] ? instance[:terminated_at] : '-'
+                %td.line_entry= instance[:latest_state]
+                %td.line_entry= (instance[:terminated_at] && instance[:terminated_at] <= @to_date) ? instance[:terminated_at] : '-'
                 %td.line_entry== #{number_with_delimiter(((instance[:billable_seconds] / 60.0) / 60.0).ceil, :delimiter => ',')} of #{@total_hours}
             %tr.highlight.bottomline
               %td== Total #{instances.first[:flavor][:name]}:
