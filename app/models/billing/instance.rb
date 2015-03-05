@@ -14,5 +14,13 @@ module Billing
       latest_state = instance_states.order('recorded_at').last
       latest_state ? Billing::Instances.billable?(latest_state.state) : true
     end
+
+    def terminated_at
+      instance_states.where(state: 'deleted').first.try(:recorded_at) { nil }
+    end
+
+    def first_booted_at
+      instance_states.where(state: 'active').first.recorded_at
+    end
   end
 end
