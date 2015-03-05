@@ -9,6 +9,7 @@ class Admin::UsageController < AdminBaseController
   def create
     begin
       @from_date, @to_date = parse_dates create_params
+      @total_hours = ((@to_date - @from_date) / 1.hour).round
       if (@organization = Organization.find(create_params[:organization]))
         @instance_results = usage('Billing::Instances', @organization, @from_date, @to_date)
         @volume_results = usage('Billing::Volumes', @organization, @from_date, @to_date)

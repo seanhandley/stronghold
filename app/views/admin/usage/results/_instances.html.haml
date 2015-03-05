@@ -3,28 +3,32 @@
   - instance_results.each do |tenant, instances|
     %h3== #{tenant} project
     - if instances.any?
-      %table.table.table-hover
+      %table.table.table-hover.phone-bill
         %tbody
           - instances.group_by{|i| i[:flavor][:flavor_id]}.each do |_, instances|
             %tr.highlight
-              %td= instances.first[:flavor][:name]
-              %td Hours Usage
-              %td Number of Cores
-              %td RAM (GB)
-              %td Root Disk (GB)
-              %td Image ID
+              %td== Flavor: #{instances.first[:flavor][:name]}
+              %td Unique Identifier
+              %td First Booted
+              %td Terminated
+              %td Hours Active This Period
             - instances.each do |instance|
               %tr
-                %td= instance[:name]
-                %td= number_with_delimiter(((instance[:billable_seconds] / 60.0) / 60.0).ceil, :delimiter => ',')
-                %td= instance[:flavor][:vcpus_count]
-                %td= (instance[:flavor][:ram_mb] / 1024.0).round(2)
-                %td= instance[:flavor][:root_disk_gb]
-                %td= instance[:image_id]
+                %td.line_entry= instance[:name]
+                %td.line_entry= instance[:uuid]
+                %td.line_entry= instance[:first_booted_at]
+                %td.line_entry= instance[:terminated_at] ? instance[:terminated_at] : '-'
+                %td.line_entry== #{number_with_delimiter(((instance[:billable_seconds] / 60.0) / 60.0).ceil, :delimiter => ',')} of #{@total_hours}
             %tr.highlight.bottomline
               %td== Total #{instances.first[:flavor][:name]}:
               %td== #{number_with_delimiter(instances.map{|i| ((i[:billable_seconds] / 60.0) / 60.0).ceil}.sum, :delimiter => ',')} hours
+              %td &nbsp;
+              %td &nbsp;
+              %td &nbsp;
             %tr
+              %td &nbsp;
+              %td &nbsp;
+              %td &nbsp;
               %td &nbsp;
               %td &nbsp;
     - else

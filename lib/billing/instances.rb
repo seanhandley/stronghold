@@ -14,7 +14,11 @@ module Billing
       instances = Billing::Instance.where(:tenant_id => tenant_id).to_a.compact
       instances = instances.collect do |instance|
         {billable_seconds: seconds(instance, from, to),
-                                       name: instance.name, flavor: {
+                                       uuid: instance.instance_id,
+                                       name: instance.name,
+                                       first_booted_at: instance.first_booted_at,
+                                       terminated_at: instance.terminated_at,
+                                       flavor: {
                                          flavor_id: instance.flavor_id,
                                          name: instance.instance_flavor.name,
                                          vcpus_count: instance.instance_flavor.vcpus,
