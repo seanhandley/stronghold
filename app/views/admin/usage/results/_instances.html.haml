@@ -10,6 +10,7 @@
               %td== Flavor: #{instances.first[:flavor][:name]}
               %td Unique Identifier
               %td First Booted
+              %td Current State
               %td Terminated
               %td Hours Active This Period
             - instances.each do |instance|
@@ -17,6 +18,7 @@
                 %td.line_entry= instance[:name]
                 %td.line_entry= instance[:uuid]
                 %td.line_entry= instance[:first_booted_at]
+                %td.line_entry= instance[:current_state]
                 %td.line_entry= instance[:terminated_at] ? instance[:terminated_at] : '-'
                 %td.line_entry== #{number_with_delimiter(((instance[:billable_seconds] / 60.0) / 60.0).ceil, :delimiter => ',')} of #{@total_hours}
             %tr.highlight.bottomline
