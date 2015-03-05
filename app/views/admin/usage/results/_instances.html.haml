@@ -17,7 +17,7 @@
               %td
                 %i.fa.fa-clock-o
                 Hours Active This Period
-            - instances.each do |instance|
+            - instances.sort { |x,y| x[:name] <=> y[:name] }.each do |instance|
               %tr
                 %td.line_entry= instance[:name]
                 %td.line_entry= instance[:uuid]
