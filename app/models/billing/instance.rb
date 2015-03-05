@@ -16,16 +16,16 @@ module Billing
     end
 
     def terminated_at
-      instance_states.where(state: 'deleted').first.try(:recorded_at) { nil }
+      instance_states.where(state: 'deleted').order('recorded_at').first.try(:recorded_at) { nil }
     end
 
     def first_booted_at
-      instance_states.where(state: 'active').first.try(:recorded_at) { nil }
+      instance_states.where(state: 'active').order('recorded_at').first.try(:recorded_at) { nil }
     end
 
     def current_state
       return 'terminated' if terminated_at
-      Instances.billable?(instance_states.last.state) ? 'active' : 'stopped'
+      Instances.billable?(instance_states.order('recorded_at').last.state) ? 'active' : 'stopped'
     end
   end
 end
