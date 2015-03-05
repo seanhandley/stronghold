@@ -24,7 +24,7 @@ module Billing
     end
 
     def current_state
-      instance_states.last.state
+      terminated_at ? 'deleted' : instance_states.last.state
     end
   end
 end
