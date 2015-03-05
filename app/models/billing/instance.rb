@@ -22,5 +22,9 @@ module Billing
     def first_booted_at
       instance_states.where(state: 'active').first.try(:recorded_at) { nil }
     end
+
+    def current_state
+      instance_states.last.state
+    end
   end
 end

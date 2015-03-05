@@ -17,6 +17,7 @@ module Billing
                                        uuid: instance.instance_id,
                                        name: instance.name,
                                        first_booted_at: instance.first_booted_at,
+                                       current_state: instance.current_state,
                                        terminated_at: instance.terminated_at,
                                        flavor: {
                                          flavor_id: instance.flavor_id,
