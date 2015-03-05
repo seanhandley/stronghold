@@ -30,7 +30,12 @@ module Billing
 
     def latest_state(from, to)
       return 'terminated' if terminated_at && terminated_at <= to # and terminated between from, to
-      Instances.billable?(instance_states.where(:recorded_at => from..to).order('recorded_at').last.try(:state)) ? 'active' : 'stopped'
+      state = instance_states.where(:recorded_at => from..to).order('recorded_at').last.try(:state)
+      if state
+        Instances.billable?(state) ? 'active' : 'stopped'
+      else
+        'unknown'
+      end
     end
   end
 end
