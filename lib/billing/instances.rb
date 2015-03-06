@@ -79,7 +79,7 @@ module Billing
     end
 
     def self.billable?(state)
-      !["building", "stopped", "shutoff", "deleted"].include?(state.downcase)
+      !["error","building", "stopped", "shutoff", "deleted"].include?(state.downcase)
     end
 
     def self.create_new_states(tenant_id, instance_id, samples, sync)
