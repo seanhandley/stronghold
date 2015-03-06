@@ -25,7 +25,7 @@
               %td
                 = image[:latest_size].round(2)
                 GB
-              %td= image[:deleted_at]
+              %td= image[:deleted_at] ? image[:deleted_at] : '-'
               %td
                 = number_with_delimiter(image[:terabyte_hours], :delimiter => ',')
                 TBh
