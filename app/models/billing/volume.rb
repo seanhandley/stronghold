@@ -12,5 +12,17 @@ module Billing
       latest_state = volume_states.order('recorded_at').last
       latest_state ? Billing::Volumes.billable?(latest_state.event_name) : true
     end
+
+    def created_at
+      volume_states.where(event_name: 'volume.create.end').order('recorded_at').first.try(:recorded_at) { nil }
+    end
+
+    def deleted_at
+      volume_states.where(event_name: 'volume.delete.end').order('recorded_at').first.try(:recorded_at) { nil }
+    end
+
+    def latest_size
+      volume_states.order('recorded_at').last.try(:size) { nil }
+    end
   end
 end

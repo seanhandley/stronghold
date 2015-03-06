@@ -3,18 +3,36 @@
   - volume_results.each do |tenant, volumes|
     %h3== #{tenant} project
     - if volumes.any?
-      %table.table.table-hover
+      %table.table.table-hover.phone-bill
         %thead
           %tr
             %th Name
+            %th Unique Identifier
+            %th Created At
+            %th Last Recorded Size
+            %th Deleted At
             %th Terabyte Hours
         %tbody
           - volumes.each do |volume|
             %tr
               %td= volume[:name]
-              %td= number_with_delimiter(volume[:terabyte_hours], :delimiter => ',')
+              %td= volume[:id]
+              %td= volume[:created_at]
+              %td
+                = volume[:latest_size]
+                GB
+              %td= volume[:deleted_at] ? volume[:deleted_at] : '-'
+              %td
+                = number_with_delimiter(volume[:terabyte_hours], :delimiter => ',')
+                TBh
           %tr.highlight.bottomline
             %td Total:
-            %td= number_with_delimiter(volumes.collect{|v| v[:terabyte_hours]}.sum.round(2), :delimiter => ',')
+            %td
+              = number_with_delimiter(volumes.collect{|v| v[:terabyte_hours]}.sum.round(2), :delimiter => ',')
+              TBh
+            %td &nbsp
+            %td &nbsp
+            %td &nbsp
+            %td &nbsp
     - else
       No volume data for this period.

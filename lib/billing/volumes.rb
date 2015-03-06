@@ -14,6 +14,10 @@ module Billing
       volumes = Billing::Volume.where(:tenant_id => tenant_id).to_a.compact
       volumes = volumes.collect do |volume|
         { terabyte_hours: terabyte_hours(volume, from, to),
+                                    id: volume.volume_id,
+                                    created_at: volume.created_at,
+                                    deleted_at: volume.deleted_at,
+                                    latest_size: volume.latest_size,
                                     name: volume.name}
       end
       volumes.select{|v| v[:terabyte_hours] > 0}
