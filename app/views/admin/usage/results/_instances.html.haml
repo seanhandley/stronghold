@@ -7,9 +7,9 @@
         %tbody
           - instances.group_by{|i| i[:flavor][:flavor_id]}.each do |_, instances|
             %tr.highlight
-              %td
+              %td.icon
                 %i.fa.fa-desktop
-                == Flavor: #{instances.first[:flavor][:name]}
+              %td== Flavor: #{instances.first[:flavor][:name]}
               %td Unique Identifier
               %td First Booted
               %td Last Recorded State
@@ -19,6 +19,7 @@
                 Hours Active This Period
             - instances.sort { |x,y| x[:name] <=> y[:name] }.each do |instance|
               %tr
+                %td &nbsp;
                 %td.line_entry= instance[:name]
                 %td.line_entry= instance[:uuid]
                 %td.line_entry= instance[:first_booted_at]
@@ -26,6 +27,7 @@
                 %td.line_entry= (instance[:terminated_at] && instance[:terminated_at] <= @to_date) ? instance[:terminated_at] : '-'
                 %td.line_entry== #{number_with_delimiter(((instance[:billable_seconds] / 60.0) / 60.0).ceil, :delimiter => ',')} of #{@total_hours}
             %tr.highlight.bottomline
+              %td &nbsp;
               %td== Total #{instances.first[:flavor][:name]}:
               %td== #{number_with_delimiter(instances.map{|i| ((i[:billable_seconds] / 60.0) / 60.0).ceil}.sum, :delimiter => ',')} hours
               %td &nbsp;

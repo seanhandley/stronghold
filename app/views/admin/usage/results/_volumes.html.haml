@@ -6,9 +6,9 @@
       %table.table.table-hover.phone-bill
         %thead
           %tr
-            %th
+            %th.icon
               %i.fa.fa-database
-              Name
+            %th Name
             %th Unique Identifier
             %th Created At
             %th Last Recorded Size
@@ -19,6 +19,7 @@
         %tbody
           - volumes.each do |volume|
             %tr
+              %td &nbsp;
               %td= volume[:name]
               %td= volume[:id]
               %td= volume[:created_at]
@@ -30,6 +31,7 @@
                 = number_with_delimiter(volume[:terabyte_hours], :delimiter => ',')
                 TBh
           %tr.highlight.bottomline
+            %td &nbsp;
             %td Total:
             %td
               = number_with_delimiter(volumes.collect{|v| v[:terabyte_hours]}.sum.round(2), :delimiter => ',')
