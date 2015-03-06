@@ -14,6 +14,10 @@ module Billing
       images = Billing::Image.where(:tenant_id => tenant_id).to_a.compact
       images = images.collect do |image|
         { terabyte_hours: terabyte_hours(image, from, to),
+                                  id: image.image_id,
+                                  created_at: image.created_at,
+                                  deleted_at: image.deleted_at,
+                                  latest_size: terabytes_to_gigabytes(image.latest_size),
                                   name: image.name}
       end
       images.select{|i| i[:terabyte_hours] > 0}
@@ -80,6 +84,10 @@ module Billing
 
     def self.bytes_to_terabytes(bytes)
       ((((bytes / 1024.0) / 1024.0) / 1024.0) / 1024.0)
+    end
+
+    def self.terabytes_to_gigabytes(terabytes)
+      terabytes * 1024.0
     end
 
     def self.create_new_states(tenant_id, image_id, samples, sync)

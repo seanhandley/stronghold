@@ -3,18 +3,36 @@
   - image_results.each do |tenant, images|
     %h3== #{tenant} project
     - if images.any?
-      %table.table.table-hover
+      %table.table.table-hover.phone-bill
         %thead
           %tr
             %th Name
+            %th Unique Identifier
+            %th Created At
+            %th Last Recorded Size
+            %th Deleted At
             %th Terabyte Hours
         %tbody
           - images.each do |image|
             %tr
               %td= image[:name]
-              %td= number_with_delimiter(image[:terabyte_hours], :delimiter => ',')
+              %td= image[:id]
+              %td= image[:created_at]
+              %td
+                = image[:latest_size].round(2)
+                GB
+              %td= image[:deleted_at]
+              %td
+                = number_with_delimiter(image[:terabyte_hours], :delimiter => ',')
+                TBh
           %tr.highlight.bottomline
             %td Total:
-            %td= number_with_delimiter(images.collect{|v| v[:terabyte_hours]}.sum.round(2), :delimiter => ',')
+            %td
+              = number_with_delimiter(images.collect{|v| v[:terabyte_hours]}.sum.round(2), :delimiter => ',')
+              TBh
+            %td &nbsp
+            %td &nbsp
+            %td &nbsp
+            %td &nbsp
     - else
       No image data for this period.
