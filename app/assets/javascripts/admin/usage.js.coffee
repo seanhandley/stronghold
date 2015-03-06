@@ -1,0 +1,2 @@
+$ ->
+  $("#project").chained("#organization")

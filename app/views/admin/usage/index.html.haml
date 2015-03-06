@@ -9,6 +9,9 @@
       %label Organization
       = select_tag :organization, options_for_select(@organizations, selected: params[:organization]), class: 'form-control'
     .form-group
+      %label Project
+      = select_tag :project, options_for_select(@projects, selected: params[:project]), class: 'form-control', include_blank: true
+    .form-group
       %label From Date
       = datetime_select :from, nil, default: @from_date, class: 'form-control', minute_step: 15
     .form-group
@@ -20,4 +23,5 @@
   = render partial: 'admin/usage/results/instances', locals: { instance_results:         @instance_results            }
   = render partial: 'admin/usage/results/volumes',   locals: { volume_results:           @volume_results              }
   = render partial: 'admin/usage/results/images',    locals: { image_results:            @image_results               }
+  = render partial: 'admin/usage/results/objects',   locals: { object_results:           @object_storage_results      }
   = render partial: 'admin/usage/results/ips',       locals: { floating_ip_results:      @floating_ip_results,                                                           external_gateway_results: @external_gateway_results    }
