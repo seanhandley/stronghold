@@ -8,7 +8,7 @@
           - instances.group_by{|i| i[:flavor][:flavor_id]}.each do |_, instances|
             %tr.highlight
               %td.icon
-                %i.fa.fa-desktop
+                %i.fa.fa-rocket
               %td== Flavor: #{instances.first[:flavor][:name]}
               %td Unique Identifier
               %td First Booted
