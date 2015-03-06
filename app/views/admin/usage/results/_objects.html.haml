@@ -1,0 +1,20 @@
+- if object_results
+  %h2 Object Storage
+  - object_results.each do |tenant, tbh|
+    %h3== #{tenant} project
+    - if tbh.present? && tbh > 0
+      %table.table.table-hover.phone-bill
+        %thead
+          %tr
+            %th.icon
+              %i.fa.fa-cloud
+            %th
+              %i.fa.fa-clock-o
+              Terabyte Hours
+        %tbody
+          %tr.highlight.bottomline
+            %td
+              = number_with_delimiter(tbh, :delimiter => ',')
+              TBh
+    - else
+      No storage data for this period.

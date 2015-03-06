@@ -1,6 +1,6 @@
 class Admin::UsageController < AdminBaseController
 
-  before_filter :get_organizations
+  before_filter :get_organizations_and_projects
 
   def index
     reset_dates
@@ -16,6 +16,7 @@ class Admin::UsageController < AdminBaseController
         @image_results = usage('Billing::Images', @organization, @from_date, @to_date)
         @floating_ip_results = usage('Billing::FloatingIps', @organization, @from_date, @to_date)
         @external_gateway_results = usage('Billing::ExternalGateways', @organization, @from_date, @to_date)
+        @object_storage_results = usage('Billing::StorageObjects', @organization, @from_date, @to_date)
       end
     rescue ArgumentError => e
       flash.now[:alert] = e.message
@@ -31,8 +32,9 @@ class Admin::UsageController < AdminBaseController
     params.permit(:organization, :from =>datetime_array, :to => datetime_array)
   end
 
-  def get_organizations
+  def get_organizations_and_projects
     @organizations ||= Organization.all.collect{|o| [o.name, o.id]}
+    @projects ||= Tenant.all.collect{|o| [o.name, o.id]}
   end
 
   def datetime_array
