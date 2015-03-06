@@ -14,7 +14,7 @@ module Billing
     end
 
     def created_at
-      image_states.where(event_name: 'image.update').order('recorded_at').first.try(:recorded_at) { nil }
+      image_states.where("event_name = 'image.update' or event_name = 'image.create'").order('recorded_at').first.try(:recorded_at) { nil }
     end
 
     def deleted_at
