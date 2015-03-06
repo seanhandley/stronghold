@@ -6,12 +6,16 @@
       %table.table.table-hover.phone-bill
         %thead
           %tr
-            %th Name
+            %th
+              %i.fa.fa-database
+              Name
             %th Unique Identifier
             %th Created At
             %th Last Recorded Size
             %th Deleted At
-            %th Terabyte Hours
+            %th
+              %i.fa.fa-clock-o
+              Terabyte Hours
         %tbody
           - images.each do |image|
             %tr
