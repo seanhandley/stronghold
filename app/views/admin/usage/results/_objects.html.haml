@@ -13,8 +13,10 @@
               Terabyte Hours
         %tbody
           %tr.highlight.bottomline
+            %td &nbsp;
             %td
-              = number_with_delimiter(tbh, :delimiter => ',')
+              Total:
+              = number_with_delimiter(tbh.round(2), :delimiter => ',')
               TBh
     - else
       No storage data for this period.
