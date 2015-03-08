@@ -11,12 +11,20 @@
             %th
               %i.fa.fa-clock-o
               Terabyte Hours
+            %th &nbsp;
+            %th &nbsp;
+            %th &nbsp;
+            %th &nbsp;
         %tbody
           %tr.highlight.bottomline
-            %td &nbsp;
             %td
-              Total:
+              %em Total usage for all buckets
+            %td
               = number_with_delimiter(tbh.round(2), :delimiter => ',')
               TBh
+            %td &nbsp;
+            %td &nbsp;
+            %td &nbsp;
+            %td &nbsp;
     - else
       No storage data for this period.
