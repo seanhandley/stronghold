@@ -23,7 +23,7 @@
         %th Router Name
         %th Hours Connected to External Network
     %tbody
-      - ips.each do |_, results|
+      - external_gateways.each do |_, results|
         %tr
           %td= results[:name]
           %td= ((results[:billable_seconds] / 60.0) / 60.0).ceil
