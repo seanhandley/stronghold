@@ -79,11 +79,11 @@ module Billing
     end
 
     def self.seconds_to_whole_hours(seconds)
-      ((seconds / 60.0) / 60.0).ceil
+      ((seconds.to_i / 60.0) / 60.0).ceil
     end
 
     def self.bytes_to_terabytes(bytes)
-      ((((bytes / 1024.0) / 1024.0) / 1024.0) / 1024.0)
+      ((((bytes.to_i / 1024.0) / 1024.0) / 1024.0) / 1024.0)
     end
 
     def self.terabytes_to_gigabytes(terabytes)
