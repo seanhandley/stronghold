@@ -13,7 +13,8 @@ module Billing
       routers = Billing::ExternalGateway.where(:tenant_id => tenant_id).to_a.compact
       total = routers.inject({}) do |usage, router|
         usage[router.router_id] = { billable_seconds: seconds(router, from, to),
-                                     name: router.name}
+                                    id: router.router_id,
+                                    name: router.name}
         usage
       end
       total.select{|k,v| v[:billable_seconds] > 0}
