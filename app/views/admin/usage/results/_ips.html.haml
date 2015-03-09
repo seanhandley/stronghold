@@ -40,6 +40,6 @@
         %td &nbsp;
         %td Total:
         %td
-          = external_gateways.values.collect{|ip| ((ip[:billable_seconds] / 60.0) / 60.0).ceil}.sum
+          = number_with_delimiter(external_gateways.values.collect{|ip| ((ip[:billable_seconds] / 60.0) / 60.0).ceil}.sum.round(2), :delimiter => ',')
           hours
         %td &nbsp;
