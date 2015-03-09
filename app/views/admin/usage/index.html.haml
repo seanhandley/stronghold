@@ -19,7 +19,7 @@
     = render partial: 'admin/usage/results/volumes',   locals: { volumes:           @volume_results              }
     = render partial: 'admin/usage/results/images',    locals: { images:            @image_results               }
     = render partial: 'admin/usage/results/objects',   locals: { tbh:               @object_storage_results      }
-    = render partial: 'admin/usage/results/ips',       locals: { floating_ips:      @floating_ip_results,                                                           external_gateways: @external_gateway_results    }
+    = render partial: 'admin/usage/results/ips',       locals: { ip_quotas:         @ip_quota_results,                                                           external_gateways: @external_gateway_results    }
   - else
 
     %h1

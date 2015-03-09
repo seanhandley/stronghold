@@ -16,6 +16,7 @@ class Admin::UsageController < AdminBaseController
         @volume_results = Billing::Volumes.usage(@project.uuid, @from_date, @to_date)
         @image_results = Billing::Images.usage(@project.uuid, @from_date, @to_date)
         @floating_ip_results = Billing::FloatingIps.usage(@project.uuid, @from_date, @to_date)
+        @ip_quota_results = Billing::IpQuotas.usage(@project.uuid, @from_date, @to_date)
         @external_gateway_results = Billing::ExternalGateways.usage(@project.uuid, @from_date, @to_date)
         @object_storage_results = Billing::StorageObjects.usage(@project.uuid, @from_date, @to_date)
       end
