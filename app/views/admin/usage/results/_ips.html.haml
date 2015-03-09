@@ -35,7 +35,7 @@
           %td= results[:id]
           %td
             = ((results[:billable_seconds] / 60.0) / 60.0).ceil
-            hours
+            == of #{@total_hours}
       %tr.highlight.bottomline
         %td &nbsp;
         %td Total:
