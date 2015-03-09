@@ -27,3 +27,4 @@
 //= require select2
 //= require moment
 //= require async
+//= require chained
