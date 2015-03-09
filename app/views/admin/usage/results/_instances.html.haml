@@ -1,5 +1,5 @@
 - if instances && instances.any?
-  %h2 Instance Usage
+  %h3 Instance Usage
   %table.table.table-hover.phone-bill
     %tbody
       - instances.group_by{|i| i[:flavor][:flavor_id]}.each do |_, instances|
