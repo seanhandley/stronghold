@@ -1,44 +1,39 @@
-- if image_results
+- if images && images.any?
   %h2 Image Usage
-  - image_results.each do |tenant, images|
-    %h3== #{tenant} project
-    - if images.any?
-      %table.table.table-hover.phone-bill
-        %thead
-          %tr
-            %th.icon
-              %i.fa.fa-upload
-            %th Name
-            %th Unique Identifier
-            %th Created At
-            %th Last Recorded Size
-            %th Deleted At
-            %th
-              %i.fa.fa-clock-o
-              Terabyte Hours
-        %tbody
-          - images.each do |image|
-            %tr
-              %td &nbsp;
-              %td= image[:name]
-              %td= image[:id]
-              %td= image[:created_at]
-              %td
-                = image[:latest_size].round(2)
-                GB
-              %td= image[:deleted_at] ? image[:deleted_at] : '-'
-              %td
-                = number_with_delimiter(image[:terabyte_hours], :delimiter => ',')
-                TBh
-          %tr.highlight.bottomline
-            %td &nbsp;
-            %td Total:
-            %td
-              = number_with_delimiter(images.collect{|v| v[:terabyte_hours]}.sum.round(2), :delimiter => ',')
-              TBh
-            %td &nbsp
-            %td &nbsp
-            %td &nbsp
-            %td &nbsp
-    - else
-      No image data for this period.
+  %table.table.table-hover.phone-bill
+    %thead
+      %tr
+        %th.icon
+          %i.fa.fa-upload
+        %th Name
+        %th Unique Identifier
+        %th Created At
+        %th Last Recorded Size
+        %th Deleted At
+        %th
+          %i.fa.fa-clock-o
+          Terabyte Hours
+    %tbody
+      - images.each do |image|
+        %tr
+          %td &nbsp;
+          %td= image[:name]
+          %td= image[:id]
+          %td= image[:created_at]
+          %td
+            = image[:latest_size].round(2)
+            GB
+          %td= image[:deleted_at] ? image[:deleted_at] : '-'
+          %td
+            = number_with_delimiter(image[:terabyte_hours], :delimiter => ',')
+            TBh
+      %tr.highlight.bottomline
+        %td &nbsp;
+        %td Total:
+        %td
+          = number_with_delimiter(images.collect{|v| v[:terabyte_hours]}.sum.round(2), :delimiter => ',')
+          TBh
+        %td &nbsp
+        %td &nbsp
+        %td &nbsp
+        %td &nbsp

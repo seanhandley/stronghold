@@ -1,41 +1,32 @@
-- if floating_ip_results
+- if floating_ips && floating_ips.values.any?
   %h3 Floating IPs
-  - floating_ip_results.each do |tenant, ips|
-    %h3== #{tenant} project
-    - if ips.values.any?
-      %p== Project quota: #{ips.values.first[:quota]} addresses
-      %table.table.table-hover
-        %thead
-          %tr
-            %th Address
-            %th Hours Assigned to an Instance
-        %tbody
-          - ips.each do |_, results|
-            %tr
-              %td= results[:address]
-              %td= ((results[:billable_seconds] / 60.0) / 60.0).ceil
-          %tr.highlight.bottomline
-            %td Total:
-            %td= ((ips.values.collect{|ip| ip[:billable_seconds]}.sum / 60.0) / 60.0).ceil
-    - else
-      No floating IP data for this period.
+  %p== Project quota: #{ips.values.first[:quota]} addresses
+  %table.table.table-hover
+    %thead
+      %tr
+        %th Address
+        %th Hours Assigned to an Instance
+    %tbody
+      - floating_ips.each do |_, results|
+        %tr
+          %td= results[:address]
+          %td= ((results[:billable_seconds] / 60.0) / 60.0).ceil
+      %tr.highlight.bottomline
+        %td Total:
+        %td= ((floating_ips.values.collect{|ip| ip[:billable_seconds]}.sum / 60.0) / 60.0).ceil
 
+- if external_gateways && external_gateways.values.any?
   %h3 External Gateways
-  - external_gateway_results.each do |tenant, ips|
-    %h3== #{tenant} project
-    - if ips.values.any?
-      %table.table.table-hover
-        %thead
-          %tr
-            %th Router Name
-            %th Hours Connected to External Network
-        %tbody
-          - ips.each do |_, results|
-            %tr
-              %td= results[:name]
-              %td= ((results[:billable_seconds] / 60.0) / 60.0).ceil
-          %tr.highlight.bottomline
-            %td Total:
-            %td= ips.values.collect{|ip| ((ip[:billable_seconds] / 60.0) / 60.0).ceil}.sum
-    - else
-      No floating IP data for this period.
+  %table.table.table-hover
+    %thead
+      %tr
+        %th Router Name
+        %th Hours Connected to External Network
+    %tbody
+      - ips.each do |_, results|
+        %tr
+          %td= results[:name]
+          %td= ((results[:billable_seconds] / 60.0) / 60.0).ceil
+      %tr.highlight.bottomline
+        %td Total:
+        %td= external_gateways.values.collect{|ip| ((ip[:billable_seconds] / 60.0) / 60.0).ceil}.sum

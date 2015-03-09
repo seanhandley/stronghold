@@ -1,27 +1,43 @@
 .container
 
-  %h1
-    %i.fa.fa-area-chart
-    Usage Data
+  - if request.post?
 
-  = form_tag(admin_usage_index_path, 'role' => 'form') do
-    .form-group
-      %label Organization
-      = select_tag :organization, options_for_select(@organizations, selected: params[:organization]), class: 'form-control'
-    .form-group
-      %label Project
-      = select_tag :project, options_for_select(@projects, selected: params[:project]), class: 'form-control', include_blank: true
-    .form-group
-      %label From Date
-      = datetime_select :from, nil, default: @from_date, class: 'form-control', minute_step: 15
-    .form-group
-      %label To Date
-      = datetime_select :to, nil, default: @to_date, class: 'form-control', minute_step: 15
+    %h1
+      %i.fa.fa-area-chart
+      = @project.organization.name
+    %p
+      %strong Project:
+      = @project.name
+    %p
+      %strong From:
+      = @from_date
+    %p
+      %strong To:
+      = @to_date
 
-    = submit_tag 'Generate →', class: 'btn btn-primary'
+    = render partial: 'admin/usage/results/instances', locals: { instances:         @instance_results            }
+    = render partial: 'admin/usage/results/volumes',   locals: { volumes:           @volume_results              }
+    = render partial: 'admin/usage/results/images',    locals: { images:            @image_results               }
+    = render partial: 'admin/usage/results/objects',   locals: { tbh:               @object_storage_results      }
+    = render partial: 'admin/usage/results/ips',       locals: { floating_ips:      @floating_ip_results,                                                           external_gateways: @external_gateway_results    }
+  - else
 
-  = render partial: 'admin/usage/results/instances', locals: { instance_results:         @instance_results            }
-  = render partial: 'admin/usage/results/volumes',   locals: { volume_results:           @volume_results              }
-  = render partial: 'admin/usage/results/images',    locals: { image_results:            @image_results               }
-  = render partial: 'admin/usage/results/objects',   locals: { object_results:           @object_storage_results      }
-  = render partial: 'admin/usage/results/ips',       locals: { floating_ip_results:      @floating_ip_results,                                                           external_gateway_results: @external_gateway_results    }
+    %h1
+      %i.fa.fa-area-chart
+      Usage Data
+
+    = form_tag(admin_usage_index_path, 'role' => 'form', 'target' => '_blank') do
+      .form-group
+        %label Organization
+        = select_tag :organization, options_for_select(@organizations, selected: params[:organization]), class: 'form-control'
+      .form-group
+        %label Project
+        = select_tag :project, options_for_select(@projects, selected: params[:project]), class: 'form-control'
+      .form-group
+        %label From Date
+        = datetime_select :from, nil, default: @from_date, class: 'form-control', minute_step: 15
+      .form-group
+        %label To Date
+        = datetime_select :to, nil, default: @to_date, class: 'form-control', minute_step: 15
+
+      = submit_tag 'Generate →', class: 'btn btn-primary'
