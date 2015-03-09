@@ -1,32 +1,36 @@
-- if floating_ips && floating_ips.values.any?
-  %h3 Floating IPs
-  %p== Project quota: #{floating_ips.values.first[:quota]} addresses
-  %table.table.table-hover
+- if ip_quotas && ip_quotas.any?
+  %h3 IP Quotas
+  %p== Current Project quota: #{Fog::Network.new(OPENSTACK_ARGS).get_quota(@project.uuid).body['quota']['floatingip']} addresses
+  %table.table.table-hover.phone-bill
     %thead
       %tr
-        %th Address
-        %th Hours Assigned to an Instance
+        %th.icon
+          %i.fa.fa-sitemap
+        %th Quota
+        %th Modified At
     %tbody
-      - floating_ips.each do |_, results|
+      - ip_quotas.each do |quota|
         %tr
-          %td= results[:address]
-          %td= ((results[:billable_seconds] / 60.0) / 60.0).ceil
-      %tr.highlight.bottomline
-        %td Total:
-        %td= ((floating_ips.values.collect{|ip| ip[:billable_seconds]}.sum / 60.0) / 60.0).ceil
+          %td &nbsp;
+          %td= quota.quota
+          %td= quota.recorded_at
 
 - if external_gateways && external_gateways.values.any?
   %h3 External Gateways
   %table.table.table-hover
     %thead
       %tr
+        %th.icon
+          %i.fa.fa-sitemap
         %th Router Name
         %th Hours Connected to External Network
     %tbody
       - external_gateways.each do |_, results|
         %tr
+          %td &nbsp;
           %td= results[:name]
           %td= ((results[:billable_seconds] / 60.0) / 60.0).ceil
       %tr.highlight.bottomline
+        %td &nbsp;
         %td Total:
         %td= external_gateways.values.collect{|ip| ((ip[:billable_seconds] / 60.0) / 60.0).ceil}.sum
