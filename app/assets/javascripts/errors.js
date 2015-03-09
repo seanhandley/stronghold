@@ -5,6 +5,7 @@ window.onerror = function(message, url, lineNumber) {
   Honeybadger.configure({
     api_key: '196da135f82659b104780db07af88020' // Public API key
   });
-  Honeybadger.notify(new Error(message, url, lineNumber));
+  // If we could limit this to JS compilation errors, that'd be fine
+  // Honeybadger.notify(new Error(message, url, lineNumber));
   return false;
 }; 
