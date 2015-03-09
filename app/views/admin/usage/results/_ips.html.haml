@@ -17,20 +17,29 @@
 
 - if external_gateways && external_gateways.values.any?
   %h3 External Gateways
-  %table.table.table-hover
+  %table.table.table-hover.phone-bill
     %thead
       %tr
         %th.icon
           %i.fa.fa-sitemap
         %th Router Name
-        %th Hours Connected to External Network
+        %th Unique Identifier
+        %th
+          %i.fa.fa-clock-o
+          Hours Connected to External Network
     %tbody
       - external_gateways.each do |_, results|
         %tr
           %td &nbsp;
           %td= results[:name]
-          %td= ((results[:billable_seconds] / 60.0) / 60.0).ceil
+          %td= results[:id]
+          %td
+            = ((results[:billable_seconds] / 60.0) / 60.0).ceil
+            hours
       %tr.highlight.bottomline
         %td &nbsp;
         %td Total:
-        %td= external_gateways.values.collect{|ip| ((ip[:billable_seconds] / 60.0) / 60.0).ceil}.sum
+        %td
+          = external_gateways.values.collect{|ip| ((ip[:billable_seconds] / 60.0) / 60.0).ceil}.sum
+          hours
+        %td &nbsp;
