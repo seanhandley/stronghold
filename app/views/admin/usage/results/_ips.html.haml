@@ -1,6 +1,6 @@
 - if floating_ips && floating_ips.values.any?
   %h3 Floating IPs
-  %p== Project quota: #{ips.values.first[:quota]} addresses
+  %p== Project quota: #{floating_ips.values.first[:quota]} addresses
   %table.table.table-hover
     %thead
       %tr
