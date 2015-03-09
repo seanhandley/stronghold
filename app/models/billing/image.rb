@@ -22,7 +22,7 @@ module Billing
     end
 
     def latest_size
-      image_states.order('recorded_at').last.try(:size) { nil }
+      image_states.order('recorded_at').last.try(:size) { 0 }
     end
   end
 end
