@@ -87,7 +87,7 @@ module Billing
     end
 
     def self.terabytes_to_gigabytes(terabytes)
-      terabytes * 1024.0
+      terabytes.to_i * 1024.0
     end
 
     def self.create_new_states(tenant_id, image_id, samples, sync)
