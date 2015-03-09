@@ -10,13 +10,14 @@ class Admin::UsageController < AdminBaseController
     begin
       @from_date, @to_date = parse_dates create_params
       @total_hours = ((@to_date - @from_date) / 1.hour).round
-      if (@organization = Organization.find(create_params[:organization]))
-        @instance_results = usage('Billing::Instances', @organization, @from_date, @to_date)
-        @volume_results = usage('Billing::Volumes', @organization, @from_date, @to_date)
-        @image_results = usage('Billing::Images', @organization, @from_date, @to_date)
-        @floating_ip_results = usage('Billing::FloatingIps', @organization, @from_date, @to_date)
-        @external_gateway_results = usage('Billing::ExternalGateways', @organization, @from_date, @to_date)
-        @object_storage_results = usage('Billing::StorageObjects', @organization, @from_date, @to_date)
+      if (@organization = Organization.find(create_params[:organization]) &&
+          @project      = Tenant.find(create_params[:project]))
+        @instance_results = Billing::Instances.usage(@project.uuid, @from_date, @to_date)
+        @volume_results = Billing::Volumes.usage(@project.uuid, @from_date, @to_date)
+        @image_results = Billing::Images.usage(@project.uuid, @from_date, @to_date)
+        @floating_ip_results = Billing::FloatingIps.usage(@project.uuid, @from_date, @to_date)
+        @external_gateway_results = Billing::ExternalGateways.usage(@project.uuid, @from_date, @to_date)
+        @object_storage_results = Billing::StorageObjects.usage(@project.uuid, @from_date, @to_date)
       end
     rescue ArgumentError => e
       flash.now[:alert] = e.message
@@ -29,23 +30,16 @@ class Admin::UsageController < AdminBaseController
   private
 
   def create_params
-    params.permit(:organization, :from =>datetime_array, :to => datetime_array)
+    params.permit(:organization, :project, :from =>datetime_array, :to => datetime_array)
   end
 
   def get_organizations_and_projects
     @organizations ||= Organization.all.collect{|o| [o.name, o.id]}
-    @projects ||= Tenant.all.collect{|o| [o.name, o.id]}
+    @projects ||= Tenant.all.collect{|o| [o.name, o.id, class: "#{o.organization.id}"]}
   end
 
   def datetime_array
     (1..5).map{|i| "(#{i}i)"}
-  end
-
-  def usage(type, organization, from, to)
-    organization.tenants.inject({}) do |acc, tenant|
-      acc[tenant.name] = type.constantize.usage(tenant.uuid, from, to)
-      acc
-    end
   end
 
   def parse_dates(params)
