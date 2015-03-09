@@ -1,6 +1,6 @@
+%h3 IP Quotas
+%p== Current Project quota: #{Fog::Network.new(OPENSTACK_ARGS).get_quota(@project.uuid).body['quota']['floatingip']} addresses
 - if ip_quotas && ip_quotas.any?
-  %h3 IP Quotas
-  %p== Current Project quota: #{Fog::Network.new(OPENSTACK_ARGS).get_quota(@project.uuid).body['quota']['floatingip']} addresses
   %table.table.table-hover.phone-bill
     %thead
       %tr
