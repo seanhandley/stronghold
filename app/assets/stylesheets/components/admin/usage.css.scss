@@ -1,0 +1,26 @@
+@import "settings";
+
+.phone-bill td, .phone-bill th {
+  font-size: 10px;
+}
+
+.phone-bill .icon {
+  font-size: 14px;
+}
+
+h1.go-back a, h1.go-back a {
+  text-decoration: none;
+  color: $headings_color;
+}
+
+h1.go-back:hover a, h1.go-back:active a {
+  text-decoration: none;
+  color: $headings_color;
+}
+
+h1.go-back:hover:after {
+  position: absolute;
+  top: 80px;
+  left: 2%;
+  content: "←"
+}
