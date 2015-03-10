@@ -8,14 +8,17 @@
       %tr
         %th.icon
           %i.fa.fa-sitemap
-        %th Quota
         %th Modified At
+        %th Quota
+        
     %tbody
       - ip_quotas.each do |quota|
         %tr
           %td &nbsp;
-          %td= quota.quota
           %td= quota.recorded_at
+          %td
+            = quota.quota
+            addresses
 
 - if external_gateways && external_gateways.values.any?
   %h3 External Gateways
