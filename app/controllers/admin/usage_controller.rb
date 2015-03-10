@@ -20,12 +20,12 @@ class Admin::UsageController < AdminBaseController
         @external_gateway_results = Billing::ExternalGateways.usage(@project.uuid, @from_date, @to_date)
         @object_storage_results = Billing::StorageObjects.usage(@project.uuid, @from_date, @to_date)
       end
+      render :report
     rescue ArgumentError => e
       flash.now[:alert] = e.message
       reset_dates
+      render :index
     end
-    
-    render :index
   end
 
   private
