@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150309131140) do
+ActiveRecord::Schema.define(version: 20150316134131) do
 
   create_table "audits", force: :cascade do |t|
     t.string   "auditable_id",    limit: 255
@@ -223,6 +223,26 @@ ActiveRecord::Schema.define(version: 20150309131140) do
     t.integer  "user_id",    limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "starburst_announcement_views", force: :cascade do |t|
+    t.integer  "user_id",         limit: 4
+    t.integer  "announcement_id", limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "starburst_announcement_views", ["user_id", "announcement_id"], name: "starburst_announcement_view_index", unique: true, using: :btree
+
+  create_table "starburst_announcements", force: :cascade do |t|
+    t.text     "title",               limit: 65535
+    t.text     "body",                limit: 65535
+    t.datetime "start_delivering_at"
+    t.datetime "stop_delivering_at"
+    t.text     "limit_to_users",      limit: 65535
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.text     "category",            limit: 65535
   end
 
   create_table "tenants", force: :cascade do |t|

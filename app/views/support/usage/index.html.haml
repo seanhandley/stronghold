@@ -1,0 +1,18 @@
+%h1
+  %i.fa.fa-area-chart
+  Cloud Resource Usage
+
+= select_tag :month_year, @usage_nav
+
+- @usage.each do |tenant, results|
+  %h2
+    %i.fa.fa-folder-o
+    = tenant.name
+
+  
+  = render partial: 'admin/usage/results/instances', locals: { instances:         results[:instance_results]         }
+  = render partial: 'admin/usage/results/volumes',   locals: { volumes:           results[:volume_results]           }
+  = render partial: 'admin/usage/results/images',    locals: { images:            results[:image_results]            }
+  = render partial: 'admin/usage/results/objects',   locals: { tbh:               results[:object_storage_results]   }
+  = render partial: 'admin/usage/results/ips',       locals: { ip_quotas:         results[:ip_quota_results],                                                           external_gateways: results[:external_gateway_results],
+                                                               project: tenant}
