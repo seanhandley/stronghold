@@ -1,7 +1,7 @@
 module Sanity
   def self.check
     missing_instances = Billing::Instance.active.reject do |instance|
-      live_instances.include? instance.instance_id
+      live_instances[instance.instance_id] == instance.current_state
     end
 
     missing_volumes = Billing::Volume.active.reject do |volume|
@@ -35,7 +35,7 @@ module Sanity
 
   def self.live_instances
     Rails.cache.fetch('sanity_live_instances', expires_in: 10.minutes) do
-      Fog::Compute.new(OPENSTACK_ARGS).list_servers(:all_tenants => true).body['servers'].collect{|s| s['id']}
+      Hash[Fog::Compute.new(OPENSTACK_ARGS).list_servers_detail(:all_tenants => true).body['servers'].collect{|s| [s['id'], s['status'].downcase]}]
     end
   end
 
