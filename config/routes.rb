@@ -45,6 +45,8 @@ Rails.application.routes.draw do
   get 'signup/:token', :controller => 'signups', :action => 'edit', :as => 'signup_begin'
   post 'signup/:token', :controller => 'signups', :action => 'update', :as => 'signup_complete'
 
+  post 'salesforce', :controller => 'salesforce', :action => 'update'
+
   get 'sign_in', :controller => 'sessions', :action => 'new'
 
   root :to => 'support/dashboard#index'
