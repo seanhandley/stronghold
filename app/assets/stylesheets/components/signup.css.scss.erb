@@ -1,0 +1,32 @@
+.container#sign-up {
+  width: 90%;
+  // overflow: auto;
+  margin: auto;
+  margin-top: 30px;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+}
+
+img.sign-in-logo {
+  height: auto;
+  width: 240px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+@media only screen and (max-width: 480px), only screen and (max-device-width: 480px) {
+  .container#sign-in {
+    width: 260px;
+  }
+}
+
+#flashes p {
+  text-align: center;
+}
+
+div#signup-form-area {
+  background-image: url(<%= asset_path 'datacentred-watermark.png' %>);
+  background-repeat: no-repeat;
+  background-position: bottom;
+}
