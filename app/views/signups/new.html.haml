@@ -1,48 +1,49 @@
 %h2
   %i.fa.fa-cloud
-  Welcome
+  Cloud Services Sign-up
 
 %ol.breadcrumb
   %li Details
   %li.active Payment
   %li.active Confirm
 
-%p Please enter your details to sign up for DataCentred cloud services.
-
 %div#signup-form-area
   = form_tag({url: create_signup_path}, 'role' => 'form') do
     .row
       .col-md-6
+        %h3
+          %i.fa.fa-user
+          About You
         .form-group
           %label First Name
           = text_field_tag :first_name, @customer_signup.first_name, class: 'form-control'
-      .col-md-6
         .form-group
           %label Last Name
           = text_field_tag :last_name, @customer_signup.last_name, class: 'form-control'
-    .row
+        .form-group
+          %label Company Name
+          = text_field_tag :last_name, @customer_signup.organization_name, class: 'form-control', placeholder: "Leave blank if signing up as an individual"
       .col-md-6
+        %h3
+          %i.fa.fa-key
+          Login Details
         .form-group
           %label E-Mail Address
           = text_field_tag :email, @customer_signup.email, class: 'form-control'
         .form-group
           %label Password
-          = password_field_tag :password, @customer_signup.password, class: 'form-control'
+          = password_field_tag :password, @customer_signup.password, class: 'form-control', placeholder: 'ADD PASSWORD POLICY'
         .form-group
-          %label Repeat Password
+          %label Confirm Your Password
           = password_field_tag :confirm_password, @customer_signup.confirm_password, class: 'form-control'
-      .col-md-6
-        .form-group
-          %label Company Name
-          = text_field_tag :last_name, @customer_signup.organization_name, class: 'form-control', placeholder: "Leave blank if signing up as an individual"
-
+      
     .row
       .col-md-8
-        .form-group
-          %label
-            = check_box_tag :privacy, @customer_signup.privacy, @customer_signup.privacy
-            I confirm I have read and accept the
-            = link_to 'DataCentred privacy policy', 'http://datacentred.co.uk/privacy-policy/', target: '_blank'
+        -# .form-group
+        -#   %label
+        -#     = check_box_tag :privacy, @customer_signup.privacy, @customer_signup.privacy
+        -#     I confirm I have read and accept the
+        -#     = link_to 'DataCentred privacy policy', 'http://datacentred.co.uk/privacy-policy/', target: '_blank'
           
         .form-group
-          = submit_tag 'Continue →', class: 'btn btn-primary'
+          = submit_tag 'Continue →', class: 'btn btn-success'

@@ -10,12 +10,10 @@
   %meta{'http-equiv' => 'X-UA-Compatible', 'content' => 'IE=edge'}
   %meta{'name' => 'viewport', 'content' => 'width=device-width, initial-scale=1'}
 
-%body.sign-in
+%body.sign-in.customer-sign-up
   #wrap
     .container#sign-up
       = image_tag 'logo_text_only.png', class: 'sign-in-logo'
       #flashes= display_flash
       = yield
-    .push
-  = render partial: 'shared/footer'
   = render partial: 'shared/ga'

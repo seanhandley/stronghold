@@ -2,18 +2,15 @@ class CustomerSignupGenerator
   include ActiveModel::Validations
 
   attr_reader :organization_name, :email, :first_name, :last_name,
-              :products, :password, :confirm_password,
-              :postcode, :privacy
+              :password, :confirm_password,
 
   def initialize(params={})
     @organization_name = params[:organization_name]
     @email             = params[:email]
-    @extra_tenants     = params[:extra_tenants]
-    if params[:organization] && params[:organization][:product_ids]
-      @products = params[:organization][:product_ids].select(&:present?)
-    else
-      @products = []
-    end
+    @first_name        = params[:first_name]
+    @last_name         = params[:last_name]
+    @password          = params[:confirm_password]
+    @confirm_password  = params[:confirm_password]
   end
 
   def generate!
@@ -23,10 +20,6 @@ class CustomerSignupGenerator
       errors.add :base, "Must provide a valid email address"
     elsif User.find_by_email(@email).present?
       errors.add :base, "Email already exists in the system"
-    elsif @products.none?
-      errors.add :base, "Select at least one product"
-    elsif @products.any? {|p| !Product.all.map(&:id).include?(p.to_i)}
-      errors.add :base, "Products invalid"
     else
       error = nil
       ActiveRecord::Base.transaction do
