@@ -1,3 +1,32 @@
-%h1 SHOW ME THE MONEY
+= render :partial => 'stripe/js'
 
-= @customer_signup.uuid
+%h2
+  %i.fa.fa-cloud
+  Cloud Services Sign-up
+
+%ol.breadcrumb
+  %li.active Details
+  %li Payment
+  %li.active Confirm
+
+%div#signup-form-area
+  = @customer_signup.uuid
+
+  = form_tag('', 'role' => 'form') do
+    .row
+    .col-md-4 &nbsp;
+    .col-md-4
+      .form-group
+        %label Card Number
+        = text_field_tag :card_number, nil, :class => 'form-control', 'data-stripe' => 'number'
+      .form-group
+        %label CVC
+        = text_field_tag :cvc, nil, :size => 4, :class => 'form-control', 'data-stripe' => 'cvc'
+      .form-group
+        %label Expiry Date
+        = text_field_tag :expiry_month, nil, :size => 2, :class => 'form-control', 'data-stripe' => 'exp-month', placeholder: 'MM'
+        = text_field_tag :expiry_year, nil, :size => 2, :class => 'form-control', 'data-stripe' => 'exp-year', placeholder: 'YY'
+    .row
+      .col-md-8
+        .form-group
+          = submit_tag 'Continue →', class: 'btn btn-success'
