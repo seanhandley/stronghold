@@ -1,49 +1,27 @@
 class CustomerSignupGenerator
   include ActiveModel::Validations
 
-  attr_reader :organization_name, :email, :first_name, :last_name,
-              :password, :confirm_password,
+  attr_reader :customer_signup
 
   def initialize(params={})
-    @organization_name = params[:organization_name]
-    @email             = params[:email]
-    @first_name        = params[:first_name]
-    @last_name         = params[:last_name]
-    @password          = params[:password]
-    @confirm_password  = params[:confirm_password]
+    if params[:customer_signup_id]
+      @customer_signup = CustomerSignup.find(customer_signup_id)
+    else
+      @customer_signup = CustomerSignup.create(params)
+    end
   end
 
   def verify_details!
-    if @organization_name.blank?
-      errors.add :base, "Must provide an organization name"
-    elsif @email.blank? || !(@email =~ /.+@.+\..+/)
-      errors.add :base, "Must provide a valid email address"
-    elsif User.find_by_email(@email).present?
-      errors.add :base, "Email already exists in the system"
-    else
-      error = nil
-      ActiveRecord::Base.transaction do
-        begin
-          create_customer
-        rescue StandardError => e
-          error = e
-          raise ActiveRecord::Rollback
-        end
-      end
-
-      raise error if error
-      return true
-    end 
-    false
+    @customer_signup.valid?
   end
 
   def confirm_payment_details!
-    # Do stuff
+    @customer_signup.update_attributes(payment_verified: true)
   end
 
   def confirm_signup!
     if true
-      # do something
+      # ensure they've ticked the policy stuff
     else
       error = nil
       ActiveRecord::Base.transaction do
