@@ -3,7 +3,7 @@ class SignupsController < ApplicationController
   layout 'sign-in'
   layout 'customer-sign-up', only: [:new, :create]
 
-  before_filter :find_invite, except: [:new, :create]
+  before_filter :find_invite, except: [:new, :create, :take_payment]
   before_filter :get_products, only: [:new, :create]
 
   def new
@@ -20,6 +20,10 @@ class SignupsController < ApplicationController
       flash[:error] = @csg.customer_signup.errors.full_messages.join('<br>').html_safe
       render :new
     end
+  end
+
+  def take_payment
+    render text: params.inspect
   end
 
   def edit

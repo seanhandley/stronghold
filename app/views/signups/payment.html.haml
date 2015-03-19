@@ -12,7 +12,7 @@
 %div#signup-form-area
   = @customer_signup.uuid
 
-  = form_tag('', 'role' => 'form') do
+  = form_tag(take_payment_path, 'role' => 'form', 'id' => 'cc-details') do
     .row
     .col-md-4 &nbsp;
     .col-md-4
