@@ -48,7 +48,7 @@ Rails.application.routes.draw do
   get 'signup/:token', :controller => 'signups', :action => 'edit', :as => 'signup_begin'
   post 'signup/:token', :controller => 'signups', :action => 'update', :as => 'signup_complete'
   get 'signup', :controller => 'signups', :action => 'new', :as => 'new_signup'
-  post 'signups', :controller => 'signups', :action => 'create', :as => 'create_signup'
+  post 'signup', :controller => 'signups', :action => 'create', :as => 'create_signup'
 
   post 'salesforce', :controller => 'salesforce', :action => 'update'
 

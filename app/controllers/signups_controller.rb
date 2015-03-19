@@ -1,22 +1,23 @@
 class SignupsController < ApplicationController
 
   layout 'sign-in'
-  layout 'customer-sign-up', only: [:new]
+  layout 'customer-sign-up', only: [:new, :create]
 
   before_filter :find_invite, except: [:new, :create]
   before_filter :get_products, only: [:new, :create]
 
   def new
-    @customer_signup = CustomerSignupGenerator.new
+    @customer_signup = CustomerSignupGenerator.new.customer_signup
   end
 
   def create
-    @customer_signup = CustomerSignupGenerator.new(create_params)
+    @csg = CustomerSignupGenerator.new(create_params)
+    @customer_signup = @csg.customer_signup
     @organization = Organization.new(create_params[:organization])
-    if @customer_signup.generate!
-      redirect_to support_root_path
+    if @csg.verify_details!
+      render :payment
     else
-      flash[:error] = @customer_signup.errors.full_messages.join('<br>')
+      flash[:error] = @csg.customer_signup.errors.full_messages.join('<br>').html_safe
       render :new
     end
   end
@@ -51,8 +52,8 @@ class SignupsController < ApplicationController
   end
 
   def create_params
-    params.permit(:organization_name, :email,
-                  :organization => {:product_ids => []})
+    params.permit(:organization_name, :email, :first_name, :last_name,
+                  :password, :confirm_password)
   end
 
   def get_products
