@@ -103,4 +103,6 @@ Rails.application.configure do
   # Prevent Angular conflicts
   config.assets.js_compressor = Uglifier.new(mangle: false)
 
+  config.stripe.publishable_key = "pk_live_vzTCZElYj4BdVeSj5648NROM"
+
 end

@@ -31,5 +31,7 @@ module Stronghold
     # Use Sidekiq as the background worker
     config.active_job.queue_adapter = :sidekiq
 
+    config.stripe.publishable_key = "pk_test_7MJ5VPJPLNmTgHLC21kuoYCh"
+
   end
 end
