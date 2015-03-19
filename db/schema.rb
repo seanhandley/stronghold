@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150316134131) do
+ActiveRecord::Schema.define(version: 20150319090132) do
 
   create_table "audits", force: :cascade do |t|
     t.string   "auditable_id",    limit: 255
@@ -158,6 +158,15 @@ ActiveRecord::Schema.define(version: 20150316134131) do
     t.string "volume_id", limit: 255
     t.string "name",      limit: 255
     t.string "tenant_id", limit: 255
+  end
+
+  create_table "customer_signups", force: :cascade do |t|
+    t.string   "email",        limit: 255
+    t.string   "first_name",   limit: 255
+    t.string   "last_name",    limit: 255
+    t.string   "company_name", limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "invites", force: :cascade do |t|

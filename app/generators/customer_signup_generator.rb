@@ -9,11 +9,11 @@ class CustomerSignupGenerator
     @email             = params[:email]
     @first_name        = params[:first_name]
     @last_name         = params[:last_name]
-    @password          = params[:confirm_password]
+    @password          = params[:password]
     @confirm_password  = params[:confirm_password]
   end
 
-  def generate!
+  def verify_details!
     if @organization_name.blank?
       errors.add :base, "Must provide an organization name"
     elsif @email.blank? || !(@email =~ /.+@.+\..+/)
@@ -35,6 +35,30 @@ class CustomerSignupGenerator
       return true
     end 
     false
+  end
+
+  def confirm_payment_details!
+    # Do stuff
+  end
+
+  def confirm_signup!
+    if true
+      # do something
+    else
+      error = nil
+      ActiveRecord::Base.transaction do
+        begin
+          create_customer
+        rescue StandardError => e
+          error = e
+          raise ActiveRecord::Rollback
+        end
+      end
+
+      raise error if error
+      return true
+    end 
+    false   
   end
 
   private
