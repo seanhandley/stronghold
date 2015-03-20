@@ -12,7 +12,6 @@ class SignupsController < ApplicationController
 
   def create
     @customer_signup = CustomerSignup.new(create_params.merge(ip_address: request.remote_ip))
-    # @csg = CustomerSignupGenerator.new(@customer_signup)
     if @customer_signup.save
       render :payment
     else
@@ -29,7 +28,7 @@ class SignupsController < ApplicationController
       :description => payment_params[:signup_uuid]
     )
     @customer_signup.update_attributes(stripe_customer_id: customer.id)
-
+    CustomerSignupJob.perform_later(@customer_signup.id)
     render :confirm
   end
 

@@ -2,8 +2,8 @@ class CustomerSignupGenerator
 
   attr_reader :customer_signup
 
-  def initialize(customer_signup)
-    @customer_signup = customer_signup
+  def initialize(customer_signup_id)
+    @customer_signup = CustomerSignup.find(customer_signup_id)
   end
 
   def generate!
