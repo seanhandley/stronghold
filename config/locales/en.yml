@@ -50,6 +50,7 @@ en:
         - :year
   delete_the_role: "Delete the role"
   description: "Description"
+  documentation: "Documentation"
   edit_organization_details: "Edit Organization Details"
   edit_profile: "Edit Profile"
   email: "E-Mail"
@@ -74,6 +75,7 @@ en:
   my_organisation: "My Organisation"
   name: "Name"
   networking: "Networking"
+  openstack: "OpenStack"
   organization_name: "Organization Name"
   organization_name_is_blank: "Organization name is blank"
   owners: "Administrator"
