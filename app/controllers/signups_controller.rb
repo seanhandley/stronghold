@@ -24,7 +24,7 @@ class SignupsController < ApplicationController
     customer = Stripe::Customer.create(
       :source => payment_params[:stripe_token],
       :email => @customer_signup.email,
-      :description => "Company: #{@customer_signup.organization_name || '(no name)'}"
+      :description => "Company: #{@customer_signup.organization_name || '(no name)'}, Signup UUID: #{@customer_signup.uuid}"
     )
     @customer_signup.update_attributes(stripe_customer_id: customer.id)
     CustomerSignupJob.perform_later(@customer_signup.id)
