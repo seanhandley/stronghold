@@ -8,7 +8,7 @@
     %h3
       %i.fa.fa-user
       About You
-    #flashes
+    #flashes= display_flash
     .form-group
       %label E-Mail Address
       = text_field_tag :email, @customer_signup.email, class: 'form-control'
