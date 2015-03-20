@@ -25,7 +25,8 @@ class SignupsController < ApplicationController
     @customer_signup = CustomerSignup.find_by_uuid(payment_params[:signup_uuid])
     customer = Stripe::Customer.create(
       :source => payment_params[:stripe_token],
-      :description => @customer_signup.email
+      :email => @customer_signup.email,
+      :description => payment_params[:signup_uuid]
     )
     @customer_signup.update_attributes(stripe_customer_id: customer.id)
 
