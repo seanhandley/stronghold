@@ -15,5 +15,8 @@
     .form-group
       %label Company Name
       = text_field_tag :organization_name, @customer_signup.organization_name, class: 'form-control', placeholder: "Leave blank if signing up as an individual"
+    .pull-right
+      = link_to 'Already got an account?', sign_in_path
     .form-group
       = submit_tag 'Continue →', class: 'btn btn-success'
+

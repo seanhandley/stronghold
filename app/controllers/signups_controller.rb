@@ -5,7 +5,11 @@ class SignupsController < ApplicationController
   before_filter :find_invite, except: [:new, :create, :take_payment, :precheck]
 
   def new
-    @customer_signup = CustomerSignup.new
+    if current_user
+      redirect_to support_root_path
+    else
+      @customer_signup = CustomerSignup.new
+    end
   end
 
   def create
