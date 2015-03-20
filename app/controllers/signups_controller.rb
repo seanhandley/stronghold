@@ -32,13 +32,11 @@ class SignupsController < ApplicationController
   end
 
   def edit
-    layout 'sign-in'
     reset_session
     @registration = RegistrationGenerator.new(nil,{})  
   end
 
   def update
-    layout 'sign-in'
     @registration = RegistrationGenerator.new(@invite, update_params)
     if @registration.generate!
       session[:user_id] = @registration.user.id
