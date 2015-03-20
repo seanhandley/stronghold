@@ -24,7 +24,20 @@ $(document).ready(function() {
     year = $(this).val().split('/')[1].trim().substring(2);
     $('#expiry_month').val(month);
     $('#expiry_year').val(year);
-  })
+  });
+
+  $('#lookup-field').setupPostcodeLookup({
+    // Add your API key
+    api_key: 'ak_i7hlkdrpH82slSRuCcKrSslMyLHQg',
+    // Identify your fields with CSS selectors
+    output_fields: {
+      line_1: '#address_line1',  
+      line_2: '#address_line2',         
+      post_town: '#address_city',
+      postcode: '#postcode'
+    }
+  });
+
 });
 
 function stripeResponseHandler(status, response) {

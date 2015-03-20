@@ -12,7 +12,7 @@
     #card-display
     .push
     = hidden_field_tag :signup_uuid, @customer_signup.uuid
-    #flashes= display_flash
+    #flashes
     .form-group
       %label Card Number
       = text_field_tag :card_number, nil, :class => 'form-control', 'data-stripe' => 'number'
@@ -25,9 +25,15 @@
     .form-group
       %label Expiry Date
       = text_field_tag :expiry, nil, :class => 'form-control', placeholder: 'MM/YYYY'
-      = hidden_field_tag :expiry_month, nil, 'data-stripe' => 'exp-month'
-      = hidden_field_tag :expiry_year, nil, 'data-stripe' => 'exp-year'
-      = hidden_field_tag :address_line1, '1 Foo Street', 'data-stripe' => 'address_line1'
-      = hidden_field_tag :address_zip, 'BG4 4KF', 'data-stripe' => 'address_zip'
+    .form-group
+      %label Address
+      #lookup-field
+    = hidden_field_tag :expiry_month, nil, 'data-stripe' => 'exp-month'
+    = hidden_field_tag :expiry_year, nil, 'data-stripe' => 'exp-year'
+    = hidden_field_tag :address_line1, nil, 'data-stripe' => 'address_line1'
+    = hidden_field_tag :address_line2, nil, 'data-stripe' => 'address_line2'
+    = hidden_field_tag :address_city, nil, 'data-stripe' => 'address_city'
+    = hidden_field_tag :postcode, nil, 'data-stripe' => 'address_zip'
+
     .form-group
       = submit_tag 'Continue →', class: 'btn btn-success'
