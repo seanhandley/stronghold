@@ -9,7 +9,7 @@ class CustomerSignup < ActiveRecord::Base
   end
 
   def organization_name
-    return read_column(:organization_name) unless read_column(:organization_name).blank?
+    return read_attribute(:organization_name) unless read_attribute(:organization_name).blank?
     email
   end
 
