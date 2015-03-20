@@ -1,7 +1,7 @@
 class SignupsController < ApplicationController
 
   layout 'sign-in'
-  layout 'customer-sign-up', only: [:new, :create]
+  layout 'customer-sign-up', only: [:new, :create, :take_payment]
 
   before_filter :find_invite, except: [:new, :create, :take_payment]
   before_filter :get_products, only: [:new, :create]
@@ -22,8 +22,14 @@ class SignupsController < ApplicationController
   end
 
   def take_payment
-    render text: params.inspect
-    # Turn the stripe token into a customer and save the customer ID with the signup object
+    @customer_signup = CustomerSignup.find_by_uuid(payment_params[:signup_uuid])
+    customer = Stripe::Customer.create(
+      :source => payment_params[:stripe_token],
+      :description => @customer_signup.email
+    )
+    @customer_signup.update_attributes(stripe_customer_id: customer.id)
+
+    render :confirm
   end
 
   def edit
@@ -58,6 +64,10 @@ class SignupsController < ApplicationController
   def create_params
     params.permit(:organization_name, :email, :first_name, :last_name,
                   :password, :confirm_password)
+  end
+
+  def payment_params
+    params.permit(:stripe_token, :signup_uuid)
   end
 
   def get_products

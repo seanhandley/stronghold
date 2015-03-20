@@ -1,5 +1,4 @@
 class CustomerSignupGenerator
-  include ActiveModel::Validations
 
   attr_reader :customer_signup
 
@@ -7,28 +6,19 @@ class CustomerSignupGenerator
     @customer_signup = customer_signup
   end
 
-  def confirm_payment_details!
-    @customer_signup.update_attributes(payment_verified: true)
-  end
-
-  def confirm_signup!
-    if true
-      # ensure they've ticked the policy stuff
-    else
-      error = nil
-      ActiveRecord::Base.transaction do
-        begin
-          create_customer
-        rescue StandardError => e
-          error = e
-          raise ActiveRecord::Rollback
-        end
+  def generate!
+    error = nil
+    ActiveRecord::Base.transaction do
+      begin
+        create_customer
+      rescue StandardError => e
+        error = e
+        raise ActiveRecord::Rollback
       end
+    end
 
-      raise error if error
-      return true
-    end 
-    false   
+    raise error if error
+    return true
   end
 
   private
