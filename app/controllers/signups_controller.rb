@@ -11,7 +11,7 @@ class SignupsController < ApplicationController
   end
 
   def create
-    @customer_signup = CustomerSignup.new(create_params)
+    @customer_signup = CustomerSignup.new(create_params.merge(ip_address: request.remote_ip))
     # @csg = CustomerSignupGenerator.new(@customer_signup)
     if @customer_signup.save
       render :payment
