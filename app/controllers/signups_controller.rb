@@ -1,6 +1,6 @@
 class SignupsController < ApplicationController
 
-  layout 'customer-sign-up'
+  layout :set_layout
 
   before_filter :find_invite, except: [:new, :create, :take_payment]
   before_filter :get_products, only: [:new, :create]
@@ -51,6 +51,15 @@ class SignupsController < ApplicationController
   end
 
   private
+
+  def set_layout
+    case action_name
+    when "edit", "update"
+      "sign-in"
+    else
+      "customer-sign-up"
+    end
+  end
 
   def update_params
     params.permit(:password, :confirm_password, :privacy,
