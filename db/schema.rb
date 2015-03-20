@@ -163,8 +163,6 @@ ActiveRecord::Schema.define(version: 20150319090132) do
   create_table "customer_signups", force: :cascade do |t|
     t.string   "uuid",              limit: 255
     t.string   "email",             limit: 255
-    t.string   "first_name",        limit: 255
-    t.string   "last_name",         limit: 255
     t.string   "organization_name", limit: 255
     t.boolean  "payment_verified",  limit: 1,   default: false, null: false
     t.datetime "created_at"

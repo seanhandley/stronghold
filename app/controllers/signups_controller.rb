@@ -7,17 +7,16 @@ class SignupsController < ApplicationController
   before_filter :get_products, only: [:new, :create]
 
   def new
-    @customer_signup = CustomerSignupGenerator.new.customer_signup
+    @customer_signup = CustomerSignup.new
   end
 
   def create
-    @csg = CustomerSignupGenerator.new(create_params)
-    @customer_signup = @csg.customer_signup
-    @organization = Organization.new(create_params[:organization])
-    if @csg.verify_details!
+    @customer_signup = CustomerSignup.new(create_params)
+    # @csg = CustomerSignupGenerator.new(@customer_signup)
+    if @customer_signup.save
       render :payment
     else
-      flash[:error] = @csg.customer_signup.errors.full_messages.join('<br>').html_safe
+      flash[:error] = @customer_signup.errors.full_messages.join('<br>').html_safe
       render :new
     end
   end

@@ -3,16 +3,8 @@ class CustomerSignupGenerator
 
   attr_reader :customer_signup
 
-  def initialize(params={})
-    if params[:customer_signup_id]
-      @customer_signup = CustomerSignup.find(customer_signup_id)
-    else
-      @customer_signup = CustomerSignup.create(params)
-    end
-  end
-
-  def verify_details!
-    @customer_signup.valid?
+  def initialize(customer_signup)
+    @customer_signup = customer_signup
   end
 
   def confirm_payment_details!
@@ -42,26 +34,14 @@ class CustomerSignupGenerator
   private
 
   def create_customer
-    @organization = Organization.create! name: @organization_name
-    @products.each do |product_id|
-      @organization.products << Product.find(product_id)
-    end
+    @organization = Organization.create! name: @customer_signup.organization_name
+    @organization.products << Product.find_by_name('Compute')
+    @organization.products << Product.find_by_name('Storage')
     @organization.save!
-    @extra_tenants.split(',').map(&:strip).map(&:downcase).uniq.each do |tenant|
-      @organization.tenants.create(name: tenant)
-    end
-    if colo_only?
-      @organization.tenants.each do |tenant|
-        OpenStack::Tenant.find(tenant.uuid).zero_quotas
-      end
-    end
-    create_default_network(@organization) unless colo_only?
-    @invite = Invite.create! email: @email, power_invite: true, organization: @organization
-    Mailer.signup(@invite.id).deliver_later
-  end
 
-  def colo_only?
-    products.collect{|p| Product.find(p).name}.include?('Colocation') && products.count == 1
+    create_default_network(@organization)
+    @invite = Invite.create! email: @customer_signup.email, power_invite: true, organization: @organization
+    Mailer.signup(@invite.id).deliver_later
   end
 
   def create_default_network(organization)
