@@ -49,6 +49,7 @@ function stripeResponseHandler(status, response) {
         $form.get(0).submit();
       } else {
         showError(data.message);
+        $form.find('input[type=submit]').prop('disabled', false);
       }
     });
 
