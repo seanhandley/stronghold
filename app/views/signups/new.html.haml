@@ -11,32 +11,19 @@
   #flashes= display_flash
   = form_tag(create_signup_path, 'role' => 'form') do
     .row
+      .col-md-4 &nbsp;
       .col-md-6
         %h3
           %i.fa.fa-user
           About You
         .form-group
-          %label First Name
-          = text_field_tag :first_name, @customer_signup.first_name, class: 'form-control'
-        .form-group
-          %label Last Name
-          = text_field_tag :last_name, @customer_signup.last_name, class: 'form-control'
-        .form-group
-          %label Company Name
-          = text_field_tag :organization_name, @customer_signup.organization_name, class: 'form-control', placeholder: "Leave blank if signing up as an individual"
-      .col-md-6
-        %h3
-          %i.fa.fa-key
-          Login Details
-        .form-group
           %label E-Mail Address
           = text_field_tag :email, @customer_signup.email, class: 'form-control'
         .form-group
-          %label Password
-          = password_field_tag :password, @customer_signup.password, class: 'form-control', placeholder: 'At least 8 characters long'
+          %label Company Name
+          = text_field_tag :organization_name, @customer_signup.organization_name, class: 'form-control', placeholder: "Leave blank if signing up as an individual"
         .form-group
-          %label Confirm Your Password
-          = password_field_tag :confirm_password, nil, class: 'form-control'
+          = submit_tag 'Continue →', class: 'btn btn-success'
       
     .row
       .col-md-8
@@ -46,5 +33,3 @@
         -#     I confirm I have read and accept the
         -#     = link_to 'DataCentred privacy policy', 'http://datacentred.co.uk/privacy-policy/', target: '_blank'
           
-        .form-group
-          = submit_tag 'Continue →', class: 'btn btn-success'

@@ -10,12 +10,14 @@
   %li.active Confirm
 
 %div#signup-form-area
-  = @customer_signup.uuid
 
   = form_tag(take_payment_path, 'role' => 'form', 'id' => 'cc-details') do
     .row
     .col-md-4 &nbsp;
-    .col-md-4
+    .col-md-6
+      %h3
+        %i.fa.fa-credit-card
+        Payment Details
       .form-group
         %label Card Number
         = text_field_tag :card_number, nil, :class => 'form-control', 'data-stripe' => 'number'
@@ -26,7 +28,5 @@
         %label Expiry Date
         = text_field_tag :expiry_month, nil, :size => 2, :class => 'form-control', 'data-stripe' => 'exp-month', placeholder: 'MM'
         = text_field_tag :expiry_year, nil, :size => 2, :class => 'form-control', 'data-stripe' => 'exp-year', placeholder: 'YY'
-    .row
-      .col-md-8
-        .form-group
-          = submit_tag 'Continue →', class: 'btn btn-success'
+      .form-group
+        = submit_tag 'Continue →', class: 'btn btn-success'
