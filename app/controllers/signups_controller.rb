@@ -1,7 +1,6 @@
 class SignupsController < ApplicationController
 
-  layout 'sign-in'
-  layout 'customer-sign-up', only: [:new, :create, :take_payment]
+  layout 'customer-sign-up'
 
   before_filter :find_invite, except: [:new, :create, :take_payment]
   before_filter :get_products, only: [:new, :create]
@@ -25,7 +24,7 @@ class SignupsController < ApplicationController
     customer = Stripe::Customer.create(
       :source => payment_params[:stripe_token],
       :email => @customer_signup.email,
-      :description => payment_params[:signup_uuid]
+      :description => "Company: #{@customer_signup.organization_name || '(no name)'}"
     )
     @customer_signup.update_attributes(stripe_customer_id: customer.id)
     CustomerSignupJob.perform_later(@customer_signup.id)
@@ -33,11 +32,13 @@ class SignupsController < ApplicationController
   end
 
   def edit
+    layout 'sign-in'
     reset_session
     @registration = RegistrationGenerator.new(nil,{})  
   end
 
   def update
+    layout 'sign-in'
     @registration = RegistrationGenerator.new(@invite, update_params)
     if @registration.generate!
       session[:user_id] = @registration.user.id
