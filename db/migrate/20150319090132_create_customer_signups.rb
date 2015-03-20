@@ -5,6 +5,7 @@ class CreateCustomerSignups < ActiveRecord::Migration
       t.string :email
       t.string :organization_name
       t.string :stripe_customer_id
+      t.string :ip_address
       t.timestamps
     end
   end
