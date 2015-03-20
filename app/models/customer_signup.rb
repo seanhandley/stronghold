@@ -4,8 +4,8 @@ class CustomerSignup < ActiveRecord::Base
   validates :email, length: {minimum: 5}, allow_blank: false
   validate :email_valid
 
-  def expired?
-    created_at + 1.hour < Time.zone.now
+  def ready?
+    stripe_customer_id.present? && address_check_passed?
   end
 
   private
@@ -18,4 +18,23 @@ class CustomerSignup < ActiveRecord::Base
     errors.add(:email, I18n.t(:is_not_a_valid_address)) unless email =~ /.+@.+\..+/
   end
 
+  def address_check_passed?
+    return false unless stripe_customer
+    return false unless stripe_customer.sources.data.first.address_line1_check == 'pass'
+    return false unless stripe_customer.sources.data.first.address_zip_check   == 'pass'
+    true
+  end
+
+  def stripe_customer
+    Stripe::Customer.retrieve(stripe_customer_id)
+  rescue Stripe::InvalidRequestError => e
+    if e.message.include? 'No such customer'
+      return nil
+    else
+      raise
+    end
+  end
+
 end
+
+

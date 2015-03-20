@@ -8,17 +8,26 @@
     %h3
       %i.fa.fa-credit-card
       Payment Details
-    #flashes= display_flash
+    
+    #card-display
+    .push
     = hidden_field_tag :signup_uuid, @customer_signup.uuid
+    #flashes= display_flash
     .form-group
       %label Card Number
       = text_field_tag :card_number, nil, :class => 'form-control', 'data-stripe' => 'number'
+    .form-group
+      %label Name On Card
+      = text_field_tag :name, nil, :class => 'form-control', 'data-stripe' => 'name'
     .form-group
       %label CVC
       = text_field_tag :cvc, nil, :size => 4, :class => 'form-control', 'data-stripe' => 'cvc'
     .form-group
       %label Expiry Date
-      = text_field_tag :expiry_month, nil, :size => 2, :class => 'form-control', 'data-stripe' => 'exp-month', placeholder: 'MM'
-      = text_field_tag :expiry_year, nil, :size => 2, :class => 'form-control', 'data-stripe' => 'exp-year', placeholder: 'YY'
+      = text_field_tag :expiry, nil, :class => 'form-control', placeholder: 'MM/YYYY'
+      = hidden_field_tag :expiry_month, nil, 'data-stripe' => 'exp-month'
+      = hidden_field_tag :expiry_year, nil, 'data-stripe' => 'exp-year'
+      = hidden_field_tag :address_line1, '1 Foo Street', 'data-stripe' => 'address_line1'
+      = hidden_field_tag :address_zip, 'BG4 4KF', 'data-stripe' => 'address_zip'
     .form-group
       = submit_tag 'Continue →', class: 'btn btn-success'

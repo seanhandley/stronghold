@@ -2,8 +2,7 @@ class SignupsController < ApplicationController
 
   layout :set_layout
 
-  before_filter :find_invite, except: [:new, :create, :take_payment]
-  before_filter :get_products, only: [:new, :create]
+  before_filter :find_invite, except: [:new, :create, :take_payment, :precheck]
 
   def new
     @customer_signup = CustomerSignup.new
@@ -21,14 +20,28 @@ class SignupsController < ApplicationController
 
   def take_payment
     @customer_signup = CustomerSignup.find_by_uuid(payment_params[:signup_uuid])
+    if @customer_signup.ready?
+      CustomerSignupJob.perform_later(@customer_signup.id)
+      render :confirm
+    else
+      render :new
+    end
+  end
+
+  # Ajax
+  def precheck
+    @customer_signup = CustomerSignup.find_by_uuid(payment_params[:signup_uuid])
     customer = Stripe::Customer.create(
       :source => payment_params[:stripe_token],
       :email => @customer_signup.email,
       :description => "Company: #{@customer_signup.organization_name || '(no name)'}, Signup UUID: #{@customer_signup.uuid}"
     )
     @customer_signup.update_attributes(stripe_customer_id: customer.id)
-    CustomerSignupJob.perform_later(@customer_signup.id)
-    render :confirm
+    if @customer_signup.ready?    
+      render json: {success: true, message: ''}
+    else
+      render json: {success: false, message: 'The address does not match the card'}
+    end
   end
 
   def edit
@@ -78,7 +91,4 @@ class SignupsController < ApplicationController
     params.permit(:stripe_token, :signup_uuid)
   end
 
-  def get_products
-    @products ||= Product.all
-  end
 end
