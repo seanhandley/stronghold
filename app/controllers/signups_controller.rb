@@ -23,6 +23,7 @@ class SignupsController < ApplicationController
 
   def take_payment
     render text: params.inspect
+    # Turn the stripe token into a customer and save the customer ID with the signup object
   end
 
   def edit

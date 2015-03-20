@@ -5,6 +5,7 @@ class CreateCustomerSignups < ActiveRecord::Migration
       t.string :email
       t.string :organization_name
       t.boolean :payment_verified, default: false, null: false
+      t.string :stripe_customer_id
       t.timestamps
     end
   end

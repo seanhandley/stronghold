@@ -1,5 +1,3 @@
-= render :partial => 'stripe/js'
-
 %h2
   %i.fa.fa-cloud
   Cloud Services Sign-up
@@ -10,23 +8,21 @@
   %li.active Confirm
 
 %div#signup-form-area
-
   = form_tag(take_payment_path, 'role' => 'form', 'id' => 'cc-details') do
-    .row
-    .col-md-4 &nbsp;
-    .col-md-6
-      %h3
-        %i.fa.fa-credit-card
-        Payment Details
-      .form-group
-        %label Card Number
-        = text_field_tag :card_number, nil, :class => 'form-control', 'data-stripe' => 'number'
-      .form-group
-        %label CVC
-        = text_field_tag :cvc, nil, :size => 4, :class => 'form-control', 'data-stripe' => 'cvc'
-      .form-group
-        %label Expiry Date
-        = text_field_tag :expiry_month, nil, :size => 2, :class => 'form-control', 'data-stripe' => 'exp-month', placeholder: 'MM'
-        = text_field_tag :expiry_year, nil, :size => 2, :class => 'form-control', 'data-stripe' => 'exp-year', placeholder: 'YY'
-      .form-group
-        = submit_tag 'Continue →', class: 'btn btn-success'
+    %h3
+      %i.fa.fa-credit-card
+      Payment Details
+    #flashes= display_flash
+    = hidden_field_tag :signup_uuid, @customer_signup.uuid
+    .form-group
+      %label Card Number
+      = text_field_tag :card_number, nil, :class => 'form-control', 'data-stripe' => 'number'
+    .form-group
+      %label CVC
+      = text_field_tag :cvc, nil, :size => 4, :class => 'form-control', 'data-stripe' => 'cvc'
+    .form-group
+      %label Expiry Date
+      = text_field_tag :expiry_month, nil, :size => 2, :class => 'form-control', 'data-stripe' => 'exp-month', placeholder: 'MM'
+      = text_field_tag :expiry_year, nil, :size => 2, :class => 'form-control', 'data-stripe' => 'exp-year', placeholder: 'YY'
+    .form-group
+      = submit_tag 'Continue →', class: 'btn btn-success'
