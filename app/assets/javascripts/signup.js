@@ -43,9 +43,12 @@ $(document).ready(function() {
 function stripeResponseHandler(status, response) {
   var $form = $('#cc-details');
 
+  document.body.style.cursor='wait';
+
   if (response.error) {
     showError(response.error.message);
     $form.find('input[type=submit]').prop('disabled', false);
+    document.body.style.cursor='default';
   } else {
     // response contains id and card, which contains additional card details
     var token = response.id;
@@ -63,6 +66,7 @@ function stripeResponseHandler(status, response) {
       } else {
         showError(data.message);
         $form.find('input[type=submit]').prop('disabled', false);
+        document.body.style.cursor='default';
       }
     });
 
