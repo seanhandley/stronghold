@@ -8,6 +8,11 @@ class CustomerSignup < ActiveRecord::Base
     stripe_customer_id.present? && address_check_passed?
   end
 
+  def organization_name
+    return read_column(:organization_name) unless read_column(:organization_name).blank?
+    email
+  end
+
   private
 
   def cache_id
@@ -17,11 +22,6 @@ class CustomerSignup < ActiveRecord::Base
   def email_valid
     errors.add(:email, I18n.t(:is_not_a_valid_address)) unless email =~ /.+@.+\..+/
     errors.add(:email, 'is already in use') if User.find_by_email(email)
-  end
-
-  def organization_name
-    return read_column(:organization_name) unless read_column(:organization_name).blank?
-    email
   end
 
   def address_check_passed?
