@@ -44,7 +44,7 @@ class CustomerSignupGenerator
       r = Fog::Network.new(OPENSTACK_ARGS).routers.create name: 'default', tenant_id: tenant_id,
                                    external_gateway_info: external_network.id
       Fog::Network.new(OPENSTACK_ARGS).add_router_interface(r.id, s.id)
-
+      OpenStack::Tenant.find(tenant.uuid).set_self_service_quotas
     end
   end
 end
