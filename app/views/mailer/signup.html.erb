@@ -2,11 +2,7 @@
 <div class="container" id="email">
   <div class="push"></div>
   <div class="pull-right"><%= image_tag "http://#{Rails.configuration.action_mailer.default_url_options[:host]}#{asset_path('logo_long.png')}" %></div>
-  <h1>
-    <i class="fa fa-plug"></i>
-    Hello
-  </h1>
-
+<%= image_tag "http://#{Rails.configuration.action_mailer.default_url_options[:host]}#{asset_path('welcome_email.png')}" %>
   <p>Welcome to DataCentred Cloud Services.</p>
 
   <p>Your account is now ready to be accessed for the first time. To continue, <%= link_to 'please click here', signup_begin_url(@invite.token), :target => "_blank" %> and follow the instructions on screen.</p>
