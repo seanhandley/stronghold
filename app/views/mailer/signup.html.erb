@@ -1,10 +1,25 @@
-<div id="container">
-  <p>Hello and welcome to DataCentred,</p>
+<link rel="stylesheet" href="<%= asset_url 'application.css' %>">
+<div class="container" id="email">
+  <div class="push"></div>
+  <div class="pull-right"><%= image_tag asset_url('logo_long.png') %></div>
+  <h1>Hello</h1>
 
-  <p>Your account is ready to be accessed for the first time. Please <%= link_to 'set up your new account', signup_begin_url(@invite.token), :target => "_blank" %>.</p>
+  <p>Welcome to DataCentred!</p>
 
-  <p>The above setup link will expire at <%= am_pm_time(@invite.expires_at) %> on <%= long_date(@invite.expires_at) %>. If the link has expired, please contact support@datacentred.co.uk to request a new token.</p>
+  <p>Your account is now ready to be accessed for the first time. Please <%= link_to 'set up your new account', signup_begin_url(@invite.token), :target => "_blank" %>.</p>
+
+  <p>The above setup link will expire at <%= am_pm_time(@invite.expires_at) %> on <%= long_date(@invite.expires_at) %>. If the link has expired, please contact <%= link_to 'support@datacentred.co.uk', 'mailto:support@datacentred.co.uk' %>.</p>
+
+  <h2>Getting Started</h2>
+
+  <ul>
+    <li>Our user portal can be found at <%= link_to 'my.datacentred.io', 'my.datacentred.io' %> - from here, you can view your cloud usage information, raise support tickets, invite other users, and handle your account settings.</li>
+    <li>Our documentation can be found at <%= link_to 'docs.datacentred.io', 'docs.datacentred.io' %> and contains various articles and tutorials on common topics and frequently asked questions.</li>
+    <li>The OpenStack control panel can be found at <%= link_to 'compute.datacentred.io', 'compute.datacentred.io' %> and allows you to create and manage instances, volumes, images and virtual networking hardware. You can log into this using the same username and password as my.datacentred.io</li>
+  </ul>
+
+  <p>If you requre any assistance, please log into <%= link_to 'my.datacentred.io', 'my.datacentred.io' %> and raise a ticket in the Support section.</p>
 
   <p>Kind regards,<br/>
-  DataCentred</p>
+  The DataCentred Team</p>
 </div>

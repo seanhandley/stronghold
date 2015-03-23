@@ -88,7 +88,7 @@ Rails.application.configure do
       :user_name => 'yvnkigkbn5',
       :password => '7y7qh820t4'
   }
-
+  config.action_controller.asset_host = "http://rails01.sal01.datacentred.co.uk"
   config.action_mailer.default_url_options = { :host => 'rails01.sal01.datacentred.co.uk' }
 
   # Error handling
