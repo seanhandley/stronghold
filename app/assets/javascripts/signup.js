@@ -19,7 +19,8 @@ $(document).ready(function() {
     width: 180
   });
 
-  $('#expiry').change(function() {
+  $('input#expiry').change(function() {
+    console.log($(this).val());
     month = $(this).val().split('/')[0].trim();
     year = $(this).val().split('/')[1].trim().substring(2);
     $('#expiry_month').val(month);
@@ -79,5 +80,6 @@ function showError(message) {
   var $div = $("<div id='flash'></div>");
   $div.append($("<p>" + message + "</p>").addClass('error'));
   $form.find('#flashes').empty();
+  $form.find('#flashes').removeClass('hide');
   $form.find('#flashes').append($div)
 }
