@@ -12,19 +12,19 @@
     #card-display
     .push
     = hidden_field_tag :signup_uuid, @customer_signup.uuid
-    #flashes
+    .hide.alert.alert-danger#flashes
     .form-group
       %label Card Number
-      = text_field_tag :card_number, nil, :class => 'form-control', 'data-stripe' => 'number'
-    .form-group
-      %label Name On Card
-      = text_field_tag :name, nil, :class => 'form-control', 'data-stripe' => 'name'
-    .form-group
-      %label CVC
-      = text_field_tag :cvc, nil, :size => 4, :class => 'form-control', 'data-stripe' => 'cvc'
-    .form-group
-      %label Expiry Date
-      = text_field_tag :expiry, nil, :class => 'form-control', placeholder: 'MM/YYYY'
+      .inline
+        = text_field_tag :card_number, nil, :class => 'form-control', 'data-stripe' => 'number'
+        = text_field_tag :cvc, nil, :size => 4, :placeholder => 'CVC', :class => 'form-control', 'data-stripe' => 'cvc'
+    .inline-form-groups
+      .form-group#name
+        %label Name On Card
+        = text_field_tag :name, nil, :class => 'form-control', 'data-stripe' => 'name'
+      .form-group#expiry
+        %label Expiry Date
+        = text_field_tag :expiry, nil, :class => 'form-control', placeholder: 'MM/YYYY'
     .form-group
       %label Post Code / ZIP
       #lookup-field

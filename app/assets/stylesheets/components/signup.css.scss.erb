@@ -21,8 +21,17 @@ img.sign-in-logo {
   }
 }
 
-#flashes p {
-  text-align: center;
+#flashes #flash p.error {
+  color: #a94442;
+}
+
+#flashes.alert {
+  margin-top: 10px;
+  padding-bottom: 5px;
+}
+
+#flashes #flash p {
+  text-align: left;
 }
 
 body.customer-sign-up {
@@ -40,11 +49,40 @@ div#signup-form-area i {
   color: #0af;
 }
 
+#signup-form-area .wider {
+  width: 70%;
+}
+
 div#card-display {
   position: absolute;
   left: 40%;
   top: 100px;
   z-index: -1050;
+}
+
+#cc-details #card_number {
+  width: 79%;
+}
+
+#cc-details #cvc {
+  width: 20%;
+}
+
+#cc-details .inline input {
+  display: inline;
+}
+
+#cc-details .inline-form-groups .form-group {
+  display: inline-block;
+}
+
+#cc-details .form-group#expiry {
+  float: right;
+  width: 29%;
+}
+
+#cc-details .form-group#name {
+  width: 70%;
 }
 
 #lookup-field input, #lookup-field select {
