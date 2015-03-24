@@ -59,7 +59,7 @@ class SignupsController < ApplicationController
     if @registration.generate!
       session[:user_id] = @registration.user.id
       session[:created_at] = Time.zone.now
-      redirect_to support_root_path, notice: 'Welcome!'
+      redirect_to support_root_path
     else
       flash[:error] = @registration.errors.full_messages.join('<br>')
       render :edit    
