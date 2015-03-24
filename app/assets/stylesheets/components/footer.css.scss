@@ -1,17 +1,26 @@
 footer {
   background: #fff;
-  color: rgba(0, 0, 0, 0.7);
+  color: #000;
   padding: 20px 0px 0px;
   height: 60px;
-  text-align: right;
+  font-size: 12px;
+}
+
+footer .copyright {
+  float: right;
+  color: rgba(0, 0, 0, 0.7);
 }
 
 .push {
   height: 60px;
 }
 
-footer a, footer a:hover {
+footer a:hover {
   color: #000;
+}
+
+footer a {
+  color: rgba(0, 0, 0, 0.7);
 }
 
 #wrap {
