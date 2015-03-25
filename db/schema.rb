@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150319090132) do
+ActiveRecord::Schema.define(version: 20150325113631) do
 
   create_table "audits", force: :cascade do |t|
     t.string   "auditable_id",    limit: 255
@@ -188,14 +188,15 @@ ActiveRecord::Schema.define(version: 20150319090132) do
   end
 
   create_table "organizations", force: :cascade do |t|
-    t.string   "reference",         limit: 255
-    t.string   "name",              limit: 255
+    t.string   "reference",          limit: 255
+    t.string   "name",               limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "time_zone",         limit: 255, default: "London", null: false
-    t.string   "locale",            limit: 255, default: "en",     null: false
-    t.integer  "primary_tenant_id", limit: 4
+    t.string   "time_zone",          limit: 255, default: "London", null: false
+    t.string   "locale",             limit: 255, default: "en",     null: false
+    t.integer  "primary_tenant_id",  limit: 4
     t.datetime "started_paying_at"
+    t.string   "stripe_customer_id", limit: 255
   end
 
   create_table "organizations_products", force: :cascade do |t|
