@@ -35,5 +35,12 @@
     = hidden_field_tag :address_city, nil, 'data-stripe' => 'address_city'
     = hidden_field_tag :postcode, nil, 'data-stripe' => 'address_zip'
 
+    .powered-by-stripe
+      = image_tag 'powered_by_stripe.png'
+
     .form-group
       = submit_tag 'Continue →', class: 'btn btn-success'
+
+.push
+.push
+
