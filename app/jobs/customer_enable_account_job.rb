@@ -3,6 +3,7 @@ class CustomerEnableAccountJob < ActiveJob::Base
 
   def perform(organization_id, stripe_customer_id)
     organization = Organization.find(organization_id)
-    organization.enable!(stripe_customer_id)
+    organization.update_attributes(stripe_customer_id: stripe_customer_id)
+    organization.enable!
   end
 end

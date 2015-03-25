@@ -47,8 +47,7 @@ class Organization < ActiveRecord::Base
     users.select(&:admin?)
   end
 
-  def enable!(stripe_customer_id)
-    update_attributes(stripe_customer_id: stripe_customer_id)
+  def enable!
     tenants.each do |tenant|
       # Enable the tenant
       Fog::Identity.new(OPENSTACK_ARGS).update_tenant(tenant.uuid, enabled: true)
