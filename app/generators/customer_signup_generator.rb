@@ -29,12 +29,12 @@ class CustomerSignupGenerator
     @organization.products << Product.find_by_name('Storage')
     @organization.save!
 
-    create_default_network(@organization)
+    create_default_network_and_quotas(@organization)
     @invite = Invite.create! email: @customer_signup.email, power_invite: true, organization: @organization
     Mailer.signup(@invite.id).deliver_later
   end
 
-  def create_default_network(organization)
+  def create_default_network_and_quotas(organization)
     organization.tenants.collect(&:uuid).each do |tenant_id|
       n = Fog::Network.new(OPENSTACK_ARGS).networks.create name: 'default', tenant_id: tenant_id
       s = Fog::Network.new(OPENSTACK_ARGS).subnets.create name: 'default', cidr: '192.168.0.0/24',
