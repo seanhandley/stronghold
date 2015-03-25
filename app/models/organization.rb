@@ -47,6 +47,18 @@ class Organization < ActiveRecord::Base
     users.select(&:admin?)
   end
 
+  def enable!(stripe_customer_id)
+    update_attributes(stripe_customer_id: stripe_customer_id)
+    tenants.each do |tenant|
+      # Enable the tenant
+      Fog::Identity.new(OPENSTACK_ARGS).update_tenant(tenant.uuid, enabled: true)
+    end
+    users.each do |user|
+      # Enable the user
+      Fog::Identity.new(OPENSTACK_ARGS).update_user(user.uuid, enabled: true)
+    end
+  end
+
   private
 
   def generate_reference

@@ -42,7 +42,7 @@ class User < ActiveRecord::Base
   def keystone_params
     { email: email, name: email,
       tenant_id: organization.primary_tenant.uuid,
-      enabled: true,
+      enabled: false,
       password: password
     }
   end
