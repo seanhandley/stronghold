@@ -15,7 +15,8 @@ class SignupsController < ApplicationController
   def create
     @customer_signup = CustomerSignup.new(create_params.merge(ip_address: request.remote_ip))
     if @customer_signup.save
-      render :payment
+      CustomerSignupJob.perform_later(@customer_signup.id)
+      render :confirm
     else
       flash[:error] = @customer_signup.errors.full_messages.join('<br>').html_safe
       render :new
@@ -25,8 +26,9 @@ class SignupsController < ApplicationController
   def take_payment
     @customer_signup = CustomerSignup.find_by_uuid(payment_params[:signup_uuid])
     if @customer_signup.ready?
-      CustomerSignupJob.perform_later(@customer_signup.id)
-      render :confirm
+      CustomerEnableAccountJob.perform_later(current_user.organization.id,
+                               @customer_signup.stripe_customer_id)
+      render :paid
     else
       render :new
     end
