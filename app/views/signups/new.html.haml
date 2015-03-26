@@ -1,13 +1,5 @@
-%ol.breadcrumb
-  %li Details
-  %li.active Payment
-  %li.active Confirm
-
 %div#signup-form-area
   = form_tag(create_signup_path, 'role' => 'form') do
-    %h3
-      %i.fa.fa-user
-      About You
     - if flash.present?
       .alert.alert-danger#flashes= display_flash
     .form-group

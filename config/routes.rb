@@ -49,7 +49,7 @@ Rails.application.routes.draw do
   post 'signup/:token', :controller => 'signups', :action => 'update', :as => 'signup_complete'
   get 'signup', :controller => 'signups', :action => 'new', :as => 'new_signup'
   post 'signup', :controller => 'signups', :action => 'create', :as => 'create_signup'
-  post 'pay', :controller => 'signups', :action => 'take_payment', :as => 'take_payment'
+  get 'pay', :controller => 'signups', :action => 'take_payment', :as => 'take_payment'
   post 'precheck', :controller => 'signups', :action => 'precheck'
 
   post 'salesforce', :controller => 'salesforce', :action => 'update'
