@@ -15,7 +15,7 @@ class Tenant < ActiveRecord::Base
   end
 
   def keystone_params
-    { name: reference, enabled: false,
+    { name: reference, enabled: true,
       description: "Customer: #{organization.name}, Project: #{name}" 
     }
   end
