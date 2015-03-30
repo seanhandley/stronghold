@@ -1,5 +1,5 @@
 default: &default
-  auth_url: "https://compute.datacentred.io:5000/v2.0/tokens"
+  auth_url: "http://devstack.datacentred.io:5000/v2.0/tokens"
 
 development:
   <<: *default
@@ -12,3 +12,4 @@ staging:
 
 production:
   <<: *default
+  auth_url: "https://compute.datacentred.io:5000/v2.0/tokens"
