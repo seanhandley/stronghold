@@ -2,6 +2,8 @@ require 'test_helper'
 
 class InstancesTest < Minitest::Test
   def setup
+    @auth = OPENSTACK_ARGS[:openstack_auth_url]
+    OPENSTACK_ARGS[:openstack_auth_url] = "https://compute.datacentred.io:5000/v2.0/tokens"
     @test_tenant = Tenant.make!
     @first_sync = Billing::Sync.create(started_at:   Time.parse('2014-11-19 18:20:47'),
                                        completed_at: Time.parse('2014-11-19 18:20:47'))
@@ -31,6 +33,7 @@ class InstancesTest < Minitest::Test
   end
 
   def teardown
+    OPENSTACK_ARGS[:openstack_auth_url] = @auth
     DatabaseCleaner.clean
   end
 
