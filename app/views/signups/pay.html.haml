@@ -1,0 +1,42 @@
+%div#signup-form-area
+  = form_tag(take_payment_path, 'role' => 'form', 'id' => 'cc-details') do
+    %h3
+      %i.fa.fa-credit-card
+      Payment Details
+    
+    #card-display
+    .push
+    = hidden_field_tag :signup_uuid, @customer_signup.uuid
+    .hide.alert.alert-danger#flashes
+    .form-group
+      %label Card Number
+      .inline
+        = text_field_tag :card_number, nil, :class => 'form-control', 'data-stripe' => 'number'
+        = text_field_tag :cvc, nil, :size => 4, :placeholder => 'CVC', :class => 'form-control', 'data-stripe' => 'cvc'
+    .inline-form-groups
+      .form-group#name
+        %label Name On Card
+        = text_field_tag :name, nil, :class => 'form-control', 'data-stripe' => 'name'
+      .form-group#expiry
+        %label Expiry Date
+        = text_field_tag :expiry, nil, :class => 'form-control', placeholder: 'MM/YYYY'
+    .form-group
+      %label Post Code / ZIP
+      #lookup-field
+    = hidden_field_tag :expiry_month, nil, 'data-stripe' => 'exp-month'
+    = hidden_field_tag :expiry_year, nil, 'data-stripe' => 'exp-year'
+    = hidden_field_tag :address_line1, nil, 'data-stripe' => 'address_line1'
+    = hidden_field_tag :address_line2, nil, 'data-stripe' => 'address_line2'
+    = hidden_field_tag :address_city, nil, 'data-stripe' => 'address_city'
+    = hidden_field_tag :postcode, nil, 'data-stripe' => 'address_zip'
+
+    .powered-by-stripe
+      %a{href: "https://stripe.com", target: '_blank'}
+        = image_tag 'powered_by_stripe.png'
+
+    .form-group
+      = submit_tag 'Continue →', class: 'btn btn-success'
+
+.push
+.push
+

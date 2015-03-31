@@ -51,6 +51,10 @@ class Organization < ActiveRecord::Base
     tenants.each do |tenant|
       OpenStack::Tenant.find(tenant.id).set_self_service_quotas
     end
+    users.each do |user|
+      # Enable the user
+      Fog::Identity.new(OPENSTACK_ARGS).update_user(user.uuid, enabled: true)
+    end
   end
 
   private
