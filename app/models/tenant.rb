@@ -1,8 +1,11 @@
 class Tenant < ActiveRecord::Base
+  include OffboardingHelper
+
   belongs_to :organization
 
   validates :organization, :presence => true
   validates :name, length: {minimum: 1}, allow_blank: false
+  before_destroy -> { offboard(self) }
 
   syncs_with_keystone as: 'OpenStack::Tenant', actions: [:create, :destroy]
   syncs_with_ceph     as: 'Ceph::User',        actions: [:create, :destroy]
