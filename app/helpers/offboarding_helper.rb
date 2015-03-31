@@ -1,5 +1,6 @@
 module OffboardingHelper
   def offboard(tenant)
+    return false unless tenant.respond_to?(:uuid) && tenant.uuid.is_a?(String)
 
     # Delete all instances to clear ports
     fog = Fog::Compute.new(OPENSTACK_ARGS)
@@ -33,5 +34,7 @@ module OffboardingHelper
     subnets.each  {|s| fog.delete_subnet(s)}
     # Iterate through networks and delete all
     networks.each {|n| fog.delete_network(n)}
+
+    true
   end
 end
