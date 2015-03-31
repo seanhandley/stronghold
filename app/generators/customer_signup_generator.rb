@@ -32,6 +32,7 @@ class CustomerSignupGenerator
     create_default_network_and_quotas(@organization)
     @invite = Invite.create! email: @customer_signup.email, power_invite: true, organization: @organization
     Mailer.signup(@invite.id).deliver_later
+    Hipchat.notify('Self Service', 'Signups', "New user signed up: #{@customer_signup.email} becoming organization #{@organization.id}")
   end
 
   def create_default_network_and_quotas(organization)
