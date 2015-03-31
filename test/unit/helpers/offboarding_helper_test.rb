@@ -59,8 +59,4 @@ class OffboardingHelperTest < Minitest::Test
     model_destroy
   end
 
-  def teardown
-    DatabaseCleaner.clean  
-  end
-
 end
