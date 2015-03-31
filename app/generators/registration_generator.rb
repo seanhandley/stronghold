@@ -53,7 +53,7 @@ class RegistrationGenerator
     roles = (invite.roles + [@owners]).flatten.compact
     @user = @organization.users.create email: invite.email, password: password,
                                        roles: roles, first_name: first_name, last_name: last_name
-
+    OpenStack::User.update_enabled(@user.uuid, false)
     if invite.power_invite?
       member_uuid = OpenStack::Role.all.select{|r| r.name == '_member_'}.first.id
       @organization.tenants.select{|t| t.id != @organization.primary_tenant.id}.each do |tenant|

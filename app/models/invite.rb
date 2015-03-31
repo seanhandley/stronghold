@@ -10,6 +10,7 @@ class Invite < ActiveRecord::Base
   validate :email_looks_valid?
 
   belongs_to :organization
+  belongs_to :customer_signup
   has_and_belongs_to_many :roles
 
   def can_register?

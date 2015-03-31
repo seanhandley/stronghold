@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
   authenticates_with_keystone
   syncs_with_keystone as: 'OpenStack::User', actions: [:create, :destroy]
   after_save :update_password
-  after_create :generate_ec2_credentials
+  after_create :generate_ec2_credentials, :set_local_password
 
   has_and_belongs_to_many :roles
   belongs_to :organization
@@ -42,7 +42,7 @@ class User < ActiveRecord::Base
   def keystone_params
     { email: email, name: email,
       tenant_id: organization.primary_tenant.uuid,
-      enabled: true,
+      enabled: false,
       password: password
     }
   end
@@ -60,6 +60,10 @@ class User < ActiveRecord::Base
     name.blank? ? email : name
   end
 
+  def authenticate_local(unencrypted_password)
+    BCrypt::Password.new(password_digest) == unencrypted_password && self
+  end
+
   private
 
   def password_complexity
@@ -68,9 +72,17 @@ class User < ActiveRecord::Base
     end
   end
 
+  def set_local_password
+    if password.present?
+      cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST : BCrypt::Engine.cost
+      update_column(:password_digest, BCrypt::Password.create(password, cost: cost))
+    end
+  end
+
   def update_password
-    if password
+    if password.present?
       OpenStack::User.update_password uuid, password
+      set_local_password
     end
   end
 
