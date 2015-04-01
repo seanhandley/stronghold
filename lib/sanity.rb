@@ -1,6 +1,7 @@
 module Sanity
   def self.check
     missing_instances = Billing::Instance.active.reject do |instance|
+      return false unless live_instances[instance.instance_id]
       live_instances[instance.instance_id]['status'] == instance.current_state
     end
 
