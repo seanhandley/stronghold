@@ -9,7 +9,7 @@ module Sanity
     end
 
     new_instances = live_instances.reject do |instance|
-      Billing::Instance.find_by_id(instance['id'])
+      Billing::Instance.find_by_instance_id(instance['id'])
     end
 
     missing_volumes = Billing::Volume.active.reject do |volume|
