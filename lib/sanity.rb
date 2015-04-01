@@ -1,7 +1,11 @@
 module Sanity
   def self.check
     missing_instances = Billing::Instance.active.reject do |instance|
-      live_instances[instance.instance_id] == instance.current_state
+      live_instances[instance.instance_id]['status'] == instance.current_state
+    end
+
+    new_instances = live_instances.reject do |instance|
+      Billing::Instance.find_by_id(instance['id'])
     end
 
     missing_volumes = Billing::Volume.active.reject do |volume|
@@ -24,7 +28,8 @@ module Sanity
       missing_instances: Hash[missing_instances.collect{|i| [i.instance_id, i.name]}],
       missing_volumes: Hash[missing_volumes.collect{|i| [i.volume_id, i.name]}],
       missing_images: Hash[missing_images.collect{|i| [i.image_id, i.name]}],
-      missing_routers: Hash[missing_routers.collect{|i| [i.router_id, i.name]}]
+      missing_routers: Hash[missing_routers.collect{|i| [i.router_id, i.name]}],
+      new_instances: new_instances
     }
     results.merge(:sane => results.values.none?(&:present?))
   end
@@ -35,7 +40,7 @@ module Sanity
 
   def self.live_instances
     Rails.cache.fetch('sanity_live_instances', expires_in: 10.minutes) do
-      Hash[Fog::Compute.new(OPENSTACK_ARGS).list_servers_detail(:all_tenants => true).body['servers'].collect{|s| [s['id'], s['status'].downcase]}]
+      Hash[Fog::Compute.new(OPENSTACK_ARGS).list_servers_detail(:all_tenants => true).body['servers'].collect{|s| [s['id'], {'status' => s['status'].downcase, 'name' => s['name']}]}]
     end
   end
 
