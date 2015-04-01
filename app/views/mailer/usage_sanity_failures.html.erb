@@ -1,15 +1,17 @@
 <%= render partial: 'email_style' %>
 <div class="container" id="email">
-  <p>The following items are active in the usage data but not active on OpenStack.</p>
-  
+  <p>Missing items are active in the usage data but not active on OpenStack.</p>
+  <p>New items are active on OpenStack but not present in the usage data.</p>
   <% for key in @keys %>
-    <% if @data["missing_#{key}".to_sym].present? %>
-      <h3><%= key.titleize %></h3>
-      <p>
-      <% @data["missing_#{key}".to_sym].each do |k,v| %>
-        <%= "#{v} (#{k})" %><br/>
+    <% for prefix in ['missing', 'new'] %>
+      <% if @data["#{prefix}_#{key}".to_sym].present? %>
+        <h3><%= "#{key.titleize} (#{prefix})" %></h3>
+        <p>
+        <% @data["#{prefix}_#{key}".to_sym].each do |k,v| %>
+          <%= "#{v} (#{k})" %><br/>
+        <% end %>
+        </p>
       <% end %>
-      </p>
     <% end %>
   <% end %>
 </div>
