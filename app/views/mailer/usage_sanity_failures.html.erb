@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="/application.css">
 <div id="container">
-  <p>The following items are active in the usage data but not active on OpenStack.</p>
-  
+  <p>Missing items are active in the usage data but not active on OpenStack.</p>
+  <p>New items are active on OpenStack but not present in the usage data.</p>
   <% for key in @keys %>
     <% for prefix in ['missing', 'new'] %>
       <% if @data["#{prefix}_#{key}".to_sym].present? %>
