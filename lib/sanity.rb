@@ -33,7 +33,7 @@ module Sanity
       missing_volumes: Hash[missing_volumes.collect{|i| [i.volume_id, i.name]}],
       missing_images: Hash[missing_images.collect{|i| [i.image_id, i.name]}],
       missing_routers: Hash[missing_routers.collect{|i| [i.router_id, i.name]}],
-      new_instances: new_instances
+      new_instances: Hash[new_instances.collect{|k,v| [k, v['name']]}]
     }
     results.merge(:sane => results.values.none?(&:present?))
   end
