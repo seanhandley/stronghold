@@ -8,7 +8,7 @@ module Sanity
       end
     end
 
-    new_instances = live_instances.reject do |instance|
+    new_instances = live_instances.reject do |instance,_|
       Billing::Instance.find_by_instance_id(instance['id'])
     end
 
