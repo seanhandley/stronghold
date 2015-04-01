@@ -82,7 +82,7 @@ class SignupsController < ApplicationController
     case action_name
     when "edit", "update"
       "sign-in"
-    when "new"
+    when "new", "create"
       "customer-sign-up"
     else
       "application"
