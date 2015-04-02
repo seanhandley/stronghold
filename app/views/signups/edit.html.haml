@@ -18,8 +18,8 @@
 
   .form-group
     %label
-      I confirm I have read and accept the
-      = link_to 'DataCentred privacy policy', 'http://datacentred.co.uk/privacy-policy/', target: '_blank'
-    = check_box_tag :privacy, @registration.privacy, @registration.privacy
+      By logging in, you agree to our
+      = link_to 'Privacy Policy', 'http://datacentred.co.uk/privacy-policy/', target: '_blank'
+      \.
   
-  = submit_tag 'Continue →', class: 'btn btn-primary'
+  = submit_tag 'Log In →', class: 'btn btn-primary'

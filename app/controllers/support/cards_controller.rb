@@ -1,45 +1,25 @@
-class Support::CardsController < SupportBaseController
+class Support::CardsController < LocallyAuthorizedController
   
   def index
 
   end
 
+  def new
+    @customer_signup = CustomerSignup.find_by_email(current_user.email)
+  end
+
   def create
-    @customer_signup = CustomerSignup.new(create_params.merge(ip_address: request.remote_ip))
-    if @customer_signup.save
-      CustomerSignupJob.perform_later(@customer_signup.id)
-      render :confirm
-    else
-      flash[:error] = @customer_signup.errors.full_messages.join('<br>').html_safe
-      render :new
-    end
-  end
-
-  def take_payment
-    @customer_signup = CustomerSignup.find_by_uuid(payment_params[:signup_uuid])
+    @customer_signup = CustomerSignup.find_by_uuid(create_params[:signup_uuid])
     if @customer_signup.ready?
-      CustomerEnableAccountJob.perform_later(current_user.organization.id,
-                               @customer_signup.stripe_customer_id)
-      render :paid
+      current_user.organization.update_attributes(stripe_customer_id: @customer_signup.stripe_customer_id)
+      current_user.organization.enable!
+      session[:token] = current_user.authenticate(Rails.cache.fetch("up_#{current_user.uuid}"))
+      Rails.cache.delete("up_#{current_user.uuid}")
+      Announcement.create(title: 'Welcome', body: 'Your card details are verified and you may now begin using cloud services!',
+        limit_field: 'id', limit_value: current_user.id)
+      redirect_to support_root_path
     else
       render :new
-    end
-  end
-
-  # Ajax
-  def precheck
-    @customer_signup = CustomerSignup.find_by_uuid(payment_params[:signup_uuid])
-    customer = Stripe::Customer.create(
-      :source => payment_params[:stripe_token],
-      :email => @customer_signup.email,
-      :description => "Company: #{@customer_signup.organization_name}, Signup UUID: #{@customer_signup.uuid}"
-    )
-    @customer_signup.update_attributes(stripe_customer_id: customer.id)
-    if @customer_signup.ready?    
-      render json: {success: true, message: ''}
-    else
-      customer.delete
-      render json: {success: false, message: 'The address does not match the card'}
     end
   end
 
@@ -53,17 +33,7 @@ class Support::CardsController < SupportBaseController
 
   private
 
-  def update_params
-    params.permit(:password, :confirm_password, :privacy,
-                  :first_name, :last_name)
-  end
-
   def create_params
-    params.permit(:organization_name, :email, :first_name, :last_name,
-                  :password, :confirm_password)
-  end
-
-  def payment_params
     params.permit(:stripe_token, :signup_uuid)
   end
 

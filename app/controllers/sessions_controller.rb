@@ -22,9 +22,10 @@ class SessionsController < ApplicationController
       session[:created_at] = Time.zone.now
       redirect_to support_root_path
     elsif @user and params[:user][:password].present? and @user.authenticate_local(params[:user][:password])
+      Rails.cache.write("up_#{@user.uuid}", params[:user][:password], expires_in: 60.minutes)
       session[:user_id]    = @user.id
       session[:created_at] = Time.zone.now
-      redirect_to support_root_path     
+      redirect_to new_support_card_path     
     else
       flash.now.alert = "Invalid credentials. Please try again."
       Rails.logger.error "Invalid login: #{params[:user][:email]}. Token=#{token.inspect}"

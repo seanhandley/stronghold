@@ -15,12 +15,10 @@ $(document).ready(function() {
         expiryInput: 'input#expiry',
         cvcInput: 'input#cvc',
         nameInput: 'input#name'
-    },
-    width: 180
+    }
   });
 
   $('input#expiry').change(function() {
-    console.log($(this).val());
     month = $(this).val().split('/')[0].trim();
     year = $(this).val().split('/')[1].trim().substring(2);
     $('#expiry_month').val(month);
@@ -36,7 +34,9 @@ $(document).ready(function() {
       line_2: '#address_line2',         
       post_town: '#address_city',
       postcode: '#postcode'
-    }
+    },
+    input_label: "Post code",
+    button_disabled_message: "Checking"
   });
 
 });
