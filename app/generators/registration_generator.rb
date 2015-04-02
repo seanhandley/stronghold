@@ -2,22 +2,19 @@ class RegistrationGenerator
   include ActiveModel::Validations
 
   attr_reader :invite, :password, :confirm_password,
-              :organization, :user, :privacy,
+              :organization, :user,
               :first_name, :last_name
 
   def initialize(invite, params)
     @invite            = invite
     @password          = params[:password]
     @confirm_password  = params[:confirm_password]
-    @privacy           = params[:privacy]
     @first_name        = params[:first_name]
     @last_name         = params[:last_name]
   end
 
   def generate!
-    if @privacy.blank?
-      errors.add :base, I18n.t(:must_agree_to_privacy)
-    elsif !invite.can_register?
+    if !invite.can_register?
       errors.add :base, I18n.t(:signup_token_not_valid)
     elsif first_name.blank? || last_name.blank?
       errors.add :base, I18n.t(:must_provide_first_name_and_last_name)

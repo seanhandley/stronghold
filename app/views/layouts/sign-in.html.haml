@@ -14,7 +14,7 @@
   #wrap
     .container#sign-in
       = image_tag 'logo_text_only.png', class: 'sign-in-logo'
-      #flashes= display_flash
+      .alert#flashes= display_flash
       = yield
     .push
   = render partial: 'shared/footer'

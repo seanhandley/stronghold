@@ -2,7 +2,7 @@ class SignupsController < ApplicationController
 
   layout :set_layout
 
-  before_filter :find_invite, except: [:new, :create, :pay, :take_payment, :precheck]
+  before_filter :find_invite, except: [:new, :create]
 
   def new
     if current_user
@@ -23,38 +23,6 @@ class SignupsController < ApplicationController
     end
   end
 
-  def pay
-    @customer_signup = CustomerSignup.find_by_email(current_user.email)
-  end
-
-  def take_payment
-    @customer_signup = CustomerSignup.find_by_uuid(payment_params[:signup_uuid])
-    if @customer_signup.ready?
-      CustomerEnableAccountJob.perform_later(current_user.organization.id,
-                               @customer_signup.stripe_customer_id)
-      render :paid
-    else
-      render :new
-    end
-  end
-
-  # Ajax
-  def precheck
-    @customer_signup = CustomerSignup.find_by_uuid(payment_params[:signup_uuid])
-    customer = Stripe::Customer.create(
-      :source => payment_params[:stripe_token],
-      :email => @customer_signup.email,
-      :description => "Company: #{@customer_signup.organization_name}, Signup UUID: #{@customer_signup.uuid}"
-    )
-    @customer_signup.update_attributes(stripe_customer_id: customer.id)
-    if @customer_signup.ready?    
-      render json: {success: true, message: ''}
-    else
-      customer.delete
-      render json: {success: false, message: 'The address does not match the card'}
-    end
-  end
-
   def edit
     reset_session
     @registration = RegistrationGenerator.new(nil,{})  
@@ -63,6 +31,7 @@ class SignupsController < ApplicationController
   def update
     @registration = RegistrationGenerator.new(@invite, update_params)
     if @registration.generate!
+      Rails.cache.write("up_#{@registration.user.uuid}", update_params[:password], expires_in: 60.minutes)
       session[:user_id] = @registration.user.id
       session[:created_at] = Time.zone.now
       redirect_to support_root_path
@@ -90,7 +59,7 @@ class SignupsController < ApplicationController
   end
 
   def update_params
-    params.permit(:password, :confirm_password, :privacy,
+    params.permit(:password, :confirm_password,
                   :first_name, :last_name)
   end
 
@@ -102,10 +71,6 @@ class SignupsController < ApplicationController
   def create_params
     params.permit(:organization_name, :email, :first_name, :last_name,
                   :password, :confirm_password)
-  end
-
-  def payment_params
-    params.permit(:stripe_token, :signup_uuid)
   end
 
 end

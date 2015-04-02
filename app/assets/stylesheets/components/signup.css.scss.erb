@@ -7,6 +7,11 @@
   top: 0; left: 0; bottom: 0; right: 0;
 }
 
+.container#sign-in input {
+  height: 55px;
+  font-size: 22px;
+}
+
 img.sign-in-logo {
   height: auto;
   width: 240px;
@@ -53,23 +58,40 @@ div#signup-form-area i {
   color: #0af;
 }
 
+div#signup-form-area .thank-you {
+  text-align: center;
+}
+
 #signup-form-area .wider {
   width: 70%;
 }
 
 div#card-display {
-  position: absolute;
-  left: 40%;
-  top: 100px;
-  z-index: -1050;
+  transform: scale(0.8,0.8);
 }
 
-#cc-details #card_number {
-  width: 79%;
+#cc-details input {
+  height: 40px;
 }
 
-#cc-details #cvc {
+#cc-details input#card_number {
+  width: 78%;
+  font-size: 18px;
+}
+
+#cc-details input#expiry {
+  font-size: 14px;
+  float: right;
+}
+
+#cc-details input#name {
+  font-size: 16px;
+}
+
+#cc-details input#cvc {
   width: 20%;
+  font-size: 16px;
+  float: right;
 }
 
 #cc-details .inline input {
@@ -94,7 +116,7 @@ div#card-display {
   width: 50%;
   height: 34px;
   padding: 6px 12px;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.428571429;
   color: #555555;
   background-color: white;
@@ -109,7 +131,7 @@ div#card-display {
 }
 
 #lookup-field #idpc_input {
-  width: 260px;
+  width: 50%;
   margin-right: 5px;
 }
 
@@ -157,12 +179,13 @@ div.powered-by-stripe  img {
   heigh: auto;
 }
 
-div.info-panel {
-  //position: absolute;
-  //right: -68%;
-}
 
 div.info-panel .alert {
-  padding-right: 10px;
+  padding-right: 20px;
   padding-left: 0px;
+  font-size: 15px;
+}
+
+div.info-panel .alert ul {
+ list-style-type: square;
 }

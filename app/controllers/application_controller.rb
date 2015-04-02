@@ -21,4 +21,9 @@ class ApplicationController < ActionController::Base
   end
   helper_method :current_user
 
+  def openstack_authenticated?
+    !!session[:token]
+  end
+  helper_method :openstack_authenticated?
+
 end

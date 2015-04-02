@@ -1,46 +1,62 @@
-%ol.breadcrumb
-  %li.active Details
-  %li Payment
-  %li.active Confirm
+%h1
+  %i.fa.fa-credit-card
+  Almost there...
 
 %div#signup-form-area
-  = form_tag(take_payment_path, 'role' => 'form', 'id' => 'cc-details') do
-    %h3
-      %i.fa.fa-credit-card
-      Payment Details
-    
-    #card-display
+  = form_tag(support_cards_path, 'role' => 'form', 'id' => 'cc-details') do
+    .row
+      .col-md-4
+        %h3 1. Card Details
+        = hidden_field_tag :signup_uuid, @customer_signup.uuid
+        #card-display
+        .hide.alert.alert-danger#flashes
+        .form-group
+          %label Card Number
+          .inline
+            = text_field_tag :card_number, nil, :class => 'form-control', 'data-stripe' => 'number'
+            = text_field_tag :cvc, nil, :size => 4, :placeholder => 'CVC', :class => 'form-control', 'data-stripe' => 'cvc'
+        .inline-form-groups
+          .form-group#name
+            %label Name On Card
+            = text_field_tag :name, nil, :class => 'form-control', 'data-stripe' => 'name'
+          .form-group#expiry
+            %label Expiry Date
+            = text_field_tag :expiry, nil, :class => 'form-control', placeholder: 'MM/YYYY'
+        = hidden_field_tag :expiry_month, nil, 'data-stripe' => 'exp-month'
+        = hidden_field_tag :expiry_year, nil, 'data-stripe' => 'exp-year'
+
+      .col-md-4
+        %h3 2. Billing Address
+        .form-group
+          %label Post Code / ZIP
+          #lookup-field
+        .form-group
+          %label Address Line 1
+          = text_field_tag :address_line1, nil, :class => 'form-control', 'data-stripe' => 'address_line1'
+        .form-group
+          %label Address Line 2
+          = text_field_tag :address_line2, nil, :class => 'form-control', 'data-stripe' => 'address_line2'
+        .form-group
+          %label City
+          = text_field_tag :address_city, nil, :class => 'form-control', 'data-stripe' => 'address_city'
+        = hidden_field_tag :postcode, nil, 'data-stripe' => 'address_zip'
+
+      .col-md-4
+        %h3 3. Confirm
+        %label
+          By signing up, you agree to our
+          = link_to 'Terms of Service', 'http://datacentred.co.uk/terms-and-conditions/', target: '_blank'
+          \.
+
+        = render partial: 'info'
+        .push
+        .pull-right= submit_tag 'Complete Signup →', class: 'btn btn-success'
     .push
-    = hidden_field_tag :signup_uuid, @customer_signup.uuid
-    .hide.alert.alert-danger#flashes
-    .form-group
-      %label Card Number
-      .inline
-        = text_field_tag :card_number, nil, :class => 'form-control', 'data-stripe' => 'number'
-        = text_field_tag :cvc, nil, :size => 4, :placeholder => 'CVC', :class => 'form-control', 'data-stripe' => 'cvc'
-    .inline-form-groups
-      .form-group#name
-        %label Name On Card
-        = text_field_tag :name, nil, :class => 'form-control', 'data-stripe' => 'name'
-      .form-group#expiry
-        %label Expiry Date
-        = text_field_tag :expiry, nil, :class => 'form-control', placeholder: 'MM/YYYY'
-    .form-group
-      %label Post Code / ZIP
-      #lookup-field
-    = hidden_field_tag :expiry_month, nil, 'data-stripe' => 'exp-month'
-    = hidden_field_tag :expiry_year, nil, 'data-stripe' => 'exp-year'
-    = hidden_field_tag :address_line1, nil, 'data-stripe' => 'address_line1'
-    = hidden_field_tag :address_line2, nil, 'data-stripe' => 'address_line2'
-    = hidden_field_tag :address_city, nil, 'data-stripe' => 'address_city'
-    = hidden_field_tag :postcode, nil, 'data-stripe' => 'address_zip'
+    .pull-right
+      .powered-by-stripe
+        %a{href: "https://stripe.com", target: '_blank'}
+          = image_tag 'powered_by_stripe.png'
 
-    .powered-by-stripe
-      %a{href: "https://stripe.com", target: '_blank'}
-        = image_tag 'powered_by_stripe.png'
-
-    .form-group
-      = submit_tag 'Continue →', class: 'btn btn-success'
 
 .push
 .push

@@ -16,11 +16,11 @@ class AuthorizedController < ApplicationController
     redirect_to_root
   end
 
-  # rescue_from OpenStackObject::InvalidCredentialsError do |exception|
-  #   notify_honeybadger(exception)
-  #   reset_session
-  #   redirect_to_root(exception)
-  # end
+  rescue_from OpenStackObject::InvalidCredentialsError do |exception|
+    notify_honeybadger(exception)
+    reset_session
+    redirect_to_root(exception)
+  end
 
   private
 
@@ -47,10 +47,8 @@ class AuthorizedController < ApplicationController
       redirect_to sign_in_path
       return
     end
-    if current_user.organization.paying?
-      current_user.token = session[:token] if session[:token] && current_user
-    else
-      redirect_to pay_path
+    unless openstack_authenticated?
+      redirect_to new_support_card_path
     end
   end
 

@@ -5,7 +5,6 @@
   = favicon_link_tag 'favicon.ico'
   = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
   = javascript_include_tag 'application', 'data-turbolinks-track' => true
-  = stripe_javascript_tag
   = csrf_meta_tags
   %meta{'charset' => "utf-8"}
   %meta{'http-equiv' => 'X-UA-Compatible', 'content' => 'IE=edge'}
@@ -15,9 +14,7 @@
   #wrap
     .container#sign-in
       = image_tag 'logo_text_only.png', class: 'sign-in-logo'
-      %h2
-        %i.fa.fa-cloud
-        Sign Up
       = yield
+  = render partial: 'shared/footer'
   = render partial: 'shared/ga'
   %script{src: asset_path('card')}
