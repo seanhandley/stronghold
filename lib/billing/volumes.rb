@@ -103,7 +103,7 @@ module Billing
       billing_volume_id = Billing::Volume.find_by_volume_id(volume_id).id
       samples.collect do |s|
         if s['resource_metadata']['event_type']
-          Billing::VolumeState.create volume_id: billing_volume_id, "#{Time.zone.parse(s['recorded_at'])} UTC",
+          Billing::VolumeState.create volume_id: billing_volume_id, recorded_at: "#{Time.zone.parse(s['recorded_at'])} UTC",
                                       size: s['resource_metadata']['size'],
                                       event_name: s['resource_metadata']['event_type'], billing_sync: sync,
                                       message_id: s['message_id']
