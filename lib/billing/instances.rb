@@ -107,7 +107,7 @@ module Billing
       billing_instance_id = Billing::Instance.find_by_instance_id(instance_id).id
       samples.collect do |s|
         if s['resource_metadata']['event_type']
-          Billing::InstanceState.create instance_id: billing_instance_id, recorded_at: Time.zone.parse(s['recorded_at'] + ' UTC'),
+          Billing::InstanceState.create instance_id: billing_instance_id, recorded_at: "#{Time.zone.parse(s['recorded_at'])} UTC",
                                         state: s['resource_metadata']['state'] ? s['resource_metadata']['state'].downcase : 'active',
                                         event_name: s['resource_metadata']['event_type'], billing_sync: sync,
                                         message_id: s['message_id']
