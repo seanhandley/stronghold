@@ -81,7 +81,7 @@ module Billing
       if(billing_external_gateway = Billing::ExternalGateway.find_by_router_id(router_id))
         samples.collect do |s|
           if s['resource_metadata']['event_type']
-            Billing::ExternalGatewayState.create external_gateway_id: billing_external_gateway.id, recorded_at: "#{Time.zone.parse(s['recorded_at']} UTC"),
+            Billing::ExternalGatewayState.create external_gateway_id: billing_external_gateway.id, recorded_at: Time.zone.parse("#{s['recorded_at']} UTC"),
                                         external_network_id: s['resource_metadata']['external_gateway_info.network_id'],
                                         event_name: s['resource_metadata']['event_type'], billing_sync: sync,
                                         message_id: s['message_id'], address: s['inferred_address']
