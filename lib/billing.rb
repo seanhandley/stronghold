@@ -5,8 +5,8 @@ module Billing
   def self.sync!
     ActiveRecord::Base.transaction do
       from = Billing::Sync.last.started_at
-      to   = Time.zone.now
-      sync = Billing::Sync.create started_at: Time.zone.now
+      to   = Time.now
+      sync = Billing::Sync.create started_at: Time.now
       Billing::Instances.sync!(from, to, sync)
       Billing::Volumes.sync!(from, to, sync)
       #Billing::FloatingIps.sync!(from, to, sync)
@@ -14,7 +14,7 @@ module Billing
       Billing::ExternalGateways.sync!(from, to, sync)
       Billing::Images.sync!(from, to, sync)
       Billing::StorageObjects.sync!(sync)
-      sync.update_attributes(completed_at: Time.zone.now)
+      sync.update_attributes(completed_at: Time.now)
       #raise ActiveRecord::Rollback
     end
   end
