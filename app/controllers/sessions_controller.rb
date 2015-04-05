@@ -20,7 +20,11 @@ class SessionsController < ApplicationController
       session[:token]      = token
       session[:user_id]    = @user.id
       session[:created_at] = Time.zone.now
-      redirect_to support_root_path
+      if params[:next]
+        redirect_to params[:next]
+      else
+        redirect_to support_root_path
+      end
     else
       flash.now.alert = "Invalid credentials. Please try again."
       Rails.logger.error "Invalid login: #{params[:user][:email]}. Token=#{token.inspect}"
