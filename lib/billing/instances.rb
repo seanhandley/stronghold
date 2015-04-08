@@ -102,6 +102,11 @@ module Billing
         if(os_flavor = OpenStack::Flavor.find(flavor_id))
           Billing::InstanceFlavor.create(flavor_id: flavor_id, name: os_flavor.name,
                                          ram: os_flavor.ram, disk: os_flavor.disk, vcpus: os_flavor.vcpus)
+        else
+          Billing::InstanceFlavor.create(flavor_id: flavor_id, name: first_sample_metadata['instance_type'],
+                                         ram: first_sample_metadata['memory_mb'],
+                                         disk: first_sample_metadata['root_gb'],
+                                         vcpus: first_sample_metadata['vcpus'])
         end
       end
       billing_instance_id = Billing::Instance.find_by_instance_id(instance_id).id
