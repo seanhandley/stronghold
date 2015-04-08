@@ -40,6 +40,7 @@ Rails.application.routes.draw do
       resources :customers, only: [:new, :create]
       resources :usage, only: [:index, :create]
       resources :sanity, only: [:index]
+      resources :free_ips, only: [:index]
     end
   #end
 
