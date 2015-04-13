@@ -20,7 +20,11 @@ class SessionsController < ApplicationController
       session[:token]      = token
       session[:user_id]    = @user.id
       session[:created_at] = Time.zone.now
-      redirect_to support_root_path
+      if params[:next]
+        redirect_to params[:next]
+      else
+        redirect_to support_root_path
+      end
     elsif @user and params[:user][:password].present? and @user.authenticate_local(params[:user][:password])
       Rails.cache.write("up_#{@user.uuid}", params[:user][:password], expires_in: 60.minutes)
       session[:user_id]    = @user.id

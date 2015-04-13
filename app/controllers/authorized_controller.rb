@@ -44,7 +44,7 @@ class AuthorizedController < ApplicationController
 
   def authenticate_user!
     unless current_user
-      redirect_to sign_in_path
+      redirect_to sign_in_path('next' => request.fullpath)
       return
     end
     unless openstack_authenticated?

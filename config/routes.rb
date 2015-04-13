@@ -40,6 +40,8 @@ Rails.application.routes.draw do
       root :to => 'dashboard#index'
       resources :customers, only: [:new, :create]
       resources :usage, only: [:index, :create]
+      resources :sanity, only: [:index]
+      resources :free_ips, only: [:index]
     end
   #end
 
