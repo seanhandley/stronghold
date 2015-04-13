@@ -11,8 +11,7 @@ class Support::CardsController < LocallyAuthorizedController
   def create
     @customer_signup = CustomerSignup.find_by_uuid(create_params[:signup_uuid])
     if @customer_signup.ready?
-      current_user.organization.update_attributes(stripe_customer_id: @customer_signup.stripe_customer_id)
-      current_user.organization.enable!
+      current_user.organization.complete_signup! @customer_signup.stripe_customer_id
       session[:token] = current_user.authenticate(Rails.cache.fetch("up_#{current_user.uuid}"))
       Rails.cache.delete("up_#{current_user.uuid}")
       Announcement.create(title: 'Welcome', body: 'Your card details are verified and you may now begin using cloud services!',
