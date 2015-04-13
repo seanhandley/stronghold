@@ -74,13 +74,6 @@ class TestRegistrationGenerator < Minitest::Test
     end
   end
 
-  def test_registration_cannot_occur_unless_privacy_is_agreed
-    registration = RegistrationGenerator.new(@power_invite,
-                                    @valid_params.merge(privacy: ''))
-    refute registration.generate!
-    assert registration.errors.present?      
-  end
-
   def teardown
     DatabaseCleaner.clean  
   end
