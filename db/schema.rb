@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150413124954) do
+ActiveRecord::Schema.define(version: 20150413125547) do
 
   create_table "audits", force: :cascade do |t|
     t.string   "auditable_id",    limit: 255
@@ -200,6 +200,12 @@ ActiveRecord::Schema.define(version: 20150413124954) do
     t.string   "stripe_customer_id", limit: 255
     t.boolean  "self_service",       limit: 1,   default: true,     null: false
     t.string   "salesforce_id",      limit: 255
+    t.string   "billing_address1",   limit: 255
+    t.string   "billing_address2",   limit: 255
+    t.string   "billing_city",       limit: 255
+    t.string   "billing_postcode",   limit: 255
+    t.string   "billing_country",    limit: 255
+    t.string   "phone",              limit: 255
   end
 
   create_table "organizations_products", force: :cascade do |t|
