@@ -6,6 +6,8 @@ Rails.application.routes.draw do
 
   mount RailsAdmin::Engine => '/data', as: 'rails_admin'
 
+  mount Starburst::Engine => "/starburst"
+
   namespace :support do
     root :to => 'dashboard#index'
     resources :instances
@@ -24,6 +26,7 @@ Rails.application.routes.draw do
     resources :role_users, only: [:create]
     resources :invites, only: [:create]
     resources :audits, only: [:index]
+    get '/usage', :controller => 'usage', :action => 'index'
   end
 
   namespace :ext do
@@ -36,6 +39,8 @@ Rails.application.routes.draw do
       root :to => 'dashboard#index'
       resources :customers, only: [:new, :create]
       resources :usage, only: [:index, :create]
+      resources :sanity, only: [:index]
+      resources :free_ips, only: [:index]
     end
   #end
 

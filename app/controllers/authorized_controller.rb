@@ -44,7 +44,7 @@ class AuthorizedController < ApplicationController
 
   def authenticate_user!
     unless current_user
-      redirect_to sign_in_path
+      redirect_to sign_in_path('next' => request.fullpath)
     end
     current_user.token = session[:token] if session[:token] && current_user
   end

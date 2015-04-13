@@ -1,0 +1,27 @@
+%h1 Sanity Checks for Usage Data
+
+%h3 States Count
+== #{@total} new states collected in the last 24 hours
+
+%h3 Billing Sync Breakdown
+
+%table.table
+  %thead
+    %th ID
+    %th Completed At
+    %th Instance States
+    %th Volume States
+    %th IP States
+    %th Image States
+  %tbody
+    - @syncs.each do |sync|
+      %tr
+        %td= sync.id
+        %td= sync.completed_at
+        %td= sync.instance_states.count
+        %td= sync.volume_states.count
+        %td= sync.ip_states.count
+        %td= sync.image_states.count
+
+%h3 Sanity Checks
+/= render partial: 'mailer/usage'

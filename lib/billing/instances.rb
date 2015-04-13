@@ -64,7 +64,7 @@ module Billing
         else
           # Only one sample for this period
           if billable?(states.first.state)
-            return (to - from).round
+            return (to - states.first.recorded_at).round
           else
             return 0
           end
@@ -102,12 +102,17 @@ module Billing
         if(os_flavor = OpenStack::Flavor.find(flavor_id))
           Billing::InstanceFlavor.create(flavor_id: flavor_id, name: os_flavor.name,
                                          ram: os_flavor.ram, disk: os_flavor.disk, vcpus: os_flavor.vcpus)
+        else
+          Billing::InstanceFlavor.create(flavor_id: flavor_id, name: first_sample_metadata['flavor.name'],
+                                         ram: first_sample_metadata['memory_mb'],
+                                         disk: first_sample_metadata['root_gb'],
+                                         vcpus: first_sample_metadata['vcpus'])
         end
       end
       billing_instance_id = Billing::Instance.find_by_instance_id(instance_id).id
       samples.collect do |s|
         if s['resource_metadata']['event_type']
-          Billing::InstanceState.create instance_id: billing_instance_id, recorded_at: s['recorded_at'],
+          Billing::InstanceState.create instance_id: billing_instance_id, recorded_at: Time.zone.parse("#{s['recorded_at']} UTC"),
                                         state: s['resource_metadata']['state'] ? s['resource_metadata']['state'].downcase : 'active',
                                         event_name: s['resource_metadata']['event_type'], billing_sync: sync,
                                         message_id: s['message_id']

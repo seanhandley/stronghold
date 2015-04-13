@@ -23,6 +23,10 @@ class User < ActiveRecord::Base
     organization.staff?
   end
 
+  def cloud?
+    organization.cloud?
+  end
+
   def admin?
     roles.any?(&:power_user?)
   end
