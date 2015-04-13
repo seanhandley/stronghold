@@ -1,6 +1,7 @@
 %h3 Sign In
 
 = form_for(User.new, :url => sessions_path, :method => :post, :html => {:role => 'form'}) do |f|
+  = hidden_field_tag :next, params[:next]
   .form-group
     %label{'for' => "exampleInputEmail1"} E-mail Address
     = f.email_field :email, :class => "form-control",
