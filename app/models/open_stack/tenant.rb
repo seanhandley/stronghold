@@ -44,7 +44,7 @@ module OpenStack
                {"volumes"=>5, "snapshots"=>2, "gigabytes" => 100},
       
                {"floatingip"=>1, "security_group_rule"=>100, "security_group"=>10,
-                "network"=>5,"port"=>20, "router"=>5, "subnet"=>5}
+                "network"=>5,"port"=>20, "router"=>1, "subnet"=>5}
               ]
       
       set_quotas(*args)  
