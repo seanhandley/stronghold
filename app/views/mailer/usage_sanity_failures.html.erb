@@ -1,15 +1,4 @@
 <link rel="stylesheet" href="/application.css">
 <div id="container">
-  <p>The following items are active in the usage data but not active on OpenStack.</p>
-  
-  <% for key in @keys %>
-    <% if @data["missing_#{key}".to_sym].present? %>
-      <h3><%= key.titleize %></h3>
-      <p>
-      <% @data["missing_#{key}".to_sym].each do |k,v| %>
-        <%= "#{v} (#{k})" %><br/>
-      <% end %>
-      </p>
-    <% end %>
-  <% end %>
+  <%= render partial: 'usage' %>
 </div>

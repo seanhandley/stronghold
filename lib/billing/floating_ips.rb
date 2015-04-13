@@ -92,7 +92,7 @@ module Billing
       billing_ip_id = Billing::Ip.find_by_ip_id(ip_id).id
       samples.collect do |s|
         if s['resource_metadata']['event_type']
-          Billing::IpState.create ip_id: billing_ip_id, recorded_at: s['recorded_at'],
+          Billing::IpState.create ip_id: billing_ip_id, recorded_at: Time.zone.parse("#{s['recorded_at']} UTC"),
                                       port: s['resource_metadata']['port_id'],
                                       event_name: s['resource_metadata']['event_type'], billing_sync: sync,
                                       message_id: s['message_id']

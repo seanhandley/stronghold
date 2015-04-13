@@ -28,3 +28,5 @@
 //= require moment
 //= require async
 //= require chained
+//= require bootstrap-select
+//= require starburst/starburst
