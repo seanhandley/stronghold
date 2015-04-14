@@ -472,6 +472,7 @@ DEPENDENCIES
   capybara
   clockwork (~> 1.1.0)
   coffee-rails (~> 4.0.0)
+  countries
   country_select
   dalli (~> 2.7.2)
   database_cleaner (~> 0.8.0)
