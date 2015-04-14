@@ -17,7 +17,7 @@ class Support::CardsController < LocallyAuthorizedController
           billing_address2: create_params[:address_line2],
           billing_city: create_params[:address_city],
           billing_postcode: create_params[:postcode],
-          billing_country: create_params[:address_country],
+          billing_country: Country.find_country_by_alpha2(create_params[:address_country].first),
         }
       )
       current_user.organization.complete_signup! @customer_signup.stripe_customer_id
@@ -43,7 +43,7 @@ class Support::CardsController < LocallyAuthorizedController
 
   def create_params
     params.permit(:stripe_token, :signup_uuid, :address_line1, :address_line2, :address_city,
-                  :postcode, :address_country)
+                  :postcode, :address_country => [])
   end
 
 end

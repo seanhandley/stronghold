@@ -42,7 +42,7 @@
         = hidden_field_tag :postcode, nil, 'data-stripe' => 'address_zip'
         .form-group
           %label Country
-          = country_select :address_country, nil, :selected => 'GB', :class => 'form-control', 'data-stripe' => 'address_country'
+          = country_select :address_country, nil, {:selected => 'GB'}, {:class => 'form-control', 'data-stripe' => 'address_country', :id => 'address_country'}
       .col-md-4
         %h3 3. Confirm
         %label
