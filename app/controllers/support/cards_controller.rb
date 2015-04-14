@@ -1,11 +1,11 @@
 class Support::CardsController < LocallyAuthorizedController
-  
-  def index
-
-  end
 
   def new
-    @customer_signup = CustomerSignup.find_by_email(current_user.email)
+    if openstack_authenticated?
+      redirect_to support_root_path
+    else
+      @customer_signup = CustomerSignup.find_by_email(current_user.email)
+    end
   end
 
   def create
@@ -17,7 +17,7 @@ class Support::CardsController < LocallyAuthorizedController
           billing_address2: create_params[:address_line2],
           billing_city: create_params[:address_city],
           billing_postcode: create_params[:postcode],
-          billing_country: Country.find_country_by_alpha2(create_params[:address_country].first),
+          billing_country: create_params[:address_country].first,
         }
       )
       current_user.organization.complete_signup! @customer_signup.stripe_customer_id
@@ -29,14 +29,6 @@ class Support::CardsController < LocallyAuthorizedController
     else
       render :new
     end
-  end
-
-  def edit
-
-  end
-
-  def update
-
   end
 
   private

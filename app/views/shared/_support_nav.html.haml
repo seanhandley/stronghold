@@ -18,6 +18,11 @@
         %a{:href => support_edit_organization_path}
           %i.fa.fa-briefcase
           = t(:my_organisation)
+      - if current_user.organization.self_service?
+        %li
+          %a{:href => support_manage_cards_path}
+            %i.fa.fa-credit-card
+            Manage Cards
       %li
         %a{:href => support_audits_path}
           %i.fa.fa-history
