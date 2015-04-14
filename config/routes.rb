@@ -16,7 +16,8 @@ Rails.application.routes.draw do
     resources :users, only: [:update, :destroy]
     get '/profile', :controller => 'users', :action => 'index'
     resources :roles
-    resources :cards
+    resources :cards, only: [:new, :create]
+    resources :manage_cards
     resources :tickets, only: [:index, :show]
     namespace :api, defaults: {format: :json} do
       resources :tickets, only: [:index, :create, :update] do
