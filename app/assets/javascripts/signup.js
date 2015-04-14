@@ -61,7 +61,8 @@ function stripeResponseHandler(status, response) {
     $.post('/precheck?stripe_token=' + token + '&signup_uuid=' + uuid, function(data) {
       if(data.success) {
         // Stop submission of details to server
-        $form.find('input:not(:hidden)').prop('disabled', true);
+        $form.find('#card_number').prop('disabled', true);
+        $form.find('#cvc').prop('disabled', true);
         // and submit
         $form.get(0).submit();
       } else {

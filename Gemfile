@@ -33,6 +33,7 @@ gem 'sinatra', '>= 1.3.0'
 gem 'responders', '~> 2.0'
 gem 'restforce', '~> 1.5.1'
 gem 'starburst', '~> 1.0.3'
+gem 'country_select'
 
 group :test do
   gem 'minitest-rails'
