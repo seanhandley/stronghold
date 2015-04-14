@@ -16,7 +16,9 @@ class Support::OrganizationsController < SupportBaseController
   def update
     check_organization
     if current_user.organization.update(update_params)
-      javascript_redirect_to support_edit_organization_path
+      respond_to do |format|
+        format.js { render :template => "shared/dialog_success", :locals => {:object => current_user.organization, :message => "Saved" } }
+      end
     else
       respond_to do |format|
         format.js { render :template => "shared/dialog_errors", :locals => {:object => current_user.organization } }
@@ -27,7 +29,9 @@ class Support::OrganizationsController < SupportBaseController
   private
 
   def update_params
-    params.require(:organization).permit(:name, :time_zone)
+    params.require(:organization).permit(:name, :time_zone, :billing_address1, :billing_address2,
+                                         :billing_postcode, :billing_city, :billing_country,
+                                         :phone)
   end
 
   def check_organization
