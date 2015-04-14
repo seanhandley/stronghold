@@ -11,6 +11,15 @@ class Support::CardsController < LocallyAuthorizedController
   def create
     @customer_signup = CustomerSignup.find_by_uuid(create_params[:signup_uuid])
     if @customer_signup.ready?
+      current_user.organization.update_attributes(
+        {
+          billing_address1: create_params[:address_line1],
+          billing_address2: create_params[:address_line2],
+          billing_city: create_params[:address_city],
+          billing_postcode: create_params[:postcode],
+          billing_country: create_params[:address_country],
+        }
+      )
       current_user.organization.complete_signup! @customer_signup.stripe_customer_id
       session[:token] = current_user.authenticate(Rails.cache.fetch("up_#{current_user.uuid}"))
       Rails.cache.delete("up_#{current_user.uuid}")
@@ -33,7 +42,8 @@ class Support::CardsController < LocallyAuthorizedController
   private
 
   def create_params
-    params.permit(:stripe_token, :signup_uuid)
+    params.permit(:stripe_token, :signup_uuid, :address_line1, :address_line2, :address_city,
+                  :postcode, :address_country)
   end
 
 end
