@@ -11,12 +11,12 @@ class Support::ManageCardsController < AuthorizedController
   def update
     @stripe_customer.default_source = params[:id]
     @stripe_customer.save
-    redirect_to support_manage_cards_path
+    redirect_to support_manage_cards_path, notice: "Card successfully set as default"
   end
 
   def create
     @stripe_customer.sources.create(:source => create_params[:stripe_token])
-    redirect_to support_manage_cards_path
+    redirect_to support_manage_cards_path, notice: "New card added successfully"
   end
 
   def destroy
@@ -24,7 +24,7 @@ class Support::ManageCardsController < AuthorizedController
       @stripe_customer.sources.retrieve(params[:id]).delete
       redirect_to support_manage_cards_path
     else
-      redirect_to support_manage_cards_path, notice: "You can't delete your default card."
+      redirect_to support_manage_cards_path, alert: "You can't delete your default card."
     end
   end
 

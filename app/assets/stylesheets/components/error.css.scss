@@ -35,11 +35,27 @@ div#flash {
 }
 
 div#flash p.alert, div#flash p.error {
-  color: $brand-warning;
+  background-color: $brand-warning;
+  color: white;
+  padding: 5px 5px 5px 5px;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+div#flash p.error:before, div#flash p.alert:before {
+  content: '✘ '
 }
 
 div#flash p.notice {
-  color: $brand-success;
+  background-color: $brand-success;
+  color: white;
+  padding: 5px 5px 5px 5px;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+div#flash p.notice:before {
+  content: '✔ '
 }
 
 div.errorExplanation h3 {
