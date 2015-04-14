@@ -70,10 +70,13 @@ div.errorExplanation a.close {
 div.successMessage {
   padding: 1px 5px 5px 5px;
   margin-bottom: 10px;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 div.successMessage h3 {
   color: $brand-success;
-  font-size: 16px;
+}
+
+div.successMessage h3:before {
+  content: '✔ '
 }
