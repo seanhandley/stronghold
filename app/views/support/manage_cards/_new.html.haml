@@ -11,7 +11,7 @@
           %p Please enter your card details
         .modal-body
           #card-display
-          .hide.alert.alert-danger#flashes
+          #flashes
           #cc-details
             = hidden_field_tag :stripe_customer_id, stripe_customer.id
             .form-group
