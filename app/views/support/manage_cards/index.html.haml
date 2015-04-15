@@ -24,7 +24,7 @@
         %td
           %i{class: "fa fa-cc-#{brand_to_font_awesome(card.brand)}"}
         %td= "**** **** **** #{card.last4}"
-        %td= card.name ? card.name : 'NO NAME'
+        %td= card.name ? card.name.upcase : 'NO NAME'
         %td= "#{card.exp_month.to_s.rjust(2, '0')} / #{card.exp_year}"
         %td
           .pull-right
