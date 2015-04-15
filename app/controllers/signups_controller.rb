@@ -34,6 +34,7 @@ class SignupsController < ApplicationController
       Rails.cache.write("up_#{@registration.user.uuid}", update_params[:password], expires_in: 60.minutes)
       session[:user_id] = @registration.user.id
       session[:created_at] = Time.zone.now
+      session[:token] = @registration.user.authenticate(update_params[:password])
       redirect_to support_root_path
     else
       flash[:error] = @registration.errors.full_messages.join('<br>')
