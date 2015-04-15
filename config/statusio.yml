@@ -1,0 +1,14 @@
+default: &default
+  url: "https://private-anon-f9d2ac0fd-statusio.apiary-proxy.com"
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+staging:
+  <<: *default
+
+production:
+  url: "https://api.status.io/v2/"
