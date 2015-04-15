@@ -6,7 +6,8 @@ class User < ActiveRecord::Base
   authenticates_with_keystone
   syncs_with_keystone as: 'OpenStack::User', actions: [:create, :destroy]
   after_save :update_password
-  after_create :generate_ec2_credentials, :set_local_password
+
+  after_create :generate_ec2_credentials, :set_local_password, :subscribe_to_status_io
 
   has_and_belongs_to_many :roles
   belongs_to :organization
@@ -92,6 +93,12 @@ class User < ActiveRecord::Base
         credential = Fog::Identity.new(OPENSTACK_ARGS).create_ec2_credential(uuid, tenant.uuid).body['credential']
         Ceph::UserKey.create 'uid' => tenant.uuid, 'access-key' => credential['access'], 'secret-key' => credential['secret']
       end
+    end
+  end
+
+  def subscribe_to_status_io
+    unless Rails.env.test?
+      StatusIO.add_subscriber email
     end
   end
 
