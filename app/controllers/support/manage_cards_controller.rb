@@ -2,7 +2,7 @@ class Support::ManageCardsController < AuthorizedController
 
   skip_authorization_check
 
-  before_filter :get_stripe_customer
+  before_filter :check_self_service, :get_stripe_customer
 
   def index
     @cards = @stripe_customer.sources
@@ -36,6 +36,10 @@ class Support::ManageCardsController < AuthorizedController
 
   def create_params
     params.permit(:stripe_token)
+  end
+
+  def check_self_service
+    raise ActionController::RoutingError.new('Not Found') unless current_user.organization.self_service?
   end
 
 end
