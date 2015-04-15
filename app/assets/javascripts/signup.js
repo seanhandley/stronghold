@@ -8,16 +8,16 @@ $(document).ready(function() {
 
     return false;
   });
-
-  var card = new Card({form: 'form',container: '#card-display',
-    formSelectors: {
-        numberInput: 'input#card_number',
-        expiryInput: 'input#expiry',
-        cvcInput: 'input#cvc',
-        nameInput: 'input#name'
-    }
-  });
-
+  if ("Card" in window) {
+    var card = new Card({form: 'form',container: '#card-display',
+      formSelectors: {
+          numberInput: 'input#card_number',
+          expiryInput: 'input#expiry',
+          cvcInput: 'input#cvc',
+          nameInput: 'input#name'
+      }
+    });
+  }
   $('input#expiry').change(function() {
     month = $(this).val().split('/')[0].trim();
     year = $(this).val().split('/')[1].trim().substring(2);
