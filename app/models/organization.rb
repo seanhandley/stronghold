@@ -25,6 +25,10 @@ class Organization < ActiveRecord::Base
     (reference == STAFF_REFERENCE)
   end
 
+  def has_payment_method?
+    !!stripe_customer_id
+  end
+
   def colo?
     products.collect(&:name).include? 'Colocation'
   end
