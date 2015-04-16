@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150413125547) do
+ActiveRecord::Schema.define(version: 20150416123415) do
 
   create_table "audits", force: :cascade do |t|
     t.string   "auditable_id",    limit: 255
@@ -215,6 +215,15 @@ ActiveRecord::Schema.define(version: 20150413125547) do
     t.datetime "updated_at"
   end
 
+  create_table "organizations_vouchers", force: :cascade do |t|
+    t.integer  "organization_id", limit: 4
+    t.integer  "voucher_id",      limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "organizations_vouchers", ["organization_id", "voucher_id"], name: "index_organizations_vouchers_on_organization_id_and_voucher_id", using: :btree
+
   create_table "products", force: :cascade do |t|
     t.string   "name",       limit: 255
     t.datetime "created_at"
@@ -286,6 +295,17 @@ ActiveRecord::Schema.define(version: 20150413125547) do
     t.integer  "organization_id", limit: 4
     t.string   "uuid",            limit: 255
     t.string   "password_digest", limit: 255
+  end
+
+  create_table "vouchers", force: :cascade do |t|
+    t.string   "name",        limit: 255
+    t.string   "description", limit: 255
+    t.string   "code",        limit: 255
+    t.integer  "duration",    limit: 4
+    t.integer  "value",       limit: 4
+    t.datetime "expires_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end
