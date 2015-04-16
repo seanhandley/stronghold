@@ -25,7 +25,7 @@ class SessionsController < ApplicationController
       else
         redirect_to support_root_path
       end
-    elsif @user and params[:user][:password].present? and @user.authenticate_local(params[:user][:password])
+    elsif @user and params[:user][:password].present? and @user.authenticate_local(params[:user][:password]) and !@user.organization.has_payment_method?
       Rails.cache.write("up_#{@user.uuid}", params[:user][:password], expires_in: 60.minutes)
       session[:user_id]    = @user.id
       session[:created_at] = Time.zone.now
