@@ -18,6 +18,11 @@
         %a{:href => support_edit_organization_path}
           %i.fa.fa-briefcase
           = t(:my_organisation)
+      - if current_user.organization.cloud?
+        %li
+          %a{:href => support_quotas_path}
+            %i.fa.fa-sliders
+            Quotas    
       %li
         %a{:href => support_audits_path}
           %i.fa.fa-history
