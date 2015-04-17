@@ -193,6 +193,15 @@ ActiveRecord::Schema.define(version: 20150417062633) do
     t.datetime "updated_at"
   end
 
+  create_table "organization_vouchers", force: :cascade do |t|
+    t.integer  "organization_id", limit: 4
+    t.integer  "voucher_id",      limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "organization_vouchers", ["organization_id", "voucher_id"], name: "index_organization_vouchers_on_organization_id_and_voucher_id", unique: true, using: :btree
+
   create_table "organizations", force: :cascade do |t|
     t.string   "reference",          limit: 255
     t.string   "name",               limit: 255
@@ -219,15 +228,6 @@ ActiveRecord::Schema.define(version: 20150417062633) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  create_table "organizations_vouchers", force: :cascade do |t|
-    t.integer  "organization_id", limit: 4
-    t.integer  "voucher_id",      limit: 4
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "organizations_vouchers", ["organization_id", "voucher_id"], name: "index_organizations_vouchers_on_organization_id_and_voucher_id", using: :btree
 
   create_table "products", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -303,14 +303,16 @@ ActiveRecord::Schema.define(version: 20150417062633) do
   end
 
   create_table "vouchers", force: :cascade do |t|
-    t.string   "name",        limit: 255
-    t.string   "description", limit: 255
-    t.string   "code",        limit: 255
-    t.integer  "duration",    limit: 4
-    t.integer  "value",       limit: 4
-    t.datetime "expires_at"
+    t.string   "name",        limit: 255,               null: false
+    t.string   "description", limit: 255,               null: false
+    t.string   "code",        limit: 255,               null: false
+    t.integer  "duration",    limit: 1
+    t.decimal  "value",                   precision: 2
+    t.datetime "expires_at",                            null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "vouchers", ["code"], name: "index_vouchers_on_code", unique: true, using: :btree
 
 end
