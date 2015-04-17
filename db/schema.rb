@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150416123415) do
+ActiveRecord::Schema.define(version: 20150417062633) do
 
   create_table "audits", force: :cascade do |t|
     t.string   "auditable_id",    limit: 255
@@ -74,6 +74,8 @@ ActiveRecord::Schema.define(version: 20150416123415) do
     t.string "tenant_id", limit: 255
   end
 
+  add_index "billing_images", ["image_id"], name: "index_billing_images_on_image_id", unique: true, using: :btree
+
   create_table "billing_instance_flavors", force: :cascade do |t|
     t.string  "flavor_id", limit: 255
     t.string  "name",      limit: 255
@@ -103,6 +105,7 @@ ActiveRecord::Schema.define(version: 20150416123415) do
   end
 
   add_index "billing_instances", ["flavor_id"], name: "instance_flavors", using: :btree
+  add_index "billing_instances", ["instance_id"], name: "index_billing_instances_on_instance_id", unique: true, using: :btree
 
   create_table "billing_ip_quotas", force: :cascade do |t|
     t.string   "tenant_id",   limit: 255
@@ -159,6 +162,8 @@ ActiveRecord::Schema.define(version: 20150416123415) do
     t.string "name",      limit: 255
     t.string "tenant_id", limit: 255
   end
+
+  add_index "billing_volumes", ["volume_id"], name: "index_billing_volumes_on_volume_id", unique: true, using: :btree
 
   create_table "customer_signups", force: :cascade do |t|
     t.string   "uuid",               limit: 255
