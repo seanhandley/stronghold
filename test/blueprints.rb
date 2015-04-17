@@ -62,3 +62,12 @@ Product.blueprint(:colocation) do
   id { 3 }
   name { 'Colocation' }
 end
+
+Voucher.blueprint do
+  name { "Free 1 Month Trial" }
+  description { "First month is free" }
+  code { "FREEDOM" }
+  duration { 1 }
+  value { 1.0 }
+  expires_at { Time.now + 1.year }
+end

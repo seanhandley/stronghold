@@ -45,6 +45,7 @@ group :test do
   gem 'simplecov'
   gem 'webmock'
   gem 'vcr'
+  gem 'timecop'
 end
 
 # Assets gems
