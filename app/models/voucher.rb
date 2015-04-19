@@ -13,6 +13,9 @@ class Voucher < ActiveRecord::Base
   validates :value, numericality: { greater_than: 0, less_than_or_equal_to: 1 }
   validate -> { errors.add(:expires_at, "is in the past") if expired? }
 
+  scope :active,  -> { where('expires_at > ?', Time.now.utc) }
+  scope :expired, -> { where('expires_at <= ?', Time.now.utc) }
+
   def expired?
     expires_at < Time.now.utc
   end
