@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class TestVoucherLifetimes < Minitest::Test
+class TestVoucherValidations < Minitest::Test
   def setup
     @voucher = Voucher.make!
     @organization = Organization.make!
@@ -14,12 +14,12 @@ class TestVoucherLifetimes < Minitest::Test
     refute @voucher.dup.valid?
   end
 
-  def test_value_between_zero_and_one
-    @voucher.value = 2
+  def test_value_between_zero_and_one_hundred
+    @voucher.discount_percent = 101
     refute @voucher.valid?
-    @voucher.value = 0
+    @voucher.discount_percent = 0
     refute @voucher.valid?
-    @voucher.value = -1
+    @voucher.discount_percent = -1
     refute @voucher.valid?
   end
 

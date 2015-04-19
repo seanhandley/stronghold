@@ -68,6 +68,6 @@ Voucher.blueprint do
   description { "First month is free" }
   code { "FREEDOM" }
   duration { 1 }
-  value { 1.0 }
+  discount_percent { 100 }
   expires_at { Time.now + 1.year }
 end
