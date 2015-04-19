@@ -5,12 +5,12 @@ class Voucher < ActiveRecord::Base
   before_validation :create_code, on: :create
 
   validates :name, :description, :code,
-            :duration, :value, :expires_at,
+            :duration, :discount_percent, :expires_at,
             presence: true, allow_blank: false
 
   validates :code, uniqueness: true
   validates :duration, numericality: { only_integer: true, greater_than: 0 }
-  validates :value, numericality: { greater_than: 0, less_than_or_equal_to: 1 }
+  validates :discount_percent, numericality: { greater_than: 0, less_than_or_equal_to: 100 }
   validate -> { errors.add(:expires_at, "is in the past") if expired? }
 
   scope :active,  -> { where('expires_at > ?', Time.now.utc) }
