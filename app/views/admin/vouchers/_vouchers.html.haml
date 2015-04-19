@@ -1,15 +1,25 @@
-%table.table.table-striped.table-hover
-  %thead
-    %th Name
-    %th Code
-    %th Duration
-    %th Discount
-    %th Expires At
-  %tbody
-    - for voucher in vouchers
-      %tr
-        %td= voucher.name
-        %td= voucher.code
-        %td= pluralize(voucher.duration, 'month')
-        %td= voucher.value
-        %td= voucher.expires_at
+- if vouchers.any?
+  %table.table.table-striped.table-hover
+    %thead
+      %th Name
+      %th Code
+      %th Duration
+      %th Discount
+      %th Expiry
+      %th
+    %tbody
+      - for voucher in vouchers
+        %tr
+          %td= voucher.name
+          %td= voucher.code
+          %td= pluralize(voucher.duration, 'month')
+          %td= "#{voucher.value_percent}%"
+          %td= voucher.expires_at
+          %td
+            - if expired
+              = link_to 'Re-Activate?', '', class: 'btn btn-info'
+            - else
+              = link_to 'Expire Early?', '', class: 'btn btn-info'
+- else
+  .push
+  %p No vouchers found :-(
