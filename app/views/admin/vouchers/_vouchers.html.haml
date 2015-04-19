@@ -13,7 +13,7 @@
           %td= voucher.name
           %td= voucher.code
           %td= pluralize(voucher.duration, 'month')
-          %td= "#{voucher.value_percent}%"
+          %td= "#{voucher.discount_percent}%"
           %td= voucher.expires_at
           %td
             - if expired

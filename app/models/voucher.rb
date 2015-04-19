@@ -20,10 +20,6 @@ class Voucher < ActiveRecord::Base
     expires_at < Time.now.utc
   end
 
-  def value_percent
-    (value.round(2) / 1.0) * 100
-  end
-
   private
 
   def create_code
