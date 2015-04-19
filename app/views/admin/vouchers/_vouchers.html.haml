@@ -1,0 +1,15 @@
+%table.table.table-striped.table-hover
+  %thead
+    %th Name
+    %th Code
+    %th Duration
+    %th Discount
+    %th Expires At
+  %tbody
+    - for voucher in vouchers
+      %tr
+        %td= voucher.name
+        %td= voucher.code
+        %td= pluralize(voucher.duration, 'month')
+        %td= voucher.value
+        %td= voucher.expires_at

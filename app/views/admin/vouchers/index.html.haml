@@ -1,2 +1,15 @@
-%h2 Vouchers
+%h2
+  %i.fa.fa-cart-arrow-down
+  Discount Codes
 
+.pull-right
+  = link_to 'New', '', class: 'btn btn-success'
+
+- if @vouchers
+  %h3 Active
+  = link_to 'View Expired Codes?', admin_vouchers_path(expired: true)
+  = render partial: 'vouchers', locals: { vouchers: @vouchers }
+- elsif @expired
+  %h3 Expired
+  = link_to 'View Active Codes?', admin_vouchers_path
+  = render partial: 'expired', locals: { expired: @expired }
