@@ -37,6 +37,20 @@ class TestVoucherLifetimes < Minitest::Test
     assert v.code.length > 0
   end
 
+  def test_voucher_active_scope
+    assert_equal 1, Voucher.active.count
+  end
+
+  def test_voucher_expired_scope
+    assert_equal 0, Voucher.expired.count
+    Timecop.freeze(@voucher.expires_at - 1.second) do
+      assert_equal 0, Voucher.expired.count
+    end
+    Timecop.freeze(@voucher.expires_at) do
+      assert_equal 1, Voucher.expired.count
+    end
+  end
+
   def teardown
     DatabaseCleaner.clean  
   end
