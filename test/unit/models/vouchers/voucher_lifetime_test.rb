@@ -43,6 +43,28 @@ class TestVoucherLifetimes < Minitest::Test
     end
   end
 
+  def test_voucher_reports_expired
+    refute @voucher.expired?
+    Timecop.freeze(@voucher.expires_at + 1.day) do
+      assert @voucher.expired?
+    end
+  end
+
+  def test_voucher_reports_applied
+    refute @voucher.applied?
+    @organization.vouchers << @voucher
+    assert @voucher.applied?
+  end
+  
+  def test_voucher_can_be_destroyed_if_it_has_no_orgs
+    assert @voucher.destroy
+  end
+
+  def test_voucher_cannot_be_destroyed_if_it_has_orgs
+    @organization.vouchers << @voucher
+    refute @voucher.destroy
+  end
+
   def teardown
     DatabaseCleaner.clean  
   end

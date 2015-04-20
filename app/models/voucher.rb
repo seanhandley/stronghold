@@ -1,8 +1,9 @@
 class Voucher < ActiveRecord::Base
-  has_many :organization_vouchers, -> { uniq }
+  has_many :organization_vouchers, {dependent: :destroy}, -> { uniq }
   has_many :organizations, :through => :organization_vouchers
 
   before_validation :create_code, on: :create
+  before_destroy :check_applied, prepend: true
 
   validates :name, :description, :code,
             :duration, :discount_percent,
@@ -21,6 +22,10 @@ class Voucher < ActiveRecord::Base
     expires_at < Time.now.utc
   end
 
+  def applied?
+    organizations.count > 0
+  end
+
   private
 
   def create_code
@@ -33,6 +38,13 @@ class Voucher < ActiveRecord::Base
     c = (0...8).map { ('a'..'z').to_a[rand(26)] }.join.upcase
     return random_code if Voucher.find_by_code(c)
     c
+  end
+
+  def check_applied
+    if applied?
+      errors.add(:base, "You can't delete a voucher that's been used by a customer.") 
+      false
+    end
   end
 
 end
