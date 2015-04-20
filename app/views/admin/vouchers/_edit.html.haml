@@ -1,0 +1,22 @@
+.modal.fade{'tabindex' => "-1", 'role' => "dialog", 'aria-labelledby' => "editVoucher#{voucher.id}", 'aria-hidden' => "true", 'data-backdrop' => 'static', 'id' => "editVoucher#{voucher.id}"}
+  .modal-dialog
+    .modal-content
+      = form_tag admin_voucher_path(voucher), :method => :put, remote: true do
+        .modal-header
+          %button{'type' => "button", 'class' => "close", 'data-dismiss' => "modal", 'aria-hidden' => "true"}
+            &times;
+          %h4.modal-title
+            %i.fa.fa-cart-arrow-down
+            Re-Activate Discount Code
+          %p Please enter a new expiry date
+        .modal-body
+          = javascript_error_messages_for(voucher)
+          #voucher-details
+            .form-group
+              %label Expires
+              = date_field_tag :expires_at, Date.today + 1.month, min: Date.today + 1.day, :class => 'form-control'
+              %p.help-block The date on which this discount expires. Leave blank to create a discount that never expires.
+        .modal-footer
+          %button.btn.btn-default{'data-toggle' => "modal", 'data-dismiss' => "modal"}
+            = t(:cancel)
+          = submit_tag 'Re-Activate', class: 'btn btn-primary', id: 'submit_button'

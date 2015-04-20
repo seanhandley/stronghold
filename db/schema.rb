@@ -303,12 +303,12 @@ ActiveRecord::Schema.define(version: 20150417062633) do
   end
 
   create_table "vouchers", force: :cascade do |t|
-    t.string   "name",             limit: 255,               null: false
-    t.string   "description",      limit: 255,               null: false
-    t.string   "code",             limit: 255,               null: false
-    t.integer  "duration",         limit: 1
-    t.decimal  "discount_percent",             precision: 3
-    t.datetime "expires_at",                                 null: false
+    t.string   "name",             limit: 255,                            null: false
+    t.string   "description",      limit: 255,                            null: false
+    t.string   "code",             limit: 255,                            null: false
+    t.integer  "duration",         limit: 1,                 default: 1,  null: false
+    t.decimal  "discount_percent",             precision: 3, default: 10, null: false
+    t.datetime "expires_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
