@@ -55,6 +55,7 @@ Rails.application.routes.draw do
   get 'signup', :controller => 'signups', :action => 'new', :as => 'new_signup'
   post 'signup', :controller => 'signups', :action => 'create', :as => 'create_signup'
   post 'precheck', :controller => 'stripe', :action => 'precheck'
+  post 'voucher_precheck', :controller => 'vouchers', :action => 'precheck'
 
   post 'salesforce', :controller => 'salesforce', :action => 'update'
 
