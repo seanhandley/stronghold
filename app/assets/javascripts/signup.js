@@ -39,6 +39,24 @@ $(document).ready(function() {
     button_disabled_message: "Checking"
   });
 
+  $('#discount_code').on('input', function() {
+    $.post('/voucher_precheck?code=' + $(this).val(), function(data) {
+      console.log(data)
+      if(data.success) {
+        $('#discount_code_message').text(data.message)
+        $('#discount_code').closest('.input-group').removeClass('has-error');
+        $('#discount_code').closest('.input-group').addClass('has-success');
+      } else {
+        if($('#discount_code').val().length == 0) {
+          $('#discount_code').closest('.input-group').removeClass('has-error');
+        } else {
+          $('#discount_code_message').text('');
+          $('#discount_code').closest('.input-group').addClass('has-error');
+        }
+      }
+    });
+  });
+
 });
 
 function stripeResponseHandler(status, response) {
