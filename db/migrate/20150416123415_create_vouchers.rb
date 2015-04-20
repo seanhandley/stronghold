@@ -4,9 +4,9 @@ class CreateVouchers < ActiveRecord::Migration
       t.string :name, null: false
       t.string :description, null: false
       t.string :code, null: false
-      t.integer :duration, limit: 1 # number of months
-      t.decimal :discount_percent, precision: 3
-      t.datetime :expires_at, null: false
+      t.integer :duration, limit: 1, default: 1, null: false
+      t.decimal :discount_percent, precision: 3, default: 10, null: false
+      t.datetime :expires_at
       t.timestamps
     end
 
