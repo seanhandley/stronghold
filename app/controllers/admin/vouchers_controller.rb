@@ -1,6 +1,9 @@
 class Admin::VouchersController < AdminBaseController
+
+  before_filter :get_vouchers, only: [:index, :destroy]
+
   def index
-    @vouchers = params[:expired] ? Voucher.expired : Voucher.active
+    
   end
 
   def create
@@ -25,6 +28,16 @@ class Admin::VouchersController < AdminBaseController
     end   
   end
 
+  def destroy
+    @voucher = Voucher.find(params[:id])
+    if @voucher.destroy
+      redirect_to admin_vouchers_path
+    else
+      flash[:error] = "You can't delete a voucher once it's been used by a customer."
+      render :index
+    end  
+  end
+
   private
 
   def create_params
@@ -36,4 +49,9 @@ class Admin::VouchersController < AdminBaseController
   def update_params
     params.permit(:expires_at)
   end
+
+  def get_vouchers
+    @vouchers ||= params[:expired] ? Voucher.expired : Voucher.active
+  end
+  
 end
