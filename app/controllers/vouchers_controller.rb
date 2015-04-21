@@ -2,10 +2,14 @@ class VouchersController < ApplicationController
   def precheck
     @voucher = Voucher.find_by_code precheck_params[:code]
 
-    if @voucher 
-      render json: {success: true, message: @voucher.description}
+    if @voucher
+      if @voucher.expired?
+        render json: {success: false, message: 'Sorry, that code has expired!'}
+      else
+        render json: {success: true, message: @voucher.description}
+      end
     else
-      render json: {success: false, message: 'Discount code not found'}
+      render json: {success: false, message: 'Sorry, that code is invalid!'}
     end
   end
 

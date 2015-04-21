@@ -55,8 +55,8 @@
           %label Discount Code
           .input-group{style: 'width:100%'}
             = text_field_tag :discount_code, nil, placeholder: 'Got a discount code? Enter it here!', class: 'form-control'
-          %p.help-block.success
-            .text-success#discount_code_message
+          %p.help-block
+            #discount_code_message
         .push
         .pull-right= submit_tag 'Complete Signup →', class: 'btn btn-success'
     .push
