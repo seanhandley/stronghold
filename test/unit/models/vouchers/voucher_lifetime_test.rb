@@ -65,6 +65,24 @@ class TestVoucherLifetimes < Minitest::Test
     refute @voucher.destroy
   end
 
+  def test_voucher_reports_expiry
+    Timecop.freeze(Date.today) do
+      @organization.vouchers << @voucher
+      assert_equal Date.today + @voucher.duration.months,
+                   @organization.organization_vouchers.first.expires_at.to_date
+    end
+  end
+
+  def test_organization_reports_active_vouchers
+    from, to = Time.now - 1.day, Time.now + 1.month
+    assert_equal 0, @organization.active_vouchers(from, to).count
+    @organization.vouchers << @voucher
+    assert_equal 1, @organization.active_vouchers(from, to).count
+    assert_equal 0, @organization.active_vouchers(@organization.organization_vouchers.first.expires_at,
+                                                  @organization.organization_vouchers.first.expires_at + 1.month
+                                                  ).count
+  end
+
   def teardown
     DatabaseCleaner.clean  
   end

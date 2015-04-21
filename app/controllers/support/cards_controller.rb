@@ -20,6 +20,9 @@ class Support::CardsController < LocallyAuthorizedController
           billing_country: create_params[:address_country].first,
         }
       )
+      if(voucher = Voucher.find_by_code(create_params[:discount_code]))
+        current_user.organization.vouchers << voucher
+      end
       current_user.organization.complete_signup! @customer_signup.stripe_customer_id
       session[:token] = current_user.authenticate(Rails.cache.fetch("up_#{current_user.uuid}"))
       Rails.cache.delete("up_#{current_user.uuid}")
@@ -35,7 +38,7 @@ class Support::CardsController < LocallyAuthorizedController
 
   def create_params
     params.permit(:stripe_token, :signup_uuid, :address_line1, :address_line2, :address_city,
-                  :postcode, :address_country => [])
+                  :postcode, :discount_code, :address_country => [])
   end
 
 end
