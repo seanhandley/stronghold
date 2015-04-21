@@ -4,7 +4,7 @@ $(document).ready(function() {
 
     $form.find('input[type=submit]').prop('disabled', true);
 
-    Stripe.card.createToken($form, stripeResponseHandler);
+    Stripe.card.createToken($form, Signup.stripeResponseHandler);
 
     return false;
   });
@@ -59,46 +59,48 @@ $(document).ready(function() {
 
 });
 
-function stripeResponseHandler(status, response) {
-  var $form = $('#cc-details');
+var Signup = {
+  stripeResponseHandler: function (status, response) {
+    var $form = $('#cc-details');
 
-  document.body.style.cursor='wait';
+    document.body.style.cursor='wait';
 
-  if (response.error) {
-    showError(response.error.message);
-    $form.find('input[type=submit]').prop('disabled', false);
-    document.body.style.cursor='default';
-  } else {
-    // response contains id and card, which contains additional card details
-    var token = response.id;
-    // Insert the token into the form so it gets submitted to the server
-    $form.append($('<input type="hidden" name="stripe_token" />').val(token));
+    if (response.error) {
+      Signup.showError(response.error.message);
+      $form.find('input[type=submit]').prop('disabled', false);
+      document.body.style.cursor='default';
+    } else {
+      // response contains id and card, which contains additional card details
+      var token = response.id;
+      // Insert the token into the form so it gets submitted to the server
+      $form.append($('<input type="hidden" name="stripe_token" />').val(token));
 
-    var uuid = $form.find('#signup_uuid').val();
-    // Check the address is valid via precheck
-    $.post('/precheck?stripe_token=' + token + '&signup_uuid=' + uuid, function(data) {
-      if(data.success) {
-        // Stop submission of details to server
-        $form.find('#card_number').prop('disabled', true);
-        $form.find('#cvc').prop('disabled', true);
-        // and submit
-        $form.get(0).submit();
-      } else {
-        showError(data.message);
-        $form.find('input[type=submit]').prop('disabled', false);
-        document.body.style.cursor='default';
-      }
-    });
+      var uuid = $form.find('#signup_uuid').val();
+      // Check the address is valid via precheck
+      $.post('/precheck?stripe_token=' + token + '&signup_uuid=' + uuid, function(data) {
+        if(data.success) {
+          // Stop submission of details to server
+          $form.find('#card_number').prop('disabled', true);
+          $form.find('#cvc').prop('disabled', true);
+          // and submit
+          $form.get(0).submit();
+        } else {
+          Signup.showError(data.message);
+          $form.find('input[type=submit]').prop('disabled', false);
+          document.body.style.cursor='default';
+        }
+      });
 
+    }
+  },
+
+  showError: function (message) {
+    // Show the errors on the form
+    var $form = $('#cc-details');
+    var $div = $("<div id='flash'></div>");
+    $div.append($("<p>" + message + "</p>").addClass('error'));
+    $form.find('#flashes').empty();
+    $form.find('#flashes').removeClass('hide');
+    $form.find('#flashes').append($div)
   }
-};
-
-function showError(message) {
-  // Show the errors on the form
-  var $form = $('#cc-details');
-  var $div = $("<div id='flash'></div>");
-  $div.append($("<p>" + message + "</p>").addClass('error'));
-  $form.find('#flashes').empty();
-  $form.find('#flashes').removeClass('hide');
-  $form.find('#flashes').append($div)
 }
