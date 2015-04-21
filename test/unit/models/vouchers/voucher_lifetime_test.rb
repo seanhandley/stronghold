@@ -31,7 +31,7 @@ class TestVoucherLifetimes < Minitest::Test
 
   def test_voucher_reports_finished_after_duration_elapses
     @organization.vouchers << @voucher
-    Timecop.freeze(Date.today + @voucher.duration.month + 1.day) do
+    Timecop.freeze(Time.now.utc + @voucher.duration.month + 1.day) do
       refute @organization.organization_vouchers.first.active?
     end
   end
@@ -66,15 +66,15 @@ class TestVoucherLifetimes < Minitest::Test
   end
 
   def test_voucher_reports_expiry
-    Timecop.freeze(Date.today) do
+    Timecop.freeze(Time.now.utc) do
       @organization.vouchers << @voucher
-      assert_equal Date.today + @voucher.duration.months,
+      assert_equal Time.now.utc.to_date + @voucher.duration.months,
                    @organization.organization_vouchers.first.expires_at.to_date
     end
   end
 
   def test_organization_reports_active_vouchers
-    from, to = Time.now - 1.day, Time.now + 1.month
+    from, to = Time.now.utc - 1.day, Time.now.utc + 1.month
     assert_equal 0, @organization.active_vouchers(from, to).count
     @organization.vouchers << @voucher
     assert_equal 1, @organization.active_vouchers(from, to).count
