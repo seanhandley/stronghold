@@ -19,7 +19,7 @@ class SessionsController < ApplicationController
     if @user and params[:user][:password].present? and (token = @user.authenticate(params[:user][:password])) and token
       session[:token]      = token
       session[:user_id]    = @user.id
-      session[:created_at] = Time.zone.now
+      session[:created_at] = Time.now.utc
       if params[:next]
         redirect_to params[:next]
       else
@@ -28,7 +28,7 @@ class SessionsController < ApplicationController
     elsif @user and params[:user][:password].present? and @user.authenticate_local(params[:user][:password]) and !@user.organization.has_payment_method?
       Rails.cache.write("up_#{@user.uuid}", params[:user][:password], expires_in: 60.minutes)
       session[:user_id]    = @user.id
-      session[:created_at] = Time.zone.now
+      session[:created_at] = Time.now.utc
       redirect_to new_support_card_path     
     else
       flash.now.alert = "Invalid credentials. Please try again."

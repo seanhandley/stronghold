@@ -54,7 +54,7 @@ class AuthorizedController < ApplicationController
 
   def timeout_session!
     if session
-      session[:created_at] = Time.now unless session[:created_at]
+      session[:created_at] = Time.now.utc unless session[:created_at]
 
       if (Time.now - session[:created_at]) > SESSION_TIMEOUT.minutes
         session[:user_id] = nil
