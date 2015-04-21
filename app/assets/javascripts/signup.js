@@ -41,21 +41,30 @@ $(document).ready(function() {
 
   $('#discount_code').on('input', function() {
     $.post('/voucher_precheck?code=' + $(this).val(), function(data) {
-      console.log(data)
+      $('#discount_code_message').text(data.message);
       if(data.success) {
-        $('#discount_code_message').text(data.message)
         $('#discount_code').closest('.input-group').removeClass('has-error');
         $('#discount_code').closest('.input-group').addClass('has-success');
+        $('#cc-details').find('input[type=submit]').prop('disabled', false);
+        $('#discount_code_message').addClass('text-success');
+        $('#discount_code_message').removeClass('text-danger');
       } else {
         if($('#discount_code').val().length == 0) {
-          $('#discount_code').closest('.input-group').removeClass('has-error');
-        } else {
           $('#discount_code_message').text('');
+          $('#discount_code').closest('.input-group').removeClass('has-error');
+          $('#cc-details').find('input[type=submit]').prop('disabled', false);
+          $('#discount_code_message').removeClass('text-success');
+          $('#discount_code_message').removeClass('text-danger');
+        } else {
           $('#discount_code').closest('.input-group').addClass('has-error');
+          $('#cc-details').find('input[type=submit]').prop('disabled', true);
+          $('#discount_code_message').removeClass('text-success');
+          $('#discount_code_message').addClass('text-danger');
         }
       }
     });
   });
+  $('#discount_code').trigger('input');
 
 });
 
