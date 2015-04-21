@@ -21,21 +21,14 @@ module ActiveRecord
         # Restforce.new.update('Account', {Status: 'Closed'}.merge(Id: salesforce_id))
       end
 
-      def update_salesforce_object
+      define_method :update_salesforce_object do
         Restforce.new.update('Account', salesforce_args.dup.merge(Id: salesforce_id))
       end
 
       self.class_eval do
         unless Rails.env.test?
-          after_create do
-            create_salesforce_object
-          end
-          before_destroy do
-            delete_salesforce_object
-          end
-          after_update do
-            update_salesforce_object
-          end
+          after_create(:create_salesforce_object)
+          after_update(:update_salesforce_object)
         end
       end
     end
