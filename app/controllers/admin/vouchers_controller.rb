@@ -18,6 +18,7 @@ class Admin::VouchersController < AdminBaseController
   end
 
   def update
+    extend! and return if update_params[:extend]
     @voucher = Voucher.find(params[:id])
     if @voucher.update(update_params)
       javascript_redirect_to admin_vouchers_path
@@ -40,6 +41,11 @@ class Admin::VouchersController < AdminBaseController
 
   private
 
+  def extend!
+    OrganizationVoucher.find(params[:id]).extend!
+    redirect_to admin_vouchers_path, notice: 'Discount extended successfully'
+  end
+
   def create_params
     params.require(:voucher).permit(:name, :description, :code,
                                     :discount_percent, :duration,
@@ -47,7 +53,7 @@ class Admin::VouchersController < AdminBaseController
   end
 
   def update_params
-    params.permit(:expires_at)
+    params.permit(:expires_at, :extend)
   end
 
   def get_vouchers

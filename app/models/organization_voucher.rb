@@ -4,9 +4,17 @@ class OrganizationVoucher < ActiveRecord::Base
 
   validate -> { errors.add(:base, "Discount code has expired") if voucher.expired? }
 
-  default_scope -> { order(:created_at) }
+  default_scope -> { order(:updated_at) }
 
   def active?
-    created_at + voucher.duration.months > Time.now.utc
+    expires_at > Time.now.utc
+  end
+
+  def expires_at
+    updated_at + voucher.duration.months
+  end
+
+  def extend!
+    touch
   end
 end

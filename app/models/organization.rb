@@ -69,6 +69,14 @@ class Organization < ActiveRecord::Base
     set_quotas!
   end
 
+  def active_vouchers(from_date, to_date)
+    return [] if from_date > to_date
+    organization_vouchers.select do |v|
+      (from_date < v.updated_at && to_date >= v.updated_at) ||
+      (from_date < v.expires_at && to_date >= v.expires_at)
+    end
+  end
+
   private
 
   def generate_reference

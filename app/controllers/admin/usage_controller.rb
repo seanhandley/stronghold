@@ -10,8 +10,8 @@ class Admin::UsageController < AdminBaseController
     begin
       @from_date, @to_date = parse_dates create_params
       @total_hours = ((@to_date - @from_date) / 1.hour).round
-      if (@organization = Organization.find(create_params[:organization]) &&
-          @project      = Tenant.find(create_params[:project]))
+      if ((@organization = Organization.find(create_params[:organization])) &&
+          (@project      = Tenant.find(create_params[:project])))
         @instance_results = Billing::Instances.usage(@project.uuid, @from_date, @to_date)
         @volume_results = Billing::Volumes.usage(@project.uuid, @from_date, @to_date)
         @image_results = Billing::Images.usage(@project.uuid, @from_date, @to_date)
@@ -19,6 +19,7 @@ class Admin::UsageController < AdminBaseController
         @ip_quota_results = Billing::IpQuotas.usage(@project.uuid, @from_date, @to_date)
         @external_gateway_results = Billing::ExternalGateways.usage(@project.uuid, @from_date, @to_date)
         @object_storage_results = Billing::StorageObjects.usage(@project.uuid, @from_date, @to_date)
+        @active_vouchers = @organization.active_vouchers(@from_date, @to_date)
       end
       render :report
     rescue ArgumentError => e
