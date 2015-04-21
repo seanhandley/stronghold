@@ -1,15 +1,13 @@
 - if @active_vouchers
-  %h3 Active Vouchers
+  %h3 Active Discounts
   %table.table.table-striped
     %thead
-      %th Name
       %th Discount
       %th First Applied At
       %th Expires At
     %tbody
       - for v in @active_vouchers
         %tr
-          %td= v.voucher.name
           %td= "#{v.voucher.discount_percent}%"
           %td= v.created_at
           %td= v.expires_at
