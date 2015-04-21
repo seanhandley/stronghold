@@ -41,5 +41,7 @@ if ['test','development'].include?(Rails.env)
   Product.create! name: 'Compute'
   Product.create! name: 'Storage'
   Product.create! name: 'Colocation'
+
+  organization.products << Product.all
   
 end
