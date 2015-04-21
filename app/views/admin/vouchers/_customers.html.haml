@@ -13,14 +13,16 @@
           %table.table.table-striped.table-hover
             %thead
               %th Customer
-              %th Applied At
-              %th Code Active?
+              %th 1st Applied At
+              %th Active?
+              %th
             %tbody
               - for ov in voucher.organization_vouchers
                 %tr
                   %td= ov.organization.name
                   %td= ov.created_at
-                  %td= ov.active? ? "Yes" : "No" 
+                  %td= ov.active? ? "Active until #{ov.expires_at}" : "Expired #{ov.expires_at}"
+                  %td= link_to 'Extend?', admin_voucher_path(ov.id, :extend => true), class: 'btn btn-success', 'data' => { 'method' => 'put'} unless ov.active?
             
       .modal-footer
         %button.btn.btn-primary{'data-toggle' => "modal", 'data-dismiss' => "modal"}

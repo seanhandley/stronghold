@@ -9,7 +9,7 @@
     %i.fa.fa-folder-o
     = tenant.name
 
-  
+  .alert.alert-success= render partial: 'admin/usage/results/vouchers',  locals: { vouchers: @active_vouchers }
   = render partial: 'admin/usage/results/instances', locals: { instances:         results[:instance_results]         }
   = render partial: 'admin/usage/results/volumes',   locals: { volumes:           results[:volume_results]           }
   = render partial: 'admin/usage/results/images',    locals: { images:            results[:image_results]            }
