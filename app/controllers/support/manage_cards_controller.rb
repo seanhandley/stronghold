@@ -17,6 +17,8 @@ class Support::ManageCardsController < AuthorizedController
   def create
     @stripe_customer.sources.create(:source => create_params[:stripe_token])
     redirect_to support_manage_cards_path, notice: "New card added successfully"
+  rescue Stripe::CardError => e
+    redirect_to support_manage_cards_path, alert: e.message
   end
 
   def destroy
