@@ -16,6 +16,8 @@ class StripeController < ApplicationController
       customer.delete
       render json: {success: false, message: 'The address does not match the card'}
     end
+  rescue Stripe::CardError => e
+    render json: {success: false, message: e.message}
   end
 
   private
