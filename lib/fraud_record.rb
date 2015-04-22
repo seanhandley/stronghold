@@ -22,8 +22,12 @@ module FraudRecord
     processed_args = process_args(args).merge!('_action' => 'query',
                                             '_api'    => Rails.application.secrets.fraud_record_key)
     response = conn.get '/api/', processed_args
-    Hash.from_xml(response.body)['report'].split('-')[2].to_f
+    value, count, reliability, _ = *Hash.from_xml(response.body)['report'].split('-')
+    puts value
+    puts count
+    puts reliability
   rescue StandardError => e
+    puts e.inspect
     Honeybadger.notify(e)
     return nil
   end
