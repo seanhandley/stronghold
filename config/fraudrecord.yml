@@ -1,0 +1,14 @@
+default: &default
+  url: "https://www.fraudrecord.com"
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+staging:
+  <<: *default
+
+production:
+  <<: *default
