@@ -1,4 +1,5 @@
 require 'digest/sha1'
+require 'honeybadger'
 
 # Variable      Name Description
 #
@@ -21,9 +22,13 @@ module FraudRecord
     processed_args = process_args(args).merge!('_action' => 'query',
                                             '_api'    => Rails.application.secrets.fraud_record_key)
     response = conn.get '/api/', processed_args
-    puts response.body
+    Hash.from_xml(response.body)['report'].split('-')[2].to_f
+  rescue StandardError => e
+    Honeybadger.notify(e)
+    return nil
   end
 
+  private
 
   def self.conn
     Faraday.new(:url => FRAUD_RECORD_ARGS[:host], ssl: { verify: false }) do |faraday|
