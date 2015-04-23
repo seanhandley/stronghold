@@ -85,7 +85,7 @@ class User < ActiveRecord::Base
   end
 
   def subscribe_to_status_io
-    unless Rails.env.test?
+    unless Rails.env.test? || Rails.env.staging?
       StatusIO.add_subscriber email
     end
   end
