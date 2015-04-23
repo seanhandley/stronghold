@@ -33,7 +33,7 @@ module ActiveRecord
       end
 
       self.class_eval do
-        unless Rails.env.test?
+        unless Rails.env.test? || Rails.env.staging?
           after_create(:create_openstack_object)              if params[:actions].include? :create
           before_destroy(:delete_openstack_object)            if params[:actions].include? :destroy
           after_update(:update_openstack_object)              if params[:actions].include? :update
