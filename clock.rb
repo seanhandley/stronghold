@@ -16,6 +16,10 @@ if Rails.env.production? || Rails.env.staging?
     UsageSanityJob.perform_later
   end
 
+  every(1.day, 'card_reverification', :at => '05:00') do
+    CardReverificationJob.perform_later
+  end
+
 end
 
 module Clockwork
