@@ -21,6 +21,7 @@
           = render partial: 'shared/support_nav'
       
     %div.page-body
+      = render partial: 'shared/environment'
       .container
         - if request.url == support_root_url
           = render :partial => "announcements/starburst/announcement_bootstrap"
