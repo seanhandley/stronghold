@@ -27,4 +27,10 @@ class Mailer < ActionMailer::Base
     @keys = ['instances', 'volumes', 'images', 'routers']
     mail(:to => "devops@datacentred.co.uk", :subject => 'Usage Sanity Check Failures')
   end
+
+  def fraud_check_alert(args, report_url)
+    @args = args
+    @report_url = report_url
+    mail(:to => "devops@datacentred.co.uk", :subject => 'Fraud Check Failure')
+  end
 end
