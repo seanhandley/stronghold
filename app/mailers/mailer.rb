@@ -33,4 +33,10 @@ class Mailer < ActionMailer::Base
     @report_url = report_url
     mail(:to => "devops@datacentred.co.uk", :subject => 'Fraud Check Failure')
   end
+
+  def card_reverification_failure(organization, card)
+    @organization = organization
+    @card = card
+    mail(:to => "devops@datacentred.co.uk", :subject => 'Card failed reverification')   
+  end
 end
