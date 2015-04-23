@@ -76,7 +76,7 @@ class User < ActiveRecord::Base
   end
 
   def generate_ec2_credentials
-    unless Rails.env.test?
+    unless Rails.env.test? || Rails.env.staging?
       organization.tenants.each do |tenant|
         credential = Fog::Identity.new(OPENSTACK_ARGS).create_ec2_credential(uuid, tenant.uuid).body['credential']
         Ceph::UserKey.create 'uid' => tenant.uuid, 'access-key' => credential['access'], 'secret-key' => credential['secret']
