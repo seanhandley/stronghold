@@ -18,6 +18,7 @@ class Organization < ActiveRecord::Base
   has_many :vouchers, :through => :organization_vouchers
 
   belongs_to :primary_tenant, class_name: 'Tenant'
+  belongs_to :customer_signup
 
   scope :paying, -> { where('started_paying_at is not null') }
   scope :trial,  -> { where(started_paying_at: nil) }
