@@ -11,7 +11,7 @@ module ActiveRecord
       end
 
       self.class_eval do
-        unless Rails.env.test? || Rails.env.staging?
+        if Rails.env.production?
           after_create(:create_ceph_object)             if params[:actions].include? :create
           after_destroy(:delete_ceph_object)            if params[:actions].include? :destroy
         end
