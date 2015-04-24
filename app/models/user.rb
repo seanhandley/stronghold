@@ -98,7 +98,7 @@ class User < ActiveRecord::Base
 
   def subscribe_to_status_io
     if Rails.env.production?
-      StatusIO.add_subscriber email
+      StatusIOSubscribeJob.perform_later(email)
     end
   end
 
