@@ -36,6 +36,7 @@ gem 'starburst', '~> 1.0.3'
 gem 'country_select'
 gem 'countries'
 gem 'fraudrecord'
+gem "recaptcha", :require => "recaptcha/rails"
 
 group :test do
   gem 'minitest-rails'

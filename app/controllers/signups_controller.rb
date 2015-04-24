@@ -30,7 +30,7 @@ class SignupsController < ApplicationController
 
   def update
     @registration = RegistrationGenerator.new(@invite, update_params)
-    if @registration.generate!
+    if verify_recaptcha(:model => @registration) && @registration.generate!
       Rails.cache.write("up_#{@registration.user.uuid}", update_params[:password], expires_in: 60.minutes)
       session[:user_id] = @registration.user.id
       session[:created_at] = Time.zone.now
