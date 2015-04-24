@@ -16,6 +16,8 @@
     %label Repeat Password
     = password_field_tag :confirm_password, @registration.confirm_password, class: 'form-control'
 
+  .form-group= recaptcha_tags
+  
   .form-group
     %label
       By logging in, you agree to our
