@@ -7,7 +7,8 @@ class User < ActiveRecord::Base
   syncs_with_keystone as: 'OpenStack::User', actions: [:create, :destroy]
   after_save :update_password
 
-  after_create :generate_ec2_credentials, :set_local_password, :subscribe_to_status_io
+  after_create :set_local_password, :subscribe_to_status_io
+  after_commit :generate_ec2_credentials, on: :create
 
   has_and_belongs_to_many :roles
   belongs_to :organization
@@ -89,10 +90,7 @@ class User < ActiveRecord::Base
 
   def generate_ec2_credentials
     if Rails.env.production?
-      organization.tenants.each do |tenant|
-        credential = Fog::Identity.new(OPENSTACK_ARGS).create_ec2_credential(uuid, tenant.uuid).body['credential']
-        Ceph::UserKey.create 'uid' => tenant.uuid, 'access-key' => credential['access'], 'secret-key' => credential['secret']
-      end
+      CreateEC2CredentialsJob.perform_later(self)
     end
   end
 
