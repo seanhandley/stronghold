@@ -9,7 +9,7 @@ module Billing
       sync = Billing::Sync.create started_at: Time.now
       Billing::Instances.sync!(from, to, sync)
       Billing::Volumes.sync!(from, to, sync)
-      #Billing::FloatingIps.sync!(from, to, sync)
+      Billing::FloatingIps.sync!(from, to, sync)
       Billing::IpQuotas.sync!(sync)
       Billing::ExternalGateways.sync!(from, to, sync)
       Billing::Images.sync!(from, to, sync)
