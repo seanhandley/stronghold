@@ -18,6 +18,11 @@ class StripeController < ApplicationController
     end
   rescue Stripe::CardError => e
     render json: {success: false, message: e.message}
+  rescue Stripe::APIConnectionError
+    render json: {success: false, message: "Payment provider isn't responding. Please try again."}
+  rescue Stripe::Error => e
+    notify_honeybadger(e)
+    render json: {success: false, message: "We're sorry - something went wrong. Our tech team has been notified."}
   end
 
   private

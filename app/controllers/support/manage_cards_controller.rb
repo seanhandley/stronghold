@@ -19,7 +19,22 @@ class Support::ManageCardsController < AuthorizedController
     redirect_to support_manage_cards_path, notice: "New card added successfully"
   rescue Stripe::CardError => e
     redirect_to support_manage_cards_path, alert: e.message
+  rescue Stripe::APIConnectionError
+    redirect_to support_manage_cards_path, alert: "Payment provider isn't responding. Please try again."
+  rescue Stripe::Error => e
+    notify_honeybadger(e)
+    redirect_to support_manage_cards_path, alert: "We're sorry - something went wrong. Our tech team has been notified."}
   end
+
+  rescue Stripe::CardError => e
+    render json: {success: false, message: e.message}
+  rescue Stripe::APIConnectionError
+    render json: {success: false, message: "Payment provider isn't responding. Please try again."}
+  rescue Stripe::Error => e
+    notify_honeybadger(e)
+    render json: {success: false, message: "We're sorry - something went wrong. Our tech team has been notified."}
+  end
+
 
   def destroy
     if @stripe_customer.default_source != params[:id]
