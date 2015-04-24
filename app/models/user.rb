@@ -88,7 +88,7 @@ class User < ActiveRecord::Base
   end
 
   def generate_ec2_credentials
-    unless Rails.env.test? || Rails.env.staging?
+    if Rails.env.production?
       organization.tenants.each do |tenant|
         credential = Fog::Identity.new(OPENSTACK_ARGS).create_ec2_credential(uuid, tenant.uuid).body['credential']
         Ceph::UserKey.create 'uid' => tenant.uuid, 'access-key' => credential['access'], 'secret-key' => credential['secret']
@@ -97,7 +97,7 @@ class User < ActiveRecord::Base
   end
 
   def subscribe_to_status_io
-    unless Rails.env.test? || Rails.env.staging?
+    if Rails.env.production?
       StatusIO.add_subscriber email
     end
   end

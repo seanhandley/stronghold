@@ -26,7 +26,7 @@ module ActiveRecord
       end
 
       self.class_eval do
-        unless Rails.env.test? || Rails.env.staging?
+        if Rails.env.production?
           after_create(:create_salesforce_object)
           after_update(:update_salesforce_object)
         end
