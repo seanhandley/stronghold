@@ -10,6 +10,8 @@ class CardReverificationJob < ActiveJob::Base
         rescue Stripe::CardError => e
           Mailer.card_reverification_failure(organization, card).deliver_now
           next
+        rescue Stripe::StripeError
+          notify_honeybadger(e)
         end
       end
     end
