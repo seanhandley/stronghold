@@ -13,8 +13,7 @@ module ActiveRecord
       end
 
       define_method :create_salesforce_object do
-        update_column(:salesforce_id, Restforce.new.create('Account', salesforce_args)
-        )
+        CreateSalesforceObjectJob.perform_later(self)
       end
 
       define_method :delete_salesforce_object do
@@ -22,15 +21,31 @@ module ActiveRecord
       end
 
       define_method :update_salesforce_object do
-        Restforce.new.update('Account', salesforce_args.dup.merge(Id: salesforce_id))
+        UpdateSalesforceObjectJob.perform_later(self)
       end
 
       self.class_eval do
-        if Rails.env.production?
-          after_create(:create_salesforce_object)
-          after_update(:update_salesforce_object)
+        if Rails.env.development?
+          after_commit(:create_salesforce_object, on: :create)
+          after_commit(:update_salesforce_object, on: :update)
         end
       end
     end
+  end
+end
+
+class CreateSalesforceObjectJob < ActiveJob::Base
+  queue_as :default
+
+  def perform(o)
+    o.update_column(:salesforce_id, Restforce.new.create('Account', o.salesforce_args))
+  end
+end
+
+class UpdateSalesforceObjectJob < ActiveJob::Base
+  queue_as :default
+
+  def perform(o)
+    Restforce.new.update('Account', o.salesforce_args.dup.merge(Id: o.salesforce_id))
   end
 end
