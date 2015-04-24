@@ -1,4 +1,7 @@
+require 'ostruct'
+
 class Support::ManageCardsController < AuthorizedController
+  include StripeHelper
 
   skip_authorization_check
 
@@ -9,50 +12,45 @@ class Support::ManageCardsController < AuthorizedController
   end
 
   def update
-    @stripe_customer.default_source = params[:id]
-    @stripe_customer.save
-    redirect_to support_manage_cards_path, notice: "Card successfully set as default"
+    rescue_stripe_errors(lambda {|msg| redirect_to support_manage_cards_path, alert: msg}) do
+      @stripe_customer.default_source = params[:id]
+      @stripe_customer.save
+      redirect_to support_manage_cards_path, notice: "Card successfully set as default"
+    end
   end
 
   def create
-    @stripe_customer.sources.create(:source => create_params[:stripe_token])
-    redirect_to support_manage_cards_path, notice: "New card added successfully"
-  rescue Stripe::CardError => e
-    redirect_to support_manage_cards_path, alert: e.message
-  rescue Stripe::APIConnectionError
-    redirect_to support_manage_cards_path, alert: "Payment provider isn't responding. Please try again."
-  rescue Stripe::Error => e
-    notify_honeybadger(e)
-    redirect_to support_manage_cards_path, alert: "We're sorry - something went wrong. Our tech team has been notified."}
+    rescue_stripe_errors(lambda {|msg| redirect_to support_manage_cards_path, alert: msg}) do
+      @stripe_customer.sources.create(:source => create_params[:stripe_token])
+      redirect_to support_manage_cards_path, notice: "New card added successfully"
+    end
   end
-
-  rescue Stripe::CardError => e
-    render json: {success: false, message: e.message}
-  rescue Stripe::APIConnectionError
-    render json: {success: false, message: "Payment provider isn't responding. Please try again."}
-  rescue Stripe::Error => e
-    notify_honeybadger(e)
-    render json: {success: false, message: "We're sorry - something went wrong. Our tech team has been notified."}
-  end
-
 
   def destroy
-    if @stripe_customer.default_source != params[:id]
-      @stripe_customer.sources.retrieve(params[:id]).delete
-      redirect_to support_manage_cards_path
-    else
-      redirect_to support_manage_cards_path, alert: "You can't delete your default card."
+    rescue_stripe_errors(lambda {|msg| redirect_to support_manage_cards_path, alert: msg}) do
+      if @stripe_customer.default_source != params[:id]
+        @stripe_customer.sources.retrieve(params[:id]).delete
+        redirect_to support_manage_cards_path
+      else
+        redirect_to support_manage_cards_path, alert: "You can't delete your default card."
+      end
     end
   end
 
   private
 
   def get_stripe_customer
-    @stripe_customer ||= Stripe::Customer.retrieve(current_user.organization.stripe_customer_id)
+    @stripe_customer ||= rescue_stripe_errors(lambda {|msg| flash.now[:error] = msg; dummy_stripe}) do
+      Stripe::Customer.retrieve(current_user.organization.stripe_customer_id)
+    end
   end
 
   def create_params
     params.permit(:stripe_token)
+  end
+
+  def dummy_stripe
+    OpenStruct.new(:sources => [])
   end
 
   def check_self_service_and_power
