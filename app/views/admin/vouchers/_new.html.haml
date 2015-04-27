@@ -22,6 +22,9 @@
                   = f.text_field :description, :class => 'form-control'
                   %p.help-block Displayed to customer at checkout
                 .form-group
+                  %label Number of uses
+                  = f.number_field :usage_limit, min: 1, step: 1, :class => 'form-control', placeholder: "Leave blank for unlimited usage"
+                .form-group
                   %label Code
                   = f.text_field :code, :class => 'form-control', placeholder: "Leave blank to auto-generate a code", maxlength: 20
                   %p.help-block Entered by the customer to activate discount
@@ -41,6 +44,7 @@
                   %label Expires
                   = f.date_field :expires_at, min: Date.today + 1.day, :class => 'form-control'
                   %p.help-block The date on which this discount expires. Leave blank to create a discount that never expires.
+
         .modal-footer
           %button.btn.btn-default{'data-toggle' => "modal", 'data-dismiss' => "modal"}
             = t(:cancel)

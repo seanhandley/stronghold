@@ -24,6 +24,17 @@ class TestVoucherLifetimes < Minitest::Test
     end
   end
 
+  def test_voucher_cannot_be_applied_when_all_uses_are_gone
+    @voucher.update_attributes(usage_limit: 1)
+    org2 = @organization.dup
+    org2.reference = "dup"
+    org2.save!
+    @organization.vouchers << @voucher
+    assert_raises ActiveRecord::RecordInvalid do
+      org2.vouchers << @voucher
+    end
+  end
+
   def test_voucher_reports_active_during_duration
     @organization.vouchers << @voucher
     assert @organization.organization_vouchers.first.active?
