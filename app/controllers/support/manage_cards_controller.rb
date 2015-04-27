@@ -22,6 +22,7 @@ class Support::ManageCardsController < AuthorizedController
   def create
     rescue_stripe_errors(lambda {|msg| redirect_to support_manage_cards_path, alert: msg}) do
       @stripe_customer.sources.create(:source => create_params[:stripe_token])
+      Rails.cache.delete("org_#{current_user.organization.id}_has_payment_method")
       redirect_to support_manage_cards_path, notice: "New card added successfully"
     end
   end

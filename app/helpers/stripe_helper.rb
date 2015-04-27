@@ -10,4 +10,19 @@ module StripeHelper
     notify_honeybadger(e)
     handler.call "We're sorry - something went wrong. Our tech team has been notified."
   end
+
+  def stripe_has_valid_source?(stripe_customer_id)
+    sources = Stripe::Customer.retrieve(stripe_customer_id).sources.all(:object => "card")
+    # Ensure at least one card is valid
+    sources.each do |source|
+      begin
+        source.metadata[:last_verified] = Time.now.utc
+        source.save
+        return true
+      rescue Stripe::CardError
+        next
+      end
+    end
+    false
+  end
 end
