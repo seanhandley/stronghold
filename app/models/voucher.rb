@@ -11,7 +11,7 @@ class Voucher < ActiveRecord::Base
 
   validates :code, uniqueness: true
   validates :duration, numericality: { only_integer: true, greater_than: 0 }
-  validates :usage_limit, numericality: { only_integer: true, greater_than: 0, :allow_nil => false }
+  validates :usage_limit, numericality: { only_integer: true, greater_than: 0, :allow_nil => true }
   validates :discount_percent, numericality: { greater_than: 0, less_than_or_equal_to: 100 }
   validate -> { errors.add(:expires_at, "is in the past") if expired? }, on: :create
 
