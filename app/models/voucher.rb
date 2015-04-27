@@ -19,8 +19,9 @@ class Voucher < ActiveRecord::Base
   scope :expired, -> { where('expires_at <= ?', Time.now.utc) }
 
   def expired?
+    return true if remaining_uses == 0
     return false unless expires_at
-    expires_at < Time.now.utc || remaining_uses == 0
+    expires_at < Time.now.utc
   end
 
   def applied?

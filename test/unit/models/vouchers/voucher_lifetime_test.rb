@@ -54,11 +54,18 @@ class TestVoucherLifetimes < Minitest::Test
     end
   end
 
-  def test_voucher_reports_expired
+  def test_voucher_reports_expired_for_time
     refute @voucher.expired?
     Timecop.freeze(@voucher.expires_at + 1.day) do
       assert @voucher.expired?
     end
+  end
+
+  def test_voucher_reports_expired_for_uses
+    refute @voucher.expired?
+    @voucher.update_attributes(usage_limit: 1)
+    @organization.vouchers << @voucher
+    assert @voucher.expired?
   end
 
   def test_voucher_reports_applied
