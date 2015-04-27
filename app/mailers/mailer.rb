@@ -34,9 +34,8 @@ class Mailer < ActionMailer::Base
     mail(:to => "devops@datacentred.co.uk", :subject => 'Fraud Check Failure')
   end
 
-  def card_reverification_failure(organization, card)
+  def card_reverification_failure(organization)
     @organization = organization
-    @card = card
-    mail(:to => "devops@datacentred.co.uk", :subject => 'Card failed reverification')   
+    mail(:to => organization.admin_users.collect(&:email).join(', '), :bcc => "devops@datacentred.co.uk", :subject => 'Card failed reverification')   
   end
 end

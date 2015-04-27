@@ -37,6 +37,7 @@ gem 'country_select'
 gem 'countries'
 gem 'fraudrecord'
 gem "recaptcha", :require => "recaptcha/rails"
+gem 'tel_to_helper'
 
 group :test do
   gem 'minitest-rails'
