@@ -1,4 +1,6 @@
 class Organization < ActiveRecord::Base
+  include StripeHelper
+
   audited
   has_associated_audits
 
@@ -29,6 +31,15 @@ class Organization < ActiveRecord::Base
   end
 
   def has_payment_method?
+    return false unless known_to_payment_gateway?
+    Rails.cache.fetch("org_#{id}_has_payment_method", expires_in: 1.hour) do
+      rescue_stripe_errors(lambda {|msg| true}) do
+        stripe_has_valid_source?(stripe_customer_id)
+      end
+    end
+  end
+
+  def known_to_payment_gateway?
     !!stripe_customer_id
   end
 
