@@ -5,6 +5,7 @@
       %th Code
       %th Duration
       %th Discount
+      %th Remaining Uses
       %th Expiry
       %th Applied By
       %th
@@ -15,6 +16,7 @@
           %td= voucher.code
           %td= pluralize(voucher.duration, 'month')
           %td= "#{voucher.discount_percent}%"
+          %td= voucher.remaining_uses
           %td= voucher.expires_at || "Never"
           %td= link_to pluralize(voucher.organizations.count, 'customer'), '', 'data-toggle' => "modal", 'data-target' => "#viewCustomers#{voucher.id}"
           %td

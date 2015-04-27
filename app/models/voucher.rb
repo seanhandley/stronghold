@@ -19,11 +19,16 @@ class Voucher < ActiveRecord::Base
 
   def expired?
     return false unless expires_at
-    expires_at < Time.now.utc
+    expires_at < Time.now.utc || remaining_uses == 0
   end
 
   def applied?
     organizations.count > 0
+  end
+
+  def remaining_uses
+    return Float::INFINITY unless usage_limit
+    usage_limit - organization_vouchers.count
   end
 
   private
