@@ -44,14 +44,14 @@ class Tenant < ActiveRecord::Base
 
   def set_self_service_quotas
     args = [
-             {"cores"=>10,"injected_file_content_bytes"=>10240, "injected_file_path_bytes"=>10240,
-              "injected_files"=>5, "instances"=>5, "key_pairs"=>10,
-              "metadata_items"=>128, "ram"=>51200},
+             {"cores"=>2,"injected_file_content_bytes"=>10240, "injected_file_path_bytes"=>10240,
+              "injected_files"=>5, "instances"=>2, "key_pairs"=>10,
+              "metadata_items"=>128, "ram"=>1024},
     
-             {"volumes"=>5, "snapshots"=>2, "gigabytes" => 100},
+             {"volumes"=>2, "snapshots"=>2, "gigabytes" => 20},
     
              {"floatingip"=>1, "security_group_rule"=>100, "security_group"=>10,
-              "network"=>5,"port"=>20, "router"=>5, "subnet"=>5}
+              "network"=>5,"port"=>20, "router"=>1, "subnet"=>5}
             ]
     
     set_quotas(*args)  
