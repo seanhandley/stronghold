@@ -25,6 +25,7 @@ class Organization < ActiveRecord::Base
   scope :paying, -> { where('started_paying_at is not null') }
   scope :trial,  -> { where(started_paying_at: nil) }
   scope :cloud,  -> { all.select(&:cloud?) }
+  scope :active, -> { all.select{|o| o.state == OrganizationStates::Active}}
 
   def staff?
     (reference == STAFF_REFERENCE)
@@ -90,6 +91,15 @@ class Organization < ActiveRecord::Base
     end
   end
 
+  def has_payment_methods!(bool)
+    if bool
+      update_attributes(state: OrganizationStates::Active)
+    else
+      update_attributes(state: OrganizationStates::HasNoPaymentMethods)
+      Rails.cache.delete("org_#{current_user.organization.id}_has_payment_method")
+    end
+  end
+
   private
 
   def generate_reference
@@ -126,4 +136,10 @@ class Organization < ActiveRecord::Base
       OpenStack::Tenant.find(tenant_id).set_self_service_quotas
     end
   end
+end
+
+module OrganizationStates
+  Active = 'active'
+  HasNoPaymentMethods = 'no_payment_methods'
+  Disabled = 'disabled'
 end
