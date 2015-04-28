@@ -28,7 +28,7 @@ class SessionsController < ApplicationController
     elsif !@user.admin?
       flash.now.alert = "Payment method has expired. Please inform a user with admin rights."
       render :new
-    elsif @user and params[:user][:password].present? and @user.authenticate_local(params[:user][:password]) and !@user.organization.has_payment_method?
+    elsif @user and params[:user][:password].present? and @user.authenticate_local(params[:user][:password]) and !@user.organization.known_to_payment_gateway?
       Rails.cache.write("up_#{@user.uuid}", params[:user][:password], expires_in: 60.minutes)
       session[:user_id]    = @user.id
       session[:created_at] = Time.now.utc
