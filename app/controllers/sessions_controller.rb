@@ -16,7 +16,7 @@ class SessionsController < ApplicationController
   def create
     @user = User.find_by_email(params[:user][:email])
 
-    if @user and params[:user][:password].present? and (token = @user.authenticate(params[:user][:password])) and token
+    if @user and params[:user][:password].present? and (token = @user.authenticate(params[:user][:password])) and token and @user.organization.has_payment_method?
       session[:token]      = token
       session[:user_id]    = @user.id
       session[:created_at] = Time.now.utc
@@ -25,6 +25,9 @@ class SessionsController < ApplicationController
       else
         redirect_to support_root_path
       end
+    elsif !@user.admin?
+      flash.now.alert = "Payment method has expired. Please inform a user with admin rights."
+      render :new
     elsif @user and params[:user][:password].present? and @user.authenticate_local(params[:user][:password]) and !@user.organization.has_payment_method?
       Rails.cache.write("up_#{@user.uuid}", params[:user][:password], expires_in: 60.minutes)
       session[:user_id]    = @user.id
