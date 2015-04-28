@@ -2,6 +2,7 @@ class SignupsController < ApplicationController
 
   layout :set_layout
 
+  before_filter :check_enabled, only: [:new, :create]
   before_filter :find_invite, except: [:new, :create]
 
   def new
@@ -72,6 +73,14 @@ class SignupsController < ApplicationController
   def create_params
     params.permit(:organization_name, :email, :first_name, :last_name,
                   :password, :confirm_password)
+  end
+
+  def check_enabled
+    unless Stronghold::SIGNUPS_ENABLED
+      @wait_list_entry = WaitListEntry.new
+      render :sorry
+      return
+    end
   end
 
 end

@@ -38,4 +38,8 @@ class Mailer < ActionMailer::Base
     @organization = organization
     mail(:to => organization.admin_users.collect(&:email).join(', '), :bcc => "devops@datacentred.co.uk", :subject => 'Card failed reverification')   
   end
+
+  def notify_wait_list_entry(email)
+    mail(:to => email, :subject => "We're back!")   
+  end
 end
