@@ -40,6 +40,7 @@ class Mailer < ActionMailer::Base
   end
 
   def notify_wait_list_entry(email)
+    @email = email
     mail(:to => email, :subject => "We're back!")   
   end
 end

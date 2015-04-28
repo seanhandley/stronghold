@@ -9,6 +9,7 @@ class SignupsController < ApplicationController
     if current_user
       redirect_to support_root_path
     else
+      @email = params[:email]
       @customer_signup = CustomerSignup.new
     end
   end
