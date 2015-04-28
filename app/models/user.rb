@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   attr_accessor :password, :password_confirmation, :token
 
   authenticates_with_keystone
-  syncs_with_keystone as: 'OpenStack::User', actions: [:create]
+  syncs_with_keystone as: 'OpenStack::User', actions: [:create, :destroy]
   after_save :update_password
   after_create :generate_ec2_credentials
   after_create :subscribe_to_status_io
