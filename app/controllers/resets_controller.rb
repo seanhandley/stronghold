@@ -46,7 +46,7 @@ class ResetsController < ApplicationController
   end
 
   def reset_update_params
-    params.permit(:password, :confirm_password)
+    params.permit(:password)
   end
 
   def render_errors(reset)
