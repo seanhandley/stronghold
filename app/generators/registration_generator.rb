@@ -63,6 +63,6 @@ class RegistrationGenerator
         UserTenantRole.create user: @user, tenant: tenant, role_uuid: member_uuid
       end
     end
-    @invite.complete!
+    invite.complete!
   end
 end
