@@ -62,7 +62,7 @@ class SignupsController < ApplicationController
   end
 
   def update_params
-    params.permit(:password, :confirm_password,
+    params.permit(:password,
                   :first_name, :last_name)
   end
 

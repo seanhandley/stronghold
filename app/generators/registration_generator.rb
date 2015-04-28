@@ -1,14 +1,13 @@
 class RegistrationGenerator
   include ActiveModel::Validations
 
-  attr_reader :invite, :password, :confirm_password,
+  attr_reader :invite, :password,
               :organization, :user,
               :first_name, :last_name
 
   def initialize(invite, params)
     @invite            = invite
     @password          = params[:password]
-    @confirm_password  = params[:confirm_password]
     @first_name        = params[:first_name]
     @last_name         = params[:last_name]
   end
@@ -18,8 +17,6 @@ class RegistrationGenerator
       errors.add :base, I18n.t(:signup_token_not_valid)
     elsif first_name.blank? || last_name.blank?
       errors.add :base, I18n.t(:must_provide_first_name_and_last_name)
-    elsif password != confirm_password
-      errors.add :base,  I18n.t(:passwords_dont_match)
     elsif password.length < 8
       errors.add :base,  I18n.t(:password_too_short)
     else
