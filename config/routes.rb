@@ -54,6 +54,7 @@ Rails.application.routes.draw do
   post 'signup/:token', :controller => 'signups', :action => 'update', :as => 'signup_complete'
   get 'signup', :controller => 'signups', :action => 'new', :as => 'new_signup'
   post 'signup', :controller => 'signups', :action => 'create', :as => 'create_signup'
+  post 'wait_list', :controller => 'wait_list_entries', :action => 'create', :as => 'wait_list'
   post 'precheck', :controller => 'stripe', :action => 'precheck'
   post 'voucher_precheck', :controller => 'vouchers', :action => 'precheck'
 

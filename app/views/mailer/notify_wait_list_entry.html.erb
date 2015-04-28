@@ -1,0 +1,13 @@
+<%= render partial: 'email_style' %>
+<div class="container" id="email">
+  <div class="push"></div>
+  <div class="pull-right"><%= image_tag "http://#{Rails.configuration.action_mailer.default_url_options[:host]}#{asset_path('logo_long.png')}" %></div>
+  <p>We're back!</p>
+
+  <p>Thanks for your patience. We're pleased to tell you that new signups are being accepted again.</p>
+
+  <p>Visit <%= link_to new_signup_url, new_signup_url %> to sign up.</p>
+
+  <p>Kind regards,<br/>
+  The DataCentred Team</p>
+</div>

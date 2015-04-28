@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150427125801) do
+ActiveRecord::Schema.define(version: 20150428095643) do
 
   create_table "audits", force: :cascade do |t|
     t.string   "auditable_id",    limit: 255
@@ -317,5 +317,12 @@ ActiveRecord::Schema.define(version: 20150427125801) do
   end
 
   add_index "vouchers", ["code"], name: "index_vouchers_on_code", unique: true, using: :btree
+
+  create_table "wait_list_entries", force: :cascade do |t|
+    t.string   "email",      limit: 255
+    t.datetime "emailed_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end
