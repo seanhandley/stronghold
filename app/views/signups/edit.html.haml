@@ -15,9 +15,6 @@
     = password_field_tag :password, @registration.password, class: 'form-control strength'
   .form-group
     #password-progress-bar-container
-  .form-group
-    %label Repeat Password
-    = password_field_tag :confirm_password, @registration.confirm_password, class: 'form-control'
 
   .form-group= recaptcha_tags
   
