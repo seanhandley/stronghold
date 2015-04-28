@@ -21,7 +21,6 @@
       %label= t(:password)
       = f.password_field :password, class: "form-control"
     .form-group
-      %label= t(:password_confirmation)
-      = f.password_field :password_confirmation, class: "form-control"
+      #password-progress-bar-container
 
     = submit_tag t(:save), class: 'btn btn-primary', data: { disable_with: t(:saving) }

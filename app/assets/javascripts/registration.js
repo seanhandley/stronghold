@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  $('input#password').strengthMeter('progressBar', {
+  $('input#password, input#user_password').strengthMeter('progressBar', {
     container: $('#password-progress-bar-container')
   });
 
