@@ -30,7 +30,6 @@ class Support::UsersController < SupportBaseController
 
   def destroy
     @user = User.find destroy_params[:id]
-    Fog::Identity.new(OPENSTACK_ARGS).delete_user @user.uuid
     if @user.destroy
       respond_to do |format|
         format.js {
