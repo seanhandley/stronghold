@@ -24,7 +24,7 @@ module ActiveRecord
       end
 
       define_method :delete_openstack_object do
-        params[:as].constantize.find(uuid).destroy
+        Fog::Identity.new(OPENSTACK_ARGS).delete_user uuid
       end
 
       define_method :update_openstack_object do
