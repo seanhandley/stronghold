@@ -40,7 +40,7 @@ module Sanity
 
   def self.notify!(data)
     msg = Mailer.usage_sanity_failures(data).html_part.body.raw_source.gsub("\n","<br />")
-    Hipchat.notify('Sanity Check', 'Web', msg)
+    Hipchat.notify('Sanity Check', 'Web', msg, :color => 'red')
   end
 
   def self.live_instances

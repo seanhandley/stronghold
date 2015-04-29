@@ -1,9 +1,9 @@
 require 'hipchat'
 
 class Hipchat
-  def self.notify(from, room, message)
+  def self.notify(from, room, message, args={})
     if HIPCHAT_NOTIFICATIONS_ENABLED
-      client[room].send(from, message, :notify => true)  
+      client[room].send(from, message, {:notify => true}.merge(args))  
     end
   end
 
