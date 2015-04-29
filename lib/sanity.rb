@@ -39,7 +39,8 @@ module Sanity
   end
 
   def self.notify!(data)
-    Mailer.usage_sanity_failures(data).deliver_later
+    msg = Mailer.usage_sanity_failures(data).html_part.body.raw_source.gsub("\n","<br />")
+    Hipchat.notify('Sanity Check', 'Web', msg)
   end
 
   def self.live_instances
