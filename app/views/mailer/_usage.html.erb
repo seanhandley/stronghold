@@ -5,6 +5,7 @@
   <% for prefix in ['missing', 'new'] -%>
     <% if @data["#{prefix}_#{key}".to_sym].present? -%>
       <h3><%= "#{key.titleize} (#{prefix})" %></h3>
+      
       <p><% @data["#{prefix}_#{key}".to_sym].each do |k,v| -%><%= "#{v} (#{k})<br/>".html_safe -%><% end -%></p>
     <% end -%>
   <% end -%>
