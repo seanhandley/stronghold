@@ -4,6 +4,7 @@ class SignupsController < ApplicationController
 
   before_filter :check_enabled, only: [:new, :create]
   before_filter :find_invite, except: [:new, :create]
+  skip_before_filter :verify_authenticity_token, :only => [:create]
 
   def new
     if current_user
@@ -18,10 +19,18 @@ class SignupsController < ApplicationController
     @customer_signup = CustomerSignup.new(create_params.merge(ip_address: request.remote_ip))
     if @customer_signup.save
       CustomerSignupJob.perform_later(@customer_signup.id)
-      render :confirm
+      respond_to do |format|
+        format.html { render :confirm }
+        format.json { head :ok }
+      end
     else
-      flash[:error] = @customer_signup.errors.full_messages.join('<br>').html_safe
-      render :new
+      respond_to do |format|
+        format.html {
+          flash[:error] = @customer_signup.errors.full_messages.join('<br>').html_safe
+          render :new
+        }
+        format.json { render json: {errors: @customer_signup.errors.full_messages}, status: :unprocessable_entity }
+      end
     end
   end
 
@@ -79,7 +88,12 @@ class SignupsController < ApplicationController
   def check_enabled
     unless Stronghold::SIGNUPS_ENABLED
       @wait_list_entry = WaitListEntry.new
-      render :sorry
+      respond_to do |format|
+        format.html {
+          render :sorry
+        }
+        format.json { render json: {errors: ["Sorry, not currently accepting signups."], status: :unprocessable_entity }
+      end
       return
     end
   end
