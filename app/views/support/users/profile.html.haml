@@ -19,7 +19,7 @@
         = t(:gravatar_instructions).html_safe
     .form-group
       %label= t(:password)
-      = f.password_field :password, class: "form-control"
+      = f.password_field :password, class: "form-control", placeholder: 'Leave blank to keep password the same'
     .form-group
       #password-progress-bar-container
 
