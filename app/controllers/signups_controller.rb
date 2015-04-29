@@ -92,7 +92,9 @@ class SignupsController < ApplicationController
         format.html {
           render :sorry
         }
-        format.json { render json: {errors: ["Sorry, not currently accepting signups."], status: :unprocessable_entity }
+        format.json {
+          render json: {errors: ["Sorry, not currently accepting signups."]}, status: :unprocessable_entity
+        }
       end
       return
     end
