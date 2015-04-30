@@ -47,11 +47,11 @@ class AuthorizedController < ApplicationController
       redirect_to sign_in_path('next' => request.fullpath)
       return
     end
-    if !current_user.organization.has_payment_method?
+    if !current_user.organization.known_to_payment_gateway?
+      redirect_to new_support_card_path
+    elsif !current_user.organization.has_payment_method?
       return if request.fullpath == support_manage_cards_path
       redirect_to support_manage_cards_path, alert: "Please add a valid card to continue."
-    elsif !current_user.organization.known_to_payment_gateway?
-      redirect_to new_support_card_path
     end
   end
 
