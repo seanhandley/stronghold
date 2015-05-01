@@ -4,7 +4,7 @@ module Sanity
       if live_instances[instance.instance_id].nil?
         false
       else
-        live_instances[instance.instance_id]['status'].downcase == instance.current_state.downcase
+        live_instances[instance.instance_id]['status'] == instance.latest_state
       end
     end
 
