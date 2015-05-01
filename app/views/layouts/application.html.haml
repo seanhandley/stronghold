@@ -26,7 +26,7 @@
       .container
         - if request.url == support_root_url
           = render :partial => "announcements/starburst/announcement_bootstrap"
-        - elsif openstack_authenticated?
+        - elsif current_user.organization.known_to_payment_gateway?
           %h3.organisation
             -# = image_tag 'bbc.png'
             = current_user.organization.name

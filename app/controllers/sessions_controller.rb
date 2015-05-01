@@ -15,27 +15,30 @@ class SessionsController < ApplicationController
   
   def create
     @user = User.find_by_email(params[:user][:email])
+    if @user and params[:user][:password].present?
+      if token = @user.authenticate(params[:user][:password])
+        session[:user_id]    = @user.id
+        session[:created_at] = Time.now.utc
+        session[:token]      = token if token.is_a? String
 
-    if @user and params[:user][:password].present? and (token = @user.authenticate(params[:user][:password])) and token and @user.organization.has_payment_method?
-      session[:token]      = token
-      session[:user_id]    = @user.id
-      session[:created_at] = Time.now.utc
-      if params[:next]
-        redirect_to params[:next]
+        if @user.organization.known_to_payment_gateway?
+          if params[:next]
+            redirect_to params[:next]
+          else
+            redirect_to support_root_path
+          end
+        else
+          Rails.cache.write("up_#{@user.uuid}", params[:user][:password], expires_in: 60.minutes)
+          redirect_to new_support_card_path 
+        end
+        
       else
-        redirect_to support_root_path
+        flash.now.alert = "Invalid credentials. Please try again."
+        Rails.logger.error "Invalid login: #{params[:user][:email]}. Token=#{token.inspect}"
+        render :new
       end
-    elsif !@user.admin?
-      flash.now.alert = "Payment method has expired. Please inform a user with admin rights."
-      render :new
-    elsif @user and params[:user][:password].present? and @user.authenticate_local(params[:user][:password]) and !@user.organization.known_to_payment_gateway?
-      Rails.cache.write("up_#{@user.uuid}", params[:user][:password], expires_in: 60.minutes)
-      session[:user_id]    = @user.id
-      session[:created_at] = Time.now.utc
-      redirect_to new_support_card_path     
     else
-      flash.now.alert = "Invalid credentials. Please try again."
-      Rails.logger.error "Invalid login: #{params[:user][:email]}. Token=#{token.inspect}"
+      flash.now.alert = "Invalid credentials. Please try again"
       render :new
     end
   end

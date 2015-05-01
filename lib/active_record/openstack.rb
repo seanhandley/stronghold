@@ -2,7 +2,7 @@ module ActiveRecord
   class Base
 
     def self.authenticates_with_keystone
-      define_method :authenticate do |password|
+      define_method :authenticate_openstack do |password|
         begin
           args = OPENSTACK_ARGS.dup
           args.merge!(:openstack_username   => email,

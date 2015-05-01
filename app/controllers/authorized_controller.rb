@@ -48,10 +48,17 @@ class AuthorizedController < ApplicationController
       return
     end
     if !current_user.organization.known_to_payment_gateway?
+      return if [new_support_card_path, support_cards_path].include?(request.fullpath)
       redirect_to new_support_card_path
     elsif !current_user.organization.has_payment_method?
-      return if request.fullpath == support_manage_cards_path
-      redirect_to support_manage_cards_path, alert: "Please add a valid card to continue."
+      if !current_user.admin?
+        reset_session
+        flash.alert = "Payment method has expired. Please inform a user with admin rights."
+        redirect_to sign_in_path
+      else
+        return if request.fullpath == support_manage_cards_path
+        redirect_to support_manage_cards_path, alert: "Please add a valid card to continue."
+      end
     end
   end
 

@@ -1,5 +1,5 @@
 .top-menu
-  - if openstack_authenticated?
+  - if current_user.organization.known_to_payment_gateway?
     - if can? :read, Role
       %a{href: support_roles_path}
         .top-menu-option{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => t(:users_slash_roles), 'class' => (current_section == 'roles' ? 'selected' : '')}
