@@ -1,2 +1,2 @@
-- unless Rails.env.production?
+- unless Rails.env.production? || Rails.env.development?
     .alert.alert-warning.text-center==This is the #{Rails.env} environment. No changes here will affect live data.
