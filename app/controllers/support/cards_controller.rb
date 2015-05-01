@@ -1,7 +1,9 @@
-class Support::CardsController < LocallyAuthorizedController
+class Support::CardsController < AuthorizedController
+
+  skip_authorization_check
 
   def new
-    if openstack_authenticated?
+    if current_user.organization.known_to_payment_gateway?
       redirect_to support_root_path
     else
       @customer_signup = CustomerSignup.find_by_email(current_user.email)

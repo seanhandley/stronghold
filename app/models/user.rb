@@ -62,8 +62,21 @@ class User < ActiveRecord::Base
     name.blank? ? email : name
   end
 
-  def authenticate_local(unencrypted_password)
-    BCrypt::Password.new(password_digest) == unencrypted_password && self
+  def authenticate(unencrypted_password)
+    setup_password_from_openstack(unencrypted_password) if password_digest.nil?
+
+    authed = BCrypt::Password.new(password_digest) == unencrypted_password && self
+    if authed
+      token = authenticate_openstack(unencrypted_password)
+    end
+    token || authed
+  end
+  
+  def setup_password_from_openstack(unencrypted_password)
+    if authenticate_openstack(unencrypted_password)
+      password = unencrypted_password
+      set_local_password
+    end
   end
 
   private

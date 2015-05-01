@@ -28,6 +28,27 @@ class SessionsControllerTest < ActionController::TestCase
     assert_equal "You have been signed out.", session["flash"]["flashes"]["notice"]
   end
 
+  test "admin user logs in successfully" do
+    @organization.stub(:has_payment_method?, true) do
+      @user.stub(:authenticate, 'token') do
+        post :create, user: {password: 'foo'}
+        assert
+      end
+    end
+  end
+
+  test "admin user logs in and is redirected to the next uri" do
+  end
+
+  test "admin user fails login because password is wrong" do
+  end
+
+  test "admin user logs in for the first time and adds the first card to the account" do
+  end
+
+  test "non admin user logs in when payment method is failing" do
+  end
+
   private
 
   def log_in
