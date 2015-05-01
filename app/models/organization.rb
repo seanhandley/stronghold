@@ -133,7 +133,7 @@ class Organization < ActiveRecord::Base
 
   def set_quotas!
     tenants.collect(&:uuid).each do |tenant_id|
-      OpenStack::Tenant.find(tenant_id).set_self_service_quotas
+      OpenStack::Tenant.set_self_service_quotas(tenant_id)
     end
   end
 end

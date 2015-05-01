@@ -36,6 +36,10 @@ module OpenStack
     end
 
     def set_self_service_quotas
+      OpenStack::Tenant.set_self_service_quotas id
+    end
+
+    def self.set_self_service_quotas(tenant_id)
       args = [
                {"cores"=>2,"injected_file_content_bytes"=>10240, "injected_file_path_bytes"=>10240,
                 "injected_files"=>5, "instances"=>2, "key_pairs"=>10,
@@ -47,12 +51,16 @@ module OpenStack
                 "network"=>5,"port"=>20, "router"=>1, "subnet"=>5}
               ]
       
-      set_quotas(*args)  
+      set_quotas(tenant_id, *args)  
     end
 
     private
 
     def set_quotas(compute, volume, network)
+      OpenStack::Tenant.set_quotas(id, compute, volume, network)
+    end
+
+    def self.set_quotas(id, compute, volume, network)
       Fog::Compute.new(OPENSTACK_ARGS).update_quota id, compute
       Fog::Volume.new(OPENSTACK_ARGS).update_quota  id, volume
       Fog::Network.new(OPENSTACK_ARGS).update_quota id, network
