@@ -2,7 +2,7 @@ require 'test_helper'
 
 class SessionsControllerTest < ActionController::TestCase
   setup do
-    @user = User.make!
+    @user = User.make!(password: '12345678')
     @organization        = @user.organization
   end
 
@@ -29,10 +29,18 @@ class SessionsControllerTest < ActionController::TestCase
   end
 
   test "admin user logs in successfully" do
-    @organization.stub(:has_payment_method?, true) do
-      @user.stub(:authenticate, 'token') do
-        post :create, user: {password: 'foo'}
-        # assert
+    @organization.stub(:known_to_payment_gateway?, true) do
+      @organization.stub(:has_payment_method?, true) do
+        User.stub(:find_by_email, @user) do
+          @user.stub(:authenticate_openstack, 'token') do
+            post :create, user: {email: @user.email, password: '12345678'}
+            # puts @response.inspect
+            assert_equal 'token', session[:token]
+            assert_equal @user.id, session[:user_id]
+            assert_in_delta Time.now.utc, session[:created_at], 1
+            assert_redirected_to support_root_path
+          end
+        end
       end
     end
   end
