@@ -76,6 +76,14 @@ class Organization < ActiveRecord::Base
     end
   end
 
+  def disable!
+    users.each do |user|
+      # Enable the user
+      Fog::Identity.new(OPENSTACK_ARGS).update_user(user.uuid, enabled: false)
+    end
+    update_attributes(disabled: true)
+  end
+
   def complete_signup!(stripe_customer_id)
     update_attributes(stripe_customer_id: stripe_customer_id)
     enable!

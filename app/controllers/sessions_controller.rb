@@ -14,7 +14,7 @@ class SessionsController < ApplicationController
   end
   
   def create
-    @user = User.find_by_email(params[:user][:email])
+    @user = User.active.find_by_email(params[:user][:email])
     if @user and params[:user][:password].present?
       if token = @user.authenticate(params[:user][:password])
         session[:user_id]    = @user.id

@@ -56,6 +56,8 @@ Rails.application.routes.draw do
   post 'signup', :controller => 'signups', :action => 'create', :as => 'create_signup'
   post 'wait_list', :controller => 'wait_list_entries', :action => 'create', :as => 'wait_list'
   post 'precheck', :controller => 'stripe', :action => 'precheck'
+  post 'reauthorise', :controller => 'support/organizations', :action => 'reauthorise'
+  post 'close_account', :controller => 'support/organizations', :action => 'close'
   post 'voucher_precheck', :controller => 'vouchers', :action => 'precheck'
 
   post 'salesforce', :controller => 'salesforce', :action => 'update'

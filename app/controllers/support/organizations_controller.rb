@@ -26,12 +26,37 @@ class Support::OrganizationsController < SupportBaseController
     end
   end
 
+  def reauthorise  
+    if reauthenticate(reauthorise_params[:password])
+      render json: {success: true }
+    else
+      render json: {success: false }
+    end
+  end
+
+  # Close this user's account
+  def close
+    if reauthenticate(reauthorise_params[:password])
+      reset_session
+      current_user.organization.disable!
+      Hipchat.notify('Account Closure', 'Accounts', "#{organization.name} (REF: #{organization.name}) has requested account termination.", color: 'red')
+      TerminateAccountJob.perform_later(current_user.organization)
+      render :goodbye
+    else
+      redirect_to support_edit_organization_path, alert: 'Your password was wrong. Account termination has been aborted.'
+    end
+  end
+
   private
 
   def update_params
     params.require(:organization).permit(:name, :time_zone, :billing_address1, :billing_address2,
                                          :billing_postcode, :billing_city, :billing_country,
                                          :phone)
+  end
+
+  def reauthorise_params
+    params.permit(:password)
   end
 
   def check_organization
