@@ -6,6 +6,16 @@ class SessionsControllerTest < ActionController::TestCase
     @organization        = @user.organization
   end
 
+  test "can go to sign in path" do
+    get :new
+    assert_response :success
+  end
+
+  test "index redirects" do
+    get :index
+    assert_redirected_to root_path
+  end
+
   test "cannot access new, index, create when logged in" do
     log_in(@user)
     @organization.stub(:has_payment_method?, true) do
@@ -76,6 +86,19 @@ class SessionsControllerTest < ActionController::TestCase
     end
   end
 
+  test "users gets logged out when session expires" do
+    create_session(true, true, true) do
+      post :create, user: {email: @user.email, password: '12345678'}
+      Timecop.freeze(Time.now.utc + 4.hours) do
+        @controller = Support::UsersController.new
+        @controller.stub(:current_user, @user) do
+          get :index
+          assert_redirected_to sign_in_path
+        end
+      end
+    end
+  end
+
   test "non admin user logs in when payment method is failing" do
     create_session(true, false, false) do
       post :create, user: {email: @user.email, password: '12345678'}
@@ -85,6 +108,14 @@ class SessionsControllerTest < ActionController::TestCase
         assert_redirected_to sign_in_path
         assert_equal "Payment method has expired. Please inform a user with admin rights.", session["flash"]["flashes"]["alert"]
       end
+    end
+  end
+
+  test "blank credentials shows error" do
+    create_session(true, true, true) do
+      post :create, user: {email: '', password: ''}
+      assert_response :success
+      assert_equal "Invalid credentials. Please try again.", session["flash"]["flashes"]["alert"]
     end
   end
 
