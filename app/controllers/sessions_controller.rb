@@ -38,7 +38,7 @@ class SessionsController < ApplicationController
         render :new
       end
     else
-      flash.now.alert = "Invalid credentials. Please try again"
+      flash.now.alert = "Invalid credentials. Please try again."
       render :new
     end
   end
