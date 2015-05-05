@@ -2,7 +2,7 @@ require 'test_helper'
 
 class SessionsControllerTest < ActionController::TestCase
   setup do
-    @user = User.make!(password: '12345678')
+    @user = User.make!(password: 'Password1')
     @organization        = @user.organization
   end
 
@@ -40,7 +40,7 @@ class SessionsControllerTest < ActionController::TestCase
 
   test "admin user logs in successfully" do
     create_session(true, true, true) do
-      post :create, user: {email: @user.email, password: '12345678'}
+      post :create, user: {email: @user.email, password: 'Password1'}
       # puts @response.inspect
       assert_equal 'token', session[:token]
       assert_equal @user.id, session[:user_id]
@@ -51,7 +51,7 @@ class SessionsControllerTest < ActionController::TestCase
 
   test "admin user logs in and is redirected to the next uri" do
     create_session(true, true, true) do
-      post :create, {user: {email: @user.email, password: '12345678'}, next: support_profile_path}
+      post :create, {user: {email: @user.email, password: 'Password1'}, next: support_profile_path}
       assert_redirected_to support_profile_path
     end
   end
@@ -66,7 +66,7 @@ class SessionsControllerTest < ActionController::TestCase
 
   test "admin user logs in for the first time and adds the first card to the account" do
     create_session(false, false, true) do
-      post :create, user: {email: @user.email, password: '12345678'}
+      post :create, user: {email: @user.email, password: 'Password1'}
       assert_redirected_to new_support_card_path 
       # allows destroy without reedirect
       delete :destroy, id: @user.id
@@ -76,7 +76,7 @@ class SessionsControllerTest < ActionController::TestCase
 
   test "admin user redirected when payment method is failing" do
     create_session(true, false, true) do
-      post :create, user: {email: @user.email, password: '12345678'}
+      post :create, user: {email: @user.email, password: 'Password1'}
       @controller = Support::UsersController.new
       @controller.stub(:current_user, @user) do
         get :index
@@ -88,7 +88,7 @@ class SessionsControllerTest < ActionController::TestCase
 
   test "users gets logged out when session expires" do
     create_session(true, true, true) do
-      post :create, user: {email: @user.email, password: '12345678'}
+      post :create, user: {email: @user.email, password: 'Password1'}
       Timecop.freeze(Time.now.utc + 4.hours) do
         @controller = Support::UsersController.new
         @controller.stub(:current_user, @user) do
@@ -101,7 +101,7 @@ class SessionsControllerTest < ActionController::TestCase
 
   test "non admin user logs in when payment method is failing" do
     create_session(true, false, false) do
-      post :create, user: {email: @user.email, password: '12345678'}
+      post :create, user: {email: @user.email, password: 'Password1'}
       @controller = Support::UsersController.new
       @controller.stub(:current_user, @user) do
         get :index
