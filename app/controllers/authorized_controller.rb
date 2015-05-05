@@ -12,6 +12,18 @@ class AuthorizedController < ApplicationController
     @current_ability ||= User::Ability.new(current_user)
   end
 
+  def reauthenticate(password)
+    if token = current_user.authenticate(password)
+      if token.is_a? String
+        session[:created_at] = Time.now.utc
+        session[:token]      = token
+        return true
+      else
+        return false
+      end
+    end
+  end
+
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to_root
   end
