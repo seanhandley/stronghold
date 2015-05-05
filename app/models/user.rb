@@ -19,7 +19,7 @@ class User < ActiveRecord::Base
   validates :email, :organization_id, :presence => true
   validates :first_name, :last_name, length: {minimum: 1}, allow_blank: false
   validates :password, :presence => true, :on => :create
-  validate :password_complexity, :on => :create
+  validate :password_complexity
 
   def staff?
     organization.staff?
@@ -82,8 +82,14 @@ class User < ActiveRecord::Base
   private
 
   def password_complexity
-    if password.present? && password.length < 8
-      errors.add(:base, I18n.t(:password_too_short))
+    if password.present?
+      if password.length < 8
+        errors.add(:base, I18n.t(:password_too_short))
+      elsif !(password =~ /[A-Z]/ && password =~ /[a-z]/)
+        errors.add(:base, "Password should contain at least one uppercase and one lowercase letter.")
+      elsif !(password =~ /[0-9]/)
+        errors.add(:base, "Password should containa at least one number.")
+      end
     end
   end
 
