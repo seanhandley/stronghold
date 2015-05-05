@@ -21,6 +21,8 @@ class User < ActiveRecord::Base
   validates :password, :presence => true, :on => :create
   validate :password_complexity
 
+  scope :active, -> { joins(:organization).where("organizations.disabled = ?", false)}
+
   def staff?
     organization.staff?
   end
