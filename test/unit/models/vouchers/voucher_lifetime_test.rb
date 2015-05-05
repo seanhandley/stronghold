@@ -101,6 +101,18 @@ class TestVoucherLifetimes < Minitest::Test
                                                   ).count
   end
 
+  def test_remaining_uses
+    @voucher2 = Voucher.make!(code: nil, usage_limit: 1)
+    assert_equal 1, @voucher2.remaining_uses
+    @organization.vouchers << @voucher2
+    assert_equal 0, @voucher2.remaining_uses
+  end
+
+  def test_delete_applied_voucher
+    @organization.vouchers << @voucher
+    refute @voucher.destroy
+  end
+
   def teardown
     DatabaseCleaner.clean  
   end
