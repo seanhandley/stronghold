@@ -47,7 +47,7 @@ class Support::UsersController < SupportBaseController
 
   def update_params
     params.require(:user).permit(:first_name, :last_name,
-                                 :password, :password_confirmation)
+                                 :password)
   end
 
   def destroy_params
