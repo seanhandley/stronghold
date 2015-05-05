@@ -108,11 +108,6 @@ class TestVoucherLifetimes < Minitest::Test
     assert_equal 0, @voucher2.remaining_uses
   end
 
-  def test_delete_applied_voucher
-    @organization.vouchers << @voucher
-    refute @voucher.destroy
-  end
-
   def teardown
     DatabaseCleaner.clean  
   end
