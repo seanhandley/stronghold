@@ -51,6 +51,12 @@ class TestVoucherValidations < Minitest::Test
     end
   end
 
+  def test_generates_code
+    @voucher2 = Voucher.make!(code: nil)
+    assert @voucher2.valid?
+    assert @voucher2.code.length > 0
+  end
+
   def teardown
     DatabaseCleaner.clean  
   end
