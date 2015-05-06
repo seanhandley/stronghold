@@ -4,5 +4,12 @@ class TerminateAccountJob < ActiveJob::Base
 
   def perform(tenant)
     offboard(tenant)
+    tenant.organization.users.each do |user|
+      begin
+        Ceph::User.destroy('uid' => user.uuid, 'display-name' => user.name)
+      catch Net::HTTPError => e
+        notify_honeybadger(e)
+      end
+    end
   end
 end
