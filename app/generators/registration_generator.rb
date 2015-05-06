@@ -48,11 +48,13 @@ class RegistrationGenerator
     @user = @organization.users.create email: invite.email, password: password,
                                        roles: roles, first_name: first_name, last_name: last_name
     @user.save!
-    FraudCheckJob.perform_later({
-      name: @user.name,
-      company: @organization.name,
-      email: @user.email
-    }.merge(@organization.customer_signup ? {ip: @organization.customer_signup.ip_address} : {}))
+    if Rails.env.production?
+      FraudCheckJob.perform_later({
+        name: @user.name,
+        company: @organization.name,
+        email: @user.email
+      }.merge(@organization.customer_signup ? {ip: @organization.customer_signup.ip_address} : {}))
+    end
     OpenStack::User.update_enabled(@user.uuid, false) unless @organization.has_payment_method?
     if invite.power_invite?
       member_uuid = OpenStack::Role.all.select{|r| r.name == '_member_'}.first.id
