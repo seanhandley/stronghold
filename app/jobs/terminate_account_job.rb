@@ -2,7 +2,7 @@ class TerminateAccountJob < ActiveJob::Base
   include OffboardingHelper
   queue_as :default
 
-  def perform(tenants)
-    tenants.each {|tenant| offboard(tenant_uuid) }
+  def perform(tenant)
+    offboard(tenant)
   end
 end
