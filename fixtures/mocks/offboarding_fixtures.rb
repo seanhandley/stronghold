@@ -1,14 +1,49 @@
 module OffboardingFixtures
   def compute_mock
     compute_mock = MiniTest::Mock.new
+
     servers_response = MiniTest::Mock.new
     servers = {'servers' => [{'tenant_id' => '12345', 'id' => '1'},
                               # Server ID 2 is never referenced in mocks
                               {'tenant_id' => '54321', 'id' => '2'}]}
     servers_response.expect(:body, servers)
+
     compute_mock.expect(:list_servers_detail, servers_response, [Hash])
     compute_mock.expect(:delete_server, true, ['1'])
+
+    images_response = MiniTest::Mock.new
+    images = {'images' => [{'id' => '1'}, {'id' => '2'}]}
+    images_response.expect(:body, images)
+
+    compute_mock.expect(:list_images_detail, images_response, [Hash])
+    ['1', '2'].each do |n|
+      compute_mock.expect(:delete_image, true, [n])
+    end
+
     compute_mock
+  end
+
+  def volume_mock
+    volume_mock = MiniTest::Mock.new
+
+    volumes_response = MiniTest::Mock.new
+    volumes = {'volumes' => [{'os-vol-tenant-attr:tenant_id' => '12345', 'id' => '1'},
+                              # Volume ID 2 is never referenced in mocks
+                              {"os-vol-tenant-attr:tenant_id" => '54321', 'id' => '2'}]}
+    volumes_response.expect(:body, volumes)
+
+    volume_mock.expect(:list_volumes, volumes_response, [true, Hash])
+    volume_mock.expect(:delete_volume, true, ['1'])
+
+    snapshots_response = MiniTest::Mock.new
+    snapshots = {'snapshots' => [{'os-extended-snapshot-attributes:project_id' => '12345', 'id' => '1'},
+                              # Snapshot ID 2 is never referenced in mocks
+                              {"os-extended-snapshot-attributes:project_id" => '54321', 'id' => '2'}]}
+    snapshots_response.expect(:body, snapshots)
+
+    volume_mock.expect(:list_snapshots, snapshots_response, [true, Hash])
+    volume_mock.expect(:delete_snapshot, true, ['1'])
+    volume_mock
   end
 
   def network_mock

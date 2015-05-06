@@ -25,7 +25,9 @@ class OffboardingHelperTest < Minitest::Test
   def model_destroy
     Fog::Compute.stub(:new, compute_mock) do
       Fog::Network.stub(:new, network_mock) do
-        assert @model.destroy
+        Fog::Volume.stub(:new, volume_mock) do
+          assert @model.destroy
+        end
       end
     end
   end
