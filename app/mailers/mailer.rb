@@ -43,4 +43,9 @@ class Mailer < ActionMailer::Base
     @email = email
     mail(:to => email, :subject => "We're back!")   
   end
+
+  def goodbye(admins)
+    email = admins.collect(&:email).join(', ')
+    mail(:to => email, :subject => "So long!")   
+  end
 end
