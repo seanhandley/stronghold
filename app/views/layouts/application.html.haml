@@ -29,7 +29,7 @@
         - elsif current_user.organization.known_to_payment_gateway?
           %h3.organisation
             -# = image_tag 'bbc.png'
-            = current_user.organization.name
+            =# current_user.organization.name
         #flashes= display_flash
         = yield
         .push
