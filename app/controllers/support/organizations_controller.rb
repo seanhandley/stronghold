@@ -40,7 +40,7 @@ class Support::OrganizationsController < SupportBaseController
       reset_session
       current_user.organization.disable!
       Hipchat.notify('Account Closure', 'Accounts', "#{current_user.organization.name} (REF: #{current_user.organization.name}) has requested account termination.", color: 'red')
-      TerminateAccountJob.perform_later(current_user.organization.tenants)
+      current_user.organization.tenants.each {|tenant| TerminateAccountJob.perform_later(tenant)}
       render :goodbye
     else
       redirect_to support_edit_organization_path, alert: 'Your password was wrong. Account termination has been aborted.'
