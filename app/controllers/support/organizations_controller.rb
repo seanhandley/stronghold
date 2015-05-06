@@ -36,11 +36,11 @@ class Support::OrganizationsController < SupportBaseController
 
   # Close this user's account
   def close
-    if reauthenticate(reauthorise_params[:password])
+    if reauthenticate(reauthorise_params[:password]) && !current_user.staff?
       reset_session
       current_user.organization.disable!
-      Hipchat.notify('Account Closure', 'Accounts', "#{organization.name} (REF: #{organization.name}) has requested account termination.", color: 'red')
-      TerminateAccountJob.perform_later(current_user.organization)
+      Hipchat.notify('Account Closure', 'Accounts', "#{current_user.organization.name} (REF: #{current_user.organization.name}) has requested account termination.", color: 'red')
+      TerminateAccountJob.perform_later(current_user.organization.tenants)
       render :goodbye
     else
       redirect_to support_edit_organization_path, alert: 'Your password was wrong. Account termination has been aborted.'
