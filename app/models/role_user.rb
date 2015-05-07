@@ -8,7 +8,7 @@ class RoleUser < ActiveRecord::Base
 
   before_destroy :check_destroyable
   before_save :check_presence, :check_addable
-  after_save :check_openstack_access
+  after_commit :check_openstack_access
 
   validates :role, :user, presence: true
 
