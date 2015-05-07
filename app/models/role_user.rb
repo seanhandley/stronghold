@@ -8,6 +8,7 @@ class RoleUser < ActiveRecord::Base
 
   before_destroy :check_destroyable
   before_save :check_presence, :check_addable
+  after_save :check_openstack_access
 
   validates :role, :user, presence: true
 
@@ -39,5 +40,11 @@ class RoleUser < ActiveRecord::Base
       return false
     end
     return true
+  end
+
+  def check_openstack_access
+    if Rails.env.production?
+      CheckOpenStackAccessJob.perform_later(user)
+    end
   end
 end

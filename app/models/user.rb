@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
 
   authenticates_with_keystone
   syncs_with_keystone as: 'OpenStack::User', actions: [:create, :destroy]
-  after_save :update_password
+  after_save :update_password, :check_openstack_access
 
   after_create :set_local_password, :subscribe_to_status_io
   after_commit :generate_ec2_credentials, on: :create
@@ -118,6 +118,12 @@ class User < ActiveRecord::Base
   def subscribe_to_status_io
     if Rails.env.production?
       StatusIOSubscribeJob.perform_later(email)
+    end
+  end
+
+  def check_openstack_access
+    if Rails.env.production?
+      CheckOpenStackAccessJob.perform_later(self)
     end
   end
 
