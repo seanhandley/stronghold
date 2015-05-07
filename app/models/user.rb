@@ -5,7 +5,8 @@ class User < ActiveRecord::Base
 
   authenticates_with_keystone
   syncs_with_keystone as: 'OpenStack::User', actions: [:create, :destroy]
-  after_save :update_password, :check_openstack_access
+  after_save :update_password
+  after_commit :check_openstack_access, on: :create
 
   after_create :set_local_password, :subscribe_to_status_io
   after_commit :generate_ec2_credentials, on: :create
@@ -46,7 +47,7 @@ class User < ActiveRecord::Base
   def keystone_params
     { email: email, name: email,
       tenant_id: organization.primary_tenant.uuid,
-      enabled: organization.has_payment_method?,
+      enabled: organization.has_payment_method? && has_permission?('cloud.read'),
       password: password
     }
   end
