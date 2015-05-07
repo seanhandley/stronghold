@@ -21,8 +21,9 @@ class User::Ability
     # can :read, Ticket if user.has_permission?('tickets.read')
     can :modify, Ticket if user.has_permission?('tickets.modify') || user.has_permission?('access_requests.modify')
 
-    # Usage
+    # Cloud
     can :read, :usage if user.has_permission?('usage.read')
+    can :read, :cloud if user.has_permission?('cloud.read')
 
     ## Power User can do everything
     can :modify, :all if user.power_user?
