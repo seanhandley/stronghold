@@ -1,3 +1,5 @@
+@import "settings";
+
 nav {
   text-align: right;
 }
@@ -17,8 +19,8 @@ nav span.choice a:hover {
 }
 
 div.top-nav {
-  background: rgba(240, 240, 240, 0.95);
-  border-bottom: 1px solid #ccc;
+  background: $brand-primary;
+  border-bottom: 1px solid #444;
   margin-bottom: 10px;
   min-height: 47px;
 }
@@ -40,6 +42,10 @@ div.context-nav {
 div.context-nav button {
   margin-top: 3px;
   padding: 5px 10px 5px 10px;
+}
+
+div.context-nav .btn .caret {
+  color: $menu-link-colour;
 }
 
 div.context-nav i {

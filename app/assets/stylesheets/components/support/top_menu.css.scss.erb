@@ -28,16 +28,16 @@ div.top-menu-option-disabled {
 }
 
 div.top-menu-option:hover, div.top-menu-option:active {
-  border-bottom: solid 3px $headings-color;
+  border-bottom: solid 3px $menu-link-colour;
 }
 
 div.top-menu-option.selected {
-  border-bottom: solid 3px $headings-color;
+  border-bottom: solid 3px $menu-link-colour;
 }
 
 div.top-menu a {
   text-decoration: none;
-  color: $headings-color;
+  color: $menu-link-colour;
 }
 
 div.top-menu-option a:hover, div.top-menu-option a:active {
@@ -59,9 +59,9 @@ i.top-menu-icon {
   margin-right: 10px;
   margin-top: 8px;
   background-image: url(<%= asset_path 'logo_long.png' %>);
+  background-repeat: no-repeat;
   height: 32px;
-  width: 158px;
-  background-position: 0px -9px;
+  width: 115px;
 }
 
 @media only screen and (max-width: 480px), only screen and (max-device-width: 480px) {
@@ -74,7 +74,7 @@ i.top-menu-icon {
   .logo {
     background-image: url(<%= asset_path 'logo_long.png' %>);
     height: 32px;
-    width: 40px;
+    width: 30px;
     
   }
 }

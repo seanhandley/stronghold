@@ -5,11 +5,10 @@ i.dashboard-icon {
 }
 
 button#user-menu {
-  background-color: #eee;
+  background-color: $brand-primary;
   border: none;
   webkit-box-shadow: none;
   box-shadow: none;
-  opacity: 0.8;
 }
 
 button#user-menu:active, button#user-menu:hover,
