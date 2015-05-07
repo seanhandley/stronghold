@@ -5,7 +5,7 @@ class TestRegistrationGenerator < Minitest::Test
     @invite = Invite.make!
     @power_invite = Invite.make!(:power_user)
     @expired_invite = Invite.make!(:expired)
-    @password = SecureRandom.base64(16)
+    @password = SecureRandom.base64(16) + "Aa9"
     @valid_params = { password: @password,
                       confirm_password: @password,
                       privacy: 'on', first_name: 'test',
