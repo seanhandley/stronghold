@@ -109,10 +109,16 @@ module Billing
                                          vcpus: first_sample_metadata['vcpus'])
         end
       end
-      billing_instance_id = Billing::Instance.find_by_instance_id(instance_id).id
+      billing_instance = Billing::Instance.find_by_instance_id(instance_id)
+      
+      # Catch renames
+      if(billing_instance.name != first_sample_metadata["display_name"])
+        billing_instance.update_attributes(name: first_sample_metadata["display_name"])
+      end
+
       samples.collect do |s|
         if s['resource_metadata']['event_type']
-          Billing::InstanceState.create instance_id: billing_instance_id, recorded_at: Time.zone.parse("#{s['recorded_at']} UTC"),
+          Billing::InstanceState.create instance_id: billing_instance.id, recorded_at: Time.zone.parse("#{s['recorded_at']} UTC"),
                                         state: s['resource_metadata']['state'] ? s['resource_metadata']['state'].downcase : 'active',
                                         event_name: s['resource_metadata']['event_type'], billing_sync: sync,
                                         message_id: s['message_id']
