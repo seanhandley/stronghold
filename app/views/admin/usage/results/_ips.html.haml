@@ -22,8 +22,7 @@
               = quota.quota
               addresses
             %td
-              = quota.previous
-              addresses
+              = quota.previous.nil? ? "-" : quota.previous
 
   - if external_gateways && external_gateways.values.any?
     %h3 External Gateways
