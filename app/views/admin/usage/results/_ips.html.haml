@@ -11,6 +11,7 @@
             %i.fa.fa-sitemap
           %th Quota Set At
           %th Addresses
+          %th Previous Value
           
       %tbody
         - ip_quotas.each do |quota|
@@ -20,6 +21,8 @@
             %td
               = quota.quota
               addresses
+            %td
+              = quota.previous.nil? ? "-" : quota.previous
 
   - if external_gateways && external_gateways.values.any?
     %h3 External Gateways

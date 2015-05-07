@@ -104,10 +104,16 @@ module Billing
           end
         end
       end
-      billing_image_id = Billing::Image.find_by_image_id(image_id).id
+      billing_image = Billing::Image.find_by_image_id(image_id)
+
+      # Catch renames
+      if(billing_image.name != first_sample_metadata["name"])
+        billing_image.update_attributes(name: first_sample_metadata["name"])
+      end
+
       samples.collect do |s|
         if s['resource_metadata']['event_type']
-          Billing::ImageState.create image_id: billing_image_id, recorded_at: Time.zone.parse("#{s['recorded_at']} UTC"),
+          Billing::ImageState.create image_id: billing_image.id, recorded_at: Time.zone.parse("#{s['recorded_at']} UTC"),
                                       size: bytes_to_terabytes(s['resource_metadata']['size'].to_i),
                                       event_name: s['resource_metadata']['event_type'], billing_sync: sync,
                                       message_id: s['message_id']
