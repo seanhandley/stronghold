@@ -3,7 +3,7 @@ class CardReverificationJob < ActiveJob::Base
   queue_as :default
 
   def perform
-    Organization.active.select(&:known_to_payment_gateway?).each do |organization|
+    Organization.active.select(&:self_service?).select(&:known_to_payment_gateway?).each do |organization|
       unless stripe_has_valid_source?(organization.stripe_customer_id)
         organization.has_payment_methods!(false)
         Mailer.card_reverification_failure(organization).deliver_now
