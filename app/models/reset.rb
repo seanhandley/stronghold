@@ -28,7 +28,7 @@ class Reset < ActiveRecord::Base
     elsif password.length < 8
       errors.add :base,  I18n.t(:password_too_short)
     else
-      user.update_attributes(password: password)
+      user.set_local_password(password)
       update_column(:completed_at, Time.now)
       return true
     end
