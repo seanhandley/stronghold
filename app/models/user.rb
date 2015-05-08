@@ -81,8 +81,7 @@ class User < ActiveRecord::Base
   
   def setup_password_from_openstack(unencrypted_password)
     if authenticate_openstack(unencrypted_password)
-      password = unencrypted_password
-      set_local_password
+      set_local_password(unencrypted_password)
     end
   end
 
@@ -100,7 +99,8 @@ class User < ActiveRecord::Base
     end
   end
 
-  def set_local_password
+  def set_local_password(p=nil)
+    password = p if p
     if password.present?
       cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST : BCrypt::Engine.cost
       update_column(:password_digest, BCrypt::Password.create(password, cost: cost))
