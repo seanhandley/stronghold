@@ -108,7 +108,7 @@ class User < ActiveRecord::Base
   end
 
   def update_password
-    if password.present?
+    if password.present? && uuid
       OpenStack::User.update_password uuid, password
       set_local_password
     end
