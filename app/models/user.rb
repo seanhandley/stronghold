@@ -86,7 +86,11 @@ class User < ActiveRecord::Base
   end
   
   def set_local_password(p=nil)
-    password = p if p
+    if p
+      password = p
+    else
+      password = self.password
+    end
     if password.present?
       cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST : BCrypt::Engine.cost
       update_column(:password_digest, BCrypt::Password.create(password, cost: cost))
@@ -115,19 +119,19 @@ class User < ActiveRecord::Base
   end
 
   def generate_ec2_credentials
-    if Rails.env.production?
+    unless Rails.env.test?
       CreateEC2CredentialsJob.perform_later(self)
     end
   end
 
   def subscribe_to_status_io
-    if Rails.env.production?
+    unless Rails.env.test?
       StatusIOSubscribeJob.perform_later(email)
     end
   end
 
   def check_openstack_access
-    if Rails.env.production?
+    unless Rails.env.test?
       CheckOpenStackAccessJob.perform_later(self)
     end
   end

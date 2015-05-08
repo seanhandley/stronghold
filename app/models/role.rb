@@ -36,7 +36,7 @@ class Role < ActiveRecord::Base
   end
 
   def check_openstack_access
-    if Rails.env.production?
+    unless Rails.env.test?
       users.each {|user| CheckOpenStackAccessJob.perform_later(user)}
     end
   end
