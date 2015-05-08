@@ -30,6 +30,7 @@ class Reset < ActiveRecord::Base
     else
       os_user = OpenStack::User.find(user.uuid)
       os_user.update(password: password)
+      user.update_attributes(password: password)
       update_column(:completed_at, Time.now)
       return true
     end
