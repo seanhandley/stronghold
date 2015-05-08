@@ -84,6 +84,14 @@ class User < ActiveRecord::Base
       set_local_password(unencrypted_password)
     end
   end
+  
+  def set_local_password(p=nil)
+    password = p if p
+    if password.present?
+      cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST : BCrypt::Engine.cost
+      update_column(:password_digest, BCrypt::Password.create(password, cost: cost))
+    end
+  end
 
   private
 
@@ -96,14 +104,6 @@ class User < ActiveRecord::Base
       elsif !(password =~ /[0-9]/)
         errors.add(:base, "Password should containa at least one number.")
       end
-    end
-  end
-
-  def set_local_password(p=nil)
-    password = p if p
-    if password.present?
-      cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST : BCrypt::Engine.cost
-      update_column(:password_digest, BCrypt::Password.create(password, cost: cost))
     end
   end
 
