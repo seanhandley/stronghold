@@ -17,17 +17,6 @@ div.error-page {
   text-align: center;
 }
 
-div.errorExplanation {
-  background-color: $brand-warning;
-  padding: 10px;
-  color: #fff;
-  margin-bottom: 10px;
-  font-size: 14px;
-  p {
-    margin: 0;
-  }
-}
-
 div#flash {
   margin-bottom: 10px;
   font-size: 14px;
@@ -56,15 +45,6 @@ div#flash p.notice {
 
 div#flash p.notice:before {
   content: '✔ '
-}
-
-div.errorExplanation h3 {
-  color: #fff;
-  font-size: 12px;
-}
-
-div.errorExplanation a.close {
-  color: #fff; 
 }
 
 div.successMessage {

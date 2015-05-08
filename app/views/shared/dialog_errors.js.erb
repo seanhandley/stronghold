@@ -7,7 +7,7 @@ $('.successMessage').remove();
 
 <% 
 content = Array.new
-content << "<div class='errorExplanation'><a class='close error-close'>×</a><h3>The following errors occured:</h3>"
+content << "<div class='alert alert-danger errorExplanation'><a class='close error-close'>×</a>"
 content << "<ul>"
 object.errors.full_messages.each {|msg| content << "<li>#{msg}</li>" }
 content << "</ul></div>"
