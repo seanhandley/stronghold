@@ -2,16 +2,16 @@ module ApplicationHelper
 
   def display_flash
     flashes = flash.collect do |key,msg|
-        content_tag :div, content_tag(:p, msg.split('<br>').map{|m| '- ' + h(m)}.join('<br>').html_safe, :class => key), :id => 'flash'
+        content_tag :div, content_tag(:p, msg.split('<br>').map{|m| h(m)}.join('<br>').html_safe), :class => "alert alert-#{flash_key_to_bootstrap_class(key)}"
     end.join.html_safe
   end
 
   def javascript_error_messages_for(obj)
-    content_tag(:div, :class => "errors#{obj.id}") { '' }
+    content_tag(:div, :id => 'js_errors', :class => "hide alert alert-danger errors#{obj.id}") { '' }
   end
 
   def javascript_success_messages_for(obj)
-    content_tag(:div, :class => "success#{obj.id}") { '' }
+    content_tag(:div, :id => 'js_successes', :class => "hide alert alert-success success#{obj.id}") { '' }
   end
 
   def get_model_errors(model)
@@ -22,6 +22,17 @@ module ApplicationHelper
       }
     end
     return errors
+  end
+
+  def flash_key_to_bootstrap_class(key)
+    case key
+    when "error"
+      "danger"
+    when "alert"
+      "danger"
+    when "notice"
+      "warning"
+    end
   end
 
 end

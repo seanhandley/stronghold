@@ -32,8 +32,8 @@ var AddCard = {
   showError: function (message) {
     // Show the errors on the form
     var $form = $('#add_new_card');
-    var $div = $("<div id='flash'></div>");
-    $div.append($("<p>" + message + "</p>").addClass('error'));
+    var $div = $("<div class='alert alert-danger'></div>");
+    $div.append($("<p>" + message + "</p>"));
     $form.find('#flashes').empty();
     $form.find('#flashes').removeClass('hide');
     $form.find('#flashes').append($div)
