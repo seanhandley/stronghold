@@ -67,8 +67,12 @@ class User < ActiveRecord::Base
 
   def authenticate(unencrypted_password)
     setup_password_from_openstack(unencrypted_password) if password_digest.nil?
+    begin
+      authed = BCrypt::Password.new(password_digest) == unencrypted_password && self
+    rescue BCrypt::Errors::InvalidHash
+      authed = false
+    end
 
-    authed = BCrypt::Password.new(password_digest) == unencrypted_password && self
     if authed
       token = authenticate_openstack(unencrypted_password)
     end
