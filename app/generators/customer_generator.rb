@@ -45,7 +45,7 @@ class CustomerGenerator
   private
 
   def create_customer
-    @organization = Organization.create! name: @organization_name
+    @organization = Organization.create! name: @organization_name, self_service: false
     @products.each do |product_id|
       @organization.products << Product.find(product_id)
     end
