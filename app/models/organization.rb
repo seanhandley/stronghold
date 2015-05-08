@@ -42,7 +42,7 @@ class Organization < ActiveRecord::Base
   end
 
   def known_to_payment_gateway?
-    !!stripe_customer_id
+    !!stripe_customer_id || !self_service?
   end
 
   def colo?
