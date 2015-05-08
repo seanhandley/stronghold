@@ -57,8 +57,8 @@ class SessionsControllerTest < ActionController::TestCase
   end
 
   test "admin user fails login because password is wrong" do
-    create_session(true, true, true) do
-      post :create, user: {email: @user.email, password: 'wrong'}
+    create_session(true, true, true, false) do
+      post :create, user: {email: @user.email, password: 'Wrongpassword123'}
       assert_response :success
       assert_equal "Invalid credentials. Please try again.", session["flash"]["flashes"]["alert"]
     end
@@ -68,7 +68,7 @@ class SessionsControllerTest < ActionController::TestCase
     create_session(false, false, true) do
       post :create, user: {email: @user.email, password: 'Password1'}
       assert_redirected_to new_support_card_path 
-      # allows destroy without reedirect
+      # allows destroy without redirect
       delete :destroy, id: @user.id
       assert_redirected_to sign_in_path
     end
@@ -127,11 +127,11 @@ class SessionsControllerTest < ActionController::TestCase
     session[:token]      = SecureRandom.hex
   end
 
-  def create_session(known, has_payment, admin, &blk)
+  def create_session(known, has_payment, admin, os_auth='token', &blk)
     @organization.stub(:known_to_payment_gateway?, known) do
       @organization.stub(:has_payment_method?, has_payment) do
         User.stub(:find_by_email, @user) do
-          @user.stub(:authenticate_openstack, 'token') do
+          @user.stub(:authenticate_openstack, os_auth) do
             @user.stub(:organization, @organization) do
               @user.stub(:admin?, admin) do
                 yield
