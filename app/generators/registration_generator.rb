@@ -55,7 +55,7 @@ class RegistrationGenerator
         email: @user.email
       }.merge(@organization.customer_signup ? {ip: @organization.customer_signup.ip_address} : {}))
     end
-    OpenStack::User.update_enabled(@user.uuid, false) unless @organization.has_payment_method?
+    # OpenStack::User.update_enabled(@user.uuid, false) unless @organization.has_payment_method?
     if invite.power_invite?
       member_uuid = OpenStack::Role.all.select{|r| r.name == '_member_'}.first.id
       @organization.tenants.select{|t| t.id != @organization.primary_tenant.id}.each do |tenant|
