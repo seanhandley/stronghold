@@ -2,25 +2,26 @@
 
 = gravatar_image_tag(@user.email, :gravatar => { :size => 180 }, class: 'img-circle profile-image')
 
-.container.profile
-  = form_for @user, url: support_user_path(@user), :html => {:role => 'form'}, remote: true do |f|
-    = javascript_error_messages_for(@user)
-    = javascript_success_messages_for(@user)
-    .form-group
-      %label= t(:first_name)
-      = f.text_field :first_name, class: "form-control"
-    .form-group
-      %label= t(:last_name)
-      = f.text_field :last_name, class: "form-control"
-    .form-group
-      %label= t(:email)
-      = f.email_field :email, class: "form-control", disabled: true
-      %span.help-block
-        = t(:gravatar_instructions).html_safe
-    .form-group
-      %label= t(:password)
-      = f.password_field :password, class: "form-control", placeholder: 'Leave blank to keep password the same'
-    .form-group
-      #password-progress-bar-container
+.row
+  .col-md-6
+    = form_for @user, url: support_user_path(@user), :html => {:role => 'form'}, remote: true do |f|
+      = javascript_error_messages_for(@user)
+      = javascript_success_messages_for(@user)
+      .form-group
+        %label= t(:first_name)
+        = f.text_field :first_name, class: "form-control"
+      .form-group
+        %label= t(:last_name)
+        = f.text_field :last_name, class: "form-control"
+      .form-group
+        %label= t(:email)
+        = f.email_field :email, class: "form-control", disabled: true
+        %span.help-block
+          = t(:gravatar_instructions).html_safe
+      .form-group
+        %label= t(:password)
+        = f.password_field :password, class: "form-control", placeholder: 'Leave blank to keep password the same'
+      .form-group
+        #password-progress-bar-container
 
-    = submit_tag t(:save), class: 'btn btn-primary', data: { disable_with: t(:saving) }
+      = submit_tag t(:save), class: 'btn btn-primary', data: { disable_with: t(:saving) }
