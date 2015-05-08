@@ -25,10 +25,7 @@
       .container
         - if request.url == support_root_url
           = render :partial => "announcements/starburst/announcement_bootstrap"
-        - else 
-          %h3.organisation
-            -# = image_tag 'bbc.png'
-            = current_user.organization.name
+        %p &nbsp;
         #flashes= display_flash
         = yield
         .push
