@@ -13,7 +13,7 @@ class Support::UsersController < SupportBaseController
     if current_user.update(update_params)
       respond_to do |format|
         format.js {
-          reauthenticate(password) if update_params[:password].present?
+          reauthenticate(update_params[:password]) if update_params[:password].present?
           render :template => "shared/dialog_success", :locals => {message: 'Changes saved', object: current_user }
         }
       end
