@@ -9,13 +9,13 @@ module OffboardingHelper
       fog.delete_server(instance)
     end
 
-    images = fog.list_images_detail(tenant_id: tenant.uuid).body['images'].select{|i| i['metadata']['owner_id'] == tenant.uuid}.map{|i| i['id']}
-    images.each do |image|
-      begin
-        fog.delete_image(image)
-      rescue Excon::Errors::Error
-      end
-    end
+    # images = fog.list_images_detail(tenant_id: tenant.uuid).body['images'].select{|i| i['metadata']['owner_id'] == tenant.uuid}.map{|i| i['id']}
+    # images.each do |image|
+    #   begin
+    #     fog.delete_image(image)
+    #   rescue Excon::Errors::Error
+    #   end
+    # end
 
     fog = Fog::Volume.new(OPENSTACK_ARGS)
     snapshots = fog.list_snapshots(true, :all_tenants => true).body['snapshots'].select{|s| s["os-extended-snapshot-attributes:project_id"] == tenant.uuid}.map{|s| s['id']}
