@@ -1,7 +1,7 @@
 <%= render partial: 'email_style' %>
 <div class="container" id="email">
   <div class="push"></div>
-  <div class="pull-right"><%= image_tag "http://#{Rails.configuration.action_mailer.default_url_options[:host]}#{asset_path('logo_large.png')}" %></div>
+  <div class="pull-right"><%= image_tag asset_path('logo_large.png') %></div>
   <h2>Sorry to see you go...</h2>
 
   <p>Hi there,</p>
