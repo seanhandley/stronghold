@@ -1,15 +1,7 @@
 require 'test_helper'
 require_relative '../../../fixtures/mocks/offboarding_fixtures'
 
-class TestModelNoUuid
-  include OffboardingHelper
-
-  def destroy
-    offboard self
-  end
-end
-
-class TestModel < TestModelNoUuid
+class TestModel
   def uuid
     "12345"
   end
@@ -17,6 +9,7 @@ end
 
 class OffboardingHelperTest < Minitest::Test
   include OffboardingFixtures
+  include OffboardingHelper
 
   def setup
     @model = TestModel.new
@@ -26,14 +19,10 @@ class OffboardingHelperTest < Minitest::Test
     Fog::Compute.stub(:new, compute_mock) do
       Fog::Network.stub(:new, network_mock) do
         Fog::Volume.stub(:new, volume_mock) do
-          assert @model.destroy
+          assert offboard TestModel.new, {}
         end
       end
     end
-  end
-
-  def test_helper_checks_containing_model_has_uuid
-    refute TestModelNoUuid.new.destroy
   end
 
   def test_only_instances_on_this_tenant_are_destroyed

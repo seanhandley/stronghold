@@ -1,23 +1,26 @@
 module OffboardingHelper
-  def offboard(tenant)
+  def offboard(tenant, creds)
     return false unless tenant.respond_to?(:uuid) && tenant.uuid.is_a?(String)
 
+    os_args = OPENSTACK_ARGS.dup
+    os_args.merge!(creds)
+
     # Delete all instances to clear ports
-    fog = Fog::Compute.new(OPENSTACK_ARGS)
+    fog = Fog::Compute.new(os_args)
     instances = fog.list_servers_detail(all_tenants: true).body['servers'].select{|s| s['tenant_id'] == tenant.uuid}.map{|s| s['id']}
     instances.each do |instance|
       fog.delete_server(instance)
     end
 
-    # images = fog.list_images_detail(tenant_id: tenant.uuid).body['images'].select{|i| i['metadata']['owner_id'] == tenant.uuid}.map{|i| i['id']}
-    # images.each do |image|
-    #   begin
-    #     fog.delete_image(image)
-    #   rescue Excon::Errors::Error
-    #   end
-    # end
+    images = fog.list_images_detail(owner: tenant.uuid).body['images'].select{|i| i['metadata']['owner_id'] == tenant.uuid}.map{|i| i['id']}
+    images.each do |image|
+      begin
+        fog.delete_image(image)
+      rescue Excon::Errors::Error
+      end
+    end
 
-    fog = Fog::Volume.new(OPENSTACK_ARGS)
+    fog = Fog::Volume.new(os_args)
     snapshots = fog.list_snapshots(true, :all_tenants => true).body['snapshots'].select{|s| s["os-extended-snapshot-attributes:project_id"] == tenant.uuid}.map{|s| s['id']}
     snapshots.each do |snapshot|
       fog.delete_snapshot(snapshot)
@@ -28,7 +31,7 @@ module OffboardingHelper
       fog.delete_volume(volume)
     end
 
-    fog = Fog::Network.new(OPENSTACK_ARGS)
+    fog = Fog::Network.new(os_args)
     routers  = fog.list_routers(tenant_id:  tenant.uuid).body['routers'].map{|r| r['id']}
     subnets  = fog.list_subnets(tenant_id:  tenant.uuid).body['subnets'].map{|s| s['id']}
     networks = fog.list_networks(tenant_id: tenant.uuid).body['networks'].map{|n| n['id']}
