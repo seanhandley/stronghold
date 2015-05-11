@@ -13,7 +13,7 @@ module OffboardingHelper
     images.each do |image|
       begin
         fog.delete_image(image)
-      rescue Excon::Errors::Forbidden
+      rescue Excon::Errors::Error
       end
     end
 
