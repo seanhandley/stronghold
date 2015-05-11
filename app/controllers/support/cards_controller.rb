@@ -1,4 +1,4 @@
-class Support::CardsController < AuthorizedController
+class Support::CardsController < SupportBaseController
 
   skip_authorization_check
 
