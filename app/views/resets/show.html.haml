@@ -9,9 +9,8 @@
 
   .form-group
     %label Password
-    = password_field_tag :password, @password, class: 'form-control'
+    = password_field_tag :password, @password, class: 'form-control wink-password'
   .form-group
-    %label Repeat Password
-    = password_field_tag :confirm_password, @confirm_password, class: 'form-control'
+    #password-progress-bar-container
 
   = submit_tag 'Continue →', class: 'btn btn-primary'

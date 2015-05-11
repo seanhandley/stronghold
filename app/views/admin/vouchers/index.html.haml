@@ -1,0 +1,16 @@
+%h2
+  %i.fa.fa-cart-arrow-down
+  Discount Codes
+
+.pull-right
+  = link_to 'New', '', class: 'btn btn-success', 'data-toggle' => "modal", 'data-target' => "#addNewVoucher"
+
+- if params[:expired]
+  %h3 Expired
+  = link_to 'View Active Codes?', admin_vouchers_path
+- else
+  %h3 Active
+  = link_to 'View Expired Codes?', admin_vouchers_path(expired: true)
+
+= render partial: 'vouchers', locals: { vouchers: @vouchers, expired: !!params[:expired] }
+= render partial: 'new'

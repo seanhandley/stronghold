@@ -8,7 +8,10 @@
                     :id => "inputEmail", :placeholder => "Enter E-mail", :autofocus => ''
   .form-group
     %label{'for' => "exampleInputPassword1"} Password
-    = f.password_field :password, :class => "form-control",
+    = f.password_field :password, :class => "form-control wink-password",
                        :id => "inputPassword", :placeholder => "Enter Password"
   = f.submit 'Sign In', :class => 'btn btn-primary'
-  .pull-right= link_to 'Reset Password?', new_reset_path
+  .pull-right
+    = link_to 'Reset Password', new_reset_path
+    -# |
+    -# = link_to 'Create Account', create_signup_path

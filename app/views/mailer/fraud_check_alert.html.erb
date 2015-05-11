@@ -1,0 +1,10 @@
+<%= render partial: 'email_style' %>
+<div class="container" id="email">
+  <h2>User Failed Fraud Check</h2>
+  <p>Data:
+  <%= @args %>
+  </p>
+  <p>Report:
+  <%= link_to @report_url, @report_url %>
+  </p>
+</div>

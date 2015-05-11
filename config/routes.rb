@@ -16,6 +16,8 @@ Rails.application.routes.draw do
     resources :users, only: [:update, :destroy]
     get '/profile', :controller => 'users', :action => 'index'
     resources :roles
+    resources :cards, only: [:new, :create]
+    resources :manage_cards
     resources :tickets, only: [:index, :show]
     namespace :api, defaults: {format: :json} do
       resources :tickets, only: [:index, :create, :update] do
@@ -41,6 +43,7 @@ Rails.application.routes.draw do
       resources :usage, only: [:index, :create]
       resources :sanity, only: [:index]
       resources :free_ips, only: [:index]
+      resources :vouchers
     end
   #end
 
@@ -49,6 +52,13 @@ Rails.application.routes.draw do
 
   get 'signup/:token', :controller => 'signups', :action => 'edit', :as => 'signup_begin'
   post 'signup/:token', :controller => 'signups', :action => 'update', :as => 'signup_complete'
+  get 'signup', :controller => 'signups', :action => 'new', :as => 'new_signup'
+  post 'signup', :controller => 'signups', :action => 'create', :as => 'create_signup'
+  post 'wait_list', :controller => 'wait_list_entries', :action => 'create', :as => 'wait_list'
+  post 'precheck', :controller => 'stripe', :action => 'precheck'
+  post 'reauthorise', :controller => 'support/organizations', :action => 'reauthorise'
+  post 'close_account', :controller => 'support/organizations', :action => 'close'
+  post 'voucher_precheck', :controller => 'vouchers', :action => 'precheck'
 
   post 'salesforce', :controller => 'salesforce', :action => 'update'
 

@@ -14,20 +14,31 @@ class SessionsController < ApplicationController
   end
   
   def create
-    @user = User.find_by_email(params[:user][:email])
+    @user = User.active.find_by_email(params[:user][:email])
+    if @user and params[:user][:password].present?
+      if token = @user.authenticate(params[:user][:password])
+        session[:user_id]    = @user.id
+        session[:created_at] = Time.now.utc
+        session[:token]      = token if token.is_a? String
 
-    if @user and params[:user][:password].present? and (token = @user.authenticate(params[:user][:password])) and token
-      session[:token]      = token
-      session[:user_id]    = @user.id
-      session[:created_at] = Time.zone.now
-      if params[:next]
-        redirect_to params[:next]
+        if @user.organization.known_to_payment_gateway?
+          if params[:next]
+            redirect_to params[:next]
+          else
+            redirect_to support_root_path
+          end
+        else
+          Rails.cache.write("up_#{@user.uuid}", params[:user][:password], expires_in: 60.minutes)
+          redirect_to new_support_card_path 
+        end
+        
       else
-        redirect_to support_root_path
+        flash.now.alert = "Invalid credentials. Please try again."
+        Rails.logger.error "Invalid login: #{params[:user][:email]}. Token=#{token.inspect}"
+        render :new
       end
     else
       flash.now.alert = "Invalid credentials. Please try again."
-      Rails.logger.error "Invalid login: #{params[:user][:email]}. Token=#{token.inspect}"
       render :new
     end
   end

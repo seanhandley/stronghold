@@ -11,6 +11,7 @@ class Invite < ActiveRecord::Base
   validate :no_user_has_that_email?
 
   belongs_to :organization
+  belongs_to :customer_signup
   has_and_belongs_to_many :roles
 
   def can_register?
