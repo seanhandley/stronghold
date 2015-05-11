@@ -6,7 +6,7 @@ module OffboardingHelper
     Rails.logger.info creds.inspect
     os_args = OPENSTACK_ARGS.dup
     os_args.merge!(creds)
-    Rails.logger.info creds.inspect os_args.inspect
+    Rails.logger.info os_args.inspect
 
     # Delete all instances to clear ports
     fog = Fog::Compute.new(os_args)

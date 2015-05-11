@@ -38,7 +38,6 @@ class Support::OrganizationsController < SupportBaseController
   # Close this user's account
   def close
     if reauthenticate(reauthorise_params[:password]) && !current_user.staff?
-      reset_session
       Hipchat.notify('Account Closure', 'Accounts', "#{current_user.organization.name} (REF: #{current_user.organization.name}) has requested account termination.", color: 'red')
       creds = {:openstack_username => current_user.email,
                :openstack_api_key  => session[:token],
@@ -55,6 +54,7 @@ class Support::OrganizationsController < SupportBaseController
       end
       current_user.organization.disable!
       Mailer.goodbye(current_user.organization.admin_users).deliver_later
+      reset_session
       render :goodbye
     else
       redirect_to support_edit_organization_path, alert: 'Your password was wrong. Account termination has been aborted.'
