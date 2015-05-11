@@ -10,15 +10,13 @@
   %meta{'http-equiv' => 'X-UA-Compatible', 'content' => 'IE=edge'}
   %meta{'name' => 'viewport', 'content' => 'width=device-width, initial-scale=1'}
 
-%body.sign-up
+%body.sign-in.customer-sign-up.public-page
   = render partial: 'shared/environment'
   #wrap
-    .container
-      %h1
-        = image_tag 'logo_long.png', class: 'logo'
-        Almost there...
     .container#sign-in
+      = image_tag 'logo_text_only.png', class: 'sign-in-logo'
       = yield
     .push
   = render partial: 'shared/footer'
   = render partial: 'shared/ga'
+  %script{src: asset_path('card')}

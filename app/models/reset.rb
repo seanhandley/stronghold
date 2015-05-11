@@ -22,16 +22,13 @@ class Reset < ActiveRecord::Base
   end
 
   def update_password(params)
-    password, confirm_password = params[:password], params[:confirm_password]
+    password = params[:password]
     if expired?
       errors.add :base, I18n.t(:signup_token_not_valid)
-    elsif password != confirm_password
-      errors.add :base,  I18n.t(:passwords_dont_match)
     elsif password.length < 8
       errors.add :base,  I18n.t(:password_too_short)
     else
-      os_user = OpenStack::User.find(user.uuid)
-      os_user.update(password: password)
+      user.set_local_password(password)
       update_column(:completed_at, Time.now)
       return true
     end

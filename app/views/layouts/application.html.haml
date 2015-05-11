@@ -5,6 +5,7 @@
   = favicon_link_tag 'favicon.ico'
   = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
   = javascript_include_tag 'application'#, 'data-turbolinks-track' => true
+  = stripe_javascript_tag
   = csrf_meta_tags
   %meta{'charset' => "utf-8"}
   %meta{'http-equiv' => 'X-UA-Compatible', 'content' => 'IE=edge'}
@@ -22,11 +23,12 @@
       
     %div.page-body
       = render partial: 'shared/environment'
+      = render partial: 'shared/openstack_details'
       .container
         - if request.url == support_root_url
           = render :partial => "announcements/starburst/announcement_bootstrap"
         %p &nbsp;
-        #flashes= display_flash
+        = display_flash
         = yield
         .push
 = render partial: 'shared/footer'

@@ -6,9 +6,10 @@
 .profile-image {
   margin-right: 120px;
   float: right;
+  margin-bottom: 20px;
 }
 
-@media only screen and (max-width: 650px), only screen and (max-device-width: 650px) {
+@media only screen and (max-width: 991px), only screen and (max-device-width: 991px) {
   .profile-image {
     float: none;
     margin-bottom: 20px;

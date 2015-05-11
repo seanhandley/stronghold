@@ -1,0 +1,21 @@
+<%= render partial: 'email_style' %>
+<div class="container" id="email">
+  <div class="push"></div>
+  <div class="pull-right"><%= image_tag "http://#{Rails.configuration.action_mailer.default_url_options[:host]}#{asset_path('logo_large.png')}" %></div>
+  <h2>Sorry to see you go...</h2>
+
+  <p>Hi there,</p>
+
+  <p>We've terminated your account for you, as you requested. This means:</p>
+
+  <ul>
+    <li>Any running instances and other cloud resources have been forcibly terminated and removed.</li>
+    <li>You (and any other users on this account) will no longer be able to access DataCentred apps, the cloud dashboard, or the API.</li>
+    <li>Your remaining account balance will be collected in a final bill payable at the end of the calendar month.</li>
+  </ul>
+
+  <p>If you want to tell us more about why you've closed your account, we'd love to hear from you. Get in touch via <%= mail_to 'issues@datacentred.co.uk' %>.</p>
+
+  <p>Kind regards,<br/>
+  The DataCentred Team</p>
+</div>

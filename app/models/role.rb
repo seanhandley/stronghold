@@ -5,6 +5,7 @@ class Role < ActiveRecord::Base
   has_and_belongs_to_many :users
   belongs_to :organization
   before_destroy :check_users, :check_power
+  after_commit :check_openstack_access
 
   serialize :permissions
 
@@ -32,5 +33,11 @@ class Role < ActiveRecord::Base
       errors.add(:base, I18n.t(:cannot_remove_power_user_group))
       false
     end  
+  end
+
+  def check_openstack_access
+    unless Rails.env.test?
+      users.each {|user| CheckOpenStackAccessJob.perform_later(user)}
+    end
   end
 end

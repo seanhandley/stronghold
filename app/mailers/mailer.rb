@@ -27,4 +27,25 @@ class Mailer < ActionMailer::Base
     @keys = ['instances', 'volumes', 'images', 'routers']
     mail(:to => "devops@datacentred.co.uk", :subject => 'Usage Sanity Check Failures')
   end
+
+  def fraud_check_alert(args, report_url)
+    @args = args
+    @report_url = report_url
+    mail(:to => "devops@datacentred.co.uk", :subject => 'Fraud Check Failure')
+  end
+
+  def card_reverification_failure(organization)
+    @organization = organization
+    mail(:to => organization.admin_users.collect(&:email).join(', '), :bcc => "devops@datacentred.co.uk", :subject => 'Card failed reverification')   
+  end
+
+  def notify_wait_list_entry(email)
+    @email = email
+    mail(:to => email, :subject => "We're back!")   
+  end
+
+  def goodbye(admins)
+    email = admins.collect(&:email).join(', ')
+    mail(:to => email, :subject => "So long!")   
+  end
 end

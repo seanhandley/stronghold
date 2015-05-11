@@ -1,28 +1,22 @@
 class RegistrationGenerator
   include ActiveModel::Validations
 
-  attr_reader :invite, :password, :confirm_password,
-              :organization, :user, :privacy,
+  attr_reader :invite, :password,
+              :organization, :user,
               :first_name, :last_name
 
   def initialize(invite, params)
     @invite            = invite
     @password          = params[:password]
-    @confirm_password  = params[:confirm_password]
-    @privacy           = params[:privacy]
     @first_name        = params[:first_name]
     @last_name         = params[:last_name]
   end
 
   def generate!
-    if @privacy.blank?
-      errors.add :base, I18n.t(:must_agree_to_privacy)
-    elsif !invite.can_register?
+    if !invite.can_register?
       errors.add :base, I18n.t(:signup_token_not_valid)
     elsif first_name.blank? || last_name.blank?
       errors.add :base, I18n.t(:must_provide_first_name_and_last_name)
-    elsif password != confirm_password
-      errors.add :base,  I18n.t(:passwords_dont_match)
     elsif password.length < 8
       errors.add :base,  I18n.t(:password_too_short)
     else
@@ -53,7 +47,15 @@ class RegistrationGenerator
     roles = (invite.roles + [@owners]).flatten.compact
     @user = @organization.users.create email: invite.email, password: password,
                                        roles: roles, first_name: first_name, last_name: last_name
-
+    @user.save!
+    unless Rails.env.test?
+      FraudCheckJob.perform_later({
+        name: @user.name,
+        company: @organization.name,
+        email: @user.email
+      }.merge(@organization.customer_signup ? {ip: @organization.customer_signup.ip_address} : {}))
+    end
+    OpenStack::User.update_enabled(@user.uuid, false) unless @organization.has_payment_method?
     if invite.power_invite?
       member_uuid = OpenStack::Role.all.select{|r| r.name == '_member_'}.first.id
       @organization.tenants.select{|t| t.id != @organization.primary_tenant.id}.each do |tenant|

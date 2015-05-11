@@ -1,0 +1,41 @@
+%h2
+  %i.fa.fa-credit-card
+  Manage cards
+
+.pull-right
+  = link_to 'Add New Card', '', class: 'btn btn-success', 'data-toggle' => "modal", 'data-target' => "#addNewCard"
+
+%p Feel free to add as many cards as you need. All details are processed and stored by Stripe.
+
+%table.table.table-striped.table-hover.cards-list
+  %thead
+    %th
+    %th Type
+    %th Number (Last 4 Digits)
+    %th Name
+    %th Expiry
+    %th
+  %tbody
+    - for card in @cards
+      %tr
+        %td
+          - if card.id == @stripe_customer.default_source
+            %span.label.label-primary Default
+        %td
+          %i{class: "fa fa-cc-#{brand_to_font_awesome(card.brand)}"}
+        %td= "**** **** **** #{card.last4}"
+        %td= card.name ? card.name.upcase : 'NO NAME'
+        %td= "#{card.exp_month.to_s.rjust(2, '0')} / #{card.exp_year}"
+        %td
+          .pull-right
+            - unless card.id == @stripe_customer.default_source
+              = link_to 'Set As Default', support_manage_card_path(card.id), class: 'btn btn-info', :data => {:method => :put}
+            = link_to 'Remove', support_manage_card_path(card.id), class: 'btn btn-danger', :data => {:confirm => 'Are you sure? This action cannot be undone.', :method => :delete}
+
+.push
+.pull-right
+  .powered-by-stripe
+    %a{href: "https://stripe.com", target: '_blank'}
+      = image_tag 'powered_by_stripe.png'
+
+= render partial: 'new', locals: {stripe_customer: @stripe_customer}

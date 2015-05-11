@@ -30,3 +30,4 @@
 //= require chained
 //= require bootstrap-select
 //= require starburst/starburst
+//= require hideShowPassword

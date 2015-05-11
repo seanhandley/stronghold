@@ -9,3 +9,7 @@ window.onerror = function(message, url, lineNumber) {
   // Honeybadger.notify(new Error(message, url, lineNumber));
   return false;
 }; 
+
+$('.error-close').click(function(){
+  $('.errorExplanation').hide();
+});

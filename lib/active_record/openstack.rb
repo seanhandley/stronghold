@@ -2,7 +2,7 @@ module ActiveRecord
   class Base
 
     def self.authenticates_with_keystone
-      define_method :authenticate do |password|
+      define_method :authenticate_openstack do |password|
         begin
           args = OPENSTACK_ARGS.dup
           args.merge!(:openstack_username   => email,
@@ -24,7 +24,11 @@ module ActiveRecord
       end
 
       define_method :delete_openstack_object do
-        Fog::Identity.new(OPENSTACK_ARGS).delete_user uuid
+        if params[:as] == 'OpenStack::User'
+          Fog::Identity.new(OPENSTACK_ARGS).delete_user uuid
+        else
+          Fog::Identity.new(OPENSTACK_ARGS).delete_tenant uuid
+        end
       end
 
       define_method :update_openstack_object do
@@ -33,7 +37,7 @@ module ActiveRecord
       end
 
       self.class_eval do
-        unless Rails.env.test? || Rails.env.staging?
+        unless Rails.env.test?
           after_create(:create_openstack_object)              if params[:actions].include? :create
           before_destroy(:delete_openstack_object)            if params[:actions].include? :destroy
           after_update(:update_openstack_object)              if params[:actions].include? :update

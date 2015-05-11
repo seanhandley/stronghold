@@ -95,6 +95,7 @@ Rails.application.configure do
       :password => 'aoz21e56ef'
   }
 
+  config.action_controller.asset_host = "http://my.datacentred.io"
   config.action_mailer.default_url_options = { :host => 'my.datacentred.io' }
 
   # Error handling
@@ -102,5 +103,7 @@ Rails.application.configure do
 
   # Prevent Angular conflicts
   config.assets.js_compressor = Uglifier.new(mangle: false)
+
+  config.stripe.publishable_key = "pk_live_vzTCZElYj4BdVeSj5648NROM"
 
 end

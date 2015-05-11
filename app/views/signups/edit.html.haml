@@ -1,6 +1,7 @@
-%h3
-  %i.fa.fa-lock
-  Please enter a secure password
+%h2
+  %i.fa.fa-plug
+  Welcome!
+%p Just a few more details before we get started...
 
 = form_tag({url: signup_complete_path(@invite.token)}, 'role' => 'form') do
   .form-group
@@ -11,15 +12,17 @@
     = text_field_tag :last_name, @registration.last_name, class: 'form-control'
   .form-group
     %label Password
-    = password_field_tag :password, @registration.password, class: 'form-control'
+    = password_field_tag :password, @registration.password, class: 'form-control strength wink-password'
   .form-group
-    %label Repeat Password
-    = password_field_tag :confirm_password, @registration.confirm_password, class: 'form-control'
+    #password-progress-bar-container
 
+  .pull-right= submit_tag 'Log In →', class: 'btn btn-primary'
+  .form-group= recaptcha_tags
+  
   .form-group
     %label
-      I confirm I have read and accept the
-      = link_to 'DataCentred privacy policy', 'http://datacentred.co.uk/privacy-policy/', target: '_blank'
-    = check_box_tag :privacy, @registration.privacy, @registration.privacy
+      By logging in, you agree to our
+      = link_to 'Privacy Policy', 'http://datacentred.co.uk/privacy-policy/', target: '_blank'
+      \.
   
-  = submit_tag 'Continue →', class: 'btn btn-primary'
+  

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150507094911) do
+ActiveRecord::Schema.define(version: 20150511080308) do
 
   create_table "audits", force: :cascade do |t|
     t.string   "auditable_id",    limit: 255
@@ -194,6 +194,15 @@ ActiveRecord::Schema.define(version: 20150507094911) do
     t.datetime "updated_at"
   end
 
+  create_table "organization_vouchers", force: :cascade do |t|
+    t.integer  "organization_id", limit: 4
+    t.integer  "voucher_id",      limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "organization_vouchers", ["organization_id", "voucher_id"], name: "index_organization_vouchers_on_organization_id_and_voucher_id", unique: true, using: :btree
+
   create_table "organizations", force: :cascade do |t|
     t.string   "reference",          limit: 255
     t.string   "name",               limit: 255
@@ -212,6 +221,9 @@ ActiveRecord::Schema.define(version: 20150507094911) do
     t.string   "billing_postcode",   limit: 255
     t.string   "billing_country",    limit: 255
     t.string   "phone",              limit: 255
+    t.integer  "customer_signup_id", limit: 4
+    t.string   "state",              limit: 255, default: "active", null: false
+    t.boolean  "disabled",           limit: 1,   default: false,    null: false
   end
 
   create_table "organizations_products", force: :cascade do |t|
@@ -220,15 +232,6 @@ ActiveRecord::Schema.define(version: 20150507094911) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  create_table "organizations_vouchers", force: :cascade do |t|
-    t.integer  "organization_id", limit: 4
-    t.integer  "voucher_id",      limit: 4
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "organizations_vouchers", ["organization_id", "voucher_id"], name: "index_organizations_vouchers_on_organization_id_and_voucher_id", using: :btree
 
   create_table "products", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -304,12 +307,22 @@ ActiveRecord::Schema.define(version: 20150507094911) do
   end
 
   create_table "vouchers", force: :cascade do |t|
-    t.string   "name",        limit: 255
-    t.string   "description", limit: 255
-    t.string   "code",        limit: 255
-    t.integer  "duration",    limit: 4
-    t.integer  "value",       limit: 4
+    t.string   "name",             limit: 255,                            null: false
+    t.string   "description",      limit: 255,                            null: false
+    t.string   "code",             limit: 255,                            null: false
+    t.integer  "duration",         limit: 1,                 default: 1,  null: false
+    t.decimal  "discount_percent",             precision: 3, default: 10, null: false
     t.datetime "expires_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "usage_limit",      limit: 4
+  end
+
+  add_index "vouchers", ["code"], name: "index_vouchers_on_code", unique: true, using: :btree
+
+  create_table "wait_list_entries", force: :cascade do |t|
+    t.string   "email",      limit: 255
+    t.datetime "emailed_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
