@@ -8,7 +8,7 @@ class TerminateAccountJob < ActiveJob::Base
       begin
         Ceph::User.destroy('uid' => user.uuid, 'display-name' => user.name)
       rescue Net::HTTPError => e
-        Honeybadger.notify(ex)
+        Honeybadger.notify(e)
       end
     end
   end
