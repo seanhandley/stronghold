@@ -12,7 +12,7 @@ module OpenStack
       unless Rails.env.test?
         conn = Fog::Identity.new(OPENSTACK_ARGS)
         u = conn.users.select {|u| u.id == uuid}.first
-        u.update_password(password)
+        u.update_password(password) if u
       end
     end
 
@@ -20,7 +20,7 @@ module OpenStack
       unless Rails.env.test?
         conn = Fog::Identity.new(OPENSTACK_ARGS)
         u = conn.users.select {|u| u.id == uuid}.first
-        u.update_enabled(enabled)
+        u.update_enabled(enabled) if u
       end    
     end
   end
