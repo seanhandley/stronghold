@@ -1,4 +1,5 @@
 class Support::OrganizationsController < SupportBaseController
+  include OffboardingHelper
 
   skip_authorization_check
 
@@ -37,11 +38,24 @@ class Support::OrganizationsController < SupportBaseController
   # Close this user's account
   def close
     if reauthenticate(reauthorise_params[:password]) && !current_user.staff?
-      reset_session
-      current_user.organization.disable!
       Hipchat.notify('Account Closure', 'Accounts', "#{current_user.organization.name} (REF: #{current_user.organization.name}) has requested account termination.", color: 'red')
-      current_user.organization.tenants.each {|tenant| TerminateAccountJob.perform_later(tenant)}
+      creds = {:openstack_username => current_user.email,
+               :openstack_api_key  => nil,
+               :openstack_auth_token => session[:token],
+               :openstack_tenant   => current_user.organization.primary_tenant.reference }
+      current_user.organization.tenants.each do |tenant|
+        offboard(tenant, creds)
+        tenant.organization.users.each do |user|
+          begin
+            Ceph::User.destroy('uid' => user.uuid, 'display-name' => user.name)
+          rescue Net::HTTPError => e
+            Honeybadger.notify(e)
+          end
+        end
+      end
+      current_user.organization.disable!
       Mailer.goodbye(current_user.organization.admin_users).deliver_later
+      reset_session
       render :goodbye
     else
       redirect_to support_edit_organization_path, alert: 'Your password was wrong. Account termination has been aborted.'
