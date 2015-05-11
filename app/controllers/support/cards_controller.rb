@@ -26,7 +26,7 @@ class Support::CardsController < AuthorizedController
         current_user.organization.vouchers << voucher
       end
       current_user.organization.complete_signup! @customer_signup.stripe_customer_id
-      session[:token] = current_user.authenticate(Rails.cache.fetch("up_#{current_user.uuid}"))
+      reauthenticate(Rails.cache.fetch("up_#{current_user.uuid}"))
       Rails.cache.delete("up_#{current_user.uuid}")
       Announcement.create(title: 'Welcome', body: 'Your card details are verified and you may now begin using cloud services!',
         limit_field: 'id', limit_value: current_user.id)
