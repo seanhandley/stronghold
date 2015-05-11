@@ -40,7 +40,8 @@ class Support::OrganizationsController < SupportBaseController
     if reauthenticate(reauthorise_params[:password]) && !current_user.staff?
       Hipchat.notify('Account Closure', 'Accounts', "#{current_user.organization.name} (REF: #{current_user.organization.name}) has requested account termination.", color: 'red')
       creds = {:openstack_username => current_user.email,
-               :openstack_api_key  => session[:token],
+               :openstack_api_key  => nil,
+               :openstack_auth_token => session[:token],
                :openstack_tenant   => current_user.organization.primary_tenant.reference }
       current_user.organization.tenants.each do |tenant|
         offboard(tenant, creds)
