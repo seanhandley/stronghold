@@ -21,7 +21,7 @@ module ActiveRecord
       end
 
       define_method :update_salesforce_object do
-        UpdateSalesforceObjectJob.perform_later(self)
+        UpdateSalesforceObjectJob.perform_later(self) if self.salesforce_id
       end
 
       self.class_eval do
