@@ -51,12 +51,12 @@ class Admin::UsageController < AdminBaseController
       rescue ArgumentError => e
         raise ArgumentError, "The #{key.to_s} date is not a valid date"
       end
-    end.collect{|d| Time.parse(d.to_s)}
+    end.collect{|d| Time.zone.parse(d.to_s)}
 
     if from < Billing::Sync.first.completed_at
       raise ArgumentError, "The earliest date we have usage for is #{Billing::Sync.first.completed_at}. Please ensure the start date is greater."
     end
-    if to > Time.zone.now
+    if to.utc > Time.now.utc
       raise ArgumentError, "The end date cannot be in the future"
     end
     if to <= from
