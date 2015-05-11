@@ -73,6 +73,7 @@ gem 'rails-assets-angular-md5', '~> 0.1.7'
 gem 'rails-assets-angular-infinite-scroll', '~> 0.0.1'
 gem 'rails-assets-chained', '~> 1.0.0'
 gem 'rails-assets-bootstrap-select'
+gem 'rails-assets-hideShowPassword'
 gem 'stripe-rails'
 
 group :development do
