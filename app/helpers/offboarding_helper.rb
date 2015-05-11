@@ -2,8 +2,10 @@ module OffboardingHelper
   def offboard(tenant, creds)
     return false unless tenant.respond_to?(:uuid) && tenant.uuid.is_a?(String)
 
+    puts creds.inspect
     os_args = OPENSTACK_ARGS.dup
     os_args.merge!(creds)
+    puts os_args.inspect
 
     # Delete all instances to clear ports
     fog = Fog::Compute.new(os_args)
