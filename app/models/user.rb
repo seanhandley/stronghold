@@ -119,13 +119,13 @@ class User < ActiveRecord::Base
   end
 
   def generate_ec2_credentials
-    unless Rails.env.test?
+    unless Rails.env.test? || Rails.env.staging?
       CreateEC2CredentialsJob.perform_later(self)
     end
   end
 
   def subscribe_to_status_io
-    unless Rails.env.test?
+    unless Rails.env.test? || Rails.env.staging?
       StatusIOSubscribeJob.perform_later(email)
     end
   end
