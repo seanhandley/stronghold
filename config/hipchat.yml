@@ -9,6 +9,7 @@ test:
 
 staging:
   <<: *default
+  enabled: true
 
 production:
   <<: *default
