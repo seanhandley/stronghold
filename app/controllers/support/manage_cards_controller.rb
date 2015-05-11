@@ -1,6 +1,6 @@
 require 'ostruct'
 
-class Support::ManageCardsController < AuthorizedController
+class Support::ManageCardsController < SupportBaseController
   include StripeHelper
 
   skip_authorization_check
