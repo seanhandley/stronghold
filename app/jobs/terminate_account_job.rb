@@ -7,7 +7,7 @@ class TerminateAccountJob < ActiveJob::Base
     tenant.organization.users.each do |user|
       begin
         Ceph::User.destroy('uid' => user.uuid, 'display-name' => user.name)
-      catch Net::HTTPError => e
+      rescue Net::HTTPError => e
         notify_honeybadger(e)
       end
     end
