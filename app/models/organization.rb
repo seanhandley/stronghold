@@ -77,6 +77,7 @@ class Organization < ActiveRecord::Base
       # Enable the user
       Fog::Identity.new(OPENSTACK_ARGS).update_user(user.uuid, enabled: true)
     end
+    has_payment_methods!(true)
   end
 
   def disable!

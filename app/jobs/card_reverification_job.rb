@@ -7,7 +7,7 @@ class CardReverificationJob < ActiveJob::Base
       unless stripe_has_valid_source?(organization.stripe_customer_id)
         organization.has_payment_methods!(false)
         Mailer.card_reverification_failure(organization).deliver_now
-        Hipchat.notify('Stronghold', 'Accounts', "#{organization.name} (ref: #{organization.reference}) failed payment reverification. Please investigate ASAP and determine further action. The customer has been notified by email.")
+        Hipchat.notify('Stronghold', 'Accounts', "#{organization.name} (ref: #{organization.reference}) failed payment reverification. Please investigate ASAP and determine further action. The customer has been notified by email.", color: 'red')
       end
     end
   end
