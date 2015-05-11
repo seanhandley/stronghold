@@ -70,6 +70,9 @@ class Organization < ActiveRecord::Base
   end
 
   def enable!
+    tenants.each do |tenant|
+      Fog::Identity.new(OPENSTACK_ARGS).update_tenant(tenant.uuid, enabled: true)
+    end
     users.each do |user|
       # Enable the user
       Fog::Identity.new(OPENSTACK_ARGS).update_user(user.uuid, enabled: true)
