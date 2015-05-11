@@ -107,7 +107,9 @@ class Organization < ActiveRecord::Base
       update_attributes(state: OrganizationStates::Active)
     else
       update_attributes(state: OrganizationStates::HasNoPaymentMethods)
-      Rails.cache.delete("org_#{current_user.organization.id}_has_payment_method")
+      if Authorization.current_user
+        Rails.cache.delete("org_#{Authorization.current_user.organization.id}_has_payment_method")
+      end
     end
   end
 
