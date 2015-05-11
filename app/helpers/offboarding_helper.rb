@@ -9,7 +9,7 @@ module OffboardingHelper
       fog.delete_server(instance)
     end
 
-    images = fog.list_images_detail(tenant_id: tenant.uuid).body['images'].map{|i| i['id']}
+    images = fog.list_images_detail(tenant_id: tenant.uuid).body['images'].select{|i| i['metadata']['owner_id'] == tenant.uuid}.map{|i| i['id']}
     images.each do |image|
       begin
         fog.delete_image(image)
