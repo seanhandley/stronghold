@@ -11,8 +11,9 @@
         #card-display
         #flashes
         .form-group
+          %label Number
           .inline
-            = text_field_tag :card_number, nil, :class => 'form-control', 'data-stripe' => 'number', placeholder: 'CARD NUMBER'
+            = text_field_tag :card_number, nil, :class => 'form-control', 'data-stripe' => 'number'
             = text_field_tag :cvc, nil, :size => 4, :placeholder => 'CVC', :class => 'form-control', 'data-stripe' => 'cvc'
         .inline-form-groups
           .form-group#name
