@@ -39,8 +39,8 @@ $(document).ready(function() {
     button_disabled_message: "Checking"
   });
 
-  $('#lookup-field').on('input', function() {
-    $('#postcode').val($(this));
+  $('#idpc_input').on('input', function() {
+    $('#postcode').val($(this).val());
   });
 
   $('#discount_code').on('input', function() {
