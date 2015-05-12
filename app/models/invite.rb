@@ -3,6 +3,7 @@ class Invite < ActiveRecord::Base
   audited only: [:email]
 
   after_create :generate_token
+  after_commit :send_email, on: :create
 
   validates :email, length: {minimum: 5}, allow_blank: false
   validates :organization, :presence => true
@@ -55,5 +56,9 @@ class Invite < ActiveRecord::Base
 
   def no_user_has_that_email?
     errors.add(:email, 'already has an account. Please choose another email.') if User.find_by_email(email) && !persisted?
+  end
+
+  def send_email
+    Mailer.signup(id).deliver_later
   end
 end
