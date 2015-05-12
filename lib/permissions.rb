@@ -20,7 +20,8 @@ class Permissions
       end
 
       if Authorization.current_user && Authorization.current_user.organization.cloud?
-        perms.merge!('usage.read' => { :description => I18n.t(:can_usage_read), :group => I18n.t(:usage) })
+        perms.merge!('usage.read'   => { :description => I18n.t(:can_usage_read), :group => I18n.t(:cloud) })
+        perms.merge!('cloud.read' => { :description => I18n.t(:can_cloud_access), :group => I18n.t(:cloud) })
       end
 
       return perms

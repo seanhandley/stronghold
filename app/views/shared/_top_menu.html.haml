@@ -1,36 +1,42 @@
 .top-menu
-  - if can? :read, Role
-    %a{href: support_roles_path}
-      .top-menu-option{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => t(:users_slash_roles), 'class' => (current_section == 'roles' ? 'selected' : '')}
-        %i.top-menu-icon.fa.fa-users
-  - else
-    .top-menu-option.top-menu-option-disabled{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => t(:users_slash_roles)}
-      %i.top-menu-icon.fa.fa-users
-  - if can? :read, Ticket
-    %a{href: support_tickets_path}
-      .top-menu-option{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => t(:support), 'class' => (current_section == 'tickets' ? 'selected' : '')}
-        %i.top-menu-icon.fa.fa-life-ring
-  - else
-    .top-menu-option.top-menu-option-disabled{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => t(:support_tickets)}
-      %i.top-menu-icon.fa.fa-life-ring
-  - if current_user.organization.cloud?
-    - if can? :read, :usage
-      %a{href: support_usage_path}
-        .top-menu-option{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => t(:usage), 'class' => (current_section == 'usage' ? 'selected' : '')}
-          %i.top-menu-icon.fa.fa-area-chart
+  - if current_user.organization.known_to_payment_gateway?
+    - if can? :read, Role
+      %a{href: support_roles_path}
+        .top-menu-option{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => t(:users_slash_roles), 'class' => (current_section == 'roles' ? 'selected' : '')}
+          %i.top-menu-icon.fa.fa-users
     - else
-      .top-menu-option.top-menu-option-disabled{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => t(:usage)}
-        %i.top-menu-icon.fa.fa-area-chart 
-    %a{href: 'https://compute.datacentred.io', target: '_blank'}
-      .top-menu-option{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => t(:openstack)}
-        %i.top-menu-icon.fa.fa-rocket
-  .not-yet-enabled
-    .top-menu-option.top-menu-option-disabled{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => t(:colo)}
-      = image_tag('server.svg')
-    .top-menu-option.top-menu-option-disabled{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => t(:billing)}
-      %i.top-menu-icon.fa.fa-money
-    .top-menu-option.top-menu-option-disabled{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => t(:colo)}
-      = image_tag('server.svg')
-    .top-menu-option.top-menu-option-disabled{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => t(:billing)}
-      %i.top-menu-icon.fa.fa-money
- 
+      .top-menu-option.top-menu-option-disabled{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => t(:users_slash_roles)}
+        %i.top-menu-icon.fa.fa-users
+    - if can? :read, Ticket
+      %a{href: support_tickets_path}
+        .top-menu-option{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => t(:support), 'class' => (current_section == 'tickets' ? 'selected' : '')}
+          %i.top-menu-icon.fa.fa-life-ring
+    - else
+      .top-menu-option.top-menu-option-disabled{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => t(:support_tickets)}
+        %i.top-menu-icon.fa.fa-life-ring
+    - if current_user.organization.cloud?
+      - if can? :read, :usage
+        %a{href: support_usage_path}
+          .top-menu-option{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => t(:usage), 'class' => (current_section == 'usage' ? 'selected' : '')}
+            %i.top-menu-icon.fa.fa-area-chart
+      - else
+        .top-menu-option.top-menu-option-disabled{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => t(:usage)}
+          %i.top-menu-icon.fa.fa-area-chart
+      - if can? :read, :cloud
+        %a{href: '', 'data-toggle' => "modal", 'data-target' => "#showOpenStackDetails"}
+          .top-menu-option{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => 'Cloud Services'}
+            %i.top-menu-icon.fa.fa-cloud
+      - else
+        .top-menu-option.top-menu-option-disabled{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => 'Cloud Services'}
+          %i.top-menu-icon.fa.fa-cloud
+
+    .not-yet-enabled
+      .top-menu-option.top-menu-option-disabled{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => t(:colo)}
+        = image_tag('server.svg')
+      .top-menu-option.top-menu-option-disabled{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => t(:billing)}
+        %i.top-menu-icon.fa.fa-money
+      .top-menu-option.top-menu-option-disabled{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => t(:colo)}
+        = image_tag('server.svg')
+      .top-menu-option.top-menu-option-disabled{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => t(:billing)}
+        %i.top-menu-icon.fa.fa-money
+

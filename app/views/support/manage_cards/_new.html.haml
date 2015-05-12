@@ -1,0 +1,35 @@
+.modal.fade#addNewCard{'tabindex' => "-1", 'role' => "dialog", 'aria-labelledby' => "addNewCard", 'aria-hidden' => "true", 'data-backdrop' => 'static'}
+  .modal-dialog
+    .modal-content
+      = form_tag support_manage_cards_path, id: 'add_new_card' do
+        .modal-header
+          %button{'type' => "button", 'class' => "close", 'data-dismiss' => "modal", 'aria-hidden' => "true"}
+            &times;
+          %h4.modal-title#addNewCard
+            %i.fa.fa-credit-card
+            Add New Card
+          %p Please enter your card details
+        .modal-body
+          #card-display
+          #flashes
+          #cc-details
+            = hidden_field_tag :stripe_customer_id, stripe_customer.id
+            .form-group
+              %label Card Number
+              .inline
+                = text_field_tag :card_number, nil, :class => 'form-control', 'data-stripe' => 'number'
+                = text_field_tag :cvc, nil, :size => 4, :placeholder => 'CVC', :class => 'form-control', 'data-stripe' => 'cvc'
+            .inline-form-groups
+              .form-group#name
+                %label Name On Card
+                = text_field_tag :name, nil, :class => 'form-control', 'data-stripe' => 'name'
+              .form-group#expiry
+                %label Expiry Date
+                = text_field_tag :expiry, nil, :class => 'form-control', placeholder: 'MM/YYYY'
+            = hidden_field_tag :expiry_month, nil, 'data-stripe' => 'exp-month'
+            = hidden_field_tag :expiry_year, nil, 'data-stripe' => 'exp-year'
+        .modal-footer
+          %button.btn.btn-default{'data-toggle' => "modal", 'data-dismiss' => "modal"}
+            = t(:cancel)
+          = submit_tag 'Add', class: 'btn btn-primary', id: 'submit_button'
+= javascript_include_tag asset_path('assets/card.js')

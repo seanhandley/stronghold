@@ -12,8 +12,12 @@ if Rails.env.production? || Rails.env.staging?
     UsageReportJob.perform_later
   end
 
-  every(1.day, 'usage_sanity', :at => '04:00') do
+  every(1.day, 'usage_sanity', :at => '06:00') do
     UsageSanityJob.perform_later
+  end
+
+  every(1.day, 'card_reverification', :at => '05:00') do
+    CardReverificationJob.perform_later
   end
 
 end

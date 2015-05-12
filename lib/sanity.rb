@@ -4,7 +4,8 @@ module Sanity
       if live_instances[instance.instance_id].nil?
         false
       else
-        live_instances[instance.instance_id]['status'] == instance.current_state
+        check_instance_state(live_instances[instance.instance_id]['status'].downcase,
+                   instance.instance_states.order('recorded_at').last.state.downcase)
       end
     end
 
@@ -39,7 +40,8 @@ module Sanity
   end
 
   def self.notify!(data)
-    Mailer.usage_sanity_failures(data).deliver_later
+    msg = Mailer.usage_sanity_failures(data).html_part.body.raw_source.gsub("\n","<br />").strip
+    Hipchat.notify('Sanity Check', 'Web', msg, :color => 'red')
   end
 
   def self.live_instances
@@ -57,6 +59,14 @@ module Sanity
   def self.live_routers
     Rails.cache.fetch('sanity_live_routers', expires_in: 10.minutes) do
       Fog::Network.new(OPENSTACK_ARGS).list_routers.body['routers'].collect{|s| s['id']}
+    end
+  end
+
+  def self.check_instance_state(live, recorded)
+    if recorded == 'rescued'
+      return recorded.include? live
+    else
+      live == recorded
     end
   end
 end

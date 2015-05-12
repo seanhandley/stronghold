@@ -1,8 +1,6 @@
-.errorExplanation{:'ng-show' => "errors"}
-  %p
-    The following errors occured:
+.alert.alert-danger.errorExplanation{:'ng-show' => "errors"}
   %ul
     %li{:'ng-repeat' => "error in errors"} {{error.field.split('_').join(' ') | capitalize:true}} {{error.message}}
-.errorExplanation{:'ng-show' => "staticError"}
+.alert.alert-danger.errorExplanation{:'ng-show' => "staticError"}
   %p
     {{staticError}}

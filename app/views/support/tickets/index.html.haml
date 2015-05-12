@@ -1,4 +1,4 @@
-.container-fluid#tickets-container{:'ng-controller' => "TicketsController", :'ng-init' => 'populateTickets()', :'data-permanent-reference' => @reference}
+.container-fluid#tickets-container.hide{:'ng-controller' => "TicketsController", :'ng-init' => 'populateTickets()', :'data-permanent-reference' => @reference}
   .col-xs-12
     .some-info.space-after.animate-show{:'ng-show' => "isLoading"}
       %p
@@ -105,3 +105,9 @@
             = t(:cancel)
           %button.btn.btn-primary{:'ng-click' => 'ticketDialogSubmit()'}
             = t(:submit)
+
+:javascript
+
+  $(document).ready(function() {
+    $('#tickets-container').removeClass('hide');
+  });

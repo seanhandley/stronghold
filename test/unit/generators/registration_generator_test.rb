@@ -5,7 +5,7 @@ class TestRegistrationGenerator < Minitest::Test
     @invite = Invite.make!
     @power_invite = Invite.make!(:power_user)
     @expired_invite = Invite.make!(:expired)
-    @password = SecureRandom.base64(16)
+    @password = SecureRandom.base64(16) + "Aa9"
     @valid_params = { password: @password,
                       confirm_password: @password,
                       privacy: 'on', first_name: 'test',
@@ -72,13 +72,6 @@ class TestRegistrationGenerator < Minitest::Test
       assert registration.generate!
       refute registration.generate!
     end
-  end
-
-  def test_registration_cannot_occur_unless_privacy_is_agreed
-    registration = RegistrationGenerator.new(@power_invite,
-                                    @valid_params.merge(privacy: ''))
-    refute registration.generate!
-    assert registration.errors.present?      
   end
 
   def teardown

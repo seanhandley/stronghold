@@ -30,8 +30,8 @@ class TestCustomerGenerator < Minitest::Test
   end
 
   def test_refuses_email_if_it_exists
-    UserNoCallbacks.create email: 'testy@customer.com', password: '12345678',
-                           password_confirmation: '12345678', organization_id: 1,
+    UserNoCallbacks.create email: 'testy@customer.com', password: 'Password1',
+                           organization_id: 1,
                            first_name: 'test', last_name: 'test'
     customer = CustomerGenerator.new(@valid_params)
     refute customer.generate!
@@ -72,17 +72,6 @@ class TestCustomerGenerator < Minitest::Test
       CustomerGenerator.new(@valid_params).generate!
       assert_equal 1, Invite.all.count
     end  
-  end
-
-  def test_mailer_is_asked_to_deliver_invite
-    VCR.use_cassette('customer_generator_valid') do      
-      mailer = MiniTest::Mock.new
-      mailer.expect(:deliver_later, true)
-      Mailer.stub(:signup, mailer) do
-        CustomerGenerator.new(@valid_params).generate!
-        assert mailer.verify
-      end
-    end
   end
 
   def teardown

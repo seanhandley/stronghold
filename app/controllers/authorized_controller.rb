@@ -12,6 +12,18 @@ class AuthorizedController < ApplicationController
     @current_ability ||= User::Ability.new(current_user)
   end
 
+  def reauthenticate(password)
+    if token = current_user.authenticate(password)
+      if token.is_a? String
+        session[:created_at] = Time.now.utc
+        session[:token]      = token
+        return true
+      else
+        return false
+      end
+    end
+  end
+
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to_root
   end
@@ -45,13 +57,26 @@ class AuthorizedController < ApplicationController
   def authenticate_user!
     unless current_user
       redirect_to sign_in_path('next' => request.fullpath)
+      return
     end
-    current_user.token = session[:token] if session[:token] && current_user
+    if !current_user.organization.known_to_payment_gateway?
+      return if [new_support_card_path, support_cards_path].include?(request.fullpath)
+      redirect_to new_support_card_path
+    elsif !current_user.organization.has_payment_method?
+      if !current_user.admin?
+        reset_session
+        flash.alert = "Payment method has expired. Please inform a user with admin rights."
+        redirect_to sign_in_path
+      else
+        return if request.fullpath == support_manage_cards_path
+        redirect_to support_manage_cards_path, alert: "Please add a valid card to continue."
+      end
+    end
   end
 
   def timeout_session!
     if session
-      session[:created_at] = Time.now unless session[:created_at]
+      session[:created_at] = Time.now.utc unless session[:created_at]
 
       if (Time.now - session[:created_at]) > SESSION_TIMEOUT.minutes
         session[:user_id] = nil

@@ -1,0 +1,183 @@
+.container#sign-up {
+  width: 90%;
+  // overflow: auto;
+  margin: auto;
+  margin-top: 30px;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+}
+
+.container#sign-in input {
+  height: 55px;
+  font-size: 22px;
+}
+
+img.sign-in-logo {
+  height: auto;
+  width: 240px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+@media only screen and (max-width: 480px), only screen and (max-device-width: 480px) {
+  .container#sign-in {
+    width: 260px;
+  }
+}
+
+body.customer-sign-up {
+  background-image: url(<%= asset_path 'datacentred-watermark.png' %>);
+  background-repeat: no-repeat;
+  background-position: bottom;
+  //background-size: 440px 120px;
+}
+
+div#sign-up ol.breadcrumb {
+  //background: #dff0d8;
+}
+
+div#signup-form-area i {
+  color: #0af;
+}
+
+div#signup-form-area .thank-you {
+  text-align: center;
+}
+
+#signup-form-area .wider {
+  width: 70%;
+}
+
+div#card-display {
+  transform: scale(0.8,0.8);
+}
+
+#cc-details input {
+  height: 40px;
+}
+
+#cc-details input#card_number {
+  width: 78%;
+  font-size: 18px;
+}
+
+#cc-details input#expiry {
+  font-size: 14px;
+  float: right;
+}
+
+#cc-details input#name {
+  font-size: 16px;
+}
+
+#cc-details input#cvc {
+  width: 20%;
+  font-size: 16px;
+  float: right;
+}
+
+#cc-details .inline input {
+  display: inline;
+}
+
+#cc-details .inline-form-groups .form-group {
+  display: inline-block;
+}
+
+#cc-details .form-group#expiry {
+  float: right;
+  width: 29%;
+}
+
+#cc-details .form-group#name {
+  width: 70%;
+}
+
+#lookup-field input, #lookup-field select {
+  display: inline-block;
+  width: 50%;
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 16px;
+  line-height: 1.428571429;
+  color: #555555;
+  background-color: white;
+  background-image: none;
+  border: 1px solid #cccccc;
+  border-radius: 2px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+}
+
+#lookup-field #idpc_input {
+  width: 50%;
+  margin-right: 5px;
+}
+
+#lookup-field #idpc_dropdown {
+  width: 100%;
+  margin-top: 10px;
+}
+
+#lookup-field button {
+  color: white;
+  border-color: #0d864b;
+  float: right;
+  background-color: #0af;
+  display: inline-block;
+  margin-bottom: 0;
+  font-weight: normal;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.428571429;
+  border-radius: 2px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+#lookup-field button:hover, #lookup-field button:active {
+  color: white;
+  background-color: #229bd2;
+  border-color: #1d85b3;
+}
+
+div.powered-by-stripe {
+  margin-top: 10px;
+  float: right;
+}
+
+div.powered-by-stripe  img {
+  width: 100px;
+  heigh: auto;
+}
+
+
+div.info-panel .alert {
+  padding-right: 20px;
+  padding-left: 0px;
+  font-size: 15px;
+}
+
+div.info-panel .alert ul {
+ list-style-type: square;
+}
+
+p.recaptcha_error {
+  display: none;
+}
+
+#complete-signup {
+  margin-top: 25px;
+}

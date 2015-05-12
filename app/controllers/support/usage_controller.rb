@@ -16,6 +16,7 @@ class Support::UsageController < SupportBaseController
   private
 
   def this_months_usage
+    @active_vouchers = current_user.organization.active_vouchers(@from_date, @to_date)
     current_user.organization.tenants.inject({}) do |acc, tenant|
       acc[tenant] = {
         instance_results: Billing::Instances.usage(tenant.uuid, @from_date, @to_date),

@@ -13,12 +13,8 @@ class Support::UsersController < SupportBaseController
     if current_user.update(update_params)
       respond_to do |format|
         format.js {
-          if update_params[:password].present?
-            reset_session
-            javascript_redirect_to support_root_path
-          else
-            render :template => "shared/dialog_success", :locals => {message: 'Changes saved', object: current_user }
-          end
+          reauthenticate(update_params[:password]) if update_params[:password].present?
+          render :template => "shared/dialog_success", :locals => {message: 'Changes saved', object: current_user }
         }
       end
     else
@@ -47,7 +43,7 @@ class Support::UsersController < SupportBaseController
 
   def update_params
     params.require(:user).permit(:first_name, :last_name,
-                                 :password, :password_confirmation)
+                                 :password)
   end
 
   def destroy_params

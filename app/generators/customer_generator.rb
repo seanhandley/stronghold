@@ -45,7 +45,7 @@ class CustomerGenerator
   private
 
   def create_customer
-    @organization = Organization.create! name: @organization_name
+    @organization = Organization.create! name: @organization_name, self_service: false
     @products.each do |product_id|
       @organization.products << Product.find(product_id)
     end
@@ -61,7 +61,7 @@ class CustomerGenerator
     create_default_network(@organization) unless colo_only?
     @invite = Invite.create! email: @email, power_invite: true, organization: @organization
     Mailer.signup(@invite.id).deliver_later
-    Hipchat.notify('Internal Signup', 'Signups', "New customer account created: #{@email} invited to organization #{@organization_name}")
+    Hipchat.notify('Internal Signup', 'Accounts', "New customer account created: #{@email} invited to organization #{@organization_name}")
   end
 
   def colo_only?

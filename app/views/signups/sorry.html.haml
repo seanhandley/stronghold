@@ -1,0 +1,17 @@
+%h2
+  %i.fa.fa-cloud
+  Sorry, we're full!
+
+.alert.alert-info We can't take any new signups right now but please feel free to join the waiting list. We'll be in touch when there's space available.
+
+%div#signup-form-area
+  = form_tag(wait_list_path, 'role' => 'form') do
+    - if flash.present?
+      #flashes= display_flash
+    .form-group
+      %label E-Mail Address
+      = text_field_tag :email, @wait_list_entry.email, class: 'form-control'
+    .pull-right
+      = link_to 'Already got an account?', sign_in_path
+    .form-group
+      = submit_tag 'Join Waiting List', class: 'btn btn-success'

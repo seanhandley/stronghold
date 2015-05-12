@@ -5,7 +5,7 @@ User.blueprint do
   email      { Faker::Internet.email }
   first_name { Faker::Name.first_name }
   last_name  { Faker::Name.last_name }
-  password   { Faker::Internet.password(8) }
+  password   { "UpperLower123" }
 end
 
 User.blueprint(:without_password) do
@@ -61,4 +61,13 @@ end
 Product.blueprint(:colocation) do
   id { 3 }
   name { 'Colocation' }
+end
+
+Voucher.blueprint do
+  name { "Free 1 Month Trial" }
+  description { "First month is free" }
+  code { "FREEDOM" }
+  duration { 1 }
+  discount_percent { 100 }
+  expires_at { Time.now + 1.year }
 end

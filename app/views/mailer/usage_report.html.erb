@@ -1,5 +1,5 @@
-<link rel="stylesheet" href="/application.css">
-<div id="container">
+<%= render partial: 'email_style' %>
+<div class="container" id="email">
   <h2>Weekly Platform Summary</h2>
   <p><em>Week beginning <%= @from.beginning_of_week.to_date.strftime("%A #{@from.day.ordinalize} %B %Y") %></em></p>
 

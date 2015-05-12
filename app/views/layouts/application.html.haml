@@ -5,6 +5,7 @@
   = favicon_link_tag 'favicon.ico'
   = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
   = javascript_include_tag 'application'#, 'data-turbolinks-track' => true
+  = stripe_javascript_tag
   = csrf_meta_tags
   %meta{'charset' => "utf-8"}
   %meta{'http-equiv' => 'X-UA-Compatible', 'content' => 'IE=edge'}
@@ -13,22 +14,21 @@
 %body
   #wrap
     .top-nav.navbar.navbar-default.navbar-fixed-top
-      .container
+      .container{style: "width:100%"}
         %a{href: support_root_path, class: 'back-to-dash' }
-          .logo
+          %h1.logo
         = render partial: 'shared/top_menu'
         .context-nav
           = render partial: 'shared/support_nav'
       
     %div.page-body
+      = render partial: 'shared/environment'
+      = render partial: 'shared/openstack_details'
       .container
         - if request.url == support_root_url
           = render :partial => "announcements/starburst/announcement_bootstrap"
-        - else 
-          %h3.organisation
-            -# = image_tag 'bbc.png'
-            = current_user.organization.name
-        #flashes= display_flash
+        %p &nbsp;
+        = display_flash
         = yield
         .push
 = render partial: 'shared/footer'

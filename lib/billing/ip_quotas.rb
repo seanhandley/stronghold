@@ -9,6 +9,7 @@ module Billing
         # Only store if there's been a change
         if !latest || latest.quota != quota
           Billing::IpQuota.create(tenant_id: tenant.uuid,
+                                  previous: latest ? latest.quota : nil,
                                   quota: quota,
                                   recorded_at: Time.zone.now,
                                   billing_sync: sync)

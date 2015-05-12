@@ -3,13 +3,16 @@ class Invite < ActiveRecord::Base
   audited only: [:email]
 
   after_create :generate_token
+  after_commit :send_email, on: :create
 
   validates :email, length: {minimum: 5}, allow_blank: false
   validates :organization, :presence => true
   validate :has_roles?
   validate :email_looks_valid?
+  validate :no_user_has_that_email?
 
   belongs_to :organization
+  belongs_to :customer_signup
   has_and_belongs_to_many :roles
 
   def can_register?
@@ -49,5 +52,13 @@ class Invite < ActiveRecord::Base
 
   def email_looks_valid?
     errors.add(:email, I18n.t(:is_not_a_valid_address)) unless email =~ /.+@.+\..+/
+  end
+
+  def no_user_has_that_email?
+    errors.add(:email, 'already has an account. Please choose another email.') if User.find_by_email(email) && !persisted?
+  end
+
+  def send_email
+    Mailer.signup(id).deliver_later
   end
 end
