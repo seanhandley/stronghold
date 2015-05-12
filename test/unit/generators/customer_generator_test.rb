@@ -74,17 +74,6 @@ class TestCustomerGenerator < Minitest::Test
     end  
   end
 
-  def test_mailer_is_asked_to_deliver_invite
-    VCR.use_cassette('customer_generator_valid') do      
-      mailer = MiniTest::Mock.new
-      mailer.expect(:deliver_later, true)
-      Mailer.stub(:signup, mailer) do
-        CustomerGenerator.new(@valid_params).generate!
-        assert mailer.verify
-      end
-    end
-  end
-
   def teardown
     DatabaseCleaner.clean  
   end
