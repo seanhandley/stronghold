@@ -11,9 +11,8 @@
         #card-display
         #flashes
         .form-group
-          %label Card Number
           .inline
-            = text_field_tag :card_number, nil, :class => 'form-control', 'data-stripe' => 'number'
+            = text_field_tag :card_number, nil, :class => 'form-control', 'data-stripe' => 'number', placeholder: 'XXXX XXXX XXXX XXXX'
             = text_field_tag :cvc, nil, :size => 4, :placeholder => 'CVC', :class => 'form-control', 'data-stripe' => 'cvc'
         .inline-form-groups
           .form-group#name
@@ -31,17 +30,15 @@
           %label Post Code / ZIP
           #lookup-field
         .form-group
-          %label Address Line 1
-          = text_field_tag :address_line1, nil, :class => 'form-control', 'data-stripe' => 'address_line1'
+          %label Address
+          = text_field_tag :address_line1, nil, :class => 'form-control', 'data-stripe' => 'address_line1', placeholder: 'Address Line 1'
         .form-group
-          %label Address Line 2
-          = text_field_tag :address_line2, nil, :class => 'form-control', 'data-stripe' => 'address_line2'
+          = text_field_tag :address_line2, nil, :class => 'form-control', 'data-stripe' => 'address_line2', placeholder: 'Address Line 2'
         .form-group
           %label City
           = text_field_tag :address_city, nil, :class => 'form-control', 'data-stripe' => 'address_city'
         = hidden_field_tag :postcode, nil, 'data-stripe' => 'address_zip'
         .form-group
-          %label Country
           = country_select :address_country, nil, {:selected => 'GB'}, {:class => 'form-control', 'data-stripe' => 'address_country', :id => 'address_country'}
       .col-md-4
         %h3 3. Confirm
