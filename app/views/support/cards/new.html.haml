@@ -12,11 +12,11 @@
         #flashes
         .form-group
           .inline
-            = text_field_tag :card_number, nil, :class => 'form-control', 'data-stripe' => 'number', placeholder: 'XXXX XXXX XXXX XXXX'
+            = text_field_tag :card_number, nil, :class => 'form-control', 'data-stripe' => 'number', placeholder: 'Number'
             = text_field_tag :cvc, nil, :size => 4, :placeholder => 'CVC', :class => 'form-control', 'data-stripe' => 'cvc'
         .inline-form-groups
           .form-group#name
-            %label Name On Card
+            %label Name
             = text_field_tag :name, nil, :class => 'form-control', 'data-stripe' => 'name'
           .form-group#expiry
             %label Expiry Date
@@ -27,7 +27,6 @@
       .col-md-4
         %h3 2. Billing Address
         .form-group
-          %label Post Code / ZIP
           #lookup-field
         .form-group
           %label Address
@@ -56,13 +55,10 @@
             #discount_code_message
         .push
         .pull-right= submit_tag 'Complete Signup →', class: 'btn btn-success'
-    .push
     .pull-right
       .powered-by-stripe
         %a{href: "https://stripe.com", target: '_blank'}
           = image_tag 'powered_by_stripe.png'
 
-
-.push
 .push
 = javascript_include_tag asset_path('assets/card.js')
