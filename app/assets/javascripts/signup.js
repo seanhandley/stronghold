@@ -39,6 +39,10 @@ $(document).ready(function() {
     button_disabled_message: "Checking"
   });
 
+  $('#lookup-field').on('input', function() {
+    $('#postcode').val($(this));
+  });
+
   $('#discount_code').on('input', function() {
     $.post('/voucher_precheck?code=' + $(this).val(), function(data) {
       $('#discount_code_message').text(data.message);
