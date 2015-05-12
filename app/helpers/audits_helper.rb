@@ -34,7 +34,7 @@ module AuditsHelper
 
   def try_translate_permissions(k,v)
     if k.to_s.underscore.to_sym == :permissions
-      vals = [v].flatten.map do |v|
+      vals = [v].flatten.compact.map do |v|
         t("can_#{v.underscore.gsub('.','_').to_sym}", default: v)
       end
       r(vals)
