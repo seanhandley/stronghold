@@ -49,12 +49,11 @@
             = text_field_tag :discount_code, nil, placeholder: 'Got a discount code? Enter it here!', class: 'form-control'
           %p.help-block
             #discount_code_message
-        .pull-right
-          = submit_tag 'Complete Signup →', class: 'btn btn-success'
           %label
             By signing up, you agree to our
             = link_to 'Terms of Service', 'http://datacentred.co.uk/terms-and-conditions/', target: '_blank'
             \.
+          .pull-right= submit_tag 'Complete Signup →', class: 'btn btn-success'
     .pull-right
       .powered-by-stripe
         %a{href: "https://stripe.com", target: '_blank'}
