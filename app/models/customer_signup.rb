@@ -1,5 +1,6 @@
 class CustomerSignup < ActiveRecord::Base
   after_create -> { update_attributes(uuid: SecureRandom.hex) }
+  after_commit :send_email, on: :create
 
   validates :email, length: {minimum: 5}, allow_blank: false
   validate :email_valid
@@ -35,6 +36,10 @@ class CustomerSignup < ActiveRecord::Base
     else
       raise
     end
+  end
+
+  def send_email
+    CustomerSignupJob.perform_later(id)
   end
 
 end

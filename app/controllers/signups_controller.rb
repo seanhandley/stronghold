@@ -18,7 +18,6 @@ class SignupsController < ApplicationController
   def create
     @customer_signup = CustomerSignup.new(create_params.merge(ip_address: request.remote_ip))
     if @customer_signup.save
-      CustomerSignupJob.perform_later(@customer_signup.id)
       respond_to do |format|
         format.html { render :confirm }
         format.json { head :ok }
