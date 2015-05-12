@@ -93,7 +93,6 @@ class Organization < ActiveRecord::Base
 
   def complete_signup!(stripe_customer_id)
     update_attributes(stripe_customer_id: stripe_customer_id)
-    enable!
     ActivateCloudResourcesJob.perform_later(self)
   end
 
