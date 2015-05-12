@@ -94,8 +94,7 @@ class Organization < ActiveRecord::Base
   def complete_signup!(stripe_customer_id)
     update_attributes(stripe_customer_id: stripe_customer_id)
     enable!
-    create_default_network!
-    set_quotas!
+    ActivateCloudResourcesJob.perform_later(self)
   end
 
   def active_vouchers(from_date, to_date)
