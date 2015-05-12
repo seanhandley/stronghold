@@ -45,12 +45,10 @@ class Support::OrganizationsController < SupportBaseController
                :openstack_tenant   => current_user.organization.primary_tenant.reference }
       current_user.organization.tenants.each do |tenant|
         offboard(tenant, creds)
-        tenant.organization.users.each do |user|
-          begin
-            Ceph::User.destroy('uid' => current_user.uuid)
-          rescue Net::HTTPError => e
-            Honeybadger.notify(e)
-          end
+        begin
+          Ceph::User.destroy('uid' => tenant.uuid)
+        rescue Net::HTTPError => e
+          Honeybadger.notify(e)
         end
       end
       current_user.organization.disable!
