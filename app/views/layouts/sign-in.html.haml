@@ -15,10 +15,6 @@
   #wrap
     .container#sign-in
       = image_tag 'logo_text_only.png', class: 'sign-in-logo'
-      %h2
-        %i.fa.fa-cloud
-        Sign In
-      = display_flash
       = yield
       .push
   = render partial: 'shared/footer'
