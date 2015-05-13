@@ -1,3 +1,9 @@
+%h2
+  %i.fa.fa-cloud
+  Sign In
+  
+= display_flash
+
 = form_for(User.new, :url => sessions_path, :method => :post, :html => {:role => 'form'}) do |f|
   = hidden_field_tag :next, params[:next]
   .form-group
