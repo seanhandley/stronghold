@@ -2,16 +2,20 @@ module ActiveRecord
   class Base
     def self.syncs_with_ceph(params)
       define_method :create_ceph_object do
-        raise ArgumentError, 'Model must define ceph_params' unless respond_to?(:ceph_params)
-        params[:as].constantize.create ceph_params
-      rescue Net::HTTPError => e
-        Honeybadger.notify(e)
+        begin
+          raise ArgumentError, 'Model must define ceph_params' unless respond_to?(:ceph_params)
+          params[:as].constantize.create ceph_params
+        rescue Net::HTTPError => e
+          Honeybadger.notify(e)
+        end
       end
 
       define_method :delete_ceph_object do
-        params[:as].constantize.destroy ceph_params
-      rescue Net::HTTPError => e
-        Honeybadger.notify(e)
+        begin
+          params[:as].constantize.destroy ceph_params
+        rescue Net::HTTPError => e
+          Honeybadger.notify(e)
+        end
       end
 
       self.class_eval do
