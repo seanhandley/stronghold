@@ -50,6 +50,7 @@ class CustomerGenerator
       @organization.products << Product.find(product_id)
     end
     @organization.save!
+    @organization.enable!
     @extra_tenants.split(',').map(&:strip).map(&:downcase).uniq.each do |tenant|
       @organization.tenants.create(name: tenant)
     end
