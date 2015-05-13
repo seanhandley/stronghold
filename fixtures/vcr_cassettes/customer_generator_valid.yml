@@ -111,6 +111,148 @@ http_interactions:
     http_version: 
   recorded_at: Tue, 31 Mar 2015 06:20:23 GMT
 - request:
+    method: put
+    uri: http://185.43.218.210:35357/v2.0/tenants/
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog/1.27.0 fog-core/1.27.3
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token:
+      - 3dce9cfdd95245009905aa7a3f41e2ea
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '122'
+      Date:
+      - Tue, 31 Mar 2015 06:20:13 GMT
+    body:
+      encoding: UTF-8
+      string: '{"versions": [{"status": "CURRENT", "id": "v2.0", "links": [{"href":
+        "http://185.43.218.210:9696/v2.0", "rel": "self"}]}]}'
+    http_version: 
+  recorded_at: Tue, 31 Mar 2015 06:20:23 GMT
+- request:
+    method: post
+    uri: http://devstack.datacentred.io:5000/v2.0/tokens
+    body:
+      encoding: UTF-8
+      string: '{"auth":{"passwordCredentials":{"username":"admin","password":"L7joid2rTaokFJ"},"tenantName":"admin"}}'
+    headers:
+      User-Agent:
+      - fog/1.27.0 fog-core/1.27.3
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      Date:
+      - Tue, 31 Mar 2015 06:20:13 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Vary:
+      - X-Auth-Token
+      X-Openstack-Request-Id:
+      - req-11ed9184-f59f-4d88-b74f-86525c044478
+      Content-Length:
+      - '4122'
+      Content-Type:
+      - application/json
+    body:
+      encoding: UTF-8
+      string: '{"access": {"token": {"issued_at": "2015-03-31T06:20:13.162118", "expires":
+        "2015-03-31T07:20:13Z", "id": "3dce9cfdd95245009905aa7a3f41e2ea", "tenant":
+        {"description": null, "enabled": true, "id": "2fe3fd6518ea4fca9540da4931905120",
+        "name": "admin"}, "audit_ids": ["P6_fIay-T7OgoqUwonbBTw"]}, "serviceCatalog":
+        [{"endpoints": [{"adminURL": "http://185.43.218.210:8774/v2.1/2fe3fd6518ea4fca9540da4931905120",
+        "region": "RegionOne", "internalURL": "http://185.43.218.210:8774/v2.1/2fe3fd6518ea4fca9540da4931905120",
+        "id": "3ae34b6e8ca0406093184f88630105ae", "publicURL": "http://185.43.218.210:8774/v2.1/2fe3fd6518ea4fca9540da4931905120"}],
+        "endpoints_links": [], "type": "computev21", "name": "novav21"}, {"endpoints":
+        [{"adminURL": "http://185.43.218.210:8774/v2/2fe3fd6518ea4fca9540da4931905120",
+        "region": "RegionOne", "internalURL": "http://185.43.218.210:8774/v2/2fe3fd6518ea4fca9540da4931905120",
+        "id": "dbce7d2f9a7646f199550b337d6352e5", "publicURL": "http://185.43.218.210:8774/v2/2fe3fd6518ea4fca9540da4931905120"}],
+        "endpoints_links": [], "type": "compute", "name": "nova"}, {"endpoints": [{"adminURL":
+        "http://185.43.218.210:9696/", "region": "RegionOne", "internalURL": "http://185.43.218.210:9696/",
+        "id": "17a8325accf94e5b84b05847d486c2c7", "publicURL": "http://185.43.218.210:9696/"}],
+        "endpoints_links": [], "type": "network", "name": "neutron"}, {"endpoints":
+        [{"adminURL": "http://185.43.218.210:8776/v2/2fe3fd6518ea4fca9540da4931905120",
+        "region": "RegionOne", "internalURL": "http://185.43.218.210:8776/v2/2fe3fd6518ea4fca9540da4931905120",
+        "id": "68d11479366d43b3a0d15af94be2dd06", "publicURL": "http://185.43.218.210:8776/v2/2fe3fd6518ea4fca9540da4931905120"}],
+        "endpoints_links": [], "type": "volumev2", "name": "cinderv2"}, {"endpoints":
+        [{"adminURL": "http://185.43.218.210:3333", "region": "RegionOne", "internalURL":
+        "http://185.43.218.210:3333", "id": "0325f0e07543489598d6917e630467e2", "publicURL":
+        "http://185.43.218.210:3333"}], "endpoints_links": [], "type": "s3", "name":
+        "s3"}, {"endpoints": [{"adminURL": "http://185.43.218.210:9292", "region":
+        "RegionOne", "internalURL": "http://185.43.218.210:9292", "id": "5229fb7ce9604e24bd8ca65319db2dad",
+        "publicURL": "http://185.43.218.210:9292"}], "endpoints_links": [], "type":
+        "image", "name": "glance"}, {"endpoints": [{"adminURL": "http://185.43.218.210:8000/v1",
+        "region": "RegionOne", "internalURL": "http://185.43.218.210:8000/v1", "id":
+        "3cf45ac2fefa4ebeac56232d18fa7a28", "publicURL": "http://185.43.218.210:8000/v1"}],
+        "endpoints_links": [], "type": "cloudformation", "name": "heat-cfn"}, {"endpoints":
+        [{"adminURL": "http://185.43.218.210:8776/v1/2fe3fd6518ea4fca9540da4931905120",
+        "region": "RegionOne", "internalURL": "http://185.43.218.210:8776/v1/2fe3fd6518ea4fca9540da4931905120",
+        "id": "303d5737b3bf420d9c6c9460e0b28e3a", "publicURL": "http://185.43.218.210:8776/v1/2fe3fd6518ea4fca9540da4931905120"}],
+        "endpoints_links": [], "type": "volume", "name": "cinder"}, {"endpoints":
+        [{"adminURL": "http://185.43.218.210:8773/", "region": "RegionOne", "internalURL":
+        "http://185.43.218.210:8773/", "id": "4add35d0d5d34afa9d776a5c59c8919e", "publicURL":
+        "http://185.43.218.210:8773/"}], "endpoints_links": [], "type": "ec2", "name":
+        "ec2"}, {"endpoints": [{"adminURL": "http://185.43.218.210:8004/v1/2fe3fd6518ea4fca9540da4931905120",
+        "region": "RegionOne", "internalURL": "http://185.43.218.210:8004/v1/2fe3fd6518ea4fca9540da4931905120",
+        "id": "139252ca7a054cb782de6c400afcd58c", "publicURL": "http://185.43.218.210:8004/v1/2fe3fd6518ea4fca9540da4931905120"}],
+        "endpoints_links": [], "type": "orchestration", "name": "heat"}, {"endpoints":
+        [{"adminURL": "http://185.43.218.210:35357/v2.0", "region": "RegionOne", "internalURL":
+        "http://185.43.218.210:5000/v2.0", "id": "624073bb56af464fb62bb34b255a6b3d",
+        "publicURL": "http://185.43.218.210:5000/v2.0"}], "endpoints_links": [], "type":
+        "identity", "name": "keystone"}], "user": {"username": "admin", "roles_links":
+        [], "id": "e81312a600004dbc99744aab364556af", "roles": [{"name": "admin"}],
+        "name": "admin"}, "metadata": {"is_admin": 0, "roles": ["053c07057b0d489b9d396f4b9b3fbe4d"]}}}'
+    http_version: 
+  recorded_at: Tue, 31 Mar 2015 06:20:23 GMT
+- request:
+    method: get
+    uri: http://185.43.218.210:9696/
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog/1.27.0 fog-core/1.27.3
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token:
+      - 3dce9cfdd95245009905aa7a3f41e2ea
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '122'
+      Date:
+      - Tue, 31 Mar 2015 06:20:13 GMT
+    body:
+      encoding: UTF-8
+      string: '{"versions": [{"status": "CURRENT", "id": "v2.0", "links": [{"href":
+        "http://185.43.218.210:9696/v2.0", "rel": "self"}]}]}'
+    http_version: 
+  recorded_at: Tue, 31 Mar 2015 06:20:23 GMT
+- request:
     method: post
     uri: http://185.43.218.210:9696/v2.0/networks
     body:
