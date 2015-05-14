@@ -64,10 +64,12 @@ class RegistrationGenerator
     end
     # Add heat roles
     unless Rails.env.test?
-      heat_roles = Fog::Identity.new(OPENSTACK_ARGS).list_roles.body['roles'].select{|r| r['name'].include? "heat"}.collect{|r| r['id']}
+      heat_roles = Fog::Identity.new(OPENSTACK_ARGS).list_roles.body['roles'].select{|r| r['name'].include? "heat_stack"}.collect{|r| r['id']}
       heat_roles.each do |role|
         Fog::Identity.new(OPENSTACK_ARGS).create_user_role(@organization.primary_tenant.uuid, @user.uuid, role)
       end
+      storage_role = Fog::Identity.new(OPENSTACK_ARGS).list_roles.body['roles'].select{|r| r['name'].include? "object-store"}.collect{|r| r['id']}.first
+      Fog::Identity.new(OPENSTACK_ARGS).create_user_role(@organization.primary_tenant.uuid, @user.uuid, storage_role)   
     end
     invite.complete!
   end
