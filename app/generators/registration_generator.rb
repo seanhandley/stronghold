@@ -62,6 +62,11 @@ class RegistrationGenerator
         UserTenantRole.create user: @user, tenant: tenant, role_uuid: member_uuid
       end
     end
+    # Add heat roles
+    heat_roles = Fog::Identity.new(OPENSTACK_ARGS).list_roles.body['roles'].select{|r| r['name'].include? "heat"}.collect{|r| r['id']}
+    heat_roles.each do |role|
+      Fog::Identity.new(OPENSTACK_ARGS).create_user_role(@organization.primary_tenant.uuid, @user.uuid, role)
+    end
     invite.complete!
   end
 end
