@@ -12,7 +12,7 @@ module ActiveRecord
 
       define_method :delete_ceph_object do
         begin
-          params[:as].constantize.destroy ceph_params
+          params[:as].constantize.destroy ceph_params.merge('purge-data' => true)
         rescue Net::HTTPError => e
           Honeybadger.notify(e)
         end
