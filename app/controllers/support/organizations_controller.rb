@@ -46,7 +46,7 @@ class Support::OrganizationsController < SupportBaseController
       current_user.organization.tenants.each do |tenant|
         offboard(tenant, creds)
         begin
-          Ceph::User.destroy('uid' => tenant.uuid)
+          Ceph::User.destroy('uid' => tenant.uuid, 'purge-data' => true)
         rescue Net::HTTPError => e
           Honeybadger.notify(e)
         end
