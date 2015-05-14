@@ -12,6 +12,10 @@ module CephObject
       request(:put, path, params)
     end
 
+    def self.update(params)
+      request(:post, path, params)
+    end
+
     def self.destroy(params)
       request(:delete, path, params)
     end
