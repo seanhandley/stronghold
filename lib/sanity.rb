@@ -66,7 +66,7 @@ module Sanity
     if recorded == 'rescued'
       return !recorded.include?(live)
     else
-      live != recorded
+      live == recorded
     end
   end
 end
