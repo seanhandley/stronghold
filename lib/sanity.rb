@@ -64,9 +64,9 @@ module Sanity
 
   def self.check_instance_state(live, recorded)
     if recorded == 'rescued'
-      return recorded.include? live
+      return !recorded.include?(live)
     else
-      live == recorded
+      live != recorded
     end
   end
 end
