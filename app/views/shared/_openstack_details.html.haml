@@ -8,6 +8,24 @@
           %i.fa.fa-cloud
           Cloud Access Info
       .modal-body
+
+        %div{'role' => "tabpanel"}
+          %ul.nav.nav-tabs{'role' => "tablist"}
+            %li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home</a></li>
+            <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Profile</a></li>
+            <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Messages</a></li>
+            <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li>
+          </ul>
+
+          <!-- Tab panes -->
+          .tab-content
+            <div role="tabpanel" class="tab-pane active" id="home">...</div>
+            <div role="tabpanel" class="tab-pane" id="profile">...</div>
+            <div role="tabpanel" class="tab-pane" id="messages">...</div>
+            <div role="tabpanel" class="tab-pane" id="settings">...</div>
+          </div>
+
+        </div>
         .center{style: 'width: 175px; margin-left: auto; margin-right: auto; margin-bottom: 10px'}= image_tag 'openstack.png'
         .alert.alert-info To access your cloud services, you may use the OpenStack dashboard or the API directly using the details below.
         %table.table.table-condensed
