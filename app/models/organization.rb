@@ -25,7 +25,7 @@ class Organization < ActiveRecord::Base
   scope :paying, -> { where('started_paying_at is not null') }
   scope :trial,  -> { where(started_paying_at: nil) }
   scope :cloud,  -> { all.select(&:cloud?) }
-  scope :active, -> { all.select{|o| o.state == OrganizationStates::Active && !disabled?}}
+  scope :active, -> { all.select{|o| o.state == OrganizationStates::Active && !o.disabled?}}
 
   def staff?
     (reference == STAFF_REFERENCE)
