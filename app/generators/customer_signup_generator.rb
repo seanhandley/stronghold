@@ -24,7 +24,9 @@ class CustomerSignupGenerator
   private
 
   def create_customer
-    @organization = Organization.create! name: @customer_signup.organization_name, customer_signup: @customer_signup
+    @organization = Organization.create! name: @customer_signup.organization_name,
+                                         customer_signup: @customer_signup,
+                                         state: OrganizationStates::Fresh
     @organization.products << Product.find_by_name('Compute')
     @organization.products << Product.find_by_name('Storage')
     @organization.save!
