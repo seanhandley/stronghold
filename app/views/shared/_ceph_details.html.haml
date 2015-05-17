@@ -1,0 +1,23 @@
+.center{style: 'width: 125px; margin-left: auto; margin-right: auto; margin-bottom: 10px; margin-top: 10px'}= image_tag 'ceph.png'
+.alert.alert-info To access your storage services, you may use the credentials and details below.
+%table.table.table-condensed
+  %tbody
+    %tr
+      %td
+        %strong Protocol:
+      %td
+        %i.fa.fa-cubes
+        Amazon S3
+    %tr
+      %td
+        %strong Host:
+      %td= link_to CEPH_ARGS[:api_url], "https://#{CEPH_ARGS[:api_url]}", target: '_blank'
+    %tr
+      %td
+        %strong Access Key:
+      %td= current_user.ec2_credentials.first['access']
+    %tr
+      %td
+        %strong Secret Key
+      %td= current_user.ec2_credentials.first['secret']
+

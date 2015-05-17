@@ -97,6 +97,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def ec2_credentials
+    Fog::Identity.new(OPENSTACK_ARGS).list_ec2_credentials(uuid).body['credentials']
+  end
+
   private
 
   def password_complexity
