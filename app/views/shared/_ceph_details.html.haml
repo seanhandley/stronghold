@@ -1,0 +1,16 @@
+.center{style: 'width: 125px; margin-left: auto; margin-right: auto; margin-bottom: 10px; margin-top: 10px'}= image_tag 'ceph.png'
+.alert.alert-info To access your storage services, you may use the credentials and details below.
+%table.table.table-condensed
+  %tbody
+    %tr
+      %td
+        %strong API:
+      %td= link_to 'https://compute.datacentred.io:8773/v2/Cloud', 'https://compute.datacentred.io:8773/v2/Cloud', target: '_blank'
+    %tr
+      %td
+        %strong Access Key:
+      %td= current_user.ec2_credentials.first['access']
+    %tr
+      %td
+        %strong Secret Key
+      %td= current_user.ec2_credentials.first['secret']
