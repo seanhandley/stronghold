@@ -4,8 +4,14 @@
   %tbody
     %tr
       %td
-        %strong API:
-      %td= link_to 'https://compute.datacentred.io:8773/v2/Cloud', 'https://compute.datacentred.io:8773/v2/Cloud', target: '_blank'
+        %strong Protocol:
+      %td
+        %i.fa.fa-cubes
+        Amazon S3
+    %tr
+      %td
+        %strong Host:
+      %td= link_to CEPH_ARGS[:api_url], "https://#{CEPH_ARGS[:api_url]}", target: '_blank'
     %tr
       %td
         %strong Access Key:
@@ -14,3 +20,4 @@
       %td
         %strong Secret Key
       %td= current_user.ec2_credentials.first['secret']
+
