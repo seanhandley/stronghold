@@ -19,5 +19,6 @@
     %tr
       %td
         %strong Secret Key
-      %td= current_user.ec2_credentials ? current_user.ec2_credentials['secret'] : "Unknown"
+      %td.click-to-reveal{'data-reveal' => current_user.ec2_credentials ? current_user.ec2_credentials['secret'] : "Unknown"}
+        %em Click To Reveal
 
