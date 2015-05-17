@@ -23,7 +23,7 @@
       
     %div.page-body
       = render partial: 'shared/environment'
-      = render partial: 'shared/openstack_details'
+      = render partial: 'shared/cloud_services'
       .container
         - if request.url == support_root_url
           = render :partial => "announcements/starburst/announcement_bootstrap"

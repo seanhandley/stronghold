@@ -5,16 +5,18 @@ div.tab-content {
   border: 0px;
 }
 
-.nav-tabs {
+.nav-tabs#user-role-tabs {
   border: 0px;
   float: right;
 }
 
-.nav-tabs > li > a {
+.nav-tabs#user-role-tabs > li > a {
   border: 0px;
 }
 
-.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+.nav-tabs#user-role-tabs > li.active > a,
+.nav-tabs#user-role-tabs > li.active > a:hover,
+.nav-tabs#user-role-tabs > li.active > a:focus {
   border: 0px;
   font-weight: bold;
 }
