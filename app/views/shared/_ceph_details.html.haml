@@ -7,7 +7,7 @@
         %strong Protocol:
       %td
         %i.fa.fa-cubes
-        Amazon S3
+        AmazonS3
     %tr
       %td
         %strong Host:
@@ -15,9 +15,9 @@
     %tr
       %td
         %strong Access Key:
-      %td= current_user.ec2_credentials.first['access']
+      %td= current_user.ec2_credentials ? current_user.ec2_credentials['access'] : "Unknown"
     %tr
       %td
         %strong Secret Key
-      %td= current_user.ec2_credentials.first['secret']
+      %td= current_user.ec2_credentials ? current_user.ec2_credentials['secret'] : "Unknown"
 

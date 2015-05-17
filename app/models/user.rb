@@ -98,7 +98,7 @@ class User < ActiveRecord::Base
   end
 
   def ec2_credentials
-    Fog::Identity.new(OPENSTACK_ARGS).list_ec2_credentials(uuid).body['credentials']
+    Fog::Identity.new(OPENSTACK_ARGS).list_ec2_credentials(uuid).body['credentials'].first
   end
 
   private
