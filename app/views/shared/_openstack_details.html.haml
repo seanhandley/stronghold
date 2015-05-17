@@ -1,57 +1,25 @@
-.modal.fade#showOpenStackDetails{'tabindex' => "-1", 'role' => "dialog", 'aria-labelledby' => "showOpenStackDetails", 'aria-hidden' => "true", 'data-backdrop' => 'static'}
-  .modal-dialog
-    .modal-content
-      .modal-header
-        %button{'type' => "button", 'class' => "close", 'data-dismiss' => "modal", 'aria-hidden' => "true"}
-          &times;
-        %h2.modal-title
-          %i.fa.fa-cloud
-          Cloud Access Info
-      .modal-body
-
-        %div{'role' => "tabpanel"}
-          %ul.nav.nav-tabs{'role' => "tablist"}
-            %li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home</a></li>
-            <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Profile</a></li>
-            <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Messages</a></li>
-            <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li>
-          </ul>
-
-          <!-- Tab panes -->
-          .tab-content
-            <div role="tabpanel" class="tab-pane active" id="home">...</div>
-            <div role="tabpanel" class="tab-pane" id="profile">...</div>
-            <div role="tabpanel" class="tab-pane" id="messages">...</div>
-            <div role="tabpanel" class="tab-pane" id="settings">...</div>
-          </div>
-
-        </div>
-        .center{style: 'width: 175px; margin-left: auto; margin-right: auto; margin-bottom: 10px'}= image_tag 'openstack.png'
-        .alert.alert-info To access your cloud services, you may use the OpenStack dashboard or the API directly using the details below.
-        %table.table.table-condensed
-          %tbody
-            %tr
-              %td
-                %strong Dashboard:
-              %td= link_to openstack_path, openstack_path, target: '_blank'
-            %tr
-              %td
-                %strong API (Keystone):
-              %td= link_to OPENSTACK_ARGS[:openstack_auth_url], OPENSTACK_ARGS[:openstack_auth_url], target: '_blank'
-            %tr
-              %td
-                %strong Username:
-              %td= current_user.email
-            %tr
-              %td
-                %strong Password:
-              %td
-                %em Same as your login password
-            %tr
-              %td
-                %strong Primary Tenant:
-              %td= current_user.organization.primary_tenant.reference
-
-      .modal-footer
-        %button.btn.btn-primary{'data-toggle' => "modal", 'data-dismiss' => "modal"}
-          = 'OK'
+.center{style: 'width: 175px; margin-left: auto; margin-right: auto; margin-bottom: 10px'}= image_tag 'openstack.png'
+.alert.alert-info To access your services, you may use the OpenStack dashboard or the API directly using the details below.
+%table.table.table-condensed
+  %tbody
+    %tr
+      %td
+        %strong Dashboard:
+      %td= link_to openstack_path, openstack_path, target: '_blank'
+    %tr
+      %td
+        %strong API (Keystone):
+      %td= link_to OPENSTACK_ARGS[:openstack_auth_url], OPENSTACK_ARGS[:openstack_auth_url], target: '_blank'
+    %tr
+      %td
+        %strong Username:
+      %td= current_user.email
+    %tr
+      %td
+        %strong Password:
+      %td
+        %em Same as your login password
+    %tr
+      %td
+        %strong Primary Tenant:
+      %td= current_user.organization.primary_tenant.reference
