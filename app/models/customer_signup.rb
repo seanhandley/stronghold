@@ -2,8 +2,8 @@ class CustomerSignup < ActiveRecord::Base
   after_create -> { update_attributes(uuid: SecureRandom.hex) }
   after_commit :send_email, on: :create
 
-  validates :email, length: {minimum: 5}, allow_blank: false
   validate :email_valid
+  validates :email, length: {minimum: 5}, allow_blank: false
 
   def ready?
     stripe_customer_id.present? && address_check_passed?
