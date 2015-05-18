@@ -33,6 +33,6 @@ class CustomerSignupGenerator
 
     @invite = Invite.create! email: @customer_signup.email, power_invite: true,
                              organization: @organization, customer_signup: @customer_signup
-    Hipchat.notify('Self Service', 'Accounts', "New user signed up: #{@customer_signup.email} becoming organization #{@organization.id}")
+    Hipchat.notify('Self Service', 'Accounts', "New user signed up: #{@customer_signup.email} becoming organization #{@organization.id}", color: 'green')
   end
 end
