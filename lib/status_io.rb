@@ -8,7 +8,7 @@ module StatusIO
       req.body = {
                     "meth" => "email",
                     "address" => email,
-                    "silent" => 1
+                    "silent" => '1'
                   }.merge("statuspage_id" => Rails.application.secrets.status_io_page_id).to_json
     end
   end
