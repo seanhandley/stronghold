@@ -4,6 +4,10 @@
 %p Just a few more details before we get started...
 
 = form_tag({url: signup_complete_path(@invite.token)}, 'role' => 'form') do
+
+  - if flash.present?
+    #flashes= display_flash
+    
   .form-group
     %label First Name
     = text_field_tag :first_name, @registration.first_name, class: 'form-control'
