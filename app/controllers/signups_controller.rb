@@ -25,7 +25,7 @@ class SignupsController < ApplicationController
     else
       respond_to do |format|
         format.html {
-          flash[:error] = @customer_signup.errors.full_messages.join('<br>').html_safe
+          flash.now.alert = @customer_signup.errors.full_messages.join('<br>').html_safe
           render :new
         }
         format.json { render json: {errors: @customer_signup.errors.full_messages}, status: :unprocessable_entity }
@@ -47,7 +47,8 @@ class SignupsController < ApplicationController
       session[:token] = @registration.user.authenticate(update_params[:password])
       redirect_to support_root_path
     else
-      flash[:error] = @registration.errors.full_messages.join('<br>')
+      flash.clear
+      flash.now.alert = @registration.errors.full_messages.join('<br>').html_safe
       render :edit    
     end
   end
