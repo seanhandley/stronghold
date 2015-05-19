@@ -28,7 +28,7 @@ class CustomerSignupGenerator
     @organization = Organization.create! name: @customer_signup.organization_name,
                                          customer_signup: @customer_signup,
                                          state: OrganizationStates::Fresh,
-                                         timezone: ActiveSupport::TimeZone[offset].name
+                                         time_zone: ActiveSupport::TimeZone[offset].name
     @organization.products << Product.find_by_name('Compute')
     @organization.products << Product.find_by_name('Storage')
     @organization.save!
