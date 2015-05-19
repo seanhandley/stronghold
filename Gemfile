@@ -38,6 +38,7 @@ gem 'countries'
 gem 'fraudrecord'
 gem "recaptcha", :require => "recaptcha/rails"
 gem 'tel_to_helper'
+gem 'geo_ip'
 
 group :test do
   gem 'minitest-rails'
