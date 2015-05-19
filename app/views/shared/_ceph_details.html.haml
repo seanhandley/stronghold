@@ -15,10 +15,10 @@
     %tr
       %td
         %strong Access Key:
-      %td= current_user.ec2_credentials ? current_user.ec2_credentials['access'] : "Unknown"
+      %td= current_user.ec2_credentials.any? ? current_user.ec2_credentials(current_user.organization.primary_tenant.uuid)['access'] : "Unknown"
     %tr
       %td
         %strong Secret Key
-      %td.click-to-reveal{'data-reveal' => current_user.ec2_credentials ? current_user.ec2_credentials['secret'] : "Unknown"}
+      %td.click-to-reveal{'data-reveal' => current_user.ec2_credentials.any? ? current_user.ec2_credentials(current_user.organization.primary_tenant.uuid)['secret'] : "Unknown"}
         %em Click To Reveal
 
