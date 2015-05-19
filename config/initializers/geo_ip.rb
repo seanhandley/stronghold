@@ -1,3 +1,3 @@
-# require 'geo_ip'
+require 'geo_ip'
 
-# GeoIp.api_key = ENV["GEO_IP_API_KEY"]
+GeoIp.api_key = ENV["GEO_IP_API_KEY"]

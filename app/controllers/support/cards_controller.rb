@@ -4,6 +4,7 @@ class Support::CardsController < SupportBaseController
 
   def new
     if current_user.organization.known_to_payment_gateway?
+      @location = GeoIp.geolocation(request.remote_ip)[:country_code] rescue 'GB'
       redirect_to support_root_path
     else
       @customer_signup = CustomerSignup.find_by_email(current_user.email)

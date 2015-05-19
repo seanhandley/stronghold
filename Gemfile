@@ -38,7 +38,8 @@ gem 'countries'
 gem 'fraudrecord'
 gem "recaptcha", :require => "recaptcha/rails"
 gem 'tel_to_helper'
-gem 'geo_ip'
+gem 'rest-client', '~> 1.6'
+gem 'geo_ip', '~> 0.5.0'
 
 group :test do
   gem 'minitest-rails'
