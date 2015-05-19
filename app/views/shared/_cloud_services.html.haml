@@ -12,7 +12,7 @@
         %div{'role' => "tabpanel"}
           %ul.nav.nav-tabs{'role' => "tablist"}
             - if current_user.organization.compute? && can?(:read, :cloud)
-              - @openstack_active = true
+              - @openstack_active = 'active'
               %li{'role' => "presentation", 'class' => "active"}
                 %a{'href' => "#openstack", 'aria-controls' => "openstack", 'role' => "tab", 'data-toggle' => "tab"}
                   OpenStack
@@ -23,11 +23,10 @@
 
         .tab-content
           - if current_user.organization.compute? && can?(:read, :cloud)
-            - @openstack_active = true
+            - @openstack_active = 'active'
             %div.tab-pane{'role' => "tabpanel", 'class' => "active", 'id' => "openstack"}
               = render partial: 'shared/openstack_details'
           - if current_user.organization.storage? && can?(:read, :storage)
-            - @active = "active" unless 
             %div.tab-pane{'role' => "tabpanel", 'class' => !@openstack_active, 'id' => "ceph"}
               = render partial: 'shared/ceph_details'
 
