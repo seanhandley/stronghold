@@ -4,13 +4,13 @@ class User < ActiveRecord::Base
   attr_accessor :password, :password_confirmation, :token
 
   authenticates_with_keystone
-  syncs_with_keystone as: 'OpenStack::User', actions: [:create, :destroy]
   after_save :update_password
   after_commit :generate_ec2_credentials, on: :create
   after_commit :check_openstack_access, :check_ceph_access, on: :create
 
   after_create :set_local_password, :subscribe_to_status_io
   before_destroy :remove_ceph_keys
+  syncs_with_keystone as: 'OpenStack::User', actions: [:create, :destroy]
 
   has_and_belongs_to_many :roles
   belongs_to :organization
