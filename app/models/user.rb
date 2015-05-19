@@ -6,10 +6,10 @@ class User < ActiveRecord::Base
   authenticates_with_keystone
   syncs_with_keystone as: 'OpenStack::User', actions: [:create, :destroy]
   after_save :update_password
+  after_commit :generate_ec2_credentials, on: :create
   after_commit :check_openstack_access, :check_ceph_access, on: :create
 
   after_create :set_local_password, :subscribe_to_status_io
-  after_commit :generate_ec2_credentials, on: :create
   before_destroy :remove_ceph_keys
 
   has_and_belongs_to_many :roles
