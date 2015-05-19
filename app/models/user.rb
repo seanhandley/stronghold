@@ -97,8 +97,11 @@ class User < ActiveRecord::Base
     end
   end
 
-  def ec2_credentials
-    Fog::Identity.new(OPENSTACK_ARGS).list_ec2_credentials(uuid).body['credentials'].first
+  def ec2_credentials(tenant_uuid=nil)
+    creds = Fog::Identity.new(OPENSTACK_ARGS).list_ec2_credentials(uuid).body['credentials']
+    return creds unless tenant_uuid
+
+    creds.select{|c| c["tenant_id"] == tenant_uuid}
   end
 
   private
