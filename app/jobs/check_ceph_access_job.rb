@@ -7,7 +7,7 @@ class CheckCephAccessJob < ActiveJob::Base
         begin
           Ceph::UserKey.create 'uid' => tenant.uuid,
                                'access-key' => user.ec2_credentials['access'],
-                               'secret-key' => user.ec2_credentials['secret']
+                               'secret-key' => user.ec2_credentials['secret'] if user.ec2_credentials
         rescue Net::HTTPError => e
           Honeybadger.notify(e)
         end
@@ -15,7 +15,7 @@ class CheckCephAccessJob < ActiveJob::Base
     else
       user.organization.tenants.each do |tenant|
         begin
-          Ceph::UserKey.destroy 'access-key' => user.ec2_credentials['access']
+          Ceph::UserKey.destroy 'access-key' => user.ec2_credentials['access'] if user.ec2_credentials
         rescue Net::HTTPError => e
           Honeybadger.notify(e) unless e.message.include? 'AccessDenied'
         end
