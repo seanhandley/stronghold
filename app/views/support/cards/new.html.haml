@@ -1,63 +1,94 @@
+.pull-right= image_tag 'horizon.png', width: 260, class: "img-responsive", id: 'horizon'
+
 %h1
-  %i.fa.fa-credit-card
-  Almost there...
+  %i.fa.fa-plug
+  Activate
+
+.lead
+  Before we let you loose spinning up instances,
+  %br we need to activate your account...
+
+.small
+  You can also activate by getting in touch on
+  = tel_to '+44 161 870 3981'
+  between 9am and 5pm GMT.
+
+.push
+
+%a{name: 'view-errors'}
 
 %div#signup-form-area
   = form_tag(support_cards_path, 'role' => 'form', 'id' => 'cc-details') do
+    .jumbotron
+      .row
+        .col-md-5
+          %h2 Billing Address
+          %h4 Lookup Postcode
+          .form-group
+            #lookup-field
+          .form-group
+            %label Address
+            = text_field_tag :address_line1, nil, :class => 'form-control', 'data-stripe' => 'address_line1', placeholder: 'Address Line 1'
+          .form-group
+            = text_field_tag :address_line2, nil, :class => 'form-control', 'data-stripe' => 'address_line2', placeholder: 'Address Line 2'
+          .form-group
+            %label City
+            = text_field_tag :address_city, nil, :class => 'form-control', 'data-stripe' => 'address_city'
+          = hidden_field_tag :postcode, nil, 'data-stripe' => 'address_zip'
+          .form-group
+            = country_select :address_country, nil, {:selected => 'GB'}, {:class => 'form-control', 'data-stripe' => 'address_country', :id => 'address_country'}
+          %p.small
+            %em
+              We need to verify the address associated with your card. We will protetct your personal information in accordance with our
+              = link_to 'privacy policy', 'http://www.datacentred.co.uk/privacy.html'
+              \.
+        .col-md-2
+        .col-md-5
+          %h2 Card Details
+          #card-display
+          = hidden_field_tag :signup_uuid, @customer_signup.uuid
+          #flashes
+          .form-group
+            %label Card Number
+            .inline
+              = text_field_tag :card_number, nil, :class => 'form-control', 'data-stripe' => 'number'
+              = text_field_tag :cvc, nil, :size => 4, :placeholder => 'CVC', :class => 'form-control', 'data-stripe' => 'cvc'
+          .inline-form-groups
+            .form-group#name
+              %label Name
+              = text_field_tag :name, nil, :class => 'form-control', 'data-stripe' => 'name'
+            .form-group#expiry
+              %label Expiry Date
+              = text_field_tag :expiry, nil, :class => 'form-control', placeholder: 'MM/YYYY'
+          = hidden_field_tag :expiry_month, nil, 'data-stripe' => 'exp-month'
+          = hidden_field_tag :expiry_year, nil, 'data-stripe' => 'exp-year'
+          .pull-right
+            .powered-by-stripe
+              .pull-right
+                %a{href: "https://stripe.com", target: '_blank'}
+                  = image_tag 'powered_by_stripe.png'
+          %p.small
+            %em
+              Your card details are handled directly by Stripe
+              %br
+              and never sent to our servers.
     .row
-      .col-md-4
-        %h3 1. Card Details
-        = hidden_field_tag :signup_uuid, @customer_signup.uuid
-        #card-display
-        #flashes
-        .form-group
-          %label Number
-          .inline
-            = text_field_tag :card_number, nil, :class => 'form-control', 'data-stripe' => 'number'
-            = text_field_tag :cvc, nil, :size => 4, :placeholder => 'CVC', :class => 'form-control', 'data-stripe' => 'cvc'
-        .inline-form-groups
-          .form-group#name
-            %label Name
-            = text_field_tag :name, nil, :class => 'form-control', 'data-stripe' => 'name'
-          .form-group#expiry
-            %label Expiry Date
-            = text_field_tag :expiry, nil, :class => 'form-control', placeholder: 'MM/YYYY'
-        = hidden_field_tag :expiry_month, nil, 'data-stripe' => 'exp-month'
-        = hidden_field_tag :expiry_year, nil, 'data-stripe' => 'exp-year'
-
-      .col-md-4
-        %h3 2. Billing Address
-        .form-group
-          #lookup-field
-        .form-group
-          %label Address
-          = text_field_tag :address_line1, nil, :class => 'form-control', 'data-stripe' => 'address_line1', placeholder: 'Address Line 1'
-        .form-group
-          = text_field_tag :address_line2, nil, :class => 'form-control', 'data-stripe' => 'address_line2', placeholder: 'Address Line 2'
-        .form-group
-          %label City
-          = text_field_tag :address_city, nil, :class => 'form-control', 'data-stripe' => 'address_city'
-        = hidden_field_tag :postcode, nil, 'data-stripe' => 'address_zip'
-        .form-group
-          = country_select :address_country, nil, {:selected => 'GB'}, {:class => 'form-control', 'data-stripe' => 'address_country', :id => 'address_country'}
-      .col-md-4
-        %h3 3. Confirm
+      .col-md-6
         = render partial: 'info'
-        .form-group
+        %label
+          By activating, you agree to our
+          = link_to 'Terms of Service', 'http://www.datacentred.co.uk/terms_of_service.html', target: '_blank'
+          \.    
+      .col-md-6
+        .pull-right= submit_tag 'Activate →', class: 'btn btn-success btn-lg', id: 'complete-signup'
+        .form-group#discount
           %label Discount Code
-          .input-group{style: 'width:100%'}
-            = text_field_tag :discount_code, nil, placeholder: 'Got a discount code? Enter it here!', class: 'form-control'
+          = text_field_tag :discount_code, nil, :size => 20, placeholder: 'Got a discount code? Enter it here!', class: 'form-control'
           %p.help-block
             #discount_code_message
-          %label
-            By signing up, you agree to our
-            = link_to 'Terms of Service', 'http://www.datacentred.co.uk/terms_of_service.html', target: '_blank'
-            \.
-          .pull-right= submit_tag 'Complete Signup →', class: 'btn btn-success', id: 'complete-signup'
-    .pull-right
-      .powered-by-stripe
-        %a{href: "https://stripe.com", target: '_blank'}
-          = image_tag 'powered_by_stripe.png'
+        
+             
+
 
 .push
 = javascript_include_tag asset_path('assets/card.js')
