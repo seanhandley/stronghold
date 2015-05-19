@@ -2,13 +2,14 @@ Hello and welcome to DataCentred,
 
 Your account is now ready to be accessed for the first time. Please set up your new account: <%= signup_begin_url(@invite.token) %>.
 
-The above setup link will expire at <%= am_pm_time(@invite.expires_at) %> on <%= long_date(@invite.expires_at) %>. If the link has expired, please contact support@datacentred.co.uk.
-
 Getting Started
 
 - Our user portal can be found at my.datacentred.io - from here, you can view your cloud usage information, raise support tickets, invite other users, and handle your account settings.
 - Our documentation can be found at docs.datacentred.io and contains various articles and tutorials on common topics and frequently asked questions.
 - The OpenStack control panel can be found at compute.datacentred.io and allows you to create and manage instances, volumes, images and virtual networking hardware. You can log into this using the same username and password as my.datacentred.io
+
+
+The above setup link will expire at <%= am_pm_time(@invite.expires_at) %> on <%= long_date(@invite.expires_at) %>. If the link has expired, please contact support@datacentred.co.uk.
 
 If you requre any assistance, please log into my.datacentred.io and raise a ticket in the Support section.
 
