@@ -12,22 +12,23 @@
         %div{'role' => "tabpanel"}
           %ul.nav.nav-tabs{'role' => "tablist"}
             - if current_user.organization.compute? && can?(:read, :cloud)
+              - @openstack_active = true
               %li{'role' => "presentation", 'class' => "active"}
                 %a{'href' => "#openstack", 'aria-controls' => "openstack", 'role' => "tab", 'data-toggle' => "tab"}
                   OpenStack
             - if current_user.organization.storage? && can?(:read, :storage)
-              - @active = "active" unless current_user.organization.compute?
-              %li{'role' => "presentation", 'class' => @active}
+              %li{'role' => "presentation", 'class' => !@openstack_active}
                 %a{'href' => "#ceph", 'aria-controls' => "ceph", 'role' => "tab", 'data-toggle' => "tab"}
                   Ceph
 
         .tab-content
-          - if current_user.organization.compute? && can?(:read, :cloud) 
+          - if current_user.organization.compute? && can?(:read, :cloud)
+            - @openstack_active = true
             %div.tab-pane{'role' => "tabpanel", 'class' => "active", 'id' => "openstack"}
               = render partial: 'shared/openstack_details'
           - if current_user.organization.storage? && can?(:read, :storage)
-            - @active = "active" unless current_user.organization.compute?
-            %div.tab-pane{'role' => "tabpanel", 'class' => @active, 'id' => "ceph"}
+            - @active = "active" unless 
+            %div.tab-pane{'role' => "tabpanel", 'class' => !@openstack_active, 'id' => "ceph"}
               = render partial: 'shared/ceph_details'
 
         
