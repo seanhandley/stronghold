@@ -1,5 +1,4 @@
-.pull-right= image_tag 'horizon.png', width: 260, class: "img-responsive", id: 'horizon'
-
+.pull-right= image_tag 'cloud-symbol.png', width: 220, id: 'cloud-symbol'
 %h1
   %i.fa.fa-plug
   Activate
@@ -70,25 +69,25 @@
           %p.small
             %em
               Your card details are handled directly by Stripe
-              %br
               and never sent to our servers.
     .row
-      .col-md-6
+      .col-md-7
+        = image_tag 'horizon.png', id: 'horizon'
+      .col-md-5
+        .push
         = render partial: 'info'
-        %label
-          By activating, you agree to our
-          = link_to 'Terms of Service', 'http://www.datacentred.co.uk/terms_of_service.html', target: '_blank'
-          \.    
-      .col-md-6
-        .pull-right= submit_tag 'Activate →', class: 'btn btn-success btn-lg', id: 'complete-signup'
         .form-group#discount
           %label Discount Code
-          = text_field_tag :discount_code, nil, :size => 20, placeholder: 'Got a discount code? Enter it here!', class: 'form-control'
-          %p.help-block
-            #discount_code_message
+          .form-group
+            = text_field_tag :discount_code, nil, placeholder: 'Got a discount code? Enter it here!', class: 'form-control'
+            %p.help-block
+              #discount_code_message
+        .pull-right= submit_tag 'Activate →', class: 'btn btn-primary btn-lg', id: 'complete-signup'
         
-             
-
-
-.push
+.pull-right
+  %label
+    By activating, you agree to our
+    = link_to 'Terms of Service', 'http://www.datacentred.co.uk/terms_of_service.html', target: '_blank'
+    \.    
+          
 = javascript_include_tag asset_path('assets/card.js')
