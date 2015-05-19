@@ -148,9 +148,9 @@ class User < ActiveRecord::Base
   end
 
   def remove_ceph_keys
-    organization.tenants.each do |tenant|
+    self.organization.tenants.each do |tenant|
       begin
-        Ceph::UserKey.destroy 'access-key' => ec2_credentials['access'] if ec2_credentials
+        Ceph::UserKey.destroy 'access-key' => self.ec2_credentials['access'] if self.ec2_credentials
       rescue Net::HTTPError => e
         Honeybadger.notify(e) unless e.message.include? 'AccessDenied'
       end
