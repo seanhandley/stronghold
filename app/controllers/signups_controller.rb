@@ -3,7 +3,7 @@ class SignupsController < ApplicationController
   layout :set_layout
 
   before_filter :check_enabled, only: [:new, :create]
-  before_filter :find_invite, except: [:new, :create]
+  before_filter :find_invite, except: [:new, :create, :ip]
   skip_before_filter :verify_authenticity_token, :only => [:create]
 
   def new
