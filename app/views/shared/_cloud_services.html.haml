@@ -11,21 +11,21 @@
 
         %div{'role' => "tabpanel"}
           %ul.nav.nav-tabs{'role' => "tablist"}
-            - if current_user.organization.compute?
+            - if current_user.organization.compute? && can?(:read, :cloud)
               %li{'role' => "presentation", 'class' => "active"}
                 %a{'href' => "#openstack", 'aria-controls' => "openstack", 'role' => "tab", 'data-toggle' => "tab"}
                   OpenStack
-            - if current_user.organization.storage?
+            - if current_user.organization.storage? && can?(:read, :storage)
               - @active = "active" unless current_user.organization.compute?
               %li{'role' => "presentation", 'class' => @active}
                 %a{'href' => "#ceph", 'aria-controls' => "ceph", 'role' => "tab", 'data-toggle' => "tab"}
                   Ceph
 
         .tab-content
-          - if current_user.organization.compute?
+          - if current_user.organization.compute? && can?(:read, :cloud) 
             %div.tab-pane{'role' => "tabpanel", 'class' => "active", 'id' => "openstack"}
               = render partial: 'shared/openstack_details'
-          - if current_user.organization.storage?
+          - if current_user.organization.storage? && can?(:read, :storage)
             - @active = "active" unless current_user.organization.compute?
             %div.tab-pane{'role' => "tabpanel", 'class' => @active, 'id' => "ceph"}
               = render partial: 'shared/ceph_details'
