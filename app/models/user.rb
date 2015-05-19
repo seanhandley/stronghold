@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
   authenticates_with_keystone
   syncs_with_keystone as: 'OpenStack::User', actions: [:create, :destroy]
   after_save :update_password
-  after_commit :check_openstack_access, on: :create
+  after_commit :check_openstack_access, :check_ceph_access, on: :create
 
   after_create :set_local_password, :subscribe_to_status_io
   after_commit :generate_ec2_credentials, on: :create
@@ -137,6 +137,12 @@ class User < ActiveRecord::Base
   def check_openstack_access
     unless Rails.env.test?
       CheckOpenStackAccessJob.perform_later(self)
+    end
+  end
+
+  def check_ceph_access
+    unless Rails.env.test?
+      CheckCephAccessJob.perform_later(self)
     end
   end
 

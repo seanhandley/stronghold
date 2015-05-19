@@ -5,7 +5,7 @@ class Role < ActiveRecord::Base
   has_and_belongs_to_many :users
   belongs_to :organization
   before_destroy :check_users, :check_power
-  after_commit :check_openstack_access
+  after_commit :check_openstack_access, :check_ceph_access
 
   serialize :permissions
 
@@ -39,5 +39,11 @@ class Role < ActiveRecord::Base
     unless Rails.env.test?
       users.each {|user| CheckOpenStackAccessJob.perform_later(user)}
     end
+  end
+
+  def check_ceph_access
+    unless Rails.env.test?
+      users.each {|user| CheckCephAccessJob.perform_later(user)}
+    end   
   end
 end
