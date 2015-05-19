@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
 
   after_create :set_local_password, :subscribe_to_status_io
   after_commit :generate_ec2_credentials, on: :create
+  before_destroy :remove_ceph_keys
 
   has_and_belongs_to_many :roles
   belongs_to :organization
@@ -143,6 +144,16 @@ class User < ActiveRecord::Base
   def check_ceph_access
     unless Rails.env.test?
       CheckCephAccessJob.perform_later(self)
+    end
+  end
+
+  def remove_ceph_keys
+    organization.tenants.each do |tenant|
+      begin
+        Ceph::UserKey.destroy 'access-key' => ec2_credentials['access'] if ec2_credentials
+      rescue Net::HTTPError => e
+        Honeybadger.notify(e) unless e.message.include? 'AccessDenied'
+      end
     end
   end
 
