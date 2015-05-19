@@ -9,7 +9,7 @@ class CheckCephAccessJob < ActiveJob::Base
                                'access-key' => user.ec2_credentials['access'],
                                'secret-key' => user.ec2_credentials['secret'] if user.ec2_credentials
         rescue Net::HTTPError => e
-          Honeybadger.notify(e)
+          Honeybadger.notify(e) unless e.message.include? 'BucketAlreadyExists'
         end
       end
     else
