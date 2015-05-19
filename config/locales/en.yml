@@ -32,6 +32,7 @@ en:
   can_instances_read: "Can read instances"
   can_roles_modify: "Can modify roles and invite users"
   can_roles_read: "Can view roles"
+  can_storage_access: "Can access/modify buckets via Ceph/S3"
   can_tickets_modify: "Can create and comment on support tickets"
   can_tickets_read: "Can view support tickets"
   can_usage_read: "Can view usage data"

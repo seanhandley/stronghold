@@ -8,7 +8,7 @@ class RoleUser < ActiveRecord::Base
 
   before_destroy :check_destroyable
   before_save :check_presence, :check_addable
-  after_commit :check_openstack_access
+  after_commit :check_openstack_access, :check_ceph_access
 
   validates :role, :user, presence: true
 
@@ -45,6 +45,12 @@ class RoleUser < ActiveRecord::Base
   def check_openstack_access
     unless Rails.env.test?
       CheckOpenStackAccessJob.perform_later(user)
+    end
+  end
+
+  def check_ceph_access
+    unless Rails.env.test?
+      CheckCephAccessJob.perform_later(user)
     end
   end
 end

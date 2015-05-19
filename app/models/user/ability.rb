@@ -24,6 +24,7 @@ class User::Ability
     # Cloud
     can :read, :usage if user.has_permission?('usage.read')
     can :read, :cloud if user.has_permission?('cloud.read')
+    can :read, :storage if user.has_permission?('storage.read')
 
     ## Power User can do everything
     can :modify, :all if user.power_user?
