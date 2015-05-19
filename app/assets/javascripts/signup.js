@@ -114,6 +114,7 @@ var Signup = {
     $div.append($("<p>" + message + "</p>"));
     $form.find('#flashes').empty();
     $form.find('#flashes').removeClass('hide');
-    $form.find('#flashes').append($div)
+    $form.find('#flashes').append($div);
+    location.href = '#view-errors'
   }
 }

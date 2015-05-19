@@ -59,6 +59,7 @@ Rails.application.routes.draw do
   post 'reauthorise', :controller => 'support/organizations', :action => 'reauthorise'
   post 'close_account', :controller => 'support/organizations', :action => 'close'
   post 'voucher_precheck', :controller => 'vouchers', :action => 'precheck'
+  get 'activate', :controller => 'support/cards', :action => 'new'
 
   post 'salesforce', :controller => 'salesforce', :action => 'update'
 

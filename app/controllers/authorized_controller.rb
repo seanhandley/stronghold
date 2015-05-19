@@ -61,8 +61,8 @@ class AuthorizedController < ApplicationController
       return
     end
     if !current_user.organization.known_to_payment_gateway?
-      return if [new_support_card_path, support_cards_path].include?(request.fullpath)
-      redirect_to new_support_card_path
+      return if [activate_path, support_cards_path].include?(request.fullpath)
+      redirect_to activate_path
     elsif !current_user.organization.has_payment_method?
       if !current_user.admin?
         reset_session
