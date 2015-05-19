@@ -53,6 +53,13 @@ class SignupsController < ApplicationController
     end
   end
 
+  def ip
+    data = GeoIp.geolocation(request.remote_ip)
+    render text: data
+  rescue => e
+    render text: e.inspect
+  end
+
   private
 
   def current_ability
