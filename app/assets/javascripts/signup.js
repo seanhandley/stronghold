@@ -49,6 +49,10 @@ $(document).ready(function() {
     } else {
       $('#idpc_button').hide();
     }
+    el = $('ul.flags .flag')
+    el.removeClass();
+    el.addClass('flag');
+    el.addClass($(this).val().toLowerCase());
   });
   $('#address_country').trigger('change');
 

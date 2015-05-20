@@ -35,7 +35,11 @@
             = text_field_tag :address_city, nil, :class => 'form-control', 'data-stripe' => 'address_city'
           = hidden_field_tag :postcode, nil, 'data-stripe' => 'address_zip'
           .form-group
-            = country_select :address_country, nil, {:selected => @location}, {:class => 'form-control', 'data-stripe' => 'address_country', :id => 'address_country'}
+            .input-group
+              .input-group-addon
+                = flag_list 32 do
+                  = flag(:gb, class: 'hide')
+              = country_select :address_country, nil, {:selected => @location}, {:class => 'form-control', 'data-stripe' => 'address_country', :id => 'address_country'}
           %p.small
             %em
               We need to verify the address associated with your card. We will protetct your personal information in accordance with our
