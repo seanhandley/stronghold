@@ -40,6 +40,7 @@ gem "recaptcha", :require => "recaptcha/rails"
 gem 'tel_to_helper'
 gem 'rest-client', '~> 1.6'
 gem 'geo_ip', '~> 0.5.0'
+gem 'world-flags', '~> 0.6'
 
 group :test do
   gem 'minitest-rails'

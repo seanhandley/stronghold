@@ -10,3 +10,7 @@ Rails.application.config.assets.version = '1.0'
 # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
 # Rails.application.config.assets.precompile += %w( search.js )
 Rails.application.config.assets.precompile += %w( card.js )
+Rails.application.config.assets.precompile += %w( flags/flags16.png )
+Rails.application.config.assets.precompile += %w( flags/flags16_semi.png )
+Rails.application.config.assets.precompile += %w( flags/flags32.png )
+Rails.application.config.assets.precompile += %w( flags/flags32_semi.png )
