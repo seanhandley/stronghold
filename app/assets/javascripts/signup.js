@@ -35,13 +35,22 @@ $(document).ready(function() {
       post_town: '#address_city',
       postcode: '#postcode'
     },
-    input_label: "Post code",
+    input_label: "Post code / ZIP",
     button_disabled_message: "Checking"
   });
 
   $('#idpc_input').on('input', function() {
     $('#postcode').val($(this).val());
   });
+
+  $('#address_country').on('change', function() {
+    if($(this).val() == 'GB') {
+      $('#idpc_button').show();
+    } else {
+      $('#idpc_button').hide();
+    }
+  });
+  $('#address_country').trigger('change');
 
   $('#discount_code').on('input', function() {
     $.post('/voucher_precheck?code=' + $(this).val(), function(data) {
