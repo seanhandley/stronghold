@@ -1,32 +1,37 @@
 .container#sign-up {
-  width: 90%;
+  width: 60%;
   // overflow: auto;
   margin: auto;
   margin-top: 30px;
-  position: absolute;
   top: 0; left: 0; bottom: 0; right: 0;
 }
 
 .container#sign-in input {
-  height: 55px;
-  font-size: 22px;
+  height: 65px;
+  font-size: 25px;
+  padding: 15px;
 }
 
 img.sign-in-logo {
   height: auto;
-  width: 240px;
+  width: 340px;
   margin-left: auto;
   margin-right: auto;
   display: block;
+  opacity: 0.8;
 }
 
 @media only screen and (max-width: 480px), only screen and (max-device-width: 480px) {
   .container#sign-in {
-    width: 260px;
+    width: 90%
   }
 
   img#horizon, img#cloud-symbol {
     display: none;
+  }
+
+  img.sign-in-logo {
+    width: 240px;
   }
 }
 
@@ -45,7 +50,7 @@ body.customer-sign-up {
   background-image: url(<%= asset_path 'datacentred-watermark.png' %>);
   background-repeat: no-repeat;
   background-position: bottom;
-  //background-size: 440px 120px;
+  padding: 1px;
 }
 
 div#sign-up ol.breadcrumb {
