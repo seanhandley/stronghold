@@ -9,9 +9,6 @@
     .form-group
       %label E-Mail Address
       = text_field_tag :email, @email || @customer_signup.email, class: 'form-control'
-    .form-group
-      %label Company Name
-      = text_field_tag :organization_name, @customer_signup.organization_name, class: 'form-control', placeholder: "Leave blank if signing up as an individual"
     .pull-right
       = link_to 'Already got an account?', sign_in_path
     .form-group
