@@ -3,7 +3,7 @@ class SignupsController < ApplicationController
   layout :set_layout
 
   before_filter :check_enabled, only: [:new, :create]
-  before_filter :find_invite, except: [:new, :create, :ip]
+  before_filter :find_invite, except: [:new, :create, :thanks]
   skip_before_filter :verify_authenticity_token, :only => [:create]
 
   def new
@@ -19,7 +19,7 @@ class SignupsController < ApplicationController
     @customer_signup = CustomerSignup.new(create_params.merge(ip_address: request.remote_ip))
     if @customer_signup.save
       respond_to do |format|
-        format.html { render :confirm }
+        format.html { redirect_to thanks_path }
         format.json { head :ok }
       end
     else
@@ -31,6 +31,10 @@ class SignupsController < ApplicationController
         format.json { render json: {errors: @customer_signup.errors.full_messages}, status: :unprocessable_entity }
       end
     end
+  end
+
+  def thanks
+    render :confirm
   end
 
   def edit
@@ -63,7 +67,7 @@ class SignupsController < ApplicationController
     case action_name
     when "edit", "update"
       "sign-in"
-    when "new", "create"
+    when "new", "create", "thanks"
       "customer-sign-up"
     else
       "application"
