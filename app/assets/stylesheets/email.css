@@ -16,3 +16,24 @@ div.push {
 div.pull-right {
   float: right !important;
 }
+
+a.confirm {
+  font-size: 18px;
+  text-align: center;
+  text-decoration: none;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 62px;
+  background: #1a76bc;
+  display: block;
+  width: 50%;
+  min-height: 60px;
+  border-radius: 3px;
+  color: #ffffff;
+}
+
+a.confirm:hover, a.confirm:active {
+  background: #74C8EA !important;
+}
