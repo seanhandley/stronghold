@@ -1,36 +1,37 @@
-.modal.fade#showOpenStackDetails{'tabindex' => "-1", 'role' => "dialog", 'aria-labelledby' => "showOpenStackDetails", 'aria-hidden' => "true", 'data-backdrop' => 'static'}
-  .modal-dialog
-    .modal-content
-      .modal-header
-        %button{'type' => "button", 'class' => "close", 'data-dismiss' => "modal", 'aria-hidden' => "true"}
-          &times;
-        %h2.modal-title
-          %i.fa.fa-cloud
-          Cloud Access Info
-      .modal-body
+- if current_user.organization.known_to_payment_gateway?
+  .modal.fade#showOpenStackDetails{'tabindex' => "-1", 'role' => "dialog", 'aria-labelledby' => "showOpenStackDetails", 'aria-hidden' => "true", 'data-backdrop' => 'static'}
+    .modal-dialog
+      .modal-content
+        .modal-header
+          %button{'type' => "button", 'class' => "close", 'data-dismiss' => "modal", 'aria-hidden' => "true"}
+            &times;
+          %h2.modal-title
+            %i.fa.fa-cloud
+            Cloud Access Info
+        .modal-body
 
-        %div{'role' => "tabpanel"}
-          %ul.nav.nav-tabs{'role' => "tablist"}
+          %div{'role' => "tabpanel"}
+            %ul.nav.nav-tabs{'role' => "tablist"}
+              - if current_user.organization.compute? && can?(:read, :cloud)
+                - @openstack_active = true
+                %li{'role' => "presentation", 'class' => "active"}
+                  %a{'href' => "#openstack", 'aria-controls' => "openstack", 'role' => "tab", 'data-toggle' => "tab"}
+                    OpenStack
+              - if current_user.organization.storage? && can?(:read, :storage)
+                %li{'role' => "presentation", 'class' => @openstack_active ? '' : 'active'}
+                  %a{'href' => "#ceph", 'aria-controls' => "ceph", 'role' => "tab", 'data-toggle' => "tab"}
+                    Ceph
+
+          .tab-content
             - if current_user.organization.compute? && can?(:read, :cloud)
               - @openstack_active = true
-              %li{'role' => "presentation", 'class' => "active"}
-                %a{'href' => "#openstack", 'aria-controls' => "openstack", 'role' => "tab", 'data-toggle' => "tab"}
-                  OpenStack
+              %div.tab-pane{'role' => "tabpanel", 'class' => "active", 'id' => "openstack"}
+                = render partial: 'shared/openstack_details'
             - if current_user.organization.storage? && can?(:read, :storage)
-              %li{'role' => "presentation", 'class' => @openstack_active ? '' : 'active'}
-                %a{'href' => "#ceph", 'aria-controls' => "ceph", 'role' => "tab", 'data-toggle' => "tab"}
-                  Ceph
+              %div.tab-pane{'role' => "tabpanel", 'class' => @openstack_active ? '' : 'active', 'id' => "ceph"}
+                = render partial: 'shared/ceph_details'
 
-        .tab-content
-          - if current_user.organization.compute? && can?(:read, :cloud)
-            - @openstack_active = true
-            %div.tab-pane{'role' => "tabpanel", 'class' => "active", 'id' => "openstack"}
-              = render partial: 'shared/openstack_details'
-          - if current_user.organization.storage? && can?(:read, :storage)
-            %div.tab-pane{'role' => "tabpanel", 'class' => @openstack_active ? '' : 'active', 'id' => "ceph"}
-              = render partial: 'shared/ceph_details'
-
-        
-      .modal-footer
-        %button.btn.btn-primary{'data-toggle' => "modal", 'data-dismiss' => "modal"}
-          = 'OK'
+          
+        .modal-footer
+          %button.btn.btn-primary{'data-toggle' => "modal", 'data-dismiss' => "modal"}
+            = 'OK'
