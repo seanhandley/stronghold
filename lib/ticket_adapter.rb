@@ -67,6 +67,10 @@ class TicketAdapter
     end
 
     def create(ticket)
+      if Authorization.current_user.organization.known_to_payment_gateway? &&
+        ticket.priority.downcase == 'emergency'
+        return
+      end
       properties = {
         :brand => 'DataCentred',
         :department => ticket.department,
