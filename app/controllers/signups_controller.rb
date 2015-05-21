@@ -75,8 +75,7 @@ class SignupsController < ApplicationController
   end
 
   def update_params
-    params.permit(:password,
-                  :first_name, :last_name)
+    params.permit(:password)
   end
 
   def find_invite
@@ -85,7 +84,7 @@ class SignupsController < ApplicationController
   end
 
   def create_params
-    params.permit(:organization_name, :email, :first_name, :last_name,
+    params.permit(:organization_name, :email,
                   :password, :confirm_password)
   end
 

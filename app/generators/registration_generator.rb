@@ -2,21 +2,16 @@ class RegistrationGenerator
   include ActiveModel::Validations
 
   attr_reader :invite, :password,
-              :organization, :user,
-              :first_name, :last_name
+              :organization, :user
 
   def initialize(invite, params)
     @invite            = invite
     @password          = params[:password]
-    @first_name        = params[:first_name]
-    @last_name         = params[:last_name]
   end
 
   def generate!
     if !invite.can_register?
       errors.add :base, I18n.t(:signup_token_not_valid)
-    elsif first_name.blank? || last_name.blank?
-      errors.add :base, I18n.t(:must_provide_first_name_and_last_name)
     elsif password.length < 8
       errors.add :base,  I18n.t(:password_too_short)
     else
@@ -46,7 +41,7 @@ class RegistrationGenerator
 
     roles = (invite.roles + [@owners]).flatten.compact
     @user = @organization.users.create email: invite.email.downcase, password: password,
-                                       roles: roles, first_name: first_name, last_name: last_name
+                                       roles: roles
     @user.save!
     unless Rails.env.test?
       FraudCheckJob.perform_later({
