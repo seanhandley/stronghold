@@ -1,19 +1,13 @@
 %h2
   %i.fa.fa-plug
   Welcome!
-%p Just a few more details before we get started...
+%p Please create yourself a complex password.
 
 = form_tag({url: signup_complete_path(@invite.token)}, 'role' => 'form') do
 
   - if flash.present?
     #flashes= display_flash
     
-  .form-group
-    %label First Name
-    = text_field_tag :first_name, @registration.first_name, class: 'form-control'
-  .form-group
-    %label Last Name
-    = text_field_tag :last_name, @registration.last_name, class: 'form-control'
   .form-group
     %label Password
     = password_field_tag :password, @registration.password, class: 'form-control strength wink-password'

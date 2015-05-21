@@ -19,7 +19,6 @@ class User < ActiveRecord::Base
 
   validates :email, :uniqueness => true
   validates :email, :organization_id, :presence => true
-  validates :first_name, :last_name, length: {minimum: 1}, allow_blank: false
   validates :password, :presence => true, :on => :create
   validate :password_complexity
 
