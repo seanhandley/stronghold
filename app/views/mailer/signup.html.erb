@@ -4,19 +4,20 @@
   <div class="push"></div>
   <div style="float:right"><%= image_tag asset_url('logo_large.png') %></div>
 <%= image_tag asset_url('welcome_email.png') %>
-  <p>Welcome to DataCentred Cloud Services.</p>
-
-  <p>Your account is now ready to be accessed for the first time. To continue, <%= link_to 'please click here', signup_begin_url(@invite.token), :target => "_blank" %> and follow the instructions on screen.</p>
-
+  
+  <div style: "padding: 30px">
+    <a class="confirm" target='_blank' href="<%= signup_begin_url(@invite.token) %>">Confirm Sign Up</a>
+  </div>
+    
   <h4>Getting Started</h4>
 
   <ul>
-    <li>Our user portal "My DataCentred" can be found at <%= link_to 'my.datacentred.io', 'https://my.datacentred.io' %> - from here, you can view your cloud usage information, raise support tickets, invite other users, and handle your account settings.</li>
+    <li>Your dashboard can be found at <%= link_to 'my.datacentred.io', 'https://my.datacentred.io' %> - from here, you can view your cloud usage information, raise support tickets, invite other users, and handle your account settings.</li>
     <li>Our documentation can be found at <%= link_to 'docs.datacentred.io', 'http://docs.datacentred.io' %> and contains various articles and tutorials on common topics and frequently asked questions.</li>
     <li>The OpenStack control panel can be found at <%= link_to 'compute.datacentred.io', 'https://compute.datacentred.io' %> and allows you to create and manage instances, volumes, images and virtual networking hardware. You can log into this using the same email address and password you set up with My DataCentred.</li>
   </ul>
 
-  <p>The above setup link will expire at <%= am_pm_time(@invite.expires_at) %> on <%= long_date(@invite.expires_at) %>. If you have any issues accessing your account, please contact <%= link_to 'support@datacentred.co.uk', 'mailto:support@datacentred.co.uk' %>.</p>
+  <p>The above setup link will expire at <%= am_pm_time(@invite.expires_at) %> on <%= long_date(@invite.expires_at.utc) %>. If you have any issues accessing your account, please contact <%= link_to 'support@datacentred.co.uk', 'mailto:support@datacentred.co.uk' %>.</p>
 
   <p>If you requre any assistance, please log into <%= link_to 'my.datacentred.io', 'https://my.datacentred.io' %> and raise a ticket in the Support section.</p>
 
