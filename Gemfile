@@ -41,6 +41,8 @@ gem 'tel_to_helper'
 gem 'rest-client', '~> 1.6'
 gem 'geo_ip', '~> 0.5.0'
 gem 'world-flags', '~> 0.6'
+gem 'nokogiri'
+gem 'premailer-rails'
 
 group :test do
   gem 'minitest-rails'

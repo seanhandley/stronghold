@@ -50,5 +50,6 @@ Rails.application.configure do
       :password => '7y7qh820t4'
   }
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+  config.action_controller.asset_host = "localhost:3000"
   
 end
