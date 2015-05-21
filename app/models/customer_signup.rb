@@ -5,8 +5,6 @@ class CustomerSignup < ActiveRecord::Base
   validate :email_valid
   validates :email, length: {minimum: 5}, allow_blank: false
 
-  belongs_to :organization
-
   scope :not_reminded, -> { where(reminder_sent: false)}
 
   def ready?
@@ -16,6 +14,10 @@ class CustomerSignup < ActiveRecord::Base
   def organization_name
     return read_attribute(:organization_name) unless read_attribute(:organization_name).blank?
     email
+  end
+
+  def organization
+    Organization.find_by_customer_signup_id(id).try(:first) { nil }
   end
 
   private
