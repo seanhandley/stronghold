@@ -17,7 +17,7 @@ class CustomerSignup < ActiveRecord::Base
   end
 
   def organization
-    Organization.find_by_customer_signup_id(id).try(:first) { nil }
+    Organization.find_by_customer_signup_id(id)
   end
 
   private
