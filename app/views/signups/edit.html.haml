@@ -14,11 +14,12 @@
   .form-group
     #password-progress-bar-container
 
-  .form-group= recaptcha_tags
+  .form-group{style: 'margin-left: auto;margin-right: auto;'}
+    = recaptcha_tags
 
   = submit_tag 'Log In →', class: 'btn btn-primary', style: 'width: 100%'
   
-  .form-group
+  .pull-right
     %label
       By logging in, you agree to our
       = link_to 'Privacy Policy', 'http://www.datacentred.co.uk/privacy.html', target: '_blank'
