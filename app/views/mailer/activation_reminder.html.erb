@@ -1,0 +1,24 @@
+<%= stylesheet_link_tag 'email' %>
+
+<div class="container" id="email">
+  <div class="push"></div>
+  <div style="float:right"><%= image_tag asset_url('logo_large.png') %></div>
+<%= image_tag asset_url('welcome_email.png') %>
+
+  <h1>Please activate your account</h1>
+
+  <p>We need to verify your details. If you don't use anything you will not be charged.</p>
+  
+  <div style: "padding: 30px">
+    <a class="confirm" target='_blank' href="<%= support_root_url %>">Activate Account</a>
+  </div>
+
+  <h4>Why is this necessary?</h4>
+
+  <p>We need to verify your identity to activate your account, even if you have a discount code that provides a free trial. This is purely to prevent fraudulent use of our cloud services.</p>
+
+  <p>You will only get charged for the resources you use. If you don't use anything, you will not be charged and you're free to cancel your account at any time.</p>
+
+  <p>Kind regards,<br/>
+  The DataCentred Team</p>
+</div>

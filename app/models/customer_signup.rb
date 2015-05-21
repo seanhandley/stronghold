@@ -5,6 +5,10 @@ class CustomerSignup < ActiveRecord::Base
   validate :email_valid
   validates :email, length: {minimum: 5}, allow_blank: false
 
+  belongs_to :organization
+
+  scope :not_reminded, -> { where(reminder_sent: false)}
+
   def ready?
     stripe_customer_id.present? && address_check_passed?
   end

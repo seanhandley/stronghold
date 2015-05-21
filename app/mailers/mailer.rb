@@ -48,4 +48,8 @@ class Mailer < ActionMailer::Base
     email = admins.collect(&:email).join(', ')
     mail(:to => email, :subject => "So long!")   
   end
+
+  def activation_reminder(email)
+    mail(:to => email, :subject => "Please activate your DataCented account")   
+  end
 end
