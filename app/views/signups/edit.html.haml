@@ -14,8 +14,9 @@
   .form-group
     #password-progress-bar-container
 
-  .pull-right= submit_tag 'Log In →', class: 'btn btn-primary'
-  .form-group= recaptcha_tags
+  .form-group= recaptcha_tags, style: 'width: 100%'
+
+  = submit_tag 'Log In →', class: 'btn btn-primary', style: 'width: 100%'
   
   .form-group
     %label
