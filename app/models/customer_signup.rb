@@ -3,7 +3,6 @@ class CustomerSignup < ActiveRecord::Base
   after_commit :send_email, on: :create
 
   validate :email_valid
-  validates :email, length: {minimum: 5}, allow_blank: false
 
   scope :not_reminded, -> { where(reminder_sent: false)}
 
@@ -23,8 +22,9 @@ class CustomerSignup < ActiveRecord::Base
   private
 
   def email_valid
-    errors.add(:email, I18n.t(:is_not_a_valid_address)) unless email =~ /.+@.+\..+/
-    errors.add(:email, 'is already in use') if User.find_by_email(email.downcase) && email_changed?
+    return errors.add(:email, I18n.t(:is_not_a_valid_address)) unless email =~ /.+@.+\..+/
+    return errors.add(:email, I18n.t(:is_not_a_valid_address)) unless email.length >= 5
+    return errors.add(:email, 'is already in use') if User.find_by_email(email.downcase) && email_changed?
   end
 
   def address_check_passed?
