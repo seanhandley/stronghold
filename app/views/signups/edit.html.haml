@@ -7,15 +7,15 @@
 
   - if flash.present?
     #flashes= display_flash
+
+  .form-group{style: 'margin-left: auto;margin-right: auto;'}
+    = recaptcha_tags
     
   .form-group
     %label Password
     = password_field_tag :password, @registration.password, class: 'form-control strength wink-password'
   .form-group
     #password-progress-bar-container
-
-  .form-group{style: 'margin-left: auto;margin-right: auto;'}
-    = recaptcha_tags
 
   = submit_tag 'Log In →', class: 'btn btn-primary', style: 'width: 100%'
   
