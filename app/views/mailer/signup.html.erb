@@ -4,6 +4,8 @@
   <div class="push"></div>
   <div style="float:right"><%= image_tag asset_url('logo_large.png') %></div>
 <%= image_tag asset_url('welcome_email.png') %>
+
+  <p>Thanks for signing up! Please confirm your email address by clicking below.</p>
   
   <div style: "padding: 30px">
     <a class="confirm" target='_blank' href="<%= signup_begin_url(@invite.token) %>">Confirm Sign Up</a>
