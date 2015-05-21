@@ -8,6 +8,10 @@ if Rails.env.production? || Rails.env.staging?
     UsageJob.perform_later
   end
 
+  every(20.minutes, 'activation_reminder') do
+    ActivationReminderJob.perform_later
+  end
+
   every(1.week, 'usage_report', :at => 'Monday 07:00') do
     UsageReportJob.perform_later
   end
