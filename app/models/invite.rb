@@ -55,7 +55,7 @@ class Invite < ActiveRecord::Base
   end
 
   def no_user_has_that_email?
-    errors.add(:email, 'already has an account. Please choose another email.') if User.find_by_email(email) && !persisted?
+    errors.add(:email, 'already has an account. Please choose another email.') if User.find_by_email(email.downcase) && !persisted?
   end
 
   def send_email

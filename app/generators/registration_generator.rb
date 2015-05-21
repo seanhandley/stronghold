@@ -45,7 +45,7 @@ class RegistrationGenerator
     end
 
     roles = (invite.roles + [@owners]).flatten.compact
-    @user = @organization.users.create email: invite.email, password: password,
+    @user = @organization.users.create email: invite.email.downcase, password: password,
                                        roles: roles, first_name: first_name, last_name: last_name
     @user.save!
     unless Rails.env.test?
