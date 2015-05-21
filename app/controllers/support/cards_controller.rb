@@ -34,7 +34,7 @@ class Support::CardsController < SupportBaseController
       Rails.cache.delete("up_#{current_user.uuid}")
       Announcement.create(title: 'Welcome', body: 'Your card details are verified and you may now begin using cloud services!',
         limit_field: 'id', limit_value: current_user.id)
-      redirect_to support_root_path
+      redirect_to activated_path
     else
       render :new
     end
