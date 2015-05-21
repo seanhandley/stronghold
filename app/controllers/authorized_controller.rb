@@ -61,7 +61,7 @@ class AuthorizedController < ApplicationController
       return
     end
     if !current_user.organization.known_to_payment_gateway?
-      return if [activate_path, support_cards_path].include?(request.fullpath)
+      return if allowed_paths_unactivated.include?(request.fullpath)
       redirect_to activate_path
     elsif !current_user.organization.has_payment_method?
       if !current_user.admin?
@@ -73,6 +73,13 @@ class AuthorizedController < ApplicationController
         redirect_to support_manage_cards_path, alert: "Please add a valid card to continue."
       end
     end
+  end
+
+  def allowed_paths_unactivated
+    [activate_path, support_cards_path, support_tickets_path,
+    support_profile_path, support_usage_path, support_edit_organization_path,
+    support_api_tickets_path, support_user_path(current_user),
+    support_organization_path(current_user.organization)]
   end
 
   def timeout_session!
