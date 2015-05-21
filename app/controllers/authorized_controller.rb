@@ -61,7 +61,7 @@ class AuthorizedController < ApplicationController
       return
     end
     if !current_user.organization.known_to_payment_gateway?
-      return if allowed_paths_unactivated.include?(request.fullpath)
+      return if allowed_paths_unactivated.include?(request.fullpath) || is_tickets_path?(request.fullpath)
       redirect_to activate_path
     elsif !current_user.organization.has_payment_method?
       if !current_user.admin?
@@ -76,10 +76,16 @@ class AuthorizedController < ApplicationController
   end
 
   def allowed_paths_unactivated
-    [activate_path, support_cards_path, support_tickets_path,
+    [activate_path, support_cards_path,
     support_profile_path, support_usage_path, support_edit_organization_path,
-    '/support/api/tickets',
     support_user_path(current_user), support_organization_path(current_user.organization)]
+  end
+
+  def is_tickets_path?(path)
+    path = path.split('?')[0] # ignore args
+    return true if path.include? '/support/api/tickets'
+    return true if path.include? '/supports/tickets/'
+    return false
   end
 
   def timeout_session!
