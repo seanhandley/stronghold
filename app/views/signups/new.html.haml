@@ -1,16 +1,13 @@
-%h2
-  %i.fa.fa-cloud
-  Sign Up
-  
+.push
+
 %div#signup-form-area
   = form_tag(create_signup_path, 'role' => 'form') do
     - if flash.present?
       #flashes= display_flash
     .form-group
-      %label E-Mail Address
-      = text_field_tag :email, @email || @customer_signup.email, class: 'form-control'
+      = text_field_tag :email, @email || @customer_signup.email, class: 'form-control', placeholder: 'Email address'
+    .form-group
+      = submit_tag 'Create Account', class: 'btn btn-primary', style: 'width: 100%'
     .pull-right
       = link_to 'Already got an account?', sign_in_path
-    .form-group
-      = submit_tag 'Sign Up', class: 'btn btn-success'
   
