@@ -61,6 +61,7 @@ Rails.application.routes.draw do
   post 'voucher_precheck', :controller => 'vouchers', :action => 'precheck'
   get 'activate', :controller => 'support/cards', :action => 'new'
   get 'activated', :controller => 'support/dashboard', :action => 'index'
+  get 'thanks', :controller => 'signups', :action => 'thanks'
 
   post 'salesforce', :controller => 'salesforce', :action => 'update'
 
