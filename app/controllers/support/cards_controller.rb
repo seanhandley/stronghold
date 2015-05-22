@@ -28,7 +28,7 @@ class Support::CardsController < SupportBaseController
       end
       current_user.organization.complete_signup! @customer_signup.stripe_customer_id
       Hipchat.notify('Self Service', 'Accounts',
-                     "(goodnews) Good news! #{current_user.organization.name} is a paying customer! Voucher: #{create_params[:discount_code].present? ? create_params[:discount_code] : 'N/A'}",
+                     "(goodnews) Good news! #{current_user.organization.name} is a paying customer! Discount code: #{create_params[:discount_code].present? ? create_params[:discount_code] : 'N/A'}",
                      color: 'green', message_format: 'text')
       reauthenticate(Rails.cache.fetch("up_#{current_user.uuid}"))
       Rails.cache.delete("up_#{current_user.uuid}")
