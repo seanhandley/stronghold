@@ -4,12 +4,12 @@ class Mailer < ActionMailer::Base
   
   def signup(invite_id)
     @invite = Invite.find(invite_id)
-    mail(:to => @invite.email, :subject => "Welcome to DataCentred")
+    mail(:to => @invite.email, :subject => "Confirm your account")
   end
 
   def reset(reset_id)
     @reset = Reset.find(reset_id)
-    mail(:to => @reset.email, :subject => "Reset your password")
+    mail(:to => @reset.email, :subject => "Password reset")
   end
 
   def usage_report(from, to)
@@ -46,10 +46,10 @@ class Mailer < ActionMailer::Base
 
   def goodbye(admins)
     email = admins.collect(&:email).join(', ')
-    mail(:to => email, :subject => "So long!")   
+    mail(:to => email, :subject => "Account closed")   
   end
 
   def activation_reminder(email)
-    mail(:to => email, :subject => "Please activate your DataCented account")   
+    mail(:to => email, :subject => "Activate your DataCented account")   
   end
 end
