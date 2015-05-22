@@ -7,7 +7,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0',  group: :doc
 gem 'bcrypt', '~> 3.1.7'
 gem 'unicorn', '~> 4.8.3'
-gem 'haml', '~> 4.0.5'
+gem 'haml', '4.1.0.beta.1'
 gem 'cancancan', '~> 1.9.2'
 gem 'fog', '~> 1.30.0'
 gem 'gravatar_image_tag', '~> 1.2.0'
