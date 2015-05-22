@@ -1,7 +1,3 @@
-%h2
-  %i.fa.fa-cloud
-  Sign In
-  
 = display_flash
 
 = form_for(User.new, :url => sessions_path, :method => :post, :html => {:role => 'form'}) do |f|
@@ -14,7 +10,7 @@
     %label{'for' => "exampleInputPassword1"} Password
     = f.password_field :password, :class => "form-control wink-password",
                        :id => "inputPassword", :placeholder => "Enter Password"
-  = f.submit 'Sign In', :class => 'btn btn-primary'
+  = f.submit 'Sign In', :class => 'btn btn-primary', style: 'width: 100%; margin-bottom: 10px'
   .pull-right
     = link_to 'Reset Password', new_reset_path
     |

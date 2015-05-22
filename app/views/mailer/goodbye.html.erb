@@ -1,10 +1,7 @@
 <%= stylesheet_link_tag 'email' %>
 <div class="container" id="email">
-  <div class="push"></div>
-  <div class="pull-right"><%= image_tag asset_url('logo_large.png') %></div>
-  <h4>Sorry to see you go...</h4>
-
-  <p>Hi there,</p>
+  <%= render partial: 'header' %>
+  <h1>Sorry to see you go...</h1>
 
   <p>We've terminated your account for you, as you requested. This means:</p>
 
@@ -19,3 +16,4 @@
   <p>Kind regards,<br/>
   The DataCentred Team</p>
 </div>
+<%= render partial: 'footer' %>

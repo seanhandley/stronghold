@@ -1,15 +1,21 @@
 <%= stylesheet_link_tag 'email' %>
 <div class="container" id="email">
-  <p>Hello,</p>
+  <%= render partial: 'header' %>
+  <h1>Reset your password</h1>
 
-  <p>A password reset has been requested for your account. If you did not request a password reset then please disregard this message.</p>
+  <p>A password reset has been requested for your account.</p>
 
-  <p>In order to proceed, please <%= link_to 'create yourself a new password', reset_url(@reset.token), :target => "_blank" %>.</p>
+  <div style: "padding: 30px">
+    <a class="confirm" target='_blank' href="<%= reset_url(@reset.token) %>">Reset Password</a>
+  </div>
 
   <p>The above reset link will expire at <%= am_pm_time(@reset.expires_at) %> on <%= long_date(@reset.expires_at) %>.<p>
+
+  <p>If you did not request a password reset then please disregard this message.</p>
 
   <p></p>
 
   <p>Kind regards,<br/>
   DataCentred.</p>
 </div>
+<%= render partial: 'footer' %>

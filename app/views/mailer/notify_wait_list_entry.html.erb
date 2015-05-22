@@ -1,13 +1,15 @@
 <%= stylesheet_link_tag 'email' %>
 <div class="container" id="email">
-  <div class="push"></div>
-  <div class="pull-right"><%= image_tag asset_url('logo_large.png') %></div>
-  <p>We're back!</p>
+  <%= render partial: 'header' %>
+  <h1>We're back!</h1>
 
   <p>Thanks for your patience. We're pleased to tell you that new signups are being accepted again.</p>
 
-  <p>Visit <%= link_to new_signup_url, new_signup_url(email: @email) %> to sign up.</p>
+  <div style: "padding: 30px">
+    <a class="confirm" target='_blank' href="<%= new_signup_url(email: @email) %>">Sign Up</a>
+  </div>
 
   <p>Kind regards,<br/>
   The DataCentred Team</p>
 </div>
+<%= render partial: 'footer' %>

@@ -1,17 +1,21 @@
 <%= stylesheet_link_tag 'email' %>
 
 <div class="container" id="email">
-  <div class="push"></div>
-  <div style="float:right"><%= image_tag asset_url('logo_large.png') %></div>
-<%= image_tag asset_url('welcome_email.png') %>
+  <%= render partial: 'header' %>
 
-  <p>Thanks for signing up! Please confirm your email address by clicking below.</p>
+  <h1>Please confirm your email address</h1>
+
+  <p>Welcome to your DataCentred account. Please click below to confirm your signup.</p>
   
   <div style: "padding: 30px">
     <a class="confirm" target='_blank' href="<%= signup_begin_url(@invite.token) %>">Confirm Sign Up</a>
   </div>
+
+  <h2>Why am I seeing this?</h2>
+
+  <p>You've been sent this email because you've either signed up for a Cloud Services account with DataCentred, or you've been invited as an additional user to an existing account.</p>
     
-  <h4>Getting Started</h4>
+  <h2>Getting Started</h2>
 
   <ul>
     <li>Your dashboard can be found at <%= link_to 'my.datacentred.io', 'https://my.datacentred.io' %> - from here, you can view your cloud usage information, raise support tickets, invite other users, and handle your account settings.</li>
@@ -26,3 +30,4 @@
   <p>Kind regards,<br/>
   The DataCentred Team</p>
 </div>
+<%= render partial: 'footer' %>
