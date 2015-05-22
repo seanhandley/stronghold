@@ -1,6 +1,7 @@
 <%= stylesheet_link_tag 'email' %>
 <div class="container" id="email">
-  <h2>Weekly Platform Summary</h2>
+  <%= render partial: 'header' %>
+  <h1>Weekly Platform Summary</h1>
   <p><em>Week beginning <%= @from.beginning_of_week.to_date.strftime("%A #{@from.day.ordinalize} %B %Y") %></em></p>
 
   <!--
@@ -14,8 +15,8 @@
 
   <!-- <h2>Customer Usage</h2> -->
   <% for entry in @organization_data %>
-    <h3><%= entry[:name] %></h3>
-    <strong>Admin Contact:</strong> <%= entry[:contacts].first %>
+    <h2><%= entry[:name] %></h2>
+    <strong>Admin Contact:</strong> <%= mail_to entry[:contacts].first %>
     <p>
       <strong>VCPU:</strong> <%= number_with_delimiter(entry[:vcpu_hours].round(1), :delimiter => ',') %> hours<br/>
       <strong>RAM:</strong> <%= number_with_delimiter(entry[:ram_tb_hours].round(1), :delimiter => ',') %> TBh<br/>

@@ -1,1 +1,6 @@
-<link rel="stylesheet" href="/application.css"><div id="container"><%= render partial: 'usage' %></div>
+<%= stylesheet_link_tag 'email' %>
+<div class="container" id="email">
+  <%= render partial: 'header' %>
+  <h1>Sanity Check Failures</h1>
+  <%= render partial: 'usage' %>
+</div>

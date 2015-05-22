@@ -1,6 +1,7 @@
 <%= stylesheet_link_tag 'email' %>
 <div class="container" id="email">
-  <h2>User Failed Fraud Check</h2>
+  <%= render partial: 'header' %>
+  <h1>User Failed Fraud Check</h1>
   <p>Data:
   <%= @args %>
   </p>

@@ -1,13 +1,17 @@
 <%= stylesheet_link_tag 'email' %>
 <div class="container" id="email">
-  <div class="push"></div>
-  <div class="pull-right"><%= image_tag asset_url('logo_large.png') %></div>
-  <h4>Oops!</h4>
+  <%= render partial: 'header' %>
+  <h1>There's a problem with your card</h1>
 
   <p>It looks like there's a problem with your payment card. In order to use DataCentred cloud services, we require a valid credit or debit card on file.</p>
 
-  <p>As soon as you can, <%= link_to 'please log in and add new card details', support_root_url, :target => "_blank" %>. If you have any questions or need to let us know more information, please get in touch with us via <%= mail_to 'support@datacentred.co.uk' %> or phone <%= tel_to '0161 870 3981' %>.</p>
+  <div style: "padding: 30px">
+    <a class="confirm" target='_blank' href="<%= support_root_url %>">Add New Card</a>
+  </div>
+
+  <p>If you have any questions or need to let us know more information, please get in touch with us via <%= mail_to 'support@datacentred.co.uk' %> or phone <%= tel_to '0161 870 3981' %>.</p>
 
   <p>Kind regards,<br/>
   The DataCentred Team</p>
 </div>
+<%= render partial: 'footer' %>

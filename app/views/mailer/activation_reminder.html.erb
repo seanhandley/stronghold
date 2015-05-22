@@ -1,8 +1,7 @@
 <%= stylesheet_link_tag 'email' %>
 
 <div class="container" id="email">
-  <div class="push"></div>
-  <div style="float:right"><%= image_tag asset_url('logo_large.png') %></div>
+  <%= render partial: 'header' %>
 
   <h1>Please activate your account</h1>
 
@@ -12,7 +11,7 @@
     <a class="confirm" target='_blank' href="<%= support_root_url %>">Activate Account</a>
   </div>
 
-  <h4>Why do I need to activate?</h4>
+  <h2>Why do I need to activate?</h4>
 
   <p>We need to verify your identity to activate your account, even if you have a discount code that provides a free trial. This is purely to prevent fraudulent use of our cloud services.</p>
 
@@ -21,3 +20,4 @@
   <p>Kind regards,<br/>
   The DataCentred Team</p>
 </div>
+<%= render partial: 'footer' %>
