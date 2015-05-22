@@ -3,8 +3,8 @@
   %head
   %title DataCentred Dashboard
   = favicon_link_tag 'favicon.png'
-  = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
-  = javascript_include_tag 'application'#, 'data-turbolinks-track' => true
+  = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true, :cache => 'base'
+  = javascript_include_tag 'application', :cache => 'base'
   = stripe_javascript_tag
   = csrf_meta_tags
   %meta{'charset' => "utf-8"}
