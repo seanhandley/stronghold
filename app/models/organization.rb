@@ -93,6 +93,7 @@ class Organization < ActiveRecord::Base
 
   def complete_signup!(stripe_customer_id)
     update_attributes(stripe_customer_id: stripe_customer_id)
+    update_attributes(started_paying_at: Time.now.utc)
     ActivateCloudResourcesJob.perform_later(self)
   end
 
