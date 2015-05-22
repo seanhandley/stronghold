@@ -26,7 +26,7 @@
       = render partial: 'shared/environment'
       = render partial: 'shared/cloud_services'
       .container
-        - if request.url == support_root_url
+        - if request.url == support_root_url || activated_url
           = render :partial => "announcements/starburst/announcement_bootstrap"
         %p &nbsp;
         = display_flash
