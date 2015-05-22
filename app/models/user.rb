@@ -98,7 +98,9 @@ class User < ActiveRecord::Base
   end
 
   def ec2_credentials
-    Fog::Identity.new(OPENSTACK_ARGS).list_ec2_credentials(uuid).body['credentials'].first
+    Rails.cache.fetch("ec2_credentials_#{id}", expires_in: 100.days) do
+      Fog::Identity.new(OPENSTACK_ARGS).list_ec2_credentials(uuid).body['credentials'].first
+    end
   end
 
   private
