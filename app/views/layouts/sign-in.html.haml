@@ -12,10 +12,9 @@
 
 %body.sign-in
   = render partial: 'shared/google_tags'
-  = render partial: 'shared/environment'
-  #wrap
-    .container#sign-in
-      = image_tag 'DC_Mono_B.png', class: 'sign-in-logo'
-      = yield
-      .push
+  = render partial: 'shared/environment'  
+  .container#sign-in
+    .push
+    = image_tag 'DC_Mono_B.png', class: 'sign-in-logo'
+    = yield
   = render partial: 'shared/ga'
