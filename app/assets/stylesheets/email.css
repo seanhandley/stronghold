@@ -1,7 +1,6 @@
 body {
-  -moz-box-sizing: border-box; -webkit-box-sizing: border-box; background-color: transparent !important; box-shadow: none !important; box-sizing: border-box; color: #000 !important; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; height: 100%; line-height: 1.428571429; margin: 0; text-shadow: none !important
+  height: 100%;
 }
-
 div.container#email {
   margin-top: 40px;
   margin-right: auto;
@@ -11,42 +10,53 @@ div.container#email {
   background: #fafafa;
   border-radius: 5px;
   margin-bottom: 10px;
+  text-shadow: none !important
+  color: #000 !important;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 14px;
 }
 
-div.footer {
+div.footer#email {
   margin-right: auto;
   margin-left: auto;
   width: 85%;
+  color: #000 !important;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 14px;
 }
 
-div.footer p {
+div.footer#email a {
+  text-decoration: none;
+}
+
+div.footer#email p {
   font-size: 9px;
   margin: 0px;
 }
 
-h1 {
+div.container#email h1 {
   font-weight: lighter;
   font-size: 30px;
 }
 
-h2, h3, h4 {
+div.container#email h2, div.container#email h3, div.container#email h4 {
   color: #666;
   font-weight: lighter;
 }
 
-h2 {
+div.container#email h2 {
   font-size: 25px;
 }
 
-h3 {
+div.container#email h3 {
   font-size: 20px;
 }
 
-h4 {
+div.container#email h4 {
   font-size: 15px;
 }
 
-p, ul > li {
+div.container#email p, div.container#email ul > li {
   font-weight: 200;
   -webkit-font-smoothing: antialiased;
 }
@@ -55,7 +65,7 @@ div.push {
   height: 60px;
 }
 
-a {
+div.container#email a {
   text-decoration: none;
 }
 
@@ -63,13 +73,13 @@ div.pull-right {
   float: right !important;
 }
 
-img.logo_email {
+div.container#email img.logo_email {
   margin-bottom: 15px;
   height: auto;
   width: 150px;
 }
 
-a.confirm {
+div.container#email a.confirm {
   font-size: 18px;
   text-align: center;
   text-decoration: none;
@@ -89,6 +99,6 @@ a.confirm {
   padding-right: 5px;
 }
 
-a.confirm:hover, a.confirm:active {
+div.container#email a.confirm:hover, div.container#email a.confirm:active {
   background: #74C8EA !important;
 }
