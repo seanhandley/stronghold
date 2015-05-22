@@ -1,6 +1,7 @@
 body {
   height: 100%;
 }
+
 div.container#email {
   margin-top: 40px;
   margin-right: auto;
@@ -10,7 +11,7 @@ div.container#email {
   background: #fafafa;
   border-radius: 5px;
   margin-bottom: 10px;
-  text-shadow: none !important
+  text-shadow: none !important;
   color: #000 !important;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 14px;
