@@ -36,7 +36,7 @@ class Mailer < ActionMailer::Base
 
   def card_reverification_failure(organization)
     @organization = organization
-    mail(:to => organization.admin_users.collect(&:email).join(', '), :bcc => "devops@datacentred.co.uk", :subject => 'Card failed reverification')   
+    mail(:to => organization.admin_users.collect(&:email).join(', '), :bcc => "devops@datacentred.co.uk", :subject => "There's a problem with your card")   
   end
 
   def notify_wait_list_entry(email)
