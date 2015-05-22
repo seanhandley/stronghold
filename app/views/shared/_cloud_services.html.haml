@@ -16,11 +16,11 @@
                 - @openstack_active = true
                 %li{'role' => "presentation", 'class' => "active"}
                   %a{'href' => "#openstack", 'aria-controls' => "openstack", 'role' => "tab", 'data-toggle' => "tab"}
-                    OpenStack
+                    Compute
               - if current_user.organization.storage? && can?(:read, :storage)
                 %li{'role' => "presentation", 'class' => @openstack_active ? '' : 'active'}
                   %a{'href' => "#ceph", 'aria-controls' => "ceph", 'role' => "tab", 'data-toggle' => "tab"}
-                    Ceph
+                    Storage
 
           .tab-content
             - if current_user.organization.compute? && can?(:read, :cloud)
