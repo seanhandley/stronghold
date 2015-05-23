@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="500px" height="342px" viewBox="0 0 500 342" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.3.2 (12043) - http://www.bohemiancoding.com/sketch -->
+    <title>Browser Window</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="Browser-Window" sketch:type="MSLayerGroup">
+            <rect id="Rectangle-19-Copy" fill="#D9D9D9" sketch:type="MSShapeGroup" x="0" y="0" width="500" height="29" rx="8"></rect>
+            <rect id="Rectangle-20-Copy" fill="#FFFFFF" sketch:type="MSShapeGroup" x="0" y="29" width="500" height="313" rx="8"></rect>
+            <circle id="Oval-19-Copy-3" fill="#C92323" sketch:type="MSShapeGroup" cx="16" cy="15" r="7"></circle>
+            <circle id="Oval-19-Copy-4" fill="#F6A623" sketch:type="MSShapeGroup" cx="36" cy="15" r="7"></circle>
+            <circle id="Oval-19-Copy-5" fill="#417505" sketch:type="MSShapeGroup" cx="56" cy="15" r="7"></circle>
+        </g>
+    </g>
+</svg>
