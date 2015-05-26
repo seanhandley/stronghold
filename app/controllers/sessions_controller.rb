@@ -1,6 +1,6 @@
 class SessionsController < ApplicationController
 
-  layout 'sign-in'
+  layout 'customer-sign-up'
   before_filter :check_for_user, except: [:destroy]
   
   def new

@@ -65,9 +65,7 @@ class SignupsController < ApplicationController
 
   def set_layout
     case action_name
-    when "edit", "update"
-      "sign-in"
-    when "new", "create", "thanks"
+    when "new", "create", "thanks", "edit", "update"
       "customer-sign-up"
     else
       "application"

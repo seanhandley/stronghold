@@ -1,4 +1,4 @@
-%h3 Reset password
+.h3 Reset Password
 
 = form_for(Reset.new, :url => resets_path, :method => :post, :html => {:role => 'form'}, :remote => true) do |f|
 
@@ -8,4 +8,9 @@
     = f.email_field :email, :class => "form-control",
                     :id => "inputEmail", :placeholder => "Enter E-mail", :autofocus => ''
 
-  = f.submit 'Send Reset Link', :class => 'btn btn-primary', style: "width: 100%"
+  = f.submit 'Reset Password', :class => 'btn btn-primary', style: "width: 100%; margin-bottom: 10px"
+
+  .pull-right
+    = link_to 'Sign In', new_session_path
+    |
+    = link_to 'Create Account', create_signup_path
