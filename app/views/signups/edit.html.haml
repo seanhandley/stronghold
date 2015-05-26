@@ -9,7 +9,7 @@
 
   .form-group
     %label Email
-    = text_field_tag :email, @invite.email, disabled: true, class: 'form-control'
+    = text_field_tag :email, @invite.email, disabled: true, class: 'form-control', style: 'background: white'
   .form-group
     %label Password
     = password_field_tag :password, @registration.password, class: 'form-control strength wink-password'

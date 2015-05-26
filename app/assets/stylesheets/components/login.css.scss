@@ -1,8 +1,13 @@
 .container#sign-in {
-  width: 480px;
+  width: 580px;
   height: auto;
   margin: auto;
+  margin-top: 60px;
   top: 0; left: 0; bottom: 0; right: 0;
+  background: #efefef;
+  border-radius: 5px;
+  border: solid 1px #ccc;
+  padding: 35px;
 }
 
 img.sign-in-logo {
