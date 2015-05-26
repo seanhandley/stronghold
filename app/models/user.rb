@@ -98,6 +98,7 @@ class User < ActiveRecord::Base
   end
 
   def ec2_credentials
+    Rails.cache.delete("ec2_credentials_#{id}") unless Rails.cache.fetch("ec2_credentials_#{id}")
     Rails.cache.fetch("ec2_credentials_#{id}", expires_in: 100.days) do
       Fog::Identity.new(OPENSTACK_ARGS).list_ec2_credentials(uuid).body['credentials'].first
     end
