@@ -110,10 +110,6 @@ class User < ActiveRecord::Base
     if password.present?
       if password.length < 8
         errors.add(:base, I18n.t(:password_too_short))
-      elsif !(password =~ /[A-Z]/ && password =~ /[a-z]/)
-        errors.add(:base, "Password should contain at least one uppercase and one lowercase letter.")
-      elsif !(password =~ /[0-9]/)
-        errors.add(:base, "Password should containa at least one number.")
       end
     end
   end
