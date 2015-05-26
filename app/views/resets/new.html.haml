@@ -1,11 +1,10 @@
-%h3 Forgot Password
+%h3 Reset password
 
 = form_for(Reset.new, :url => resets_path, :method => :post, :html => {:role => 'form'}, :remote => true) do |f|
 
   = javascript_error_messages_for(f.object)
   = javascript_success_messages_for(f.object)
   .form-group
-    %label{'for' => "exampleInputEmail1"} E-mail Address
     = f.email_field :email, :class => "form-control",
                     :id => "inputEmail", :placeholder => "Enter E-mail", :autofocus => ''
 
