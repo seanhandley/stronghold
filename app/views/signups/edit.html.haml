@@ -1,6 +1,6 @@
 %h2
   %i.fa.fa-lock
-  Please set your password
+  Set your password
 
 = form_tag({url: signup_complete_path(@invite.token)}, 'role' => 'form') do
 
@@ -16,14 +16,11 @@
   .form-group
     #password-progress-bar-container
 
-  .form-group{style: 'margin-left: auto;margin-right: auto;'}
-    .pull-right= submit_tag 'Proceed', class: 'btn btn-primary', style: 'height: 76px; font-size: 22px; padding: 25px'
-    = recaptcha_tags
+  = recaptcha_tags
+  #signup-proceed-button= submit_tag 'Proceed', class: 'btn btn-primary'
   
   .div{style: "text-align: center"}
     %label
       By proceeding, you agree to our
       = link_to 'privacy policy', 'http://www.datacentred.co.uk/privacy.html', target: '_blank'
       \.
-  
-  

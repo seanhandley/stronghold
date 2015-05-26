@@ -6,15 +6,12 @@
   top: 0; left: 0; bottom: 0; right: 0;
 }
 
-/*.g-recaptcha {
-  margin-left: auto;
-  margin-right: auto;
-  width: 302px;
-  transform: scale(1.49, 1.3);
-  margin-bottom: 20px;
-  margin-top: 20px;
+.g-recaptcha {
+  margin-bottom: 15px;
+  transform: scale(0.9);
+  transform-origin: 0 0;
   -webkit-font-smoothing: antialiased;
-}*/
+}
 
 .container#sign-in input {
   height: 65px;
@@ -226,4 +223,33 @@ p.recaptcha_error {
 #signup-form-area .jumbotron p {
   font-size: 12px;
   font-weight: 200;
+}
+
+div#signup-proceed-button {
+  float: right;
+  height: 76px;
+}
+
+#signup-proceed-button input {
+  height: 74px !important;
+  width: 180px !important;
+  font-size: 22px !important;
+  padding: 25px !important;
+  top: -93px;
+  position: relative;
+}
+
+@media only screen and (max-width: 585px), only screen and (max-device-width: 585px) {
+  div#signup-proceed-button {
+    float: none;
+  }
+
+  #signup-proceed-button input {
+    height: 76px !important;
+    width: 100% !important;
+    font-size: 22px !important;
+    padding: 25px !important;
+    margin-bottom: 15px;
+    position: initial;
+  }
 }
