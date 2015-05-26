@@ -8,6 +8,7 @@
   border-radius: 5px;
   border: solid 1px #ccc;
   padding: 35px;
+  padding-bottom: 10px;
 }
 
 img.sign-in-logo {
@@ -18,9 +19,9 @@ img.sign-in-logo {
   display: block;
 }
 
-@media only screen and (max-width: 480px), only screen and (max-device-width: 480px) {
+@media only screen and (max-width: 585px), only screen and (max-device-width: 585px) {
   .container#sign-in {
-    width: 260px;
+    width: 460px;
   }
 }
 
