@@ -1,6 +1,6 @@
 %h2
   %i.fa.fa-lock
-  Enter a secure password
+  Please set your password
 
 = form_tag({url: signup_complete_path(@invite.token)}, 'role' => 'form') do
 
@@ -22,8 +22,8 @@
   
   .div{style: "text-align: center"}
     %label
-      By logging in, you agree to our
-      = link_to 'Privacy Policy', 'http://www.datacentred.co.uk/privacy.html', target: '_blank'
+      By proceeding, you agree to our
+      = link_to 'privacy policy', 'http://www.datacentred.co.uk/privacy.html', target: '_blank'
       \.
   
   
