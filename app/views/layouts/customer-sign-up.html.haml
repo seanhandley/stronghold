@@ -13,8 +13,9 @@
 %body.sign-in.customer-sign-up.public-page
   = render partial: 'shared/google_tags'
   = render partial: 'shared/environment'
+  .push
+  = image_tag 'DC_Mono_B.png', class: 'sign-in-logo'
   .container#sign-in
-    = image_tag 'DC_Mono_B.png', class: 'sign-in-logo'
     = yield
   = render partial: 'shared/ga'
   %script{src: asset_path('card')}

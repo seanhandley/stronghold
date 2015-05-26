@@ -1,6 +1,6 @@
 class ResetsController < ApplicationController
 
-  layout 'sign-in'
+  layout 'customer-sign-up'
 
   before_filter :check_for_user
 
