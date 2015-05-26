@@ -17,5 +17,6 @@
   = image_tag 'DC_Mono_B.png', class: 'sign-in-logo'
   .container#sign-in
     = yield
+  .push
   = render partial: 'shared/ga'
   %script{src: asset_path('card')}
