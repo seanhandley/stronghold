@@ -44,7 +44,7 @@ module CephObject
     private
 
     def self.options
-      {use_ssl: true}
+      {use_ssl: true, port: 443}
     end
 
     def self.conn
@@ -54,8 +54,8 @@ module CephObject
       end
       
       AWS::S3::Base.establish_connection!(
-        :access_key_id     => args[:ceph_token], 
-        :secret_access_key => args[:ceph_key]
+        {:access_key_id     => args[:ceph_token], 
+        :secret_access_key => args[:ceph_key]}.merge(options)
       )
     end
   end
