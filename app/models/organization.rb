@@ -1,7 +1,9 @@
 class Organization < ActiveRecord::Base
   include StripeHelper
 
-  audited
+  audited only: [:name, :time_zone, :locale, :billing_address1, :billing_address2,
+                 :billing_city, :billing_postcode, :billing_country, :phone]
+
   has_associated_audits
 
   syncs_with_salesforce
