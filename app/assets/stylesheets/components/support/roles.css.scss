@@ -47,19 +47,15 @@ div.panel .user-images span.image{
 }
 
 .select-roles, .select-user {
-  width: 480px;
+  width: 100%;
 }
 
 .select2-search-field {
-  width: 480px;
-}
-
-.modal#inviteUser .input-group {
-  margin: 5px;
+  width: 100%;
 }
 
 .modal#inviteUser input[type=text] {
-  width: 480px;
+  width: 100%;
 }
 
 .select2-container-multi .select2-choices, ul.select2-choices {
