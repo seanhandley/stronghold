@@ -1,25 +1,26 @@
 .center{style: 'width: 175px; margin-left: auto; margin-right: auto; margin-bottom: 10px'}= image_tag 'openstack.png'
 .alert.alert-info To access your services, you may use the OpenStack dashboard or the API directly using the details below.
-%table.table.table-condensed
-  %tbody
-    %tr
-      %td
-        %strong Dashboard:
-      %td= link_to openstack_path, openstack_path, target: '_blank'
-    %tr
-      %td
-        %strong API (Keystone):
-      %td= link_to OPENSTACK_ARGS[:openstack_auth_url], OPENSTACK_ARGS[:openstack_auth_url], target: '_blank'
-    %tr
-      %td
-        %strong Username:
-      %td= current_user.email
-    %tr
-      %td
-        %strong Password:
-      %td
-        %em Same as your login password
-    %tr
-      %td
-        %strong Primary Tenant:
-      %td= current_user.organization.primary_tenant.reference
+.table-responsive
+  %table.table.table-condensed
+    %tbody
+      %tr
+        %td
+          %strong Dashboard:
+        %td= link_to openstack_path, openstack_path, target: '_blank'
+      %tr
+        %td
+          %strong API (Keystone):
+        %td= link_to OPENSTACK_ARGS[:openstack_auth_url], OPENSTACK_ARGS[:openstack_auth_url], target: '_blank'
+      %tr
+        %td
+          %strong Username:
+        %td= current_user.email
+      %tr
+        %td
+          %strong Password:
+        %td
+          %em Same as your login password
+      %tr
+        %td
+          %strong Primary Tenant:
+        %td= current_user.organization.primary_tenant.reference
