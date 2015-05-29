@@ -4,6 +4,8 @@ $(document).ready(function() {
 
     $form.find('input[type=submit]').prop('disabled', true);
 
+    $('#loading-overlay').removeClass('hide');
+
     Stripe.card.createToken($form, Signup.stripeResponseHandler);
 
     return false;
@@ -95,6 +97,7 @@ var Signup = {
       Signup.showError(response.error.message);
       $form.find('input[type=submit]').prop('disabled', false);
       document.body.style.cursor='default';
+      $('#loading-overlay').addClass('hide');
     } else {
       // response contains id and card, which contains additional card details
       var token = response.id;
@@ -114,6 +117,7 @@ var Signup = {
           Signup.showError(data.message);
           $form.find('input[type=submit]').prop('disabled', false);
           document.body.style.cursor='default';
+          $('#loading-overlay').addClass('hide');
         }
       });
 
