@@ -10,7 +10,7 @@
       #flashes= display_flash
     .form-group
       %label E-Mail Address
-      = text_field_tag :email, @wait_list_entry.email, class: 'form-control'
+      = email_field_tag :email, @wait_list_entry.email, class: 'form-control'
     .pull-right
       = link_to 'Already got an account?', sign_in_path
     .form-group
