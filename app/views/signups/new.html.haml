@@ -6,7 +6,7 @@
       #flashes= display_flash
 
     .form-group
-      = text_field_tag :email, @email || @customer_signup.email, class: 'form-control', placeholder: 'Email address'
+      = email_field_tag :email, @email || @customer_signup.email, class: 'form-control', placeholder: 'Email address'
     .form-group
       = submit_tag 'Create Account', class: 'btn btn-primary', style: 'width: 100%'
     .pull-right
