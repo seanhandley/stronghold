@@ -67,18 +67,18 @@ body {
   position: fixed;
   width: 100%;
   height:100%;
-  display: flex;
+  display: table;
   align-items: center;
-  line-height: 100%;
   background: rgba(0, 0, 0, 0.4);
   top: 0;
   z-index: 2000;
 }
 
 #loading-overlay .spinner {
-  display: flex;
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
   margin: 0 auto;
-  line-height: 100%;
   color: white;
   font-size: 80px;
 }
