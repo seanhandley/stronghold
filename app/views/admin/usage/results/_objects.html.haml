@@ -1,26 +1,27 @@
 - if tbh && tbh > 0
   %div.usage-back
     %h3 Object Storage
-    %table.table.table-hover.phone-bill.table-responsive
-      %thead
-        %tr
-          %th.icon
-            %i.fa.fa-cloud
-          %th
-            %i.fa.fa-clock-o
-            Terabyte Hours
-          %th &nbsp;
-          %th &nbsp;
-          %th &nbsp;
-          %th &nbsp;
-      %tbody
-        %tr.highlight.bottomline
-          %td
-            %em Total usage for all buckets
-          %td
-            = number_with_delimiter(tbh.round(2), :delimiter => ',')
-            TBh
-          %td &nbsp;
-          %td &nbsp;
-          %td &nbsp;
-          %td &nbsp;
+    .table-responsive
+      %table.table.table-hover.phone-bill
+        %thead
+          %tr
+            %th.icon
+              %i.fa.fa-cloud
+            %th
+              %i.fa.fa-clock-o
+              Terabyte Hours
+            %th &nbsp;
+            %th &nbsp;
+            %th &nbsp;
+            %th &nbsp;
+        %tbody
+          %tr.highlight.bottomline
+            %td
+              %em Total usage for all buckets
+            %td
+              = number_with_delimiter(tbh.round(2), :delimiter => ',')
+              TBh
+            %td &nbsp;
+            %td &nbsp;
+            %td &nbsp;
+            %td &nbsp;

@@ -1,14 +1,15 @@
 - if vouchers && vouchers.any?
   .alert.alert-success
     %h3 Active Discounts
-    %table.table.table-striped.table-responsive
-      %thead
-        %th Discount
-        %th First Applied At
-        %th Expires At
-      %tbody
-        - for v in @active_vouchers
-          %tr
-            %td= "#{v.voucher.discount_percent}%"
-            %td= v.created_at
-            %td= v.expires_at
+    .table-responsive
+      %table.table.table-striped
+        %thead
+          %th Discount
+          %th First Applied At
+          %th Expires At
+        %tbody
+          - for v in @active_vouchers
+            %tr
+              %td= "#{v.voucher.discount_percent}%"
+              %td= v.created_at
+              %td= v.expires_at

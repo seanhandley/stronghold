@@ -4,51 +4,52 @@
     %strong Current Quota:
     == #{Fog::Network.new(OPENSTACK_ARGS).get_quota(project.uuid).body['quota']['floatingip']} addresses
   - if ip_quotas && ip_quotas.any?
-    %table.table.table-hover.phone-bill.table-responsive
-      %thead
-        %tr
-          %th.icon
-            %i.fa.fa-sitemap
-          %th Quota Set At
-          %th Addresses
-          %th Previous Value
-          
-      %tbody
-        - ip_quotas.each do |quota|
+    .table-responsive
+      %table.table.table-hover.phone-bill
+        %thead
           %tr
-            %td &nbsp;
-            %td= quota.recorded_at
-            %td
-              = quota.quota
-              addresses
-            %td
-              = quota.previous.nil? ? "-" : "#{quota.previous} addresses"
+            %th.icon
+              %i.fa.fa-sitemap
+            %th Quota Set At
+            %th Addresses
+            %th Previous Value
+            
+        %tbody
+          - ip_quotas.each do |quota|
+            %tr
+              %td &nbsp;
+              %td= quota.recorded_at
+              %td
+                = quota.quota
+                addresses
+              %td
+                = quota.previous.nil? ? "-" : "#{quota.previous} addresses"
 
-  - if external_gateways && external_gateways.values.any?
-    %h3 External Gateways
-    %table.table.table-hover.phone-bill
-      %thead
-        %tr
-          %th.icon
-            %i.fa.fa-sitemap
-          %th Router Name
-          %th Unique Identifier
-          %th
-            %i.fa.fa-clock-o
-            Hours Connected to External Network
-      %tbody
-        - external_gateways.each do |_, results|
+    - if external_gateways && external_gateways.values.any?
+      %h3 External Gateways
+      %table.table.table-hover.phone-bill
+        %thead
           %tr
+            %th.icon
+              %i.fa.fa-sitemap
+            %th Router Name
+            %th Unique Identifier
+            %th
+              %i.fa.fa-clock-o
+              Hours Connected to External Network
+        %tbody
+          - external_gateways.each do |_, results|
+            %tr
+              %td &nbsp;
+              %td= results[:name]
+              %td= results[:id]
+              %td
+                = ((results[:billable_seconds] / 60.0) / 60.0).ceil
+                == of #{@total_hours}
+          %tr.highlight.bottomline
             %td &nbsp;
-            %td= results[:name]
-            %td= results[:id]
+            %td Total:
             %td
-              = ((results[:billable_seconds] / 60.0) / 60.0).ceil
-              == of #{@total_hours}
-        %tr.highlight.bottomline
-          %td &nbsp;
-          %td Total:
-          %td
-            = number_with_delimiter(external_gateways.values.collect{|ip| ((ip[:billable_seconds] / 60.0) / 60.0).ceil}.sum, :delimiter => ',')
-            hours
-          %td &nbsp;
+              = number_with_delimiter(external_gateways.values.collect{|ip| ((ip[:billable_seconds] / 60.0) / 60.0).ceil}.sum, :delimiter => ',')
+              hours
+            %td &nbsp;
