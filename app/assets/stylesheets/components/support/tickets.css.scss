@@ -125,3 +125,19 @@ p.timestamp {
   padding-top: 5px;
   padding-right: 10px;
 }
+
+a.ticket-top-anchor{
+  position: absolute;
+  display: block;
+  top: -200px;
+  visibility: hidden;
+}
+
+@media only screen and (max-width: 585px), only screen and (max-device-width: 585px) {
+  a.ticket-top-anchor{
+    position: relative;
+    display: block;
+    top: -70px;
+    visibility: hidden;
+  }
+}

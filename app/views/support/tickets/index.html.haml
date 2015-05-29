@@ -1,13 +1,17 @@
-.container-fluid#tickets-container.hide{:'ng-controller' => "TicketsController", :'ng-init' => 'populateTickets()', :'data-permanent-reference' => @reference}
-  .col-xs-12
-    .some-info.space-after.animate-show{:'ng-show' => "isLoading"}
-      %p
-        %i.fa.fa-refresh.fa-spin
-      %p
-        Loading tickets...
+%h1
+  %i.fa.fa-life-ring
+  Support
 
-  %div
-    .col-xs-12{:'ng-show' => "hasFailed"}
+.container-fluid#tickets-container.hide{:'ng-controller' => "TicketsController", :'ng-init' => 'populateTickets()', :'data-permanent-reference' => @reference}
+  .row
+    .col-md-12
+      .some-info.space-after.animate-show{:'ng-show' => "isLoading"}
+        %p
+          %i.fa.fa-refresh.fa-spin
+        %p
+          Loading tickets...
+
+    .col-md-12{:'ng-show' => "hasFailed"}
       .some-info.space-after
         %p
           %i.fa.fa-warning
@@ -16,38 +20,36 @@
         %p
           Please check back later.
 
-    %div{:'ng-hide' => "hasFailed !== false"}
+    .col-md-12.space-after{:'ng-hide' => "isLoading || hasFailed !== false"}
 
-      .col-xs-12.space-after{:'ng-hide' => "isLoading"}
+      .some-info.clear-fix.space-after{:'ng-hide' => "hasTickets()"}
+        %p
+          %i.fa.fa-square-o
+        %p
+          There are no tickets.
+        - if can? :modify, Ticket
+          %p
+            %a{:href => '', :'ng-click' => 'ticketDialogShow()'} Create a new ticket
 
-        .some-info.clear-fix.space-after{:'ng-hide' => "hasTickets()"}
-          %p
-            %i.fa.fa-square-o
-          %p
-            There are no tickets.
+    .col-md-3
+      %div{:'ng-show' => "hasTickets()"}
+        %tabset
+          %tab{:'ng-repeat' => "status in statuses | orderBy:'-name'", :heading => '{{status.name}}', :active => 'status.active'}
+            = render partial: 'tickets_list'
+        %a{name: 'ticket-top', class: 'ticket-top-anchor'}
+    .col-md-9
+      .some-info.space-after.ticket{:'ng-hide' => "selectedTicket || !hasTickets()"}
+        %p
+          %i.fa.fa-info-circle
+        %p
           - if can? :modify, Ticket
-            %p
-              %a{:href => '', :'ng-click' => 'ticketDialogShow()'} Create a new ticket
-
-      .col-xs-3
-        %div{:'ng-show' => "hasTickets()"}
-          %tabset
-            %tab{:'ng-repeat' => "status in statuses | orderBy:'-name'", :heading => '{{status.name}}', :active => 'status.active'}
-              = render partial: 'tickets_list'
-
-      .col-xs-9
-        .some-info.space-after.ticket{:'ng-hide' => "selectedTicket || !hasTickets()"}
-          %p
-            %i.fa.fa-info-circle
-          %p
-            - if can? :modify, Ticket
-              Select a ticket, or
-              %a{:href => '', :'ng-click' => 'ticketDialogShow()'} create a new one
-              \.
-            - else
-              Select a ticket.
-        %div{:'ng-show' => "selectedTicket"}
-          = render partial: 'ticket'
+            Select a ticket, or
+            %a{:href => '', :'ng-click' => 'ticketDialogShow()'} create a new one
+            \.
+          - else
+            Select a ticket.
+      %div{:'ng-show' => "selectedTicket", id: 'selectedTicketAnchor'}
+        = render partial: 'ticket'
 
   .modal.fade{'id' => 'newTicket', 'tabindex' => "-1", 'role' => "dialog", 'aria-labelledby' => 'newTicket', 'aria-hidden' => "true", 'data-backdrop' => 'static'}
     .modal-dialog
