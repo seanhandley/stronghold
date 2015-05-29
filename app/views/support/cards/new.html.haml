@@ -46,9 +46,9 @@
         .col-md-2
         .col-md-5
           %h2 Card Details
+          %a{name: 'view-errors'}
           #card-display
           = hidden_field_tag :signup_uuid, @customer_signup.uuid
-          %a{name: 'view-errors'}
           #flashes
           .form-group
             %label Card Number
