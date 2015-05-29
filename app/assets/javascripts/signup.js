@@ -85,6 +85,12 @@ $(document).ready(function() {
   });
   $('#discount_code').trigger('input');
 
+  $('#signup-proceed-button .btn').on('click', function(e) {
+    e.preventDefault();
+    $('#loading-overlay').removeClass('hide');
+    $('#signup-proceed-button').closest('form')[0].submit()
+  });
+
 });
 
 var Signup = {
