@@ -11,7 +11,7 @@
         = f.text_field :name, class: "form-control"
       .form-group
         %label Phone Number
-        = f.text_field :phone, class: "form-control"
+        = f.telephone_field :phone, class: "form-control"
       .form-group
         %label= t(:time_zone)
         = f.time_zone_select :time_zone, nil, {include_blank: false}, {class: "form-control"}
@@ -31,7 +31,7 @@
         = f.text_field :billing_postcode, class: "form-control"
       .form-group
         %label Country
-        = f.country_select :billing_country, {selected: @organization.billing_country}, {class: "form-control"}
+        = f.country_select :billing_country, {selected: @organization.billing_country || 'GB'}, {class: "form-control"}
       - if current_user.organization.self_service? && !current_user.staff? && current_user.organization.known_to_payment_gateway?
         .form-group
           .pull-right
