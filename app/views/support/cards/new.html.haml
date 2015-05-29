@@ -14,8 +14,6 @@
 
 .push
 
-%a{name: 'view-errors'}
-
 %div#signup-form-area
   = form_tag(support_cards_path, 'role' => 'form', 'id' => 'cc-details') do
     .jumbotron
@@ -50,6 +48,7 @@
           %h2 Card Details
           #card-display
           = hidden_field_tag :signup_uuid, @customer_signup.uuid
+          %a{name: 'view-errors'}
           #flashes
           .form-group
             %label Card Number
