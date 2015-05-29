@@ -2,6 +2,10 @@ class Support::CardsController < SupportBaseController
 
   skip_authorization_check
 
+  def current_section
+    'activate'
+  end
+
   def new
     if current_user.organization.known_to_payment_gateway?
       redirect_to support_root_path
