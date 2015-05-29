@@ -1,7 +1,7 @@
 - if instances && instances.any?
   %div.usage-back
     %h3 Instance Usage
-    %table.table.table-hover.phone-bill
+    %table.table.table-hover.phone-bill.table-responsive
       %tbody
         - instances.group_by{|i| i[:flavor][:flavor_id]}.each do |_, instances|
           %tr.highlight

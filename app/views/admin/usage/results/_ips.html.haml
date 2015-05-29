@@ -4,7 +4,7 @@
     %strong Current Quota:
     == #{Fog::Network.new(OPENSTACK_ARGS).get_quota(project.uuid).body['quota']['floatingip']} addresses
   - if ip_quotas && ip_quotas.any?
-    %table.table.table-hover.phone-bill
+    %table.table.table-hover.phone-bill.table-responsive
       %thead
         %tr
           %th.icon
