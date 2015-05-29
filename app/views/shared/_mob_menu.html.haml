@@ -17,7 +17,11 @@
           %a{href: ''}
             %i.fa.fa-users
             = t(:users_slash_roles)
-
+    - else
+      %li
+        %a{href: activate_path}
+          %i.fa.fa-plug
+          = 'Activate'
     - if can? :read, Ticket
       %li
         %a{href: support_tickets_path}
