@@ -76,7 +76,8 @@ body {
 
 #loading-overlay .spinner {
   display: flex;
-  margin: auto;
+  margin: 0 auto;
+  line-height: 1;
   color: white;
   font-size: 80px;
 }
