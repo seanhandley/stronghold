@@ -35,3 +35,6 @@
         .push
 = render partial: 'shared/footer' if current_user.organization.known_to_payment_gateway?
 = render partial: 'shared/ga'
+#loading-overlay.hide
+  .spinner
+    %i.fa.fa-cog.fa-spin
