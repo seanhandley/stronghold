@@ -2,7 +2,7 @@
   - if current_user.organization.known_to_payment_gateway?
     - if can? :read, Role
       %a{href: support_roles_path}
-        .top-menu-option{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => t(:users_slash_roles), 'class' => (current_section == 'roles' ? 'selected' : '')}
+        .top-menu-option{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => "Team", 'class' => (current_section == 'roles' ? 'selected' : '')}
           %i.top-menu-icon.fa.fa-users
     - else
       .top-menu-option.top-menu-option-disabled{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => t(:users_slash_roles)}
