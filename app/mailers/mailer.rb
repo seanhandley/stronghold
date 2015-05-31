@@ -52,4 +52,9 @@ class Mailer < ActionMailer::Base
   def activation_reminder(email)
     mail(:to => email, :subject => "Activate your DataCented account")   
   end
+
+  def notify_staff_of_signup(email)
+    @email = email
+    mail(:to => 'signups@datacentred.co.uk', :subject => "New Signup: #{@email}")   
+  end
 end

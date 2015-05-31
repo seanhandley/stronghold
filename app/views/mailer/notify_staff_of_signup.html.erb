@@ -1,0 +1,13 @@
+<%= stylesheet_link_tag 'email' %>
+
+<div class="container" id="email">
+  <%= render partial: 'header' %>
+
+  <h1>New Signup</h1>
+
+  <p><%= mail_to @email %> has signed up through the self service portal.</p>
+
+  <p>Kind regards,<br/>
+  The DataCentred Team</p>
+</div>
+<%= render partial: 'footer' %>
