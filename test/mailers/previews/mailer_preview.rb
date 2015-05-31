@@ -35,4 +35,8 @@ class MailerPreview < ActionMailer::Preview
   def goodbye
     Mailer.goodbye(Organization.first.admin_users)
   end
+
+  def notify_staff_of_signup
+    Mailer.notify_staff_of_signup('foo@bar.com')
+  end
 end
