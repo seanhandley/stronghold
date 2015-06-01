@@ -1,4 +1,4 @@
-unless Rails.env.test?
+unless Rails.env.test? || Rails.env.acceptance?
   RailsAdmin.config do |config|
 
     ### Popular gems integration

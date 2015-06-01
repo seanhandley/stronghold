@@ -7,6 +7,9 @@ development:
 test:
   <<: *default
 
+acceptance:
+  <<: *default
+
 staging:
   <<: *default
 

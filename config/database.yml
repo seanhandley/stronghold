@@ -13,6 +13,10 @@ test:
   <<: *default
   database: stronghold_test
 
+acceptance:
+  <<: *default
+  database: stronghold_acceptance
+
 staging:
   <<: *default
   database: stronghold_staging

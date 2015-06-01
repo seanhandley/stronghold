@@ -1,11 +1,17 @@
-require 'capybara'
-require 'test/unit'
-require 'yaml'
+ENV["RAILS_ENV"] = "acceptance"
+require File.expand_path("../../../config/environment", __FILE__)
+require "rails/test_help"
+
+require "minitest/rails/capybara"
 require 'capybara/poltergeist'
 
-CAPYBARA_CONFIG = YAML.load_file(File.expand_path(File.join(File.dirname(__FILE__), "../../config/capybara.yml")))
+VCR.configure do |c|
+  c.ignore_localhost = true
+end
 
-Capybara.run_server = false
+# Uncomment to run tests on staging
+# Capybara.run_server = false
+# Capybara.app_host = CAPYBARA_CONFIG['url']
 
 ## Uncomment this to help debug JS errors
 
@@ -13,41 +19,41 @@ Capybara.run_server = false
 #   Capybara::Poltergeist::Driver.new(app, js_errors: false)
 # end
 
+require File.expand_path(File.dirname(__FILE__) + '/../blueprints')
+require 'database_cleaner'
+
+DatabaseCleaner.strategy = :truncation
+
 Capybara.default_driver = :poltergeist
-Capybara.app_host = CAPYBARA_CONFIG['url']
 
 module LoggingIn
   include Capybara::DSL
   
   def login
+    @user = User.make!
     visit('/sign_in')
-    fill_in('inputEmail',    :with => CAPYBARA_CONFIG['username'])
-    fill_in('inputPassword', :with => ENV["CAPYBARA_PASSWORD"])
+    fill_in('inputEmail',    :with => @user.email)
+    fill_in('inputPassword', :with => "UpperLower123")
     click_button('Sign In')
+  end
+
+  def logout
+    DatabaseCleaner.clean
+    Capybara.reset_sessions!
   end      
 end
 
-class CapybaraTestCase < Test::Unit::TestCase
+class CapybaraTestCase < Minitest::Test
   include Capybara::DSL
   include LoggingIn
 
   def setup
+    WebMock.allow_net_connect!
     login  
   end
   
   def teardown
+    WebMock.disable_net_connect!
     Capybara.reset_sessions!
-  end
-end
-
-module WaitForSync
-  include Capybara::DSL
-  
-  def wait_for_sync
-    sleep(2)
-    until find(:xpath, "//span[contains(@class, 'sync-status')]").text == 'SYNCED' do
-      sleep(1)
-    end
-    sleep(2)
   end
 end

@@ -43,17 +43,18 @@ gem 'geo_ip', '~> 0.5.0'
 gem 'world-flags', '~> 0.6'
 gem 'nokogiri'
 gem 'premailer-rails'
+gem "minitest-rails"
 
-group :test do
-  gem 'minitest-rails'
+group :test, :acceptance do
   gem 'faker'
   gem 'machinist'
-  gem 'capybara'
+  gem "minitest-rails-capybara"
   gem 'poltergeist'
   gem 'simplecov'
+  gem 'timecop'
+  gem 'launchy'
   gem 'webmock'
   gem 'vcr'
-  gem 'timecop'
 end
 
 # Assets gems
