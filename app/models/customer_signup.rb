@@ -46,7 +46,7 @@ class CustomerSignup < ActiveRecord::Base
 
   def send_email
     CustomerSignupJob.perform_later(id)
-    Mailer.notify_staff_of_signup(email)
+    Mailer.notify_staff_of_signup(email).deliver_later
   end
 
 end
