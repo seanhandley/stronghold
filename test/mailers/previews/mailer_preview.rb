@@ -37,6 +37,6 @@ class MailerPreview < ActionMailer::Preview
   end
 
   def notify_staff_of_signup
-    Mailer.notify_staff_of_signup('foo@bar.com')
+    Mailer.notify_staff_of_signup(CustomerSignup.first)
   end
 end
