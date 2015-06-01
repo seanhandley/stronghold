@@ -7,6 +7,10 @@
 
   <p><%= mail_to @email %> has signed up through the self service portal.</p>
 
+  <div style: "padding: 30px">
+    <a class="confirm" target='_blank' href="<%= @salesforce_link %>">View More Info</a>
+  </div>
+
   <p>Kind regards,<br/>
   The DataCentred Team</p>
 </div>
