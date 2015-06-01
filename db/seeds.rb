@@ -6,6 +6,10 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+Product.find_or_create_by name: 'Compute'
+Product.find_or_create_by name: 'Storage'
+Product.find_or_create_by name: 'Colocation'
+
 if ['test','development'].include?(Rails.env)
   Organization.skip_callback(:create, :after, :create_salesforce_object)
   Organization.skip_callback(:update, :after, :update_salesforce_object)
@@ -37,11 +41,13 @@ if ['test','development'].include?(Rails.env)
     user.roles << role
     user.save!
   end
-  
-  Product.create! name: 'Compute'
-  Product.create! name: 'Storage'
-  Product.create! name: 'Colocation'
 
   organization.products << Product.all
   
+elsif Rails.env == 'acceptance'
+  rand = (0...8).map { ('a'..'z').to_a[rand(26)] }.join.downcase
+  cg = CustomerGenerator.new(organization_name: rand, email: "#{rand}@test.com",
+    extra_tenants: "", organization: { product_ids: Product.all.collect(&:id)})
+  rg = RegistrationGenerator.new(Invite.first, password: '12345678')
+  rg.generate!
 end

@@ -60,7 +60,7 @@ class RegistrationGenerator
     Hipchat.notify('New User', 'Accounts',
                      "#{@user.name} added to organization #{@organization.name}.")
     # Add heat roles
-    unless Rails.env.test?
+    unless Rails.env.test? || Rails.env.acceptance?
       heat_roles = Fog::Identity.new(OPENSTACK_ARGS).list_roles.body['roles'].select{|r| r['name'].include? "heat_stack"}.collect{|r| r['id']}
       heat_roles.each do |role|
         Fog::Identity.new(OPENSTACK_ARGS).create_user_role(@organization.primary_tenant.uuid, @user.uuid, role)

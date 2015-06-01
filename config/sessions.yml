@@ -4,6 +4,9 @@ development:
 test:
   timeout: 60
 
+acceptance:
+  timeout: 60
+
 staging:
   timeout: 60
 
