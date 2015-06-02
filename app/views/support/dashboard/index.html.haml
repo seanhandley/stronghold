@@ -1,25 +1,38 @@
-.pull-right
-  %a{class: "btn btn-primary has-tooltip", href: openstack_path, target: '_blank', 'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => 'Log in using your username/password',}
-    OpenStack Dashboard
-  %a{class: "btn btn-default", href: '', 'data-toggle' => "modal", 'data-target' => "#showOpenStackDetails"}
-    API Details
+- if current_user.organization.cloud?
+  .pull-right
+    - if current_user.organization.compute? && can?(:read, :cloud)
+      %a{class: "btn btn-primary has-tooltip", href: openstack_path, target: '_blank', 'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => 'Log in using your username/password',}
+        OpenStack Dashboard
+    %a{class: "btn btn-default", href: '', 'data-toggle' => "modal", 'data-target' => "#showOpenStackDetails"}
+      API Details
 
-%h1#dashboard-overview
-  %i.fa.fa-cloud
-  Overview
+  %h1#dashboard-overview
+    %i.fa.fa-cloud
+    Overview
 
-.container-fluid
-  .push
-  .row
-    .col-md-6{style: 'text-align: center'}
-      .dashboard-element
-        %h2
-          %i.fa.fa-rocket
-          Compute
-        == Instances active: #{@instance_count} 
-    .col-md-6{style: 'text-align: center'}
-      .dashboard-element
-        %h2
-          %i.fa.fa-database
-          Storage
-        ==  Object storage used: #{@object_usage} GB
+  .container-fluid
+    .push
+    .row
+      - if current_user.organization.compute? && can?(:read, :cloud)
+        .col-md-6{style: 'text-align: center'}
+          .dashboard-element
+            %h2
+              %i.fa.fa-rocket
+              Compute
+            == Instances active: #{@instance_count}
+      - if current_user.organization.storage? && can?(:read, :storage)
+        .col-md-6{style: 'text-align: center'}
+          .dashboard-element
+            %h2
+              %i.fa.fa-database
+              Storage
+            ==  Object storage used: #{@object_usage} GB
+- else
+  &nbsp;
+  .jumbotron.bg-info
+    %h3
+      = image_tag 'logo_small.png'
+      Welcome
+    %p== This is the DataCentred online control panel.
+
+    %em== If you have any questions or issues, please report them via the #{link_to 'Support Tickets', support_tickets_path} section.
