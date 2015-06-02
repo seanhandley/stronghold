@@ -7,8 +7,8 @@
   - if current_user.organization.cloud?
     - if current_user.organization.known_to_payment_gateway?
       - if can?(:read, :cloud) || can?(:read, :storage)
-        %a{href: '', 'data-toggle' => "modal", 'data-target' => "#showOpenStackDetails"}
-          .top-menu-option{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => 'Cloud Services', 'class' => (current_section == 'cloud' ? 'selected' : '')}
+        %a{href: support_root_path}
+          .top-menu-option{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => 'Overview', 'class' => (current_section == 'cloud' ? 'selected' : '')}
             %i.top-menu-icon.fa.fa-cloud
     - else
       .top-menu-option.top-menu-option-disabled{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => 'Cloud Services'}

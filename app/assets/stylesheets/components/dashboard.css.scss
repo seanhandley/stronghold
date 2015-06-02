@@ -74,3 +74,14 @@ img.dashboard-option {
   opacity: 0.0 !important;
   cursor: initial !important;
 }
+
+div.dashboard-element {
+  width: 95%;
+  background: $brand-primary-fade;
+  font-size: 22px;
+  padding: 30px;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
