@@ -1,14 +1,15 @@
 - if current_user.organization.cloud?
-  .pull-right
+
+  %h1#dashboard-overview
+    %i.fa.fa-cloud
+    Overview
+    
+  #dashboard_buttons.pull-right
     - if current_user.organization.compute? && can?(:read, :cloud)
       %a{class: "btn btn-primary has-tooltip", href: openstack_path, target: '_blank', 'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => 'Log in using your username/password',}
         OpenStack Dashboard
     %a{class: "btn btn-default", href: '', 'data-toggle' => "modal", 'data-target' => "#showOpenStackDetails"}
       API Details
-
-  %h1#dashboard-overview
-    %i.fa.fa-cloud
-    Overview
 
   .container-fluid
     %h3= "Project: #{current_user.organization.primary_tenant.name}"
