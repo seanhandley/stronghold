@@ -8,7 +8,7 @@ class Support::DashboardController < SupportBaseController
   
   def index
     @instance_count = OpenStack::Instance.all.count
-    @object_usage = (Ceph::Usage.kilobytes_for(current_user.organization.primary_tenant.uuid) / 1024.0).gigabytes
+    @object_usage = ((Ceph::Usage.kilobytes_for(current_user.organization.primary_tenant.uuid) / 1024.0) / 1024.0).round(2)
     @ips_count = 0
   end
 
