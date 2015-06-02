@@ -1,5 +1,7 @@
 $ ->
   $('.top-menu-option').tooltip({})
+  $('.has-tooltip').tooltip({})
+
 
   # Workaround for display bug with the navpills
   $('.dropdown').on 'shown.bs.dropdown', ->
