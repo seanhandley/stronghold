@@ -11,8 +11,8 @@
     Overview
 
   .container-fluid
-    .push
-    .row
+    %h3= "Project: #{current_user.organization.primary_tenant.name}"
+    .row{style: "margin-top: 20px"}
       - if current_user.organization.compute? && can?(:read, :cloud)
         .col-md-6{style: 'text-align: center'}
           .dashboard-element
