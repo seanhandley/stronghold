@@ -6,6 +6,8 @@ require 'minitest'
 require "minitest/rails/capybara"
 require 'capybara/poltergeist'
 
+Recaptcha.configuration.skip_verify_env << 'acceptance'
+
 # Uncomment to run tests on staging
 # Capybara.run_server = false
 # Capybara.app_host = CAPYBARA_CONFIG['url']
@@ -24,6 +26,9 @@ require 'database_cleaner'
 DatabaseCleaner.strategy = :truncation
 
 Capybara.default_driver = :poltergeist
+
+Organization.destroy_all
+DatabaseCleaner.clean
 
 # seed
 require 'rake'
