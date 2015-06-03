@@ -39,7 +39,7 @@ angularJS.controller "TicketsController", [
           if (not $scope.hasFailed)
             $scope.tickets = tickets
             $scope.showTicket(null)
-          console.log($scope.tickets)
+          # console.log($scope.tickets)
           $scope.$apply() if !$scope.$$phase
           dCallback() if dCallback
           return
