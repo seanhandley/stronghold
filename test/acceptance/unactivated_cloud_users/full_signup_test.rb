@@ -39,7 +39,7 @@ class FullSignupTests < CapybaraTestCase
     fill_in('card_number', :with => '4242424242424242')
     fill_in('cvc', :with => '123')
     fill_in('name', :with => 'MR FOO BAR')
-    fill_in('expiry', :with => "03#{Date.today.year + 1}")
+    fill_in('expiry', :with => "03/#{Date.today.year + 1}")
 
     page.save_screenshot('/Users/sean/Desktop/screenshot.png', :full => true)
 
