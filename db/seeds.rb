@@ -47,7 +47,8 @@ if ['test','development'].include?(Rails.env)
 elsif Rails.env == 'acceptance'
   rand = (0...8).map { ('a'..'z').to_a[rand(26)] }.join.downcase
   cg = CustomerGenerator.new(organization_name: rand, email: "#{rand}@test.com",
-    extra_tenants: "", organization: { product_ids: Product.all.collect(&:id)})
+    extra_tenants: "", organization: { product_ids: Product.all.map{|p| p.id.to_s}})
+  cg.generate!
   rg = RegistrationGenerator.new(Invite.first, password: '12345678')
   rg.generate!
 end
