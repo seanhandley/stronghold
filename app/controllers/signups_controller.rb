@@ -49,7 +49,7 @@ class SignupsController < ApplicationController
       session[:user_id] = @registration.user.id
       session[:created_at] = Time.zone.now
       session[:token] = @registration.user.authenticate(update_params[:password])
-      redirect_to support_root_path
+      redirect_to current_user.organization.known_to_payment_gateway? ? support_root_path : activate_path
     else
       flash.clear
       flash.now.alert = @registration.errors.full_messages.join('<br>').html_safe
