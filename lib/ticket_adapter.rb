@@ -24,7 +24,7 @@ class TicketAdapter
           head, *tail = SIRPORTLY.request("ticket_updates/all", ticket: t['reference']).sort_by{|t| t['posted_at']}
           updates = tail.map do |u|
             unless u['private']
-              TicketComment.new(ticket_reference: t['reference'], id: u['id'],
+              ::TicketComment.new(ticket_reference: t['reference'], id: u['id'],
                                 email: u['from_address'], text: markdown(u['message']),
                                 time: Time.parse(u['posted_at']),
                                 staff: (u['author']["type"] == "User"),
