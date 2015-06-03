@@ -15,13 +15,13 @@ class Support::DashboardController < SupportBaseController
 
   def instance_count
     Rails.cache.fetch("instance_count_#{current_user.organization.primary_tenant.id}", expires_in: 5.minutes) do
-      OpenStack::Instance.all.count
+      OpenStack::Instance.all.count rescue 0
     end  
   end
 
   def object_usage
     Rails.cache.fetch("object_usage_#{current_user.organization.primary_tenant.id}", expires_in: 5.minutes) do
-      ((Ceph::Usage.kilobytes_for(current_user.organization.primary_tenant.uuid) / 1024.0) / 1024.0).round(2)
+      ((Ceph::Usage.kilobytes_for(current_user.organization.primary_tenant.uuid) / 1024.0) / 1024.0).round(2) rescue 0
     end
   end
 
