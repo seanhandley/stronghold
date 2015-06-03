@@ -53,6 +53,9 @@ group :test, :acceptance do
   gem 'simplecov'
   gem 'timecop'
   gem 'launchy'
+end
+
+group :test do
   gem 'webmock'
   gem 'vcr'
 end
