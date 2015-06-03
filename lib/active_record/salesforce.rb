@@ -39,6 +39,7 @@ class CreateSalesforceObjectJob < ActiveJob::Base
 
   def perform(o)
     o.update_column(:salesforce_id, Restforce.new.create('Account', o.salesforce_args))
+    Mailer.notify_staff_of_signup(o).deliver_later
   end
 end
 

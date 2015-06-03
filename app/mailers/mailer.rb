@@ -53,7 +53,8 @@ class Mailer < ActionMailer::Base
     mail(:to => email, :subject => "Activate your DataCented account")   
   end
 
-  def notify_staff_of_signup(customer_signup)
+  def notify_staff_of_signup(organization)
+    customer_signup = organization.customer_signup
     @email = customer_signup.email
     @salesforce_link = "https://eu2.salesforce.com/#{customer_signup.organization.salesforce_id}"
     mail(:to => 'signups@datacentred.co.uk', :subject => "New Signup: #{@email}")   
