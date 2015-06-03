@@ -5,7 +5,7 @@
 
   <h1>New Signup</h1>
 
-  <p><%= mail_to @email %> has signed up through the self service portal.</p>
+  <p><%= @organization.name %> has signed up through the self service portal.</p>
 
   <div style: "padding: 30px">
     <a class="confirm" target='_blank' href="<%= @salesforce_link %>">View More Info</a>

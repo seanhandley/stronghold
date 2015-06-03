@@ -54,9 +54,8 @@ class Mailer < ActionMailer::Base
   end
 
   def notify_staff_of_signup(organization)
-    customer_signup = organization.customer_signup
-    @email = customer_signup.email
-    @salesforce_link = "https://eu2.salesforce.com/#{customer_signup.organization.salesforce_id}"
-    mail(:to => 'signups@datacentred.co.uk', :subject => "New Signup: #{@email}")   
+    @organization = organization
+    @salesforce_link = "https://eu2.salesforce.com/#{@organization.salesforce_id}"
+    mail(:to => 'signups@datacentred.co.uk', :subject => "New Signup: #{@organization.name}")   
   end
 end
