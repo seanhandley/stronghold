@@ -7,5 +7,6 @@ dependencies:
     - DEBIAN_FRONTEND=noninteractive sudo apt-get install -y mysql-server-5.6
 
 test:
-  override:
-    - rake test:unit_and_functional
+  minitest_globs:
+    - test/functional/**/*.rb
+    - test/unit/**/*.rb
