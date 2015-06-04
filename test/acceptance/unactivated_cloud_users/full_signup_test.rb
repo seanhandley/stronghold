@@ -36,16 +36,24 @@ class FullSignupTests < CapybaraTestCase
     fill_in('address_city', :with => 'Place')
     select('United Kingdom', :from => 'address_country')
 
-    fill_in('card_number', :with => '4242424242424242')
-    fill_in('cvc', :with => '123')
+    4.times {find_field('card_number').native.send_key('4242')}
+    find_field('expiry').native.send_key '05'
+    find_field('expiry').native.send_key (Date.today.year + 1).to_s
     fill_in('name', :with => 'MR FOO BAR')
-    fill_in('expiry', :with => "03/#{Date.today.year + 1}")
+    find_field('cvc').native.send_key '123'
 
-    page.save_screenshot('/Users/sean/Desktop/screenshot.png', :full => true)
+    find('input[type="submit"]').click
 
-    click_button('Activate →')
+    # page.driver.debug
 
-    sleep(20)
+    sleep(15)
+
+    within('.page-body') do
+      assert has_content?('Your card details are verified')
+      assert has_content?('Overview')
+      assert has_content?('OpenStack Dashboard')
+      assert has_content?('API Details')
+    end
 
   end
 end

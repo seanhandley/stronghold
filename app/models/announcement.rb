@@ -11,7 +11,6 @@ class Announcement
           }
       ])
     end
-    puts args
 
     Starburst::Announcement.create(args)
   end
