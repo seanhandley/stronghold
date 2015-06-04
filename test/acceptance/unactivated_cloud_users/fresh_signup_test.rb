@@ -8,7 +8,7 @@ class FreshSignupTests < CapybaraTestCase
   
   def test_new_signup
     visit('/signup')
-    fill_in('email', :with => 'test@test.com')
+    fill_in('email', :with => 'test_fresh@test.com')
     click_button('Create Account')
     within('#sign-in') do
       assert has_content?('Thanks for signing up!')

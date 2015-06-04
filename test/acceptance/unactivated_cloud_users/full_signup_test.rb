@@ -31,6 +31,13 @@ class FullSignupTests < CapybaraTestCase
       assert has_content?('Before we let you loose')
     end
 
+    within('.top-menu') do
+      assert page.has_no_xpath?("//a[@href='#{support_roles_path}']")
+      assert find(:xpath, "//a[@href='#{activate_path}']")
+      assert find(:xpath, "//a[@href='#{support_usage_path}']")
+      assert find(:xpath, "//a[@href='#{support_tickets_path}']")
+    end
+
     fill_in('idpc_input', :with => 'ID1 1QD')
     fill_in('address_line1', :with => '1 Street Street')
     fill_in('address_city', :with => 'Place')
@@ -53,6 +60,13 @@ class FullSignupTests < CapybaraTestCase
       assert has_content?('Overview')
       assert has_content?('OpenStack Dashboard')
       assert has_content?('API Details')
+    end
+
+    within('.top-menu') do
+      assert page.has_no_xpath?("//a[@href='#{activate_path}']")
+      assert find(:xpath, "//a[@href='#{support_usage_path}']")
+      assert find(:xpath, "//a[@href='#{support_tickets_path}']")
+      assert find(:xpath, "//a[@href='#{support_roles_path}']")
     end
 
   end
