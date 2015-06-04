@@ -5,6 +5,7 @@ require "rails/test_help"
 require 'minitest'
 require "minitest/rails/capybara"
 require 'capybara/poltergeist'
+require_relative '../support/alert_confirmer'
 
 Recaptcha.configuration.skip_verify_env << 'acceptance'
 
@@ -62,6 +63,7 @@ module LoggingIn
 end
 
 class CapybaraTestCase < Minitest::Test
+  include Rails.application.routes.url_helpers
   include Capybara::DSL
   include LoggingIn
 
