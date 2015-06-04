@@ -36,6 +36,14 @@ Rake::Task.clear
 Stronghold::Application.load_tasks
 Rake::Task["db:seed"].invoke
 
+Capybara.register_driver :poltergeist do |app|
+  Capybara::Poltergeist::Driver.new(app, :inspector => true,
+    phantomjs_options: ['--ignore-ssl-errors=yes', '--ssl-protocol=any'])
+end
+
+# Capybara.javascript_driver = :poltergeist
+Capybara.javascript_driver = :poltergeist
+
 module LoggingIn
   include Capybara::DSL
   
