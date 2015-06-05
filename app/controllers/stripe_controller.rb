@@ -15,7 +15,7 @@ class StripeController < ApplicationController
       if @customer_signup.ready?    
         render json: {success: true, message: ''}
       else
-        customer.delete
+        # customer.delete
         render json: {success: false, message: 'The address does not match the card'}
       end
     end
