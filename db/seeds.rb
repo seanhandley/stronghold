@@ -21,7 +21,7 @@ if ['test','development'].include?(Rails.env)
   User.skip_callback(:create, :after, :generate_ec2_credentials)
   User.skip_callback(:create, :after, :subscribe_to_status_io)
 
-  organization = Organization.create(name: 'DataCentred', reference: STAFF_REFERENCE)
+  organization = Organization.create(name: 'DataCentred', reference: STAFF_REFERENCE, self_service: false)
   tenant = Tenant.create(name: 'datacentred', uuid: '612bfb90f93c4b6e9ba515d51bb16022', organization: organization)
   organization.primary_tenant_id = tenant.id
   organization.save!
