@@ -24,10 +24,10 @@ class Organization < ActiveRecord::Base
   belongs_to :primary_tenant, class_name: 'Tenant'
   belongs_to :customer_signup
 
-  scope :paying, -> { where('started_paying_at is not null') }
-  scope :trial,  -> { where(started_paying_at: nil) }
-  scope :cloud,  -> { all.select(&:cloud?) }
-  scope :active, -> { all.select{|o| o.state == OrganizationStates::Active && !o.disabled?}}
+  scope :paying,    -> { where('started_paying_at is not null') }
+  scope :billable,  -> { all.select{|o| !o.test_account?} }
+  scope :cloud,     -> { all.select(&:cloud?) }
+  scope :active,    -> { all.select{|o| o.state == OrganizationStates::Active && !o.disabled?}}
 
   def staff?
     (reference == STAFF_REFERENCE)
@@ -72,23 +72,27 @@ class Organization < ActiveRecord::Base
   end
 
   def enable!
-    tenants.each do |tenant|
-      Fog::Identity.new(OPENSTACK_ARGS).update_tenant(tenant.uuid, enabled: true)
-    end
-    users.each do |user|
-      # Enable the user
-      Fog::Identity.new(OPENSTACK_ARGS).update_user(user.uuid, enabled: true)
+    unless Rails.env.test?
+      tenants.each do |tenant|
+        Fog::Identity.new(OPENSTACK_ARGS).update_tenant(tenant.uuid, enabled: true)
+      end
+      users.each do |user|
+        # Enable the user
+        Fog::Identity.new(OPENSTACK_ARGS).update_user(user.uuid, enabled: true)
+      end
     end
     has_payment_methods!(true)
   end
 
   def disable!
-    tenants.each do |tenant|
-      Fog::Identity.new(OPENSTACK_ARGS).update_tenant(tenant.uuid, enabled: false)
-    end
-    users.each do |user|
-      # Enable the user
-      Fog::Identity.new(OPENSTACK_ARGS).update_user(user.uuid, enabled: false)
+    unless Rails.env.test?
+      tenants.each do |tenant|
+        Fog::Identity.new(OPENSTACK_ARGS).update_tenant(tenant.uuid, enabled: false)
+      end
+      users.each do |user|
+        # Enable the user
+        Fog::Identity.new(OPENSTACK_ARGS).update_user(user.uuid, enabled: false)
+      end
     end
     update_attributes(disabled: true)
   end

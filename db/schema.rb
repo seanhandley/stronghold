@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150521094315) do
+ActiveRecord::Schema.define(version: 20150608065255) do
 
   create_table "audits", force: :cascade do |t|
     t.string   "auditable_id",    limit: 255
@@ -225,6 +225,7 @@ ActiveRecord::Schema.define(version: 20150521094315) do
     t.integer  "customer_signup_id", limit: 4
     t.string   "state",              limit: 255, default: "active", null: false
     t.boolean  "disabled",           limit: 1,   default: false,    null: false
+    t.boolean  "test_account",       limit: 1,   default: false,    null: false
   end
 
   create_table "organizations_products", force: :cascade do |t|
