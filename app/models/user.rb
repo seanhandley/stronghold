@@ -128,7 +128,7 @@ class User < ActiveRecord::Base
   end
 
   def subscribe_to_status_io
-    unless Rails.env.test? || Rails.env.staging?
+    unless Rails.env.test? || Rails.env.staging? || Rails.env.acceptance?
       StatusIOSubscribeJob.perform_later(email)
     end
   end
