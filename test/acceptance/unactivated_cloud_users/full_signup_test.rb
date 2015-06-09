@@ -16,7 +16,7 @@ class FullSignupTests < CapybaraTestCase
 
     sleep(10)
 
-    visit("/signup/#{Invite.last.token}")
+    visit("/signup/#{Invite.find_by_email('test@test.com').token}")
 
     within('#sign-in') do
       assert has_content?('Set your password')
