@@ -28,10 +28,12 @@ DatabaseCleaner.strategy = :truncation
 
 Capybara.default_driver = :poltergeist
 
-begin
-  Organization.destroy_all
-rescue StandardError => e
-  STDERR.puts "Couldn't destroy orgs: #{e.message}"
+for organization in Organization.all
+  begin
+    organization.destroy
+  rescue StandardError => e
+    STDERR.puts "Couldn't destroy org: #{organization.name}"
+  end
 end
 
 DatabaseCleaner.clean
@@ -43,7 +45,7 @@ Stronghold::Application.load_tasks
 Rake::Task["db:seed"].invoke
 
 Capybara.register_driver :poltergeist do |app|
-  Capybara::Poltergeist::Driver.new(app, :inspector => true,
+  Capybara::Poltergeist::Driver.new(app, :inspector => true, :timeout => 60,
     phantomjs_options: ['--ignore-ssl-errors=yes', '--ssl-protocol=any'])
 end
 
@@ -65,6 +67,12 @@ module LoggingIn
   def logout
     Capybara.reset_sessions!
   end     
+end
+
+MiniTest.after_run do
+  Organization.destroy_all rescue nil
+  User.destroy_all rescue nil
+  DatabaseCleaner.clean
 end
 
 class CapybaraTestCase < Minitest::Test
