@@ -28,7 +28,12 @@ DatabaseCleaner.strategy = :truncation
 
 Capybara.default_driver = :poltergeist
 
-Organization.destroy_all
+begin
+  Organization.destroy_all
+rescue StandardError => e
+  STDERR.puts "Couldn't destroy orgs: #{e.message}"
+end
+
 DatabaseCleaner.clean
 
 # seed
@@ -73,10 +78,5 @@ class CapybaraTestCase < Minitest::Test
   
   def teardown
     Capybara.reset_sessions!
-  end
-
-  Minitest.after_run do
-    Organization.destroy_all
-    DatabaseCleaner.clean
   end
 end
