@@ -3,12 +3,14 @@
 - if @pending_customers.any?
   %table.table.table-striped.table-hover
     %thead
+      %th Signed Up
       %th Email
       %th IP Address
       %th
     %tbody
       - for customer in @pending_customers
         %tr
+          %td= customer.customer_signup.created_at
           %td= customer.customer_signup.email
           %td= customer.customer_signup.ip_address
           %td
