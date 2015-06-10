@@ -1,7 +1,7 @@
 class Admin::PendingCustomersController < AdminBaseController
 
   def index
-    @pending_customers = Organization.pending.sort(&:created_at).reverse
+    @pending_customers = Organization.pending.reverse
   end
 
   def update
