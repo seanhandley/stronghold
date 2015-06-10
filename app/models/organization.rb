@@ -28,6 +28,7 @@ class Organization < ActiveRecord::Base
   scope :billable,  -> { all.select{|o| !o.test_account?} }
   scope :cloud,     -> { all.select(&:cloud?) }
   scope :active,    -> { all.select{|o| o.state == OrganizationStates::Active && !o.disabled?}}
+  scope :pending,    -> { all.select{|o| o.state == OrganizationStates::Fresh }}
 
   def staff?
     (reference == STAFF_REFERENCE)
@@ -95,6 +96,14 @@ class Organization < ActiveRecord::Base
       end
     end
     update_attributes(disabled: true)
+  end
+
+  def manually_activate!
+    return false unless state == OrganizationStates::Fresh 
+    update_attributes(started_paying_at: Time.now.utc, self_service: false)
+    enable!
+    create_default_network!
+    set_quotas!
   end
 
   def complete_signup!(stripe_customer_id)
