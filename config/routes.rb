@@ -44,6 +44,7 @@ Rails.application.routes.draw do
       resources :sanity, only: [:index]
       resources :free_ips, only: [:index]
       resources :vouchers
+      resources :pending_customers, only: [:index, :update]
     end
   #end
 
