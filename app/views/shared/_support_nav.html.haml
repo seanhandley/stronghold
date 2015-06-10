@@ -7,7 +7,7 @@
     %li
       %a{:href => support_profile_path}
         %i.fa.fa-user
-        = t(:my_details)
+        My Profile
     - if current_user.staff?
       %li
         %a{:href => admin_root_path}
@@ -22,7 +22,7 @@
         %li
           %a{:href => support_manage_cards_path}
             %i.fa.fa-credit-card
-            Manage Cards
+            Payment Settings
       %li
         %a{:href => support_audits_path}
           %i.fa.fa-history
