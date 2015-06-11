@@ -7,7 +7,13 @@ module Notifications
   end
 
   def self.notify(settings, message)
-    notifiers.each{|n| "Notifications::#{n.to_s}".constantize.send(:notify, *[settings, message])}
+    notifiers.each do |n|
+      begin
+        "Notifications::#{n.to_s}".constantize.send(:notify, *[settings, message])
+      rescue StandardError => e
+        Honeybadger.notify(e)
+      end
+    end
   end
 
 end
