@@ -38,7 +38,7 @@ class Support::OrganizationsController < SupportBaseController
   # Close this user's account
   def close
     if reauthenticate(reauthorise_params[:password]) && !current_user.staff?
-      Hipchat.notify('Account Closure', 'Accounts', "#{current_user.organization.name} (REF: #{current_user.organization.reference}) has requested account termination.", color: 'red')
+      Notifications.notify(:account_alert, "#{current_user.organization.name} (REF: #{current_user.organization.reference}) has requested account termination.")
       creds = {:openstack_username => current_user.email,
                :openstack_api_key  => nil,
                :openstack_auth_token => session[:token],

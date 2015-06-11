@@ -1,5 +1,37 @@
 default: &default
   enabled: false
+  notifications:
+    new_signup:
+      from: 'Self Service'
+      room: 'Accounts'
+      format:
+        color: 'green'
+        message_format: 'text'
+      prefix: '(goodnews) Good news!'
+    account_alert:
+      from: 'Account Alert'
+      room: 'Accounts'
+      format:
+        color: 'red'
+        message_format: 'text'
+      prefix: '(sadpanda) Bad news!'
+    internal_signup:
+      from: 'Internal Signup'
+      room: 'Accounts'
+      format:
+        color: 'green'
+        message_format: 'text'
+      prefix: '(goodnews) Good news!'
+    new_user:
+      from: 'New user'
+      room: 'Accounts'
+      format:
+        message_format: 'text'
+    sanity_check: 
+      from: 'Sanity Check'
+      room: 'Web'
+      format:
+        color: 'red'
 
 development:
   <<: *default

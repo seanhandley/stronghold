@@ -44,6 +44,7 @@ gem 'world-flags', '~> 0.6'
 gem 'nokogiri'
 gem 'premailer-rails'
 gem "minitest-rails"
+gem "slack-notifier"
 
 group :test, :acceptance do
   gem 'faker'
