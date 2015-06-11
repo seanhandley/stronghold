@@ -53,7 +53,7 @@ class FullSignupTests < CapybaraTestCase
 
     # page.driver.debug
 
-    sleep(15)
+    sleep(25)
 
     within('.page-body') do
       assert has_content?('Your card details are verified')
