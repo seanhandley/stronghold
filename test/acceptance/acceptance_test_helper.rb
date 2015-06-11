@@ -5,6 +5,10 @@ ENV["RAILS_ENV"] = "acceptance"
 require File.expand_path("../../../config/environment", __FILE__)
 require "rails/test_help"
 
+require 'sidekiq/testing'
+Sidekiq::Testing.inline!
+Sidekiq::Worker.clear_all
+
 require 'minitest'
 require "minitest/rails/capybara"
 require 'capybara/poltergeist'
