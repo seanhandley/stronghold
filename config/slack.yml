@@ -1,0 +1,30 @@
+default: &default
+  enabled: false
+  notifications:
+    new_signup:
+      channel: '#signups'
+    account_alert:
+      channel: '#webdev'
+    internal_signup:
+      channel: '#signups'
+    new_user:
+      channel: '#signups'
+    sanity_check:
+      channel: '#webdev'
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+acceptance:
+  <<: *default
+
+staging:
+  <<: *default
+  enabled: true
+
+production:
+  <<: *default
+  enabled: true
