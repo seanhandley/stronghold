@@ -72,7 +72,7 @@ module LoggingIn
   end     
 end
 
-MiniTest.after_run do
+Minitest.after_run do
   Organization.destroy_all rescue nil
   User.destroy_all rescue nil
   DatabaseCleaner.clean
