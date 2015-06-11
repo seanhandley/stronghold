@@ -12,8 +12,8 @@ module Notifications
       begin
         o = "Notifications::#{n.to_s}".constantize
         raise ArgumentError, "Unknown settings: #{key}" unless o.settings[key]
-        message = "#{o.settings[key]['prefix']} #{message}" if o.settings[key]['prefix']
-        o.send(:notify, *[key, message])
+        m = "#{o.settings[key]['prefix']} #{message}" if o.settings[key]['prefix']
+        o.send(:notify, *[key, m])
       rescue StandardError => e
         Honeybadger.notify(e)
       end
