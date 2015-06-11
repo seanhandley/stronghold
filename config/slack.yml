@@ -4,15 +4,19 @@ default: &default
     new_signup:
       channel: '#signups'
       color: 'good'
+      prefix: ':beers:'
     account_alert:
       channel: '#webdev'
       color: 'danger'
+      prefix: ':crying_cat_face:'
     internal_signup:
       channel: '#signups'
       color: 'good'
+      prefix: ':beers:'
     new_user:
       channel: '#signups'
       color: 'good'
+      prefix: ':key:'
     sanity_check:
       channel: '#webdev'
       color: 'danger'
