@@ -3,14 +3,19 @@ default: &default
   notifications:
     new_signup:
       channel: '#signups'
+      color: 'good'
     account_alert:
       channel: '#webdev'
+      color: 'danger'
     internal_signup:
       channel: '#signups'
+      color: 'good'
     new_user:
       channel: '#signups'
+      color: 'good'
     sanity_check:
       channel: '#webdev'
+      color: 'danger'
 
 development:
   <<: *default
