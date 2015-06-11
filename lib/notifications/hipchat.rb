@@ -7,7 +7,7 @@ module Notifications
       raise ArgumentError, "Unknown settings: #{key}" unless settings[key]
       if HIPCHAT_NOTIFICATIONS_ENABLED
         message = "#{prefix} #{message}" if settings[key][:prefix]
-        client[settings[key]['room']].send(settings[key]['from'], message, {:notify => true}.merge(settings[key]['format']))  
+        client[settings[key]['room']].send(settings[key]['from'], message, {:notify => true}.merge(settings[key]['format'].symbolize_keys!))  
       end
     end
 
