@@ -57,8 +57,7 @@ class RegistrationGenerator
         UserTenantRole.create user: @user, tenant: tenant, role_uuid: member_uuid
       end
     end
-    Hipchat.notify('New User', 'Accounts',
-                     "#{@user.name} added to organization #{@organization.name}.")
+    Notifications.notify(:new_user, "#{@user.name} added to organization #{@organization.name}.")
     # Add heat roles
     unless Rails.env.test? || Rails.env.acceptance? || Rails.env.development?
       heat_roles = Fog::Identity.new(OPENSTACK_ARGS).list_roles.body['roles'].select{|r| r['name'].include? "heat_stack"}.collect{|r| r['id']}

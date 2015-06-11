@@ -61,7 +61,7 @@ class CustomerGenerator
     end
     create_default_network(@organization) unless colo_only?
     Invite.create! email: @email, power_invite: true, organization: @organization
-    Hipchat.notify('Internal Signup', 'Accounts', "New customer account created: #{@email} invited to organization #{@organization_name}")
+    Notifications.notify(:internal_signup, "New customer account created: #{@email} invited to organization #{@organization_name}")
   end
 
   def colo_only?
