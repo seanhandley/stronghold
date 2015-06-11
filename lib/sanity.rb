@@ -40,8 +40,7 @@ module Sanity
   end
 
   def self.notify!(data)
-    msg = Mailer.usage_sanity_failures(data).body.raw_source.gsub("\n","<br />").strip
-    Notifications.notify(:sanity_check, msg)
+    Mailer.usage_sanity_failures(data).deliver_later
   end
 
   def self.live_instances
