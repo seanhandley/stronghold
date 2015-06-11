@@ -24,12 +24,10 @@ class CustomerSignupGenerator
   private
 
   def create_customer
-    offset = GeoIp.geolocation(@customer_signup.ip_address, :timezone => true)[:timezone].split(':')[0].to_i rescue "00:00"
-    tz = ActiveSupport::TimeZone[offset].name rescue 'London'
     @organization = Organization.create! name: @customer_signup.organization_name,
                                          customer_signup: @customer_signup,
                                          state: OrganizationStates::Fresh,
-                                         time_zone: tz
+                                         time_zone: 'UTC'
     @organization.products << Product.find_by_name('Compute')
     @organization.products << Product.find_by_name('Storage')
     @organization.save!
