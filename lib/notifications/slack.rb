@@ -3,10 +3,7 @@ require 'slack-notifier'
 module Notifications
   class Slack
     def self.notify(key, message)
-      key = key.to_s
-      raise ArgumentError, "Unknown settings: #{key}" unless settings[key]
       if SLACK_NOTIFICATIONS_ENABLED
-        message = "#{settings[key]['prefix']} #{message}" if settings[key]['prefix']
         attachment = {
           fallback: message,
           text: message,
