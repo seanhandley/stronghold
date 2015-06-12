@@ -25,6 +25,8 @@
             #lookup-field
           .form-group
             %label Address
+            = text_field_tag :organization_name, nil, :class => 'form-control', placeholder: 'Company (if applicable)'
+          .form-group
             = text_field_tag :address_line1, nil, :class => 'form-control', 'data-stripe' => 'address_line1', placeholder: 'Address Line 1'
           .form-group
             = text_field_tag :address_line2, nil, :class => 'form-control', 'data-stripe' => 'address_line2', placeholder: 'Address Line 2'

@@ -32,6 +32,7 @@ $(document).ready(function() {
     api_key: 'ak_i7hlkdrpH82slSRuCcKrSslMyLHQg',
     // Identify your fields with CSS selectors
     output_fields: {
+      organisation_name: '#organization_name',
       line_1: '#address_line1',  
       line_2: '#address_line2',         
       post_town: '#address_city',

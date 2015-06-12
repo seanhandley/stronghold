@@ -20,6 +20,7 @@ class Support::CardsController < SupportBaseController
     if @customer_signup.ready?
       current_user.organization.update_attributes(
         {
+          name: create_params[:organization_name],
           billing_address1: create_params[:address_line1],
           billing_address2: create_params[:address_line2],
           billing_city: create_params[:address_city],
@@ -46,7 +47,7 @@ class Support::CardsController < SupportBaseController
   private
 
   def create_params
-    params.permit(:stripe_token, :signup_uuid, :address_line1, :address_line2, :address_city,
+    params.permit(:stripe_token, :signup_uuid, :organization_name, :address_line1, :address_line2, :address_city,
                   :postcode, :discount_code, :address_country => [])
   end
 
