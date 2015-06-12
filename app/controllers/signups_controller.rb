@@ -34,6 +34,7 @@ class SignupsController < ApplicationController
   end
 
   def thanks
+    redirect_to support_root_path if current_user
     render :confirm
   end
 
