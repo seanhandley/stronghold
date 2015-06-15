@@ -85,7 +85,7 @@
         .form-group#discount
           %label Discount Code
           .form-group
-            = text_field_tag :discount_code, @customer_signup.discount_code, placeholder: 'Got a discount code? Enter it here!', class: 'form-control'
+            = text_field_tag :discount_code, Voucher.find_by_code(@customer_signup.discount_code) ? @customer_signup.discount_code : nil, placeholder: 'Got a discount code? Enter it here!', class: 'form-control'
             %p.help-block
               #discount_code_message
         .pull-right= submit_tag 'Activate →', class: 'btn btn-primary btn-lg', id: 'complete-signup', disable_with: 'Activating...'
