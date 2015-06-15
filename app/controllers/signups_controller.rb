@@ -86,8 +86,7 @@ class SignupsController < ApplicationController
   end
 
   def create_params
-    params.permit(:organization_name, :email,
-                  :password, :confirm_password)
+    params.permit(:organization_name, :email, :discount_code)
   end
 
   def check_enabled

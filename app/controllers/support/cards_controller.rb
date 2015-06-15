@@ -11,7 +11,7 @@ class Support::CardsController < SupportBaseController
       redirect_to support_root_path
     else
       @location = GeoIp.geolocation(request.remote_ip)[:country_code] rescue 'GB'
-      @customer_signup = CustomerSignup.find_by_email(current_user.email)
+      @customer_signup = current_user.organization.customer_signup
     end
   end
 

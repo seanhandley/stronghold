@@ -5,6 +5,8 @@
     - if flash.present?
       #flashes= display_flash
 
+    = hidden_field_tag :discount_code, params[:discount_code]
+
     .form-group
       = email_field_tag :email, @email || @customer_signup.email, class: 'form-control', placeholder: 'Email address'
     .form-group
