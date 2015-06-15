@@ -14,6 +14,10 @@ module ApplicationHelper
     content_tag(:div, :id => 'js_successes', :class => "hide alert alert-success success#{obj.id}") { '' }
   end
 
+  def title(page_title)
+    content_for(:title) { "DataCentred - #{page_title}" }
+  end
+
   def get_model_errors(model)
     errors = model.errors.messages.collect do |field, message|
       {
