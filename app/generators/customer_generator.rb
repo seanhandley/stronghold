@@ -1,12 +1,13 @@
 class CustomerGenerator
   include ActiveModel::Validations
 
-  attr_reader :organization_name, :email, :products, :extra_tenants
+  attr_reader :organization_name, :email, :products, :extra_tenants, :salesforce_id
 
   def initialize(params={})
     @organization_name = params[:organization_name]
     @email             = params[:email]
     @extra_tenants     = params[:extra_tenants]
+    @salesforce_id     = params[:salesforce_id]
     if params[:organization] && params[:organization][:product_ids]
       @products = params[:organization][:product_ids].select(&:present?)
     else
@@ -45,7 +46,7 @@ class CustomerGenerator
   private
 
   def create_customer
-    @organization = Organization.create! name: @organization_name, self_service: false
+    @organization = Organization.create! name: @organization_name, self_service: false, salesforce_id: @salesforce_id
     @products.each do |product_id|
       @organization.products << Product.find(product_id)
     end

@@ -13,7 +13,7 @@ module ActiveRecord
       end
 
       define_method :create_salesforce_object do
-        CreateSalesforceObjectJob.perform_later(self)
+        CreateSalesforceObjectJob.perform_later(self) unless self.salesforce_id
       end
 
       define_method :delete_salesforce_object do

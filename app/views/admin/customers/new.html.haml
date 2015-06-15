@@ -11,6 +11,9 @@
     .form-group
       %label Administrator E-Mail
       = email_field_tag :email, @customer.email, class: 'form-control'
+    .form-group
+      %label Salesforce ID
+      = text_field_tag :salesforce_id, @customer.salesforce_id, class: 'form-control', placeholder: 'If they already have one'
     %h4 Products
     = collection_check_boxes(:organization, :product_ids, Product.all, :id, :name, {}, {})
     %hr
