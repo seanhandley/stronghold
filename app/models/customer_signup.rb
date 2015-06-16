@@ -19,6 +19,8 @@ class CustomerSignup < ActiveRecord::Base
     Organization.find_by_customer_signup_id(id)
   end
 
+  private
+
   def email_valid
     return errors.add(:email, I18n.t(:is_not_a_valid_address)) unless email =~ /.+@.+\..+/
     return errors.add(:email, I18n.t(:is_not_a_valid_address)) unless email.length >= 5
@@ -33,7 +35,6 @@ class CustomerSignup < ActiveRecord::Base
   end
 
   def stripe_customer
-    return nil unless stripe_customer_id
     Stripe::Customer.retrieve(stripe_customer_id)
   rescue Stripe::InvalidRequestError => e
     if e.message.include? 'No such customer'
