@@ -99,6 +99,9 @@ en:
   please_choose_a_user: "Please choose a user to add to this role"
   please_email_and_one_role: "Please enter an email address and at least one role."
   please_give_user_at_least_one_role: "Please give this user at least one role"
+  recaptcha:
+    errors:
+      verification_failed: "Anti-robot check failed. Please tick the box and follow the instructions."
   reference: "Reference"
   remove: "Remove"
   rename: "Rename?"
