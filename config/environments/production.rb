@@ -96,6 +96,7 @@ Rails.application.configure do
   }
 
   config.action_controller.asset_host = "https://my.datacentred.io"
+  config.action_mailer.asset_host = config.action_controller.asset_host
   config.action_mailer.default_url_options = { :host => 'my.datacentred.io' }
 
   # Error handling
