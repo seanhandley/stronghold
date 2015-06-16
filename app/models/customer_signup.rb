@@ -19,6 +19,17 @@ class CustomerSignup < ActiveRecord::Base
     Organization.find_by_customer_signup_id(id)
   end
 
+  def stripe_customer
+    return nil unless stripe_customer_id.present?
+    Stripe::Customer.retrieve(stripe_customer_id)
+  rescue Stripe::InvalidRequestError => e
+    if e.message.include? 'No such customer'
+      return nil
+    else
+      raise
+    end
+  end
+
   private
 
   def email_valid
@@ -32,16 +43,6 @@ class CustomerSignup < ActiveRecord::Base
     return false if stripe_customer.sources.data.first.address_line1_check == 'fail'
     return false if stripe_customer.sources.data.first.address_zip_check   == 'fail'
     true
-  end
-
-  def stripe_customer
-    Stripe::Customer.retrieve(stripe_customer_id)
-  rescue Stripe::InvalidRequestError => e
-    if e.message.include? 'No such customer'
-      return nil
-    else
-      raise
-    end
   end
 
   def send_email
