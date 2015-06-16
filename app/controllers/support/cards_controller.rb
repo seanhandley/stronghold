@@ -18,16 +18,13 @@ class Support::CardsController < SupportBaseController
   def create
     @customer_signup = CustomerSignup.find_by_uuid(create_params[:signup_uuid])
     if @customer_signup.ready?
-      current_user.organization.update_attributes(
-        {
-          name: create_params[:organization_name],
+      args = {
           billing_address1: create_params[:address_line1],
           billing_address2: create_params[:address_line2],
           billing_city: create_params[:address_city],
           billing_postcode: create_params[:postcode],
           billing_country: create_params[:address_country].first,
-        }
-      )
+        }.merge(name: create_params[:organization_name].present? ? {name: create_params[:organization_name]} : {})
       if(voucher = Voucher.find_by_code(create_params[:discount_code]))
         current_user.organization.vouchers << voucher
       end
