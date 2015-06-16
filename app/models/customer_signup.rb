@@ -29,8 +29,8 @@ class CustomerSignup < ActiveRecord::Base
 
   def address_check_passed?
     return false unless stripe_customer
-    return false unless stripe_customer.sources.data.first.address_line1_check == 'pass'
-    return false unless stripe_customer.sources.data.first.address_zip_check   == 'pass'
+    return false if stripe_customer.sources.data.first.address_line1_check == 'fail'
+    return false if stripe_customer.sources.data.first.address_zip_check   == 'fail'
     true
   end
 
