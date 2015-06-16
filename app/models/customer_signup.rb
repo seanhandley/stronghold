@@ -19,8 +19,6 @@ class CustomerSignup < ActiveRecord::Base
     Organization.find_by_customer_signup_id(id)
   end
 
-  private
-
   def email_valid
     return errors.add(:email, I18n.t(:is_not_a_valid_address)) unless email =~ /.+@.+\..+/
     return errors.add(:email, I18n.t(:is_not_a_valid_address)) unless email.length >= 5
