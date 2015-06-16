@@ -33,6 +33,7 @@ class CustomerSignup < ActiveRecord::Base
   end
 
   def stripe_customer
+    return nil unless stripe_customer_id
     Stripe::Customer.retrieve(stripe_customer_id)
   rescue Stripe::InvalidRequestError => e
     if e.message.include? 'No such customer'
