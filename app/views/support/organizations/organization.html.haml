@@ -1,6 +1,10 @@
 - title "My Account"
 
-%h2 Edit Account
+%h2 My Account
+
+%p
+  %strong Account Number:
+  = @organization.reporting_code
 
 = form_for @organization, url: support_organization_path(@organization), :html => {:role => 'form'}, remote: true do |f|
   = javascript_error_messages_for(@organization)
