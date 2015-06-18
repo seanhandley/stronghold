@@ -8,7 +8,8 @@ module ActiveRecord
           Name: name, Type: 'Customer',
           Billingstreet: [billing_address1, billing_address2].join("\n").strip,
           Billingcity: billing_city, Billingpostalcode: billing_postcode,
-          Billingcountry: Country.find_country_by_alpha2(billing_country), Phone: phone
+          Billingcountry: Country.find_country_by_alpha2(billing_country), Phone: phone,
+          c2g__CODAReportingCode__c: reporting_code
         }
       end
 
