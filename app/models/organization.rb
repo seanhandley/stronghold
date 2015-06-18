@@ -8,10 +8,11 @@ class Organization < ActiveRecord::Base
 
   syncs_with_salesforce
 
-  after_save :generate_reference, :on => :create
+  after_save :generate_reference, :generate_reporting_code, :on => :create
 
   validates :name, length: {minimum: 1}, allow_blank: false
-  validates :reference, :uniqueness => true
+  validates :reference,      :uniqueness => true, :if => Proc.new{|o| o.reference.present? } 
+  validates :reporting_code, :uniqueness => true, :if => Proc.new{|o| o.reporting_code.present? } 
 
   has_many :users, dependent: :destroy
   has_many :roles, dependent: :destroy
@@ -146,6 +147,18 @@ class Organization < ActiveRecord::Base
       update_column(:reference, new_ref)
       t = tenants.create name: "primary"
       update_column(:primary_tenant_id, t.id)
+    end
+  end
+
+  def generate_reporting_code
+    return nil if reporting_code
+    letters = (0...3).map { ('a'..'z').to_a[rand(26)] }.join.upcase
+    numbers = rand(999).to_s.rjust(3, '0')
+    code = "DC-#{letters}-#{numbers}"
+    if Organization.all.collect(&:reporting_code).include?(code)
+      generate_reporting_code
+    else
+      update_column(:reporting_code, code)
     end
   end
 

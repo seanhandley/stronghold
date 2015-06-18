@@ -33,6 +33,20 @@ class TestOrganizationValidations < Minitest::Test
     assert_equal ref, @organization.reference
   end
 
+  def test_organization_has_reporting_code
+    assert_nil @organization.reporting_code
+    @organization.save!
+    assert @organization.reporting_code =~ /DC\-\w\w\w\-\d\d\d/
+  end
+
+  def test_organization_has_unique_reporting_code
+    organizations = [@organization.dup, @organization.dup, @organization.dup]
+    @organization.save!
+    organizations.each(&:save!)
+
+    assert Organization.all.collect(&:reporting_code).uniq
+  end
+
   def teardown
     DatabaseCleaner.clean  
   end

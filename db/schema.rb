@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150615122820) do
+ActiveRecord::Schema.define(version: 20150618103004) do
 
   create_table "audits", force: :cascade do |t|
     t.string   "auditable_id",    limit: 255
@@ -227,7 +227,10 @@ ActiveRecord::Schema.define(version: 20150615122820) do
     t.string   "state",              limit: 255, default: "active", null: false
     t.boolean  "disabled",           limit: 1,   default: false,    null: false
     t.boolean  "test_account",       limit: 1,   default: false,    null: false
+    t.string   "reporting_code",     limit: 255
   end
+
+  add_index "organizations", ["reporting_code"], name: "index_organizations_on_reporting_code", unique: true, using: :btree
 
   create_table "organizations_products", force: :cascade do |t|
     t.integer  "organization_id", limit: 4

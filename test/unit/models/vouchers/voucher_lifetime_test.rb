@@ -28,6 +28,7 @@ class TestVoucherLifetimes < Minitest::Test
     @voucher.update_attributes(usage_limit: 1)
     org2 = @organization.dup
     org2.reference = "dup"
+    org2.reporting_code = "dup"
     org2.save!
     @organization.vouchers << @voucher
     assert_raises ActiveRecord::RecordInvalid do
