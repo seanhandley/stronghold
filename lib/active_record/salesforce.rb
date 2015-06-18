@@ -9,7 +9,7 @@ module ActiveRecord
           Billingstreet: [billing_address1, billing_address2].join("\n").strip,
           Billingcity: billing_city, Billingpostalcode: billing_postcode,
           Billingcountry: Country.find_country_by_alpha2(billing_country), Phone: phone,
-          Reportingcode: reporting_code, Taxcountrycode: billing_country
+          Reportingcode: reporting_code
         }
       end
 
