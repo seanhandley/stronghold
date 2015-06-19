@@ -14,7 +14,7 @@ module ActiveRecord
       end
 
       define_method :create_salesforce_object do
-        # CreateSalesforceObjectJob.perform_later(self) unless self.salesforce_id
+        CreateSalesforceObjectJob.perform_later(self) unless self.salesforce_id
       end
 
       define_method :delete_salesforce_object do
@@ -22,7 +22,7 @@ module ActiveRecord
       end
 
       define_method :update_salesforce_object do
-        # UpdateSalesforceObjectJob.perform_later(self) if self.salesforce_id
+        UpdateSalesforceObjectJob.perform_later(self) if self.salesforce_id
       end
 
       self.class_eval do
