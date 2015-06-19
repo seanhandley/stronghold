@@ -20,7 +20,7 @@ class Admin::CustomersController < AdminBaseController
   private
 
   def create_params
-    params.permit(:organization_name, :email, :extra_tenants,
+    params.permit(:organization_name, :email, :extra_tenants, :salesforce_id,
                   :organization => {:product_ids => []})
   end
 
