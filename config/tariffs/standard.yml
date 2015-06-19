@@ -1,0 +1,26 @@
+instances:
+  dc1.1x0: 0.0089
+  dc1.1x1: 0.0177
+  dc1.1x2: 0.0348
+  dc1.2x2: 0.0353
+  dc1.2x4: 0.0695
+  dc1.2x8: 0.1375
+  dc1.4x8: 0.1391
+  dc1.4x16: 0.2750
+  dc1.8x16: 0.2817
+  dc1.8x32: 0.5250
+  dc1.1x1.arm: 0.0354
+  dc1.1x2.arm: 0.0696
+  dc1.2x2.arm: 0.0706
+  dc1.2x4.arm: 0.1390
+  dc1.2x8.arm: 0.2750
+  dc1.4x8.arm: 0.2782
+  dc1.4x16.arm: 0.5500
+  dc1.4x32.arm: 1.0500
+
+storage:
+  block: 0.0313
+  object: 0.0313
+
+network:
+  floating_ip: 2.00
