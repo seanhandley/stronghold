@@ -26,7 +26,7 @@ module ActiveRecord
       end
 
       self.class_eval do
-        unless Rails.env.test? || Rails.env.acceptance?
+        unless Rails.env.test? || Rails.env.acceptance? || Rails.env.staging?
           after_commit(:create_salesforce_object, on: :create)
           after_commit(:update_salesforce_object, on: :update)
         end
