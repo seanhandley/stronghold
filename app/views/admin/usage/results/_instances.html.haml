@@ -16,9 +16,6 @@
               %td
                 %i.fa.fa-clock-o
                 Hours Active This Period
-              %td
-                %i.fa.fa-gbp
-                Total
             - instances.sort { |x,y| x[:name] <=> y[:name] }.each do |instance|
               %tr
                 %td &nbsp;
@@ -28,19 +25,15 @@
                 %td.line_entry= instance[:latest_state]
                 %td.line_entry= (instance[:terminated_at] && instance[:terminated_at] <= @to_date) ? instance[:terminated_at] : '-'
                 %td.line_entry== #{number_with_delimiter(((instance[:billable_seconds] / 60.0) / 60.0).ceil, :delimiter => ',')} of #{@total_hours}
-                %td.line_entry== £#{number_with_delimiter((instance[:billable_seconds] / 60.0).ceil * TARIFFS['standard']['instances'][instance[:flavor][:name]], :delimiter => ',')}
             %tr.highlight.bottomline
               %td &nbsp;
               %td== Total #{instances.first[:flavor][:name]}:
               %td== #{number_with_delimiter(instances.map{|i| ((i[:billable_seconds] / 60.0) / 60.0).ceil}.sum, :delimiter => ',')} hours
-              %td== £#{number_with_delimiter(instances.map{|i| (i[:billable_seconds] / 60.0).ceil}.sum * TARIFFS['standard']['instances'][instances.first[:flavor][:name]], :delimiter => ',')}
               %td &nbsp;
               %td &nbsp;
               %td &nbsp;
               %td &nbsp;
             %tr
-              %td &nbsp;
-              %td &nbsp;
               %td &nbsp;
               %td &nbsp;
               %td &nbsp;
