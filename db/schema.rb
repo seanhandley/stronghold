@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150618103004) do
+ActiveRecord::Schema.define(version: 20150622131029) do
 
   create_table "audits", force: :cascade do |t|
     t.string   "auditable_id",    limit: 255
@@ -82,6 +82,7 @@ ActiveRecord::Schema.define(version: 20150618103004) do
     t.integer "ram",       limit: 4
     t.integer "disk",      limit: 4
     t.integer "vcpus",     limit: 4
+    t.float   "rate",      limit: 24
   end
 
   create_table "billing_instance_states", force: :cascade do |t|
