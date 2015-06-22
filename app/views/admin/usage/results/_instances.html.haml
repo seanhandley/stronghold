@@ -29,7 +29,7 @@
                 %td.line_entry= (instance[:terminated_at] && instance[:terminated_at] <= @to_date) ? instance[:terminated_at] : '-'
                 %td.line_entry== #{number_with_delimiter(((instance[:billable_seconds] / 60.0) / 60.0).ceil, :delimiter => ',')} of #{@total_hours}
                 - if instance[:flavor][:rate].present?
-                  %td.line_entry== £#{number_with_precision((((instance[:billable_seconds] / 60.0 / 60.0)).ceil.to_f * instance[:flavor][:rate].to_f).round(2), :delimiter => ',' :separator => '.', :precision => 2)}
+                  %td.line_entry== £#{number_with_precision((((instance[:billable_seconds] / 60.0) / 60.0)).ceil.to_f * instance[:flavor][:rate].to_f).round(2), :delimiter => ',' :separator => '.', :precision => 2)}
                 - else
                   %td.line_entry -
             %tr.highlight.bottomline
