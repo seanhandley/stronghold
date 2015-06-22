@@ -29,14 +29,14 @@
                 %td.line_entry= (instance[:terminated_at] && instance[:terminated_at] <= @to_date) ? instance[:terminated_at] : '-'
                 %td.line_entry== #{number_with_delimiter(((instance[:billable_seconds] / 60.0) / 60.0).ceil, :delimiter => ',')} of #{@total_hours}
                 - if instance[:flavor][:rate].present?
-                  %td.line_entry== £#{number_with_precision(((((instance[:billable_seconds] / 60.0) / 60.0)).ceil.to_f * instance[:flavor][:rate].to_f).round(2), :delimiter => ',' :separator => '.', :precision => 2)}
+                  %td.line_entry== £#{number_with_precision(((((instance[:billable_seconds] / 60.0) / 60.0)).ceil.to_f * instance[:flavor][:rate].to_f).round(2), :delimiter => ',', :separator => '.', :precision => 2)}
                 - else
                   %td.line_entry -
             %tr.highlight.bottomline
               %td &nbsp;
               %td== Total #{instances.first[:flavor][:name]}:
               %td== #{number_with_delimiter(instances.map{|i| ((i[:billable_seconds] / 60.0) / 60.0).ceil}.sum, :delimiter => ',')} hours
-              %td== £#{number_with_precision((instances.map{|i| ((i[:billable_seconds] / 60.0) / 60.0).ceil}.sum.to_f * instances.first[:flavor][:rate].to_f).round(2), :delimiter => ',' :separator => '.', :precision => 2)}
+              %td== £#{number_with_precision((instances.map{|i| ((i[:billable_seconds] / 60.0) / 60.0).ceil}.sum.to_f * instances.first[:flavor][:rate].to_f).round(2), :delimiter => ',', :separator => '.', :precision => 2)}
               %td &nbsp;
               %td &nbsp;
               %td &nbsp;
