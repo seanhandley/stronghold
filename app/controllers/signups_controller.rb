@@ -19,6 +19,8 @@ class SignupsController < ApplicationController
     extra_headers = { ip_address: request.remote_ip,
                       real_ip: request.headers['X-Real-IP'],
                       forwarded_ip: request.headers['X-Forwarded-For'],
+                      accept_language: request.headers['Accept-Language'],
+                      user_agent: request.headers['User-Agent'],
                       device_id: device_cookie
                     }
     @customer_signup = CustomerSignup.new(create_params.merge(extra_headers))

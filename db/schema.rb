@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150623124152) do
+ActiveRecord::Schema.define(version: 20150623154310) do
 
   create_table "audits", force: :cascade do |t|
     t.string   "auditable_id",    limit: 255
@@ -181,6 +181,8 @@ ActiveRecord::Schema.define(version: 20150623124152) do
     t.string   "forwarded_ip",        limit: 255
     t.string   "device_id",           limit: 255
     t.integer  "activation_attempts", limit: 4,   default: 0,     null: false
+    t.string   "user_agent",          limit: 255
+    t.string   "accept_language",     limit: 255
   end
 
   create_table "invites", force: :cascade do |t|
