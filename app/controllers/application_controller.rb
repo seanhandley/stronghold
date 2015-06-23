@@ -3,6 +3,8 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :null_session
 
+  before_filter :device_cookie
+
   helper Starburst::AnnouncementsHelper
 
   def javascript_redirect_to(path)
@@ -20,5 +22,11 @@ class ApplicationController < ActionController::Base
     @current_user
   end
   helper_method :current_user
+
+  def device_cookie
+    args = {value: SecureRandom.hex, expires: 2.years.from_now}
+    @device_cookie ||= (cookies[:_d] || (cookies[:_d] = args))
+  end
+  helper_method :device_cookie
 
 end

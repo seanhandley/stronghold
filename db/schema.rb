@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150623122931) do
+ActiveRecord::Schema.define(version: 20150623124152) do
 
   create_table "audits", force: :cascade do |t|
     t.string   "auditable_id",    limit: 255
@@ -168,17 +168,19 @@ ActiveRecord::Schema.define(version: 20150623122931) do
   add_index "billing_volumes", ["volume_id"], name: "index_billing_volumes_on_volume_id", unique: true, using: :btree
 
   create_table "customer_signups", force: :cascade do |t|
-    t.string   "uuid",               limit: 255
-    t.string   "email",              limit: 255
-    t.string   "organization_name",  limit: 255
-    t.string   "stripe_customer_id", limit: 255
-    t.string   "ip_address",         limit: 255
+    t.string   "uuid",                limit: 255
+    t.string   "email",               limit: 255
+    t.string   "organization_name",   limit: 255
+    t.string   "stripe_customer_id",  limit: 255
+    t.string   "ip_address",          limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "reminder_sent",      limit: 1,   default: false, null: false
-    t.string   "discount_code",      limit: 255
-    t.string   "real_ip",            limit: 255
-    t.string   "forwarded_ip",       limit: 255
+    t.boolean  "reminder_sent",       limit: 1,   default: false, null: false
+    t.string   "discount_code",       limit: 255
+    t.string   "real_ip",             limit: 255
+    t.string   "forwarded_ip",        limit: 255
+    t.string   "device_id",           limit: 255
+    t.integer  "activation_attempts", limit: 4,   default: 0,     null: false
   end
 
   create_table "invites", force: :cascade do |t|
