@@ -45,6 +45,7 @@ gem 'nokogiri'
 gem 'premailer-rails'
 gem "minitest-rails"
 gem "slack-notifier"
+gem "maxmind"
 
 group :test, :acceptance do
   gem 'faker'

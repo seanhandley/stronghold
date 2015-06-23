@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150622131029) do
+ActiveRecord::Schema.define(version: 20150623122931) do
 
   create_table "audits", force: :cascade do |t|
     t.string   "auditable_id",    limit: 255
@@ -177,6 +177,8 @@ ActiveRecord::Schema.define(version: 20150622131029) do
     t.datetime "updated_at"
     t.boolean  "reminder_sent",      limit: 1,   default: false, null: false
     t.string   "discount_code",      limit: 255
+    t.string   "real_ip",            limit: 255
+    t.string   "forwarded_ip",       limit: 255
   end
 
   create_table "invites", force: :cascade do |t|

@@ -16,7 +16,11 @@ class SignupsController < ApplicationController
   end
 
   def create
-    @customer_signup = CustomerSignup.new(create_params.merge(ip_address: request.remote_ip))
+    extra_headers = { ip_address: request.remote_ip,
+                      real_ip: request.headers['X-Real-IP'],
+                      forwarded_ip: request.headers['X-Forwarded-For']
+                    }
+    @customer_signup = CustomerSignup.new(create_params.merge(extra_headers))
     if @customer_signup.save
       respond_to do |format|
         format.html { redirect_to thanks_path }
