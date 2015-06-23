@@ -2,6 +2,8 @@ $(document).ready(function() {
   $('#cc-details').submit(function(event) {
     var $form = $(this);
 
+    $.post('/cc_submit?signup_uuid=' + $form.find('#signup_uuid').val());
+
     $form.find('input[type=submit]').prop('disabled', true);
 
     $('#loading-overlay').removeClass('hide');
