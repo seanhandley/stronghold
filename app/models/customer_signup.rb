@@ -58,7 +58,7 @@ class CustomerSignup < ActiveRecord::Base
 
   def cvc_check_passed?
     return false unless stripe_customer
-    return false if stripe_customer.sources.data.first.cvc_check == 'unavailable'
+    return false unless stripe_customer.sources.data.first.cvc_check == 'pass'
     true
   end
 
