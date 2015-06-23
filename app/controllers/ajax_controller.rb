@@ -28,6 +28,7 @@ class AjaxController < ApplicationController
     if @customer_signup
       @customer_signup.update_attributes(activation_attempts: @customer_signup.activation_attempts + 1)
     end
+    head :no_content
   end
 
   private
