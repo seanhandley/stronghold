@@ -1,4 +1,6 @@
 class CustomerSignup < ActiveRecord::Base
+  attr_reader :error_message
+
   after_create -> { update_attributes(uuid: SecureRandom.hex) }
   after_commit :send_email, on: :create
 
@@ -7,7 +9,16 @@ class CustomerSignup < ActiveRecord::Base
   scope :not_reminded, -> { where(reminder_sent: false)}
 
   def ready?
-    stripe_customer_id.present? && address_check_passed?
+    @error_message = nil
+    unless address_check_passed?
+      @error_message = 'The address does not match the card. Try activating by phone?'
+      return false
+    end
+    unless cvc_check_passed?
+      @error_message = 'Please use a card that has a valid CVC number'
+      return false
+    end
+    stripe_customer_id.present?
   end
 
   def organization_name
@@ -42,6 +53,12 @@ class CustomerSignup < ActiveRecord::Base
     return false unless stripe_customer
     return false if stripe_customer.sources.data.first.address_line1_check == 'fail'
     return false if stripe_customer.sources.data.first.address_zip_check   == 'fail'
+    true
+  end
+
+  def cvc_check_passed?
+    return false unless stripe_customer
+    return false if stripe_customer.sources.data.first.cvc_check == 'unavailable'
     true
   end
 

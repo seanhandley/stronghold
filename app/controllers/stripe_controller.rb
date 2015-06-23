@@ -18,7 +18,7 @@ class StripeController < ApplicationController
         render json: {success: true, message: ''}
       else
         # customer.delete
-        render json: {success: false, message: 'The address does not match the card. Try activating by phone?'}
+        render json: {success: false, message: @customer_signup.error_message}
       end
     end
   end
