@@ -64,8 +64,12 @@ class RegistrationGenerator
       heat_roles.each do |role|
         Fog::Identity.new(OPENSTACK_ARGS).create_user_role(@organization.primary_tenant.uuid, @user.uuid, role)
       end
-      storage_role = Fog::Identity.new(OPENSTACK_ARGS).list_roles.body['roles'].select{|r| r['name'].include? "object-store"}.collect{|r| r['id']}.first
-      Fog::Identity.new(OPENSTACK_ARGS).create_user_role(@organization.primary_tenant.uuid, @user.uuid, storage_role)   
+
+      storage_roles = Fog::Identity.new(OPENSTACK_ARGS).list_roles.body['roles'].select{|r| r['name'].include? "object-store"}.collect{|r| r['id']}
+      storage_roles.each do |role|
+        Fog::Identity.new(OPENSTACK_ARGS).create_user_role(@organization.primary_tenant.uuid, @user.uuid, role)
+      end
+      
     end
     invite.complete!
   end
