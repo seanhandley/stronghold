@@ -53,7 +53,9 @@ class FullSignupTests < CapybaraTestCase
 
     # page.driver.debug
 
-    sleep(25)
+    sleep(35)
+
+    # save_screenshot('/Users/sean/Desktop/screen.png', :full => true)
 
     within('.page-body') do
       assert has_content?('Your card details are verified')
