@@ -17,7 +17,8 @@ class StripeController < ApplicationController
       if @customer_signup.ready?    
         render json: {success: true, message: ''}
       else
-        # customer.delete
+        customer.delete
+        @customer_signup.update_attributes(stripe_customer_id: nil)
         render json: {success: false, message: @customer_signup.error_message}
       end
     end
