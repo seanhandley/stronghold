@@ -7,7 +7,7 @@ module FraudCheck
       :country => customer_signup.organization.billing_country, 
       :forwarded_ip => customer_signup.forwarded_ip,
       :email => customer_signup.email,
-      :shipping_address => [customer_signup.organization.address1, customer_signup.organization.address1].join("\n") 
+      :shipping_address => [customer_signup.organization.address1, customer_signup.organization.address1].join("\n"),
       :shipping_city => customer_signup.organization.billing_city, 
       :shipping_postal => customer_signup.organization.billing_postcode, 
       :shipping_country => customer_signup.organization.billing_country, 
