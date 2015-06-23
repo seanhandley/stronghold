@@ -25,6 +25,7 @@ class Support::CardsController < SupportBaseController
           billing_postcode: create_params[:postcode],
           billing_country: create_params[:address_country].first,
         }.merge(name: create_params[:organization_name].present? ? {name: create_params[:organization_name]} : {})
+      current_user.organization.update_attributes(args)
       if(voucher = Voucher.find_by_code(create_params[:discount_code]))
         current_user.organization.vouchers << voucher
       end
