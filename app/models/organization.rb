@@ -87,14 +87,7 @@ class Organization < ActiveRecord::Base
   end
 
   def disable!
-    unless Rails.env.test?
-      tenants.each do |tenant|
-        Fog::Identity.new(OPENSTACK_ARGS).update_tenant(tenant.uuid, enabled: false)
-      end
-      users.each do |user|
-        Fog::Identity.new(OPENSTACK_ARGS).update_user(user.uuid, enabled: false)
-      end
-    end
+    soft_freeze!
     update_attributes(disabled: true)
   end
 
