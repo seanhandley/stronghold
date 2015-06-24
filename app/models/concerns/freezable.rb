@@ -1,16 +1,18 @@
 module Freezable
 
-  # Lock out of OpenStack and Ceph, but leave instances accessible
+  # Lock out of OpenStack, but leave instances and storage accessible
   def soft_freeze!
     disable_users!
     disable_tenants!
-    disable_storage!
+    true
   end
 
   # Lock out of OpenStack and Ceph, and pause all instances
   def hard_freeze!
     soft_freeze!
+    disable_storage!
     pause_instances!
+    true
   end
 
   def unfreeze!
@@ -18,6 +20,7 @@ module Freezable
     enable_tenants!
     enable_storage!
     unpause_instances!
+    true
   end
 
   private
