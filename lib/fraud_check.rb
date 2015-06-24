@@ -1,10 +1,12 @@
 class FraudCheck
 
+  attr_reader :customer_signup
+
   def initialize(customer_signup)
     @customer_signup = customer_signup
   end
 
-  def fields
+  def request_fields
     signup_fields = {
       :client_ip => customer_signup.real_ip, 
       :forwarded_ip => customer_signup.forwarded_ip,
@@ -26,13 +28,21 @@ class FraudCheck
     end
   end
 
-  def looks_suspicious?(customer_signup)
-    request = Maxmind::Request.new(fields)
-    response = request.process!
-    if response.attributes[:risk_score] > 5
-      return response.attributes
-    else
-      return false
+  def response_fields
+    response.attributes
+  end
+
+  def suspicious?
+    return true if response_fields[:risk_score] > 5
+    false
+  end
+
+  private
+
+  def response
+    Rails.cache.fetch("fraud_check_#{customer_signup.id}", expires_in: 7.days) do
+      request = Maxmind::Request.new(request_fields)
+      request.process!
     end
   end
 end
