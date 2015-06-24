@@ -21,7 +21,7 @@ class SignupsController < ApplicationController
                       forwarded_ip: request.headers['X-Forwarded-For'],
                       accept_language: request.headers['Accept-Language'],
                       user_agent: request.headers['User-Agent'],
-                      device_id: device_cookie
+                      device_id: device_cookie[:value]
                     }
     @customer_signup = CustomerSignup.new(create_params.merge(extra_headers))
     if @customer_signup.save
