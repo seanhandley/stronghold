@@ -60,9 +60,13 @@ class AuthorizedController < ApplicationController
       redirect_to sign_in_path('next' => request.fullpath)
       return
     end
-    if !current_user.organization.known_to_payment_gateway?
+    if !current_user.organization.known_to_payment_gateway? || current_user.organization.in_review?
       return if allowed_paths_unactivated.include?(request.fullpath) || is_tickets_path?(request.fullpath)
-      redirect_to activate_path
+      if current_user.organization.in_review?
+        redirect_to support_root_path
+      else
+        redirect_to activate_path
+      end
     elsif !current_user.organization.has_payment_method?
       if !current_user.admin?
         reset_session
@@ -76,7 +80,7 @@ class AuthorizedController < ApplicationController
   end
 
   def allowed_paths_unactivated
-    [activate_path, support_cards_path, support_root_path,
+    [activate_path, support_cards_path, support_root_path, review_path,
     support_profile_path, support_usage_path, support_edit_organization_path,
     support_user_path(current_user), support_organization_path(current_user.organization)]
   end
