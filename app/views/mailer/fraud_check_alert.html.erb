@@ -1,11 +1,51 @@
 <%= stylesheet_link_tag 'email' %>
 <div class="container" id="email">
   <%= render partial: 'header' %>
-  <h1>User Failed Fraud Check</h1>
-  <p>Data:
-  <%= @args %>
-  </p>
-  <p>Report:
-  <%= link_to @report_url, @report_url %>
-  </p>
+  <h1>Potential fraud for <%= @customer_signup.organization_name %></h1>
+
+  <p>Account has been frozen until further action is decided.</p>
+
+  <hr>
+
+  <p><strong>MaxMind Risk Score:</strong> <%= @fraud_check.response_fields[:risk_score] %> (out of 100)</p>
+  <p><strong>Activation Attempts:</strong> <%= @customer_signup.activation_attempts %></p>
+  <p><strong>Other Signup Attempts From Same Device:</strong> <%= @customer_signup.other_signups_from_device %></p>
+  
+  <hr>
+
+  <h2>Details</h2>
+
+  <p><strong>Account Reference:</strong> <%= @customer_signup.organization.reporting_code %></p>
+
+  <%- i = 0 %>
+  <table>
+    <tbody>
+      <tr>
+      <%- @fraud_check.request_fields.each do |k,v| %>
+        <%- if i % 2 == 0 %>
+          </tr><tr>
+        <%- end %>
+        <td><strong><%= k.to_s.humanize.titleize %></strong>: <%= v %></td>
+        <% i += 1 %>
+      <% end %></tr>
+    </tbody>
+  </table>
+
+  <hr>
+
+  <h2>MaxMind Report</h2>
+
+  <%- i = 0 %>
+  <table style="width:100%">
+    <tbody>
+      <tr>
+      <%- @fraud_check.response_fields.each do |k,v| %>
+        <%- if i % 2 == 0 %>
+          </tr><tr>
+        <%- end %>
+        <td><strong><%= k.to_s.humanize.titleize %></strong>: <%= v %></td>
+        <% i += 1 %>
+      <% end %></tr>
+    </tbody>
+  </table>
 </div>

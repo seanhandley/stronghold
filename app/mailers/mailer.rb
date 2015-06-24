@@ -28,10 +28,10 @@ class Mailer < ActionMailer::Base
     mail(:to => "devops@datacentred.co.uk", :subject => 'Usage Sanity Check Failures')
   end
 
-  def fraud_check_alert(args, report_url)
-    @args = args
-    @report_url = report_url
-    mail(:to => "devops@datacentred.co.uk", :subject => 'Fraud Check Failure')
+  def fraud_check_alert(customer_signup, fraud_check)
+    @customer_signup = customer_signup
+    @fraud_check = fraud_check
+    mail(:to => "devops@datacentred.co.uk", :subject => "Potential Fraud: #{customer_signup.organization_name}")
   end
 
   def card_reverification_failure(organization)
@@ -57,5 +57,9 @@ class Mailer < ActionMailer::Base
     @organization = organization
     @salesforce_link = "https://eu2.salesforce.com/#{@organization.salesforce_id}"
     mail(:to => 'signups@datacentred.co.uk', :subject => "New Signup: #{@organization.name}")   
+  end
+
+  def review_mode_alert(customer_signup)
+    mail(:to => customer_signup.email, :subject => "Account Review: Please respond ASAP")
   end
 end
