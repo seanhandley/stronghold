@@ -1,5 +1,6 @@
 class Organization < ActiveRecord::Base
   include StripeHelper
+  include Freezable
 
   audited only: [:name, :time_zone, :locale, :billing_address1, :billing_address2,
                  :billing_city, :billing_postcode, :billing_country, :phone]
@@ -79,7 +80,6 @@ class Organization < ActiveRecord::Base
         Fog::Identity.new(OPENSTACK_ARGS).update_tenant(tenant.uuid, enabled: true)
       end
       users.each do |user|
-        # Enable the user
         Fog::Identity.new(OPENSTACK_ARGS).update_user(user.uuid, enabled: true)
       end
     end
@@ -92,7 +92,6 @@ class Organization < ActiveRecord::Base
         Fog::Identity.new(OPENSTACK_ARGS).update_tenant(tenant.uuid, enabled: false)
       end
       users.each do |user|
-        # Enable the user
         Fog::Identity.new(OPENSTACK_ARGS).update_user(user.uuid, enabled: false)
       end
     end
