@@ -26,6 +26,7 @@ class FraudCheck
       }
       signup_fields.merge(org_fields)
     end
+    signup_fields
   end
 
   def response_fields
