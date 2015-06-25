@@ -30,10 +30,10 @@ class Mailer < ActionMailer::Base
     mail(:to => "devops@datacentred.co.uk", :subject => 'Usage Sanity Check Failures')
   end
 
-  def fraud_check_alert(customer_signup, fraud_check)
+  def fraud_check_alert(customer_signup, fraud_check, recipient="devops@datacentred.co.uk")
     @customer_signup = customer_signup
     @fraud_check = fraud_check
-    mail(:to => "devops@datacentred.co.uk", :subject => "Potential Fraud: #{customer_signup.organization_name}")
+    mail(:to => recipient, :subject => "Potential Fraud: #{customer_signup.organization_name}")
   end
 
   def card_reverification_failure(organization)
