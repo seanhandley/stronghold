@@ -31,6 +31,7 @@ class Organization < ActiveRecord::Base
   scope :cloud,     -> { all.select(&:cloud?) }
   scope :active,    -> { all.select{|o| o.state == OrganizationStates::Active && !o.disabled?}}
   scope :pending,    -> { all.select{|o| o.state == OrganizationStates::Fresh }}
+  scope :frozen,    -> { where(in_review: true)}
 
   def staff?
     (reference == STAFF_REFERENCE)

@@ -45,6 +45,11 @@ Rails.application.routes.draw do
       resources :free_ips, only: [:index]
       resources :vouchers
       resources :pending_customers, only: [:index, :update]
+      resources :frozen_customers, only: [:index, :update] do
+        member do
+          post 'mail'
+        end
+      end
     end
   #end
 
