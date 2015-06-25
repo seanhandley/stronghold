@@ -33,7 +33,7 @@ class FraudCheck
     response.attributes
   end
 
-  def suspicious?(force_new_response: false)
+  def suspicious?(force_new_response = false)
     Rails.cache.delete("fraud_check_#{customer_signup.id}") if force_new_response
     return true if response_fields[:risk_score] > 5
     return true if customer_signup.other_signups_from_device > 3
