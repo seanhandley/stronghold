@@ -60,6 +60,7 @@ class Mailer < ActionMailer::Base
   end
 
   def review_mode_alert(customer_signup)
-    mail(:to => customer_signup.email, :subject => "Account Review: Please respond ASAP")
+    mail(:to => customer_signup.organization.admin_users.collect(&:email).join(', '),
+         :subject => "Account Review: Please respond ASAP")
   end
 end
