@@ -35,7 +35,6 @@ gem 'restforce', '~> 1.5.1'
 gem 'starburst', '~> 1.0.3'
 gem 'country_select'
 gem 'countries'
-gem 'fraudrecord'
 gem "recaptcha", :require => "recaptcha/rails"
 gem 'tel_to_helper'
 gem 'rest-client', '~> 1.6'
