@@ -23,7 +23,7 @@ class FraudCheck
         :shipping_postal => customer_signup.organization.billing_postcode, 
         :shipping_country => customer_signup.organization.billing_country, 
       }
-      signup_fields.merge(org_fields)
+      signup_fields.merge!(org_fields)
     end
     signup_fields
   end
