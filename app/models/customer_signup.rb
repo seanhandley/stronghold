@@ -46,6 +46,12 @@ class CustomerSignup < ActiveRecord::Base
     end
   end
 
+  def prepaid?
+    return false unless stripe_customer
+    return true if stripe_customer.sources.data.first.funding == "prepaid"
+    false
+  end
+
   private
 
   def email_valid
