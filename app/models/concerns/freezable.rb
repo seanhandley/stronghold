@@ -4,6 +4,7 @@ module Freezable
   def soft_freeze!
     disable_users!
     disable_tenants!
+    update_attributes(in_review: true)
     true
   end
 
@@ -20,6 +21,7 @@ module Freezable
     enable_tenants!
     enable_storage!
     unpause_instances!
+    update_attributes(in_review: false)
     true
   end
 
@@ -83,9 +85,21 @@ module Freezable
       fog.list_servers_detail(all_tenants: true).body['servers'].select{|s| s['tenant_id'] == tenant.uuid}.map{|s| s['id']}
     end.flatten
     if state
-      instances.each {|instance| fog.unpause_server(instance)}
+      instances.each do |instance|
+        begin
+          fog.unpause_server(instance)
+        rescue Excon::Errors::Conflict
+          # Already unpaused
+        end
+      end
     else
-      instances.each {|instance| fog.pause_server(instance)}
+      instances.each do |instance|
+        begin
+          fog.pause_server(instance)
+        rescue Excon::Errors::Conflict
+          # Already paused
+        end
+      end
     end
   end
 end

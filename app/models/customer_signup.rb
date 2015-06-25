@@ -30,6 +30,11 @@ class CustomerSignup < ActiveRecord::Base
     Organization.find_by_customer_signup_id(id)
   end
 
+  def other_signups_from_device
+    return 0 unless device_id
+    CustomerSignup.where(device_id: device_id).count - 1
+  end
+
   def stripe_customer
     return nil unless stripe_customer_id.present?
     Stripe::Customer.retrieve(stripe_customer_id)
@@ -39,6 +44,12 @@ class CustomerSignup < ActiveRecord::Base
     else
       raise
     end
+  end
+
+  def prepaid?
+    return false unless stripe_customer
+    return true if stripe_customer.sources.data.first.funding == "prepaid"
+    false
   end
 
   private

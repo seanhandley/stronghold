@@ -25,7 +25,8 @@ class ApplicationController < ActionController::Base
 
   def device_cookie
     args = {value: SecureRandom.hex, expires: 2.years.from_now}
-    @device_cookie ||= (cookies[:_d] || (cookies[:_d] = args))
+    cookies[:_d] = args unless cookies[:_d]
+    @device_cookie ||= cookies[:_d]
   end
   helper_method :device_cookie
 

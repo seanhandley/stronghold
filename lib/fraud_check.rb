@@ -1,5 +1,4 @@
 class FraudCheck
-
   attr_reader :customer_signup
 
   def initialize(customer_signup)
@@ -33,16 +32,19 @@ class FraudCheck
     response.attributes
   end
 
-  def suspicious?(force_new_response: false)
+  def suspicious?(force_new_response = false)
     Rails.cache.delete("fraud_check_#{customer_signup.id}") if force_new_response
     return true if response_fields[:risk_score] > 5
+    return true if customer_signup.prepaid?
+    return true if customer_signup.other_signups_from_device > 3
+    return true if customer_signup.activation_attempts > 5
     false
   end
 
   private
 
   def response
-    Rails.cache.fetch("fraud_check_#{customer_signup.id}", expires_in: 7.days) do
+    Rails.cache.fetch("fraud_check_#{customer_signup.id}", expires_in: 30.days) do
       request = Maxmind::Request.new(request_fields)
       request.process!
     end

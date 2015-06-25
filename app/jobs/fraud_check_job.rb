@@ -1,11 +1,14 @@
 class FraudCheckJob < ActiveJob::Base
   queue_as :default
 
-  def perform(args)
-    results = Fraudrecord.query(args)
-    threshold = 2
-    if [results[:value], results[:count], results[:reliability]].any? {|r| r >= threshold}
-      Mailer.fraud_check_alert(args, results[:report]).deliver_now
+  def perform(customer_signup)
+    unless Rails.env.test? || Rails.env.acceptance?
+      fc = FraudCheck.new(customer_signup)
+      if fc.suspicious?
+        customer_signup.organization.hard_freeze!
+        Mailer.fraud_check_alert(customer_signup, fc).deliver_now
+        Mailer.review_mode_alert(customer_signup).deliver_now
+      end
     end
   end
 end
