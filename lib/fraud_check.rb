@@ -45,7 +45,7 @@ class FraudCheck
   private
 
   def response
-    Rails.cache.fetch("fraud_check_#{customer_signup.id}", expires_in: 7.days) do
+    Rails.cache.fetch("fraud_check_#{customer_signup.id}", expires_in: 30.days) do
       request = Maxmind::Request.new(request_fields)
       request.process!
     end
