@@ -10,7 +10,11 @@
   <p><strong>MaxMind Risk Score:</strong> <%= @fraud_check.response_fields[:risk_score] %> (out of 100)</p>
   <p><strong>Activation Attempts:</strong> <%= @customer_signup.activation_attempts %></p>
   <p><strong>Other Signup Attempts From Same Device:</strong> <%= @customer_signup.other_signups_from_device %></p>
-  
+
+  <div style: "padding: 30px; margin: 30px">
+    <a class="confirm" target='_blank' href="<%= admin_frozen_customers_path %>">Review</a>
+  </div>
+
   <hr>
 
   <h2>Details</h2>
