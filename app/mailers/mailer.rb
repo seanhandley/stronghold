@@ -1,5 +1,7 @@
 class Mailer < ActionMailer::Base
   add_template_helper(DateTimeHelper)
+  add_template_helper(AbbreviationHelper)
+
   default :from => "DataCentred <noreply@datacentred.co.uk>"
   
   def signup(invite_id)
