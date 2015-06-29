@@ -10,6 +10,7 @@
   <p><strong>MaxMind Risk Score:</strong> <%= @fraud_check.response_fields[:risk_score] %> (out of 100)</p>
   <p><strong>Activation Attempts:</strong> <%= @customer_signup.activation_attempts %></p>
   <p><strong>Other Signup Attempts From Same Device:</strong> <%= @customer_signup.other_signups_from_device %></p>
+  <p>This alert is triggered if the risk score is greater than 5, or if the user makes more than 5 activation attempts, or if more than 3 different signups are made from the same device.</p>
 
   <div style: "padding: 30px; margin: 30px">
     <a class="confirm" target='_blank' href="<%= admin_frozen_customers_path %>">Review</a>
