@@ -34,6 +34,8 @@
                     %td.line_entry== £#{number_with_precision(((((instance[:billable_seconds] / 60.0) / 60.0)).ceil.to_f * instance[:flavor][:rate].to_f).round(2), :delimiter => ',', :separator => '.', :precision => 2)}
                   - else
                     %td.line_entry
+            - unless DarkLaunch.hide?
+              %tr
             %tr.highlight.bottomline
               %td &nbsp;
               %td== Total #{instances.first[:flavor][:name]}:
