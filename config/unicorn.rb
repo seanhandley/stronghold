@@ -17,8 +17,7 @@ worker_processes 2
 listen "/var/run/rails/stronghold/unicorn.sock", :backlog => 64
 pid "/var/run/rails/stronghold/unicorn.pid"
 
-# nuke workers after 30 seconds instead of 60 seconds (the default)
-timeout 30
+timeout 60
 
 # set log paths
 stderr_path "/var/log/rails/stronghold/unicorn.stderr.log"
