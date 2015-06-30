@@ -1,0 +1,11 @@
+development:
+  requires_dark_launch: false
+
+test:
+  requires_dark_launch: false
+
+staging:
+  requires_dark_launch: false
+
+production:
+  requires_dark_launch: true
