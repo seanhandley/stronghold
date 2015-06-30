@@ -21,7 +21,11 @@
             %td
               = number_with_delimiter(tbh.round(2), :delimiter => ',')
               TBh
-            %td &nbsp;
+            - unless DarkLaunch.hide?
+              %td
+                == £#{number_with_precision((tbh * RateCard.object_storage).round(2), :delimiter => ',', :separator => '.', :precision => 2)}
+            - else
+              %td &nbsp;
             %td &nbsp;
             %td &nbsp;
             %td &nbsp;
