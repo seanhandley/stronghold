@@ -1,8 +1,14 @@
 %div.usage-back
   %h3 IP Addresses
+  %p.tiny== £#{number_with_precision(RateCard.ip_address.round(2), :delimiter => ',', :separator => '.', :precision => 2)} per address per month
   %p
     %strong Current Quota:
-    == #{Fog::Network.new(OPENSTACK_ARGS).get_quota(project.uuid).body['quota']['floatingip']} addresses
+    - @quota = Fog::Network.new(OPENSTACK_ARGS).get_quota(project.uuid).body['quota']['floatingip']
+    == #{@quota} addresses
+    - unless DarkLaunch.hide?
+      (
+      == £#{number_with_precision(RateCard.ip_address.round(2) * @quota, :delimiter => ',', :separator => '.', :precision => 2)} per month
+      )
   - if ip_quotas && ip_quotas.any?
     .table-responsive
       %table.table.table-hover.phone-bill

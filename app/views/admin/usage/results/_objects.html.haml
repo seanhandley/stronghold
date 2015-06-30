@@ -10,7 +10,12 @@
             %th
               %i.fa.fa-clock-o
               Terabyte Hours
-            %th &nbsp;
+            - unless DarkLaunch.hide?
+              %th
+                %i.fa.fa-gbp
+                Total
+            - else
+              %th &nbsp;
             %th &nbsp;
             %th &nbsp;
             %th &nbsp;
