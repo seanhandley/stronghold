@@ -16,10 +16,9 @@
               %td
                 %i.fa.fa-clock-o
                 Hours Active This Period
-              - unless DarkLaunch.hide?
-                %td
-                  %i.fa.fa-gbp
-                  Total
+              %td
+                %i.fa.fa-gbp
+                Total
             - instances.sort { |x,y| x[:name] <=> y[:name] }.each do |instance|
               %tr
                 %td &nbsp;
@@ -29,21 +28,17 @@
                 %td.line_entry= instance[:latest_state]
                 %td.line_entry= (instance[:terminated_at] && instance[:terminated_at] <= @to_date) ? instance[:terminated_at] : '-'
                 %td.line_entry== #{number_with_delimiter(((instance[:billable_seconds] / 60.0) / 60.0).ceil, :delimiter => ',')} of #{@total_hours}
-                - unless DarkLaunch.hide?
-                  - if instance[:flavor][:rate].present?
-                    %td.line_entry== £#{number_with_precision(((((instance[:billable_seconds] / 60.0) / 60.0)).ceil.to_f * instance[:flavor][:rate].to_f).round(2), :delimiter => ',', :separator => '.', :precision => 2)}
-                  - else
-                    %td.line_entry
+                - if instance[:flavor][:rate].present?
+                  %td.line_entry== £#{number_with_precision(((((instance[:billable_seconds] / 60.0) / 60.0)).ceil.to_f * instance[:flavor][:rate].to_f).round(2), :delimiter => ',', :separator => '.', :precision => 2)}
             %tr.highlight.bottomline
+              %td &nbsp;
+              %td &nbsp;
+              %td &nbsp;
+              %td &nbsp;
               %td &nbsp;
               %td== Total #{instances.first[:flavor][:name]}:
               %td== #{number_with_delimiter(instances.map{|i| ((i[:billable_seconds] / 60.0) / 60.0).ceil}.sum, :delimiter => ',')} hours
-              - unless DarkLaunch.hide?
-                %td== £#{number_with_precision((instances.map{|i| ((i[:billable_seconds] / 60.0) / 60.0).ceil}.sum.to_f * instances.first[:flavor][:rate].to_f).round(2), :delimiter => ',', :separator => '.', :precision => 2)}
-              %td &nbsp;
-              %td &nbsp;
-              %td &nbsp;
-              %td &nbsp;
+              %td== £#{number_with_precision((instances.map{|i| ((i[:billable_seconds] / 60.0) / 60.0).ceil}.sum.to_f * instances.first[:flavor][:rate].to_f).round(2), :delimiter => ',', :separator => '.', :precision => 2)}
             %tr
               %td &nbsp;
               %td &nbsp;
@@ -52,5 +47,4 @@
               %td &nbsp;
               %td &nbsp;
               %td &nbsp;
-              - unless DarkLaunch.hide?
-                %td &nbsp;
+              %td &nbsp;
