@@ -13,8 +13,6 @@
             %th
               %i.fa.fa-gbp
               Total
-            - else
-              %th &nbsp;
             %th &nbsp;
             %th &nbsp;
             %th &nbsp;
@@ -27,6 +25,4 @@
               TBh
             %td
               == £#{number_with_precision((tbh * RateCard.object_storage).round(2), :delimiter => ',', :separator => '.', :precision => 2)}
-            - else
-              %td &nbsp;
 
