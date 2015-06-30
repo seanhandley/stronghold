@@ -15,6 +15,10 @@
             %th
               %i.fa.fa-clock-o
               Terabyte Hours
+            - unless DarkLaunch.hide?
+              %th
+                %i.fa.fa-gbp
+                Total
         %tbody
           - images.each do |image|
             %tr
@@ -29,12 +33,17 @@
               %td
                 = number_with_delimiter(image[:terabyte_hours], :delimiter => ',')
                 TBh
+              - unless DarkLaunch.hide?
+                %td== £#{number_with_precision((image[:terabyte_hours] * RateCard.block_storage).round(2), :delimiter => ',', :separator => '.', :precision => 2)}
           %tr.highlight.bottomline
             %td &nbsp;
             %td Total:
             %td
               = number_with_delimiter(images.collect{|v| v[:terabyte_hours]}.sum.round(2), :delimiter => ',')
               TBh
+            - unless DarkLaunch.hide?
+              %td
+                == £#{number_with_precision((images.collect{|v| v[:terabyte_hours]}.sum * RateCard.block_storage).round(2), :delimiter => ',', :separator => '.', :precision => 2)}
             %td &nbsp
             %td &nbsp
             %td &nbsp
