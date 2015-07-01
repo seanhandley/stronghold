@@ -69,7 +69,7 @@ Rails.application.routes.draw do
   get 'activate', :controller => 'support/cards', :action => 'new'
   get 'activated', :controller => 'support/dashboard', :action => 'index'
   get 'thanks', :controller => 'signups', :action => 'thanks'
-  post 'stripe', :controller => 'stripe', :action => 'webhook'
+  post 'stripe_webhook', :controller => 'stripe', :action => 'webhook'
 
   post 'salesforce', :controller => 'salesforce', :action => 'update'
 
