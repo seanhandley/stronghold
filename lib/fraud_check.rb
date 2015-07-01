@@ -29,7 +29,7 @@ class FraudCheck
   end
 
   def card_fields
-    return nil unless customer_signup.stripe_customer
+    return {} unless customer_signup.stripe_customer
     card = customer_signup.stripe_customer.sources.data.first
     {
       number: "*** *** *** #{card.last4}",

@@ -38,6 +38,24 @@
 
   <hr>
 
+  <h2>Card Used</h2>
+
+  <%- i = 0 %>
+  <table>
+    <tbody>
+      <tr>
+      <%- @fraud_check.carc_fields.each do |k,v| %>
+        <%- if i % 2 == 0 %>
+          </tr><tr>
+        <%- end %>
+        <td><strong><%= fix_abbreviation_case(k.to_s.humanize.titleize) %></strong>: <%= v %></td>
+        <% i += 1 %>
+      <% end %></tr>
+    </tbody>
+  </table>
+
+  <hr>
+
   <h2>MaxMind Report</h2>
 
   <%- i = 0 %>
