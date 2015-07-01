@@ -28,6 +28,21 @@ class FraudCheck
     signup_fields
   end
 
+  def card_fields
+    card = customer_signup.stripe_customer.sources.data.first
+    {
+      number: "*** *** *** #{card.last4}",
+      kind: card.brand,
+      fund: card.funding,
+      country: Country.find_country_by_alpha2(card.country),
+      expiry: "#{card.exp_month}/#{card.exp_year}",
+      stripe_link: "https://dashboard.stripe.com/customers/#{card.customer}",
+      cvc_check: card.cvc_check,
+      address_check: card.address_line1_check,
+      zip_check: card.address_zip_check
+    }
+  end
+
   def response_fields
     response.attributes
   end
