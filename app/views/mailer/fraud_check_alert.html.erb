@@ -1,7 +1,7 @@
 <%= stylesheet_link_tag 'email' %>
 <div class="container" id="email">
   <%= render partial: 'header' %>
-  <h1>Potential fraud for <%= @customer_signup.organization_name %></h1>
+  <h1>Potential fraud for<br><%= @customer_signup.organization_name %></h1>
 
   <p>Account has been frozen until further action is decided.</p>
 
