@@ -30,7 +30,7 @@ class Mailer < ActionMailer::Base
     mail(:to => "devops@datacentred.co.uk", :subject => 'Usage Sanity Check Failures')
   end
 
-  def fraud_check_alert(customer_signup, fraud_check, recipient="devops@datacentred.co.uk")
+  def fraud_check_alert(customer_signup, fraud_check, recipient="fraud@datacentred.co.uk")
     @customer_signup = customer_signup
     @fraud_check = fraud_check
     mail(:to => recipient, :subject => "Potential Fraud: #{customer_signup.organization_name}")
@@ -38,7 +38,7 @@ class Mailer < ActionMailer::Base
 
   def card_reverification_failure(organization)
     @organization = organization
-    mail(:to => organization.admin_users.collect(&:email).join(', '), :bcc => "devops@datacentred.co.uk", :subject => "There's a problem with your card")   
+    mail(:to => organization.admin_users.collect(&:email).join(', '), :bcc => "fraud@datacentred.co.uk", :subject => "There's a problem with your card")   
   end
 
   def notify_wait_list_entry(email)
