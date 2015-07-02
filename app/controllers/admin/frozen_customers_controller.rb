@@ -7,6 +7,7 @@ class Admin::FrozenCustomersController < AdminBaseController
   def update
     organization = Organization.find(params[:id])
     if organization.unfreeze!
+      Mailer.review_mode_successful(organization).deliver_later
       redirect_to admin_frozen_customers_path, notice: "Customer has been unfrozen."  
     else
       redirect_to admin_frozen_customers_path, alert: "Couldn't unfreeze!"

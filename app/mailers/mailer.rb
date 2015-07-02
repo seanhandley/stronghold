@@ -65,4 +65,9 @@ class Mailer < ActionMailer::Base
     mail(:to => customer_signup.organization.admin_users.collect(&:email).join(', '),
          :subject => "Account Review: Please respond ASAP")
   end
+
+  def review_mode_successful(organization)
+    mail(:to => organization.admin_users.collect(&:email).join(', '),
+         :subject => "Account Review Completed")
+  end
 end

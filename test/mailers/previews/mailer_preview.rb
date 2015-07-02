@@ -44,6 +44,10 @@ class MailerPreview < ActionMailer::Preview
     Mailer.review_mode_alert(CustomerSignup.last)
   end
 
+  def review_mode_successful
+    Mailer.review_mode_successful(Organization.first)
+  end
+
   private
 
   def fc
