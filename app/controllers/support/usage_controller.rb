@@ -2,7 +2,7 @@ class Support::UsageController < SupportBaseController
   include UsageHelper
 
   before_filter -> { authorize! :read, :usage }
-  before_filter :get_time_period
+  before_filter :get_time_period_from_params
 
   def current_section
     'usage'
@@ -31,7 +31,7 @@ class Support::UsageController < SupportBaseController
     end
   end
 
-  def get_time_period
+  def get_time_period_from_params
     @from_date, @to_date = get_time_period(params[:year], params[:month])
     @total_hours = ((@to_date - @from_date) / 1.hour).ceil
   end
