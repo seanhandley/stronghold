@@ -1,5 +1,6 @@
 class Support::UsageController < SupportBaseController
   include UsageHelper
+  include TimePeriodHelper
 
   before_filter -> { authorize! :read, :usage }
   before_filter :get_time_period_from_params
