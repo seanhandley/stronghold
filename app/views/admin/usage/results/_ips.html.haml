@@ -6,7 +6,7 @@
     - @quota = Fog::Network.new(OPENSTACK_ARGS).get_quota(project.uuid).body['quota']['floatingip']
     == #{@quota} addresses
     (
-    == £#{number_with_precision(RateCard.ip_address.round(2) * @quota, :delimiter => ',', :separator => '.', :precision => 2)} per month
+    == £#{number_with_precision(RateCard.ip_address.round(2) * (@quota - 1), :delimiter => ',', :separator => '.', :precision => 2)} per month
     )
   - if ip_quotas && ip_quotas.any?
     .table-responsive
