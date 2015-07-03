@@ -4,7 +4,11 @@ class TestModel
   include TimePeriodHelper
 
   def current_user
-    @user ||= User.make(organization: Organization.make(created_at: Time.parse('2014-01-01')))
+    @user ||= User.make(organization: Organization.make(created_at: signed_up))
+  end
+
+  def signed_up
+    Time.parse('2014-01-01')
   end
 end
 
@@ -17,21 +21,20 @@ class TimePeriodHelperTest < Minitest::Test
     datetime.strftime("%Y-%m-%d")
   end
 
-  def test_january_2015
+  def test_historic_month_january_2015
     from, to = @model.get_time_period(2015, 1)
     assert_equal "2015-01-01", format_date(from)
     assert_equal "2015-01-31", format_date(to)
   end
 
-  def test_february_2015
+  def test_historic_month_february_2015
     from, to = @model.get_time_period(2015, 2)
     assert_equal "2015-02-01", format_date(from)
     assert_equal "2015-02-28", format_date(to)
   end
 
-  # This is the month they signed up
-  def test_january_2014
-    from, to = @model.get_time_period(2014, 1)
+  def test_signup_month_january_2014
+    from, to = @model.get_time_period(@model.signed_up.year, @model.signed_up.month)
     assert_equal "2014-01-01", format_date(from)
     assert_equal "2014-01-31", format_date(to)
   end
@@ -44,9 +47,10 @@ class TimePeriodHelperTest < Minitest::Test
     end
   end
 
-  def test_month_preceeding_signup_month
+  def test_month_preceeding_signup_month_defaults_to_current_month
     Timecop.freeze(Time.parse("2015-07-03 12:00:00")) do
-      from, to = @model.get_time_period(2013, 12)
+      dt = @model.signed_up - 1.month
+      from, to = @model.get_time_period(dt.year, dt.month)
       assert_equal "2015-07-01", format_date(from)
       assert_equal "2015-07-03", format_date(to)
     end
