@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class TestModel
-  include TimePeriodHelper
+  include UsageHelper
 
   def current_user
     @user ||= User.make(organization: Organization.make(created_at: signed_up))
@@ -12,7 +12,7 @@ class TestModel
   end
 end
 
-class TimePeriodHelperTest < Minitest::Test
+class UsageHelperTest < Minitest::Test
   def setup
     @model = TestModel.new
   end
