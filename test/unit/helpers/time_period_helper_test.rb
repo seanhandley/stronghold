@@ -29,17 +29,27 @@ class TimePeriodHelperTest < Minitest::Test
     assert_equal "2015-02-28", format_date(to)
   end
 
+  # This is the month they signed up
   def test_january_2014
     from, to = @model.get_time_period(2014, 1)
     assert_equal "2014-01-01", format_date(from)
     assert_equal "2014-01-31", format_date(to)
   end
 
+  def test_current_month_up_to_today
+    Timecop.freeze(Time.parse("2015-07-15 12:00:00")) do
+      from, to = @model.get_time_period(2015, 7)
+      assert_equal "2015-07-01", format_date(from)
+      assert_equal "2015-07-15", format_date(to)
+    end
+  end
 
-  def test_december_2013
-    from, to = @model.get_time_period(2013, 12)
-    assert_equal "2015-07-01", format_date(from)
-    assert_equal "2015-07-03", format_date(to)
+  def test_month_preceeding_signup_month
+    Timecop.freeze(Time.parse("2015-07-03 12:00:00")) do
+      from, to = @model.get_time_period(2013, 12)
+      assert_equal "2015-07-01", format_date(from)
+      assert_equal "2015-07-03", format_date(to)
+    end
   end
 
 end
