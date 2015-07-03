@@ -32,19 +32,7 @@ class Support::UsageController < SupportBaseController
   end
 
   def get_time_period
-    if params[:month] && params[:year]
-      month = Time.parse("#{params[:year]}-#{params[:month]}-01 00:00:00")
-      if month > current_user.organization.created_at && month < Time.zone.now.end_of_month
-        @from_date = month.beginning_of_month
-        @to_date = (month.end_of_month < Time.zone.now) ? month.end_of_month : Time.zone.now
-      else
-        @from_date = Time.zone.now.beginning_of_month
-        @to_date = Time.zone.now
-      end
-    else
-      @from_date = Time.zone.now.beginning_of_month
-      @to_date = Time.zone.now
-    end
+    @from_date, @to_date = get_time_period(params[:year], params[:month])
     @total_hours = ((@to_date - @from_date) / 1.hour).ceil
   end
 
