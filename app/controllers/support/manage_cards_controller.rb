@@ -21,10 +21,16 @@ class Support::ManageCardsController < SupportBaseController
 
   def create
     rescue_stripe_errors(lambda {|msg| redirect_to support_manage_cards_path, alert: msg}) do
-      @stripe_customer.sources.create(:source => create_params[:stripe_token])
-      Rails.cache.delete("org_#{current_user.organization.id}_has_payment_method")
-      current_user.organization.has_payment_methods!(true)
-      redirect_to support_manage_cards_path, notice: "New card added successfully"
+      card = @stripe_customer.sources.create(:source => create_params[:stripe_token])
+      fingerprints = @stripe_customer.sources.collect(&:fingerprint)
+      if fingerprints.include?(card.fingerprint)
+        card.delete
+        redirect_to support_manage_cards_path, alert: "You've already added that card"
+      else
+        Rails.cache.delete("org_#{current_user.organization.id}_has_payment_method")
+        current_user.organization.has_payment_methods!(true)
+        redirect_to support_manage_cards_path, notice: "New card added successfully"
+      end
     end
   end
 

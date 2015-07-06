@@ -1,4 +1,5 @@
 class Support::CardsController < SupportBaseController
+  include ActionView::Helpers::UrlHelper
 
   skip_authorization_check
 
