@@ -2,7 +2,7 @@ standard:
   compute:
     instances: 10
     cores: 10
-    ram: 1024
+    ram: 20480
     injected_file_content_bytes: 10240
     injected_file_path_bytes: 10240
     injected_files: 5
@@ -25,7 +25,7 @@ restricted:
   compute:
     instances: 2
     cores: 2
-    ram: 20480
+    ram: 1024
     injected_file_content_bytes: 10240
     injected_file_path_bytes: 10240
     injected_files: 5
