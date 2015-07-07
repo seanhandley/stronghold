@@ -1,0 +1,17 @@
+%h1= "Quotas: #{@organization.name}"
+
+- for project in @organization.tenants
+  %h2= "Project: #{project.name}"
+  = form_tag admin_quota_path(project), method: 'put', remote: true, class: 'admin_quota_form' do
+    #js_errors.hide.alert.alert-danger
+    .container
+      .usage-back.row
+        - ['compute', 'volume', 'network'].each do |key|
+          .col-md-4
+            %h3= key.titleize
+            - project.quotas[key].each do |k,v|
+              .form-group
+                %label= fix_abbreviation_case(k.humanize.titleize.pluralize)
+                = number_field_tag "quota[#{key}][#{k}]", v, :class => 'form-control'
+
+  = link_to 'Notify Customer', mail_admin_quota_path(@organization), class: 'btn btn-primary', data: {confirm: 'All done? Email the customer?', method: 'post'}

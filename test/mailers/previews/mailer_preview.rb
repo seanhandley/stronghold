@@ -48,6 +48,10 @@ class MailerPreview < ActionMailer::Preview
     Mailer.review_mode_successful(Organization.first)
   end
 
+  def quota_changed
+    Mailer.quota_changed(Organization.first)
+  end
+
   private
 
   def fc

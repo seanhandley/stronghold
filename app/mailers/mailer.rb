@@ -70,4 +70,9 @@ class Mailer < ActionMailer::Base
     mail(:to => organization.admin_users.collect(&:email).join(', '),
          :subject => "Account Review Completed")
   end
+
+  def quota_changed(organization)
+    mail(:to => organization.admin_users.collect(&:email).join(', '),
+         :subject => "Your account limits have changed")
+  end
 end

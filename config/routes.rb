@@ -45,6 +45,11 @@ Rails.application.routes.draw do
       resources :sanity, only: [:index]
       resources :free_ips, only: [:index]
       resources :vouchers
+      resources :quotas do
+        member do
+          post 'mail'
+        end
+      end
       resources :pending_customers, only: [:index, :update]
       resources :frozen_customers, only: [:index, :update] do
         member do

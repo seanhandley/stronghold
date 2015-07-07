@@ -1,0 +1,19 @@
+<%= stylesheet_link_tag 'email' %>
+
+<div class="container" id="email">
+  <%= render partial: 'header' %>
+
+  <h1>Your limits have changed</h1>
+
+  <p>Hi there,</p>
+
+  <p>Your cloud limits have been updated. You can view the new limits by clicking below.</p>
+  
+  <div style: "padding: 30px">
+    <a class="confirm" target='_blank' href="<%= support_quotas_url %>">View Limits</a>
+  </div>
+
+  <p>Kind regards,<br/>
+  The DataCentred Team</p>
+</div>
+<%= render partial: 'footer' %>
