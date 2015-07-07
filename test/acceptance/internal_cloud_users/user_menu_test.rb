@@ -12,7 +12,7 @@ class UserMenuTests < CapybaraTestCase
       assert find(:xpath, "//a[@href='#{support_profile_path}']")
       assert find(:xpath, "//a[@href='#{support_edit_organization_path}']")
       assert find(:xpath, "//a[@href='#{support_audits_path}']")
-      assert find(:xpath, "//a[@href='#{session_path(User.first)}']")
+      assert find(:xpath, "//a[@href='#{signout_path}']")
     end
   end
 
@@ -20,7 +20,7 @@ class UserMenuTests < CapybaraTestCase
     visit('/')
     find('button#user-menu').click
     AlertConfirmer.accept_confirm_from do
-      find(:xpath, "//a[@href='#{session_path(User.first)}']").click
+      find(:xpath, "//a[@href='#{signout_path}']").click
     end
 
     sleep(2)
