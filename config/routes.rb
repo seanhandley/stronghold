@@ -8,15 +8,15 @@ Rails.application.routes.draw do
 
   mount Starburst::Engine => "/starburst"
 
-  namespace :support do
+  namespace :support, path: 'account' do
     root :to => 'dashboard#index'
     resources :instances
     resources :organizations, only: [:update]
-    get '/edit_organization', :controller => 'organizations', :action => 'index', :as => 'edit_organization'
+    get '/details', :controller => 'organizations', :action => 'index', :as => 'edit_organization'
     resources :users, only: [:update, :destroy]
     get '/profile', :controller => 'users', :action => 'index'
-    resources :roles
-    resources :quotas, only: [:index, :update]
+    resources :roles, path: 'team'
+    resources :quotas, only: [:index], path: 'limits'
     resources :cards, only: [:new, :create]
     resources :manage_cards
     resources :tickets, only: [:index, :show]
@@ -61,6 +61,7 @@ Rails.application.routes.draw do
   post 'signup/:token', :controller => 'signups', :action => 'update', :as => 'signup_complete'
   get 'signup', :controller => 'signups', :action => 'new', :as => 'new_signup'
   post 'signup', :controller => 'signups', :action => 'create', :as => 'create_signup'
+  post 'sign_out', :controller => 'sessions', :action => 'destroy', :as => 'signout'
   post 'wait_list', :controller => 'wait_list_entries', :action => 'create', :as => 'wait_list'
   post 'precheck', :controller => 'ajax', :action => 'precheck'
   post 'cc_submit', :controller => 'ajax', :action => 'cc_submit'
