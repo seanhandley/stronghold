@@ -49,7 +49,8 @@ class Admin::VouchersController < AdminBaseController
   def create_params
     params.require(:voucher).permit(:name, :description, :code,
                                     :discount_percent, :duration,
-                                    :expires_at, :usage_limit)
+                                    :expires_at, :usage_limit,
+                                    :restricted)
   end
 
   def update_params
