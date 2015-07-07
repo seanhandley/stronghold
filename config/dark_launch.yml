@@ -7,5 +7,8 @@ test:
 staging:
   requires_dark_launch: false
 
+acceptance:
+  requires_dark_launch: false
+
 production:
   requires_dark_launch: true

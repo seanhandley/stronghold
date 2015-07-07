@@ -44,6 +44,11 @@
                   %label Expires
                   = f.date_field :expires_at, min: Date.today + 1.day, :class => 'form-control'
                   %p.help-block The date on which this discount expires. Leave blank to create a discount that never expires.
+                .checkbox
+                  %label
+                    = f.check_box :restricted
+                    Restricted Quota?
+                  %p.help-block Users starts with a restricted quota. Use for free trials.
 
         .modal-footer
           %button.btn.btn-default{'data-toggle' => "modal", 'data-dismiss' => "modal"}

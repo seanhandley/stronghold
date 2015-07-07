@@ -45,6 +45,7 @@ gem 'premailer-rails'
 gem "minitest-rails"
 gem "slack-notifier"
 gem "maxmind"
+gem "deep_merge"
 
 group :test, :acceptance do
   gem 'faker'

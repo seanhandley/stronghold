@@ -1,0 +1,69 @@
+standard:
+  compute:
+    instances: 10
+    cores: 10
+    ram: 20480
+    injected_file_content_bytes: 10240
+    injected_file_path_bytes: 10240
+    injected_files: 5
+    key_pairs: 10
+    metadata_items: 128
+  volume:
+    volumes: 4
+    snapshots: 4
+    gigabytes: 40
+  network:
+    floatingip: 1
+    router: 1
+    security_group_rule: 100
+    security_group: 10
+    network: 5
+    port: 20
+    subnet: 5
+
+restricted:
+  compute:
+    instances: 2
+    cores: 2
+    ram: 1024
+    injected_file_content_bytes: 10240
+    injected_file_path_bytes: 10240
+    injected_files: 5
+    key_pairs: 10
+    metadata_items: 128
+  volume:
+    volumes: 2
+    snapshots: 2
+    gigabytes: 20
+  network:
+    floatingip: 1
+    router: 1
+    security_group_rule: 100
+    security_group: 10
+    network: 5
+    port: 20
+    subnet: 5
+
+zero:
+  compute:
+    instances: 0
+    cores: 0
+    ram: 0
+    injected_file_content_bytes: 0
+    injected_file_path_bytes: 0
+    injected_files: 0
+    key_pairs: 0
+    metadata_items: 0
+  volume:
+    volumes: 0
+    snapshots: 0
+    gigabytes: 0
+  network:
+    floatingip: 0
+    router: 0
+    security_group_rule: 0
+    security_group: 0
+    network: 0
+    port: 0
+    subnet: 0
+

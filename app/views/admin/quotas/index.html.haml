@@ -1,0 +1,12 @@
+%h1 Quotas
+
+.table-responsive
+  %table.table.table-striped
+    %thead
+      %th Organization
+      %th
+    %tbody
+      - for organization in @organizations
+        %tr
+          %td= organization.name 
+          %td= link_to 'Update Quotas', edit_admin_quota_path(organization)

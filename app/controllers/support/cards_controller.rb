@@ -27,10 +27,12 @@ class Support::CardsController < SupportBaseController
           billing_country: create_params[:address_country].first,
         }.merge(create_params[:organization_name].present? ? {name: create_params[:organization_name]} : {})
       current_user.organization.update_attributes(args)
+      signup_args = {stripe_customer_id: @customer_signup.stripe_customer_id}
       if(voucher = Voucher.find_by_code(create_params[:discount_code]))
         current_user.organization.vouchers << voucher
+        signup_args.merge!(voucher: voucher)
       end
-      current_user.organization.complete_signup! @customer_signup.stripe_customer_id
+      current_user.organization.complete_signup!(signup_args)
       FraudCheckJob.set(wait: 10.seconds).perform_later(@customer_signup)
       Notifications.notify(:new_signup, "#{current_user.organization.name} has activated their account! Discount code: #{create_params[:discount_code].present? ? create_params[:discount_code] : 'N/A'}")
 
