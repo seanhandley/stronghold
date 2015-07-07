@@ -21,15 +21,15 @@ module OpenStack
     end
 
     def zero_quotas
-      set_quotas(StartingQuota.fetch('zero'))
+      set_quotas(StartingQuota['zero'])
     end    
 
-    def set_self_service_quotas
-      OpenStack::Tenant.set_self_service_quotas id
+    def set_self_service_quotas(quota)
+      OpenStack::Tenant.set_self_service_quotas id, quota
     end
 
-    def self.set_self_service_quotas(id)
-      set_quotas(id, StartingQuota.fetch('standard'))
+    def self.set_self_service_quotas(id, quota)
+      set_quotas(id, StartingQuota[quota])
     end
 
     private
@@ -39,6 +39,7 @@ module OpenStack
     end
 
     def self.set_quotas(id, quota)
+      return false unless quota
       Fog::Compute.new(OPENSTACK_ARGS).update_quota id, quota['compute']
       Fog::Volume.new(OPENSTACK_ARGS).update_quota  id, quota['volume']
       Fog::Network.new(OPENSTACK_ARGS).update_quota id, quota['network']

@@ -1,6 +1,6 @@
 module StartingQuota
   class << self
-    def fetch(key)
+    def [](key)
       settings[key]
     end
 

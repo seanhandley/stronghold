@@ -107,10 +107,10 @@ class Organization < ActiveRecord::Base
     set_quotas!
   end
 
-  def complete_signup!(stripe_customer_id)
-    update_attributes(stripe_customer_id: stripe_customer_id)
+  def complete_signup!(args)
+    update_attributes(stripe_customer_id: args[:stripe_customer_id])
     update_attributes(started_paying_at: Time.now.utc)
-    ActivateCloudResourcesJob.perform_later(self)
+    ActivateCloudResourcesJob.perform_later(self, args[:voucher])
   end
 
   def active_vouchers(from_date, to_date)
@@ -175,9 +175,10 @@ class Organization < ActiveRecord::Base
     end
   end
 
-  def set_quotas!
+  def set_quotas!(voucher=nil)
+    quota = (voucher && voucher.restricted?) ? 'restricted' : 'standard'
     tenants.collect(&:uuid).each do |tenant_id|
-      OpenStack::Tenant.set_self_service_quotas(tenant_id)
+      OpenStack::Tenant.set_self_service_quotas(tenant_id, quota)
     end
   end
 end
