@@ -16,6 +16,7 @@ Rails.application.routes.draw do
     resources :users, only: [:update, :destroy]
     get '/profile', :controller => 'users', :action => 'index'
     resources :roles
+    resources :quotas, only: [:index, :update]
     resources :cards, only: [:new, :create]
     resources :manage_cards
     resources :tickets, only: [:index, :show]
