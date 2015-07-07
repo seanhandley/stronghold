@@ -24,7 +24,7 @@ class Admin::QuotasController < AdminBaseController
   def mail
     organization = Organization.find(params[:id])
     Mailer.quota_changed(organization).deliver_later
-    redirect_to admin_quotas_path, notice: "Email delivered."
+    redirect_to edit_admin_quota_path(organization), notice: "Email delivered."
   end
 
   private
