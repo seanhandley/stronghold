@@ -32,6 +32,14 @@ module OpenStack
       set_quotas(id, StartingQuota[quota])
     end
 
+    def set_custom_quotas(quota)
+      OpenStack::Tenant.set_custom_quotas id, quota
+    end
+
+    def self.set_custom_quotas(id, quota)
+      set_quotas(id, quota)
+    end
+
     private
 
     def set_quotas(quota)

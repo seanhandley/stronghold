@@ -26,4 +26,31 @@ class Tenant < ActiveRecord::Base
     { 'uid' => uuid, 'display-name' => name}
   end
 
+  def quotas
+    Rails.cache.fetch("quotas_for_#{uuid}", expires_in: 1.hour) do
+      {
+        "compute" => compute_quota,
+        "volume"  => volume_quota,
+        "network" => network_quota
+      }
+    end
+  end
+
+  private
+
+  def compute_quota
+    keys = ["instances", "cores", "ram"]
+    Fog::Compute.new(OPENSTACK_ARGS).get_quota(uuid).body['quota_set'].slice(*keys)
+  end
+
+  def volume_quota
+    keys = ["volumes", "snapshots", "gigabytes"]
+    Fog::Volume.new(OPENSTACK_ARGS).get_quota(uuid).body['quota_set'].slice(*keys)
+  end
+
+  def network_quota
+    keys = ["floatingip", "router"]
+    Fog::Network.new(OPENSTACK_ARGS).get_quota(uuid).body['quota'].slice(*keys)
+  end
+
 end

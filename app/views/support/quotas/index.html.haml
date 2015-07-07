@@ -1,12 +1,22 @@
-%h2
+%h1
   %i.fa.fa-sliders
-  Quotas
+  Limits
 
+.alert.alert-info
+  %i.fa.fa-info-circle
+  Need to change your limits?
+  = link_to 'Raise a support ticket', support_tickets_path
+  and let us know what you need.
+
+- for project in @projects
+  %h2= "Project: #{project.name}"
 .container
-  .quotas
-    .quota
-      %h3 Floating IPs
-      .progress
-        .progress-bar{'role' => "progressbar", 'aria-valuenow' => "60", 'aria-valuemin' => "0", 'aria-valuemax' => "100", 'style' => "width: 60%;"}
-          60%
-
+  .usage-back.row
+    - ['compute', 'volume', 'network'].each do |key|
+      .col-md-4
+        %h3= key.titleize
+        %ul.quota-list
+          - project.quotas[key].each do |k,v|
+            %li
+              = number_with_precision(v, :delimiter => ',', :separator => '.', :precision => 0)
+              = fix_abbreviation_case(k.humanize.titleize.pluralize(v))

@@ -22,7 +22,7 @@
         %li
           %a{:href => support_quotas_path}
             %i.fa.fa-sliders
-            Quotas    
+            Limits 
       - if current_user.organization.self_service?
         %li
           %a{:href => support_manage_cards_path}
@@ -34,6 +34,6 @@
           = t(:audit_log)
     %li.divider
     %li
-      %a{:href => session_path(current_user), data: { confirm: "#{t(:sign_out)}?", :method => :delete }}
+      %a{:href => signout_path, data: { confirm: "#{t(:sign_out)}?", :method => :post }}
         %i.fa.fa-sign-out
         = t(:sign_out)
