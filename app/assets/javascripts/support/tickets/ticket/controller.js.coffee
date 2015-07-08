@@ -184,7 +184,7 @@ angularJS.controller "TicketsController", [
         return
       request = $http({
         method: "post",
-        url: "/support/api/tickets/",
+        url: "/account/api/tickets/",
         data: {
           "title": ticketTitleInput.val(),
           "description": ticketDescriptionTextArea.val(),
@@ -239,7 +239,7 @@ angularJS.controller "TicketsController", [
         return
       request = $http({
         method: "post",
-        url: "/support/api/tickets/" + $scope.selectedTicket.reference + "/comments/",
+        url: "/account/api/tickets/" + $scope.selectedTicket.reference + "/comments/",
         data: {
           "text": commentTextArea.val()
         }
@@ -253,7 +253,7 @@ angularJS.controller "TicketsController", [
     $scope.changeStatus = (status_name) ->
       statusDropdownSpan = $("#statusDropdown > span").not(".caret")
       statusDropdownSpan.html("Changing...")
-      url = "/support/api/tickets/" + $scope.selectedTicket.reference + "/"
+      url = "/account/api/tickets/" + $scope.selectedTicket.reference + "/"
       data = {
         "status": status_name
       }

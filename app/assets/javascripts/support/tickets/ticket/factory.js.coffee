@@ -10,4 +10,4 @@ angularJS.factory "TicketFactory", ($http, TicketStatusFactory) ->
     errorHandler = (response) ->
       null
 
-    $http.get("/support/api/tickets?page=" + page).then successHandler, errorHandler
+    $http.get("/account/api/tickets?page=" + page).then successHandler, errorHandler

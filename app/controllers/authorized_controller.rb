@@ -87,8 +87,8 @@ class AuthorizedController < ApplicationController
 
   def is_tickets_path?(path)
     path = path.split('?')[0] # ignore args
-    return true if path.include? '/support/api/tickets'
-    return true if path.include? '/support/tickets'
+    return true if path.include? '/account/api/tickets'
+    return true if path.include? '/account/tickets'
     return false
   end
 
