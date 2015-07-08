@@ -560,18 +560,18 @@ DEPENDENCIES
   poltergeist
   premailer-rails
   rails (= 4.2)
-  rails-assets-angular (~> 1.2.24)
-  rails-assets-angular-animate (~> 1.2.24)
-  rails-assets-angular-bootstrap (~> 0.11.0)
-  rails-assets-angular-gravatar (~> 0.2.1)
-  rails-assets-angular-infinite-scroll (~> 0.0.1)
-  rails-assets-angular-md5 (~> 0.1.7)
-  rails-assets-angular-resource (~> 1.2.24)
-  rails-assets-angular-sanitize (~> 1.2.24)
-  rails-assets-bootstrap-select
-  rails-assets-chained (~> 1.0.0)
-  rails-assets-hideShowPassword
-  rails-assets-normalize-css
+  rails-assets-angular (~> 1.2.24)!
+  rails-assets-angular-animate (~> 1.2.24)!
+  rails-assets-angular-bootstrap (~> 0.11.0)!
+  rails-assets-angular-gravatar (~> 0.2.1)!
+  rails-assets-angular-infinite-scroll (~> 0.0.1)!
+  rails-assets-angular-md5 (~> 0.1.7)!
+  rails-assets-angular-resource (~> 1.2.24)!
+  rails-assets-angular-sanitize (~> 1.2.24)!
+  rails-assets-bootstrap-select!
+  rails-assets-chained (~> 1.0.0)!
+  rails-assets-hideShowPassword!
+  rails-assets-normalize-css!
   rails_admin (~> 0.6.7)
   recaptcha
   redcarpet (~> 3.1.2)

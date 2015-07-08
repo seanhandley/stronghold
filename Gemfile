@@ -1,5 +1,4 @@
 source 'https://rubygems.org'
-source 'https://rails-assets.org'
 
 gem 'rails', '4.2'
 gem 'mysql2', '~> 0.3.18'
@@ -46,6 +45,7 @@ gem "minitest-rails"
 gem "slack-notifier"
 gem "maxmind"
 gem "deep_merge"
+gem 'stripe-rails'
 
 group :test, :acceptance do
   gem 'faker'
@@ -66,7 +66,6 @@ end
 gem "select2-rails", '~> 3.5.9.1'
 gem 'font-awesome-sass', '~> 4.2.0'
 gem 'bootstrap-sass', '~> 3.1.1'
-gem 'rails-assets-normalize-css'
 gem 'jquery-rails', '~> 4.0.3'
 gem 'jquery-ui-rails'
 gem 'sass-rails', '~> 4.0.3'
@@ -74,18 +73,21 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.0.0'
 gem 'therubyracer', '~> 0.12.1', platforms: :ruby
 gem 'momentjs-rails', '~> 2.8.3'
-gem 'rails-assets-angular', '~> 1.2.24'
-gem 'rails-assets-angular-resource', '~> 1.2.24'
-gem 'rails-assets-angular-bootstrap', '~> 0.11.0'
-gem 'rails-assets-angular-sanitize', '~> 1.2.24'
-gem 'rails-assets-angular-gravatar', '~> 0.2.1'
-gem 'rails-assets-angular-animate', '~> 1.2.24'
-gem 'rails-assets-angular-md5', '~> 0.1.7'
-gem 'rails-assets-angular-infinite-scroll', '~> 0.0.1'
-gem 'rails-assets-chained', '~> 1.0.0'
-gem 'rails-assets-bootstrap-select'
-gem 'rails-assets-hideShowPassword'
-gem 'stripe-rails'
+
+source 'https://rails-assets.org' do
+  gem 'rails-assets-angular', '~> 1.2.24'
+  gem 'rails-assets-angular-resource', '~> 1.2.24'
+  gem 'rails-assets-angular-bootstrap', '~> 0.11.0'
+  gem 'rails-assets-angular-sanitize', '~> 1.2.24'
+  gem 'rails-assets-angular-gravatar', '~> 0.2.1'
+  gem 'rails-assets-angular-animate', '~> 1.2.24'
+  gem 'rails-assets-angular-md5', '~> 0.1.7'
+  gem 'rails-assets-angular-infinite-scroll', '~> 0.0.1'
+  gem 'rails-assets-chained', '~> 1.0.0'
+  gem 'rails-assets-bootstrap-select'
+  gem 'rails-assets-hideShowPassword'
+  gem 'rails-assets-normalize-css'
+end
 
 group :development do
   gem 'i18n_yaml_sorter', '~> 0.2.0'
