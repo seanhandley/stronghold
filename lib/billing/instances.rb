@@ -19,6 +19,7 @@ module Billing
                                        first_booted_at: instance.first_booted_at,
                                        latest_state: instance.latest_state(from,to),
                                        terminated_at: instance.terminated_at,
+                                       rate: instance.rate,
                                        flavor: {
                                          flavor_id: instance.flavor_id,
                                          name: instance.instance_flavor.name,
