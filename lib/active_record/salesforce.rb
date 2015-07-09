@@ -13,7 +13,7 @@ module ActiveRecord
           c2g__CODABillingMethod__c: 'Self-Service',
           Usage_Value__c: usage_value,
           c2g__CODADescription1__c: payment_card_type,
-          c2g__CODABaseDate1__c: "Invoice Date"
+          c2g__CODABaseDate1__c: "Invoice Date",
           c2g__CODADaysOffset1__c: 0
         }
       end
