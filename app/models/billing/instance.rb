@@ -24,7 +24,7 @@ module Billing
     end
 
     def rate
-      instance_flavor.billing_rates.where(arch: arch).first.rate
+      instance_flavor.rates.where(arch: arch).first.rate rescue nil
     end
 
     def current_state

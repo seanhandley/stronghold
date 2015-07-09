@@ -4,7 +4,8 @@ module Billing
 
     has_many :billing_instances
 
-    has_many :billing_rates, :class_name => "Billing::Rate",
-               :primary_key => 'flavor_id', :foreign_key => 'flavor_id'
+    def rates
+      Billing::Rate.where(flavor_id: id)
+    end
   end
 end
