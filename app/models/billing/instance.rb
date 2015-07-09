@@ -23,6 +23,10 @@ module Billing
       instance_states.where(state: 'active').order('recorded_at').first.try(:recorded_at) { nil }
     end
 
+    def rate
+      instance_flavor.billing_rates.where(arch: arch).first.rate
+    end
+
     def current_state
       return 'terminated' if terminated_at
       Instances.billable?(latest_state) ? 'active' : 'stopped'
