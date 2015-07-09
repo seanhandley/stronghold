@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150709093954) do
+ActiveRecord::Schema.define(version: 20150709112459) do
 
   create_table "audits", force: :cascade do |t|
     t.string   "auditable_id",    limit: 255
@@ -134,6 +134,12 @@ ActiveRecord::Schema.define(version: 20150709093954) do
     t.string  "address",   limit: 255
     t.string  "tenant_id", limit: 255
     t.boolean "active",    limit: 1,   default: true, null: false
+  end
+
+  create_table "billing_rates", force: :cascade do |t|
+    t.integer "flavor_id", limit: 4
+    t.string  "arch",      limit: 255
+    t.float   "rate",      limit: 24
   end
 
   create_table "billing_storage_objects", force: :cascade do |t|
