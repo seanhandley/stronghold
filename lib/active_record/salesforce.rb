@@ -10,7 +10,7 @@ module ActiveRecord
           Billingcity: billing_city, Billingpostalcode: billing_postcode,
           Billingcountry: Country.find_country_by_alpha2(billing_country), Phone: phone,
           c2g__CODAReportingCode__c: reporting_code,
-          c2g__CODABillingMethod__c: 'Self-Service',
+          c2g__CODABillingMethod__c: self_service? ? 'Self-Service' : nil,
           Usage_Value__c: usage_value,
           c2g__CODADescription1__c: payment_card_type,
           c2g__CODABaseDate1__c: "Invoice Date",

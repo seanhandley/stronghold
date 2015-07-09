@@ -137,7 +137,7 @@ class Organization < ActiveRecord::Base
   end
 
   def payment_card_type
-    return nil unless customer_signup.stripe_customer
+    return nil unless customer_signup && customer_signup.stripe_customer
     card = customer_signup.stripe_customer.sources.data.first
     "#{card.brand} #{card.funding}"
   end
