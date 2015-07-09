@@ -132,6 +132,16 @@ class Organization < ActiveRecord::Base
     end
   end
 
+  def usage_value
+    0
+  end
+
+  def payment_card_type
+    return nil unless customer_signup.stripe_customer
+    card = customer_signup.stripe_customer.sources.data.first
+    "#{card.brand} #{card.funding}"
+  end
+
   private
 
   def generate_reference

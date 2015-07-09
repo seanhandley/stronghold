@@ -9,7 +9,12 @@ module ActiveRecord
           Billingstreet: [billing_address1, billing_address2].join("\n").strip,
           Billingcity: billing_city, Billingpostalcode: billing_postcode,
           Billingcountry: Country.find_country_by_alpha2(billing_country), Phone: phone,
-          c2g__CODAReportingCode__c: reporting_code
+          c2g__CODAReportingCode__c: reporting_code,
+          c2g__CODABillingMethod__c: 'Self-Service',
+          Usage_Value__c: usage_value,
+          c2g__CODADescription1__c: payment_card_type,
+          c2g__CODABaseDate1__c: "Invoice Date"
+          c2g__CODADaysOffset1__c: 0
         }
       end
 
