@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150706142545) do
+ActiveRecord::Schema.define(version: 20150709093954) do
 
   create_table "audits", force: :cascade do |t|
     t.string   "auditable_id",    limit: 255
@@ -103,6 +103,7 @@ ActiveRecord::Schema.define(version: 20150706142545) do
     t.string "flavor_id",   limit: 255
     t.string "image_id",    limit: 255
     t.string "tenant_id",   limit: 255
+    t.string "arch",        limit: 255
   end
 
   add_index "billing_instances", ["flavor_id"], name: "instance_flavors", using: :btree

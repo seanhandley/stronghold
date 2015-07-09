@@ -123,6 +123,9 @@ module Billing
                                         state: s['resource_metadata']['state'] ? s['resource_metadata']['state'].downcase : 'active',
                                         event_name: s['resource_metadata']['event_type'], billing_sync: sync,
                                         message_id: s['message_id']
+          unless billing_instance.architecture.present? || s['resource_metadata']['architecture'].empty?
+            billing_instance.update_attributes(arch: s['resource_metadata']['architecture'])
+          end
         end
       end
     end
