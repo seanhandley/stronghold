@@ -22,10 +22,10 @@ class UsageDecorator < ApplicationDecorator
   end
 
   def instance_total(tenant_id, flavor_id=nil)
-    usage_data[:instance_results].each do |tenant, results|
+    usage_data.each do |tenant, results|
       if(tenant_id == tenant.id)
         if flavor_id
-          results = results.select{|i| i[:flavor][:flavor_id] == flavor_id}
+          results = results[:instance_results].select{|i| i[:flavor][:flavor_id] == flavor_id}
         end
         results.collect{|i| i[:cost]}.sum.round(2)
       end
@@ -33,9 +33,9 @@ class UsageDecorator < ApplicationDecorator
   end
 
   def volume_total(tenant_id)
-    usage_data[:volume_results].each do |tenant, results|
+    usage_data.each do |tenant, results|
       if(tenant_id == tenant.id)
-        results.collect{|i| i[:cost]}.sum.round(2)
+        results[:instance_results].collect{|i| i[:cost]}.sum.round(2)
       end
     end
   end
