@@ -15,7 +15,7 @@ module Billing
       images = images.collect do |image|
         tb_hours = terabyte_hours(image, from, to)
         { terabyte_hours: tb_hours,
-                                  cost: (tb_hours * RateCard.block_storage),
+                                  cost: (tb_hours * RateCard.block_storage).nearest_penny,
                                   id: image.image_id,
                                   created_at: image.created_at,
                                   deleted_at: image.deleted_at,
