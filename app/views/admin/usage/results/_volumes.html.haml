@@ -44,5 +44,5 @@
               = number_with_delimiter(volumes.collect{|v| v[:terabyte_hours]}.sum.round(2), :delimiter => ',')
               TBh
             %td
-              == £#{number_with_precision(@usage_decorator.volume_total(project), :delimiter => ',', :separator => '.', :precision => 2)}
+              == £#{number_with_precision(@usage_decorator.volume_total(project.id), :delimiter => ',', :separator => '.', :precision => 2)}
 
