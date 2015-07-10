@@ -32,6 +32,7 @@ class Admin::UsageController < AdminBaseController
       render :report
     rescue ArgumentError => e
       flash.now[:alert] = e.message
+      notify_honeybadger(e)
       reset_dates
       render :index
     end
