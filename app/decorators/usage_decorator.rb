@@ -35,7 +35,7 @@ class UsageDecorator < ApplicationDecorator
   def volume_total(tenant_id)
     usage_data.each do |tenant, results|
       if(tenant_id == tenant.id)
-        return results[:instance_results].collect{|i| i[:cost]}.sum.round(2)
+        return results[:volume_results].collect{|i| i[:cost]}.sum.round(2)
       end
     end
   end

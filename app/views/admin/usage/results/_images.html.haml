@@ -44,5 +44,5 @@
               = number_with_delimiter(images.collect{|v| v[:terabyte_hours]}.sum.round(2), :delimiter => ',')
               TBh
             %td
-              == £#{number_with_precision(@usage_decorator.image_total(project.id), :delimiter => ',', :separator => '.', :precision => 2)}
+              == £#{number_with_precision((images.collect{|v| v[:terabyte_hours]}.sum * RateCard.block_storage).round(2), :delimiter => ',', :separator => '.', :precision => 2)}
 
