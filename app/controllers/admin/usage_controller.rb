@@ -13,13 +13,17 @@ class Admin::UsageController < AdminBaseController
       if ((@organization = Organization.find(create_params[:organization])) &&
           (@project      = Tenant.find(create_params[:project])))
         @usage = UsageDecorator.new(@organization).usage_data(@from_date, @to_date)
-        @instance_results = @usage[:instance_results]
-        @volume_results = @usage[:volume_results]
-        @image_results = @usage[:image_results]
-        @floating_ip_results = @usage[:floating_ip_results]
-        @ip_quota_results = @usage[:ip_quota_results]
-        @external_gateway_results = @usage[:external_gateway_results]
-        @object_storage_results = @usage[:object_storage_results]
+        @usage.each do |project, results|
+          if @project.id == project.id
+            @instance_results = results[:instance_results]
+            @volume_results = results[:volume_results]
+            @image_results = results[:image_results]
+            @floating_ip_results = results[:floating_ip_results]
+            @ip_quota_results = results[:ip_quota_results]
+            @external_gateway_results = results[:external_gateway_results]
+            @object_storage_results = results[:object_storage_results]
+          end
+        end
         @active_vouchers = @organization.active_vouchers(@from_date, @to_date)
       end
       render :report
