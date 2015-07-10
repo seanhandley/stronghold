@@ -72,12 +72,8 @@ class UsageDecorator < ApplicationDecorator
   #   end
   # end
 
-  def object_storage_total(tenant_id)
-    usage_data.each do |tenant, results|
-      if(tenant_id == tenant.id)
-        return results[:object_storage_results].collect{|i| i[:cost]}.sum
-      end
-    end
+  def object_storage_total
+    (results[:object_storage_results] * RateCard.object_storage).nearest_penny
   end
 
   def total(tenant_id)
@@ -86,7 +82,7 @@ class UsageDecorator < ApplicationDecorator
       image_total(tenant_id),
       # floating_ip_total(tenant_id),
       # ip_quota_total(tenant_id), external_gateway_total(tenant_id),
-      object_storage_total(tenant_id)
+      object_storage_total
     ].sum
   end
 
