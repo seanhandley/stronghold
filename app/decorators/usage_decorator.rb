@@ -48,29 +48,29 @@ class UsageDecorator < ApplicationDecorator
     end
   end
 
-  def floating_ip_total(tenant_id)
-    usage_data.each do |tenant, results|
-      if(tenant_id == tenant.id)
-        return results[:floating_ip_results].collect{|i| i[:cost]}.sum
-      end
-    end
-  end
+  # def floating_ip_total(tenant_id)
+  #   usage_data.each do |tenant, results|
+  #     if(tenant_id == tenant.id)
+  #       return results[:floating_ip_results].collect{|i| i[:cost]}.sum
+  #     end
+  #   end
+  # end
 
-  def ip_quota_total(tenant_id)
-    usage_data.each do |tenant, results|
-      if(tenant_id == tenant.id)
-        return results[:ip_quota_results].collect{|i| i[:cost]}.sum
-      end
-    end
-  end
+  # def ip_quota_total(tenant_id)
+  #   usage_data.each do |tenant, results|
+  #     if(tenant_id == tenant.id)
+  #       return results[:ip_quota_results].collect{|i| i[:cost]}.sum
+  #     end
+  #   end
+  # end
 
-  def external_gateway_total(tenant_id)
-    usage_data.each do |tenant, results|
-      if(tenant_id == tenant.id)
-        return results[:external_gateway_results].collect{|i| i[:cost]}.sum
-      end
-    end
-  end
+  # def external_gateway_total(tenant_id)
+  #   usage_data.each do |tenant, results|
+  #     if(tenant_id == tenant.id)
+  #       return results[:external_gateway_results].collect{|i| i[:cost]}.sum
+  #     end
+  #   end
+  # end
 
   def object_storage_total(tenant_id)
     usage_data.each do |tenant, results|
@@ -83,8 +83,9 @@ class UsageDecorator < ApplicationDecorator
   def total(tenant_id)
     [
       instance_total(tenant_id), volume_total(tenant_id),
-      image_total(tenant_id), floating_ip_total(tenant_id),
-      ip_quota_total(tenant_id), external_gateway_total(tenant_id),
+      image_total(tenant_id),
+      # floating_ip_total(tenant_id),
+      # ip_quota_total(tenant_id), external_gateway_total(tenant_id),
       object_storage_total(tenant_id)
     ].sum
   end

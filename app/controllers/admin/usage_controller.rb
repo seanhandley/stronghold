@@ -14,6 +14,7 @@ class Admin::UsageController < AdminBaseController
           (@project      = Tenant.find(create_params[:project])))
         @usage_decorator = UsageDecorator.new(@organization)
         @usage = @usage_decorator.usage_data(from_date: @from_date, to_date: @to_date)
+        @grand_total = @usage_decorator.grand_total
 
         @usage.each do |project, results|
           if @project.id == project.id

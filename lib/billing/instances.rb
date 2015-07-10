@@ -23,7 +23,7 @@ module Billing
                                        terminated_at: instance.terminated_at,
                                        rate: instance.rate,
                                        billable_hours: billable_hours,
-                                       cost: (billable_hours * instance.rate.to_f),
+                                       cost: (billable_hours * instance.rate.to_f).nearest_penny,
                                        flavor: {
                                          flavor_id: instance.flavor_id,
                                          name: instance.instance_flavor.name,

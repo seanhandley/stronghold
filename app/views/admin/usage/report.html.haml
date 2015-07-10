@@ -13,6 +13,10 @@
     %strong To:
     = @to_date
 
+  %p
+    %strong Total (still in development):
+    = @grand_total
+
   = render partial: 'admin/usage/results/vouchers',  locals: { vouchers: @active_vouchers }
   = render partial: 'admin/usage/results/instances', locals: { project: @project, instances:         @instance_results            }
   = render partial: 'admin/usage/results/volumes',   locals: { project: @project, volumes:           @volume_results              }
