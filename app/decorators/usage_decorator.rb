@@ -1,7 +1,7 @@
 class UsageDecorator < ApplicationDecorator
   attr_reader :from_date, :to_date
   def usage_data(args=nil)
-    if args[:from_date] && args[:to_date]
+    if args && args[:from_date] && args[:to_date]
       @from_date, @to_date = args[:from_date], args[:to_date]
     end
     raise(ArgumentError, 'Please supply :from_date and :to_date') unless from_date && to_date
