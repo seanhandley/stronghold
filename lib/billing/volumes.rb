@@ -15,7 +15,7 @@ module Billing
       volumes = volumes.collect do |volume|
         tb_hours = terabyte_hours(volume, from, to)
         { terabyte_hours: tb_hours,
-                                    cost: (tb_hours * RateCard.block_storage).round(2),
+                                    cost: (tb_hours * RateCard.block_storage),
                                     id: volume.volume_id,
                                     created_at: volume.created_at,
                                     deleted_at: volume.deleted_at,
