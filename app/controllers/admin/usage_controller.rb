@@ -12,13 +12,14 @@ class Admin::UsageController < AdminBaseController
       @total_hours = ((@to_date - @from_date) / 1.hour).round
       if ((@organization = Organization.find(create_params[:organization])) &&
           (@project      = Tenant.find(create_params[:project])))
-        @instance_results = Billing::Instances.usage(@project.uuid, @from_date, @to_date)
-        @volume_results = Billing::Volumes.usage(@project.uuid, @from_date, @to_date)
-        @image_results = Billing::Images.usage(@project.uuid, @from_date, @to_date)
-        @floating_ip_results = Billing::FloatingIps.usage(@project.uuid, @from_date, @to_date)
-        @ip_quota_results = Billing::IpQuotas.usage(@project.uuid, @from_date, @to_date)
-        @external_gateway_results = Billing::ExternalGateways.usage(@project.uuid, @from_date, @to_date)
-        @object_storage_results = Billing::StorageObjects.usage(@project.uuid, @from_date, @to_date)
+        @usage = UsageDecorator.new(@organization).usage_data(@from_date, @to_date)
+        @instance_results = @usage[:instance_results]
+        @volume_results = @usage[:volume_results]
+        @image_results = @usage[:image_results]
+        @floating_ip_results = @usage[:floating_ip_results]
+        @ip_quota_results = @usage[:ip_quota_results]
+        @external_gateway_results = @usage[:external_gateway_results]
+        @object_storage_results = @usage[:object_storage_results]
         @active_vouchers = @organization.active_vouchers(@from_date, @to_date)
       end
       render :report
