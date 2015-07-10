@@ -15,7 +15,7 @@
 
   %p
     %strong Total (still in development):
-    = @grand_total
+    == £#{number_with_precision(@grand_total, :delimiter => ',', :separator => '.', :precision => 2)}
 
   = render partial: 'admin/usage/results/vouchers',  locals: { vouchers: @active_vouchers }
   = render partial: 'admin/usage/results/instances', locals: { project: @project, instances:         @instance_results            }
