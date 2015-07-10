@@ -21,36 +21,52 @@ class UsageDecorator < ApplicationDecorator
     end
   end
 
-  def instance_total(flavour=nil)
+  def instance_total(tenant_id, flavor_id=nil)
+    usage_data[:instance_results].each do |tenant, results|
+      if(tenant_id == tenant.id)
+        if flavor_id
+          results = results.select{|i| i[:flavor][:flavor_id] == flavor_id}
+        end
+        results.collect{|i| i[:billable_hours] * i[:rate].to_f}.sum.round(2)
+      end
+    end
+  end
+
+  def volume_total(tenant_id)
     
   end
 
-  def volume_total
+  def image_total(tenant_id)
     
   end
 
-  def image_total
+  def floating_ip_total(tenant_id)
     
   end
 
-  def floating_ip_total
+  def ip_quota_total(tenant_id)
     
   end
 
-  def ip_quota_total
+  def external_gateway_total(tenant_id)
     
   end
 
-  def external_gateway_total
+  def object_storage_total(tenant_id)
     
   end
 
-  def object_storage_total
-    
+  def total(tenant_id)
+    [
+      instance_total(tenant_id), volume_total(tenant_id),
+      image_total(tenant_id), floating_ip_total(tenant_id),
+      ip_quota_total(tenant_id), external_gateway_total(tenant_id),
+      object_storage_total(tenant_id)
+    ].sum
   end
 
   def grand_total
-    
+    model.tenants.sum{|t| total(t.id)}
   end
 
   private

@@ -13,13 +13,17 @@ module Billing
     def self.usage(tenant_id, from, to)
       instances = Billing::Instance.where(:tenant_id => tenant_id).to_a.compact
       instances = instances.collect do |instance|
-        {billable_seconds: seconds(instance, from, to),
+        billable_seconds = seconds(instance, from, to)
+        billable_hours = ((billable_seconds / 60.0) / 60.0).ceil
+        {billable_seconds: billable_seconds,
                                        uuid: instance.instance_id,
                                        name: instance.name,
                                        first_booted_at: instance.first_booted_at,
                                        latest_state: instance.latest_state(from,to),
                                        terminated_at: instance.terminated_at,
                                        rate: instance.rate,
+                                       billable_hours: billable_hours,
+                                       cost: (billable_hours * instance.rate.to_f).round(2)
                                        flavor: {
                                          flavor_id: instance.flavor_id,
                                          name: instance.instance_flavor.name,
