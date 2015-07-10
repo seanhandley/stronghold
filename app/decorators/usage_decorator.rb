@@ -27,13 +27,17 @@ class UsageDecorator < ApplicationDecorator
         if flavor_id
           results = results.select{|i| i[:flavor][:flavor_id] == flavor_id}
         end
-        results.collect{|i| i[:billable_hours] * i[:rate].to_f}.sum.round(2)
+        results.collect{|i| i[:cost]}.sum.round(2)
       end
     end
   end
 
   def volume_total(tenant_id)
-    
+    usage_data[:volume_results].each do |tenant, results|
+      if(tenant_id == tenant.id)
+        results.collect{|i| i[:cost]}.sum.round(2)
+      end
+    end
   end
 
   def image_total(tenant_id)

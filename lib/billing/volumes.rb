@@ -13,7 +13,9 @@ module Billing
     def self.usage(tenant_id, from, to)
       volumes = Billing::Volume.where(:tenant_id => tenant_id).to_a.compact
       volumes = volumes.collect do |volume|
-        { terabyte_hours: terabyte_hours(volume, from, to),
+        tb_hours = terabyte_hours(volume, from, to)
+        { terabyte_hours: tb_hours,
+                                    cost: (tb_hours * RateCard.block_storage).round(2)
                                     id: volume.volume_id,
                                     created_at: volume.created_at,
                                     deleted_at: volume.deleted_at,

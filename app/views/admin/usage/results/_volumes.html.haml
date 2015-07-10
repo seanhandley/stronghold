@@ -32,7 +32,7 @@
               %td
                 = number_with_delimiter(volume[:terabyte_hours], :delimiter => ',')
                 TBh
-              %td== £#{number_with_precision((volume[:terabyte_hours] * RateCard.block_storage).round(2), :delimiter => ',', :separator => '.', :precision => 2)}
+              %td== £#{number_with_precision(volume[:cost], :delimiter => ',', :separator => '.', :precision => 2)}
           %tr.highlight.bottomline
             %td &nbsp
             %td &nbsp
@@ -44,5 +44,5 @@
               = number_with_delimiter(volumes.collect{|v| v[:terabyte_hours]}.sum.round(2), :delimiter => ',')
               TBh
             %td
-              == £#{number_with_precision((volumes.collect{|v| v[:terabyte_hours]}.sum * RateCard.block_storage).round(2), :delimiter => ',', :separator => '.', :precision => 2)}
+              == £#{number_with_precision(@usage.volume_total(project), :delimiter => ',', :separator => '.', :precision => 2)}
 
