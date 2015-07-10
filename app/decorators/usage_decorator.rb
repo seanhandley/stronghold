@@ -87,7 +87,7 @@ class UsageDecorator < ApplicationDecorator
   end
 
   def grand_total
-    model.tenants.sum{|t| total(t.id)}
+    model.tenants.collect{|t| total(t.id)}.sum
   end
 
   private
