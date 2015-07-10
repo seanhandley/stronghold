@@ -13,7 +13,9 @@ module Billing
     def self.usage(tenant_id, from, to)
       images = Billing::Image.where(:tenant_id => tenant_id).to_a.compact
       images = images.collect do |image|
-        { terabyte_hours: terabyte_hours(image, from, to),
+        tb_hours = terabyte_hours(image, from, to)
+        { terabyte_hours: tb_hours,
+                                  cost: (tb_hours * RateCard.block_storage).round(2),
                                   id: image.image_id,
                                   created_at: image.created_at,
                                   deleted_at: image.deleted_at,

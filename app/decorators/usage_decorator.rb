@@ -5,7 +5,6 @@ class UsageDecorator < ApplicationDecorator
       @from_date, @to_date = args[:from_date], args[:to_date]
     end
     raise(ArgumentError, 'Please supply :from_date and :to_date') unless from_date && to_date
-    Rails.cache.delete("org#{model.id}_#{from_date.strftime(timestamp_format)}_#{to_date.strftime(timestamp_format)}") rescue nil
     Rails.cache.fetch("org#{model.id}_#{from_date.strftime(timestamp_format)}_#{to_date.strftime(timestamp_format)}", expires_in: 1.hour) do
       model.tenants.inject({}) do |acc, tenant|
         acc[tenant] = {
@@ -42,23 +41,43 @@ class UsageDecorator < ApplicationDecorator
   end
 
   def image_total(tenant_id)
-    
+    usage_data.each do |tenant, results|
+      if(tenant_id == tenant.id)
+        return results[:image_results].collect{|i| i[:cost]}.sum.round(2)
+      end
+    end
   end
 
   def floating_ip_total(tenant_id)
-    
+    usage_data.each do |tenant, results|
+      if(tenant_id == tenant.id)
+        return results[:floating_ip_results].collect{|i| i[:cost]}.sum.round(2)
+      end
+    end
   end
 
   def ip_quota_total(tenant_id)
-    
+    usage_data.each do |tenant, results|
+      if(tenant_id == tenant.id)
+        return results[:ip_quota_results].collect{|i| i[:cost]}.sum.round(2)
+      end
+    end
   end
 
   def external_gateway_total(tenant_id)
-    
+    usage_data.each do |tenant, results|
+      if(tenant_id == tenant.id)
+        return results[:external_gateway_results].collect{|i| i[:cost]}.sum.round(2)
+      end
+    end
   end
 
   def object_storage_total(tenant_id)
-    
+    usage_data.each do |tenant, results|
+      if(tenant_id == tenant.id)
+        return results[:object_storage_results].collect{|i| i[:cost]}.sum.round(2)
+      end
+    end
   end
 
   def total(tenant_id)
