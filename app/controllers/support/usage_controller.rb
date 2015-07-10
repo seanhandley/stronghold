@@ -9,7 +9,7 @@ class Support::UsageController < SupportBaseController
   end
 
   def index
-    @usage = UsageDecorator.new(current_user.organization).usage_data(@from_date, @to_date)
+    @usage = UsageDecorator.new(current_user.organization).usage_data(from_date: @from_date, to_date: @to_date)
     @active_vouchers = current_user.organization.active_vouchers(@from_date, @to_date)
     @usage_nav = usages_for_select(current_user.organization)
   end

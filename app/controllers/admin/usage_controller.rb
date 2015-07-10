@@ -12,7 +12,7 @@ class Admin::UsageController < AdminBaseController
       @total_hours = ((@to_date - @from_date) / 1.hour).round
       if ((@organization = Organization.find(create_params[:organization])) &&
           (@project      = Tenant.find(create_params[:project])))
-        @usage = UsageDecorator.new(@organization).usage_data(@from_date, @to_date)
+        @usage = UsageDecorator.new(@organization).usage_data(from_date: @from_date, to_date: @to_date)
         @usage.each do |project, results|
           if @project.id == project.id
             @instance_results = results[:instance_results]
