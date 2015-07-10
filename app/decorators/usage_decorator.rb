@@ -1,6 +1,6 @@
 class UsageDecorator < ApplicationDecorator
   def usage_data(from_date, to_date)
-    format = "%Y%m%d%H%M%S"
+    format = "%Y%m%d%H"
     Rails.cache.fetch("org#{model.id}_#{from_date.strftime(format)}_#{to_date.strftime(format)}", expires_in: 1.hour) do
       model.tenants.inject({}) do |acc, tenant|
         acc[tenant] = {
