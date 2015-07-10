@@ -27,7 +27,7 @@ class UsageDecorator < ApplicationDecorator
         if flavor_id
           results = results[:instance_results].select{|i| i[:flavor][:flavor_id] == flavor_id}
         end
-        return results.collect{|i| i[:cost]}.sum.round(2)
+        return results.collect{|i| i[:cost]}.sum
       end
     end
   end
@@ -35,7 +35,7 @@ class UsageDecorator < ApplicationDecorator
   def volume_total(tenant_id)
     usage_data.each do |tenant, results|
       if(tenant_id == tenant.id)
-        return results[:volume_results].collect{|i| i[:cost]}.sum.round(2)
+        return results[:volume_results].collect{|i| i[:cost]}.sum
       end
     end
   end
@@ -43,7 +43,7 @@ class UsageDecorator < ApplicationDecorator
   def image_total(tenant_id)
     usage_data.each do |tenant, results|
       if(tenant_id == tenant.id)
-        return results[:image_results].collect{|i| i[:cost]}.sum.round(2)
+        return results[:image_results].collect{|i| i[:cost]}.sum
       end
     end
   end
@@ -51,7 +51,7 @@ class UsageDecorator < ApplicationDecorator
   def floating_ip_total(tenant_id)
     usage_data.each do |tenant, results|
       if(tenant_id == tenant.id)
-        return results[:floating_ip_results].collect{|i| i[:cost]}.sum.round(2)
+        return results[:floating_ip_results].collect{|i| i[:cost]}.sum
       end
     end
   end
@@ -59,7 +59,7 @@ class UsageDecorator < ApplicationDecorator
   def ip_quota_total(tenant_id)
     usage_data.each do |tenant, results|
       if(tenant_id == tenant.id)
-        return results[:ip_quota_results].collect{|i| i[:cost]}.sum.round(2)
+        return results[:ip_quota_results].collect{|i| i[:cost]}.sum
       end
     end
   end
@@ -67,7 +67,7 @@ class UsageDecorator < ApplicationDecorator
   def external_gateway_total(tenant_id)
     usage_data.each do |tenant, results|
       if(tenant_id == tenant.id)
-        return results[:external_gateway_results].collect{|i| i[:cost]}.sum.round(2)
+        return results[:external_gateway_results].collect{|i| i[:cost]}.sum
       end
     end
   end
@@ -75,7 +75,7 @@ class UsageDecorator < ApplicationDecorator
   def object_storage_total(tenant_id)
     usage_data.each do |tenant, results|
       if(tenant_id == tenant.id)
-        return results[:object_storage_results].collect{|i| i[:cost]}.sum.round(2)
+        return results[:object_storage_results].collect{|i| i[:cost]}.sum
       end
     end
   end
