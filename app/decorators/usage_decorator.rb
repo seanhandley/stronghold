@@ -27,7 +27,7 @@ class UsageDecorator < ApplicationDecorator
         if flavor_id
           results = results[:instance_results].select{|i| i[:flavor][:flavor_id] == flavor_id}
         end
-        return results.collect{|i| i[:cost]}.sum
+        return results[:instance_results].collect{|i| i[:cost]}.sum
       end
     end
   end
