@@ -18,3 +18,8 @@
   = render partial: 'admin/usage/results/objects',   locals: { project: tenant, tbh:               results[:object_storage_results]   }
   = render partial: 'admin/usage/results/ips',       locals: { project: tenant, ip_quotas:         results[:ip_quota_results],                                                           external_gateways: results[:external_gateway_results],
                                                                project: tenant}
+
+.pull-right
+  %h2
+    Total:
+    == £#{number_with_precision(@usage_decorator.grand_total, :delimiter => ',', :separator => '.', :precision => 2)}
