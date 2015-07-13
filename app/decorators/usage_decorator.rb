@@ -83,7 +83,7 @@ class UsageDecorator < ApplicationDecorator
           end.sum
 
           q = results[:ip_quota_results].last.quota - 1
-          period = ((((to_date - quota.recorded_at) / 60.0) / 60.0) / 24.0).round
+          period = ((((to_date - results[:ip_quota_results].last.recorded_at) / 60.0) / 60.0) / 24.0).round
           total_rate = (period * daily_rate)
           cost += (q * total_rate)
           cost
