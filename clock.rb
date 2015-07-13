@@ -31,6 +31,10 @@ if Rails.env.production? || Rails.env.staging?
     CardReverificationJob.perform_later
   end
 
+  every(203.minutes, 'restart_sidekiq') do
+    `restart sidekiq_stronghold`
+  end
+
 end
 
 module Clockwork
