@@ -5,7 +5,7 @@ class UsageDecorator < ApplicationDecorator
       @from_date, @to_date = args[:from_date], args[:to_date]
     end
     raise(ArgumentError, 'Please supply :from_date and :to_date') unless from_date && to_date
-    Rails.cache.fetch("org#{model.id}_#{from_date.strftime(timestamp_format)}_#{to_date.strftime(timestamp_format)}", expires_in: 1.hour) do
+    Rails.cache.fetch("org#{model.id}_#{from_date.strftime(timestamp_format)}_#{to_date.strftime(timestamp_format)}", expires_in: 2.hours) do
       model.tenants.inject({}) do |acc, tenant|
         acc[tenant] = {
           instance_results: Billing::Instances.usage(tenant.uuid, from_date, to_date),

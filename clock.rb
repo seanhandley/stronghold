@@ -12,6 +12,13 @@ if Rails.env.production? || Rails.env.staging?
     ActivationReminderJob.perform_later
   end
 
+  every(40.minutes, 'usage_cache_refresh') do
+    Organization.active.each do |organization|
+      n = (3..15).to_a.sample
+      UsageCacheRefreshJob.set(wait: n.seconds).perform_later(organization)
+    end
+  end
+
   every(1.week, 'usage_report', :at => 'Monday 07:00') do
     UsageReportJob.perform_later
   end
