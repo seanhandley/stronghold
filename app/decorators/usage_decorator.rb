@@ -57,14 +57,6 @@ class UsageDecorator < ApplicationDecorator
   #   end
   # end
 
-  # def ip_quota_total(tenant_id)
-  #   usage_data.each do |tenant, results|
-  #     if(tenant_id == tenant.id)
-  #       return results[:ip_quota_results].collect{|i| i[:cost]}.sum
-  #     end
-  #   end
-  # end
-
   # def external_gateway_total(tenant_id)
   #   usage_data.each do |tenant, results|
   #     if(tenant_id == tenant.id)
@@ -72,6 +64,26 @@ class UsageDecorator < ApplicationDecorator
   #     end
   #   end
   # end
+
+  def ip_quota_total(tenant_id)
+    usage_data.each do |tenant, results|
+      if(tenant_id == tenant.id)
+        if results[:ip_quota_results].none?
+          return RateCard.ip_address * Fog::Network.new(OPENSTACK_ARGS).get_quota(tenant.uuid).body['quota']['floatingip']
+        else
+          for quota in results[:ip_quota_results]
+            # Calculate the cost for the time period
+            # based on quota changes and their timestamps.
+            # Need to calculate quota at start of time period
+            RateCard.ip_address
+            quota.recorded_at
+            quota.quota
+            quota.previous
+          end
+        end
+      end
+    end
+  end
 
   def object_storage_total(tenant_id)
     usage_data.each do |tenant, results|
@@ -85,8 +97,8 @@ class UsageDecorator < ApplicationDecorator
     [
       instance_total(tenant_id), volume_total(tenant_id),
       image_total(tenant_id),
-      # floating_ip_total(tenant_id),
-      # ip_quota_total(tenant_id), external_gateway_total(tenant_id),
+      # floating_ip_total(tenant_id), external_gateway_total(tenant_id),
+      ip_quota_total(tenant_id), 
       object_storage_total(tenant_id)
     ].sum
   end
