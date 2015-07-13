@@ -8,6 +8,8 @@
     (
     == £#{number_with_precision(RateCard.ip_address.round(2) * (@quota - 1), :delimiter => ',', :separator => '.', :precision => 2)} per month
     )
+  - if current_user.staff?
+    %p= @usage_decorator.ip_quota_total(project.id)
   - if ip_quotas && ip_quotas.any?
     .table-responsive
       %table.table.table-hover.phone-bill
