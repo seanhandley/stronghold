@@ -14,7 +14,7 @@ if Rails.env.production? || Rails.env.staging?
 
   every(40.minutes, 'usage_cache_refresh') do
     Organization.active.each do |organization|
-      n = (3..15).to_a.sample
+      n = (1..60).to_a.sample
       UsageCacheRefreshJob.set(wait: n.seconds).perform_later(organization)
     end
   end
