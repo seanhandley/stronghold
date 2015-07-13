@@ -88,7 +88,7 @@ class UsageDecorator < ApplicationDecorator
           cost
         end
       end
-    end.sum
+    end.compact.sum
   end
 
   def object_storage_total(tenant_id)
