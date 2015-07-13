@@ -69,7 +69,7 @@ class UsageDecorator < ApplicationDecorator
     usage_data.collect do |tenant, results|
       if(tenant_id == tenant.id)
         if results[:ip_quota_results].none?
-          RateCard.ip_address * Fog::Network.new(OPENSTACK_ARGS).get_quota(tenant.uuid).body['quota']['floatingip'] - 1
+          RateCard.ip_address * (Fog::Network.new(OPENSTACK_ARGS).get_quota(tenant.uuid).body['quota']['floatingip'] - 1)
         else
           seconds_in_period = to_date - from_date
           start = from_date
