@@ -71,7 +71,7 @@ class UsageDecorator < ApplicationDecorator
         if results[:ip_quota_results].none?
           RateCard.ip_address * Fog::Network.new(OPENSTACK_ARGS).get_quota(tenant.uuid).body['quota']['floatingip']
         else
-          seconds_in_period = to - from_date
+          seconds_in_period = to_date - from_date
           start = from_date
           daily_rate = ((RateCard.ip_address * 12) / 365.0).round(2)
           cost = results[:ip_quota_results].collect do |quota|
