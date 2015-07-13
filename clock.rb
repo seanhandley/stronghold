@@ -31,7 +31,8 @@ if Rails.env.production? || Rails.env.staging?
     CardReverificationJob.perform_later
   end
 
-  every(203.minutes, 'restart_sidekiq') do
+  every(203.minutes, 'restart_sidekiq', :thread => true) do
+    sleep 12 * 60
     `restart sidekiq_stronghold`
   end
 
