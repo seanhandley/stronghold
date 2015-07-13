@@ -46,6 +46,7 @@ gem "slack-notifier"
 gem "maxmind"
 gem "deep_merge"
 gem 'stripe-rails'
+gem 'sidekiq-unique-jobs'
 
 group :test, :acceptance do
   gem 'faker'
