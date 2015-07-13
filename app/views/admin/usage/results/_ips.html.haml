@@ -5,11 +5,9 @@
     %strong Current Quota:
     - @quota = Fog::Network.new(OPENSTACK_ARGS).get_quota(project.uuid).body['quota']['floatingip']
     == #{@quota} addresses
-    (
-    == £#{number_with_precision(RateCard.ip_address.round(2) * (@quota - 1), :delimiter => ',', :separator => '.', :precision => 2)} per month
-    )
-  - if current_user.staff?
-    %p= @usage_decorator.ip_quota_total(project.id)
+  %p
+    %strong Cost:
+    == £#{number_with_precision(@usage_decorator.ip_quota_total(project.id), :delimiter => ',', :separator => '.', :precision => 2)}
   - if ip_quotas && ip_quotas.any?
     .table-responsive
       %table.table.table-hover.phone-bill
