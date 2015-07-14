@@ -92,11 +92,5 @@
             %p.help-block
               #discount_code_message
         .pull-right= submit_tag 'Activate →', class: 'btn btn-primary btn-lg', id: 'complete-signup', disable_with: 'Activating...'
-        
-.pull-right
-  %label
-    By activating, you agree to our
-    = link_to 'Terms of Service', 'http://www.datacentred.co.uk/terms_of_service.html', target: '_blank'
-    \.    
           
 = javascript_include_tag asset_path('assets/card.js')
