@@ -12,7 +12,7 @@ if ENV["SIDEKIQ_PROFILE"]
       module Server
         class Profiler
           # Number of jobs to process before reporting
-          JOBS = 100
+          JOBS = 200
 
           class << self
             mattr_accessor :counter
@@ -36,6 +36,7 @@ if ENV["SIDEKIQ_PROFILE"]
                   GC.start
                   ObjectSpace.dump_all(output: File.open("heap.json", "w"))
                   Sidekiq.logger.info "heap saved to heap.json"
+                  Notifications.notify(:account_alert, "Finished collecting sidekiq profiling info")
                 end
               end
             end
