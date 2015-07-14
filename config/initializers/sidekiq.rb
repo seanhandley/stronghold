@@ -2,7 +2,7 @@ Sidekiq.configure_server do |config|
   config.error_handlers << Proc.new {|ex,_| Honeybadger.notify(ex) }
 end
 
-if ENV["PROFILE"]
+if ENV["SIDEKIQ_PROFILE"]
   require "objspace"
   ObjectSpace.trace_object_allocations_start
   Sidekiq.logger.info "allocations tracing enabled"
