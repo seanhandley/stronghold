@@ -12,7 +12,7 @@ if ENV["SIDEKIQ_PROFILE"]
       module Server
         class Profiler
           # Number of jobs to process before reporting
-          JOBS = 50
+          JOBS = 10
 
           class << self
             mattr_accessor :counter
