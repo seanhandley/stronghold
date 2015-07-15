@@ -33,6 +33,8 @@ module CephObject
     
     def self.request(verb, path, params)
       conn
+      puts "#{path}#{params.to_query}"
+      puts options.inspect
       response = AWS::S3::Base.request(verb, "#{path}#{params.to_query}", options)
       if response.code == 200
         if response.body.length > 0
