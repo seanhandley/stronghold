@@ -1,7 +1,7 @@
 class UserDecorator < ApplicationDecorator
   def as_sirportly_data
     {
-      reference: model.organization.reporting_code,
+      reference: "#{model.organization.reporting_code} (User: #{id})",
       contact_methods: {
         email: [
           model.email
