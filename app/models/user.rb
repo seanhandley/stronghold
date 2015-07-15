@@ -40,10 +40,6 @@ class User < ActiveRecord::Base
     { email: email }
   end
 
-  def unique_id
-    "stronghold_#{id}"
-  end
-
   def keystone_params
     { email: email, name: email,
       tenant_id: organization.primary_tenant.uuid,

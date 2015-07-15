@@ -1,7 +1,7 @@
 class UserDecorator < ApplicationDecorator
   def as_sirportly_data
     {
-      reference: model.unique_id,
+      reference: model.organization.reporting_code,
       contact_methods: {
         email: [
           model.email
@@ -9,7 +9,7 @@ class UserDecorator < ApplicationDecorator
       },
       first_name: model.first_name,
       last_name: model.last_name,
-      company: model.organization.reference,
+      company: model.organization.name,
       timezone: model.organization.time_zone
     }
   end
