@@ -8,8 +8,8 @@ module CephObject
   #
   class Base
 
-    def self.create(params)
-      request(:put, path, params)
+    def self.create(params, body=nil)
+      request(:put, path, params, body)
     end
 
     def self.update(params)
@@ -31,11 +31,9 @@ module CephObject
       return false
     end
     
-    def self.request(verb, path, params)
+    def self.request(verb, path, params, body=nil)
       conn
-      puts "#{path}#{params.to_query}"
-      puts options.inspect
-      response = AWS::S3::Base.request(verb, "#{path}#{params.to_query}", options)
+      response = AWS::S3::Base.request(verb, "#{path}#{params.to_query}", options, body)
       if response.code == 200
         if response.body.length > 0
           JSON.parse(response.body)

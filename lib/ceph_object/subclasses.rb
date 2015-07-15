@@ -14,6 +14,9 @@ module CephObject
       def self.get(params)
         super params.merge('quota-type' => 'user')
       end
+      def self.create(params, body)
+        super params.merge('quota-type' => 'user'), body
+      end
     end
   end
 end
