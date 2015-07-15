@@ -20,6 +20,10 @@ module CephObject
       request(:delete, path, params)
     end
 
+    def self.get(params)
+      request(:get, path, params)
+    end
+
     def self.exists?(params)
       request(:get, path, params)
     rescue Net::HTTPError => e

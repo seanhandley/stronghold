@@ -8,8 +8,11 @@ module CephObject
     end
     class Usage < Base
       def self.path ; '/admin/bucket?' ; end
+    end
+    class UserQuota < Base
+      def self.path; '/admin/user?quota&' ; end
       def self.get(params)
-        request(:get, path, params)
+        super params.merge('quota-type' => 'user')
       end
     end
   end
