@@ -33,10 +33,6 @@ if Rails.env.production? || Rails.env.staging?
     `restart sidekiq_stronghold`
   end
 
-  every(200.minutes, 'cache') do
-    Tenant.all.each {|t| Rails.cache.delete("quotas_for_#{t.uuid}") rescue nil}
-  end
-
 end
 
 module Clockwork
