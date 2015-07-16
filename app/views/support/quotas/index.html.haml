@@ -14,8 +14,8 @@
   %h2= "Project: #{project.name}"
 .container
   .usage-back.row
-    - ['compute', 'volume', 'network'].each do |key|
-      .col-md-4
+    - ['compute', 'volume', 'network', 'object_storage'].sort.each do |key|
+      .col-md-3
         %h3= key.titleize
         %ul.quota-list
           - project.quotas[key].each do |k,v|

@@ -31,7 +31,8 @@ class Tenant < ActiveRecord::Base
       {
         "compute" => compute_quota,
         "volume"  => volume_quota,
-        "network" => network_quota
+        "network" => network_quota,
+        "object_storage" => storage_quota
       }
     end
   end
@@ -51,6 +52,10 @@ class Tenant < ActiveRecord::Base
   def network_quota
     keys = ["floatingip", "router"]
     Fog::Network.new(OPENSTACK_ARGS).get_quota(uuid).body['quota'].slice(*keys)
+  end
+
+  def storage_quota
+    { "" => organization.limited_storage? ? '5 GB' : 'Unlimited'}
   end
 
 end

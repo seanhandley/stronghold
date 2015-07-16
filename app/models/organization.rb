@@ -10,6 +10,7 @@ class Organization < ActiveRecord::Base
   syncs_with_salesforce
 
   after_save :generate_reference, :generate_reporting_code, :on => :create
+  before_save :check_limited_storage, :if => Proc.new{|o| o.limited_storage_changed? }
 
   validates :name, length: {minimum: 1}, allow_blank: false
   validates :reference,      :uniqueness => true, :if => Proc.new{|o| o.reference.present? } 
@@ -190,6 +191,11 @@ class Organization < ActiveRecord::Base
     tenants.collect(&:uuid).each do |tenant_id|
       OpenStack::Tenant.set_self_service_quotas(tenant_id, quota)
     end
+    update_attributes(limited_storage: true) if voucher.restricted?
+  end
+
+  def check_limited_storage
+    SetCephQuotaJob.perform_later(self)
   end
 end
 

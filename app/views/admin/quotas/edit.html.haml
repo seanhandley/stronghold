@@ -7,11 +7,19 @@
     .container
       .usage-back.row
         - ['compute', 'volume', 'network'].each do |key|
-          .col-md-4
+          .col-md-3
             %h3= key.titleize
             - project.quotas[key].each do |k,v|
               .form-group
                 %label= fix_abbreviation_case(k.humanize.titleize.pluralize)
                 = number_field_tag "quota[#{key}][#{k}]", v, :class => 'form-control'
+        .col-md-3
+          %h3 Object Storage
+          .checkbox
+            %label
+              = check_box_tag "quota[storage][limited_storage]", true, @organization.limited_storage?
+              Limited Quota (5GB)?
+            %p.help-block Unlimited users can use as much storage as they want.
+
 
   = link_to 'Notify Customer', mail_admin_quota_path(@organization), class: 'btn btn-primary', data: {confirm: 'All done? Email the customer?', method: 'post'}
