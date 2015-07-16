@@ -10,7 +10,7 @@ module Ceph
     end
 
     def self.get(uid)
-      super default_params.merge('uid' => uid), {}.to_json
+      super default_params.merge('uid' => uid)
     end
 
     private
