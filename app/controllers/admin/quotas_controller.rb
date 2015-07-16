@@ -1,6 +1,6 @@
 class Admin::QuotasController < AdminBaseController
 
-  before_filter :find_organization
+  before_filter :find_organization, except: [:update]
 
   def index
     @organizations = Organization.active
