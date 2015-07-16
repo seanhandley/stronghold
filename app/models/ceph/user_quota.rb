@@ -9,6 +9,10 @@ module Ceph
       set_quota(uid, 'enabled' => false, 'max_size_kb' => -1, 'max_objects' => -1)
     end
 
+    def self.get(uid)
+      super default_params.merge('uid' => uid)
+    end
+
     private
 
     def self.set_quota(uid, body)
