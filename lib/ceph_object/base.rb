@@ -20,8 +20,8 @@ module CephObject
       request(:delete, path, params)
     end
 
-    def self.get(params)
-      request(:get, path, params)
+    def self.get(params, body=nil)
+      request(:get, path, params, body)
     end
 
     def self.exists?(params)
