@@ -11,7 +11,7 @@ module Ceph
 
     private
 
-    def set_quota(uid, body)
+    def self.set_quota(uid, body)
       CephObject::UserQuota.create(default_params.merge('uid' => uid), body.to_json)
     end
 
