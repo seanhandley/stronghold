@@ -7,6 +7,8 @@ module Billing
     has_many :instance_states
     belongs_to :instance_flavor, :class_name => "Billing::InstanceFlavor",
                :primary_key => 'flavor_id', :foreign_key => 'flavor_id'
+    belongs_to :instance_image, :class_name => "Billing::Image",
+               :primary_key => 'image_id', :foreign_key => 'image_id'
 
     scope :active, -> { all.select(&:active?) }
 

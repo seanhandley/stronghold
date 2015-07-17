@@ -11,7 +11,12 @@ module Billing
     end
 
     def self.usage(tenant_id, from, to)
-      instances = Billing::Instance.where(:tenant_id => tenant_id).to_a.compact
+      instances = []
+      if tenant_id.present?
+        instances = Billing::Instance.where(:tenant_id => tenant_id).to_a.compact
+      else
+        instances = Billing::Instance.all.to_a.compact
+      end
       instances = instances.collect do |instance|
         billable_seconds = seconds(instance, from, to)
         billable_hours = ((billable_seconds / 60.0) / 60.0).ceil
@@ -24,6 +29,7 @@ module Billing
                                        rate: instance.rate,
                                        billable_hours: billable_hours,
                                        cost: (billable_hours * instance.rate.to_f).nearest_penny,
+                                       arch: instance.arch,
                                        flavor: {
                                          flavor_id: instance.flavor_id,
                                          name: instance.instance_flavor.name,
@@ -31,7 +37,10 @@ module Billing
                                          ram_mb: instance.instance_flavor.ram,
                                          root_disk_gb: instance.instance_flavor.disk,
                                          rate: instance.instance_flavor.rate},
-                                       image_id: instance.image_id}
+                                       image: {
+                                         image_id: instance.image_id,
+                                         name: instance.instance_image.name}
+                                       }
       end
       instances.select{|i| i[:billable_seconds] > 0}
     end
