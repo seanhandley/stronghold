@@ -21,6 +21,6 @@ namespace :stronghold do
     usage = usage.select{|u| u[:image][:name].downcase.include?('ubuntu')}.group_by{|u| u[:image][:name]}.collect do |name, results|
       [name, {hours_per_month: (results.collect{|r| r[:billable_hours]}.sum / 3.0).ceil, arch: results.first[:arch]}]
     end
-    CSV.generate {|csv| csv << ['Name', 'Hours Per Month', 'Arch']; Hash[usage].each{|k,v| csv << [k, *v.values]}}
+    puts CSV.generate {|csv| csv << ['Name', 'Hours Per Month', 'Arch']; Hash[usage].each{|k,v| csv << [k, *v.values]}}
   end
 end
