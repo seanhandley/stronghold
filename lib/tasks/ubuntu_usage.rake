@@ -10,7 +10,7 @@ namespace :stronghold do
     start_date, end_date = m, m.end_of_month
     usage = Billing::Instances.usage(nil, start_date, end_date)
     usage = usage.select{|u| u[:image][:name].downcase.include?('ubuntu')}.group_by{|u| u[:image][:name]}.collect do |name, results|
-      [name, {hours_per_month: (results.collect{|r| r[:billable_hours]}.sum / 3.0).ceil, arch: results.first[:arch]}]
+      [name, {hours_per_month: (results.collect{|r| r[:billable_hours]}.sum).ceil, arch: results.first[:arch]}]
     end
     puts CSV.generate {|csv| csv << ['Name', 'Hours Per Month', 'Arch']; Hash[usage].each{|k,v| csv << [k, *v.values]}}
   end
