@@ -17,6 +17,10 @@ namespace :stronghold do
     when '4'
       start_date, end_date = Time.parse("#{year}-10-01 00:00:00 UTC"), Time.parse("#{year.to_i+1}-01-01 00:00:00 UTC")
     end
-    puts Billing::Instances.usage(nil, start_date, end_date).inspect
+    usage = Billing::Instances.usage(nil, start_date, end_date)
+    usage = usage.select{|u| u[:image][:name].downcase.include?('ubuntu')}.group_by{|u| u[:image][:name]}.collect do |name, results|
+      [name, {hours_per_month: (results.collect{|r| r[:billable_hours]}.sum / 3.0).ceil, arch: results.first[:arch]}]
+    end
+    Hash[usage]
   end
 end
