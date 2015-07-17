@@ -23,6 +23,7 @@ module Billing
         {billable_seconds: billable_seconds,
                                        uuid: instance.instance_id,
                                        name: instance.name,
+                                       tenant_id: instance.tenant_id,
                                        first_booted_at: instance.first_booted_at,
                                        latest_state: instance.latest_state(from,to),
                                        terminated_at: instance.terminated_at,
