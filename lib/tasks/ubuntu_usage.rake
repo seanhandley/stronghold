@@ -21,6 +21,6 @@ namespace :stronghold do
     usage = usage.select{|u| u[:image][:name].downcase.include?('ubuntu')}.group_by{|u| u[:image][:name]}.collect do |name, results|
       [name, {hours_per_month: (results.collect{|r| r[:billable_hours]}.sum / 3.0).ceil, arch: results.first[:arch]}]
     end
-    Hash[usage]
+    puts Hash[usage].inspect
   end
 end
