@@ -39,7 +39,7 @@ module Billing
                                          rate: instance.instance_flavor.rate},
                                        image: {
                                          image_id: instance.image_id,
-                                         name: instance.instance_image.name}
+                                         name: instance.instance_image.name rescue ''}
                                        }
       end
       instances.select{|i| i[:billable_seconds] > 0}
