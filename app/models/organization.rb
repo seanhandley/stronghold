@@ -191,7 +191,7 @@ class Organization < ActiveRecord::Base
     tenants.collect(&:uuid).each do |tenant_id|
       OpenStack::Tenant.set_self_service_quotas(tenant_id, quota)
     end
-    update_attributes(limited_storage: true) if voucher.restricted?
+    update_attributes(limited_storage: true) if voucher && voucher.restricted?
   end
 
   def check_limited_storage
