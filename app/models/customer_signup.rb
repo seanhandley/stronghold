@@ -64,7 +64,6 @@ class CustomerSignup < ActiveRecord::Base
     return errors.add(:email, I18n.t(:is_not_a_valid_address)) unless email =~ /.+@.+\..+/
     return errors.add(:email, I18n.t(:is_not_a_valid_address)) unless email.length >= 5
     return errors.add(:email, 'is already in use') if User.find_by_email(email.downcase) && email_changed?
-    return errors.add(:email, 'is already in use') if invite = Invite.find_by_email(email.downcase) && email_changed? && invite.can_register?
   end
 
   def address_check_passed?
