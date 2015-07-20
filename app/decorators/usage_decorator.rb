@@ -66,13 +66,14 @@ class UsageDecorator < ApplicationDecorator
   # end
 
   def ip_quota_total(tenant_id)
+    daily_rate = ((RateCard.ip_address * 12) / 365.0).round(2)
     usage_data.collect do |tenant, results|
       if(tenant_id == tenant.id)
         if results[:ip_quota_results].none?
-          RateCard.ip_address * (Fog::Network.new(OPENSTACK_ARGS).get_quota(tenant.uuid).body['quota']['floatingip'] - 1)
+          quota = Fog::Network.new(OPENSTACK_ARGS).get_quota(tenant.uuid).body['quota']['floatingip'] - 1
+          ((((to_date - from_date) / 60.0) / 60.0) / 24.0).round * daily_rate * quota
         else
           start = from_date
-          daily_rate = ((RateCard.ip_address * 12) / 365.0).round(2)
           cost = results[:ip_quota_results].collect do |quota|
             period = ((((quota.recorded_at - start) / 60.0) / 60.0) / 24.0).round
             start = quota.recorded_at
@@ -111,6 +112,45 @@ class UsageDecorator < ApplicationDecorator
 
   def grand_total
     model.tenants.collect{|t| total(t.id)}.sum
+  end
+
+  def grand_total_include_discounts
+    return grand_total unless discounts?
+    v = model.active_vouchers(from_date, to_date).first
+    discount_percent = v.voucher.discount_percent
+    voucher_start = v.created_at
+    voucher_end = v.expires_at
+
+    totals = []
+    
+    # Calculate the part of the month that needs a discount
+    from = (voucher_start < from_date) ? from_date : voucher_start
+    to   = (voucher_end > to_date) ? to_date : voucher_end
+
+    ud = UsageDecorator.new(model)
+
+    ud.usage_data(from_date: from, to_date: to)
+    discounted_total = ud.grand_total  * (1 - (discount_percent / 100.0))
+    totals << discounted_total
+
+    # Calculate the remainder at the start
+    if from > from_date
+      ud.usage_data(from_date: from_date, to_date: from)
+      totals << ud.grand_total
+    end
+
+    # Calculate remainder at the end
+    if to < to_date
+      ud.usage_data(from_date: to, to_date: to_date)
+      totals << ud.grand_total
+    end
+
+    totals.sum
+  end
+
+
+  def discounts?
+    model.active_vouchers(from_date, to_date).any?
   end
 
   private

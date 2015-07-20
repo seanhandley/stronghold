@@ -1,6 +1,5 @@
 - title "Usage"
 
-= render partial: 'total', locals: { grand_total: @usage_decorator.grand_total }
 %h1
   %i.fa.fa-area-chart
   Cloud Usage
@@ -20,5 +19,5 @@
   = render partial: 'admin/usage/results/ips',       locals: { project: tenant, ip_quotas:         results[:ip_quota_results],                                                           external_gateways: results[:external_gateway_results],
                                                                project: tenant}
 
-= render partial: 'total', locals: { grand_total: @usage_decorator.grand_total }
+= render partial: 'total', locals: { grand_total: DarkLaunch.hide? ? @usage_decorator.grand_total : @usage_decorator.grand_total_include_discounts }
 .push
