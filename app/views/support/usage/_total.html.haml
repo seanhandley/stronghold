@@ -5,8 +5,8 @@
       == £#{number_with_precision(sub_total, :delimiter => ',', :separator => '.', :precision => 2)}
       %br
       Discount: 
-      = current_user.organization.active_vouchers(@from_date, @to_date).first.voucher.discount_percent
-      \%
+      == #{current_user.organization.active_vouchers(@from_date, @to_date).first.voucher.discount_percent}%
+
   %h2
     Total:
     == £#{number_with_precision(grand_total, :delimiter => ',', :separator => '.', :precision => 2)}
