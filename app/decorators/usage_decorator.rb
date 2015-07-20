@@ -110,12 +110,12 @@ class UsageDecorator < ApplicationDecorator
     ].sum
   end
 
-  def grand_total
+  def sub_total
     model.tenants.collect{|t| total(t.id)}.sum
   end
 
-  def grand_total_include_discounts
-    return grand_total unless discounts?
+  def grand_total
+    return sub_total unless discounts?
     v = model.active_vouchers(from_date, to_date).first
     discount_percent = v.voucher.discount_percent
     voucher_start = v.created_at
@@ -130,19 +130,19 @@ class UsageDecorator < ApplicationDecorator
     ud = UsageDecorator.new(model)
 
     ud.usage_data(from_date: from, to_date: to)
-    discounted_total = ud.grand_total  * (1 - (discount_percent / 100.0))
+    discounted_total = ud.sub_total  * (1 - (discount_percent / 100.0))
     totals << discounted_total
 
     # Calculate the remainder at the start
     if from > from_date
       ud.usage_data(from_date: from_date, to_date: from)
-      totals << ud.grand_total
+      totals << ud.sub_total
     end
 
     # Calculate remainder at the end
     if to < to_date
       ud.usage_data(from_date: to, to_date: to_date)
-      totals << ud.grand_total
+      totals << ud.sub_total
     end
 
     totals.sum

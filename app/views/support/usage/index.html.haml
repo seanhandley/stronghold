@@ -19,7 +19,8 @@
   = render partial: 'admin/usage/results/ips',       locals: { project: tenant, ip_quotas:         results[:ip_quota_results],                                                           external_gateways: results[:external_gateway_results],
                                                                project: tenant}
 
-= render partial: 'total', locals: { grand_total: @usage_decorator.grand_total_include_discounts }
+= render partial: 'total', locals: { sub_total: @usage_decorator.sub_total, grand_total: @usage_decorator.grand_total }
+.push
 %p.tiny
   * Usage information is updated automatically every hour.
   %br
