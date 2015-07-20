@@ -20,4 +20,8 @@
                                                                project: tenant}
 
 = render partial: 'total', locals: { grand_total: @usage_decorator.grand_total_include_discounts }
+%p.tiny
+  * Usage information is updated automatically every hour.
+  %br
+  ** These figures are purely indicative of cost and the final monthly amount will be issued separately.
 .push
