@@ -61,6 +61,10 @@ class User < ActiveRecord::Base
     name.blank? ? email : name
   end
 
+  def unique_id
+    "#{organization.reporting_code} (User: #{id})"
+  end
+
   def authenticate(unencrypted_password)
     setup_password_from_openstack(unencrypted_password) if password_digest.nil?
     begin
