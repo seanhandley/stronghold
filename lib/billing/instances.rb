@@ -137,7 +137,8 @@ module Billing
           Billing::InstanceState.create instance_id: billing_instance.id, recorded_at: Time.zone.parse("#{s['recorded_at']} UTC"),
                                         state: s['resource_metadata']['state'] ? s['resource_metadata']['state'].downcase : 'active',
                                         event_name: s['resource_metadata']['event_type'], billing_sync: sync,
-                                        message_id: s['message_id']
+                                        message_id: s['message_id'],
+                                        flavor_id: s['resource_metadata']["instance_flavor_id"]
           unless billing_instance.arch.present? || s['resource_metadata']['architecture'].empty?
             billing_instance.update_attributes(arch: s['resource_metadata']['architecture'])
           end
