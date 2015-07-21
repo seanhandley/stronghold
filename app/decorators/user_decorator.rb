@@ -9,7 +9,7 @@ class UserDecorator < ApplicationDecorator
       },
       first_name: model.first_name,
       last_name: model.last_name,
-      company: model.organization.name,
+      company: model.organization.reference,
       timezone: model.organization.time_zone
     }
   end
