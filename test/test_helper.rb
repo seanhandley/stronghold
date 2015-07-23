@@ -61,4 +61,10 @@ def load_instance_flavors
   Billing::InstanceFlavor.create(flavor_id: '78d43ae0-7c98-48d2-9adc-90e8f8f6fe99', name: 'dc1.1x0', ram: 512, disk: 10, vcpus: 1)
   Billing::InstanceFlavor.create(flavor_id: 'b671216b-1c68-4765-b752-0e8e6b6d015f', name: 'dc1.1x2', ram: 2048, disk: 40, vcpus: 1)
   Billing::InstanceFlavor.create(flavor_id: '7e1d9f77-acdf-41bb-a5e8-572ee153d21f', name: 'dc1.4x8', ram: 8192, disk: 120, vcpus: 4)
+
+  ["aarch64", "x86_64"].each do |arch|
+    Billing::InstanceFlavor.all.each do |flavor|
+      Billing::Rate.create(flavor_id: flavor.id, arch: arch, rate: 0.5)
+    end
+  end
 end

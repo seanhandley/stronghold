@@ -5,8 +5,6 @@ module Billing
     validates :instance_id, uniqueness: true
 
     has_many :instance_states
-    belongs_to :instance_flavor, :class_name => "Billing::InstanceFlavor",
-               :primary_key => 'flavor_id', :foreign_key => 'flavor_id'
     belongs_to :instance_image, :class_name => "Billing::Image",
                :primary_key => 'image_id', :foreign_key => 'image_id'
 
@@ -27,6 +25,10 @@ module Billing
 
     def rate
       instance_flavor.rates.where(arch: arch).first.rate rescue nil
+    end
+
+    def instance_flavor
+      instance_states.order('recorded_at').last.try(:instance_flavor) { Billing::InstanceFlavor.find(flavor_id) }
     end
 
     def current_state

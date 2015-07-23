@@ -29,7 +29,7 @@ module Billing
                                        terminated_at: instance.terminated_at,
                                        rate: instance.rate,
                                        billable_hours: billable_hours,
-                                       cost: (billable_hours * instance.rate.to_f).nearest_penny,
+                                       cost: cost(instance, from, to).nearest_penny,
                                        arch: instance.arch,
                                        flavor: {
                                          flavor_id: instance.flavor_id,
@@ -44,6 +44,57 @@ module Billing
                                        }
       end
       instances.select{|i| i[:billable_seconds] > 0}
+    end
+
+    def self.cost(instance, from, to)
+      states = instance.instance_states.where(:recorded_at => from..to).order('recorded_at')
+      previous_state = instance.instance_states.where('recorded_at < ?', from).order('recorded_at DESC').limit(1).first
+
+      if states.any?
+        if states.count > 1
+          start = 0
+
+          if previous_state
+            if billable?(previous_state.state)
+              start = (states.first.recorded_at - from) * previous_state.rate(instance.arch)
+            end
+          end
+
+          previous = states.first
+          middle = states.collect do |state|
+            difference = 0
+            if billable?(previous.state)
+              difference = state.recorded_at - previous.recorded_at
+            end
+            begin
+              difference * previous.rate(instance.arch)
+            ensure
+              previous = state
+            end
+          end.sum
+
+          ending = 0
+
+          if(billable?(states.last.state))
+            ending = (to - states.last.recorded_at) * states.last.rate(instance.arch)
+          end
+
+          return (start + middle + ending).round
+        else
+          # Only one sample for this period
+          if billable?(states.first.state)
+            return (to - states.first.recorded_at).round * states.first.rate(instance.arch)
+          else
+            return 0
+          end
+        end
+      else
+        if previous_state && billable?(previous_state.state)
+          return (to - from).round * previous_state.rate(instance.arch)
+        else
+          return 0
+        end
+      end
     end
 
     def self.seconds(instance, from, to)
