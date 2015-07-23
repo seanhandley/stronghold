@@ -6,6 +6,9 @@
 
 = select_tag :month_year, @usage_nav
 
+.pull-right
+  %p.tiny= link_to 'View Pricing', 'http://www.datacentred.co.uk/pricing/', target: '_blank'
+
 - @usage.each do |tenant, results|
   %h2
     %i.fa.fa-folder-o
