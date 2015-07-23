@@ -10,7 +10,7 @@ module Billing
 
     def rate(arch)
       arch = "x86_64" if arch == "None"
-      flavor = instance_flavor ? instance_flavor : Billing::InstanceFlavor.find(billing_instance.flavor_id)
+      flavor = instance_flavor ? instance_flavor : Billing::InstanceFlavor.find_by_flavor_id(billing_instance.flavor_id)
       flavor.rates.where(arch: arch).first.rate.to_f rescue nil
     end
 
