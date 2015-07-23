@@ -10,6 +10,7 @@
                 %i.fa.fa-rocket
               %td== Flavor: #{instances.first[:flavor][:name]}
               %td Unique Identifier
+              %td Arch
               %td First Booted
               %td Last Recorded State
               %td Terminated
@@ -24,6 +25,7 @@
                 %td &nbsp;
                 %td.line_entry= instance[:name]
                 %td.line_entry= instance[:uuid]
+                %td.line_entry= instance[:arch]
                 %td.line_entry= instance[:first_booted_at]
                 %td.line_entry= instance[:latest_state]
                 %td.line_entry= (instance[:terminated_at] && instance[:terminated_at] <= @to_date) ? instance[:terminated_at] : '-'
