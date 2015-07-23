@@ -56,7 +56,9 @@ module Billing
 
           if previous_state
             if billable?(previous_state.state)
-              start = (states.first.recorded_at - from) * previous_state.rate(instance.arch)
+              start = (states.first.recorded_at - from)
+              start = ((start / 60.0) / 60.0).ceil
+              start * previous_state.rate(instance.arch)
             end
           end
 
@@ -67,6 +69,7 @@ module Billing
               difference = state.recorded_at - previous.recorded_at
             end
             begin
+              difference = ((difference / 60.0) / 60.0).ceil
               difference * previous.rate(instance.arch)
             ensure
               previous = state
@@ -76,21 +79,27 @@ module Billing
           ending = 0
 
           if(billable?(states.last.state))
-            ending = (to - states.last.recorded_at) * states.last.rate(instance.arch)
+            ending = (to - states.last.recorded_at)
+            ending = ((ending / 60.0) / 60.0).ceil
+            ending * states.last.rate(instance.arch)
           end
 
           return (start + middle + ending).round
         else
           # Only one sample for this period
           if billable?(states.first.state)
-            return (to - states.first.recorded_at).round * states.first.rate(instance.arch)
+            time = (to - states.first.recorded_at).round
+            time = ((time / 60.0) / 60.0).ceil
+            return time * states.first.rate(instance.arch)
           else
             return 0
           end
         end
       else
         if previous_state && billable?(previous_state.state)
-          return (to - from).round * previous_state.rate(instance.arch)
+          time = (to - from).round 
+          time = ((time / 60.0) / 60.0).ceil
+          return time * previous_state.rate(instance.arch)
         else
           return 0
         end
