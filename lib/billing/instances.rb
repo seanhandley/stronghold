@@ -84,11 +84,11 @@ module Billing
             ending * states.last.rate(instance.arch)
           end
 
-          return (start + middle + ending).round
+          return (start + middle + ending)
         else
           # Only one sample for this period
           if billable?(states.first.state)
-            time = (to - states.first.recorded_at).round
+            time = (to - states.first.recorded_at)
             time = ((time / 60.0) / 60.0)
             return time * states.first.rate(instance.arch)
           else
@@ -97,7 +97,7 @@ module Billing
         end
       else
         if previous_state && billable?(previous_state.state)
-          time = (to - from).round 
+          time = (to - from)
           time = ((time / 60.0) / 60.0)
           return time * previous_state.rate(instance.arch)
         else
