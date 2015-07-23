@@ -38,10 +38,12 @@
               %td &nbsp;
               %td &nbsp;
               %td &nbsp;
+              %td &nbsp;
               %td== Total #{instances.first[:flavor][:name]}:
               %td== #{number_with_delimiter(instances.map{|i| i[:billable_hours]}.sum, :delimiter => ',')} hours
               %td== £#{number_with_precision(@usage_decorator.instance_total(project.id, flavor_id), :delimiter => ',', :separator => '.', :precision => 2)}
             %tr
+              %td &nbsp;
               %td &nbsp;
               %td &nbsp;
               %td &nbsp;
