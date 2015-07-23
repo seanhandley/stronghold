@@ -9,7 +9,8 @@ module Billing
            :primary_key => 'flavor_id', :foreign_key => 'flavor_id'
 
     def rate(arch)
-      instance_flavor.rates.where(arch: arch).first.rate rescue nil
+      flavor = instance_flavor ? instance_flavor : Billing::InstanceFlavor.find(billing_instance.flavor_id)
+      flavor.rates.where(arch: arch).first.rate rescue nil
     end
 
   end
