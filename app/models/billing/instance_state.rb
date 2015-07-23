@@ -9,18 +9,9 @@ module Billing
            :primary_key => 'flavor_id', :foreign_key => 'flavor_id'
 
     def rate(arch)
+      arch = "x86_64" if arch == "None"
       flavor = instance_flavor ? instance_flavor : Billing::InstanceFlavor.find(billing_instance.flavor_id)
-      rate = flavor.rates.where(arch: arch).first.rate.to_f rescue nil
-
-      unless rate
-        logger.debug '*' * 10
-        logger.debug flavor.inspect
-        logger.debug flavor.rates.inspect
-        logger.debug arch
-        logger.debug '*' * 10
-      end
-      
-      rate
+      flavor.rates.where(arch: arch).first.rate.to_f rescue nil
     end
 
   end
