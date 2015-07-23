@@ -9,7 +9,12 @@ module Billing
            :primary_key => 'flavor_id', :foreign_key => 'flavor_id'
 
     def rate(arch)
+      Rails.logger.debug '*' * 10
       flavor = instance_flavor ? instance_flavor : Billing::InstanceFlavor.find(billing_instance.flavor_id)
+      Rails.logger.debug flavor.inspect
+      Rails.logger.debug flavor.rates.inspect
+      Rails.logger.debug arch
+      Rails.logger.debug '*' * 10
       flavor.rates.where(arch: arch).first.rate rescue nil
     end
 
