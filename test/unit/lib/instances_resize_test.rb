@@ -14,14 +14,33 @@ class TestInstancesResize < Minitest::Test
     load_instance_flavors
   end
 
-  def test_calculation_of_cost
+  def test_calculation_of_cost_for_unresized_instance
+    Billing.stub(:fetch_samples, @events) do
+      Fog::Compute.stub(:new, @servers_mock) do
+        Billing::Instances.sync!(@from, @to, Billing::Sync.create(started_at: Time.now))
+        instance = Billing::Instance.find_by_instance_id("68bd37fc-5e51-4bee-802b-a748fb1543da")
+        instance.instance_states.create(recorded_at: Time.parse("2015-06-17 08:17:41"), state: 'active', sync_id: Billing::Sync.first.id, flavor_id: instance.flavor_id)
+        puts '***'
+        puts instance.instance_states.first.billing_instance.inspect
+        assert_equal 0.48, Billing::Instances.cost(instance, @from, @to).round(2)
+      end
+    end   
+  end
+
+  def test_calculation_of_cost_for_resized_instance
     # Instance starts as 2x2 (billed at 0.0353)
     # and becomes 8x16 (billed at 0.2817)  
     Billing.stub(:fetch_samples, @events) do
       Fog::Compute.stub(:new, @servers_mock) do
         Billing::Instances.sync!(@from, @to, Billing::Sync.create(started_at: Time.now))
         instance = Billing::Instance.find_by_instance_id("b246c075-36d8-45ee-a8f5-a44c15158dd9")
-        assert_equal 0.5989945815555554, Billing::Instances.cost(instance, @from, @to)
+
+        # Between 08:55 and 11:12 this machine was 2x2 (billed at 0.0353)
+        # Between 11:22 and 12:46 this machine was 8x16 (billed at 0.2817)
+        #
+        # Logically, the cost should be 2.28 x 0.0353 + 1.4 * 0.2817
+        # i.e. 0.474864, about 48p
+        assert_equal 0.48, Billing::Instances.cost(instance, @from, @to).round(2)
       end
     end
   end
