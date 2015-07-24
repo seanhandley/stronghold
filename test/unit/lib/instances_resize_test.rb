@@ -21,7 +21,7 @@ class TestInstancesResize < Minitest::Test
       Fog::Compute.stub(:new, @servers_mock) do
         Billing::Instances.sync!(@from, @to, Billing::Sync.create(started_at: Time.now))
         instance = Billing::Instance.find_by_instance_id("b246c075-36d8-45ee-a8f5-a44c15158dd9")
-        assert_equal 1, Billing::Instances.cost(instance, @from, @to)
+        assert_equal 0.5989945815555554, Billing::Instances.cost(instance, @from, @to)
       end
     end
   end
