@@ -37,7 +37,7 @@ class TestInstancesResize < Minitest::Test
         instance = Billing::Instance.find_by_instance_id("b246c075-36d8-45ee-a8f5-a44c15158dd9")
 
         # Between 08:55 and 11:12 this machine was 2x2 (billed at 0.0353)
-        # Between 11:22 and 12:46 this machine was 8x16 (billed at 0.2817)
+        # Between 11:12 and 12:46 this machine was 8x16 (billed at 0.2817)
         #
         # Logically, the cost should be 2.28 x 0.0353 + 1.55 * 0.2817
         # i.e. 0.517119, about 52p
