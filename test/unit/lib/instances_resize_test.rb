@@ -39,9 +39,9 @@ class TestInstancesResize < Minitest::Test
         # Between 08:55 and 11:12 this machine was 2x2 (billed at 0.0353)
         # Between 11:22 and 12:46 this machine was 8x16 (billed at 0.2817)
         #
-        # Logically, the cost should be 2.28 x 0.0353 + 1.4 * 0.2817
-        # i.e. 0.474864, about 48p
-        assert_equal 0.48, Billing::Instances.cost(instance, @from, @to).round(2)
+        # Logically, the cost should be 2.28 x 0.0353 + 1.55 * 0.2817
+        # i.e. 0.517119, about 52p
+        assert_equal 0.52, Billing::Instances.cost(instance, @from, @to).round(2)
       end
     end
   end
