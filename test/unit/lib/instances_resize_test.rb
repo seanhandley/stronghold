@@ -18,11 +18,12 @@ class TestInstancesResize < Minitest::Test
     Billing.stub(:fetch_samples, @events) do
       Fog::Compute.stub(:new, @servers_mock) do
         Billing::Instances.sync!(@from, @to, Billing::Sync.create(started_at: Time.now))
+        Billing::Instance.all.each{|i| i.update_attributes(arch: 'x86_64')}
         instance = Billing::Instance.find_by_instance_id("68bd37fc-5e51-4bee-802b-a748fb1543da")
         instance.instance_states.create(recorded_at: Time.parse("2015-06-17 08:17:41"), state: 'active', sync_id: Billing::Sync.first.id, flavor_id: instance.flavor_id)
-        puts '***'
-        puts instance.instance_states.first.billing_instance.inspect
-        assert_equal 0.48, Billing::Instances.cost(instance, @from, @to).round(2)
+
+        # 10 billable hours total, at 0.0353
+        assert_equal 0.35, Billing::Instances.cost(instance, @from, @to).round(2)
       end
     end   
   end

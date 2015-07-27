@@ -29,7 +29,7 @@ module Billing
                                        terminated_at: instance.terminated_at,
                                        rate: instance.rate,
                                        billable_hours: billable_hours,
-                                       cost: (billable_hours * instance.rate.to_f).nearest_penny,
+                                       cost: cost(instance, from, to),
                                        arch: instance.arch,
                                        flavor: {
                                          flavor_id: instance.flavor_id,
@@ -47,6 +47,17 @@ module Billing
     end
 
     def self.cost(instance, from, to)
+      flavors = instance.instance_states.where(:recorded_at => from..to).order('recorded_at').collect(&:flavor_id)
+      if flavors.uniq.count > 1
+        return split_cost(instance, from, to).nearest_penny
+      else
+        billable_seconds = seconds(instance, from, to)
+        billable_hours   = ((billable_seconds / 60.0) / 60.0).ceil
+        return (billable_hours * instance.rate.to_f).nearest_penny
+      end
+    end
+
+    def self.split_cost(instance, from, to)
       states = instance.instance_states.where(:recorded_at => from..to).order('recorded_at')
       previous_state = instance.instance_states.where('recorded_at < ?', from).order('recorded_at DESC').limit(1).first
 
