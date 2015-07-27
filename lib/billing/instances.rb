@@ -210,7 +210,7 @@ module Billing
                                         event_name: s['resource_metadata']['event_type'], billing_sync: sync,
                                         message_id: s['message_id'],
                                         flavor_id: s['resource_metadata']["instance_flavor_id"]
-          unless billing_instance.arch.present? || s['resource_metadata']['architecture'].empty? || billing_instance.arch.downcase == 'none'
+          unless billing_instance.arch.present? || s['resource_metadata']['architecture'].empty? || s['resource_metadata']['architecture'].downcase == 'none'
             billing_instance.update_attributes(arch: s['resource_metadata']['architecture'])
           end
         end
