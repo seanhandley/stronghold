@@ -25,7 +25,7 @@
 = render partial: 'total', locals: { sub_total: @usage_decorator.sub_total, grand_total: @usage_decorator.grand_total }
 .push
 %p.tiny
-  * Usage information is updated automatically every hour.
+  * Usage information is updated automatically every hour and accounts for instance resizing.
   %br
   ** These figures are purely indicative of cost and the final monthly amount will be issued separately.
 .push
