@@ -34,7 +34,7 @@ module Billing
     end
 
     ActiveRecord::Base.transaction do
-      Organization.all.each do |organization|
+      Organization.active.self_service.each do |organization|
         # Skip if there's already an invoice for this year/month/org
         next if Billing::Invoice.where(organization: organization, year: year, month: month).any?
         

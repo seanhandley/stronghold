@@ -27,12 +27,13 @@ class Organization < ActiveRecord::Base
   belongs_to :primary_tenant, class_name: 'Tenant'
   belongs_to :customer_signup
 
-  scope :paying,    -> { where('started_paying_at is not null') }
-  scope :billable,  -> { all.select{|o| !o.test_account?} }
-  scope :cloud,     -> { all.select(&:cloud?) }
-  scope :active,    -> { all.select{|o| o.state == OrganizationStates::Active && !o.disabled?}}
-  scope :pending,    -> { all.select{|o| o.state == OrganizationStates::Fresh }}
-  scope :frozen,    -> { where(in_review: true)}
+  scope :paying,       -> { where('started_paying_at is not null') }
+  scope :billable,     -> { all.select{|o| !o.test_account?} }
+  scope :cloud,        -> { all.select(&:cloud?) }
+  scope :active,       -> { all.select{|o| o.state == OrganizationStates::Active && !o.disabled?}}
+  scope :self_service, -> { where('self_service = true') }
+  scope :pending,      -> { all.select{|o| o.state == OrganizationStates::Fresh }}
+  scope :frozen,       -> { where(in_review: true)}
 
   def staff?
     (reference == STAFF_REFERENCE)
