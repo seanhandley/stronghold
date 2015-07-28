@@ -114,10 +114,25 @@ class UsageDecorator < ApplicationDecorator
     model.tenants.collect{|t| total(t.id)}.sum
   end
 
+  def discounts?
+    !!active_discount
+  end
+
+  def discount_percent
+    active_discount.voucher.discount_percent
+  end
+
+  def active_discount
+    model.active_vouchers(from_date, to_date).first
+  end
+
+  def tax_percent
+    20
+  end
+
   def grand_total
     return sub_total unless discounts?
-    v = model.active_vouchers(from_date, to_date).first
-    discount_percent = v.voucher.discount_percent
+    v = active_discount
     voucher_start = v.created_at
     voucher_end = v.expires_at
 
@@ -146,11 +161,6 @@ class UsageDecorator < ApplicationDecorator
     end
 
     totals.sum
-  end
-
-
-  def discounts?
-    model.active_vouchers(from_date, to_date).any?
   end
 
   private
