@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150728111240) do
+ActiveRecord::Schema.define(version: 20150728145823) do
 
   create_table "audits", force: :cascade do |t|
     t.string   "auditable_id",    limit: 255
@@ -111,13 +111,13 @@ ActiveRecord::Schema.define(version: 20150728111240) do
   add_index "billing_instances", ["instance_id"], name: "index_billing_instances_on_instance_id", unique: true, using: :btree
 
   create_table "billing_invoices", force: :cascade do |t|
-    t.integer "organization_id",       limit: 4,                null: false
-    t.integer "year",                  limit: 4,                null: false
-    t.integer "month",                 limit: 4,                null: false
-    t.integer "sub_total",             limit: 4,   default: 0,  null: false
-    t.integer "grand_total",           limit: 4,   default: 0,  null: false
-    t.integer "discount_percent",      limit: 4,   default: 0,  null: false
-    t.integer "tax_percent",           limit: 4,   default: 20, null: false
+    t.integer "organization_id",       limit: 4,                 null: false
+    t.integer "year",                  limit: 4,                 null: false
+    t.integer "month",                 limit: 4,                 null: false
+    t.float   "sub_total",             limit: 24,  default: 0.0, null: false
+    t.float   "grand_total",           limit: 24,  default: 0.0, null: false
+    t.integer "discount_percent",      limit: 4,   default: 0,   null: false
+    t.integer "tax_percent",           limit: 4,   default: 20,  null: false
     t.string  "stripe_invoice_id",     limit: 255
     t.string  "salesforce_invoice_id", limit: 255
   end
