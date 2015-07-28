@@ -42,7 +42,7 @@ module Billing
         ud = UsageDecorator.new(organization)
         ud.usage_data(from_date: invoice.period_start, to_date: invoice.period_end)
         invoice.update_attributes(sub_total: ud.sub_total, grand_total: ud.grand_total,
-                                  discount:  ud.discount_percent, tax_percent: ud.tax_percent)
+                                  discount_percent:  ud.discount_percent, tax_percent: ud.tax_percent)
       end
     end
   end
