@@ -119,7 +119,7 @@ class UsageDecorator < ApplicationDecorator
   end
 
   def discount_percent
-    active_discount.voucher.discount_percent
+    active_discount ? active_discount.voucher.discount_percent : 0.0
   end
 
   def active_discount
