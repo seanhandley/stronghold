@@ -10,6 +10,8 @@ class SupportTicketsTests < CapybaraTestCase
     within('div.some-info') do
       assert has_content?('There are no tickets')
     end
+
+    Percy::Capybara.snapshot(page)
   end
   
 end

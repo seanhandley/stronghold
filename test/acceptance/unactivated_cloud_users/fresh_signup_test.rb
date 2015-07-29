@@ -13,6 +13,7 @@ class FreshSignupTests < CapybaraTestCase
     within('#sign-in') do
       assert has_content?('Thanks for signing up!')
     end
+    Percy::Capybara.snapshot(page)
   end
 
   def test_new_signup_bad_email
@@ -22,6 +23,7 @@ class FreshSignupTests < CapybaraTestCase
     within('#sign-in') do
       assert has_content?('Email is not a valid address')
     end
+    Percy::Capybara.snapshot(page)
   end
 
   def test_new_signup_existing_email
@@ -31,5 +33,6 @@ class FreshSignupTests < CapybaraTestCase
     within('#sign-in') do
       assert has_content?('Email is already in use')
     end
+    Percy::Capybara.snapshot(page)
   end
 end
