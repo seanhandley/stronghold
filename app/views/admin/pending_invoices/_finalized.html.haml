@@ -1,0 +1,25 @@
+%h1 Finalized Invoices
+
+.pull-right
+  = link_to 'Pending Invoices', admin_pending_invoices_path, class: 'btn btn-info'
+
+- if @finalized_invoices.any?
+  %table.table.table-striped.table-hover
+    %thead
+      %th Reporting Code
+      %th Organization
+      %th Month
+      %th SalesForce Invoice
+      %th Stripe Invoice
+    %tbody
+      - for invoice in @finalized_invoices
+        = render partial: 'edit', locals: {invoice: invoice }
+        %tr
+          %td= invoice.organization.reporting_code
+          %td= invoice.organization.name
+          %td== #{Date::MONTHNAMES[invoice.month]} #{invoice.year}
+          %td= link_to invoice.salesforce_invoice_id, invoice.salesforce_invoice_link
+          %td= link_to invoice.stripe_invoice_id, invoice.stripe_invoice_link
+- else
+  .push
+  .alert.alert-warning No finalized invoices found.

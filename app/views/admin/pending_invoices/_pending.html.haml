@@ -1,0 +1,33 @@
+%h1 Pending Invoices
+
+.pull-right
+  = link_to 'Finalized Invoices', admin_pending_invoices_path(finalized: true), class: 'btn btn-info'
+
+- if @pending_invoices.any?
+  %table.table.table-striped.table-hover
+    %thead
+      %th Reporting Code
+      %th Organization
+      %th Sub total
+      %th Grand total*
+      %th Tax
+      %th Discount
+      %th
+    %tbody
+      - for invoice in @pending_invoices
+        = render partial: 'edit', locals: {invoice: invoice }
+        %tr
+          %td= invoice.organization.reporting_code
+          %td= invoice.organization.name
+          %td== £#{number_with_precision(invoice.sub_total, :delimiter => ',', :separator => '.', :precision => 2)}
+          %td== £#{number_with_precision(invoice.grand_total_plus_tax, :delimiter => ',', :separator => '.', :precision => 2)}
+          %td== #{invoice.tax_percent}%
+          %td== #{invoice.discount_percent}%
+          %td
+            = link_to 'Finalize?', '', class: 'btn btn-success', 'data-toggle' => "modal", 'data-target' => "#editInvoice#{invoice.id}"
+- else
+  .push
+  .alert.alert-warning No pending invoices found.
+
+.push
+%p.tiny * After tax and discounts.

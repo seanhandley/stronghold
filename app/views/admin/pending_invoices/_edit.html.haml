@@ -1,0 +1,20 @@
+.modal.fade{'tabindex' => "-1", 'role' => "dialog", 'aria-labelledby' => "editInvoice#{invoice.id}", 'aria-hidden' => "true", 'data-backdrop' => 'static', 'id' => "editInvoice#{invoice.id}"}
+  .modal-dialog
+    .modal-content
+      = form_for invoice, url: admin_pending_invoice_path(invoice), remote: true do |f|
+        .modal-header
+          %button{'type' => "button", 'class' => "close", 'data-dismiss' => "modal", 'aria-hidden' => "true"}
+            &times;
+          %h4.modal-title
+            Finalize Invoice
+          %p Please enter the invoice number from Salesforce
+        .modal-body
+          = javascript_error_messages_for(f.object)
+          .form-group
+            %label Salesforce Invoice Number
+            = f.text_field :salesforce_invoice_id, :class => 'form-control', placeholder: 'i.e. SIN001234'
+               
+        .modal-footer
+          %button.btn.btn-default{'data-toggle' => "modal", 'data-dismiss' => "modal"}
+            = t(:cancel)
+          = submit_tag 'Finalize', class: 'btn btn-success', id: 'submit_button'

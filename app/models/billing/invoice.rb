@@ -8,9 +8,15 @@ module Billing
     validates :organization, :year, :month, presence: true
 
     scope :unfinalized, -> { all.where(stripe_invoice_id: nil) }
+    scope :finalized, -> { all.where('stripe_invoice_id is not null') }
 
     def finalize!
       return false if stripe_invoice_id
+      if salesforce_invoice_id.blank?
+        errors.add(:salesforce_invoice_id, 'must not be blank')
+        return false
+      end
+
       invoice_item = Stripe::InvoiceItem.create(customer: organization.stripe_customer_id,
                                                 amount: to_pence(grand_total),
                                                 currency: currency,
@@ -31,6 +37,15 @@ module Billing
 
     def grand_total_plus_tax
       grand_total + (grand_total * (tax_percent.to_f / 100.0))
+    end
+
+    def salesforce_invoice_link
+      salesforce_invoice_id.present? ? "https://eu2.salesforce.com/_ui/search/ui/UnifiedSearchResults?str=#{salesforce_invoice_id}" : ''
+    end
+
+
+    def stripe_invoice_link
+      stripe_invoice_id.present? ? "https://dashboard.stripe.com/invoices/#{stripe_invoice_id}" : ''
     end
 
     private
