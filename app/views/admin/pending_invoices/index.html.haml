@@ -1,0 +1,25 @@
+%h1 Pending Invoices
+
+- if @pending_invoices.any?
+  %table.table.table-striped.table-hover
+    %thead
+      %th Reporting Code
+      %th Organization
+      %th Sub total
+      %th Grand total
+      %th Tax
+      %th Discount
+    %tbody
+      - for invoice in @pending_invoices
+        %tr
+          %td= invoice.organization.reporting_code
+          %td= invoice.organization.name
+          %td== £#{number_with_precision(invoice.sub_total, :delimiter => ',', :separator => '.', :precision => 2)}
+          %td== £#{number_with_precision(invoice.grand_total, :delimiter => ',', :separator => '.', :precision => 2)}
+          %td== #{invoice.tax_percent}%
+          %td== #{invoice.discount_percent}%
+          %td
+            = link_to 'Finalize', admin_pending_invoice_path(invoice), class: 'btn btn-success', 'data-method' => "put", 'data-confirm' => "This can't be undone. Are you sure?"
+- else
+  .push
+  .alert.alert-warning No pending invoices found.
