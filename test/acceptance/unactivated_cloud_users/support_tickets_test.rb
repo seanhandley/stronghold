@@ -11,7 +11,7 @@ class SupportTicketsTests < CapybaraTestCase
       assert has_content?('There are no tickets')
     end
 
-    Percy::Capybara.snapshot(page)
+    Percy::Capybara.snapshot(page, name: 'support tickets index')
   end
   
 end

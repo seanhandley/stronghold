@@ -14,8 +14,6 @@ class FullSignupTests < CapybaraTestCase
       assert has_content?('Thanks for signing up!')
     end
 
-    Percy::Capybara.snapshot(page)
-
     sleep(10)
 
     visit("/signup/#{Invite.find_by_email('test@test.com').token}")
@@ -42,7 +40,7 @@ class FullSignupTests < CapybaraTestCase
       assert find(:xpath, "//a[@href='#{support_tickets_path}']")
     end
 
-    Percy::Capybara.snapshot(page)
+    Percy::Capybara.snapshot(page, name: 'activation page')
 
     fill_in('idpc_input', :with => 'ID1 1QD')
     fill_in('address_line1', :with => '1 Street Street')
@@ -77,7 +75,7 @@ class FullSignupTests < CapybaraTestCase
       assert find(:xpath, "//a[@href='#{support_roles_path}']")
     end
 
-    Percy::Capybara.snapshot(page)
+    Percy::Capybara.snapshot(page, name: 'successful activation')
 
   end
 end

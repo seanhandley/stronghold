@@ -7,7 +7,7 @@ class InvalidLoginsTests < CapybaraTestCase
     within('.page-body') do
       assert has_content?('Overview')
     end
-    Percy::Capybara.snapshot(page)
+    Percy::Capybara.snapshot(page, name: 'valid login')
   end
 
   def test_invalid_login
@@ -24,7 +24,7 @@ class InvalidLoginsTests < CapybaraTestCase
         assert has_content?('Invalid credentials')
       end 
     end
-    Percy::Capybara.snapshot(page)
+    Percy::Capybara.snapshot(page, name: 'invalid login')
   end
   
 end
