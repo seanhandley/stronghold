@@ -6,7 +6,7 @@
       %th Reporting Code
       %th Organization
       %th Sub total
-      %th Grand total
+      %th Grand total*
       %th Tax
       %th Discount
     %tbody
@@ -15,7 +15,7 @@
           %td= invoice.organization.reporting_code
           %td= invoice.organization.name
           %td== £#{number_with_precision(invoice.sub_total, :delimiter => ',', :separator => '.', :precision => 2)}
-          %td== £#{number_with_precision(invoice.grand_total, :delimiter => ',', :separator => '.', :precision => 2)}
+          %td== £#{number_with_precision(invoice.grand_total_plus_tax, :delimiter => ',', :separator => '.', :precision => 2)}
           %td== #{invoice.tax_percent}%
           %td== #{invoice.discount_percent}%
           %td
@@ -23,3 +23,6 @@
 - else
   .push
   .alert.alert-warning No pending invoices found.
+
+.push
+%p.tiny * After tax and discounts.

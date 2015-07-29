@@ -29,6 +29,10 @@ module Billing
       period_start.end_of_month
     end
 
+    def grand_total_plus_tax
+      grand_total + (grand_total * (discount_percent.to_f / 100.0))
+    end
+
     private
 
     def invoice_description
