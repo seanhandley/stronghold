@@ -30,7 +30,7 @@ module Billing
     end
 
     def grand_total_plus_tax
-      grand_total + (grand_total * (discount_percent.to_f / 100.0))
+      grand_total + (grand_total * (tax_percent.to_f / 100.0))
     end
 
     private
