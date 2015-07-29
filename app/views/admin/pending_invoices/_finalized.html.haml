@@ -18,8 +18,8 @@
           %td= invoice.organization.reporting_code
           %td= invoice.organization.name
           %td== #{Date::MONTHNAMES[invoice.month]} #{invoice.year}
-          %td= link_to invoice.salesforce_invoice_id, invoice.salesforce_invoice_link
-          %td= link_to invoice.stripe_invoice_id, invoice.stripe_invoice_link
+          %td= link_to invoice.salesforce_invoice_id, invoice.salesforce_invoice_link, target: '_blank'
+          %td= link_to invoice.stripe_invoice_id, invoice.stripe_invoice_link, target: '_blank'
 - else
   .push
   .alert.alert-warning No finalized invoices found.
