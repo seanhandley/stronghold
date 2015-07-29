@@ -251,6 +251,7 @@ GEM
     httparty (0.13.3)
       json (~> 1.8)
       multi_xml (>= 0.5.2)
+    httpclient (2.6.0.1)
     i18n (0.7.0)
     i18n_data (0.7.0)
     i18n_yaml_sorter (0.2.0)
@@ -312,6 +313,11 @@ GEM
     newrelic_rpm (3.9.9.275)
     nokogiri (1.6.6.2)
       mini_portile (~> 0.6.0)
+    percy-capybara (0.2.4)
+      percy-client (>= 0.2.7)
+    percy-client (0.2.11)
+      faraday (>= 0.8)
+      httpclient (>= 2.6)
     poltergeist (1.5.1)
       capybara (~> 2.1)
       cliver (~> 0.3.1)
@@ -556,6 +562,7 @@ DEPENDENCIES
   net-ssh (~> 2.8.0)
   newrelic_rpm (~> 3.9)
   nokogiri (~> 1.6)
+  percy-capybara
   poltergeist
   premailer-rails (~> 1.8)
   rails (= 4.2)

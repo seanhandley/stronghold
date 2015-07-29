@@ -55,6 +55,7 @@ group :test, :acceptance do
   gem 'simplecov'
   gem 'timecop'
   gem 'launchy'
+  gem 'percy-capybara'
 end
 
 group :test do

@@ -2,6 +2,7 @@ require 'simplecov'
 SimpleCov.start
 
 ENV["RAILS_ENV"] = "acceptance"
+ENV["PERCY_ENABLE"] = "1"
 require File.expand_path("../../../config/environment", __FILE__)
 require "rails/test_help"
 
@@ -80,6 +81,7 @@ Minitest.after_run do
   Organization.destroy_all rescue nil
   User.destroy_all rescue nil
   DatabaseCleaner.clean
+  Percy::Capybara.finalize_build
 end
 
 class CapybaraTestCase < Minitest::Test
