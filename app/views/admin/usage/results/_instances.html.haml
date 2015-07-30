@@ -27,7 +27,7 @@
                 %td.line_entry= instance[:uuid]
                 %td.line_entry= architecture_human_name(instance[:arch])
                 %td.line_entry= instance[:first_booted_at]
-                %td.line_entry= instance[:latest_state]
+                %td.line_entry= state_with_icon(instance[:latest_state])
                 %td.line_entry= (instance[:terminated_at] && instance[:terminated_at] <= @to_date) ? instance[:terminated_at] : '-'
                 %td.line_entry== #{number_with_delimiter(instance[:billable_hours], :delimiter => ',')} of #{@total_hours}
                 - if instance[:flavor][:rate].present?

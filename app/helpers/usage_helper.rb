@@ -45,4 +45,17 @@ module UsageHelper
       arch
     end
   end
+
+  def state_with_icon(state)
+    case state.downcase
+    when 'active'
+      "<i class='fa fa-play text-success'></i> Active".html_safe
+    when 'stopped'
+      "<i class='fa fa-pause'></i> Stopped".html_safe
+    when 'terminated'
+      "<i class='fa fa-eject text-danger'></i> Terminated".html_safe
+    else
+      state
+    end    
+  end
 end
