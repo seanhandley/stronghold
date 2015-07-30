@@ -21,7 +21,7 @@ module Billing
 
   def self.fetch_samples(tenant_id, measurement, from, to)
     tenant_samples = fetch_all_samples(measurement, from, to)[tenant_id]
-    tenant_samples.group_by{|s| s['resource_id']}
+    tenant_samples ? tenant_samples.group_by{|s| s['resource_id']} : {}
   end
 
   def self.fetch_all_samples(measurement, from, to)
