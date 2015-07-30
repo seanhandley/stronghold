@@ -33,7 +33,7 @@ if Rails.env.production? || Rails.env.staging?
     `restart sidekiq_stronghold`
   end
 
-  every(1.day, 'billing_run', :at => '06:00') do
+  every(1.day, 'billing_run', :at => '06:30') do
     BillingRunJob.perform_later if Time.now.day == 1
   end
 
