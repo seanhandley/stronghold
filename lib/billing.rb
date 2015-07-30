@@ -34,7 +34,7 @@ module Billing
     end 
   end
 
-  def timestamp_format
+  def self.timestamp_format
     "%Y-%m-%dT%H:%M:%S"
   end
 
