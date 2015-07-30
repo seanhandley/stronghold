@@ -20,12 +20,22 @@ module Billing
   end
 
   def self.fetch_samples(tenant_id, measurement, from, to)
-    timestamp_format = "%Y-%m-%dT%H:%M:%S"
-    options = [{'field' => 'timestamp', 'op' => 'ge', 'value' => from.utc.strftime(timestamp_format)},
-               {'field' => 'timestamp', 'op' => 'lt', 'value' => to.utc.strftime(timestamp_format)},
-               {'field' => 'project_id', 'value' => tenant_id, 'op' => 'eq'}]
-    tenant_samples = Fog::Metering.new(OPENSTACK_ARGS).get_samples(measurement, options).body
+    tenant_samples = fetch_all_samples(measurement, from, to)[tenant_id]
     tenant_samples.group_by{|s| s['resource_id']}
+  end
+
+  def self.fetch_all_samples(measurement, from, to)
+    key = "ceilometer_samples_#{measurement}_#{from.utc.strftime(timestamp_format)}_#{to.utc.strftime(timestamp_format)}"
+    Rails.cache.fetch(key, expires_in: 2.hours) do
+      options = [{'field' => 'timestamp', 'op' => 'ge', 'value' => from.utc.strftime(timestamp_format)},
+                 {'field' => 'timestamp', 'op' => 'lt', 'value' => to.utc.strftime(timestamp_format)}]
+      tenant_samples = Fog::Metering.new(OPENSTACK_ARGS).get_samples(measurement, options).body
+      tenant_samples.group_by{|s| s['project_id']}
+    end 
+  end
+
+  def timestamp_format
+    "%Y-%m-%dT%H:%M:%S"
   end
 
   def self.billing_run!(year, month)
