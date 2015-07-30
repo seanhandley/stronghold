@@ -34,4 +34,15 @@ module UsageHelper
     end
     [@from_date, @to_date]
   end
+
+  def architecture_human_name(arch)
+    case arch.downcase
+    when 'aarch64'
+      'ARM'
+    when 'x86_64'
+      'Intel x86'
+    else
+      arch
+    end
+  end
 end
