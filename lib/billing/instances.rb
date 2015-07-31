@@ -47,7 +47,7 @@ module Billing
     end
 
     def self.cost(instance, from, to)
-      flavors = instance.instance_states.where(:recorded_at => from..to).order('recorded_at').collect(&:flavor_id)
+      flavors = instance.fetch_states(from, to).collect(&:flavor_id)
       if flavors.uniq.count > 1
         return split_cost(instance, from, to).nearest_penny
       else
@@ -58,7 +58,7 @@ module Billing
     end
 
     def self.split_cost(instance, from, to)
-      states = instance.instance_states.where(:recorded_at => from..to).order('recorded_at')
+      states = instance.fetch_states(from, to)
       previous_state = instance.instance_states.where('recorded_at < ?', from).order('recorded_at DESC').limit(1).first
 
       if states.any?
@@ -118,7 +118,7 @@ module Billing
     end
 
     def self.seconds(instance, from, to)
-      states = instance.instance_states.where(:recorded_at => from..to).order('recorded_at')
+      states = instance.fetch_states(from, to)
       previous_state = instance.instance_states.where('recorded_at < ?', from).order('recorded_at DESC').limit(1).first
 
       if states.any?
