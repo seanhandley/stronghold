@@ -12,7 +12,9 @@ module StripeHelper
   end
 
   def stripe_has_valid_source?(stripe_customer_id)
-    sources = Stripe::Customer.retrieve(stripe_customer_id).sources.all(:object => "card")
+    customer = Stripe::Customer.retrieve(stripe_customer_id)
+    return false unless customer.respond_to?(:sources)
+    sources = customer.sources.all(:object => "card")
     # Ensure at least one card is valid
     sources.each do |source|
       begin
