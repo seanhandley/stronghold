@@ -20,10 +20,10 @@ module RolesHelper
   end
 
   def invite_status_label(status)
-    original_status = status
+    original_status = status.dup
     status = "pending" unless status.present?
     envelope = content_tag(:i, '', class: 'fa fa-envelope')
-    status = "#{envelope} #{status.upcase}".html_safe
+    status = "#{envelope} #{original_status.upcase}".html_safe
     case original_status.downcase
     when 'delivered'
       content_tag(:span, status, class: "label label-success")
