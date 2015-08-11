@@ -1,5 +1,3 @@
-require 'timeout'
-
 class Invite < ActiveRecord::Base
 
   audited only: [:email]
@@ -42,7 +40,7 @@ class Invite < ActiveRecord::Base
 
   def remote_message
     @remote_message ||= Timeout::timeout(2) { Deliverhq::Message.find(remote_message_id) }
-  rescue Deliverhq::RequestError, Timeout::TimeoutError
+  rescue Deliverhq::RequestError, Timeout::Error
     nil
   end
 
