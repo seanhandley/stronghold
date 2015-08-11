@@ -27,8 +27,10 @@ module RolesHelper
     case original_status.downcase
     when 'delivered'
       content_tag(:span, status, class: "label label-success")
-    else
+    when 'pending'
       content_tag(:span, status, class: "label label-default")
+    else
+      content_tag(:span, status, class: "label label-danger")
     end
   end
 end
