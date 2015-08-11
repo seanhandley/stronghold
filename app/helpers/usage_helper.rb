@@ -36,6 +36,7 @@ module UsageHelper
   end
 
   def architecture_human_name(arch)
+    return '-' if arch.blank?
     case arch.downcase
     when 'aarch64'
       'ARM'
