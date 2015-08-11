@@ -32,7 +32,7 @@ class Invite < ActiveRecord::Base
   end
 
   def delivery_status
-    return "unknown" unless remote_message
+    return "pending" unless remote_message
     remote_message.status
   end
 
