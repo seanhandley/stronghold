@@ -1,3 +1,5 @@
+require 'timeout'
+
 class Invite < ActiveRecord::Base
 
   audited only: [:email]
