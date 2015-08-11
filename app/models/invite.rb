@@ -31,7 +31,18 @@ class Invite < ActiveRecord::Base
     persisted? ? created_at + 7.days : Time.now + 7.days
   end
 
+  def delivery_status
+    return "unknown" unless remote_message
+    remote_message.status
+  end
+
   private
+
+  def remote_message
+    @remote_message ||= Deliverhq::Message.find(remote_message_id)
+  rescue Deliverhq::RequestError
+    nil
+  end
 
   def complete?
     !!completed_at
@@ -59,6 +70,6 @@ class Invite < ActiveRecord::Base
   end
 
   def send_email
-    Mailer.signup(id).deliver_later
+    DeliverhqMailJob.perform_later(self) 
   end
 end

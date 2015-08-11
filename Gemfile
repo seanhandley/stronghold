@@ -45,6 +45,7 @@ gem "slack-notifier", '~> 1.2'
 gem "maxmind", '~> 0.4'
 gem "deep_merge", '~> 1.0'
 gem 'stripe-rails', '~> 0.3'
+gem 'deliverhq', '~> 0.0.1'
 
 group :test, :acceptance do
   gem 'faker'

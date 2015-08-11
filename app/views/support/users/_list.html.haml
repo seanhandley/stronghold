@@ -23,12 +23,14 @@
           = t(:email)
         %th
           = t(:roles)
+        %th
       %tbody
         - open_invites.each do |invite|
           %tr
             %td= gravatar_image_tag(invite.email, title: invite.email, alt: invite.email, class: 'img-circle')
             %td= invite.email
             %td= invite.roles.collect(&:name).join ", "
+            %td= invite_status_label(invite.delivery_status)
 
 %h3
   = t(:users)
