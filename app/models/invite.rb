@@ -39,8 +39,8 @@ class Invite < ActiveRecord::Base
   private
 
   def remote_message
-    @remote_message ||= Deliverhq::Message.find(remote_message_id)
-  rescue Deliverhq::RequestError
+    @remote_message ||= Timeout::timeout(2) { Deliverhq::Message.find(remote_message_id) }
+  rescue Deliverhq::RequestError, Timeout::TimeoutError
     nil
   end
 
