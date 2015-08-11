@@ -30,7 +30,7 @@ module RolesHelper
     when 'pending'
       content_tag(:span, status, class: "label label-default")
     else
-      "#{content_tag(:span, envelope + ' UNDELIVERED', class: "label label-danger")} (Mail server responded: #{original_status.downcase})".html_safe
+      "#{content_tag(:span, envelope + ' UNDELIVERED', class: "label label-danger")} <p class='text-danger'><em>(Mail server responded: #{original_status.downcase})</em></p>".html_safe
     end
   end
 end
