@@ -17,6 +17,15 @@ class Support::InvitesController < SupportBaseController
     end
   end
 
+  def destroy
+    @invite = Invite.find(params[:id])
+    if @invite.organization.id == current_user.organization.id
+      if @invite.destroy
+        javascript_redirect_to support_roles_path
+      end
+    end
+  end
+
   private
 
   def create_params
