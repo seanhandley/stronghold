@@ -17,8 +17,8 @@ module StatusIO
     resp = conn.get do |req|
       req.url "/v2/#{key}/list/#{Rails.application.secrets.status_io_page_id}"
       req.headers['Content-Type'] = 'application/json'
-      req.headers['API-ID'] = Rails.application.secrets.status_io_id
-      req.headers['API-KEY'] = Rails.application.secrets.status_io_key
+      req.headers['x-api-id'] = Rails.application.secrets.status_io_id
+      req.headers['x-api-key'] = Rails.application.secrets.status_io_key
     end
     resp = JSON.parse(resp.body)
     raise resp['status']['message'] if resp['status']['error'] == 'yes'
