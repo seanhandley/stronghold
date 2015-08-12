@@ -4,8 +4,10 @@ module Sanity
       if live_instances[instance.instance_id].nil?
         false
       else
+        from = instance.instance_states.order('recorded_at').first.recorded_at
+        to   = instance.instance_states.order('recorded_at').last.recorded_at
         check_instance_state(live_instances[instance.instance_id]['status'].downcase,
-                   instance.instance_states.order('recorded_at').last.state.downcase)
+                   instance.fetch_states(from, to).order('recorded_at').last.state.downcase)
       end
     end
 
