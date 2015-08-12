@@ -1,0 +1,16 @@
+- if StatusIO.active_incidents.any?
+  .alert.alert-warning#incident-notice
+    %h4
+      %i.fa.fa-bullhorn
+      Service Disruption
+    %ul
+      - for incident in StatusIO.active_incidents
+        %li= "#{incident['name']}. #{truncate(incident['messages'].first['details'], :length => 120, :omission => '...')} #{link_to('Read more', status_io_url('incident', incident['_id']), target: '_blank')}".html_safe
+- elsif StatusIO.active_maintenances.any?
+  .alert.alert-info#incident-notice
+    %h4
+      %i.fa.fa-bullhorn
+      Ongoing Maintenance
+    %ul
+      - for maintenance in StatusIO.active_maintenances
+        %li= "#{maintenance['name']}. #{truncate(maintenance['messages'].first['details'], :length => 120, :omission => '...')} #{link_to('Read more', status_io_url('maintenance', maintenance['_id']), target: '_blank')}".html_safe

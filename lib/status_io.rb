@@ -28,15 +28,21 @@ module StatusIO
   end
 
   def self.active_incidents
-    list_items('incident', 'active_incidents')
+    Rails.cache.fetch("status_io_active_incidents", expires_in: 5.minutes) do
+      list_items('incident', 'active_incidents')
+    end
   end
 
   def self.active_maintenances
-    list_items('maintenance', 'active_maintenances')
+    Rails.cache.fetch("status_io_active_maintenances", expires_in: 5.minutes) do
+      list_items('maintenance', 'active_maintenances')
+    end
   end
 
   def self.upcoming_maintenances
-    list_items('maintenance', 'upcoming_maintenances')
+    Rails.cache.fetch("status_io_upcoming_maintenances", expires_in: 5.minutes) do
+      list_items('maintenance', 'upcoming_maintenances')
+    end
   end
 
   private
