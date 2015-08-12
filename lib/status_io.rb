@@ -20,7 +20,9 @@ module StatusIO
       req.headers['API-ID'] = Rails.application.secrets.status_io_id
       req.headers['API-KEY'] = Rails.application.secrets.status_io_key
     end
-    JSON.parse(resp.body)['result'][filter]
+    resp = JSON.parse(resp.body)
+    raise resp['status']['message'] if resp['status']['error'] == 'yes'
+    resp['result'][filter]
   end
 
   def self.active_incidents
