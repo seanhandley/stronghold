@@ -5,6 +5,8 @@ module StatusIO
       req.headers['Content-Type'] = 'application/json'
       req.headers['API-ID'] = Rails.application.secrets.status_io_id
       req.headers['API-KEY'] = Rails.application.secrets.status_io_key
+      req.headers['x-api-id'] = Rails.application.secrets.status_io_id
+      req.headers['x-api-key'] = Rails.application.secrets.status_io_key
       req.body = {
                     "meth" => "email",
                     "address" => email,
