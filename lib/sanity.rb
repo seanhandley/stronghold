@@ -7,7 +7,7 @@ module Sanity
         from = instance.instance_states.order('recorded_at').first.recorded_at
         to   = instance.instance_states.order('recorded_at').last.recorded_at
         check_instance_state(live_instances[instance.instance_id]['status'].downcase,
-                   instance.fetch_states(from, to).order('recorded_at').last.state.downcase)
+                   instance.fetch_states(from, to).last.state.downcase)
       end
     end
 
