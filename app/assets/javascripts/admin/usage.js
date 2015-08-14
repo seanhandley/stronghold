@@ -10,4 +10,5 @@ $(document).ready(function() {
       $("." + $(this).data('id')).addClass('hide');
     }
   });
+  $('a.toggle_line_entry').click();
 });
