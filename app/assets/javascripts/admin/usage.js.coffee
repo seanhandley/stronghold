@@ -5,8 +5,8 @@ $ ->
     id = $(this).data('id')
     link_text = $(this).text()
     if link_text.substring(0,1) == "+"
-      $(this).text("-" + $(this).text().substring(1,link_text.length))
+      $(this).text("-" + link_text.substring(1,link_text.length-1))
       $("." + id).removeClass('hide')
     else
-      $(this).text("+" + $(this).text().substring(1,link_text.length))
+      $(this).text("+" + link_text.substring(1,link_text.length-1))
       $("." + id).addClass('hide')
