@@ -5,7 +5,7 @@ module Billing
   def self.sync!
     ActiveRecord::Base.transaction do
       from = Billing::Sync.last.started_at
-      to   = Billing::Sync.last.started_at + 30.minutes
+      to   = Time.now
       sync = Billing::Sync.create started_at: Time.now
       Billing::Instances.sync!(from, to, sync)
       Billing::Volumes.sync!(from, to, sync)
