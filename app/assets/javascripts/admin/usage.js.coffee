@@ -6,7 +6,7 @@ $ ->
     console.log(id)
     link_text = $(this).text()
     console.log(link_text)
-    console.log(link_text.charAt(0)))
+    console.log(link_text.charAt(0))
     if link_text.charAt(0) == "+"
       console.log(link_text.substring(1))
       $(this).text("-" + link_text.substring(1))
