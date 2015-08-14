@@ -11,6 +11,7 @@ module Billing
     scope :active, -> { all.select(&:active?) }
 
     def active?
+      return false if instance_states.collect{|i| i.state.downcase }.include?('deleted')
       latest_state = instance_states.order('recorded_at').last
       latest_state ? Billing::Instances.billable?(latest_state.state) : true
     end
