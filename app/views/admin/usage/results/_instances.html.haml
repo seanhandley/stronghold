@@ -23,7 +23,7 @@
                 %a{'class' => 'toggle_line_entry', 'data-id' => "line_entry_#{i[:flavor][:flavor_id]}", "href" => '#'}
                   == #{instances.count} instances
             - instances.sort { |x,y| x[:name] <=> y[:name] }.each do |instance|
-              %tr{class: "hide line_entry_row line_entry_#{i[:flavor][:flavor_id]}}"}
+              %tr{class: "hide line_entry_row line_entry_#{instance[:flavor][:flavor_id]}"}
                 %td &nbsp;
                 %td.line_entry= instance[:name]
                 %td.line_entry= instance[:uuid]
