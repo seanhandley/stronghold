@@ -17,7 +17,7 @@ worker_processes 2
 listen "/var/run/rails/stronghold/unicorn.sock", :backlog => 64
 pid "/var/run/rails/stronghold/unicorn.pid"
 
-timeout 120
+timeout 180
 
 # set log paths
 stderr_path "/var/log/rails/stronghold/unicorn.stderr.log"
