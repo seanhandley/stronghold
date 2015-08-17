@@ -17,7 +17,7 @@ module Migratable
       CustomerSignup.skip_callback(:commit, :after, :send_email)
       customer_signup = CustomerSignup.new(email: admin_users.first.email,
                           organization_name: name, ip_address: nil)
-      customer_signup.save(false)
+      customer_signup.save(validate: false)
       CustomerSignup.set_callback(:commit, :after, :send_email)
       update_attributes(customer_signup: customer_signup)
     end
