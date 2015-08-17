@@ -15,8 +15,9 @@ module Migratable
   def migrate_invoiced_to_self_service
     unless customer_signup
       CustomerSignup.skip_callback(:commit, :after, :send_email)
-      customer_signup = CustomerSignup.create(email: admin_users.first.email,
+      customer_signup = CustomerSignup.new(email: admin_users.first.email,
                           organization_name: name, ip_address: nil)
+      customer_signup.save(false)
       CustomerSignup.set_callback(:commit, :after, :send_email)
       update_attributes(customer_signup: customer_signup)
     end
