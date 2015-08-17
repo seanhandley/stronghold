@@ -1,6 +1,7 @@
 class Organization < ActiveRecord::Base
   include StripeHelper
   include Freezable
+  include Migratable
 
   audited only: [:name, :time_zone, :locale, :billing_address1, :billing_address2,
                  :billing_city, :billing_postcode, :billing_country, :phone]

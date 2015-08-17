@@ -45,6 +45,7 @@ Rails.application.routes.draw do
       resources :sanity, only: [:index]
       resources :free_ips, only: [:index]
       resources :vouchers
+      resources :account_migrations, only: [:index, :create]
       resources :quotas do
         member do
           post 'mail'
