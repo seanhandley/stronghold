@@ -1,8 +1,8 @@
 module Migratable
 
   def migrate!
-    update_attributes(self_service: !self_service?)
     self_service? ? migrate_self_service_to_invoiced : migrate_invoiced_to_self_service
+    update_attributes(self_service: !self_service?)
     true
   end
 
