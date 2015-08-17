@@ -175,7 +175,14 @@ class Organization < ActiveRecord::Base
     end
   end
 
+  def router_count
+    @router_count ||= tenants.collect do |tenant|
+      Fog::Network.new(OPENSTACK_ARGS).list_routers(tenant_id: tenant.uuid).body['routers'].count
+    end.sum
+  end
+
   def create_default_network!
+    return if router_count > 0
     tenants.collect(&:uuid).each do |tenant_id|
       n = Fog::Network.new(OPENSTACK_ARGS).networks.create name: 'default', tenant_id: tenant_id
       s = Fog::Network.new(OPENSTACK_ARGS).subnets.create name: 'default', cidr: '192.168.0.0/24',
