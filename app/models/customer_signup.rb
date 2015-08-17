@@ -2,9 +2,9 @@ class CustomerSignup < ActiveRecord::Base
   attr_reader :error_message
 
   after_create -> { update_attributes(uuid: SecureRandom.hex) }
-  after_commit :send_email, on: :create
+  after_commit :send_email, on: :create, unless: -> { retro_migrated? }
 
-  validate :email_valid
+  validate :email_valid, unless: -> { retro_migrated? }
 
   scope :not_reminded, -> { where(reminder_sent: false)}
 
