@@ -18,6 +18,7 @@ module Migratable
       customer_signup = CustomerSignup.new(email: admin_users.first.email,
                           organization_name: name, ip_address: nil)
       customer_signup.save(validate: false)
+      customer_signup.update_attributes(uuid: SecureRandom.hex)
       CustomerSignup.set_callback(:commit, :after, :send_email)
       update_attributes(customer_signup: customer_signup)
     end
