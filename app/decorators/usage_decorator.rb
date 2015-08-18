@@ -31,6 +31,7 @@ class UsageDecorator < ApplicationDecorator
         return results.collect{|i| i[:cost]}.sum
       end
     end
+    return 0
   end
 
   def volume_total(tenant_id)
@@ -39,6 +40,7 @@ class UsageDecorator < ApplicationDecorator
         return results[:volume_results].collect{|i| i[:cost]}.sum
       end
     end
+    return 0
   end
 
   def image_total(tenant_id)
@@ -47,6 +49,7 @@ class UsageDecorator < ApplicationDecorator
         return results[:image_results].collect{|i| i[:cost]}.sum
       end
     end
+    return 0
   end
 
   # def floating_ip_total(tenant_id)
@@ -98,6 +101,7 @@ class UsageDecorator < ApplicationDecorator
         return (results[:object_storage_results] * RateCard.object_storage).nearest_penny
       end
     end
+    return 0
   end
 
   def total(tenant_id)
