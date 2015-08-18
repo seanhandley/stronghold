@@ -12,7 +12,7 @@ module Sanity
     end
 
     new_instances = live_instances.reject do |instance,_|
-      Billing::Instance.find_by_instance_id(instance)
+      Billing::Instance.find_by_instance_id(instance) || instance_in_error_state(instance)
     end
 
     missing_volumes = Billing::Volume.active.reject do |volume|
@@ -69,5 +69,11 @@ module Sanity
     else
       live == recorded
     end
+  end
+
+  def self.instance_in_error_state(instance)
+    Fog::Compute.new(OPENSTACK_ARGS).get_server_details(instance).body['server']['status'].downcase == 'error'
+  rescue Fog::Compute::OpenStack::NotFound
+    false
   end
 end
