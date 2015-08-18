@@ -17,14 +17,28 @@ module Billing
         return false
       end
 
-      invoice_item = Stripe::InvoiceItem.create(customer: organization.stripe_customer_id,
+      begin
+        invoice_item = Stripe::InvoiceItem.create(customer: organization.stripe_customer_id,
                                                 amount: to_pence(grand_total),
                                                 currency: currency,
                                                 description: invoice_description)
 
-      invoice = Stripe::Invoice.create(customer: organization.stripe_customer_id,
+        invoice = Stripe::Invoice.create(customer: organization.stripe_customer_id,
                                        tax_percent: tax_percent)
-      update_attributes(stripe_invoice_id: invoice.id)
+        update_attributes(stripe_invoice_id: invoice.id)
+      rescue StandardError => e
+        if invoice_item
+          begin
+            invoice_item.delete
+          rescue StandardError => e
+            notify_honeybadger(e)
+          end
+        end
+
+        if invoice
+          invoice.delete
+        end
+      end
     end
 
     def period_start
