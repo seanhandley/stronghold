@@ -12,13 +12,13 @@
 
 - for project in @projects
   %h2= "Project: #{project.name}"
-.container
-  .usage-back.row
-    - ['compute', 'volume', 'network', 'object_storage'].sort.each do |key|
-      .col-md-3
-        %h3= key.titleize
-        %ul.quota-list
-          - project.quotas[key].each do |k,v|
-            %li
-              = number_with_precision(v, :delimiter => ',', :separator => '.', :precision => 0)
-              = fix_abbreviation_case(k.humanize.titleize.pluralize(v))
+  .container
+    .usage-back.row
+      - ['compute', 'volume', 'network', 'object_storage'].sort.each do |key|
+        .col-md-3
+          %h3= key.titleize
+          %ul.quota-list
+            - project.quotas[key].each do |k,v|
+              %li
+                = number_with_precision(v, :delimiter => ',', :separator => '.', :precision => 0)
+                = fix_abbreviation_case(k.humanize.titleize.pluralize(v))
