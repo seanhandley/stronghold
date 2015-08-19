@@ -49,8 +49,8 @@ Rails.application.configure do
       :user_name => ENV["MAIL_SERVER_USERNAME"],
       :password => ENV["MAIL_SERVER_PASSWORD"]
   }
-  config.action_mailer.default_url_options = { :host => 'localhost:3000' }
-  config.action_controller.asset_host = "localhost:3000"
+  config.action_mailer.default_url_options = { :host => 'stronghold.vagrant.dev:8080' }
+  config.action_controller.asset_host = "stronghold.vagrant.dev:8080"
 
   config.stripe.secret_key = ENV["STRIPE_SECRET_KEY"] || ""
   

@@ -27,3 +27,4 @@ app/assets/stylesheets/.DS_Store
 
 # Env vars for API tokens, passwords, etc
 .defaults
+.vagrant/
