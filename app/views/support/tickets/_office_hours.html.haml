@@ -1,14 +1,18 @@
-Support Status: 
-- if uk_office_is_open?
-  %span.text-success
-    Open
-    %i.fa.fa-circle
-- else
-  %span.text-danger
-    Closed
-    %i.fa.fa-circle
-%p.tiny{style: 'text-align: right'}
-  UK office hours 9am-5pm, Mon-Fri
-  - if uk_office_is_on_public_holiday?
+%p{style: 'text-align: right'}
+  Support Status: 
+  - if uk_office_is_open?
+    %span.text-success
+      Open
+      %i.fa.fa-circle
+  - else
+    %span.text-danger
+      Closed
+      %i.fa.fa-circle
+  %span.tiny{style: 'text-align: right'}
     %br
-    Today is a UK public holiday.
+    - if uk_office_is_on_public_holiday?
+      Today is a UK public holiday
+      ==(#{uk_office_is_on_public_holiday?}).
+    - else
+      UK office hours 9am-5pm, Mon-Fri
+      

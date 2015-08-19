@@ -49,6 +49,7 @@ module DateTimeHelper
   end
 
   def uk_office_is_on_public_holiday?
-    Holidays.on(DateTime.now.in_time_zone('London'), :gb_eng, :observed).any?
+    hols = Holidays.on(DateTime.now.in_time_zone('London'), :gb_eng, :observed)
+    hols.any? ? hols.first[:name] : false
   end
 end
