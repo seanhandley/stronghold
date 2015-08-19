@@ -48,6 +48,7 @@ gem 'stripe-rails', '~> 0.3'
 gem 'deliverhq', '~> 0.0.1'
 gem 'httparty', '~> 0.13'
 gem 'icalendar', '~> 2.3'
+gem 'holidays', '~> 2.2'
 
 group :test, :acceptance do
   gem 'faker'

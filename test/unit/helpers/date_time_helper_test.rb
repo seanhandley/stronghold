@@ -10,10 +10,8 @@ class DateTimeHelperTest < Minitest::Test
   end
 
   def run_office_hours_test(time_string, operation, message)
-    VCR.use_cassette('bank_holidays') do
-      Timecop.freeze(DateTime.parse(time_string)) do
-        send operation, @model.uk_office_is_open?, message
-      end
+    Timecop.freeze(DateTime.parse(time_string)) do
+      send operation, @model.uk_office_is_open?, message
     end
   end
 

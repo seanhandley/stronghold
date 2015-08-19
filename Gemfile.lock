@@ -247,6 +247,7 @@ GEM
     hipchat (1.3.0)
       httparty
     hitimes (1.2.2)
+    holidays (2.2.0)
     honeybadger (1.7.0)
       json
     htmlentities (4.3.3)
@@ -549,6 +550,7 @@ DEPENDENCIES
   gravatar_image_tag (~> 1.2.0)
   haml (~> 4.0)
   hipchat (~> 1.3)
+  holidays (~> 2.2)
   honeybadger (~> 1.7)
   httparty (~> 0.13)
   i18n_yaml_sorter (~> 0.2.0)

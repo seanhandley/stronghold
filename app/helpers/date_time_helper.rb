@@ -49,6 +49,6 @@ module DateTimeHelper
   end
 
   def uk_office_is_on_public_holiday?
-    BankHoliday.today?
+    Holidays.on(DateTime.now.in_time_zone('London'), :gb_eng, :observed).any?
   end
 end
