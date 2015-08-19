@@ -1,0 +1,14 @@
+Support Status: 
+- if uk_office_is_open?
+  %span.text-success
+    Open
+    %i.fa.fa-circle
+- else
+  %span.text-danger
+    Closed
+    %i.fa.fa-circle
+%p.tiny{style: 'text-align: right'}
+  UK office hours 9am-5pm, Mon-Fri
+  - if uk_office_is_on_public_holiday?
+    %br
+    Today is a UK public holiday.

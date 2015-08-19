@@ -17,4 +17,38 @@ module DateTimeHelper
   def long_time(time)
     time.strftime("%H:%M:%S %Z")
   end
+
+  def uk_office_is_open?
+    uk_office_is_workday? && uk_office_is_workhour? && !uk_office_is_on_public_holiday?
+  end
+
+  def uk_office_is_workhour?
+    current_hour = DateTime.now.in_time_zone('London').hour
+    current_hour >= uk_office_opens_at && current_hour < uk_office_closes_at
+  end
+
+  def uk_office_is_workday?
+    current_day = DateTime.now.in_time_zone('London').wday
+    current_day >= uk_office_week_starts_on && current_day <= uk_office_week_ends_on
+  end
+
+  def uk_office_opens_at
+    9
+  end
+
+  def uk_office_closes_at
+    17
+  end
+
+  def uk_office_week_starts_on
+    1
+  end
+
+  def uk_office_week_ends_on
+    5
+  end
+
+  def uk_office_is_on_public_holiday?
+    BankHoliday.today?
+  end
 end
