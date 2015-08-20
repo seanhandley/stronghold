@@ -16,10 +16,12 @@
       %tr
         %td
           %strong Access Key:
-        %td= current_user.ec2_credentials ? current_user.ec2_credentials['access'] : "Unknown"
+        %td#ceph-access-key= current_user.ec2_credentials ? current_user.ec2_credentials['access'] : "Unknown"
       %tr
         %td
           %strong Secret Key
-        %td.click-to-reveal{'data-reveal' => current_user.ec2_credentials ? current_user.ec2_credentials['secret'] : "Unknown"}
+        %td.click-to-reveal#ceph-secret-key{'data-reveal' => current_user.ec2_credentials ? current_user.ec2_credentials['secret'] : "Unknown"}
           %em Click To Reveal
 
+- unless DarkLaunch.hide?
+  = link_to "#{content_tag(:i, '', class: 'fa fa-refresh')} Regenerate Credentials".html_safe, '#', id: 'regenerate-ceph-credentials'

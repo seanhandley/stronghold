@@ -79,6 +79,7 @@ Rails.application.routes.draw do
   get 'activated', :controller => 'support/dashboard', :action => 'index'
   get 'thanks', :controller => 'signups', :action => 'thanks'
   post 'stripe_webhook', :controller => 'stripe', :action => 'webhook'
+  post 'regenerate_ceph_credentials', :controller => 'support/dashboard', :action => 'regenerate_ceph_credentials'
 
   post 'salesforce', :controller => 'salesforce', :action => 'update'
 
