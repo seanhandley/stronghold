@@ -8,7 +8,7 @@ $(document).ready(function() {
           $('#loading-overlay').addClass('hide');
           $('#ceph-access-key').text(data.credentials.access);
           $('#ceph-secret-key').empty();
-          $('#ceph-secret-key').append("<em>Click To Reveal</em>");
+          $('#ceph-secret-key').append(data.credentials.secret);
           $('#ceph-secret-key').data('reveal', data.credentials.secret);
         } else {
           alert(data.message);
