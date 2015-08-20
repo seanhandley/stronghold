@@ -14,11 +14,9 @@ class Admin::QuotasController < AdminBaseController
       OpenStack::Tenant.set_custom_quotas project.uuid, StartingQuota['standard'].deep_merge(quota_params)
       project.organization.update_attributes(limited_storage: update_params[:storage] ? true : false)
       Rails.cache.delete("quotas_for_#{project.uuid}")
-      render json: {success: true, message: ''}
+      redirect_to edit_admin_quota_path(project.organization), notice: 'Saved'
     rescue ArgumentError => e
-      respond_to do |format|
-        format.js { render :template => "shared/dialog_errors", :locals => {:object => OpenStruct.new(full_messages: [e.message], errors: {'quota' => e.message}) } }
-      end
+      redirect_to edit_admin_quota_path(project.organization), notice: e.message
     end
   end
 

@@ -2,8 +2,7 @@
 
 - for project in @organization.tenants
   %h2= "Project: #{project.name}"
-  = form_tag admin_quota_path(project), method: 'put', remote: true, class: 'admin_quota_form' do
-    #js_errors.hide.alert.alert-danger
+  = form_tag admin_quota_path(project), method: 'put', class: 'admin_quota_form' do
     .container
       .usage-back.row
         - ['compute', 'volume', 'network'].each do |key|
@@ -20,6 +19,5 @@
               = check_box_tag "quota[storage][limited_storage]", true, @organization.limited_storage?
               Limited Quota (5GB)?
             %p.help-block Unlimited users can use as much storage as they want.
-
-
-  = link_to 'Notify Customer', mail_admin_quota_path(@organization), class: 'btn btn-primary', data: {confirm: 'All done? Email the customer?', method: 'post'}
+    = submit_tag 'Save', class: 'btn btn-primary'
+    = link_to 'Notify Customer', mail_admin_quota_path(@organization), class: 'btn btn-primary', data: {confirm: 'All done? Email the customer?', method: 'post'}
