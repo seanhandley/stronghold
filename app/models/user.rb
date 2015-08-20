@@ -104,13 +104,13 @@ class User < ActiveRecord::Base
     end
   end
 
-  def refresh_ec2_credentials!
-    remove_ceph_keys
+  def refresh_ec2_credentials!   
     Fog::Identity.new(OPENSTACK_ARGS).list_ec2_credentials(uuid).body['credentials'].each do |c|
       Fog::Identity.new(OPENSTACK_ARGS).delete_ec2_credential(uuid, c['access'])
     end
     Fog::Identity.new(OPENSTACK_ARGS).create_ec2_credential(uuid, organization.primary_tenant.uuid)
     Rails.cache.delete("ec2_credentials_#{id}")
+    remove_ceph_keys
     check_ceph_access
   end
 
