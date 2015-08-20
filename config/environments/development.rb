@@ -4,7 +4,7 @@ Rails.application.configure do
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
   # since you don't have to restart the web server when you make code changes.
-  config.cache_classes = true
+  config.cache_classes = false
 
   # Do not eager load code on boot.
   config.eager_load = false
@@ -49,8 +49,8 @@ Rails.application.configure do
       :user_name => ENV["MAIL_SERVER_USERNAME"],
       :password => ENV["MAIL_SERVER_PASSWORD"]
   }
-  config.action_mailer.default_url_options = { :host => 'stronghold.vagrant.dev:8080' }
-  config.action_controller.asset_host = "stronghold.vagrant.dev:8080"
+  config.action_mailer.default_url_options = { :host => 'stronghold.vagrant.devel:8080' }
+  config.action_controller.asset_host = "stronghold.vagrant.devel:8080"
 
   config.stripe.secret_key = ENV["STRIPE_SECRET_KEY"] || ""
   
