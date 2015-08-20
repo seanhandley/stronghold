@@ -3,6 +3,7 @@ $(document).ready(function() {
     e.preventDefault();
     if (confirm("This can't be undone and any applications/users that use these credentials will be locked out until provided with the new credentials. Are you sure?")) {
       $('#loading-overlay').removeClass('hide');
+      $('#show-js-errors').empty();
       $.post('/regenerate_ceph_credentials', function(data) {
         if(data.success) {
           $('#loading-overlay').addClass('hide');
@@ -11,7 +12,6 @@ $(document).ready(function() {
           $('#ceph-secret-key').append(data.credentials.secret);
           $('#ceph-secret-key').data('reveal', data.credentials.secret);
         } else {
-          $('#show-js-errors').empty();
           $('#show-js-errors').append('<div class="alert alert-danger">Failed to regenerate. Support team has been notified.</div>')
         }
       });
