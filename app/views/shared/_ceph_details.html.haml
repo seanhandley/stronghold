@@ -1,5 +1,6 @@
 .center{style: 'width: 75px; margin-left: auto; margin-right: auto; margin-bottom: 10px; margin-top: 10px'}= image_tag 'ceph.png'
 .alert.alert-info To access your storage services, you may use the credentials and details below.
+#show-js-errors
 .table-responsive
   %table.table.table-condensed
     %tbody
@@ -23,5 +24,4 @@
         %td.click-to-reveal#ceph-secret-key{'data-reveal' => current_user.ec2_credentials ? current_user.ec2_credentials['secret'] : "Unknown"}
           %em Click To Reveal
 
-- unless DarkLaunch.hide?
-  = link_to "#{content_tag(:i, '', class: 'fa fa-refresh')} Regenerate Credentials".html_safe, '#', id: 'regenerate-ceph-credentials'
+= link_to "#{content_tag(:i, '', class: 'fa fa-refresh')} Regenerate Credentials".html_safe, '#', id: 'regenerate-ceph-credentials'

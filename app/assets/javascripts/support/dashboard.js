@@ -11,7 +11,8 @@ $(document).ready(function() {
           $('#ceph-secret-key').append(data.credentials.secret);
           $('#ceph-secret-key').data('reveal', data.credentials.secret);
         } else {
-          alert(data.message);
+          $('#show-js-errors').empty();
+          $('#show-js-errors').append('<div class="alert alert-danger">Failed to regenerate. Support team has been notified.</div>')
         }
       });
     }
