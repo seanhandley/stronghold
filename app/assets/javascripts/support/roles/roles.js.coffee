@@ -57,6 +57,6 @@ $ ->
   $('#inviteUser select#invite_role_ids').change()
 
   $('#user-role-tabs a[data-toggle="tab"]').on 'shown.bs.tab', (e) ->
-    window.history.replaceState('', '', 'roles?tab=' + $(e.target).data('name'))
+    window.history.replaceState('', '', 'team?tab=' + $(e.target).data('name'))
 
   $('.user-images span.image').tooltip({})
