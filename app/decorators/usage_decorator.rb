@@ -73,7 +73,7 @@ class UsageDecorator < ApplicationDecorator
     usage_data.collect do |tenant, results|
       if(tenant_id == tenant.id)
         if results[:ip_quota_results].none?
-          quota = Fog::Network.new(OPENSTACK_ARGS).get_quota(tenant.uuid).body['quota']['floatingip'] - 1
+          quota = tenant.quotas['network']['floatingip'] - 1
           ((((to_date - from_date) / 60.0) / 60.0) / 24.0).round * daily_rate * quota
         else
           start = from_date
