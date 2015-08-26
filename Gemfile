@@ -8,7 +8,7 @@ gem 'bcrypt', '~> 3.1'
 gem 'unicorn', '~> 4.8'
 gem 'haml', '~> 4.0'
 gem 'cancancan', '~> 1.9'
-gem 'fog', '~> 1.31', :require => "fog/openstack/"
+gem 'fog', '~> 1.31', :require => "fog/openstack"
 gem 'gravatar_image_tag', '~> 1.2.0'
 gem 'js-routes', '~> 0.9.9'
 gem 'sidekiq', '~> 3.3'
