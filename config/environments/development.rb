@@ -49,8 +49,10 @@ Rails.application.configure do
       :user_name => ENV["MAIL_SERVER_USERNAME"],
       :password => ENV["MAIL_SERVER_PASSWORD"]
   }
-  config.action_mailer.default_url_options = { :host => 'stronghold.vagrant.devel:8080' }
-  config.action_controller.asset_host = "stronghold.vagrant.devel:8080"
+
+  APP_DOMAIN = 'stronghold.vagrant.devel'
+  config.action_mailer.default_url_options = { :host => "#{APP_DOMAIN}:8080" }
+  config.action_controller.asset_host = "#{APP_DOMAIN}:8080"
 
   config.stripe.secret_key = ENV["STRIPE_SECRET_KEY"] || ""
   

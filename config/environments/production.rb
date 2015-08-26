@@ -95,9 +95,10 @@ Rails.application.configure do
       :password => ENV["MAIL_SERVER_PASSWORD"]
   }
 
-  config.action_controller.asset_host = "https://my.datacentred.io"
+  APP_DOMAIN = "my.datacentred.io"
+  config.action_controller.asset_host = "https://#{APP_DOMAIN}"
   config.action_mailer.asset_host = config.action_controller.asset_host
-  config.action_mailer.default_url_options = { :host => 'my.datacentred.io' }
+  config.action_mailer.default_url_options = { :host => APP_DOMAIN }
 
   # Error handling
   config.exceptions_app = self.routes

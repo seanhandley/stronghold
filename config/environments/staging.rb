@@ -88,8 +88,9 @@ Rails.application.configure do
       :user_name => 'yvnkigkbn5',
       :password => '7y7qh820t4'
   }
-  config.action_controller.asset_host = "https://staging-my.datacentred.io"
-  config.action_mailer.default_url_options = { :host => 'staging-my.datacentred.io' }
+  APP_DOMAIN = "staging-my.datacentred.io"
+  config.action_controller.asset_host = "//#{APP_DOMAIN}"
+  config.action_mailer.default_url_options = { :host => APP_DOMAIN }
 
   # Error handling
   config.exceptions_app = self.routes
