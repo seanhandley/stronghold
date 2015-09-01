@@ -14,7 +14,7 @@
       - @audits.each do |audit|
         %tr
           %td
-            = cached_gravatar_image(audit.user ? audit.user.email : '')
+            = gravatar_image_tag(audit.user ? audit.user.email : '')
           %td
             = short_date(audit.created_at)
           %td
