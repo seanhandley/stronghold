@@ -28,7 +28,7 @@
       %tbody
         - open_invites.each do |invite|
           %tr
-            %td= gravatar_image_tag(invite.email, title: invite.email, alt: invite.email, class: 'img-circle')
+            %td= cached_gravatar_image(invite.email, title: invite.email, alt: invite.email, class: 'img-circle')
             %td= invite.email
             %td= invite.roles.collect(&:name).join ", "
             %td= invite_status_label(invite.delivery_status)
@@ -55,7 +55,7 @@
     %tbody
       - users.each do |user|
         %tr
-          %td= gravatar_image_tag(user.email, title: user.name, alt: user.name, class: 'img-circle')
+          %td= cached_gravatar_image(user.email, title: user.name, alt: user.name, class: 'img-circle')
           %td= link_to user.name, "#user_#{user.id}", 'data-toggle' => 'collapse', 'data-parent' => '#accordionUsers'
           %td= link_to user.email, "mailto:#{user.email}"
           %td
