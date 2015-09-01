@@ -8,7 +8,7 @@ module Billing
     belongs_to :instance_image, :class_name => "Billing::Image",
                :primary_key => 'image_id', :foreign_key => 'image_id'
 
-    scope :active, -> { all.select(&:active?) }
+    scope :active, -> { all.includes(:instance_states).select(&:active?) }
 
     def active?
       return false if instance_states.collect{|i| i.state.downcase }.include?('deleted')

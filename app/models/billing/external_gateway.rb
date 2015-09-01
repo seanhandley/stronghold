@@ -6,7 +6,7 @@ module Billing
 
     has_many :external_gateway_states
 
-    scope :active, -> { all.select(&:active?) }
+    scope :active, -> { all.includes(:external_gateway_states).select(&:active?) }
 
     def active?
       latest_state = external_gateway_states.order('recorded_at').last

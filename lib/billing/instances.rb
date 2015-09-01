@@ -13,9 +13,9 @@ module Billing
     def self.usage(tenant_id, from, to)
       instances = []
       if tenant_id.present?
-        instances = Billing::Instance.where(:tenant_id => tenant_id).to_a.compact
+        instances = Billing::Instance.where(:tenant_id => tenant_id).includes(:instance_states).to_a.compact
       else
-        instances = Billing::Instance.all.to_a.compact
+        instances = Billing::Instance.all.includes(:instance_states).to_a.compact
       end
       instances = instances.collect do |instance|
         billable_seconds = seconds(instance, from, to)

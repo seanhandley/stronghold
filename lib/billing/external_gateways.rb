@@ -10,7 +10,7 @@ module Billing
     end
 
     def self.usage(tenant_id, from, to)
-      routers = Billing::ExternalGateway.where(:tenant_id => tenant_id).to_a.compact
+      routers = Billing::ExternalGateway.where(:tenant_id => tenant_id).includes(:external_gateway_states).to_a.compact
       total = routers.inject({}) do |usage, router|
         usage[router.router_id] = { billable_seconds: seconds(router, from, to),
                                     id: router.router_id,
