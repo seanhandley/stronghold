@@ -6,7 +6,7 @@ module Billing
 
     has_many :image_states
     
-    scope :active, -> { all.select(&:active?) }
+    scope :active, -> { all.includes(:image_states).select(&:active?) }
 
     def active?
       latest_state = image_states.order('recorded_at').last
