@@ -2,7 +2,7 @@
 
 %h3= t(:edit_profile)
 
-= gravatar_image_tag(@user.email, :gravatar => { :size => 180 }, class: 'img-circle profile-image')
+= cached_gravatar_image(@user.email, :gravatar => { :size => 180 }, class: 'img-circle profile-image')
 
 .row
   .col-md-6

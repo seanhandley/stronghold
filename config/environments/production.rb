@@ -96,7 +96,7 @@ Rails.application.configure do
   }
 
   APP_DOMAIN = "my.datacentred.io"
-  config.action_controller.asset_host = "https://#{APP_DOMAIN}"
+  config.action_controller.asset_host = "//assets.datacentred.io"
   config.action_mailer.asset_host = config.action_controller.asset_host
   config.action_mailer.default_url_options = { :host => APP_DOMAIN }
 
