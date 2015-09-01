@@ -4,7 +4,7 @@ module Billing
     def self.sync!(sync)
       Tenant.all.each do |tenant|
         next unless tenant.uuid
-        quota = Fog::Network.new(OPENSTACK_ARGS).get_quota(tenant.uuid).body['quota']['floatingip']
+        quota = tenant.quotas['network']['floatingip']
         latest = Billing::IpQuota.where(tenant_id: tenant.uuid).order('recorded_at').last
         # Only store if there's been a change
         if !latest || latest.quota != quota

@@ -11,7 +11,7 @@ module Billing
     end
 
     def self.usage(tenant_id, from, to)
-      volumes = Billing::Volume.where(:tenant_id => tenant_id).to_a.compact
+      volumes = Billing::Volume.where(:tenant_id => tenant_id).includes(:volume_states).to_a.compact
       volumes = volumes.collect do |volume|
         tb_hours = terabyte_hours(volume, from, to)
         { terabyte_hours: tb_hours,

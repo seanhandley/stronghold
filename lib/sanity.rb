@@ -1,6 +1,6 @@
 module Sanity
   def self.check
-    missing_instances = Billing::Instance.active.reject do |instance|
+    missing_instances = Billing::Instance.active.includes(:instance_states).reject do |instance|
       if live_instances[instance.instance_id].nil?
         false
       else
@@ -15,7 +15,7 @@ module Sanity
       Billing::Instance.find_by_instance_id(instance) || instance_in_error_state(instance)
     end
 
-    missing_volumes = Billing::Volume.active.reject do |volume|
+    missing_volumes = Billing::Volume.active.includes(:volume_states).reject do |volume|
       begin
         Fog::Volume.new(OPENSTACK_ARGS).get_volume_details(volume.volume_id)
       rescue Fog::Compute::OpenStack::NotFound
@@ -23,11 +23,11 @@ module Sanity
       end
     end
 
-    missing_images = Billing::Image.active.reject do |image|
+    missing_images = Billing::Image.active.includes(:image_states).reject do |image|
       live_images.include? image.image_id
     end
 
-    missing_routers = Billing::ExternalGateway.active.reject do |router|
+    missing_routers = Billing::ExternalGateway.active.includes(:external_gateway_states).reject do |router|
       live_routers.include? router.router_id
     end
 
