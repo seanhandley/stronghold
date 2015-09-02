@@ -12,6 +12,7 @@ Rails.application.config.assets.version = '2.0'
 Rails.application.config.assets.precompile += %w( logo_long.png )
 Rails.application.config.assets.precompile += %w( default_user.png )
 Rails.application.config.assets.precompile += %w( card.js )
+Rails.application.config.assets.precompile += %w( password-score.js )
 Rails.application.config.assets.precompile += %w( flags/flags16.png )
 Rails.application.config.assets.precompile += %w( flags/flags16_semi.png )
 Rails.application.config.assets.precompile += %w( flags/flags32.png )
