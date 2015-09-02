@@ -86,7 +86,6 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-angular-gravatar', '~> 0.2.1'
   gem 'rails-assets-angular-animate', '~> 1.2.24'
   gem 'rails-assets-angular-md5', '~> 0.1.7'
-  gem 'rails-assets-angular-infinite-scroll', '~> 0.0.1'
   gem 'rails-assets-chained', '~> 1.0.0'
   gem 'rails-assets-bootstrap-select', '~> 1.7'
   gem 'rails-assets-hideShowPassword', '~> 2.0'
