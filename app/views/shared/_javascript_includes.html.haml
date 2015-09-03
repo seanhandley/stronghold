@@ -1,6 +1,6 @@
 - if content_for(:enable_angular)
-  = javascript_include_tag 'application', 'async' => true, 'cache' => true
-- else
   = javascript_include_tag 'application'
+- else
+  = javascript_include_tag 'application', 'async' => true, 'cache' => true
 
 = stripe_javascript_tag
