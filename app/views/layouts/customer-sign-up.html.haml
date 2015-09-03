@@ -2,13 +2,9 @@
 %html
   %head
     %title= content_for?(:title) ? content_for(:title) : "DataCentred"
-    = render partial: 'shared/meta'
-    = render partial: 'shared/preconnects'
-    = render partial: 'shared/javascript_includes'
-    = csrf_meta_tags
+    = render partial: 'shared/head'
 
 %body.sign-in.customer-sign-up.public-page
-  = render partial: 'shared/stylesheet_includes'
   = render partial: 'shared/google_tags'
   = render partial: 'shared/environment'
   = image_tag 'DC_Mono_B.png', class: 'sign-in-logo'
