@@ -1,10 +1,11 @@
 @charset "utf-8";
 
+@import "settings";
+@import "bootstrap";
+
 @import "font-awesome-sprockets";
 @import "font-awesome";
 
-@import "settings";
-@import "bootstrap";
 @import "components/dashboard";
 @import "components/forms";
 @import "components/support/roles";
