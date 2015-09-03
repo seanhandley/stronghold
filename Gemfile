@@ -77,6 +77,7 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.0.0'
 gem 'therubyracer', '~> 0.12.1', platforms: :ruby
 gem 'momentjs-rails', '~> 2.8.3'
+gem 'font-awesome-sass', '~> 4.2'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-angular', '~> 1.2.24'
