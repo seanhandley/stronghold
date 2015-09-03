@@ -3,17 +3,12 @@
   %head
     %title Oops!
     = render partial: 'shared/preconnects'
-    = favicon_link_tag 'favicon.png'
-    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
-    = stylesheet_link_tag 'https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css', media: 'all', 'data-turbolinks-track' => true
-    = javascript_include_tag 'application', 'data-turbolinks-track' => true, 'async' => true, 'cache' => true
+    = render partial: 'shared/javascript_includes'
     = csrf_meta_tags
-    %meta{'charset' => "utf-8"}
-    %meta{'http-equiv' => 'X-UA-Compatible', 'content' => 'IE=edge'}
-    %meta{'name' => 'viewport', 'content' => 'width=device-width, initial-scale=1'}
 
 %body
   = render partial: 'shared/google_tags'
+  = render partial: 'shared/stylesheet_includes'
   = render partial: 'shared/environment'
   .thunder-cloud
   #wrap
@@ -21,7 +16,7 @@
       .container
         %a{href: support_root_path, class: 'back-to-dash' }
           = image_tag 'logo_long.png', class: 'logo'
-    .container.error-page
+    .container.error-page§
       .push
       .push
       = yield
