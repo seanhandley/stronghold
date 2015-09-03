@@ -13,6 +13,7 @@
  *= require_tree .
  *= require_self
  *= require includes
+ *= require font-awesome
  *= require flags/basic
  *= require flags/flags16
  *= require flags/flags32
