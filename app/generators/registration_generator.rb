@@ -46,21 +46,25 @@ class RegistrationGenerator
     OpenStack::User.update_enabled(@user.uuid, false) unless @organization.has_payment_method?
     if invite.power_invite?
       member_uuid = OpenStack::Role.all.select{|r| r.name == '_member_'}.first.id
-      @organization.tenants.select{|t| t.id != @organization.primary_tenant.id}.each do |tenant|
+      @organization.tenants.each do |tenant|
         UserTenantRole.create user: @user, tenant: tenant, role_uuid: member_uuid
       end
     end
     Notifications.notify(:new_user, "#{@user.name} added to organization #{@organization.name}.")
-    # Add heat roles
+    # Add heat and storage roles
     unless Rails.env.test? || Rails.env.acceptance? || Rails.env.development?
       heat_roles = Fog::Identity.new(OPENSTACK_ARGS).list_roles.body['roles'].select{|r| r['name'].include? "heat_stack_owner"}.collect{|r| r['id']}
       heat_roles.each do |role|
-        Fog::Identity.new(OPENSTACK_ARGS).create_user_role(@organization.primary_tenant.uuid, @user.uuid, role)
+        @organization.tenants.each do |tenant|
+          Fog::Identity.new(OPENSTACK_ARGS).create_user_role(tenant.uuid, @user.uuid, role)
+        end
       end
 
       storage_roles = Fog::Identity.new(OPENSTACK_ARGS).list_roles.body['roles'].select{|r| r['name'].include? "object-store"}.collect{|r| r['id']}
       storage_roles.each do |role|
-        Fog::Identity.new(OPENSTACK_ARGS).create_user_role(@organization.primary_tenant.uuid, @user.uuid, role)
+        @organization.tenants.each do |tenant|
+          Fog::Identity.new(OPENSTACK_ARGS).create_user_role(tenant.uuid, @user.uuid, role)
+        end
       end
       
     end

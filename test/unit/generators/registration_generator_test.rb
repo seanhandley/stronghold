@@ -48,16 +48,6 @@ class TestRegistrationGenerator < Minitest::Test
     end
   end
 
-  def test_power_invite_creates_owners_role_and_adds_user
-    VCR.use_cassette('registration_valid_params') do
-      registration = RegistrationGenerator.new(@power_invite, @valid_params)
-      registration.generate!
-      role = registration.organization.roles.first 
-      assert role.power_user?
-      assert_equal registration.user.roles.first.id, role.id
-    end
-  end
-
   def test_registration_marks_invite_as_complete
     VCR.use_cassette('registration_valid_params') do
       registration = RegistrationGenerator.new(@invite, @valid_params)
