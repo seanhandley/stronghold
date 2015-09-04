@@ -84,13 +84,13 @@ div.dashboard-element {
   margin-right: auto;
   border-radius: 10px;
   margin-bottom: 20px;
-  -webkit-transition: all 1000ms cubic-bezier(0.550, 0.085, 0.680, 0.530); 
-   -moz-transition: all 1000ms cubic-bezier(0.550, 0.085, 0.680, 0.530); 
-     -o-transition: all 1000ms cubic-bezier(0.550, 0.085, 0.680, 0.530); 
-        transition: all 1000ms cubic-bezier(0.550, 0.085, 0.680, 0.530); /* easeInQuad */
+  -webkit-transition: all 1000ms cubic-bezier(0.600, 0.040, 0.980, 0.335); 
+     -moz-transition: all 1000ms cubic-bezier(0.600, 0.040, 0.980, 0.335); 
+       -o-transition: all 1000ms cubic-bezier(0.600, 0.040, 0.980, 0.335); 
+          transition: all 1000ms cubic-bezier(0.600, 0.040, 0.980, 0.335); /* easeInCirc */
 
-  -webkit-transition-timing-function: cubic-bezier(0.550, 0.085, 0.680, 0.530); 
-     -moz-transition-timing-function: cubic-bezier(0.550, 0.085, 0.680, 0.530); 
-       -o-transition-timing-function: cubic-bezier(0.550, 0.085, 0.680, 0.530); 
-          transition-timing-function: cubic-bezier(0.550, 0.085, 0.680, 0.530); /* easeInQuad */
+  -webkit-transition-timing-function: cubic-bezier(0.600, 0.040, 0.980, 0.335); 
+     -moz-transition-timing-function: cubic-bezier(0.600, 0.040, 0.980, 0.335); 
+       -o-transition-timing-function: cubic-bezier(0.600, 0.040, 0.980, 0.335); 
+          transition-timing-function: cubic-bezier(0.600, 0.040, 0.980, 0.335); /* easeInCirc */
 }
