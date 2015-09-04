@@ -51,9 +51,7 @@ Rails.application.configure do
   # ActionMailer::Base.deliveries array.
   config.action_mailer.delivery_method = :test
 
-  APP_DOMAIN = "localhost"
-
-  config.action_controller.asset_host = "#{APP_DOMAIN}:63346"
+  config.action_controller.asset_host = "localhost:63346"
 
   config.action_mailer.default_url_options = { :host => 'test.datacentred.io' }
 

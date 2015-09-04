@@ -50,9 +50,8 @@ Rails.application.configure do
       :password => ENV["MAIL_SERVER_PASSWORD"]
   }
 
-  APP_DOMAIN = 'localhost'
-  config.action_mailer.default_url_options = { :host => "#{APP_DOMAIN}:3000" }
-  config.action_controller.asset_host = "#{APP_DOMAIN}:3000"
+  config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+  config.action_controller.asset_host = 'localhost:3000'
 
   config.stripe.secret_key = ENV["STRIPE_SECRET_KEY"] || ""
   

@@ -22,6 +22,7 @@ Recaptcha.configuration.skip_verify_env << 'acceptance'
 # Capybara.app_host = CAPYBARA_CONFIG['url']
 
 Capybara.server_port = 63346
+Capybara.default_wait_time = 5
 
 ## Uncomment this to help debug JS errors
 

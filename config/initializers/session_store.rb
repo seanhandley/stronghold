@@ -1,5 +1,7 @@
 # Be sure to restart your server when you modify this file.
+keys = {:expire_after => 1.hour, :key => '_stronghold_session'}
+if defined?(APP_DOMAIN)
+  keys.merge!(domain: APP_DOMAIN)
+end
 
-APP_DOMAIN = 'localhost' unless defined?(APP_DOMAIN)
-
-Rails.application.config.session_store ActionDispatch::Session::MemCacheStore, :expire_after => 1.hour, :key => '_stronghold_session', domain: APP_DOMAIN
+Rails.application.config.session_store ActionDispatch::Session::MemCacheStore, keys

@@ -6,9 +6,9 @@ class UserMenuTests < CapybaraTestCase
     visit('/')
     find('button#user-menu').click
 
-    sleep(1)
+    sleep(2)
 
-    within('ul.dropdown-menu') do
+    using_wait_time 10 do
       assert find(:xpath, "//a[@href='#{support_profile_path}']")
       assert find(:xpath, "//a[@href='#{support_edit_organization_path}']")
       assert find(:xpath, "//a[@href='#{support_audits_path}']")
@@ -19,16 +19,21 @@ class UserMenuTests < CapybaraTestCase
 
   def test_user_can_logout
     visit('/')
+    
     find('button#user-menu').click
+
     AlertConfirmer.accept_confirm_from do
       find(:xpath, "//a[@href='#{signout_path}']").click
     end
 
     sleep(2)
-    
-    within('#sign-in') do
-      assert has_content?('Sign In')
+
+    using_wait_time 10 do
+      within('div#sign-in') do
+        assert has_content?('Sign In')
+      end
     end
+
     Percy::Capybara.snapshot(page, name: 'user can logout')
     
   end
