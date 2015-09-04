@@ -47,7 +47,7 @@ class RegistrationGenerator
     if invite.power_invite?
       member_uuid = OpenStack::Role.all.select{|r| r.name == '_member_'}.first.id
       @organization.tenants.each do |tenant|
-        UserTenantRole.create user: @user, tenant: tenant, role_uuid: member_uuid
+        Fog::Identity.new(OPENSTACK_ARGS).create_user_role(tenant.uuid, @user.uuid, member_uuid)
       end
     end
     Notifications.notify(:new_user, "#{@user.name} added to organization #{@organization.name}.")
