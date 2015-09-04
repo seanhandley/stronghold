@@ -142,7 +142,7 @@ class Organization < ActiveRecord::Base
   def payment_card_type
     return nil unless customer_signup && customer_signup.stripe_customer && customer_signup.stripe_customer.respond_to?(:sources)
     card = customer_signup.stripe_customer.sources.data.first
-    "#{card.brand} #{card.funding}"
+    card ? "#{card.brand} #{card.funding}" : nil
   end
 
   private
