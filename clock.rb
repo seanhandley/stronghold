@@ -37,6 +37,10 @@ if Rails.env.production? || Rails.env.staging?
     BillingRunJob.perform_later if Time.now.day == 1
   end
 
+  every(1.day, 'audit_blanks', :at => '01:00') do
+    FillAuditBlanksJob.perform_later
+  end
+
 end
 
 module Clockwork
