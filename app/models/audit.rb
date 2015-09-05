@@ -16,14 +16,14 @@ class Audit < ActiveRecord::Base
   end
 
   def self.for_organization(organization)
-    where(organization_id: nil).each do |audit|
+    where(organization_id: nil).includes(:user).each do |audit|
       if audit.user
         audit.update_column(:organization_id, audit.user.organization_id)
       elsif organization_id = audit.audited_changes['organization_id']
         audit.update_column(:organization_id, organization_id)
       end
     end
-    where(organization_id: organization.id)
+    where(organization_id: organization.id).includes(:user => :roles)
   end
 
   private
