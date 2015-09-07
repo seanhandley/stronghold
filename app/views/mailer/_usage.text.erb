@@ -1,0 +1,12 @@
+Missing items are active in the usage data but not active on OpenStack.
+New items are active on OpenStack but not present in the usage data.
+
+<% for key in @keys -%>
+<% for prefix in ['missing', 'new'] -%>
+<% if @data["#{prefix}_#{key}".to_sym].present? -%>
+<%= "#{key.titleize} (#{prefix})" %>
+
+<%- @data["#{prefix}_#{key}".to_sym].each do |k,v| -%><%= "* #{v} (#{k})\n".html_safe -%><% end -%>
+<% end -%>
+<% end -%>
+<% end -%>

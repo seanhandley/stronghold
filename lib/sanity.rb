@@ -42,7 +42,10 @@ module Sanity
   end
 
   def self.notify!(data)
-    Mailer.usage_sanity_failures(data).deliver_later
+    msg = Mailer.usage_sanity_failures(data).text_part.to_s
+    ignore = "Content-Type: text/plain;\r\n charset=UTF-8\r\nContent-Transfer-Encoding: 7bit\r\n\r\n"
+    msg.gsub! ignore, ''
+    Notifications.notify(:sanity_check, msg)
   end
 
   def self.live_instances
