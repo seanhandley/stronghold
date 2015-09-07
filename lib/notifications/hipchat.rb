@@ -4,7 +4,7 @@ module Notifications
   class Hipchat
     def self.notify(key, message)
       if HIPCHAT_NOTIFICATIONS_ENABLED
-        client[settings[key]['room']].send(settings[key]['from'], message, {:notify => true}.merge(settings[key]['format'].symbolize_keys!))  
+        #client[settings[key]['room']].send(settings[key]['from'], message, {:notify => true}.merge(settings[key]['format'].symbolize_keys!))  
       end
     end
 

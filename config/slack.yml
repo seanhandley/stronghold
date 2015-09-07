@@ -20,6 +20,7 @@ default: &default
     sanity_check:
       channel: '#webdev'
       color: 'danger'
+      prefix: ':crying_cat_face:'
 
 development:
   <<: *default
