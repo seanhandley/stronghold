@@ -6,7 +6,9 @@ New items are active on OpenStack but not present in the usage data.
 <% if @data["#{prefix}_#{key}".to_sym].present? -%>
 <%= "#{key.titleize} (#{prefix})" %>
 
-<%- @data["#{prefix}_#{key}".to_sym].each do |k,v| -%><%= "* #{v} (#{k})\n".html_safe -%><% end -%>
+Name - UUID - Organization/Tenant
+---------------------------------
+<%- @data["#{prefix}_#{key}".to_sym].each do |k,v| -%><%- tenant = Tenant.find_by_uuid(v[:tenant_id]) %><%= "* #{v[:name]} - #{k} - #{(tenant && tenant.organization) ? tenant.organization.name : v[:tenant_id]} \n".html_safe -%><% end -%>
 <% end -%>
 <% end -%>
 <% end -%>

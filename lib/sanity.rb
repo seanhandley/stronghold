@@ -32,11 +32,11 @@ module Sanity
     end
 
     results = {
-      missing_instances: Hash[missing_instances.collect{|i| [i.instance_id, i.name]}],
-      missing_volumes: Hash[missing_volumes.collect{|i| [i.volume_id, i.name]}],
-      missing_images: Hash[missing_images.collect{|i| [i.image_id, i.name]}],
-      missing_routers: Hash[missing_routers.collect{|i| [i.router_id, i.name]}],
-      new_instances: Hash[new_instances.collect{|k,v| [k, v['name']]}]
+      missing_instances: Hash[missing_instances.collect{|i| [i.instance_id, {name: i.name, tenant_id: i.tenant_id}]}],
+      missing_volumes: Hash[missing_volumes.collect{|i| [i.volume_id, {name: i.name, tenant_id: i.tenant_id}]}],
+      missing_images: Hash[missing_images.collect{|i| [i.image_id, {name: i.name, tenant_id: i.tenant_id}]}],
+      missing_routers: Hash[missing_routers.collect{|i| [i.router_id, {name: i.name, tenant_id: i.tenant_id}]}],
+      new_instances: Hash[new_instances.collect{|k,v| [k, {name: v['name'], tenant_id: v['tenant_id']}]}]
     }
     results.merge(:sane => results.values.none?(&:present?))
   end
@@ -50,7 +50,7 @@ module Sanity
 
   def self.live_instances
     Rails.cache.fetch('sanity_live_instances', expires_in: 10.minutes) do
-      Hash[Fog::Compute.new(OPENSTACK_ARGS).list_servers_detail(:all_tenants => true).body['servers'].collect{|s| [s['id'], {'status' => s['status'].downcase, 'name' => s['name']}]}]
+      Hash[Fog::Compute.new(OPENSTACK_ARGS).list_servers_detail(:all_tenants => true).body['servers'].collect{|s| [s['id'], {'status' => s['status'].downcase, 'name' => s['name'], 'tenant_id' => s['tenant_id']}]}]
     end
   end
 
