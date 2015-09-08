@@ -110,7 +110,7 @@ module OpenStackObject
 
       def conn
         args = OPENSTACK_ARGS.dup
-        if Authorization.current_user.present?
+        if Authorization.current_user.present? && !Authorization.current_user.admin?
           username   = Authorization.current_user.email
           tenant     = Authorization.current_user.organization.primary_tenant.reference
           token      = Authorization.current_user.token
@@ -122,6 +122,9 @@ module OpenStackObject
         "Fog::#{object_name.to_s.titleize}".constantize.new(args)
       rescue NameError
         raise InvalidCredentialsError, "Invalid credentials"
+      rescue ArgumentError
+        STDERR.puts args.inspect if Rails.env.development?
+        raise
       end
 
     end

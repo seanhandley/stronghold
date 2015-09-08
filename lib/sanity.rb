@@ -1,5 +1,19 @@
 module Sanity
   def self.check
+    results = current_sanity_state.dup
+    key = "previous_sanity_state"
+    previous_results = Rails.cache.read(key)
+    if previous_results
+      duplicates = compare_sanity_states(previous_results, results)
+      Rails.cache.write(key, results, expires_in: 3.days)
+      return duplicates.merge(:sane => duplicates.values.none?(&:present?))
+    else
+      Rails.cache.write(key, results, expires_in: 3.days)
+      return {sane: true}
+    end
+  end
+
+  def self.current_sanity_state
     missing_instances = Billing::Instance.active.reject do |instance|
       if live_instances[instance.instance_id].nil?
         false
@@ -31,14 +45,19 @@ module Sanity
       live_routers.include? router.router_id
     end
 
-    results = {
+    {
       missing_instances: Hash[missing_instances.collect{|i| [i.instance_id, {name: i.name, tenant_id: i.tenant_id}]}],
       missing_volumes: Hash[missing_volumes.collect{|i| [i.volume_id, {name: i.name, tenant_id: i.tenant_id}]}],
       missing_images: Hash[missing_images.collect{|i| [i.image_id, {name: i.name, tenant_id: i.tenant_id}]}],
       missing_routers: Hash[missing_routers.collect{|i| [i.router_id, {name: i.name, tenant_id: i.tenant_id}]}],
       new_instances: Hash[new_instances.collect{|k,v| [k, {name: v['name'], tenant_id: v['tenant_id']}]}]
     }
-    results.merge(:sane => results.values.none?(&:present?))
+  end
+
+  def self.compare_sanity_states(previous_results, results)
+    Hash[results.collect do |k,v|
+      [k, v.select{|i,_| previous_results[k][i]}]
+    end]
   end
 
   def self.notify!(data)

@@ -31,6 +31,7 @@ class CustomerSignupGenerator
     @organization.products << Product.find_by_name('Compute')
     @organization.products << Product.find_by_name('Storage')
     @organization.save!
+    @organization.primary_tenant.disable!
 
     @invite = Invite.create! email: @customer_signup.email, power_invite: true,
                              organization: @organization, customer_signup: @customer_signup

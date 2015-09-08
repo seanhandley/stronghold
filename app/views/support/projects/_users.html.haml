@@ -1,0 +1,6 @@
+%br
+- for user in current_user.organization.users
+  .checkbox
+    %label
+      = check_box_tag "tenant[users][#{user.id}]", true, tenant.users.map(&:uuid).include?(user.uuid)
+      = user.name

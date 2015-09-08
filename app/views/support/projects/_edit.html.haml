@@ -1,0 +1,23 @@
+.modal.fade{'tabindex' => "-1", 'role' => "dialog", 'aria-labelledby' => "editProject#{project.id}", 'aria-hidden' => "true", 'data-backdrop' => 'static', 'id' => "editProject#{project.id}"}
+  .modal-dialog
+    .modal-content
+      = form_for project, url: support_project_path(project), id: "editProject#{project.id}", remote: true do |f|
+        .modal-header
+          %button{'type' => "button", 'class' => "close", 'data-dismiss' => "modal", 'aria-hidden' => "true"}
+            &times;
+          %h4.modal-title
+            %i.fa.fa-folder-o
+            Edit Project
+        .modal-body
+          = javascript_error_messages_for(f.object)
+          #project-details
+            .form-group
+              %label Name
+              = f.text_field :name, :class => 'form-control', :readonly => project.staff_tenant?
+            .form-group
+              %label Members
+              = render partial: 'users', locals: {tenant: project}
+        .modal-footer
+          %button.btn.btn-default{'data-toggle' => "modal", 'data-dismiss' => "modal"}
+            = t(:cancel)
+          = submit_tag 'Save', class: 'btn btn-primary', id: 'submit_button'
