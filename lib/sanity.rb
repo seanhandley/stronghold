@@ -6,7 +6,7 @@ module Sanity
     if previous_results
       duplicates = compare_sanity_states(previous_results, results)
       Rails.cache.write(key, results, expires_in: 3.days)
-      return results.merge(:sane => duplicates.values.none?(&:present?))
+      return duplicates.merge(:sane => duplicates.values.none?(&:present?))
     else
       Rails.cache.write(key, results, expires_in: 3.days)
       return {sane: true}
