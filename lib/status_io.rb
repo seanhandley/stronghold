@@ -25,6 +25,9 @@ module StatusIO
     resp = JSON.parse(resp.body)
     raise resp['status']['message'] if resp['status']['error'] == 'yes'
     resp['result'][filter]
+  rescue StandardError => e
+    notify_honeybadger(e)
+    []
   end
 
   def self.active_incidents
