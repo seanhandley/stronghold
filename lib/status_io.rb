@@ -1,3 +1,5 @@
+require 'honeybadger'
+
 module StatusIO
   def self.add_subscriber(email)
     conn.post do |req|
@@ -26,7 +28,7 @@ module StatusIO
     raise resp['status']['message'] if resp['status']['error'] == 'yes'
     resp['result'][filter]
   rescue StandardError => e
-    notify_honeybadger(e)
+    Honeybadger.notify(e)
     []
   end
 
