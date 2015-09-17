@@ -1,0 +1,12 @@
+<br>
+<div style="overflow: auto; height: 200px">
+  <%- current_user.organization.users.each_with_index do |user, i| %>
+    <%- if i % 2 == 0 %>
+      <div class='row'>
+    <% end %>
+      <%= render partial: 'user_entry', locals: {user: user, tenant: tenant} %>
+    <%- if i % 2 != 0 %>
+      </div>
+    <% end %>
+  <% end %>
+</div>
