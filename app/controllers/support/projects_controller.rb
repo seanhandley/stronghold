@@ -15,6 +15,7 @@ class Support::ProjectsController < SupportBaseController
     if @tenant.save
       @tenant.update(user_tenant_roles_attributes)
       @tenant.enable!
+      OpenStack::Tenant.set_self_service_quotas(@tenant.uuid, current_user.organization.limited_storage? ? 'restricted' : 'standard')
       javascript_redirect_to support_projects_path
     else
       respond_to do |format|
@@ -47,8 +48,8 @@ class Support::ProjectsController < SupportBaseController
     @tenant ||= Tenant.find(params[:id])
   end
 
-  def check_power_user_and_cloud
-    raise ActionController::RoutingError.new('Not Found') unless current_user.power_user? && current_user.organization.cloud?
+  def check_power_user_and_cloud_and_unrestricted
+    raise ActionController::RoutingError.new('Not Found') unless current_user.power_user? && current_user.organization.cloud? && !current_user.organization.limited_storage?
   end
 
   def tenant_params
