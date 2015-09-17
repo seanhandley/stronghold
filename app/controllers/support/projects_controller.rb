@@ -3,7 +3,7 @@ class Support::ProjectsController < SupportBaseController
 
   skip_authorization_check
 
-  before_filter :check_power_user_and_cloud
+  before_filter :check_power_user_and_cloud_and_unrestricted
   before_filter :fetch_tenant, only: [:update, :destroy]
 
   def index
