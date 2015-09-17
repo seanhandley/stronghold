@@ -4,26 +4,51 @@ class Tenant < ActiveRecord::Base
   belongs_to :organization
 
   validates :organization, :presence => true
-  validates :name, length: {minimum: 1}, allow_blank: false
+  validates :name, length: {minimum: 1}, allow_blank: false, :uniqueness => true
 
-  syncs_with_keystone as: 'OpenStack::Tenant', actions: [:create, :destroy]
+  syncs_with_keystone as: 'OpenStack::Tenant', actions: [:create, :destroy, :update]
   syncs_with_ceph     as: 'Ceph::User',        actions: [:create, :destroy]
 
-  has_many :user_tenant_roles
+  has_many :user_tenant_roles, dependent: :destroy
   has_many :users, :through => :user_tenant_roles
 
+  validate {|t| readonly! if t.persisted? && Tenant.find(id).staff_tenant? && name_changed? }
+  before_destroy {|t| readonly! if t.persisted? && Tenant.find(id).staff_tenant? }
+
+  accepts_nested_attributes_for :user_tenant_roles, allow_destroy: true
+
+  def staff_tenant?
+    self.name == 'datacentred'
+  end
+
   def reference
-    organization.staff? ? "datacentred" : "#{organization.reference}_#{name}"
+    name
   end
 
   def keystone_params
-    { name: reference, enabled: false,
+    { name: reference,
       description: "Customer: #{organization.name}, Project: #{name}" 
     }
   end
 
   def ceph_params
     { 'uid' => uuid, 'display-name' => name}
+  end
+
+  def enable!
+    Fog::Identity.new(OPENSTACK_ARGS).update_tenant(uuid, enabled: true)
+  end
+
+  def disable!
+    Fog::Identity.new(OPENSTACK_ARGS).update_tenant(uuid, enabled: false)
+  end
+
+  def destroy_unless_primary
+    destroy unless primary_tenant?
+  end
+
+  def primary_tenant?
+    organization ? organization.primary_tenant_id == id : false
   end
 
   def quotas

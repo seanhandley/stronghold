@@ -18,6 +18,11 @@
         %a{:href => support_edit_organization_path}
           %i.fa.fa-briefcase
           My Account
+      - unless DarkLaunch.hide?
+        %li
+          %a{:href => support_projects_path}
+            %i.fa.fa-folder-o
+            Cloud Projects
       - if current_user.organization.cloud?
         %li
           %a{:href => support_quotas_path}

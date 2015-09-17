@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150902133737) do
+ActiveRecord::Schema.define(version: 20150917132554) do
 
   create_table "audits", force: :cascade do |t|
     t.string   "auditable_id",    limit: 255
@@ -331,6 +331,8 @@ ActiveRecord::Schema.define(version: 20150902133737) do
     t.integer "tenant_id", limit: 4
     t.string  "role_uuid", limit: 255
   end
+
+  add_index "user_tenant_roles", ["user_id", "tenant_id", "role_uuid"], name: "index_user_tenant_roles_on_user_id_and_tenant_id_and_role_uuid", unique: true, using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",           limit: 255

@@ -18,6 +18,7 @@ Rails.application.routes.draw do
     resources :roles, path: 'team'
     resources :quotas, only: [:index], path: 'limits'
     resources :cards, only: [:new, :create]
+    resources :projects, except: [:edit, :new]
     resources :manage_cards
     resources :tickets, only: [:index, :show]
     namespace :api, defaults: {format: :json} do
