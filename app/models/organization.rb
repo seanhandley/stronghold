@@ -78,6 +78,10 @@ class Organization < ActiveRecord::Base
     users.select(&:admin?)
   end
 
+  def new_projects_remaining
+    projects_limit - tenants.count
+  end
+
   def enable!
     unless Rails.env.test?
       tenants.each do |tenant|
