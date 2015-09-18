@@ -18,7 +18,7 @@
       %tr
         %td= tenant.name
         %td= tenant.uuid
-        %td= tenant.users.count
+        %td= tenant.users.uniq.count
         %td
           .pull-right
             = link_to 'Edit', '', class: 'btn btn-default', 'data-toggle' => "modal", 'data-target' => "#editProject#{tenant.id}", 'remote' => true, 'data' => { 'method' => :put }
