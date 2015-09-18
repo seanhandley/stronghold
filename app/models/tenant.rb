@@ -87,7 +87,7 @@ class Tenant < ActiveRecord::Base
   end
 
   def check_projects_limit
-    return true if persisted?
+    return true unless persisted?
     errors.add(:base, "Your quota only permits #{pluralize organization.projects_limit, 'project'}. #{link_to 'Raise a ticket to request more?', Rails.application.routes.url_helpers.support_tickets_path}".html_safe) unless organization.new_projects_remaining > 0
   end
 
