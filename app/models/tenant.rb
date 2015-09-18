@@ -16,7 +16,7 @@ class Tenant < ActiveRecord::Base
 
   validate {|t| readonly! if t.persisted? && Tenant.find(id).staff_tenant? && name_changed? }
   before_destroy {|t| readonly! if t.persisted? && Tenant.find(id).staff_tenant? }
-  # validate :check_projects_limit
+  validate :check_projects_limit
 
   accepts_nested_attributes_for :user_tenant_roles, allow_destroy: true
 

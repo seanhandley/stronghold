@@ -162,7 +162,7 @@ class Organization < ActiveRecord::Base
       generate_reference_step(ref, (count+1))
     else
       update_column(:reference, new_ref)
-      t = tenants.create name: "primary"
+      t = tenants.create name: "#{reference}_primary"
       update_column(:primary_tenant_id, t.id)
     end
   end
