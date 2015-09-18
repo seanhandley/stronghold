@@ -20,6 +20,7 @@ end
 
 Organization.blueprint do
   name { Faker::Company.name }
+  projects_limit { 100 }
 end
 
 Tenant.blueprint do

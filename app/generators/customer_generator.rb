@@ -46,7 +46,7 @@ class CustomerGenerator
   private
 
   def create_customer
-    @organization = Organization.create! name: @organization_name, self_service: false, salesforce_id: @salesforce_id
+    @organization = Organization.create! name: @organization_name, self_service: false, salesforce_id: @salesforce_id, projects_limit: @extra_tenants.split(',').count + 1
     @products.each do |product_id|
       @organization.products << Product.find(product_id)
     end
