@@ -16,7 +16,7 @@ class Tenant < ActiveRecord::Base
 
   validate {|t| readonly! if t.persisted? && Tenant.find(id).staff_tenant? && name_changed? }
   before_destroy {|t| readonly! if t.persisted? && Tenant.find(id).staff_tenant? }
-  validate :check_projects_limit
+  # validate :check_projects_limit
 
   accepts_nested_attributes_for :user_tenant_roles, allow_destroy: true
 
@@ -87,7 +87,6 @@ class Tenant < ActiveRecord::Base
   end
 
   def check_projects_limit
-    return true unless persisted?
     errors.add(:base, "Your quota only permits #{pluralize organization.projects_limit, 'project'}. #{link_to 'Raise a ticket to request more?', Rails.application.routes.url_helpers.support_tickets_path}".html_safe) unless organization.new_projects_remaining > 0
   end
 
