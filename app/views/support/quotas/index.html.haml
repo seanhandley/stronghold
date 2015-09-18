@@ -10,6 +10,10 @@
   = link_to 'Raise a support ticket', support_tickets_path
   and let us know what you need.
 
+%p.pull-right
+  %strong Maximum number of projects:
+  = current_user.organization.projects_limit
+
 - for project in @projects
   %h2= "Project: #{project.name}"
   .container
