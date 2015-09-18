@@ -19,12 +19,11 @@
           %i.fa.fa-briefcase
           My Account
       - if current_user.organization.cloud?
-        - unless DarkLaunch.hide?
-          - unless current_user.organization.limited_storage?
-            %li
-              %a{:href => support_projects_path}
-                %i.fa.fa-folder-o
-                Cloud Projects
+        - unless current_user.organization.limited_storage?
+          %li
+            %a{:href => support_projects_path}
+              %i.fa.fa-folder-o
+              Cloud Projects
         %li
           %a{:href => support_quotas_path}
             %i.fa.fa-sliders
