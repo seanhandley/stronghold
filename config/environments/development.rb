@@ -54,5 +54,16 @@ Rails.application.configure do
   config.action_controller.asset_host = 'localhost:3000'
 
   config.stripe.secret_key = ENV["STRIPE_SECRET_KEY"] || ""
+
+  config.after_initialize do
+    Bullet.enable = true
+    # Bullet.alert = true
+    # Bullet.bullet_logger = true
+    # Bullet.console = true
+    Bullet.rails_logger = true
+    # Bullet.honeybadger = true
+    # Bullet.add_footer = true
+    # Bullet.slack = { webhook_url: 'http://some.slack.url', foo: 'bar' }
+  end
   
 end

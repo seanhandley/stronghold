@@ -104,6 +104,9 @@ group :development do
   gem 'web-console', '~> 2.0' 
   gem 'traceroute'
   gem 'brakeman', :require => false
+  gem 'rack-mini-profiler'
+  gem 'bullet'
+  gem 'rubycritic'
 end
 
 group :production do 
