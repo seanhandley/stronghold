@@ -5,8 +5,6 @@ class ApplicationController < ActionController::Base
 
   before_filter :device_cookie
 
-  helper Starburst::AnnouncementsHelper
-
   def javascript_redirect_to(path)
     render js: "window.location.replace('#{path}')"
   end
@@ -29,5 +27,7 @@ class ApplicationController < ActionController::Base
     @device_cookie ||= cookies[:_d]
   end
   helper_method :device_cookie
+
+  helper Starburst::AnnouncementsHelper
 
 end
