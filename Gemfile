@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.2'
+gem 'rails', '4.2.4'
 gem 'mysql2', '~> 0.3'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0',  group: :doc
@@ -27,7 +27,7 @@ gem 'bootstrap-kaminari-views', '~> 0.0.5'
 gem 'dalli', '~> 2.7'
 gem 'clockwork', '~> 1.1'
 gem 'aws-s3', git: 'https://github.com/datacentred/aws-s3.git'
-gem 'rails_admin', '~> 0.6'
+# gem 'rails_admin', '~> 0.6'
 gem 'sinatra', '>= 1.3.0'
 gem 'responders', '~> 2.0'
 gem 'restforce', '~> 1.5'
@@ -102,6 +102,8 @@ group :development do
   gem 'net-ssh', '~> 2.8.0'
   gem 'spring', '~> 1.1.3'
   gem 'web-console', '~> 2.0' 
+  gem 'traceroute'
+  gem 'brakeman', :require => false
 end
 
 group :production do 
