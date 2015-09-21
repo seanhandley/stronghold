@@ -15,11 +15,11 @@ Rails.application.routes.draw do
     get '/details', :controller => 'organizations', :action => 'index', :as => 'edit_organization'
     resources :users, only: [:update, :destroy]
     get '/profile', :controller => 'users', :action => 'index'
-    resources :roles, path: 'team'
+    resources :roles, except: [:new, :edit, :show], path: 'team'
     resources :quotas, only: [:index], path: 'limits'
     resources :cards, only: [:new, :create]
-    resources :projects, except: [:edit, :new]
-    resources :manage_cards
+    resources :projects, except: [:edit, :new, :show]
+    resources :manage_cards, except: [:new, :edit, :show]
     resources :tickets, only: [:index, :show]
     namespace :api, defaults: {format: :json} do
       resources :tickets, only: [:index, :create, :update] do
@@ -45,9 +45,9 @@ Rails.application.routes.draw do
       resources :usage, only: [:index, :create]
       resources :sanity, only: [:index]
       resources :free_ips, only: [:index]
-      resources :vouchers
+      resources :vouchers, except: [:new, :edit, :show]
       resources :account_migrations, only: [:index, :create]
-      resources :quotas do
+      resources :quotas, except: [:create, :new, :destroy, :show] do
         member do
           post 'mail'
         end
