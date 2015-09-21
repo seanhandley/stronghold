@@ -2,7 +2,7 @@ $(document).ready(function() {
   $('#cc-details').submit(function(event) {
     var $form = $(this);
 
-    $.post('/cc_submit?signup_uuid=' + $form.find('#signup_uuid').val());
+    $.post('/cc_submit?signup_uuid=' + $form.find('#signup_uuid').val() + 'authenticity_token=' + AUTH_TOKEN);
 
     $form.find('input[type=submit]').prop('disabled', true);
 
@@ -62,7 +62,7 @@ $(document).ready(function() {
   $('#address_country').trigger('change');
 
   $('#discount_code').on('input', function() {
-    $.post('/voucher_precheck?code=' + $(this).val(), function(data) {
+    $.post('/voucher_precheck?code=' + $(this).val(), {'authenticity_token': AUTH_TOKEN}, function(data) {
       $('#discount_code_message').text(data.message);
       if(data.success) {
         $('#discount_code').closest('.input-group').removeClass('has-error');
@@ -115,7 +115,7 @@ var Signup = {
 
       var uuid = $form.find('#signup_uuid').val();
       // Check the address is valid via precheck
-      $.post('/precheck?stripe_token=' + token + '&signup_uuid=' + uuid, function(data) {
+      $.post('/precheck?stripe_token=' + token + '&signup_uuid=' + uuid, {'authenticity_token': AUTH_TOKEN}, function(data) {
         if(data.success) {
           // Stop submission of details to server
           $form.find('#card_number').prop('disabled', true);

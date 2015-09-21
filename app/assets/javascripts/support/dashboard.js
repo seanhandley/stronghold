@@ -4,7 +4,7 @@ $(document).ready(function() {
     if (confirm("This can't be undone and any applications/users that use these credentials will be locked out until provided with the new credentials. Are you sure?")) {
       $('#loading-overlay').removeClass('hide');
       $('#show-js-errors').empty();
-      $.post('/regenerate_ceph_credentials', function(data) {
+      $.post('/regenerate_ceph_credentials', {'authenticity_token': AUTH_TOKEN}, function(data) {
         if(data.success) {
           $('#loading-overlay').addClass('hide');
           $('#ceph-access-key').text(data.credentials.access);
