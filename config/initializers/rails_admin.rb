@@ -1,4 +1,4 @@
-unless Rails.env.test? || Rails.env.acceptance?
+unless true || Rails.env.test? || Rails.env.acceptance?
   begin
     RailsAdmin.config do |config|
 
