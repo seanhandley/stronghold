@@ -44,7 +44,7 @@ module Reports
           :openstack_tb_hours => openstack_tb_hours,
           :ceph_tb_hours => ceph_tb_hours,
           :paying => organization.paying?,
-          :spend => [instances, volumes, images].map{|i| i.map{|j| [:cost]}}.flatten.compact.sum
+          :spend => [instances, volumes, images].map{|i| i.map{|j| j[:cost]}}.flatten.compact.sum
         }
       end.sort{|x,y| x[:spend] <=> y[:spend]}.take(30)
     end
