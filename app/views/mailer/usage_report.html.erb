@@ -4,16 +4,6 @@
   <h1>Weekly Platform Summary</h1>
   <p><em>Week beginning <%= @from.beginning_of_week.to_date.strftime("%A #{@from.day.ordinalize} %B %Y") %></em></p>
 
-  <!--
-  <p>
-    <strong>CPU Load:</strong> 70% (of x)<br/>
-    <strong>RAM Load:</strong> 60% (of y)<br/>
-    <strong>OpenStack Disk Load:</strong> 50% (of z)<br/>
-    <strong>Ceph Disk Load:</strong> 40% (of zz)<br/>
-  </p>
-  -->
-
-  <!-- <h2>Customer Usage</h2> -->
   <% for entry in @organization_data %>
     <h2><%= entry[:name] %></h2>
     <strong>Admin Contact:</strong> <%= mail_to entry[:contacts].first %>
@@ -23,7 +13,7 @@
       <strong>OpenStack Storage:</strong> <%= number_with_delimiter(entry[:openstack_tb_hours].round(1), :delimiter => ',') %> TBh<br/>
       <strong>Ceph Storage:</strong> <%= number_with_delimiter(entry[:ceph_tb_hours].round(1), :delimiter => ',') %> TBh<br/>
     </p>
-    <p><strong>Paying?</strong> <%= entry[:paying] ? '✔' : '✘' %></p>
+    <p><strong>Spend:</strong> <%= number_to_currency(entry[:spend], unit: '£', separator: '.', delimiter: ',' ) %><br/><strong>Paying?</strong> <%= entry[:paying] ? '✔' : '✘' %></p>
     <p>&nbsp;</p>
   <% end %>
 </div>
