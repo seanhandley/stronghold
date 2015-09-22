@@ -43,9 +43,10 @@ module Reports
           :ram_tb_hours => ((ram_tb_seconds / 60.0) / 60.0),
           :openstack_tb_hours => openstack_tb_hours,
           :ceph_tb_hours => ceph_tb_hours,
-          :paying => organization.paying?
+          :paying => organization.paying?,
+          :spend => [instances, volumes, images].map{|i| i.map{|j| [:cost]}}.flatten.compact.sum
         }
-      end
+      end.sort{|x,y| x[:spend] <=> y[:spend]}.take(30)
     end
   end
 end
