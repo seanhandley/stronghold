@@ -4,6 +4,7 @@ class UsageReportJob < ActiveJob::Base
   def perform
     from = (Time.zone.now - 1.day).beginning_of_week
     to = (Time.zone.now - 1.day).end_of_week
-    Mailer.usage_report(from.to_s, to.to_s).deliver_later
+    data = Reports::UsageReport.new(from, to).contents
+    Mailer.usage_report(from.to_s, to.to_s, data).deliver_later
   end
 end

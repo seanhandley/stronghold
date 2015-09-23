@@ -14,12 +14,10 @@ class Mailer < ActionMailer::Base
     mail(:to => @reset.email, :subject => "Password reset")
   end
 
-  def usage_report(from, to)
+  def usage_report(from, to, data)
     @from = Time.parse(from)
     @to   = Time.parse(to)
-    # Total available platform resources, with % in-use
-    @platform_usage_summary = {}
-    @organization_data = Reports::UsageReport.new(@from, @to).contents
+    @organization_data = data
 
     mail(:to => "usage@datacentred.co.uk", :subject => "Weekly Platform Usage")
   end
