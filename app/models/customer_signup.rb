@@ -1,4 +1,6 @@
 class CustomerSignup < ActiveRecord::Base
+  include ActionView::Helpers::UrlHelper
+
   attr_reader :error_message
 
   after_create -> { update_attributes(uuid: SecureRandom.hex) }
@@ -64,6 +66,7 @@ class CustomerSignup < ActiveRecord::Base
     return errors.add(:email, I18n.t(:is_not_a_valid_address)) unless email =~ /.+@.+\..+/
     return errors.add(:email, I18n.t(:is_not_a_valid_address)) unless email.length >= 5
     return errors.add(:email, 'is already in use') if User.find_by_email(email.downcase) && email_changed?
+    return errors.add(:email, "already used to sign up! If you didn't receive a sign up email, please contact support@datacentred.co.uk") if CustomerSignup.find_by_email(email.downcase) && email_changed?
   end
 
   def address_check_passed?
