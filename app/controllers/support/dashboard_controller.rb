@@ -26,7 +26,7 @@ class Support::DashboardController < SupportBaseController
   end
 
   def live_servers
-    Rails.cache.fetch("live_servers", expires_in: 5.minutes) do
+    Rails.cache.fetch("live_servers_dashboard", expires_in: 5.minutes) do
       Fog::Compute.new(OPENSTACK_ARGS).list_servers_detail(all_tenants: true).body['servers']
     end 
   end
