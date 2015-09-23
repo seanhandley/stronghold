@@ -157,7 +157,7 @@ module Billing
           end
         end
       else
-        if previous_state && billable?(previous_state.state)
+        if previous_state && billable?(previous_state.state) && instance.active?
           return (to - from).round
         else
           return 0
