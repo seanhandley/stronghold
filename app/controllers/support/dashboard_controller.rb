@@ -22,7 +22,7 @@ class Support::DashboardController < SupportBaseController
   private
 
   def instance_count
-    live_servers.select{|s| current_user.organization.tenants.map(&:uuid).include?(['tenant_id'])}.count
+    live_servers.select{|s| current_user.organization.tenants.map(&:uuid).include?(s['tenant_id'])}.count
   end
 
   def live_servers
