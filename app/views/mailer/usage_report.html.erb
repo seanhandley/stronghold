@@ -3,17 +3,34 @@
   <%= render partial: 'header' %>
   <h1>Weekly Platform Summary</h1>
   <p><em>Week beginning <%= @from.beginning_of_week.to_date.strftime("%A #{@from.day.ordinalize} %B %Y") %></em></p>
-
-  <% for entry in @organization_data %>
-    <h2><%= entry[:name] %></h2>
-    <strong>Admin Contact:</strong> <%= mail_to entry[:contacts].first %>
-    <p>
-      <strong>VCPU:</strong> <%= number_with_delimiter(entry[:vcpu_hours].round(1), :delimiter => ',') %> hours<br/>
-      <strong>RAM:</strong> <%= number_with_delimiter(entry[:ram_tb_hours].round(1), :delimiter => ',') %> TBh<br/>
-      <strong>OpenStack Storage:</strong> <%= number_with_delimiter(entry[:openstack_tb_hours].round(1), :delimiter => ',') %> TBh<br/>
-      <strong>Ceph Storage:</strong> <%= number_with_delimiter(entry[:ceph_tb_hours].round(1), :delimiter => ',') %> TBh<br/>
-    </p>
-    <p><strong>Spend:</strong> <%= number_to_currency(entry[:spend], unit: '£', separator: '.', delimiter: ',' ) %><br/><strong>Paying?</strong> <%= entry[:paying] ? '✔' : '✘' %></p>
-    <p>&nbsp;</p>
-  <% end %>
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <th>#</th>
+        <th>Customer</th>
+        <th>VCPU hours</th>
+        <th>RAM</th>
+        <th>OpenStack Storage</th>
+        <th>Ceph Storage</th>
+        <th>Admin Contact</th>
+        <th>Spend</th>
+        <th>Paying?</th>
+      </thead>
+      <tbody>
+        <% @organization_data.each_with_index do |entry, i| %>
+          <tr>
+            <td><%= i+1 %></td>
+            <td><%= entry[:name] %></td>
+            <td><%= number_with_delimiter(entry[:vcpu_hours].round(1), :delimiter => ',') %> hours</td>
+            <td><%= number_with_delimiter(entry[:ram_tb_hours].round(1), :delimiter => ',') %> TBh</td>
+            <td><%= number_with_delimiter(entry[:openstack_tb_hours].round(1), :delimiter => ',') %> TBh</td>
+            <td><%= number_with_delimiter(entry[:ceph_tb_hours].round(1), :delimiter => ',') %> TBh</td>
+            <td><%= mail_to entry[:contacts].first %></td>
+            <td><%= number_to_currency(entry[:spend], unit: '£', separator: '.', delimiter: ',' ) %></td>
+            <td><%= entry[:paying] ? '✔' : '✘' %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 </div>
