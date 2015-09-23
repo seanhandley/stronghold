@@ -4,7 +4,10 @@ class MailerPreview < ActionMailer::Preview
   end
 
   def usage_report
-    Mailer.usage_report((Time.now - 7.days).to_s, Time.now.to_s)
+    from = (Time.now - 1.day).beginning_of_week
+    to = (Time.now - 1.day).end_of_week
+    data = Reports::UsageReport.new(from, to).contents
+    Mailer.usage_report(from.to_s, to.to_s, data)
   end
 
   def usage_sanity_failures
