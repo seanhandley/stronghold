@@ -12,8 +12,8 @@ module Billing
     scope :active, -> { all.includes(:instance_states).select(&:active?) }
 
     def active?
-      return false if instance_states.collect{|i| i.state.downcase }.include?('deleted')
-      latest_state = instance_states.order('recorded_at').last
+      return false if fetch_states.collect{|i| i.state.downcase }.include?('deleted')
+      latest_state = fetch_states.order('recorded_at').last
       latest_state ? Billing::Instances.billable?(latest_state.state) : true
     end
 
@@ -60,7 +60,7 @@ module Billing
 
     def latest_state(from, to)
       return 'terminated' if terminated_at && terminated_at <= to # and terminated between from, to
-      state = instance_states.where('recorded_at <= ?', to).order('recorded_at').last.try(:state)
+      state = fetch_states.where('recorded_at <= ?', to).order('recorded_at').last.try(:state)
       if state
         Instances.billable?(state) ? 'active' : 'stopped'
       else
