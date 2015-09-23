@@ -46,7 +46,7 @@ module Reports
           :paying => organization.paying?,
           :spend => [instances, volumes, images].map{|i| i.map{|j| j[:cost]}}.flatten.compact.sum
         }
-      end.sort{|x,y| x[:spend] <=> y[:spend]}.take(30)
+      end.sort{|x,y| y[:spend] <=> x[:spend]}.take(30)
     end
   end
 end
