@@ -14,6 +14,15 @@ class Admin::FrozenCustomersController < AdminBaseController
     end
   end
 
+  def destroy
+    organization = Organization.find(params[:id])
+    if organization.destroy
+      redirect_to admin_frozen_customers_path, notice: "Customer has been deleted."  
+    else
+      redirect_to admin_frozen_customers_path, alert: "Couldn't delete!"
+    end
+  end
+
   def mail
     organization = Organization.find(params[:id])
     fc = FraudCheck.new(organization.customer_signup)
