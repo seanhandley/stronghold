@@ -18,7 +18,18 @@ class Mailer < ActionMailer::Base
     @from = Time.parse(from)
     @to   = Time.parse(to)
     @organization_data = data
+    @week_beginning = @from.beginning_of_week.to_date.strftime("%A #{@from.day.ordinalize} %B %Y")
 
+    csv_string = CSV.generate do |csv|
+      csv << ["Customer", "VCPU hours", "RAM TBh", "OpenStack Storage TBh", "Ceph Storage TBh", "Admin Contact" "Paying?", "Spend (£)"]
+      data.each do |entry|
+        csv << [entry[:name], entry[:vcpu_hours], entry[:ram_tb_hours], entry[:openstack_tb_hours],
+                entry[:ceph_tb_hours], entry[:contacts].join(','), entry[:paying], entry[:spend]]
+      end
+    end
+
+    attachments["weekly_usage_#{@week_beginning.parameterize}.csv"] = csv_string
+    @csv_string = csv_string
     mail(:to => "usage@datacentred.co.uk", :subject => "Weekly Platform Usage")
   end
 

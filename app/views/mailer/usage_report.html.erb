@@ -2,7 +2,7 @@
 <div class="container" id="email">
   <%= render partial: 'header' %>
   <h1>Weekly Platform Summary</h1>
-  <p><em>Week beginning <%= @from.beginning_of_week.to_date.strftime("%A #{@from.day.ordinalize} %B %Y") %></em></p>
+  <p><em>Week beginning <%= @week_beginning %></em></p>
   <div class="table-responsive">
     <table class="table table-striped">
       <thead>
