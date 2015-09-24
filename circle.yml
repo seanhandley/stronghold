@@ -8,5 +8,6 @@ dependencies:
 
 test:
   override:
-    - rake test:unit_and_functional
+    # - rake test:unit_and_functional
+    - RAILS_ENV=acceptance bundle exec rake db:create db:schema:load --trace
     - rake test:acceptance
