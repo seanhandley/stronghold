@@ -19,7 +19,7 @@ namespace :stronghold do
   desc "Get Ubuntu Usage Detailed"
   task :ubuntu_usage_detailed => :environment do
     if ENV['MONTH'].blank? || ENV['YEAR'].blank?
-      puts 'Usage: rake stronghold:ubuntu_usage MONTH=2 YEAR=2015'
+      puts 'Usage: rake stronghold:ubuntu_usage_detailed MONTH=2 YEAR=2015'
       exit
     end
     month, year = ENV['MONTH'], ENV['YEAR']
