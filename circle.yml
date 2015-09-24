@@ -14,5 +14,5 @@ database:
 
 test:
   override:
-    # - rake test:unit_and_functional
+    - rake test:unit_and_functional
     - rake test:acceptance
