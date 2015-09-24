@@ -9,7 +9,8 @@ class UserMenuTests < CapybaraTestCase
     sleep(2)
 
     using_wait_time 10 do
-      #assert find(:xpath, "//a[@href='#{support_profile_path}']")
+      find(:xpath, "//a[@href='#{support_profile_path}']")
+      assert find(:xpath, "//a[@href='#{support_profile_path}']")
       assert find(:xpath, "//a[@href='#{support_edit_organization_path}']")
       assert find(:xpath, "//a[@href='#{support_audits_path}']")
       assert find(:xpath, "//a[@href='#{signout_path}']")
