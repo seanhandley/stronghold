@@ -21,12 +21,21 @@ default: &default
       channel: '#webdev'
       color: 'danger'
       prefix: ':crying_cat_face:'
+    code_quality_analysis:
+      channel: '#webdev'
+      color: 'warning'
+      prefix: ':gem: Code Quality Results: '
+    security_analysis:
+      channel: '#webdev'
+      color: 'warning'
+      prefix: ':lock: Security Analysis Results: '
 
 development:
   <<: *default
 
 test:
   <<: *default
+  enabled: true
 
 acceptance:
   <<: *default
