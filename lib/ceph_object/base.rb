@@ -32,6 +32,7 @@ module CephObject
     end
     
     def self.request(verb, path, params, body=nil)
+      return true if Rails.env.acceptance?
       conn
       response = AWS::S3::Base.request(verb, "#{path}#{params.to_query}", options, body)
       if response.code == 200
