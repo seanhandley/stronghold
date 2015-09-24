@@ -17,4 +17,4 @@ test:
     - rake test:unit_and_functional
     - rake test:acceptance
     - rake stronghold:security_analysis
-    - rake stronghold:code_quality_analysis
+    #- rake stronghold:code_quality_analysis
