@@ -7,6 +7,7 @@ module Notifications
   end
 
   def self.notify(key, message)
+    WebMock.allow_net_connect! if Rails.env.test?
     key = key.to_s
     notifiers.each do |n|
       begin
@@ -18,6 +19,8 @@ module Notifications
         Honeybadger.notify(e)
       end
     end
+  ensure
+    WebMock.disable_net_connect! if Rails.env.test?
   end
 
 end
