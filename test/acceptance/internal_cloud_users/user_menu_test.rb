@@ -14,7 +14,6 @@ class UserMenuTests < CapybaraTestCase
       assert find(:xpath, "//a[@href='#{support_audits_path}']")
       assert find(:xpath, "//a[@href='#{signout_path}']")
     end
-    Percy::Capybara.snapshot(page, name: 'user menu contents')
   end
 
   def test_user_can_logout
@@ -33,8 +32,6 @@ class UserMenuTests < CapybaraTestCase
         assert has_content?('Sign In')
       end
     end
-
-    Percy::Capybara.snapshot(page, name: 'user can logout')
     
   end
   

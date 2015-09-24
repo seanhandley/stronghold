@@ -82,7 +82,6 @@ Minitest.after_run do
   Organization.destroy_all rescue nil
   User.destroy_all rescue nil
   DatabaseCleaner.clean
-  Percy::Capybara.finalize_build
 end
 
 class CapybaraTestCase < Minitest::Test

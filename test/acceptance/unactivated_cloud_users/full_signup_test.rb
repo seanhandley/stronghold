@@ -22,8 +22,6 @@ class FullSignupTests < CapybaraTestCase
       assert has_content?('Set your password')
     end
 
-    Percy::Capybara.snapshot(page)
-
     fill_in('password', :with => '12345678')
     click_button('Proceed')
 
@@ -39,8 +37,6 @@ class FullSignupTests < CapybaraTestCase
       assert find(:xpath, "//a[@href='#{support_usage_path}']")
       assert find(:xpath, "//a[@href='#{support_tickets_path}']")
     end
-
-    Percy::Capybara.snapshot(page, name: 'activation page')
 
     fill_in('idpc_input', :with => 'ID1 1QD')
     fill_in('address_line1', :with => '1 Street Street')
@@ -74,8 +70,6 @@ class FullSignupTests < CapybaraTestCase
       assert find(:xpath, "//a[@href='#{support_tickets_path}']")
       assert find(:xpath, "//a[@href='#{support_roles_path}']")
     end
-
-    Percy::Capybara.snapshot(page, name: 'successful activation')
 
   end
 end
