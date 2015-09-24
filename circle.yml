@@ -6,8 +6,13 @@ dependencies:
     - sudo apt-get update ; true
     - DEBIAN_FRONTEND=noninteractive sudo apt-get install -y mysql-server-5.6
 
+database:
+  override:
+    - cp config/database.yml.ci config/database.yml
+    - RACK_ENV=test RAILS_ENV=test bundle exec rake db:create db:schema:load --trace
+    - RACK_ENV=acceptance RAILS_ENV=acceptance bundle exec rake db:create db:schema:load --trace
+
 test:
   override:
     # - rake test:unit_and_functional
-    - RAILS_ENV=acceptance bundle exec rake db:create db:schema:load --trace
     - rake test:acceptance
