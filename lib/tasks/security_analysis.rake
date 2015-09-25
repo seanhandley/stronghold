@@ -6,6 +6,7 @@ namespace :stronghold do
     analysis = JSON.parse `brakeman -q -f json`
     case analysis['scan_info']['security_warnings'].to_i
     when 0
+      puts "No security issues found."
       exit 0
     else
       msg = "There are #{analysis['scan_info']['security_warnings']} potential security issues. Run brakeman locally for more info."
