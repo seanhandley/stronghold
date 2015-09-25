@@ -6,6 +6,6 @@ content = "<div class='successMessage'><h3>#{message}</h3>"
 %>
 
 $('.successMessage').remove();
-$('.success<%="#{object.id}"%>').before('<%= raw "#{escape_javascript content}" %>');
+$('.success<%= object.id %>').before('<%= escape_javascript(content).html_safe %>');
 
 $('form input:password').val('')

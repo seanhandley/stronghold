@@ -14,7 +14,7 @@ content << "</ul></div>"
 %>
 
 $('.errorExplanation').remove();
-$('.errors<%="#{object.id}"%>').before('<%= raw "#{escape_javascript content.join}" %>');
+$('.errors<%= object.id %>').before('<%= escape_javascript(content.join).html_safe %>');
 
 $('.error-close').click(function(){
   $('.errorExplanation').remove();
