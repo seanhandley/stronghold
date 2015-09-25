@@ -14,6 +14,8 @@ namespace :stronghold do
     end
     if rated_modules.values.flatten.count > 0
       Notifications.notify(:code_quality_analysis, "#{results.join('. ')}. Run rubycritic locally for more info.")
+    else
+      Notifications.notify(:code_quality_analysis, "All modules are rated A & B :heart_eyes_cat:")
     end
     puts results.join('. ')
     exit 0
