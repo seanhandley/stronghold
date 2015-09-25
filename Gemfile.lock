@@ -318,6 +318,7 @@ GEM
     kgio (2.9.2)
     launchy (2.4.3)
       addressable (~> 2.3)
+    let_it_go (0.0.3)
     libv8 (3.16.14.7)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
@@ -621,6 +622,7 @@ DEPENDENCIES
   js-routes (~> 0.9.9)
   kaminari (~> 0.16)
   launchy
+  let_it_go
   machinist
   maxmind (~> 0.4)
   minitest-rails

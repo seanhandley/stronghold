@@ -100,7 +100,8 @@ group :development do
   gem 'capistrano-bundler', '~> 1.1.2'
   gem 'net-ssh', '~> 2.8.0'
   gem 'spring', '~> 1.1.3'
-  gem 'web-console', '~> 2.0' 
+  gem 'web-console', '~> 2.0'
+  gem 'let_it_go'
 end
 
 group :development, :test do
