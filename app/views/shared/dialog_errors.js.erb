@@ -9,7 +9,7 @@ $('.successMessage').remove();
 content = Array.new
 content << "<div class='alert alert-danger errorExplanation'><a class='close error-close'>×</a>"
 content << "<ul>"
-object.errors.full_messages.each {|msg| content << "<li>#{msg}</li>" }
+object.errors.full_messages.each {|msg| content << "<li>#{h(msg)}</li>" }
 content << "</ul></div>"
 %>
 

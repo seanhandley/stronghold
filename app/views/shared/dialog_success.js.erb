@@ -2,7 +2,7 @@ $('.errorExplanation').remove();
 $('form *').removeClass('withError')
 
 <% 
-content = "<div class='successMessage'><h3>#{message}</h3>"
+content = "<div class='successMessage'><h3>#{h(message)}</h3>"
 %>
 
 $('.successMessage').remove();
