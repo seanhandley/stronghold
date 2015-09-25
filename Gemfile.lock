@@ -18,6 +18,13 @@ GIT
       mime-types
       xml-simple
 
+GIT
+  remote: https://github.com/vmg/redcarpet.git
+  revision: 73c66cfdcec7df760cad65cd56d6acfd97fa8dac
+  tag: v3.3.3
+  specs:
+    redcarpet (3.3.3)
+
 GEM
   remote: https://rubygems.org/
   remote: https://rails-assets.org/
@@ -429,7 +436,6 @@ GEM
     rake (10.4.2)
     rdoc (4.2.0)
     recaptcha (0.4.0)
-    redcarpet (3.1.2)
     redis (3.2.1)
     redis-namespace (1.5.2)
       redis (~> 3.0, >= 3.0.4)
@@ -648,7 +654,7 @@ DEPENDENCIES
   rails-assets-hideShowPassword (~> 2.0)!
   rails-assets-normalize-css (~> 3.0)!
   recaptcha
-  redcarpet (~> 3.1)
+  redcarpet!
   responders (~> 2.0)
   rest-client (~> 1.6)
   restforce (~> 1.5)
