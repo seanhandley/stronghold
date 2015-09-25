@@ -18,4 +18,4 @@ test:
     - bundle exec rake test:acceptance
     - bundle exec rake stronghold:security_analysis
     # This currently fails to run correctly on the Circle CI container
-    # - bundle exec rake stronghold:code_quality_analysis
+    - bundle exec rake stronghold:code_quality_analysis
