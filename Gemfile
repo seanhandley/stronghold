@@ -101,6 +101,9 @@ group :development do
   gem 'net-ssh', '~> 2.8.0'
   gem 'spring', '~> 1.1.3'
   gem 'web-console', '~> 2.0' 
+end
+
+group :development, :test do
   gem 'traceroute'
   gem 'brakeman', :require => false
   gem 'rack-mini-profiler'
