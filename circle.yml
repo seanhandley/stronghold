@@ -17,4 +17,5 @@ test:
     - bundle exec rake test:unit_and_functional
     - bundle exec rake test:acceptance
     - bundle exec rake stronghold:security_analysis
-    - bundle exec rake stronghold:code_quality_analysis
+    # - bundle exec rake stronghold:code_quality_analysis
+    - bundle exec rubycritic -f json
