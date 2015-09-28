@@ -7,17 +7,10 @@ class UserMenuTests < CapybaraTestCase
     find('button#user-menu').click
 
     sleep(2)
-
-    using_wait_time 10 do
-      # assert find(:xpath, "//a[@href='#{support_profile_path}']")
-      # assert find(:xpath, "//a[@href='#{support_edit_organization_path}']")
-      # assert find(:xpath, "//a[@href='#{support_audits_path}']")
-      # assert find(:xpath, "//a[@href='#{signout_path}']")
-      page.has_content?('My Profile')
-      page.has_content?('My Account')
-      page.has_content?('Audit Log')
-      page.has_content?('Limits')
-    end
+    page.has_content?('My Profile')
+    page.has_content?('My Account')
+    page.has_content?('Audit Log')
+    page.has_content?('Limits')
   end
 
   def test_user_can_logout
@@ -31,10 +24,8 @@ class UserMenuTests < CapybaraTestCase
 
     sleep(2)
 
-    using_wait_time 10 do
-      within('div#sign-in') do
-        assert has_content?('Sign In')
-      end
+    within('div#sign-in') do
+      assert has_content?('Sign In')
     end
     
   end
