@@ -12,7 +12,7 @@ if Rails.env.production? || Rails.env.staging?
     ActivationReminderJob.perform_later
   end
 
-  every(40.minutes, 'usage_cache_refresh') do
+  every(1.hour, 'usage_cache_refresh') do
     UsageCacheRefreshJob.perform_later
   end
 

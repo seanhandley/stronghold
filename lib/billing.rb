@@ -1,6 +1,11 @@
 module Billing
+  require_relative 'billing/external_gateways'
+  require_relative 'billing/floating_ips'
+  require_relative 'billing/images'
   require_relative 'billing/instances'
+  require_relative 'billing/storage_objects'
   require_relative 'billing/volumes'
+
 
   def self.sync!
     ActiveRecord::Base.transaction do
