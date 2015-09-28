@@ -21,7 +21,7 @@ class Mailer < ActionMailer::Base
     @week_beginning = @from.beginning_of_week.to_date.strftime("%A #{@from.day.ordinalize} %B %Y")
 
     csv_string = CSV.generate do |csv|
-      csv << ["Customer", "VCPU hours", "RAM TBh", "OpenStack Storage TBh", "Ceph Storage TBh", "Admin Contact" "Paying?", "Spend (£)"]
+      csv << ["Customer", "VCPU hours", "RAM TBh", "OpenStack Storage TBh", "Ceph Storage TBh", "Admin Contact", "Paying?", "Spend (£)"]
       data.each do |entry|
         csv << [entry[:name], entry[:vcpu_hours].round(1), entry[:ram_tb_hours].round(1), entry[:openstack_tb_hours].round(1),
                 entry[:ceph_tb_hours].round(1), entry[:contacts].join(','), entry[:paying], entry[:spend].round(2)]
