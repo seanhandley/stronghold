@@ -4,8 +4,10 @@ class UsageCacheRefreshJob < ActiveJob::Base
   def perform(organization=nil)
     return warm_cache(organization) if organization
 
-    Organization.active.each do |organization|
-      x = rand(5...300) # between 5 seconds and 5 minutes
+    dispersal_time = 300
+    spacing = dispersal_time / Organization.active.count
+    Organization.active.each_with_index do |organization, i|
+      x = (spacing * i) + 30
       UsageCacheRefreshJob.set(wait: x.seconds).perform_later(organization)
     end
   end
