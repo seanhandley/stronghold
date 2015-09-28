@@ -51,6 +51,7 @@ gem 'icalendar', '~> 2.3'
 gem 'holidays', '~> 2.2'
 gem 'skylight'
 
+
 group :test, :acceptance do
   gem 'faker'
   gem 'machinist'
@@ -115,4 +116,5 @@ end
 
 group :production do 
   gem 'unicorn-worker-killer', '~> 0.4.2'
+  gem 'sidekiq_memlimit'
 end

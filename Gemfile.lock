@@ -483,6 +483,8 @@ GEM
       json
       redis (>= 3.0.6)
       redis-namespace (>= 1.3.1)
+    sidekiq_memlimit (0.2)
+      sidekiq (>= 3.0)
     simplecov (0.9.1)
       docile (~> 1.1.0)
       multi_json (~> 1.0)
@@ -665,6 +667,7 @@ DEPENDENCIES
   sdoc (~> 0.4.0)
   select2-rails (~> 3.5.9.1)
   sidekiq (~> 3.3)
+  sidekiq_memlimit
   simplecov
   sinatra (>= 1.3.0)
   sirportly (~> 1.3)
