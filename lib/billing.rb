@@ -9,20 +9,20 @@ module Billing
   SECONDS_TO_HOURS = 3600.0
 
   def self.sync!
-    ActiveRecord::Base.transaction do
-      from = Billing::Sync.last.started_at
-      to   = Time.now
-      sync = Billing::Sync.create started_at: Time.now
-      Billing::Instances.sync!(from, to, sync)
-      Billing::Volumes.sync!(from, to, sync)
-      Billing::FloatingIps.sync!(from, to, sync)
-      Billing::IpQuotas.sync!(sync)
-      Billing::ExternalGateways.sync!(from, to, sync)
-      Billing::Images.sync!(from, to, sync)
-      Billing::StorageObjects.sync!(sync)
-      sync.update_attributes(completed_at: Time.now)
-      #raise ActiveRecord::Rollback
-    end
+    from = Billing::Sync.last.started_at
+    to   = Time.now
+    sync = Billing::Sync.create started_at: Time.now
+    Billing::Instances.sync!(from, to, sync)
+    Billing::Volumes.sync!(from, to, sync)
+    Billing::FloatingIps.sync!(from, to, sync)
+    Billing::IpQuotas.sync!(sync)
+    Billing::ExternalGateways.sync!(from, to, sync)
+    Billing::Images.sync!(from, to, sync)
+    Billing::StorageObjects.sync!(sync)
+    sync.update_attributes(completed_at: Time.now)
+  rescue StandardError => e
+    sync.destroy
+    raise
   end
 
   def self.fetch_samples(tenant_id, measurement, from, to)
