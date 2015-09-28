@@ -489,6 +489,7 @@ GEM
       hashie (>= 1.2.0, < 4.0)
       json (>= 1.7.5, < 1.9.0)
     rspec-logsplit (0.1.3)
+    ruby-prof (0.15.8)
     ruby2ruby (2.2.0)
       ruby_parser (~> 3.1)
       sexp_processor (~> 4.0)
@@ -530,8 +531,6 @@ GEM
       tilt (~> 1.3, >= 1.3.4)
     sirportly (1.3.6)
       multipart-post (~> 2.0.0)
-    skylight (0.8.0)
-      activesupport (>= 3.0.0)
     slack-notifier (1.2.1)
     slim (3.0.6)
       temple (~> 0.7.3)
@@ -696,6 +695,7 @@ DEPENDENCIES
   responders (~> 2.0)
   rest-client (~> 1.6)
   restforce (~> 1.5)
+  ruby-prof
   rubycritic
   sass-rails (~> 4.0.3)
   sdoc (~> 0.4.0)
@@ -704,7 +704,6 @@ DEPENDENCIES
   simplecov
   sinatra (>= 1.3.0)
   sirportly (~> 1.3)
-  skylight
   slack-notifier (~> 1.2)
   spring (~> 1.1.3)
   starburst (~> 1.0)
