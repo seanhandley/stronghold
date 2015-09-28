@@ -81,11 +81,11 @@ module Billing
     end
 
     def self.seconds_to_whole_hours(seconds)
-      ((seconds.to_f / 60.0) / 60.0).ceil
+      (seconds.to_f / Billing::SECONDS_TO_HOURS).ceil
     end
 
     def self.bytes_to_terabytes(bytes)
-      ((((bytes.to_f / 1024.0) / 1024.0) / 1024.0) / 1024.0)
+      bytes.to_f / 1_099_511_627_776
     end
 
     def self.terabytes_to_gigabytes(terabytes)
@@ -100,7 +100,7 @@ module Billing
           # This is a new image and we don't know its current size
           # Attempt to find out
           if(os_image = Fog::Image.new(OPENSTACK_ARGS).images.get(image_id))
-            image.image_states.create recorded_at: DateTime.now, size: bytes_to_terabytes(os_image.size.to_i),
+            image.image_states.create recorded_at: Time.now, size: bytes_to_terabytes(os_image.size.to_i),
                                             event_name: 'ping', billing_sync: sync,
                                             message_id: SecureRandom.hex
           end

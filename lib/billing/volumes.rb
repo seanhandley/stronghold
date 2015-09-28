@@ -81,7 +81,7 @@ module Billing
     end
 
     def self.seconds_to_whole_hours(seconds)
-      ((seconds / 60.0) / 60.0).ceil
+      (seconds / Billing::SECONDS_TO_HOURS).ceil
     end
 
     def self.gigabytes_to_terabytes(gigabytes)
@@ -96,7 +96,7 @@ module Billing
           # This is a new volume and we don't know its current size
           # Attempt to find out
           if(os_volume = Fog::Volume.new(OPENSTACK_ARGS).volumes.get(volume_id))
-            volume.volume_states.create recorded_at: DateTime.now, size: os_volume.size,
+            volume.volume_states.create recorded_at: Time.now, size: os_volume.size,
                                             event_name: 'ping', billing_sync: sync,
                                             message_id: SecureRandom.hex
           end

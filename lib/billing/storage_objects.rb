@@ -18,12 +18,12 @@ module Billing
       last = measurements.first
       gbs = measurements.collect do |measurement|
         
-        gb = (measurement.size.to_f * 1024.0 / 1000000000.0).ceil
+        gb = (measurement.size.to_f * 1024.0 / 1_000_000_000.0).ceil
         seconds = measurement.recorded_at - last.recorded_at
         last = measurement
         gb * seconds
       end.sum
-      gbs / 3600.0 / 1000.0
+      gbs / 3_600_000.0
     end
 
   end

@@ -19,7 +19,7 @@ module Billing
       end
       instances = instances.collect do |instance|
         billable_seconds = seconds(instance, from, to)
-        billable_hours = ((billable_seconds / 60.0) / 60.0).ceil
+        billable_hours = (billable_seconds / Billing::SECONDS_TO_HOURS).ceil
         {billable_seconds: billable_seconds,
                                        uuid: instance.instance_id,
                                        name: instance.name,
@@ -52,7 +52,7 @@ module Billing
         return split_cost(instance, from, to).nearest_penny
       else
         billable_seconds = seconds(instance, from, to)
-        billable_hours   = ((billable_seconds / 60.0) / 60.0).ceil
+        billable_hours   = (billable_seconds / Billing::SECONDS_TO_HOURS).ceil
         return (billable_hours * instance.rate.to_f).nearest_penny
       end
     end
@@ -68,7 +68,7 @@ module Billing
           if previous_state
             if billable?(previous_state.state)
               start = (states.first.recorded_at - from)
-              start = ((start / 60.0) / 60.0)
+              start = start / Billing::SECONDS_TO_HOURS
               start * previous_state.rate(instance.arch)
             end
           end
@@ -80,7 +80,7 @@ module Billing
               difference = state.recorded_at - previous.recorded_at
             end
             begin
-              difference = ((difference / 60.0) / 60.0)
+              difference = difference / Billing::SECONDS_TO_HOURS
               difference * previous.rate(instance.arch)
             ensure
               previous = state
@@ -91,7 +91,7 @@ module Billing
 
           if(billable?(states.last.state))
             ending = (to - states.last.recorded_at)
-            ending = ((ending / 60.0) / 60.0)
+            ending = ending / Billing::SECONDS_TO_HOURS
             ending * states.last.rate(instance.arch)
           end
 
@@ -100,7 +100,7 @@ module Billing
           # Only one sample for this period
           if billable?(states.first.state)
             time = (to - states.first.recorded_at)
-            time = ((time / 60.0) / 60.0)
+            time = time / Billing::SECONDS_TO_HOURS
             return time * states.first.rate(instance.arch)
           else
             return 0
@@ -109,7 +109,7 @@ module Billing
       else
         if previous_state && billable?(previous_state.state)
           time = (to - from)
-          time = ((time / 60.0) / 60.0)
+          time = time / Billing::SECONDS_TO_HOURS
           return time * previous_state.rate(instance.arch)
         else
           return 0
@@ -179,7 +179,7 @@ module Billing
           # This is a new instance and we don't know its current state.
           # Attempt to find out
           if(os_instance = Fog::Compute.new(OPENSTACK_ARGS).servers.get(instance_id))
-            instance.instance_states.create recorded_at: DateTime.now, state: os_instance.state.downcase,
+            instance.instance_states.create recorded_at: Time.now, state: os_instance.state.downcase,
                                             event_name: 'ping', billing_sync: sync,
                                             message_id: SecureRandom.hex
           end

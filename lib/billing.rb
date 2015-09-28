@@ -6,6 +6,7 @@ module Billing
   require_relative 'billing/storage_objects'
   require_relative 'billing/volumes'
 
+  SECONDS_TO_HOURS = 3600.0
 
   def self.sync!
     ActiveRecord::Base.transaction do
