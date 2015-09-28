@@ -5,7 +5,8 @@ class UsageCacheRefreshJob < ActiveJob::Base
     return warm_cache(organization) if organization
 
     Organization.active.each do |organization|
-      UsageCacheRefreshJob.perform_later(organization)
+      x = rand(5...300) # between 5 seconds and 5 minutes
+      UsageCacheRefreshJob.set(wait: x.seconds).perform_later(organization)
     end
   end
 
