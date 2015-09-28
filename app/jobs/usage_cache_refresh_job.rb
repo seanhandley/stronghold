@@ -4,7 +4,7 @@ class UsageCacheRefreshJob < ActiveJob::Base
   def perform(organization=nil)
     return warm_cache(organization) if organization
 
-    dispersal_time = 300
+    dispersal_time = 600
     spacing = dispersal_time / Organization.active.count
     Organization.active.each_with_index do |organization, i|
       x = (spacing * i) + 30
