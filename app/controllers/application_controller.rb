@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
 
   rescue_from ActionController::InvalidAuthenticityToken do |exception|
     reset_session
-    redirect_to_root(exception)
+    redirect_to sign_in_url
   end
 
   before_filter :device_cookie
