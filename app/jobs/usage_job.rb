@@ -8,9 +8,9 @@ class UsageJob < ActiveJob::Base
   private
 
   def already_running?
-    Sidekiq::Workers.new.each do |process_id, thread_id, work|
-      return true if work['payload']['wrapped'] == 'UsageJob' && work['payload']['jid'] != job_id
-    end
-    false
+    usage_job_count = Sidekiq::Workers.new.select do |process_id, thread_id, work|
+      work['payload']['wrapped'] == 'UsageJob'
+    end.count
+    usage_job_count > 1
   end
 end
