@@ -35,6 +35,11 @@ class AuthorizedController < ApplicationController
     redirect_to_root(exception)
   end
 
+  rescue_from ActionController::InvalidAuthenticityToken do |exception|
+    reset_session
+    redirect_to_root(exception)
+  end
+
   private
 
   def redirect_to_root(exception=nil)
