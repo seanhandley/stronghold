@@ -24,7 +24,7 @@ class UsageCacheRefreshJob < ActiveJob::Base
     usage_cache_refresh_job_count = Sidekiq::Workers.new.select do |process_id, thread_id, work|
       work['payload']['wrapped'] == 'UsageCacheRefreshJob' &&
       work['payload']['args'].count > 0 &&
-      org_id_from_global(work['payload']['args'].first) == @organization.id
+      org_id_from_global(work['payload']['args']) == @organization.id
     end.count
     usage_cache_refresh_job_count > 1
   end
