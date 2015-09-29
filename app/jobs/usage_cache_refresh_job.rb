@@ -2,7 +2,7 @@ class UsageCacheRefreshJob < ActiveJob::Base
   queue_as :usage_cache
 
   def perform(organization=nil)
-    return warm_cache(organization) if !already_running?(organization)
+    return warm_cache(organization) unless already_running?(organization)
     
     dispersal_time = 600
     spacing = dispersal_time / Organization.active.count
@@ -20,10 +20,12 @@ class UsageCacheRefreshJob < ActiveJob::Base
   end
 
   def already_running?(organization)
+    return false unless organization
+
     usage_cache_refresh_job_count = Sidekiq::Workers.new.select do |process_id, thread_id, work|
       work['payload']['wrapped'] == 'UsageCacheRefreshJob' &&
-      work['payload']['args'].count > 0 &&
-      org_id_from_global(work['payload']['args'].first) == organization.id
+      work['payload']['args'].first['arguments'].count > 0 &&
+      org_id_from_global(work['payload']['args'].first['arguments'].first) == organization.id
     end.count
     usage_cache_refresh_job_count > 1
   end
