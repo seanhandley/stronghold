@@ -3,9 +3,10 @@ module Billing
 
     def self.sync!(from, to, sync)
       Tenant.all.each do |tenant|
-        next unless tenant.uuid
-        Billing.fetch_samples(tenant.uuid, "ip.floating", from, to).each do |ip_id, samples|
-          create_new_states(tenant.uuid, ip_id, samples, sync)
+        tenant_uuid = tenant.uuid
+        next unless tenant_uuid
+        Billing.fetch_samples(tenant_uuid, "ip.floating", from, to).each do |ip_id, samples|
+          create_new_states(tenant_uuid, ip_id, samples, sync)
         end
       end
     end
@@ -19,12 +20,14 @@ module Billing
                                      quota: quota}
         usage
       end
-      total.select{|k,v| v[:billable_seconds] > 0}
+      total.select{|_,value| value[:billable_seconds] > 0}
     end
 
     def self.seconds(ip, from, to)
       states = ip.ip_states.where(:recorded_at => from..to).order('recorded_at')
       previous_state = ip.ip_states.where('recorded_at < ?', from).order('recorded_at DESC').limit(1).first
+      first_state = states.first
+      last_state = states.last
 
       if states.any?
         if states.count > 1
@@ -32,11 +35,11 @@ module Billing
 
           if previous_state
             if billable?(previous_state)
-              start = (states.first.recorded_at - from)
+              start = (first_state.recorded_at - from)
             end
           end
 
-          previous = states.first
+          previous = first_state
           middle = states.collect do |state|
             difference = 0
             if billable?(previous)
@@ -48,15 +51,15 @@ module Billing
 
           ending = 0
 
-          if(billable?(states.last))
-            ending = (to - states.last.recorded_at)
+          if(billable?(last_state))
+            ending = (to - last_state.recorded_at)
           end
 
           return (start + middle + ending).round
         else
           # Only one sample for this period
-          if billable?(states.first)
-            return (to - states.first.recorded_at).round
+          if billable?(first_state)
+            return (to - first_state.recorded_at).round
           else
             return 0
           end
@@ -79,7 +82,7 @@ module Billing
       unless Billing::Ip.find_by_ip_id(ip_id)
         ip = Billing::Ip.create(ip_id: ip_id, tenant_id: tenant_id,
                                         address: first_sample_metadata["floating_ip_address"])
-        unless samples.any? {|s| s['resource_metadata']['event_type']}
+        unless samples.any? {|sample| sample['resource_metadata']['event_type']}
           # This is a new volume and we don't know its current size
           # Attempt to find out
           if(os_ip = Fog::Network.new(OPENSTACK_ARGS).ips.get(ip_id))
@@ -90,12 +93,13 @@ module Billing
         end
       end
       billing_ip_id = Billing::Ip.find_by_ip_id(ip_id).id
-      samples.collect do |s|
-        if s['resource_metadata']['event_type']
-          Billing::IpState.create ip_id: billing_ip_id, recorded_at: Time.zone.parse("#{s['recorded_at']} UTC"),
-                                      port: s['resource_metadata']['port_id'],
-                                      event_name: s['resource_metadata']['event_type'], billing_sync: sync,
-                                      message_id: s['message_id']
+      samples.collect do |sample|
+        meta_data = sample['resource_metadata']
+        if meta_data['event_type']
+          Billing::IpState.create ip_id: billing_ip_id, recorded_at: Time.zone.parse("#{sample['recorded_at']} UTC"),
+                                      port: meta_data['port_id'],
+                                      event_name: meta_data['event_type'], billing_sync: sync,
+                                      message_id: sample['message_id']
         end
       end
     end

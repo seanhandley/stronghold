@@ -3,9 +3,10 @@ module Billing
 
     def self.sync!(from, to, sync)
       Tenant.all.each do |tenant|
-        next unless tenant.uuid
-        Billing.fetch_samples(tenant.uuid, "instance", from, to).each do |instance_id, samples|
-          create_new_states(tenant.uuid, instance_id, samples, sync)
+        tenant_uuid = tenant.uuid
+        next unless tenant_uuid
+        Billing.fetch_samples(tenant_uuid, "instance", from, to).each do |instance_id, samples|
+          create_new_states(tenant_uuid, instance_id, samples, sync)
         end
       end
     end
@@ -20,6 +21,7 @@ module Billing
       instances = instances.collect do |instance|
         billable_seconds = seconds(instance, from, to)
         billable_hours = (billable_seconds / Billing::SECONDS_TO_HOURS).ceil
+        instance_flavor = instance.instance_flavor
         {billable_seconds: billable_seconds,
                                        uuid: instance.instance_id,
                                        name: instance.name,
@@ -33,17 +35,17 @@ module Billing
                                        arch: instance.arch,
                                        flavor: {
                                          flavor_id: instance.flavor_id,
-                                         name: instance.instance_flavor.name,
-                                         vcpus_count: instance.instance_flavor.vcpus,
-                                         ram_mb: instance.instance_flavor.ram,
-                                         root_disk_gb: instance.instance_flavor.disk,
-                                         rate: instance.instance_flavor.rate},
+                                         name: instance_flavor.name,
+                                         vcpus_count: instance_flavor.vcpus,
+                                         ram_mb: instance_flavor.ram,
+                                         root_disk_gb: instance_flavor.disk,
+                                         rate: instance_flavor.rate},
                                        image: {
                                          image_id: instance.image_id,
                                          name: instance.instance_image ? instance.instance_image.name : ''}
                                        }
       end
-      instances.select{|i| i[:billable_seconds] > 0}
+      instances.select{|instance| instance[:billable_seconds] > 0}
     end
 
     def self.cost(instance, from, to)
@@ -60,6 +62,9 @@ module Billing
     def self.split_cost(instance, from, to)
       states = instance.fetch_states(from, to)
       previous_state = instance.instance_states.where('recorded_at < ?', from).order('recorded_at DESC').limit(1).first
+      first_state = states.first
+      last_state = states.last
+      arch = instance.arch
 
       if states.any?
         if states.count > 1
@@ -67,9 +72,9 @@ module Billing
 
           if previous_state
             if billable?(previous_state.state)
-              start = (states.first.recorded_at - from)
+              start = (first_state.recorded_at - from)
               start = start / Billing::SECONDS_TO_HOURS
-              start * previous_state.rate(instance.arch)
+              start * previous_state.rate(arch)
             end
           end
 
@@ -81,7 +86,7 @@ module Billing
             end
             begin
               difference = difference / Billing::SECONDS_TO_HOURS
-              difference * previous.rate(instance.arch)
+              difference * previous.rate(arch)
             ensure
               previous = state
             end
@@ -89,19 +94,19 @@ module Billing
 
           ending = 0
 
-          if(billable?(states.last.state))
-            ending = (to - states.last.recorded_at)
+          if(billable?(last_state.state))
+            ending = (to - last_state.recorded_at)
             ending = ending / Billing::SECONDS_TO_HOURS
-            ending * states.last.rate(instance.arch)
+            ending * last_state.rate(arch)
           end
 
           return (start + middle + ending)
         else
           # Only one sample for this period
-          if billable?(states.first.state)
-            time = (to - states.first.recorded_at)
+          if billable?(first_state.state)
+            time = (to - first_state.recorded_at)
             time = time / Billing::SECONDS_TO_HOURS
-            return time * states.first.rate(instance.arch)
+            return time * first_state.rate(arch)
           else
             return 0
           end
@@ -110,7 +115,7 @@ module Billing
         if previous_state && billable?(previous_state.state)
           time = (to - from)
           time = time / Billing::SECONDS_TO_HOURS
-          return time * previous_state.rate(instance.arch)
+          return time * previous_state.rate(arch)
         else
           return 0
         end
@@ -120,6 +125,8 @@ module Billing
     def self.seconds(instance, from, to)
       states = instance.fetch_states(from, to)
       previous_state = instance.instance_states.where('recorded_at < ?', from).order('recorded_at DESC').limit(1).first
+      first_state = states.first
+      last_state = states.last
 
       if states.any?
         if states.count > 1
@@ -127,11 +134,11 @@ module Billing
 
           if previous_state
             if billable?(previous_state.state)
-              start = (states.first.recorded_at - from)
+              start = (first_state.recorded_at - from)
             end
           end
 
-          previous = states.first
+          previous = first_state
           middle = states.collect do |state|
             difference = 0
             if billable?(previous.state)
@@ -143,15 +150,15 @@ module Billing
 
           ending = 0
 
-          if(billable?(states.last.state))
-            ending = (to - states.last.recorded_at)
+          if(billable?(last_state.state))
+            ending = (to - last_state.recorded_at)
           end
 
           return (start + middle + ending).round
         else
           # Only one sample for this period
-          if billable?(states.first.state)
-            return (to - states.first.recorded_at).round
+          if billable?(first_state.state)
+            return (to - first_state.recorded_at).round
           else
             return 0
           end
@@ -175,7 +182,7 @@ module Billing
       unless Billing::Instance.find_by_instance_id(instance_id)
         instance = Billing::Instance.create(instance_id: instance_id, tenant_id: tenant_id, name: first_sample_metadata["display_name"],
                                  flavor_id: flavor_id, image_id: first_sample_metadata["image_ref_url"].split('/').last)
-        unless samples.any? {|s| s['resource_metadata']['event_type']}
+        unless samples.any? {|sample| sample['resource_metadata']['event_type']}
           # This is a new instance and we don't know its current state.
           # Attempt to find out
           if(os_instance = Fog::Compute.new(OPENSTACK_ARGS).servers.get(instance_id))
@@ -203,15 +210,16 @@ module Billing
         billing_instance.update_attributes(name: first_sample_metadata["display_name"])
       end
 
-      samples.collect do |s|
-        if s['resource_metadata']['event_type']
-          Billing::InstanceState.create instance_id: billing_instance.id, recorded_at: Time.zone.parse("#{s['recorded_at']} UTC"),
-                                        state: s['resource_metadata']['state'] ? s['resource_metadata']['state'].downcase : 'active',
-                                        event_name: s['resource_metadata']['event_type'], billing_sync: sync,
-                                        message_id: s['message_id'],
-                                        flavor_id: s['resource_metadata']["instance_flavor_id"]
-          unless s['resource_metadata']['architecture'].empty? || s['resource_metadata']['architecture'].downcase == 'none'
-            billing_instance.update_attributes(arch: s['resource_metadata']['architecture'])
+      samples.collect do |sample|
+        meta_data = sample['resource_metadata']
+        if meta_data['event_type']
+          Billing::InstanceState.create instance_id: billing_instance.id, recorded_at: Time.zone.parse("#{sample['recorded_at']} UTC"),
+                                        state: meta_data['state'] ? meta_data['state'].downcase : 'active',
+                                        event_name: meta_data['event_type'], billing_sync: sync,
+                                        message_id: sample['message_id'],
+                                        flavor_id: meta_data["instance_flavor_id"]
+          unless meta_data['architecture'].empty? || meta_data['architecture'].downcase == 'none'
+            billing_instance.update_attributes(arch: meta_data['architecture'])
           end
         end
       end
