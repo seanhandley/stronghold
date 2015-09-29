@@ -2,7 +2,10 @@ class UsageCacheRefreshJob < ActiveJob::Base
   queue_as :usage_cache
 
   def perform(organization=nil)
-    return warm_cache(organization) unless already_running?(organization)
+    if organization
+      warm_cache(organization) unless already_running?(organization)
+      return
+    end
     
     dispersal_time = 600
     spacing = dispersal_time / Organization.active.count
