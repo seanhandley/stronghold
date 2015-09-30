@@ -30,7 +30,8 @@ module Billing
     end
 
     def instance_flavor
-      instance_states.order('recorded_at').last.try(:instance_flavor) { Billing::InstanceFlavor.find(flavor_id) }
+      flavor = instance_states.order('recorded_at').last.try(:instance_flavor)
+      flavor || Billing::InstanceFlavor.find(flavor_id)
     end
 
     def fetch_states(from, to)
