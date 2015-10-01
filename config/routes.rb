@@ -58,7 +58,7 @@ Rails.application.routes.draw do
           post 'mail'
         end
       end
-      resources :pending_invoices, only: [:index, :update]
+      resources :pending_invoices, only: [:index, :update, :destroy]
     end
   #end
 

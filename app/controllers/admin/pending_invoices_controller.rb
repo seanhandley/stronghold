@@ -21,6 +21,17 @@ class Admin::PendingInvoicesController < AdminBaseController
     end
   end
 
+  def destroy
+    @invoice = Billing::Invoice.find(params[:id])
+    if @invoice.destroy
+      javascript_redirect_to admin_pending_invoices_path
+    else
+      respond_to do |format|
+        format.js { render :template => "shared/dialog_errors", :locals => {:object => @invoice } }
+      end
+    end
+  end
+
   private
 
   def update_params

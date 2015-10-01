@@ -25,6 +25,9 @@
           %td== #{invoice.discount_percent}%
           %td
             = link_to 'Finalize?', '', class: 'btn btn-success', 'data-toggle' => "modal", 'data-target' => "#editInvoice#{invoice.id}"
+          %td
+            = link_to 'Dismiss', admin_pending_invoice_path(invoice), class: 'btn btn-danger', 'data-method' => "delete", 'data-confirm' => "This can't be undone. Are you sure?"
+- else
   .push
   %p.tiny * After tax and discounts.
 - else
