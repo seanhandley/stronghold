@@ -8,8 +8,8 @@
     %thead
       %th Reporting Code
       %th Organization
-      %th Sub total
-      %th Grand total*
+      %th Sub total (including discounts)
+      %th Grand total (including tax)
       %th Tax
       %th Discount
       %th
@@ -27,8 +27,6 @@
             = link_to 'Finalize?', '', class: 'btn btn-success', 'data-toggle' => "modal", 'data-target' => "#editInvoice#{invoice.id}"
           %td
             = link_to 'Dismiss', admin_pending_invoice_path(invoice), 'class' => 'btn btn-danger', 'data-method' => "delete", 'data-confirm' => "This can't be undone. Are you sure?"
-  .push
-  %p.tiny * After tax and discounts.
 - else
   .push
   .alert.alert-warning No pending invoices found.
