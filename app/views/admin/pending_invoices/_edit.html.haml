@@ -14,11 +14,8 @@
             %label Salesforce Invoice Number
             = f.text_field :salesforce_invoice_id, :class => 'form-control', placeholder: 'i.e. SIN001234'
           .form-group
-            %label Sub Total
-            = f.number_field :sub_total, :class => 'form-control'
-          .form-group
-            %label Tax Percent
-            = f.number_field :tax_percent, :class => 'form-control', min: 0, max: 100, step: 1
+            %label Grand Total (Includes Tax And Discounts)
+            = f.number_field :grand_total, :class => 'form-control'
                
         .modal-footer
           %button.btn.btn-default{'data-toggle' => "modal", 'data-dismiss' => "modal"}

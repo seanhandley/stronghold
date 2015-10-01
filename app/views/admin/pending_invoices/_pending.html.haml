@@ -8,8 +8,7 @@
     %thead
       %th Reporting Code
       %th Organization
-      %th Sub total (including discounts)
-      %th Grand total (including tax)
+      %th Grand total (including tax and discounts)
       %th Tax
       %th Discount
       %th
@@ -19,8 +18,7 @@
         %tr
           %td= invoice.organization.reporting_code
           %td= invoice.organization.name
-          %td== £#{number_with_precision(invoice.sub_total, :delimiter => ',', :separator => '.', :precision => 2)}
-          %td== £#{number_with_precision(invoice.grand_total_plus_tax, :delimiter => ',', :separator => '.', :precision => 2)}
+          %td== £#{number_with_precision(invoice.grand_total, :delimiter => ',', :separator => '.', :precision => 2)}
           %td== #{invoice.tax_percent}%
           %td== #{invoice.discount_percent}%
           %td

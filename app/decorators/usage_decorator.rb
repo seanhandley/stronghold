@@ -175,6 +175,10 @@ class UsageDecorator < ApplicationDecorator
     totals.sum
   end
 
+  def grand_total_plus_tax
+    grand_total + (grand_total * 0.2)
+  end
+
   private
 
   def timestamp_format
