@@ -35,8 +35,7 @@ class Admin::PendingInvoicesController < AdminBaseController
   private
 
   def update_params
-    params.require(:billing_invoice).permit(:salesforce_invoice_id, :sub_total,
-      :tax_percent)
+    params.require(:billing_invoice).permit(:salesforce_invoice_id, :grand_total)
   end
 
   def show_finalized?
