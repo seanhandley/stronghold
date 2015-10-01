@@ -23,8 +23,7 @@ module Billing
                                                 currency: currency,
                                                 description: invoice_description)
 
-        invoice = Stripe::Invoice.create(customer: organization.stripe_customer_id,
-                                       tax_percent: tax_percent)
+        invoice = Stripe::Invoice.create(customer: organization.stripe_customer_id)
         update_attributes(stripe_invoice_id: invoice.id)
       rescue StandardError => e
         if invoice_item
