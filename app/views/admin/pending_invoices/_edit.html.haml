@@ -17,13 +17,6 @@
             %label Sub Total
             = f.number_field :sub_total, :class => 'form-control'
           .form-group
-            %label Grand Total
-            = f.number_field :grand_total_plus_tax, :class => 'form-control', disabled: true
-            %p.help-block After Tax
-          .form-group
-            %label Discount Percent
-            = f.number_field :discount_percent, :class => 'form-control', min: 0, max: 100, step: 1
-          .form-group
             %label Tax Percent
             = f.number_field :tax_percent, :class => 'form-control', min: 0, max: 100, step: 1
                
