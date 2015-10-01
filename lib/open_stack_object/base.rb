@@ -30,7 +30,7 @@ module OpenStackObject
     #   instance.to_s # => #<OpenStack::Instance:23122dfc-8aee-421a-8503-874c92ab0900 @name="Foo", @state="ACTIVE", @all_addresses=[]>
     #
     def to_s
-      "#<#{self.class.to_s}:#{id} #{@@attributes.collect{|d| "@#{d}=#{send(d.to_sym).inspect}"}.join ', '}>"
+      "#<#{self.class.to_s}:#{id} #{@@attributes.collect{|attribute| "@#{attribute}=#{send(attribute.to_sym).inspect}"}.join ', '}>"
     end
 
     # UUID of the OpenStack object
@@ -61,8 +61,8 @@ module OpenStackObject
     # @return [OpenStackObject::Base] Updated object
     def update(args)
       obj.update(args)
-      args.each do |k,v|
-        obj.send("#{k.to_sym}=", v)
+      args.each do |key,value|
+        obj.send("#{key.to_sym}=", value)
       end
       self
     end
@@ -73,7 +73,7 @@ module OpenStackObject
       #
       # @return [Array] of type [OpenStackObject::Base]
       def all
-        conn.send(collection_name).map{|s| new s }
+        conn.send(collection_name).map{|item| new item }
       end
 
       # Find all items in the supplied collection where the supplied
@@ -83,8 +83,8 @@ module OpenStackObject
       # @param [String] value the value to be found
       # @return [Array] of type [OpenStackObject::Base] where the attribute matches the value
       def find_all_by(attribute, value)
-        [conn.send(collection_name).find {|s| s.send(attribute.to_sym) == value}].flatten.compact.map do |s|
-          new s  
+        [conn.send(collection_name).find {|item| item.send(attribute.to_sym) == value}].flatten.compact.map do |item|
+          new item
         end
       end
 
@@ -93,7 +93,7 @@ module OpenStackObject
       # @param [String] id the ID of the item
       # @return [OpenStackObject::Base] Object with this ID, otherwise nil
       def find(id)
-        result = [conn.send(collection_name).find {|s| s.id == id}].flatten.first
+        result = [conn.send(collection_name).find {|item| item.id == id}].flatten.first
         result ? new(result) : nil
       end
 
@@ -110,10 +110,11 @@ module OpenStackObject
 
       def conn
         args = OPENSTACK_ARGS.dup
-        if Authorization.current_user.present? && !Authorization.current_user.admin?
-          username   = Authorization.current_user.email
-          tenant     = Authorization.current_user.organization.primary_tenant.reference
-          token      = Authorization.current_user.token
+        current_user = Authorization.current_user
+        if current_user.present? && !current_user.admin?
+          username   = current_user.email
+          tenant     = current_user.organization.primary_tenant.reference
+          token      = current_user.token
           args.merge!(:openstack_username   => username,
                       :openstack_auth_token => token,
                       :openstack_tenant     => tenant,
@@ -135,7 +136,7 @@ module OpenStackObject
       Audited::Adapters::ActiveRecord::Audit.create auditable: self, action: action, comment: self.name,
                    user: Authorization.current_user,
                    organization_id: Authorization.current_user.organization_id,
-                   audited_changes: Hash[(@@attributes + ['id']).collect{|d| [d.to_s,self.send(d.to_sym)]}]
+                   audited_changes: Hash[(@@attributes + ['id']).collect{|item| [item.to_s,self.send(item.to_sym)]}]
     end
 
     private
@@ -157,7 +158,7 @@ module OpenStackObject
     # These will be passed to the OpenStack object and its response returned.
     #
     def self.attributes(*args)
-      @@attributes = args.each{|a| class_eval{|c| delegate a.to_sym, to: :obj}}
+      @@attributes = args.each{|arg| class_eval{|_| delegate arg.to_sym, to: :obj}}
     end
 
     # Given a list of methods, add them as method delegates to the underlying
@@ -173,7 +174,7 @@ module OpenStackObject
     #
     def self.methods(*args)
       args = [args + default_methods].uniq.flatten.compact
-      args.each{|a| class_eval{|c| delegate a.to_sym, to: :obj}}
+      args.each{|arg| class_eval{|_| delegate arg.to_sym, to: :obj}}
     end
 
     # The object we get back from OpenStack via the Fog gem
@@ -194,14 +195,14 @@ module OpenStackObject
     def service_method(&block)
       yield(obj.service)
       self
-    rescue Excon::Errors::Conflict => e
-      raise OpenStackObject::Error, api_error_message(e)
-    rescue Fog::Compute::OpenStack::NotFound => e
+    rescue Excon::Errors::Conflict => error
+      raise OpenStackObject::Error, api_error_message(error)
+    rescue Fog::Compute::OpenStack::NotFound => error
       raise OpenStackObject::Error, 'Could not find that object'
     end
 
-    def api_error_message(e)
-      body = JSON.parse(e.response.data[:body])
+    def api_error_message(error_object)
+      body = JSON.parse(error_object.response.data[:body])
       if body['conflictingRequest']
         return body['conflictingRequest']['message']
       else
