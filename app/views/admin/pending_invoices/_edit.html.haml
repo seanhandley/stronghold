@@ -7,12 +7,24 @@
             &times;
           %h4.modal-title
             Finalize Invoice
-          %p Please enter the invoice number from Salesforce
+          %p Please enter the invoice number from Salesforce and make corrections
         .modal-body
           = javascript_error_messages_for(f.object)
           .form-group
             %label Salesforce Invoice Number
             = f.text_field :salesforce_invoice_id, :class => 'form-control', placeholder: 'i.e. SIN001234'
+          .form-group
+            %label Sub Total
+            = f.number_field :sub_total, :class => 'form-control'
+          .form-group
+            %label Grand Total
+            = f.number_field :grand_total, :class => 'form-control'
+          .form-group
+            %label Discount Percent
+            = f.number_field :discount_percent, :class => 'form-control', min: 0, max: 100, step: 1
+          .form-group
+            %label Tax Percent
+            = f.number_field :tax_percent, :class => 'form-control', min: 0, max: 100, step: 1
                
         .modal-footer
           %button.btn.btn-default{'data-toggle' => "modal", 'data-dismiss' => "modal"}
