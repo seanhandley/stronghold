@@ -1,3 +1,9 @@
+machine:
+  timezone:
+    Europe/London
+  ruby:
+    version: 2.2.3p173
+
 dependencies:
   pre:
     - sudo rm -rf /var/lib/apt/lists/*
