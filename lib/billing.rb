@@ -42,15 +42,15 @@ module Billing
 
   # No caching - use for auditing
   def self.fetch_raw_events_for_instance(instance, from, to)
-  options = [{'field' => 'timestamp', 'op' => 'ge', 'value' => from.utc.strftime(timestamp_format)},
-                   {'field' => 'timestamp', 'op' => 'lt', 'value' => to.utc.strftime(timestamp_format)},
-                   {'field' => 'project_id', 'op' => 'eq', 'value' => instance.tenant_id}]
+    options = [{'field' => 'timestamp', 'op' => 'ge', 'value' => from.utc.strftime(timestamp_format)},
+                     {'field' => 'timestamp', 'op' => 'lt', 'value' => to.utc.strftime(timestamp_format)},
+                     {'field' => 'project_id', 'op' => 'eq', 'value' => instance.tenant_id}]
 
-  instance_results = Fog::Metering.new(OPENSTACK_ARGS).get_samples(measurement, options).body
-  grouped_results = instance_results.group_by{|s| s['resource_id']}
-  instance_events = grouped_results[instance.instance_id]
-  instance_events.collect{|i| i['resource_metadata']['event_type'] ? [i['resource_metadata']['event_type'], i['recorded_at']] : nil}.compact.reverse
-end
+    instance_results = Fog::Metering.new(OPENSTACK_ARGS).get_samples('instance', options).body
+    grouped_results = instance_results.group_by{|s| s['resource_id']}
+    instance_events = grouped_results[instance.instance_id]
+    instance_events.collect{|i| i['resource_metadata']['event_type'] ? [i['resource_metadata']['event_type'], i['recorded_at']] : nil}.compact.reverse
+  end
 
   def self.timestamp_format
     "%Y-%m-%dT%H:%M:%S"
