@@ -22,7 +22,7 @@ Recaptcha.configuration.skip_verify_env << 'acceptance'
 # Capybara.app_host = CAPYBARA_CONFIG['url']
 
 Capybara.server_port = 63346
-Capybara.default_wait_time = 5
+Capybara.default_max_wait_time = 5
 
 ## Uncomment this to help debug JS errors
 
@@ -78,12 +78,6 @@ module LoggingIn
   end     
 end
 
-Minitest.after_run do
-  Organization.destroy_all rescue nil
-  User.destroy_all rescue nil
-  DatabaseCleaner.clean
-end
-
 class CapybaraTestCase < Minitest::Test
   include Rails.application.routes.url_helpers
   include Capybara::DSL
@@ -96,4 +90,10 @@ class CapybaraTestCase < Minitest::Test
   def teardown
     Capybara.reset_sessions!
   end
+end
+
+Minitest.after_run do
+  Organization.destroy_all
+  User.destroy_all
+  DatabaseCleaner.clean
 end
