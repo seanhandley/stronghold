@@ -39,6 +39,6 @@
           = t(:audit_log)
     %li.divider
     %li
-      %a{:href => signout_path}
+      %a{:href => signout_path, data: { confirm: "#{t(:sign_out)}?", :method => :post }}
         %i.fa.fa-sign-out
         = t(:sign_out)
