@@ -96,7 +96,7 @@ class AuthorizedController < ApplicationController
     if session
       session[:created_at] = Time.now.utc unless session[:created_at]
 
-      if (Time.now.utc - Time.parse(session[:created_at].to_s)) > SESSION_TIMEOUT.minutes
+      if (Time.now.utc - Time.parse(session[:created_at].to_s).utc) > SESSION_TIMEOUT.minutes
         reset_session
         redirect_to sign_in_path, notice: t(:signed_out_after_timeout)
       end

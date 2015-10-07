@@ -4,6 +4,7 @@ class SessionsController < ApplicationController
   before_filter :check_for_user, except: [:destroy]
   
   def new
+    reset_session
     respond_to do |wants|
       wants.html
     end
