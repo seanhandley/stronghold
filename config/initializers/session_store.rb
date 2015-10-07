@@ -4,4 +4,7 @@ if defined?(APP_DOMAIN)
   keys.merge!(domain: APP_DOMAIN)
 end
 
-Rails.application.config.session_store ActionDispatch::Session::MemCacheStore, keys
+# If we want to use memcached
+# Rails.application.config.session_store ActionDispatch::Session::MemCacheStore, keys
+
+Rails.application.config.session_store :cookie_store, keys
