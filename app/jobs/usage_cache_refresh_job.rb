@@ -10,7 +10,7 @@ class UsageCacheRefreshJob < ActiveJob::Base
     dispersal_time = 3000
     spacing = dispersal_time / Organization.active.count
     Organization.active.each_with_index do |organization, i|
-      x = (spacing * i * 1.5) + 30
+      x = (spacing * i * 1.1) + 5
       UsageCacheRefreshJob.set(wait: x.seconds).perform_later(organization)
     end
   end
@@ -18,7 +18,7 @@ class UsageCacheRefreshJob < ActiveJob::Base
   private
 
   def warm_cache(organization)
-    sleep rand(1..5)
+    sleep rand(500..5000) / 1000.0
     ud = UsageDecorator.new(organization)
     ud.usage_data(from_date: Time.now.beginning_of_month, to_date: Time.now)
   end
