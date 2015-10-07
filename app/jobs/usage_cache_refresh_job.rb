@@ -9,7 +9,7 @@ class UsageCacheRefreshJob < ActiveJob::Base
     
     dispersal_time = 3000
     spacing = dispersal_time / Organization.active.count
-    Organization.active.each_with_index do |organization, i|
+    Organization.active.to_a.shuffle.each_with_index do |organization, i|
       x = (spacing * i * 1.1) + 5
       UsageCacheRefreshJob.set(wait: x.seconds).perform_later(organization)
     end
