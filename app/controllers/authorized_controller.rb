@@ -1,7 +1,7 @@
 require 'open_stack_object'
 
 class AuthorizedController < ApplicationController
-  before_filter :current_user, :authenticate_user!
+  before_filter :current_user, :authenticate_user!, :timeout_session!
   before_filter { Authorization.current_user = current_user }
   before_filter { Authorization.current_user.token = session[:token] }
   around_filter :user_time_zone, :if => :current_user
@@ -16,6 +16,7 @@ class AuthorizedController < ApplicationController
   def reauthenticate(password)
     if token = current_user.authenticate(password)
       if token.is_a? String
+        session[:created_at] = Time.now.utc
         session[:token]      = token
         return true
       else
@@ -89,5 +90,16 @@ class AuthorizedController < ApplicationController
     return true if path.include? '/account/api/tickets'
     return true if path.include? '/account/tickets'
     return false
+  end
+
+  def timeout_session!
+    if session
+      session[:created_at] = Time.now.utc unless session[:created_at]
+
+      if (Time.now - session[:created_at]) > SESSION_TIMEOUT.minutes
+        session[:user_id] = nil
+        redirect_to sign_in_path, notice: t(:signed_out_after_timeout)
+      end
+    end
   end
 end

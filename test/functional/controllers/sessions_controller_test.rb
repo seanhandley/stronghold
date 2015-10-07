@@ -44,6 +44,7 @@ class SessionsControllerTest < ActionController::TestCase
       # puts @response.inspect
       assert_equal 'token', session[:token]
       assert_equal @user.id, session[:user_id]
+      assert_in_delta Time.now.utc, session[:created_at], 1
       assert_redirected_to support_root_path
     end
   end
@@ -122,6 +123,7 @@ class SessionsControllerTest < ActionController::TestCase
 
   def log_in(user)
     session[:user_id]    = user.id
+    session[:created_at] = Time.now.utc
     session[:token]      = SecureRandom.hex
   end
 
