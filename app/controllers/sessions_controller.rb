@@ -18,7 +18,6 @@ class SessionsController < ApplicationController
     if @user and params[:user][:password].present?
       if token = @user.authenticate(params[:user][:password])
         session[:user_id]    = @user.id
-        session[:created_at] = Time.now.utc
         session[:token]      = token if token.is_a? String
 
         if @user.organization.known_to_payment_gateway?
