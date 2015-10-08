@@ -1,6 +1,7 @@
 = javascript_tag "var AUTH_TOKEN = '#{form_authenticity_token}';" if protect_against_forgery?
 
-- if content_for(:enable_angular)
-  = javascript_include_tag 'application_with_angular'
-- else
-  = javascript_include_tag 'application', Rails.env.acceptance? ? {} : {'async' => true, 'cache' => true}
+- @enable_angular = true if content_for(:enable_angular)
+- @enable_password_score = true if content_for(:enable_password_score)
+- @enable_card_animations = true if content_for(:enable_card_animations)
+
+= javascript_include_tag 'application' , Rails.env.acceptance? ? {} : {'async' => true, 'cache' => true}

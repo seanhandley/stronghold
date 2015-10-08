@@ -15,4 +15,4 @@
 
   = submit_tag 'Continue →', class: 'btn btn-primary'
 
-  = javascript_include_tag asset_path('assets/password-score.js')
+  - content_for(:enable_password_score, true)

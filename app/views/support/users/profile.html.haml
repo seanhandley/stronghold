@@ -1,4 +1,5 @@
 - title "My Profile"
+- content_for(:enable_password_score, true)
 
 %h3= t(:edit_profile)
 
@@ -28,4 +29,5 @@
 
       = submit_tag t(:save), class: 'btn btn-primary', data: { disable_with: t(:saving) }
 
-= javascript_include_tag asset_path('assets/password-score.js')
+
+
