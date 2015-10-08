@@ -2,4 +2,5 @@
 // about supported directives.
 //
 //= require common
+//= require_tree ./includes
 //= require_tree ./site_wide
