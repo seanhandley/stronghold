@@ -14,4 +14,4 @@
 //= require common
 //
 //= require_tree ./site_wide
-//= require_tree ./angular
+//= require_tree ./angular_includes
