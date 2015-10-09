@@ -3,7 +3,7 @@ filters = angular.module("filters", [])
 filters.filter "momentDateTime", ->
   (time) ->
     return if !time
-    moment.lang 'en', {
+    moment.locale 'en', {
         'calendar' : {
             'lastDay' : 'Do MMMM YYYY',
             'sameDay' : 'h:mmA',
