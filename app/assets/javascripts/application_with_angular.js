@@ -1,8 +1,7 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require common
-//
+//= require jquery_deps
 //= require js-routes
 //= require angular
 //= require angular-resource
@@ -11,6 +10,8 @@
 //= require angular-md5
 //= require angular-gravatar
 //= require angular-animate
+//
+//= require common
 //
 //= require_tree ./site_wide
 //= require_tree ./angular
