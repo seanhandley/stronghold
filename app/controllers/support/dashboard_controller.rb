@@ -7,8 +7,12 @@ class Support::DashboardController < SupportBaseController
   end
   
   def index
-    @instance_count = instance_count
-    @object_usage = object_usage
+    respond_to do |format|
+      format.js {
+        render json: {instance_count: instance_count, object_usage: object_usage}
+      }
+      format.html
+    end
   end
 
   def regenerate_ceph_credentials

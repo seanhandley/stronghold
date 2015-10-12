@@ -1,3 +1,9 @@
+machine:
+  timezone:
+    Europe/London
+  ruby:
+    version: 2.2.3
+
 dependencies:
   pre:
     - sudo rm -rf /var/lib/apt/lists/*
@@ -15,7 +21,7 @@ database:
 test:
   override:
     - bundle exec rake test:unit_and_functional
-    - bundle exec rake test:acceptance
+    - RACK_ENV=acceptance RAILS_ENV=acceptance bundle exec rake test:acceptance
     - bundle exec rake stronghold:security_analysis
     - git config --global user.email "circle@circleci.com"
     - git config --global user.name "Circle"

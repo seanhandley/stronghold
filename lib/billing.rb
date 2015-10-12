@@ -9,9 +9,11 @@ module Billing
   SECONDS_TO_HOURS = 3600.0
 
   def self.sync!
+    now = Time.now
     from = Billing::Sync.last.started_at
-    to   = Time.now
-    sync = Billing::Sync.create started_at: Time.now
+    to   = now
+    sync = Billing::Sync.create started_at: now
+    sleep 30 # Because it can take a few seconds for events to get off the queue and into Mongo
     Billing::Instances.sync!(from, to, sync)
     Billing::Volumes.sync!(from, to, sync)
     Billing::FloatingIps.sync!(from, to, sync)
@@ -40,6 +42,19 @@ module Billing
     end 
   end
 
+  # No caching - use for auditing
+  def self.fetch_raw_events_for_instance(instance, from, to)
+    options = [{'field' => 'timestamp', 'op' => 'ge', 'value' => from.utc.strftime(timestamp_format)},
+                     {'field' => 'timestamp', 'op' => 'lt', 'value' => to.utc.strftime(timestamp_format)},
+                     {'field' => 'project_id', 'op' => 'eq', 'value' => instance.tenant_id}]
+
+    instance_results = Fog::Metering.new(OPENSTACK_ARGS).get_samples('instance', options).body
+    grouped_results = instance_results.group_by{|s| s['resource_id']}
+    instance_events = grouped_results[instance.instance_id]
+    return [] unless instance_events
+    instance_events.collect{|i| i['resource_metadata']['event_type'] ? [i['resource_metadata']['event_type'], i['recorded_at']] : nil}.compact.reverse
+  end
+
   def self.timestamp_format
     "%Y-%m-%dT%H:%M:%S"
   end
@@ -56,7 +71,7 @@ module Billing
       invoice = Billing::Invoice.new(organization: organization, year: year, month: month)
       ud = UsageDecorator.new(organization)
       ud.usage_data(from_date: invoice.period_start, to_date: invoice.period_end)
-      invoice.update_attributes(sub_total: ud.sub_total, grand_total: ud.grand_total,
+      invoice.update_attributes(sub_total: ud.sub_total, grand_total: ud.grand_total_plus_tax,
                                 discount_percent:  ud.discount_percent, tax_percent: ud.tax_percent)
     end
   end

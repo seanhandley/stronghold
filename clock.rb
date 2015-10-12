@@ -12,7 +12,7 @@ if Rails.env.production? || Rails.env.staging?
     ActivationReminderJob.perform_later
   end
 
-  every(1.hour, 'usage_cache_refresh') do
+  every(80.minutes, 'usage_cache_refresh') do
     UsageCacheRefreshJob.perform_later
   end
 
@@ -32,7 +32,7 @@ if Rails.env.production? || Rails.env.staging?
     CardReverificationJob.perform_later
   end
 
-  every(203.minutes, 'restart_sidekiq', :thread => true) do
+  every(103.minutes, 'restart_sidekiq', :thread => true) do
     sleep 12 * 60
     `restart sidekiq_stronghold`
   end

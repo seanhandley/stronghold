@@ -20,6 +20,7 @@ class Organization < ActiveRecord::Base
   has_many :users, dependent: :destroy
   has_many :roles, dependent: :destroy
   has_many :invites, dependent: :destroy
+  has_many :invoices, class_name: 'Billing::Invoice', dependent: :destroy
   has_many :tenants, dependent: :destroy
   has_and_belongs_to_many :products, -> { uniq }
   has_many :organization_vouchers, {dependent: :destroy}, -> { uniq }
