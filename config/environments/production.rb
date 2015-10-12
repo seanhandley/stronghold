@@ -25,8 +25,9 @@ Rails.application.configure do
   config.serve_static_files = true
 
   # Compress JavaScripts and CSS.
-  config.assets.js_compressor = :uglifier
   config.assets.css_compressor = :sass
+  # Prevent Angular conflicts
+  config.assets.js_compressor = Uglifier.new(mangle: false)
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.
   config.assets.compile = false
@@ -102,9 +103,6 @@ Rails.application.configure do
 
   # Error handling
   config.exceptions_app = self.routes
-
-  # Prevent Angular conflicts
-  config.assets.js_compressor = Uglifier.new(mangle: false)
 
   config.stripe.publishable_key = "pk_live_vzTCZElYj4BdVeSj5648NROM"
 
