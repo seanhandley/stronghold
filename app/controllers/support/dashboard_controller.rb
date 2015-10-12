@@ -11,7 +11,10 @@ class Support::DashboardController < SupportBaseController
       format.js {
         render json: {instance_count: instance_count, object_usage: object_usage}
       }
-      format.html
+      format.html {
+        @instance_count = Rails.cache.fetch("live_servers_dashboard") || '0'
+        @object_usage = Rails.cache.fetch("object_usage_#{current_user.organization.primary_tenant.id}") || '0 GB'
+      }
     end
   end
 

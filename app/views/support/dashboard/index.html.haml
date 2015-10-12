@@ -31,7 +31,7 @@
               %i.fa.fa-rocket
               Compute
             Instances active: 
-            %span#instances_active
+            %span#instances_active= @instance_count
       - if current_user.organization.storage? && can?(:read, :storage)
         .col-md-6{style: 'text-align: center'}
           .dashboard-element
@@ -39,7 +39,7 @@
               %i.fa.fa-database
               Storage
             Object storage used: 
-            %span#object-storage
+            %span#object-storage= @object_usage
 - else
   &nbsp;
   .jumbotron.bg-info
