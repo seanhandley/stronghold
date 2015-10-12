@@ -9,9 +9,11 @@ module Billing
   SECONDS_TO_HOURS = 3600.0
 
   def self.sync!
+    now = Time.now
     from = Billing::Sync.last.started_at
-    to   = Time.now
-    sync = Billing::Sync.create started_at: Time.now
+    to   = now
+    sync = Billing::Sync.create started_at: now
+    sleep 30 # Because it can take a few seconds for events to get off the queue and into Mongo
     Billing::Instances.sync!(from, to, sync)
     Billing::Volumes.sync!(from, to, sync)
     Billing::FloatingIps.sync!(from, to, sync)
