@@ -9,10 +9,10 @@ class Support::DashboardController < SupportBaseController
   def index
     respond_to do |format|
       format.js {
-        render json: {instance_count: instance_count, object_usage: object_usage}
+        render json: {instance_count: instance_count(live_servers), object_usage: object_usage}
       }
       format.html {
-        @instance_count = Rails.cache.fetch("live_servers_dashboard") || '0'
+        @instance_count = instance_count(Rails.cache.fetch("live_servers_dashboard") || [])
         @object_usage = Rails.cache.fetch("object_usage_#{current_user.organization.primary_tenant.id}") || '0 GB'
       }
     end
@@ -28,8 +28,8 @@ class Support::DashboardController < SupportBaseController
 
   private
 
-  def instance_count
-    live_servers.select{|s| current_user.organization.tenants.map(&:uuid).include?(s['tenant_id'])}.count
+  def instance_count(servers)
+    servers.select{|s| current_user.organization.tenants.map(&:uuid).include?(s['tenant_id'])}.count
   end
 
   def live_servers
