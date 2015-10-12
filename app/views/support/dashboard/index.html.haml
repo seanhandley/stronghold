@@ -38,8 +38,9 @@
             %h2
               %i.fa.fa-database
               Storage
-            Object storage used: 
-            %span#object-storage= @object_usage
+            Object storage used:
+            %span#object-storage== #{@object_usage} GB
+
 - else
   &nbsp;
   .jumbotron.bg-info

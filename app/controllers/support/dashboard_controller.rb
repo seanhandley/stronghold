@@ -13,7 +13,7 @@ class Support::DashboardController < SupportBaseController
       }
       format.html {
         @instance_count = instance_count(Rails.cache.fetch("live_servers_dashboard") || [])
-        @object_usage = Rails.cache.fetch("object_usage_#{current_user.organization.primary_tenant.id}") || '0 GB'
+        @object_usage = Rails.cache.fetch("object_usage_#{current_user.organization.primary_tenant.id}") || '0'
       }
     end
   end
