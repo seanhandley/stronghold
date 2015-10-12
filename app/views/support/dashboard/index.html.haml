@@ -49,3 +49,13 @@
     %p== This is the DataCentred online control panel.
 
     %em== If you have any questions or issues, please report them via the #{link_to 'Support Tickets', support_tickets_path} section.
+
+:javascript
+
+  $(document).ready(function() {
+    $.getJSON('/account', {'authenticity_token': AUTH_TOKEN}, function(data) {
+      $('span#instances_active').text(data.instance_count);
+      $('span#object-storage').text(data.object_usage + ' GB')
+    });
+  });
+
