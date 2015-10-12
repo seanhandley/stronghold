@@ -49,6 +49,7 @@ module Billing
     instance_results = Fog::Metering.new(OPENSTACK_ARGS).get_samples('instance', options).body
     grouped_results = instance_results.group_by{|s| s['resource_id']}
     instance_events = grouped_results[instance.instance_id]
+    return [] unless instance_events
     instance_events.collect{|i| i['resource_metadata']['event_type'] ? [i['resource_metadata']['event_type'], i['recorded_at']] : nil}.compact.reverse
   end
 
