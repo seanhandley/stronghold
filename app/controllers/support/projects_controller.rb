@@ -25,13 +25,7 @@ class Support::ProjectsController < SupportBaseController
   end
 
   def update
-    if @tenant.update(user_tenant_roles_attributes.merge(name: tenant_params[:name]))
-      javascript_redirect_to support_projects_path
-    else
-      respond_to do |format|
-        format.js { render :template => "shared/dialog_errors", :locals => {:object => @tenant } }
-      end
-    end
+    ajax_response(@tenant, :update, support_projects_path, user_tenant_roles_attributes.merge(name: tenant_params[:name]))
   end
 
   def destroy

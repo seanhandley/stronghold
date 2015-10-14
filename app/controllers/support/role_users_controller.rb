@@ -13,13 +13,7 @@ class Support::RoleUsersController < SupportBaseController
 
   def create
     @role_user = RoleUser.new(create_params)
-    if @role_user.save
-      javascript_redirect_to support_roles_path(tab: 'roles')
-    else
-      respond_to do |format|
-        format.js { render :template => "shared/dialog_errors", :locals => {:object => @role_user} }
-      end
-    end
+    ajax_response(@role_user, :save, support_roles_path(tab: 'roles'))
   end
 
   private

@@ -31,13 +31,7 @@ class Support::RolesController < SupportBaseController
 
   def create
     @role = @organization.roles.create(role_params)
-    if @role.save
-      javascript_redirect_to support_roles_path(tab: 'roles')
-    else
-      respond_to do |format|
-        format.js { render :template => "shared/dialog_errors", :locals => {:object => @role } }
-      end
-    end
+    ajax_response(@role, :save, support_roles_path(tab: 'roles'))
   end
 
   def destroy

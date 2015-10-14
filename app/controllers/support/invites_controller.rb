@@ -8,13 +8,7 @@ class Support::InvitesController < SupportBaseController
     end.compact
 
     @invite = current_organization.invites.create(create_params)
-    if @invite.save
-      javascript_redirect_to support_roles_path
-    else
-      respond_to do |format|
-        format.js { render :template => "shared/dialog_errors", :locals => {:object => @invite} }
-      end
-    end
+    ajax_response(@invite, :save, support_roles_path)
   end
 
   def destroy

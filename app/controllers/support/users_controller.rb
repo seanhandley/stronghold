@@ -26,17 +26,7 @@ class Support::UsersController < SupportBaseController
 
   def destroy
     @user = User.find destroy_params[:id]
-    if @user.destroy
-      respond_to do |format|
-        format.js {
-          javascript_redirect_to support_roles_path
-        }
-      end
-    else
-      respond_to do |format|
-        format.js { render :template => "shared/dialog_errors", :locals => {:object => @user } }
-      end
-    end
+    ajax_response(@user, :destroy, support_roles_path)
   end
 
   private
