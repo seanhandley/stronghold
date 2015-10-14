@@ -19,7 +19,7 @@ class SessionsController < ApplicationController
     password = params_user[:password]
     @user = User.active.find_by_email(params_user[:email])
     if @user and password.present?
-      if token = @user.authenticate(:password)
+      if token = @user.authenticate(password)
         session[:user_id]    = @user.id
         session[:created_at] = Time.now.utc
         session[:token]      = token if token.is_a? String
