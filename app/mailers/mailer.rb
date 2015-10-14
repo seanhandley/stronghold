@@ -1,7 +1,7 @@
 class Mailer < ActionMailer::Base
   add_template_helper(DateTimeHelper)
   add_template_helper(AbbreviationHelper)
-  add_template_helper(CsvHelper)
+  include CsvHelper
 
   default :from => "DataCentred <noreply@datacentred.co.uk>"
   
