@@ -46,7 +46,7 @@ class Admin::UsageController < AdminBaseController
 
   def get_organizations_and_projects
     @organizations ||= Organization.billable.collect{|organization| [organization.name, organization.id]}
-    @projects ||= Organization.billable.map(&:tenants).flatten.collect{|organization| [organization.name, organization.id, class: "#{o.organization.id}"]}
+    @projects ||= Organization.billable.map(&:tenants).flatten.collect{|tenant| [tenant.name, tenant.id, class: "#{tenant.organization.id}"]}
   end
 
   def datetime_array
