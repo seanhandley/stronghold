@@ -59,7 +59,7 @@ module Reports
         instances_disk_tb_hours << (billable_hours * (instance[:flavor][:root_disk_gb] / 1024.0))
       end
       
-      [vcpu_seconds.sum, ram_tb_seconds.sum, instances_disk_tb_hours.sum]
+      [vcpu_hours.sum, ram_tb_hours.sum, instances_disk_tb_hours.sum]
     end
   end
 end
