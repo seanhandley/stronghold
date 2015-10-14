@@ -41,7 +41,7 @@ module Reports
     private
 
     def organizations
-      Organization.active.includes(:tenants).select(&:cloud?).reject(&:test_account)
+      Organization.includes(:tenants).active.select(&:cloud?).reject(&:test_account)
     end
 
     def get_usage(klass, tenants, from, to)
