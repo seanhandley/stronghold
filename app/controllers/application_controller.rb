@@ -37,7 +37,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
 
   def current_organization
-    current_user ? current_organization : nil
+    current_user ? current_user.organization : nil
   end
   helper_method :current_organization
 
