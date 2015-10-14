@@ -25,6 +25,10 @@ default: &default
       channel: '#webdev'
       color: 'warning'
       prefix: ':gem: Code Quality Results: '
+    test_coverage_percent:
+      channel: '#webdev'
+      color: 'warning'
+      prefix: ':cloud: Test coverage: '
     security_analysis:
       channel: '#webdev'
       color: 'warning'
