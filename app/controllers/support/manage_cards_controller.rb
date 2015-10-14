@@ -27,8 +27,8 @@ class Support::ManageCardsController < SupportBaseController
         card.delete
         redirect_to support_manage_cards_path, alert: "You've already added that card"
       else
-        Rails.cache.delete("org_#{current_user.organization.id}_has_payment_method")
-        current_user.organization.has_payment_methods!(true)
+        Rails.cache.delete("org_#{current_organization.id}_has_payment_method")
+        current_organization.has_payment_methods!(true)
         redirect_to support_manage_cards_path, notice: "New card added successfully"
       end
     end
@@ -49,7 +49,7 @@ class Support::ManageCardsController < SupportBaseController
 
   def get_stripe_customer
     @stripe_customer ||= rescue_stripe_errors(lambda {|msg| flash.now[:error] = msg; dummy_stripe}) do
-      Stripe::Customer.retrieve(current_user.organization.stripe_customer_id)
+      Stripe::Customer.retrieve(current_organization.stripe_customer_id)
     end
   end
 
@@ -62,7 +62,7 @@ class Support::ManageCardsController < SupportBaseController
   end
 
   def check_self_service_and_power
-    raise ActionController::RoutingError.new('Not Found') unless current_user.power_user? && current_user.organization.self_service?
+    raise ActionController::RoutingError.new('Not Found') unless current_user.power_user? && current_organization.self_service?
   end
 
 end

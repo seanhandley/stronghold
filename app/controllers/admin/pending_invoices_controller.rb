@@ -12,13 +12,7 @@ class Admin::PendingInvoicesController < AdminBaseController
   def update
     @invoice = Billing::Invoice.find(params[:id])
     @invoice.update(update_params)
-    if @invoice.finalize!
-      javascript_redirect_to admin_pending_invoices_path
-    else
-      respond_to do |format|
-        format.js { render :template => "shared/dialog_errors", :locals => {:object => @invoice } }
-      end
-    end
+    ajax_response(@invoice, :finalize!, admin_pending_invoices_path)
   end
 
   def destroy
@@ -26,9 +20,7 @@ class Admin::PendingInvoicesController < AdminBaseController
     if @invoice.destroy
       redirect_to admin_pending_invoices_path
     else
-      respond_to do |format|
-        format.js { render :template => "shared/dialog_errors", :locals => {:object => @invoice } }
-      end
+      redirect_to admin_pending_invoices_path, alert: "Couldn't destroy invoice"
     end
   end
 

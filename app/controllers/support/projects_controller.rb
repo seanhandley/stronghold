@@ -7,15 +7,15 @@ class Support::ProjectsController < SupportBaseController
   before_filter :fetch_tenant, only: [:update, :destroy]
 
   def index
-    @tenants = Tenant.where(organization: current_user.organization).includes(:users)
+    @tenants = Tenant.where(organization: current_organization).includes(:users)
   end
 
   def create
-    @tenant = current_user.organization.tenants.create(name: tenant_params[:name])
+    @tenant = current_organization.tenants.create(name: tenant_params[:name])
     if @tenant.save
       @tenant.update(user_tenant_roles_attributes)
       @tenant.enable!
-      OpenStack::Tenant.set_self_service_quotas(@tenant.uuid, current_user.organization.limited_storage? ? 'restricted' : 'standard')
+      OpenStack::Tenant.set_self_service_quotas(@tenant.uuid, current_organization.limited_storage? ? 'restricted' : 'standard')
       javascript_redirect_to support_projects_path
     else
       respond_to do |format|
@@ -49,11 +49,11 @@ class Support::ProjectsController < SupportBaseController
   end
 
   def check_power_user_and_cloud_and_unrestricted
-    raise ActionController::RoutingError.new('Not Found') unless current_user.power_user? && current_user.organization.cloud? && !current_user.organization.limited_storage?
+    raise ActionController::RoutingError.new('Not Found') unless current_user.power_user? && current_organization.cloud? && !current_organization.limited_storage?
   end
 
   def tenant_params
-    params.require(:tenant).permit(:name, :users => Hash[current_user.organization.users.map{|u| [u.id.to_s, true]}])
+    params.require(:tenant).permit(:name, :users => Hash[current_organization.users.map{|u| [u.id.to_s, true]}])
   end
 
 end

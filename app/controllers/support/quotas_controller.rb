@@ -5,7 +5,7 @@ class Support::QuotasController < SupportBaseController
   before_filter :check_power_user_and_cloud
 
   def index
-    @projects = current_user.organization.tenants
+    @projects = current_organization.tenants
   end
 
   def update
@@ -15,7 +15,7 @@ class Support::QuotasController < SupportBaseController
   private
 
   def check_power_user_and_cloud
-    raise ActionController::RoutingError.new('Not Found') unless current_user.power_user? && current_user.organization.cloud?
+    raise ActionController::RoutingError.new('Not Found') unless current_user.power_user? && current_organization.cloud?
   end
 
 end

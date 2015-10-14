@@ -9,14 +9,14 @@ class Support::UsageController < SupportBaseController
   end
 
   def index
-    @usage_decorator = UsageDecorator.new(current_user.organization)
+    @usage_decorator = UsageDecorator.new(current_organization)
     if params[:year] && params[:month] && !((params[:year].to_i == Time.now.year) && (params[:month].to_i == Time.now.month))
       @usage = @usage_decorator.usage_data(from_date: @from_date, to_date: @to_date)
     else
       @usage = @usage_decorator.latest_usage_data
     end
-    @active_vouchers = current_user.organization.active_vouchers(@from_date, @to_date)
-    @usage_nav = usages_for_select(current_user.organization)
+    @active_vouchers = current_organization.active_vouchers(@from_date, @to_date)
+    @usage_nav = usages_for_select(current_organization)
   end
 
   private

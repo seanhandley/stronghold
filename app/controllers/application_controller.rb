@@ -14,6 +14,16 @@ class ApplicationController < ActionController::Base
     render js: "window.location.replace('#{path}')"
   end
 
+  def ajax_response(model, action, success_path, *args)
+    if model.send(action, *args)
+      javascript_redirect_to success_path
+    else
+      respond_to do |format|
+        format.js { render :template => "shared/dialog_errors", :locals => {:object => model } }
+      end
+    end
+  end
+
   def current_section; end
   helper_method :current_section
 
@@ -25,6 +35,11 @@ class ApplicationController < ActionController::Base
     @current_user
   end
   helper_method :current_user
+
+  def current_organization
+    current_user ? current_organization : nil
+  end
+  helper_method :current_organization
 
   def device_cookie
     args = {value: SecureRandom.hex, expires: 2.years.from_now}

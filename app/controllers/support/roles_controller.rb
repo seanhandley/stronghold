@@ -55,7 +55,7 @@ class Support::RolesController < SupportBaseController
   end
 
   def find_organization
-    @organization = current_user.organization
+    @organization = current_organization
   end
 
   def role_params

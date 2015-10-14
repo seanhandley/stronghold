@@ -66,7 +66,7 @@ class User < ActiveRecord::Base
   end
 
   def authenticate(unencrypted_password)
-    setup_password_from_openstack(unencrypted_password) if password_digest.nil?
+    setup_password_from_openstack(unencrypted_password) unless password_digest.present?
     begin
       authed = BCrypt::Password.new(password_digest) == unencrypted_password && self
     rescue BCrypt::Errors::InvalidHash
@@ -85,9 +85,9 @@ class User < ActiveRecord::Base
     end
   end
   
-  def set_local_password(p=nil)
-    if p
-      password = p
+  def set_local_password(new_password=nil)
+    if new_password
+      password = new_password
     else
       password = self.password
     end
@@ -98,15 +98,16 @@ class User < ActiveRecord::Base
   end
 
   def ec2_credentials
-    Rails.cache.delete("ec2_credentials_#{id}") unless Rails.cache.fetch("ec2_credentials_#{id}")
-    Rails.cache.fetch("ec2_credentials_#{id}", expires_in: 100.days) do
+    cache = Rails.cache
+    cache.delete("ec2_credentials_#{id}") unless cache.fetch("ec2_credentials_#{id}")
+    cache.fetch("ec2_credentials_#{id}", expires_in: 100.days) do
       Fog::Identity.new(OPENSTACK_ARGS).list_ec2_credentials(uuid).body['credentials'].first
     end
   end
 
   def refresh_ec2_credentials!   
-    Fog::Identity.new(OPENSTACK_ARGS).list_ec2_credentials(uuid).body['credentials'].each do |c|
-      Fog::Identity.new(OPENSTACK_ARGS).delete_ec2_credential(uuid, c['access'])
+    Fog::Identity.new(OPENSTACK_ARGS).list_ec2_credentials(uuid).body['credentials'].each do |credential|
+      Fog::Identity.new(OPENSTACK_ARGS).delete_ec2_credential(uuid, credential['access'])
     end
     Fog::Identity.new(OPENSTACK_ARGS).create_ec2_credential(uuid, organization.primary_tenant.uuid)
     Rails.cache.delete("ec2_credentials_#{id}")
@@ -138,7 +139,7 @@ class User < ActiveRecord::Base
   end
 
   def subscribe_to_status_io
-    unless Rails.env.test? || Rails.env.staging? || Rails.env.acceptance?
+    if Rails.env.production?
       StatusIOSubscribeJob.perform_later(email)
     end
   end
@@ -158,8 +159,8 @@ class User < ActiveRecord::Base
   def remove_ceph_keys
     begin
       Ceph::UserKey.destroy 'access-key' => self.ec2_credentials['access'] if self.ec2_credentials
-    rescue Net::HTTPError => e
-      Honeybadger.notify(e) unless e.message.include? 'AccessDenied'
+    rescue Net::HTTPError => error
+      Honeybadger.notify(error) unless e.message.include? 'AccessDenied'
     end
   end
 

@@ -20,7 +20,7 @@
             .input-group.has-warning
               %span.input-group-addon
                 %i.fa.fa-key
-              = f.select :role_ids, roles_for_select(current_user.organization), {}, class: "select-roles", multiple: true, placeholder: t(:assign_at_least_one_role)
+              = f.select :role_ids, roles_for_select(current_organization), {}, class: "select-roles", multiple: true, placeholder: t(:assign_at_least_one_role)
         .modal-footer
           %button.btn.btn-default{'data-toggle' => "modal", 'data-dismiss' => "modal"}
             = t(:cancel)

@@ -8,11 +8,11 @@ class Support::CardsController < SupportBaseController
   end
 
   def new
-    if current_user.organization.known_to_payment_gateway?
+    if current_organization.known_to_payment_gateway?
       redirect_to support_root_path
     else
       @location = GeoIp.geolocation(request.remote_ip)[:country_code] rescue 'GB'
-      @customer_signup = current_user.organization.customer_signup
+      @customer_signup = current_organization.customer_signup
     end
   end
 
@@ -26,15 +26,15 @@ class Support::CardsController < SupportBaseController
           billing_postcode: create_params[:postcode],
           billing_country: create_params[:address_country].first,
         }.merge(create_params[:organization_name].present? ? {name: create_params[:organization_name]} : {})
-      current_user.organization.update_attributes(args)
+      current_organization.update_attributes(args)
       signup_args = {stripe_customer_id: @customer_signup.stripe_customer_id}
       if(voucher = Voucher.find_by_code(create_params[:discount_code]))
-        current_user.organization.vouchers << voucher
+        current_organization.vouchers << voucher
         signup_args.merge!(voucher: voucher)
       end
-      current_user.organization.complete_signup!(signup_args)
+      current_organization.complete_signup!(signup_args)
       FraudCheckJob.set(wait: 10.seconds).perform_later(@customer_signup)
-      Notifications.notify(:new_signup, "#{current_user.organization.name} has activated their account! Discount code: #{create_params[:discount_code].present? ? create_params[:discount_code] : 'N/A'}")
+      Notifications.notify(:new_signup, "#{current_organization.name} has activated their account! Discount code: #{create_params[:discount_code].present? ? create_params[:discount_code] : 'N/A'}")
 
       reauthenticate(Rails.cache.fetch("up_#{current_user.uuid}"))
       Rails.cache.delete("up_#{current_user.uuid}")

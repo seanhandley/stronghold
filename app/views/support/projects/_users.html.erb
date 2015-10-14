@@ -1,6 +1,6 @@
 <br>
 <div style="overflow: auto; height: 180px">
-  <%- current_user.organization.users.each_with_index do |user, i| %>
+  <%- current_organization.users.each_with_index do |user, i| %>
     <%- if i % 2 == 0 %>
       <div class='row'>
     <% end %>

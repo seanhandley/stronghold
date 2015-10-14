@@ -30,9 +30,9 @@ class Admin::UsageController < AdminBaseController
         @active_vouchers = @organization.active_vouchers(@from_date, @to_date)
       end
       render :report
-    rescue ArgumentError => e
-      flash.now[:alert] = e.message
-      notify_honeybadger(e)
+    rescue ArgumentError => error
+      flash.now[:alert] = error.message
+      notify_honeybadger(error)
       reset_dates
       render :index
     end
@@ -41,26 +41,26 @@ class Admin::UsageController < AdminBaseController
   private
 
   def create_params
-    params.permit(:organization, :project, :from =>datetime_array, :to => datetime_array)
+    params.permit(:organization, :project, :from => datetime_array, :to => datetime_array)
   end
 
   def get_organizations_and_projects
-    @organizations ||= Organization.billable.collect{|o| [o.name, o.id]}
-    @projects ||= Organization.billable.map{|o| o.tenants}.flatten.collect{|o| [o.name, o.id, class: "#{o.organization.id}"]}
+    @organizations ||= Organization.billable.collect{|organization| [organization.name, organization.id]}
+    @projects ||= Organization.billable.map(&:tenants).flatten.collect{|organization| [organization.name, organization.id, class: "#{o.organization.id}"]}
   end
 
   def datetime_array
-    (1..5).map{|i| "(#{i}i)"}
+    (1..5).map{|index| "(#{index}i)"}
   end
 
   def parse_dates(params)
     from, to = [:from, :to].collect do |key|
       begin
         DateTime.civil(*params[key].sort.map(&:last).map(&:to_i))
-      rescue ArgumentError => e
+      rescue ArgumentError
         raise ArgumentError, "The #{key.to_s} date is not a valid date"
       end
-    end.collect{|d| Time.zone.parse(d.to_s)}
+    end.collect{|date| Time.zone.parse(date.to_s)}
 
     if from < Billing::Sync.first.completed_at
       raise ArgumentError, "The earliest date we have usage for is #{Billing::Sync.first.completed_at}. Please ensure the start date is greater."
@@ -76,10 +76,11 @@ class Admin::UsageController < AdminBaseController
   end
 
   def reset_dates
-    @from_date = Time.zone.now.last_month.beginning_of_month
+    now = Time.zone.now
+    @from_date = now.last_month.beginning_of_month
     @from_date = Billing::Sync.first.completed_at if @from_date < Billing::Sync.first.completed_at
-    @to_date = Time.zone.now.beginning_of_month
-    @to_date = Time.zone.now if @to_date < @from_date
+    @to_date = now.beginning_of_month
+    @to_date = now if @to_date < @from_date
   end
 
 end

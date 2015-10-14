@@ -23,6 +23,7 @@ module Billing
         billable_hours = (billable_seconds / Billing::SECONDS_TO_HOURS).ceil
         instance_flavor = instance.instance_flavor
         {billable_seconds: billable_seconds,
+          billable_hours: billable_hours,
                                        uuid: instance.instance_id,
                                        name: instance.name,
                                        tenant_id: instance.tenant_id,

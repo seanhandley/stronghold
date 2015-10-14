@@ -10,19 +10,19 @@ class Support::OrganizationsController < SupportBaseController
   end
 
   def index
-    @organization = current_user.organization
+    @organization = current_organization
     render template: 'support/organizations/organization'
   end
 
   def update
     check_organization
-    if current_user.organization.update(update_params)
+    if current_organization.update(update_params)
       respond_to do |format|
-        format.js { render :template => "shared/dialog_success", :locals => {:object => current_user.organization, :message => "Saved" } }
+        format.js { render :template => "shared/dialog_success", :locals => {:object => current_organization, :message => "Saved" } }
       end
     else
       respond_to do |format|
-        format.js { render :template => "shared/dialog_errors", :locals => {:object => current_user.organization } }
+        format.js { render :template => "shared/dialog_errors", :locals => {:object => current_organization } }
       end
     end
   end
@@ -38,12 +38,12 @@ class Support::OrganizationsController < SupportBaseController
   # Close this user's account
   def close
     if reauthenticate(reauthorise_params[:password]) && !current_user.staff?
-      Notifications.notify(:account_alert, "#{current_user.organization.name} (REF: #{current_user.organization.reference}) has requested account termination.")
+      Notifications.notify(:account_alert, "#{current_organization.name} (REF: #{current_organization.reference}) has requested account termination.")
       creds = {:openstack_username => current_user.email,
                :openstack_api_key  => nil,
                :openstack_auth_token => session[:token],
-               :openstack_tenant   => current_user.organization.primary_tenant.reference }
-      current_user.organization.tenants.each do |tenant|
+               :openstack_tenant   => current_organization.primary_tenant.reference }
+      current_organization.tenants.each do |tenant|
         offboard(tenant, creds)
         begin
           Ceph::User.update('uid' => tenant.uuid, 'suspended' => true)
@@ -51,8 +51,8 @@ class Support::OrganizationsController < SupportBaseController
           Honeybadger.notify(e)
         end
       end
-      current_user.organization.disable!
-      Mailer.goodbye(current_user.organization.admin_users).deliver_later
+      current_organization.disable!
+      Mailer.goodbye(current_organization.admin_users).deliver_later
       reset_session
       render :goodbye
     else
@@ -73,7 +73,7 @@ class Support::OrganizationsController < SupportBaseController
   end
 
   def check_organization
-    raise ActionController::RoutingError.new('Not Found') unless current_user.organization.id = params[:id]
+    raise ActionController::RoutingError.new('Not Found') unless current_organization.id = params[:id]
   end
 
   def check_power_user

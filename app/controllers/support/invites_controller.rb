@@ -4,10 +4,10 @@ class Support::InvitesController < SupportBaseController
 
   def create
     roles = [create_params[:role_ids]].flatten.compact.collect do |r|
-      current_user.organization.roles.find_by_id(r.to_i)
+      current_organization.roles.find_by_id(r.to_i)
     end.compact
 
-    @invite = current_user.organization.invites.create(create_params)
+    @invite = current_organization.invites.create(create_params)
     if @invite.save
       javascript_redirect_to support_roles_path
     else
@@ -19,7 +19,7 @@ class Support::InvitesController < SupportBaseController
 
   def destroy
     @invite = Invite.find(params[:id])
-    if @invite.organization.id == current_user.organization.id
+    if @invite.organization.id == current_organization.id
       if @invite.destroy
         javascript_redirect_to support_roles_path
       end

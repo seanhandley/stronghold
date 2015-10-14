@@ -1,11 +1,11 @@
 .pull-right{style: "text-align: right"}
-  - if current_user.organization.active_vouchers(@from_date, @to_date).any?
+  - if current_organization.active_vouchers(@from_date, @to_date).any?
     %h4
       Sub Total:
       == £#{number_with_precision(sub_total, :delimiter => ',', :separator => '.', :precision => 2)}
       %br
       Discount: 
-      == #{current_user.organization.active_vouchers(@from_date, @to_date).first.voucher.discount_percent}%
+      == #{current_organization.active_vouchers(@from_date, @to_date).first.voucher.discount_percent}%
 
   %h2
     Total:
