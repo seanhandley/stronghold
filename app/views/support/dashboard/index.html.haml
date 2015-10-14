@@ -31,15 +31,16 @@
               %i.fa.fa-rocket
               Compute
             Instances active: 
-            %span#instances_active
+            %span#instances_active= @instance_count
       - if current_user.organization.storage? && can?(:read, :storage)
         .col-md-6{style: 'text-align: center'}
           .dashboard-element
             %h2
               %i.fa.fa-database
               Storage
-            Object storage used: 
-            %span#object-storage
+            Object storage used:
+            %span#object-storage== #{@object_usage} GB
+
 - else
   &nbsp;
   .jumbotron.bg-info
@@ -49,3 +50,13 @@
     %p== This is the DataCentred online control panel.
 
     %em== If you have any questions or issues, please report them via the #{link_to 'Support Tickets', support_tickets_path} section.
+
+:javascript
+
+  $(document).ready(function() {
+    $.getJSON('/account', {'authenticity_token': AUTH_TOKEN}, function(data) {
+      $('span#instances_active').text(data.instance_count);
+      $('span#object-storage').text(data.object_usage + ' GB')
+    });
+  });
+

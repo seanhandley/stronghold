@@ -17,8 +17,4 @@ $(document).ready(function() {
       });
     }
   });
-  $.getJSON('/account', function(data) {
-    $('span#instances_active').text(data.instance_count);
-    $('span#object-storage').text(data.object_usage + ' GB')
-  });
 });
