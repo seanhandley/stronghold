@@ -21,7 +21,9 @@ database:
 test:
   override:
     - bundle exec rake test:unit_and_functional
+    - bundle exec rake stronghold:test_coverage_percent
     - RACK_ENV=acceptance RAILS_ENV=acceptance bundle exec rake test:acceptance
+    - bundle exec rake stronghold:test_coverage_percent
     - bundle exec rake stronghold:security_analysis
     - git config --global user.email "circle@circleci.com"
     - git config --global user.name "Circle"
