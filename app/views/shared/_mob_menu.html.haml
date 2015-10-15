@@ -6,13 +6,13 @@
         %i.fa.fa-home
         Home
     %li.divider
-    - if current_user.organization.cloud?
-      - unless current_user.organization.known_to_payment_gateway?
+    - if current_organization.cloud?
+      - unless current_organization.known_to_payment_gateway?
         %li
           %a{href: activate_path}
             %i.fa.fa-plug
             = 'Activate'
-      - if current_user.organization.known_to_payment_gateway?
+      - if current_organization.known_to_payment_gateway?
         - if can?(:read, :cloud) || can?(:read, :storage)
           %li
             %a{href: support_root_path}
@@ -35,7 +35,7 @@
             %i.fa.fa-area-chart
             = t(:usage)
             
-    - if current_user.organization.known_to_payment_gateway?
+    - if current_organization.known_to_payment_gateway?
       - if can? :read, Role
         %li
           %a{href: support_roles_path}

@@ -1,10 +1,10 @@
 .top-menu
-  - unless current_user.organization.known_to_payment_gateway?
+  - unless current_organization.known_to_payment_gateway?
     %a{href: activate_path}
       .top-menu-option{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => "Activate", 'class' => (current_section == 'activate' ? 'selected' : '')}
         %i.top-menu-icon.fa.fa-plug
 
-  - if current_user.organization.cloud?
+  - if current_organization.cloud?
     - if can?(:read, :cloud) || can?(:read, :storage)
       %a{href: support_root_path}
         .top-menu-option{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => 'Overview', 'class' => (current_section == 'cloud' ? 'selected' : '')}
@@ -18,7 +18,7 @@
       .top-menu-option.top-menu-option-disabled{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => t(:usage)}
         %i.top-menu-icon.fa.fa-area-chart
 
-  - if current_user.organization.known_to_payment_gateway?
+  - if current_organization.known_to_payment_gateway?
     - if can? :read, Role
       %a{href: support_roles_path}
         .top-menu-option{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => "Team", 'class' => (current_section == 'roles' ? 'selected' : '')}

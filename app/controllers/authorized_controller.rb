@@ -46,34 +46,35 @@ class AuthorizedController < ApplicationController
   end
 
   def set_locale
-    I18n.locale = current_user.present? ? current_user.organization.locale.to_sym : I18n.default_locale
+    I18n.locale = current_user.present? ? current_organization.locale.to_sym : I18n.default_locale
   rescue I18n::InvalidLocale
     I18n.locale = I18n.default_locale
   end
 
   def user_time_zone(&block)
-    Time.use_zone(current_user.organization.time_zone, &block)
+    Time.use_zone(current_organization.time_zone, &block)
   end
 
   def authenticate_user!
+    current_path = request.fullpath
     unless current_user
-      redirect_to sign_in_path('next' => request.fullpath)
+      redirect_to sign_in_path('next' => current_path)
       return
     end
-    if !current_user.organization.known_to_payment_gateway? || current_user.organization.in_review?
-      return if allowed_paths_unactivated.include?(request.fullpath) || is_tickets_path?(request.fullpath)
-      if current_user.organization.in_review?
+    if !current_organization.known_to_payment_gateway? || current_organization.in_review?
+      return if allowed_paths_unactivated.include?(current_path) || is_tickets_path?(current_path)
+      if current_organization.in_review?
         redirect_to support_root_path
       else
         redirect_to activate_path
       end
-    elsif !current_user.organization.has_payment_method?
+    elsif !current_organization.has_payment_method?
       if !current_user.admin?
         reset_session
         flash.alert = "Payment method has expired. Please inform a user with admin rights."
         redirect_to sign_in_path
       else
-        return if request.fullpath == support_manage_cards_path
+        return if current_path == support_manage_cards_path
         redirect_to support_manage_cards_path, alert: "Please add a valid card to continue."
       end
     end
@@ -82,7 +83,7 @@ class AuthorizedController < ApplicationController
   def allowed_paths_unactivated
     [activate_path, support_cards_path, support_root_path,
     support_profile_path, support_usage_path, support_edit_organization_path,
-    support_user_path(current_user), support_organization_path(current_user.organization)]
+    support_user_path(current_user), support_organization_path(current_organization)]
   end
 
   def is_tickets_path?(path)

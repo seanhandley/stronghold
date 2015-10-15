@@ -17,12 +17,14 @@ module Billing
                                     name: router.name}
         usage
       end
-      total.select{|k,v| v[:billable_seconds] > 0}
+      total.select{|_,value| value[:billable_seconds] > 0}
     end
 
     def self.seconds(router, from, to)
       states = router.external_gateway_states.where(:recorded_at => from..to).order('recorded_at')
       previous_state = router.external_gateway_states.where('recorded_at < ?', from).order('recorded_at DESC').limit(1).first
+      first_state = states.first
+      last_state = states.last
 
       if states.any?
         if states.count > 1
@@ -30,7 +32,7 @@ module Billing
 
           if previous_state
             if billable?(previous_state)
-              start = (states.first.recorded_at - from)
+              start = (first_state.recorded_at - from)
             end
           end
 
@@ -46,15 +48,15 @@ module Billing
 
           ending = 0
 
-          if(billable?(states.last))
-            ending = (to - states.last.recorded_at)
+          if(billable?(last_state))
+            ending = (to - last_state.recorded_at)
           end
 
           return (start + middle + ending).round
         else
           # Only one sample for this period
-          if billable?(states.first)
-            return (to - states.first.recorded_at).round
+          if billable?(first_state)
+            return (to - first_state.recorded_at).round
           else
             return 0
           end
@@ -79,12 +81,13 @@ module Billing
                                                  name: first_sample_metadata['name'])
       end
       if(billing_external_gateway = Billing::ExternalGateway.find_by_router_id(router_id))
-        samples.collect do |s|
-          if s['resource_metadata']['event_type']
-            Billing::ExternalGatewayState.create external_gateway_id: billing_external_gateway.id, recorded_at: Time.zone.parse("#{s['recorded_at']} UTC"),
-                                        external_network_id: s['resource_metadata']['external_gateway_info.network_id'],
-                                        event_name: s['resource_metadata']['event_type'], billing_sync: sync,
-                                        message_id: s['message_id'], address: s['inferred_address']
+        samples.collect do |sample|
+          metadata = sample['resource_metadata']
+          if sample['resource_metadata']['event_type']
+            Billing::ExternalGatewayState.create external_gateway_id: billing_external_gateway.id, recorded_at: Time.zone.parse("#{sample['recorded_at']} UTC"),
+                                        external_network_id: metadata['external_gateway_info.network_id'],
+                                        event_name: metadata['event_type'], billing_sync: sync,
+                                        message_id: sample['message_id'], address: sample['inferred_address']
           end
         end
       end
@@ -95,18 +98,18 @@ module Billing
       options = [{'field' => 'timestamp', 'op' => 'ge', 'value' => from.strftime(timestamp_format)},
                  {'field' => 'timestamp', 'op' => 'lt', 'value' => to.strftime(timestamp_format)}]
       tenant_samples = Fog::Metering.new(OPENSTACK_ARGS).get_samples("router", options).body
-      tenant_samples = tenant_samples.select{|s| s['resource_metadata']['tenant_id'] == tenant_id}
+      tenant_samples = tenant_samples.select{|sample| sample['resource_metadata']['tenant_id'] == tenant_id}
 
-      tenant_samples = tenant_samples.collect do |s|
-        gateways = Fog::Network.new(OPENSTACK_ARGS).ports.all(device_id: s['resource_id'], device_owner: 'network:router_gateway')
+      tenant_samples = tenant_samples.collect do |sample|
+        gateways = Fog::Network.new(OPENSTACK_ARGS).ports.all(device_id: sample['resource_id'], device_owner: 'network:router_gateway')
         address = gateways.any? ? gateways.first : nil
         if address
-          s.merge('inferred_address' => address.fixed_ips.first['ip_address'])
+          sample.merge('inferred_address' => address.fixed_ips.first['ip_address'])
         end
         s
       end
 
-      tenant_samples.compact.group_by{|s| s['resource_id']}
+      tenant_samples.compact.group_by{|sample| sample['resource_id']}
     end
 
   end

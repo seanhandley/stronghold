@@ -29,7 +29,7 @@ class Support::Api::TicketCommentsController < SupportBaseController
   # def destroy
   #   issue_reference = params[:ticket_id]
   #   comment_id = params[:id]
-  #   response = current_user.organization.tickets.destroy_comment(issue_reference, comment_id)
+  #   response = current_organization.tickets.destroy_comment(issue_reference, comment_id)
   #   respond_to do |format|
   #     format.json {
   #       render :json => response

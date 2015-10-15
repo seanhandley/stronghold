@@ -2,29 +2,29 @@
 
 = render partial: 'support/tickets/incidents'
 
-- if current_user.organization.cloud?
+- if current_organization.cloud?
 
   %h1#dashboard-overview
     Account Overview
 
-  - if current_user.organization.in_review?
+  - if current_organization.in_review?
     .alert.alert-warning
       %i.fa.fa-info-circle
       Your account is currently in review mode while we perform additional checks. Please check your email for further instructions.
 
   #dashboard_buttons.pull-right
-    - unless current_user.organization.in_review?
-      - if current_user.organization.compute? && can?(:read, :cloud)
+    - unless current_organization.in_review?
+      - if current_organization.compute? && can?(:read, :cloud)
         %a{class: "btn btn-primary has-tooltip", href: openstack_path, target: '_blank', 'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => 'Log in using your username/password',}
           OpenStack Dashboard
-      - if current_user.organization.known_to_payment_gateway? && (can?(:read, :cloud) || can?(:read, :storage))
+      - if current_organization.known_to_payment_gateway? && (can?(:read, :cloud) || can?(:read, :storage))
         %a{class: "btn btn-default", href: '', 'data-toggle' => "modal", 'data-target' => "#showOpenStackDetails"}
           API Details
 
   .container-fluid
-    %h3= "Project: #{current_user.organization.primary_tenant.name}"
+    %h3= "Project: #{current_organization.primary_tenant.name}"
     .row{style: "margin-top: 20px"}
-      - if current_user.organization.compute? && can?(:read, :cloud)
+      - if current_organization.compute? && can?(:read, :cloud)
         .col-md-6{style: 'text-align: center'}
           .dashboard-element
             %h2
@@ -32,7 +32,7 @@
               Compute
             Instances active: 
             %span#instances_active= @instance_count
-      - if current_user.organization.storage? && can?(:read, :storage)
+      - if current_organization.storage? && can?(:read, :storage)
         .col-md-6{style: 'text-align: center'}
           .dashboard-element
             %h2

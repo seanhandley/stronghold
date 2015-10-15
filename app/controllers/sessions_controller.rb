@@ -15,9 +15,11 @@ class SessionsController < ApplicationController
   end
   
   def create
-    @user = User.active.find_by_email(params[:user][:email])
-    if @user and params[:user][:password].present?
-      if token = @user.authenticate(params[:user][:password])
+    params_user = params[:user]
+    password = params_user[:password]
+    @user = User.active.find_by_email(params_user[:email])
+    if @user and password.present?
+      if token = @user.authenticate(password)
         session[:user_id]    = @user.id
         session[:created_at] = Time.now.utc
         session[:token]      = token if token.is_a? String
@@ -29,13 +31,13 @@ class SessionsController < ApplicationController
             redirect_to support_root_path
           end
         else
-          Rails.cache.write("up_#{@user.uuid}", params[:user][:password], expires_in: 60.minutes)
+          Rails.cache.write("up_#{@user.uuid}", password, expires_in: 60.minutes)
           redirect_to new_support_card_path 
         end
         
       else
         flash.now.alert = "Invalid credentials. Please try again."
-        Rails.logger.error "Invalid login: #{params[:user][:email]}. Token=#{token.inspect}"
+        Rails.logger.error "Invalid login: #{params_user[:email]}. Token=#{token.inspect}"
         render :new
       end
     else

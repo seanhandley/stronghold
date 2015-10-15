@@ -38,7 +38,7 @@
       .form-group
         %label Country
         = f.country_select :billing_country, {selected: @organization.billing_country || 'GB'}, {class: "form-control"}
-      - if current_user.organization.self_service? && !current_user.staff? && current_user.organization.known_to_payment_gateway? && !current_user.organization.in_review?
+      - if current_organization.self_service? && !current_user.staff? && current_organization.known_to_payment_gateway? && !current_organization.in_review?
         .form-group
           .pull-right
             = link_to 'Close Account', '', 'data-toggle' => "modal", 'data-target' => "#closeAccount"
@@ -46,7 +46,7 @@
 
   = submit_tag t(:save), class: 'btn btn-primary', data: { disable_with: t(:saving) }
 
-- if current_user.organization.self_service?
+- if current_organization.self_service?
   .modal.fade#closeAccount{'tabindex' => "-1", 'role' => "dialog", 'aria-labelledby' => "closeAccount", 'aria-hidden' => "true", 'data-backdrop' => 'static'}
     .modal-dialog
       = form_tag close_account_path do

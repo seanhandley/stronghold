@@ -2,31 +2,17 @@ class Admin::VouchersController < AdminBaseController
 
   before_filter :get_vouchers, only: [:index, :destroy]
 
-  def index
-    
-  end
+  def index ; end
 
   def create
     @voucher = Voucher.new(create_params)
-    if @voucher.save
-      javascript_redirect_to admin_vouchers_path
-    else
-      respond_to do |format|
-        format.js { render :template => "shared/dialog_errors", :locals => {:object => @voucher } }
-      end
-    end
+    ajax_response(@voucher, :save, admin_vouchers_path)
   end
 
   def update
     extend! and return if update_params[:extend]
     @voucher = Voucher.find(params[:id])
-    if @voucher.update(update_params)
-      javascript_redirect_to admin_vouchers_path
-    else
-      respond_to do |format|
-        format.js { render :template => "shared/dialog_errors", :locals => {:object => @voucher } }
-      end
-    end   
+    ajax_response(@voucher, :update, admin_vouchers_path, update_params) 
   end
 
   def destroy

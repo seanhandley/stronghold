@@ -10,8 +10,8 @@ namespace :stronghold do
       acc
     end
     results = rated_modules.collect do |k,v|
-      "#{v.count} modules rated #{k}"
-    end
+      v.count > 0 ? "#{v.count} modules rated #{k}" : nil
+    end.compact
     if rated_modules.values.flatten.count > 0
       Notifications.notify(:code_quality_analysis, "#{results.join('. ')}. Run rubycritic locally for more info.")
     else

@@ -45,8 +45,8 @@ module Freezable
 
   def toggle_openstack!(coll, state)
     unless Rails.env.test?
-      send("#{coll}s").each do |e|
-        Fog::Identity.new(OPENSTACK_ARGS).send("update_#{coll}".to_sym, e.uuid, enabled: state)
+      send("#{coll}s").each do |entity|
+        Fog::Identity.new(OPENSTACK_ARGS).send("update_#{coll}".to_sym, entity.uuid, enabled: state)
       end
     end
   end
@@ -64,8 +64,8 @@ module Freezable
       tenants.each do |tenant|
         begin
           Ceph::User.update('uid' => tenant.uuid, 'suspended' => !state)
-        rescue Net::HTTPError => e
-          Honeybadger.notify(e)
+        rescue Net::HTTPError => error
+          Honeybadger.notify(error)
         end
       end
     end
@@ -79,10 +79,12 @@ module Freezable
     toggle_instances!(false)
   end
 
+  private
+
   def toggle_instances!(state)
     fog = Fog::Compute.new(OPENSTACK_ARGS)
     instances = tenants.collect do |tenant|
-      fog.list_servers_detail(all_tenants: true).body['servers'].select{|s| s['tenant_id'] == tenant.uuid}.map{|s| s['id']}
+      fog.list_servers_detail(all_tenants: true).body['servers'].select{|server| server['tenant_id'] == tenant.uuid}.map{|server| server['id']}
     end.flatten
     if state
       instances.each do |instance|

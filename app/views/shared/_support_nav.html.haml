@@ -18,8 +18,8 @@
         %a{:href => support_edit_organization_path}
           %i.fa.fa-briefcase
           My Account
-      - if current_user.organization.cloud?
-        - unless current_user.organization.limited_storage?
+      - if current_organization.cloud?
+        - unless current_organization.limited_storage?
           %li
             %a{:href => support_projects_path}
               %i.fa.fa-folder-o
@@ -28,7 +28,7 @@
           %a{:href => support_quotas_path}
             %i.fa.fa-sliders
             Limits 
-      - if current_user.organization.self_service?
+      - if current_organization.self_service?
         %li
           %a{:href => support_manage_cards_path}
             %i.fa.fa-credit-card
