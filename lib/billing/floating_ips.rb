@@ -96,7 +96,9 @@ module Billing
       samples.collect do |sample|
         meta_data = sample['resource_metadata']
         if meta_data['event_type']
-          Billing::IpState.create ip_id: billing_ip_id, recorded_at: Time.zone.parse("#{sample['recorded_at']} UTC"),
+          Billing::IpState.create ip_id: billing_ip_id,
+                                      recorded_at: Time.zone.parse("#{sample['recorded_at']} UTC"),
+                                      timestamp: Time.zone.parse("#{sample['timestamp']} UTC"),
                                       port: meta_data['port_id'],
                                       event_name: meta_data['event_type'], billing_sync: sync,
                                       message_id: sample['message_id']
