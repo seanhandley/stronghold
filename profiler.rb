@@ -5,9 +5,7 @@ require 'ruby-prof'
 # Profile the code
 RubyProf.start
 
-organization = Organization.find(321)
-ud = UsageDecorator.new(organization)
-ud.usage_data(from_date: Time.now.beginning_of_month, to_date: Time.now)
+Billing::sync!
 
 result = RubyProf.stop
 
