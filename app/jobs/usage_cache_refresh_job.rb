@@ -54,6 +54,6 @@ class UsageCacheRefreshJob < ActiveJob::Base
         billing_external_gateways: :external_gateway_states,
         billing_ips: :ip_states
       }]
-    )
+    ).first
   end
 end
