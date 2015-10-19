@@ -2,23 +2,27 @@ class UsageCacheRefreshJob < ActiveJob::Base
   queue_as :usage_cache
 
   def perform(organization=nil)
-    if organization
-      warm_cache(organization) unless already_running?(organization)
-      return
-    end
+    # if organization
+    #   warm_cache(organization) unless already_running?(organization)
+    #   return
+    # end
     
-    dispersal_time = 300
-    spacing = dispersal_time / Organization.active.count
-    organizations.each_with_index do |organization, i|
-      x = (spacing * i * 1.1) + 5
-      UsageCacheRefreshJob.set(wait: x.seconds).perform_later(organization)
+    # dispersal_time = 3000
+    # spacing = dispersal_time / Organization.active.count
+    # organizations.each_with_index do |organization, i|
+    #   x = (spacing * i * 1.1) + 5
+    #   UsageCacheRefreshJob.set(wait: x.seconds).perform_later(organization)
+    # end
+
+    organizations.each do |organization|
+      warm_cache(organization)
     end
   end
 
   private
 
   def warm_cache(organization)
-    sleep rand(500..5000) / 1000.0
+    # sleep rand(500..5000) / 1000.0
     ud = UsageDecorator.new(organization)
     ud.usage_data(from_date: Time.now.beginning_of_month, to_date: Time.now)
   end
