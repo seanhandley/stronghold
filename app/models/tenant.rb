@@ -14,6 +14,14 @@ class Tenant < ActiveRecord::Base
   has_many :user_tenant_roles, dependent: :destroy
   has_many :users, :through => :user_tenant_roles
 
+  has_many :billing_instances, primary_key: :uuid, class_name: 'Billing::Instance'
+  has_many :billing_volumes, primary_key: :uuid, class_name: 'Billing::Volume'
+  has_many :billing_images, primary_key: :uuid, class_name: 'Billing::Image'
+  has_many :billing_external_gateways, primary_key: :uuid, class_name: 'Billing::ExternalGateway'
+  has_many :billing_ips, primary_key: :uuid, class_name: 'Billing::Ip'
+  has_many :billing_storage_objects, primary_key: :uuid, class_name: 'Billing::ObjectStorage'
+  has_many :billing_ip_quotas, primary_key: :uuid, class_name: 'Billing::IpQuota'
+
   validate {|t| readonly! if t.persisted? && Tenant.find(id).staff_tenant? && name_changed? }
   before_destroy {|t| readonly! if t.persisted? && Tenant.find(id).staff_tenant? }
   validate :check_projects_limit, on: :create

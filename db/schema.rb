@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151015095009) do
+ActiveRecord::Schema.define(version: 20151019083630) do
 
   create_table "audits", force: :cascade do |t|
     t.string   "auditable_id",    limit: 255
@@ -60,6 +60,8 @@ ActiveRecord::Schema.define(version: 20151015095009) do
     t.string "name",      limit: 255
   end
 
+  add_index "billing_external_gateways", ["tenant_id"], name: "tenant_external_gateways", using: :btree
+
   create_table "billing_image_states", force: :cascade do |t|
     t.datetime "recorded_at",                   precision: 3
     t.string   "event_name",        limit: 255
@@ -83,6 +85,7 @@ ActiveRecord::Schema.define(version: 20151015095009) do
   end
 
   add_index "billing_images", ["image_id"], name: "index_billing_images_on_image_id", unique: true, using: :btree
+  add_index "billing_images", ["tenant_id"], name: "tenant_images", using: :btree
 
   create_table "billing_instance_flavors", force: :cascade do |t|
     t.string  "flavor_id", limit: 255
@@ -121,6 +124,7 @@ ActiveRecord::Schema.define(version: 20151015095009) do
 
   add_index "billing_instances", ["flavor_id"], name: "instance_flavors", using: :btree
   add_index "billing_instances", ["instance_id"], name: "index_billing_instances_on_instance_id", unique: true, using: :btree
+  add_index "billing_instances", ["tenant_id"], name: "tenant_instances", using: :btree
 
   create_table "billing_invoices", force: :cascade do |t|
     t.integer "organization_id",       limit: 4,                 null: false
@@ -141,6 +145,8 @@ ActiveRecord::Schema.define(version: 20151015095009) do
     t.integer  "sync_id",     limit: 4
     t.integer  "previous",    limit: 4
   end
+
+  add_index "billing_ip_quotas", ["tenant_id"], name: "tenant_ip_quotas", using: :btree
 
   create_table "billing_ip_states", force: :cascade do |t|
     t.integer  "ip_id",             limit: 4
@@ -165,6 +171,8 @@ ActiveRecord::Schema.define(version: 20151015095009) do
     t.boolean "active",                default: true, null: false
   end
 
+  add_index "billing_ips", ["tenant_id"], name: "tenant_ips", using: :btree
+
   create_table "billing_rates", force: :cascade do |t|
     t.integer "flavor_id", limit: 4
     t.string  "arch",      limit: 255
@@ -177,6 +185,8 @@ ActiveRecord::Schema.define(version: 20151015095009) do
     t.datetime "recorded_at",             precision: 3
     t.integer  "sync_id",     limit: 4
   end
+
+  add_index "billing_storage_objects", ["tenant_id"], name: "tenant_storage_objects", using: :btree
 
   create_table "billing_syncs", force: :cascade do |t|
     t.datetime "completed_at", precision: 3
@@ -205,6 +215,7 @@ ActiveRecord::Schema.define(version: 20151015095009) do
     t.string "tenant_id", limit: 255
   end
 
+  add_index "billing_volumes", ["tenant_id"], name: "tenant_volumes", using: :btree
   add_index "billing_volumes", ["volume_id"], name: "index_billing_volumes_on_volume_id", unique: true, using: :btree
 
   create_table "customer_signups", force: :cascade do |t|
