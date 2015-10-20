@@ -18,7 +18,7 @@ module Billing
     Billing::Volumes.sync!(from, to, sync)
     Billing::FloatingIps.sync!(from, to, sync)
     Billing::IpQuotas.sync!(sync)
-    Billing::ExternalGateways.sync!(from, to, sync)
+    # Billing::ExternalGateways.sync!(from, to, sync)
     Billing::Images.sync!(from, to, sync)
     Billing::StorageObjects.sync!(sync)
     sync.update_attributes(completed_at: Time.now)
