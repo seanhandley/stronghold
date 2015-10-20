@@ -10,7 +10,7 @@ module Billing
 
   def self.sync!
     now = Time.now
-    from = Billing::Sync.last.started_at
+    from = Billing::Sync.completed.last.started_at
     to   = now
     sync = Billing::Sync.create started_at: now
     sleep 30 # Because it can take a few seconds for events to get off the queue and into Mongo
@@ -18,13 +18,15 @@ module Billing
     Billing::Volumes.sync!(from, to, sync)
     Billing::FloatingIps.sync!(from, to, sync)
     Billing::IpQuotas.sync!(sync)
-    Billing::ExternalGateways.sync!(from, to, sync)
+    # Billing::ExternalGateways.sync!(from, to, sync)
     Billing::Images.sync!(from, to, sync)
     Billing::StorageObjects.sync!(sync)
     sync.update_attributes(completed_at: Time.now)
   rescue StandardError => e
     sync.destroy
     raise
+  ensure
+    sync.destroy unless sync.completed_at
   end
 
   def self.fetch_samples(tenant_id, measurement, from, to)

@@ -96,14 +96,10 @@ module Billing
     end
 
     def self.fetch_router_samples(tenant_id, from, to)
-      timestamp_format = "%Y-%m-%dT%H:%M:%S"
-      options = [{'field' => 'timestamp', 'op' => 'ge', 'value' => from.strftime(timestamp_format)},
-                 {'field' => 'timestamp', 'op' => 'lt', 'value' => to.strftime(timestamp_format)}]
-      tenant_samples = Fog::Metering.new(OPENSTACK_ARGS).get_samples("router", options).body
-      tenant_samples = tenant_samples.select{|sample| sample['resource_metadata']['tenant_id'] == tenant_id}
-
+      samples, ports = fetch_all_router_samples_and_ports(from, to)
+      tenant_samples = samples.select{|sample| sample['resource_metadata']['tenant_id'] == tenant_id}
       tenant_samples = tenant_samples.collect do |sample|
-        gateways = Fog::Network.new(OPENSTACK_ARGS).ports.all(device_id: sample['resource_id'], device_owner: 'network:router_gateway')
+        gateways = ports.select{|port| port.device_id == sample['resource_id'] && port.device_owner == 'network:router_gateway'}
         address = gateways.any? ? gateways.first : nil
         if address
           sample.merge('inferred_address' => address.fixed_ips.first['ip_address'])
@@ -112,6 +108,18 @@ module Billing
       end
 
       tenant_samples.compact.group_by{|sample| sample['resource_id']}
+    end
+
+    def self.fetch_all_router_samples_and_ports(from, to)
+      timestamp_format = "%Y-%m-%dT%H:%M:%S"
+      key = "ceilometer_samples_all_routers_#{from.utc.strftime(timestamp_format)}_#{to.utc.strftime(timestamp_format)}"
+      Rails.cache.fetch(key, expires_in: 2.hours) do
+        options = [{'field' => 'timestamp', 'op' => 'ge', 'value' => from.strftime(timestamp_format)},
+                   {'field' => 'timestamp', 'op' => 'lt', 'value' => to.strftime(timestamp_format)}]
+        samples = Fog::Metering.new(OPENSTACK_ARGS).get_samples("router", options).body
+        ports = Fog::Network.new(OPENSTACK_ARGS).ports.all
+        [samples, ports]
+      end
     end
 
   end
