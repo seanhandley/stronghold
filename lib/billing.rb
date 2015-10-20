@@ -25,6 +25,8 @@ module Billing
   rescue StandardError => e
     sync.destroy
     raise
+  ensure
+    sync.destroy unless sync.completed_at
   end
 
   def self.fetch_samples(tenant_id, measurement, from, to)
