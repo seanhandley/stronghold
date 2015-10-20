@@ -63,36 +63,40 @@ class Tenant < ActiveRecord::Base
   end
 
   def quotas
-    Rails.cache.fetch("quotas_for_#{uuid}", expires_in: 1.hour) do
-      {
-        "compute" => compute_quota,
-        "volume"  => volume_quota,
-        "network" => network_quota,
-        "object_storage" => storage_quota
-      }
+    {
+      "compute" => compute_quota,
+      "volume"  => volume_quota,
+      "network" => network_quota,
+      "object_storage" => storage_quota
+    }
+  end
+
+  def compute_quota
+    Rails.cache.fetch("compute_quotas_for_#{uuid}", expires_in: 1.hour) do
+      keys = ["instances", "cores", "ram"]
+      Fog::Compute.new(OPENSTACK_ARGS).get_quota(uuid).body['quota_set'].slice(*keys)
     end
   end
 
-  private
-
-  def compute_quota
-    keys = ["instances", "cores", "ram"]
-    Fog::Compute.new(OPENSTACK_ARGS).get_quota(uuid).body['quota_set'].slice(*keys)
-  end
-
   def volume_quota
-    keys = ["volumes", "snapshots", "gigabytes"]
-    Fog::Volume.new(OPENSTACK_ARGS).get_quota(uuid).body['quota_set'].slice(*keys)
+    Rails.cache.fetch("volume_quotas_for_#{uuid}", expires_in: 1.hour) do
+      keys = ["volumes", "snapshots", "gigabytes"]
+      Fog::Volume.new(OPENSTACK_ARGS).get_quota(uuid).body['quota_set'].slice(*keys)
+    end
   end
 
   def network_quota
-    keys = ["floatingip", "router"]
-    Fog::Network.new(OPENSTACK_ARGS).get_quota(uuid).body['quota'].slice(*keys)
+    Rails.cache.fetch("network_quotas_for_#{uuid}", expires_in: 1.hour) do
+      keys = ["floatingip", "router"]
+      Fog::Network.new(OPENSTACK_ARGS).get_quota(uuid).body['quota'].slice(*keys)
+    end
   end
 
   def storage_quota
     { "" => organization.limited_storage? ? '5 GB' : 'Unlimited'}
   end
+
+  private
 
   def check_projects_limit
     errors.add(:base, "Your account limits only permit #{pluralize organization.projects_limit, 'project'}. #{link_to 'Raise a ticket to request more?', Rails.application.routes.url_helpers.support_tickets_path}".html_safe) unless organization.new_projects_remaining > 0
