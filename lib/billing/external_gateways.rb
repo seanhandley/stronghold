@@ -94,7 +94,7 @@ module Billing
     end
 
     def self.fetch_router_samples(tenant_id, from, to)
-      samples, ports = *fetch_all_router_samples_and_ports(from, to)
+      samples, ports = fetch_all_router_samples_and_ports(from, to)
       tenant_samples = samples.select{|sample| sample['resource_metadata']['tenant_id'] == tenant_id}
       tenant_samples = tenant_samples.collect do |sample|
         gateways = ports.select{|port| port.device_id == sample['resource_id'] && port.device_owner == 'network:router_gateway'}
