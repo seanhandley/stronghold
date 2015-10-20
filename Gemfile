@@ -115,5 +115,5 @@ end
 
 group :production do 
   gem 'unicorn-worker-killer', '~> 0.4.2'
-  # gem 'sidekiq_memlimit'
+  gem 'sidekiq_memlimit'
 end
