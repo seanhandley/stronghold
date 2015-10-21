@@ -13,7 +13,9 @@ class Admin::QuotasController < AdminBaseController
     begin
       OpenStack::Tenant.set_custom_quotas project.uuid, StartingQuota['standard'].deep_merge(quota_params)
       project.organization.update_attributes(limited_storage: update_params[:storage] ? true : false)
-      Rails.cache.delete("quotas_for_#{project.uuid}")
+      ['compute', 'volume', 'network'].each do |section|
+        Rails.cache.delete("#{section}_quotas_for_#{project.uuid}")
+      end
       redirect_to edit_admin_quota_path(project.organization), notice: 'Saved'
     rescue ArgumentError => e
       redirect_to edit_admin_quota_path(project.organization), notice: e.message
