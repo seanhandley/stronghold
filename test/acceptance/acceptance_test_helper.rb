@@ -2,6 +2,8 @@ require 'simplecov'
 SimpleCov.start
 
 ENV["RAILS_ENV"] = "acceptance"
+ENV["STRIPE_SECRET_KEY"] = 'dummy'
+
 # ENV["PERCY_ENABLE"] = "1"
 require File.expand_path("../../../config/environment", __FILE__)
 require "rails/test_help"
