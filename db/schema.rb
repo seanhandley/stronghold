@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151019083630) do
+ActiveRecord::Schema.define(version: 20151021133102) do
 
   create_table "audits", force: :cascade do |t|
     t.string   "auditable_id",    limit: 255
@@ -45,7 +45,7 @@ ActiveRecord::Schema.define(version: 20151019083630) do
     t.string   "message_id",          limit: 255
     t.string   "address",             limit: 255
     t.datetime "timestamp"
-    t.integer  "minutes_in_state",    limit: 4
+    t.integer  "hours_in_state",      limit: 4
     t.integer  "previous_state_id",   limit: 4
     t.integer  "next_state_id",       limit: 4
   end
@@ -70,7 +70,7 @@ ActiveRecord::Schema.define(version: 20151019083630) do
     t.integer  "sync_id",           limit: 4
     t.string   "message_id",        limit: 255
     t.datetime "timestamp"
-    t.integer  "minutes_in_state",  limit: 4
+    t.integer  "hours_in_state",    limit: 4
     t.integer  "previous_state_id", limit: 4
     t.integer  "next_state_id",     limit: 4
   end
@@ -105,7 +105,7 @@ ActiveRecord::Schema.define(version: 20151019083630) do
     t.integer  "sync_id",           limit: 4
     t.string   "flavor_id",         limit: 255
     t.datetime "timestamp"
-    t.integer  "minutes_in_state",  limit: 4
+    t.integer  "hours_in_state",    limit: 4
     t.integer  "previous_state_id", limit: 4
     t.integer  "next_state_id",     limit: 4
   end
@@ -156,7 +156,7 @@ ActiveRecord::Schema.define(version: 20151019083630) do
     t.string   "message_id",        limit: 255
     t.integer  "sync_id",           limit: 4
     t.datetime "timestamp"
-    t.integer  "minutes_in_state",  limit: 4
+    t.integer  "hours_in_state",    limit: 4
     t.integer  "previous_state_id", limit: 4
     t.integer  "next_state_id",     limit: 4
   end
@@ -201,7 +201,7 @@ ActiveRecord::Schema.define(version: 20151019083630) do
     t.string   "message_id",        limit: 255
     t.integer  "sync_id",           limit: 4
     t.datetime "timestamp"
-    t.integer  "minutes_in_state",  limit: 4
+    t.integer  "hours_in_state",    limit: 4
     t.integer  "previous_state_id", limit: 4
     t.integer  "next_state_id",     limit: 4
   end
