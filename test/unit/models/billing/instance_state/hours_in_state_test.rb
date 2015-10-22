@@ -35,10 +35,6 @@ module Billing
       end
     end
 
-    def test_
-      
-    end
-
     def teardown
       DatabaseCleaner.clean  
     end
