@@ -25,15 +25,19 @@ module Billing
       end
     end
 
+    def billable_hours
+      billable? ? hours_in_state : 0
+    end
+
     def cost
-      hours_in_state * rate
+      billable_hours * rate
     end
 
     def current_state?
       !!next_state
     end
 
-    def rate(arch)
+    def rate
       arch = "x86_64" if arch == "None"
       flavor = instance_flavor ? instance_flavor : Billing::InstanceFlavor.find_by_flavor_id(billing_instance.flavor_id)
       flavor.rates.where(arch: arch).first.rate.to_f rescue nil

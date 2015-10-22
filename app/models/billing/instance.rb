@@ -68,5 +68,45 @@ module Billing
         'unknown'
       end
     end
+
+    def billable_hours(from, to)
+      states = instance_states.to_a
+      states_between = states.select{|state| state.recorded_at > from && state.recorded_at < to}
+
+      if states_between.any?
+        total_billable_hours = states_between.map(&:billable_hours).sum
+
+        # Check for shortfall at the start
+        first_state = states_between.first
+        previous_state = first_state.previous_state
+
+        if previous_state && previous_state.billable?
+          total_billable_hours += previous_state.billable_hours
+          total_billable_hours -= ((from - previous_state.recorded_at) / 3600.0).ceil
+        end
+
+        # Check for shortfall at the end
+        last_state = states_between.last
+        next_state = last_state.next_state
+
+        if next_state && last_state.billable?
+          total_billable_hours -= last_state.billable_hours
+          total_billable_hours += ((to - last_state.recorded_at) / 3600.0).ceil
+        end
+
+        return total_billable_hours
+      else
+        last_state_before_from = states.select{|state| state.recorded_at <= from }.last
+
+        if last_state_before_from && last_state_before_from.billable?
+          return ((to - from) / 3600.0).ceil
+        end
+      end
+      return 0
+    end
+
+    def cost(from, to)
+      
+    end
   end
 end
