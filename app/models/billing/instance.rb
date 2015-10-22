@@ -82,7 +82,7 @@ module Billing
 
         if previous_state && previous_state.billable?
           total_billable_hours += previous_state.billable_hours
-          total_billable_hours -= ((from - previous_state.recorded_at) / 3600.0).ceil
+          total_billable_hours -= TimeDifference.between(previous_state.recorded_at, from).in_hours.ceil
         end
 
         # Check for shortfall at the end
@@ -91,7 +91,7 @@ module Billing
 
         if next_state && last_state.billable?
           total_billable_hours -= last_state.billable_hours
-          total_billable_hours += ((to - last_state.recorded_at) / 3600.0).ceil
+          total_billable_hours += TimeDifference.between(last_state.recorded_at, to).in_hours.ceil
         end
 
         return total_billable_hours
@@ -99,7 +99,7 @@ module Billing
         last_state_before_from = states.select{|state| state.recorded_at <= from }.last
 
         if last_state_before_from && last_state_before_from.billable?
-          return ((to - from) / 3600.0).ceil
+          return TimeDifference.between(from, to).in_hours.ceil
         end
       end
       return 0

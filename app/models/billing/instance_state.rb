@@ -16,12 +16,12 @@ module Billing
       return hours if hours
 
       if next_state
-        hours = ((next_state.recorded_at - recorded_at) / 3600.0).ceil
+        hours = TimeDifference.between(recorded_at, next_state.recorded_at).in_hours.ceil
         write_attribute(:hours_in_state, hours)
         save!
         hours
       else
-        ((Time.now - recorded_at) / 3600.0).ceil
+        TimeDifference.between(recorded_at, Time.now).in_hours.ceil
       end
     end
 
