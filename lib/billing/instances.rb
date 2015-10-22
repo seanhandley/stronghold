@@ -64,7 +64,6 @@ module Billing
       previous_state = instance.instance_states.where('recorded_at < ?', from).order('recorded_at DESC').limit(1).first
       first_state = states.first
       last_state = states.last
-      arch = instance.arch
 
       if states.any?
         if states.count > 1
@@ -74,7 +73,7 @@ module Billing
             if billable?(previous_state.state)
               start = (first_state.recorded_at - from)
               start = start / Billing::SECONDS_TO_HOURS
-              start * previous_state.rate(arch)
+              start * previous_state.rate
             end
           end
 
@@ -86,7 +85,7 @@ module Billing
             end
             begin
               difference = difference / Billing::SECONDS_TO_HOURS
-              difference * previous.rate(arch)
+              difference * previous.rate
             ensure
               previous = state
             end
@@ -97,7 +96,7 @@ module Billing
           if(billable?(last_state.state))
             ending = (to - last_state.recorded_at)
             ending = ending / Billing::SECONDS_TO_HOURS
-            ending * last_state.rate(arch)
+            ending * last_state.rate
           end
 
           return (start + middle + ending)
@@ -106,7 +105,7 @@ module Billing
           if billable?(first_state.state)
             time = (to - first_state.recorded_at)
             time = time / Billing::SECONDS_TO_HOURS
-            return time * first_state.rate(arch)
+            return time * first_state.rate
           else
             return 0
           end
@@ -115,7 +114,7 @@ module Billing
         if previous_state && billable?(previous_state.state)
           time = (to - from)
           time = time / Billing::SECONDS_TO_HOURS
-          return time * previous_state.rate(arch)
+          return time * previous_state.rate
         else
           return 0
         end

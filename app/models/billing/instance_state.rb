@@ -38,7 +38,7 @@ module Billing
     end
 
     def rate
-      arch = "x86_64" if arch == "None"
+      billing_instance.arch == "None" ? arch = "x86_64" : arch = billing_instance.arch
       flavor = instance_flavor ? instance_flavor : Billing::InstanceFlavor.find_by_flavor_id(billing_instance.flavor_id)
       flavor.rates.where(arch: arch).first.rate.to_f rescue nil
     end
