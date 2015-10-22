@@ -72,3 +72,27 @@ Voucher.blueprint do
   discount_percent { 100 }
   expires_at { Time.now + 1.year }
 end
+
+module Billing
+  Instance.blueprint do
+    instance_id { SecureRandom.hex }
+    name { Faker::Company.name }
+    flavor_id { SecureRandom.hex }
+    image_id { SecureRandom.hex }
+    tenant_id { SecureRandom.hex }
+    arch { 'x86_64' }
+  end
+
+  Sync.blueprint {
+    completed_at { Time.now }
+    started_at { Time.now - 2.minutes }
+  }
+
+  InstanceState.blueprint do
+    state { 'building' }
+    billing_sync { Sync.make! }
+    flavor_id { SecureRandom.hex }
+    message_id { SecureRandom.hex }
+    event_name { 'compute.instance.create.start' }
+  end
+end
