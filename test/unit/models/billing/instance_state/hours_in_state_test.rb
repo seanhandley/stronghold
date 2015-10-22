@@ -26,12 +26,17 @@ module Billing
 
     def test_two_active_states_wont_increase_over_time
       @active_state.update_attributes(next_state_id: @inactive_state.id)
+      
       Timecop.freeze(Time.parse('2015-10-10 09:40:00')) do
         assert_equal 7, @active_state.hours_in_state
       end
 
       Timecop.freeze(Time.parse('2016-10-10 09:40:00')) do
         assert_equal 7, @active_state.hours_in_state
+      end
+
+      Timecop.freeze(Time.parse('2015-10-11 16:30:00')) do
+        assert_equal 24, @inactive_state.hours_in_state
       end
     end
 
