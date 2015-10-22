@@ -35,6 +35,13 @@ module Billing
       end
     end
 
+    def test_value_persisted_in_db
+      assert_nil @active_state.send(:read_attribute, :hours_in_state)
+      @active_state.update_attributes(next_state_id: @inactive_state.id)
+      @active_state.hours_in_state
+      assert_equal 7, @active_state.send(:read_attribute, :hours_in_state)
+    end
+
     def teardown
       DatabaseCleaner.clean  
     end
