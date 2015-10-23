@@ -71,14 +71,14 @@ class CustomerGenerator
 
   def create_default_network(organization)
     organization.tenants.collect(&:uuid).each do |tenant_id|
-      n = Fog::Network.new(OPENSTACK_ARGS).networks.create name: 'default', tenant_id: tenant_id
-      s = Fog::Network.new(OPENSTACK_ARGS).subnets.create name: 'default', cidr: '192.168.0.0/24',
+      n = OpenStackConnection.network.networks.create name: 'default', tenant_id: tenant_id
+      s = OpenStackConnection.network.subnets.create name: 'default', cidr: '192.168.0.0/24',
                                    network_id: n.id, ip_version: 4, dns_nameservers: ['8.8.8.8', '8.8.4.4'],
                                    tenant_id: tenant_id
-      external_network = Fog::Network.new(OPENSTACK_ARGS).networks.select{|n| n.router_external == true }.first
-      r = Fog::Network.new(OPENSTACK_ARGS).routers.create name: 'default', tenant_id: tenant_id,
+      external_network = OpenStackConnection.network.networks.select{|n| n.router_external == true }.first
+      r = OpenStackConnection.network.routers.create name: 'default', tenant_id: tenant_id,
                                    external_gateway_info: external_network.id
-      Fog::Network.new(OPENSTACK_ARGS).add_router_interface(r.id, s.id)
+      OpenStackConnection.network.add_router_interface(r.id, s.id)
 
     end
   end

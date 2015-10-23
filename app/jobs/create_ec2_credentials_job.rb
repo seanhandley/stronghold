@@ -3,7 +3,7 @@ class CreateEC2CredentialsJob < ActiveJob::Base
 
   def perform(user)
     tenant = user.organization.primary_tenant
-    Fog::Identity.new(OPENSTACK_ARGS).create_ec2_credential(user.uuid, tenant.uuid).body['credential']
+    OpenStackConnection.identity.create_ec2_credential(user.uuid, tenant.uuid).body['credential']
     CheckCephAccessJob.perform_later(user)
   end
 end

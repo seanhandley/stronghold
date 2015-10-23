@@ -39,7 +39,7 @@ module Billing
     Rails.cache.fetch(key, expires_in: 2.hours) do
       options = [{'field' => 'timestamp', 'op' => 'ge', 'value' => from.utc.strftime(timestamp_format)},
                  {'field' => 'timestamp', 'op' => 'lt', 'value' => to.utc.strftime(timestamp_format)}]
-      tenant_samples = Fog::Metering.new(OPENSTACK_ARGS).get_samples(measurement, options).body
+      tenant_samples = OpenStackConnection.metering.get_samples(measurement, options).body
       tenant_samples.group_by{|s| s['project_id']}
     end 
   end
@@ -50,7 +50,7 @@ module Billing
                      {'field' => 'timestamp', 'op' => 'lt', 'value' => to.utc.strftime(timestamp_format)},
                      {'field' => 'project_id', 'op' => 'eq', 'value' => instance.tenant_id}]
 
-    instance_results = Fog::Metering.new(OPENSTACK_ARGS).get_samples('instance', options).body
+    instance_results = OpenStackConnection.metering.get_samples('instance', options).body
     grouped_results = instance_results.group_by{|s| s['resource_id']}
     instance_events = grouped_results[instance.instance_id]
     return [] unless instance_events

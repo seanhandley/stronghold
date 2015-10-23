@@ -48,9 +48,9 @@ module OpenStack
 
     def self.set_quotas(id, quota)
       return false unless quota
-      Fog::Compute.new(OPENSTACK_ARGS).update_quota id, quota['compute']
-      Fog::Volume.new(OPENSTACK_ARGS).update_quota  id, quota['volume']
-      Fog::Network.new(OPENSTACK_ARGS).update_quota id, quota['network']
+      OpenStackConnection.compute.update_quota id, quota['compute']
+      OpenStackConnection.volume.update_quota  id, quota['volume']
+      OpenStackConnection.network.update_quota id, quota['network']
       true
     end
 

@@ -29,7 +29,7 @@ class UserTenantRole < ActiveRecord::Base
 
   def self.os_roles
     Rails.cache.fetch("required_tenant_roles", expires_in: 1.day) do
-      Fog::Identity.new(OPENSTACK_ARGS).list_roles.body['roles']
+      OpenStackConnection.identity.list_roles.body['roles']
     end
   end
 

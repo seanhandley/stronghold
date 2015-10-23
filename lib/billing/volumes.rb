@@ -95,7 +95,7 @@ module Billing
         unless samples.any? {|s| s['resource_metadata']['event_type']}
           # This is a new volume and we don't know its current size
           # Attempt to find out
-          if(os_volume = Fog::Volume.new(OPENSTACK_ARGS).volumes.get(volume_id))
+          if(os_volume = OpenStackConnection.volume.volumes.get(volume_id))
             volume.volume_states.create recorded_at: Time.now, size: os_volume.size,
                                             event_name: 'ping', billing_sync: sync,
                                             message_id: SecureRandom.hex

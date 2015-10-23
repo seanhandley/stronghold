@@ -114,8 +114,8 @@ module Billing
       Rails.cache.fetch(key, expires_in: 2.hours) do
         options = [{'field' => 'timestamp', 'op' => 'ge', 'value' => from.strftime(timestamp_format)},
                    {'field' => 'timestamp', 'op' => 'lt', 'value' => to.strftime(timestamp_format)}]
-        samples = Fog::Metering.new(OPENSTACK_ARGS).get_samples("router", options).body
-        ports = Fog::Network.new(OPENSTACK_ARGS).ports.all
+        samples = OpenStackConnection.metering.get_samples("router", options).body
+        ports = OpenStackConnection.network.ports.all
         [samples, ports]
       end
     end

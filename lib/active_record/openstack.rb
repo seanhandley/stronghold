@@ -25,9 +25,9 @@ module ActiveRecord
 
       define_method :delete_openstack_object do
         if params[:as] == 'OpenStack::User'
-          Fog::Identity.new(OPENSTACK_ARGS).delete_user uuid
+          OpenStackConnection.identity.delete_user uuid
         else
-          Fog::Identity.new(OPENSTACK_ARGS).delete_tenant uuid
+          OpenStackConnection.identity.delete_tenant uuid
         end
       end
 
