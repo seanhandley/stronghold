@@ -76,6 +76,12 @@ module Billing
       assert_equal 0, narrow_range_billable_hours('2015-10-17 11:30:00 UTC', '2015-10-18 14:30:00 UTC')
     end
 
+    def test_billable_hours_with_sequential_active_periods
+      @active_state_a.update_attributes(instance_id: @instance.id, next_state_id: @active_state_b.id)
+      @active_state_b.update_attributes(instance_id: @instance.id, previous_state_id: @active_state_a.id)
+      assert_equal 14, @instance.billable_hours(Time.parse('2015-10-7 11:30:00 UTC'), Time.parse('2015-10-18 14:30:00 UTC'))
+    end
+
     def teardown
       DatabaseCleaner.clean  
     end
