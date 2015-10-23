@@ -10,7 +10,7 @@ module OpenStack
 
     def self.update_password(uuid, password)
       unless Rails.env.test?
-        conn = Fog::Identity.new(OPENSTACK_ARGS)
+        conn = OpenStackConnection.identity
         u = conn.users.select {|u| u.id == uuid}.first
         u.update_password(password) if u
       end
@@ -18,7 +18,7 @@ module OpenStack
 
     def self.update_enabled(uuid, enabled)
       unless Rails.env.test?
-        conn = Fog::Identity.new(OPENSTACK_ARGS)
+        conn = OpenStackConnection.identity
         u = conn.users.select {|u| u.id == uuid}.first
         u.update_enabled(enabled) if u
       end    

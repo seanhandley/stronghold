@@ -47,11 +47,11 @@ class Tenant < ActiveRecord::Base
   end
 
   def enable!
-    Fog::Identity.new(OPENSTACK_ARGS).update_tenant(uuid, enabled: true)
+    OpenStackConnection.identity.update_tenant(uuid, enabled: true)
   end
 
   def disable!
-    Fog::Identity.new(OPENSTACK_ARGS).update_tenant(uuid, enabled: false)
+    OpenStackConnection.identity.update_tenant(uuid, enabled: false)
   end
 
   def destroy_unless_primary
@@ -74,21 +74,21 @@ class Tenant < ActiveRecord::Base
   def compute_quota
     Rails.cache.fetch("compute_quotas_for_#{uuid}", expires_in: 1.hour) do
       keys = ["instances", "cores", "ram"]
-      Fog::Compute.new(OPENSTACK_ARGS).get_quota(uuid).body['quota_set'].slice(*keys)
+      OpenStackConnection.compute.get_quota(uuid).body['quota_set'].slice(*keys)
     end
   end
 
   def volume_quota
     Rails.cache.fetch("volume_quotas_for_#{uuid}", expires_in: 1.hour) do
       keys = ["volumes", "snapshots", "gigabytes"]
-      Fog::Volume.new(OPENSTACK_ARGS).get_quota(uuid).body['quota_set'].slice(*keys)
+      OpenStackConnection.volume.get_quota(uuid).body['quota_set'].slice(*keys)
     end
   end
 
   def network_quota
     Rails.cache.fetch("network_quotas_for_#{uuid}", expires_in: 1.hour) do
       keys = ["floatingip", "router"]
-      Fog::Network.new(OPENSTACK_ARGS).get_quota(uuid).body['quota'].slice(*keys)
+      OpenStackConnection.network.get_quota(uuid).body['quota'].slice(*keys)
     end
   end
 

@@ -13,11 +13,11 @@ namespace :stronghold do
         end
       end
       organization.users.each do |user|
-        credentials = Fog::Identity.new(OPENSTACK_ARGS).list_ec2_credentials(user.uuid).body['credentials']
+        credentials = OpenStackConnection.identity.list_ec2_credentials(user.uuid).body['credentials']
         tenants_with_creds = credentials.collect{|c| c['tenant_id']}
         organization.tenants.each do |tenant|
           unless tenants_with_creds.include?(tenant.uuid)
-            credential = Fog::Identity.new(OPENSTACK_ARGS).create_ec2_credential(user.uuid, tenant.uuid).body['credential']
+            credential = OpenStackConnection.identity.create_ec2_credential(user.uuid, tenant.uuid).body['credential']
             puts "Created new EC2 credential for tenant #{tenant.reference} for user #{user.name}"
           else
             credential = credentials.select{|c| c['tenant_id'] == tenant.uuid}.first

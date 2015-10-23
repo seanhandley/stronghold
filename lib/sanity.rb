@@ -46,7 +46,7 @@ module Sanity
   def self.missing_volumes
     Billing::Volume.active.reject do |volume|
       begin
-        Fog::Volume.new(OPENSTACK_ARGS).get_volume_details(volume.volume_id)
+        OpenStackConnection.volume.get_volume_details(volume.volume_id)
       rescue Fog::Compute::OpenStack::NotFound
         false
       end
@@ -84,19 +84,19 @@ module Sanity
 
   def self.live_instances
     Rails.cache.fetch('sanity_live_instances', expires_in: 10.minutes) do
-      Hash[Fog::Compute.new(OPENSTACK_ARGS).list_servers_detail(:all_tenants => true).body['servers'].collect{|server| [server['id'], {'status' => server['status'].downcase, 'name' => server['name'], 'tenant_id' => server['tenant_id']}]}]
+      Hash[OpenStackConnection.compute.list_servers_detail(:all_tenants => true).body['servers'].collect{|server| [server['id'], {'status' => server['status'].downcase, 'name' => server['name'], 'tenant_id' => server['tenant_id']}]}]
     end
   end
 
   def self.live_images
     Rails.cache.fetch('sanity_live_images', expires_in: 10.minutes) do
-      Fog::Compute.new(OPENSTACK_ARGS).list_images.body['images'].collect{|image| image['id']}
+      OpenStackConnection.compute.list_images.body['images'].collect{|image| image['id']}
     end
   end
 
   def self.live_routers
     Rails.cache.fetch('sanity_live_routers', expires_in: 10.minutes) do
-      Fog::Network.new(OPENSTACK_ARGS).list_routers.body['routers'].collect{|router| router['id']}
+      OpenStackConnection.network.list_routers.body['routers'].collect{|router| router['id']}
     end
   end
 
@@ -109,7 +109,7 @@ module Sanity
   end
 
   def self.instance_in_error_state(instance)
-    Fog::Compute.new(OPENSTACK_ARGS).get_server_details(instance).body['server']['status'].downcase == 'error'
+    OpenStackConnection.compute.get_server_details(instance).body['server']['status'].downcase == 'error'
   rescue Fog::Compute::OpenStack::NotFound
     false
   end

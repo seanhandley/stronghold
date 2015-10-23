@@ -37,7 +37,7 @@ module Billing
     return @@cache[key] if @@cache[key]
     options = [{'field' => 'timestamp', 'op' => 'ge', 'value' => from.utc.strftime(timestamp_format)},
                {'field' => 'timestamp', 'op' => 'lt', 'value' => to.utc.strftime(timestamp_format)}]
-    tenant_samples = Fog::Metering.new(OPENSTACK_ARGS).get_samples(measurement, options).body
+    tenant_samples = OpenStackConnection.metering.get_samples(measurement, options).body
     @@cache[key] = tenant_samples.group_by{|s| s['project_id']}
     @@cache[key] 
   end
@@ -67,8 +67,8 @@ module Billing
       return @@eg_cache[key] if @@eg_cache[key]
       options = [{'field' => 'timestamp', 'op' => 'ge', 'value' => from.strftime(timestamp_format)},
                  {'field' => 'timestamp', 'op' => 'lt', 'value' => to.strftime(timestamp_format)}]
-      samples = Fog::Metering.new(OPENSTACK_ARGS).get_samples("router", options).body
-      ports = Fog::Network.new(OPENSTACK_ARGS).ports.all
+      samples = OpenStackConnection.metering.get_samples("router", options).body
+      ports = OpenStackConnection.network.ports.all
       @@eg_cache[key] = [samples, ports]
       @@eg_cache[key]
     end

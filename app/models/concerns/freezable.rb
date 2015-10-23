@@ -46,7 +46,7 @@ module Freezable
   def toggle_openstack!(coll, state)
     unless Rails.env.test?
       send("#{coll}s").each do |entity|
-        Fog::Identity.new(OPENSTACK_ARGS).send("update_#{coll}".to_sym, entity.uuid, enabled: state)
+        OpenStackConnection.identity.send("update_#{coll}".to_sym, entity.uuid, enabled: state)
       end
     end
   end
@@ -82,7 +82,7 @@ module Freezable
   private
 
   def toggle_instances!(state)
-    fog = Fog::Compute.new(OPENSTACK_ARGS)
+    fog = OpenStackConnection.compute
     instances = tenants.collect do |tenant|
       fog.list_servers_detail(all_tenants: true).body['servers'].select{|server| server['tenant_id'] == tenant.uuid}.map{|server| server['id']}
     end.flatten

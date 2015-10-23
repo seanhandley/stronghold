@@ -11,7 +11,7 @@ class CheckOpenStackAccessJob < ActiveJob::Base
   end
 
   def fog
-    Fog::Identity.new(OPENSTACK_ARGS)
+    OpenStackConnection.identity
   end
 
   def set_roles_and_tenants(user)

@@ -101,15 +101,15 @@ class User < ActiveRecord::Base
     cache = Rails.cache
     cache.delete("ec2_credentials_#{id}") unless cache.fetch("ec2_credentials_#{id}")
     cache.fetch("ec2_credentials_#{id}", expires_in: 100.days) do
-      Fog::Identity.new(OPENSTACK_ARGS).list_ec2_credentials(uuid).body['credentials'].first
+      OpenStackConnection.identity.list_ec2_credentials(uuid).body['credentials'].first
     end
   end
 
   def refresh_ec2_credentials!   
-    Fog::Identity.new(OPENSTACK_ARGS).list_ec2_credentials(uuid).body['credentials'].each do |credential|
-      Fog::Identity.new(OPENSTACK_ARGS).delete_ec2_credential(uuid, credential['access'])
+    OpenStackConnection.identity.list_ec2_credentials(uuid).body['credentials'].each do |credential|
+      OpenStackConnection.identity.delete_ec2_credential(uuid, credential['access'])
     end
-    Fog::Identity.new(OPENSTACK_ARGS).create_ec2_credential(uuid, organization.primary_tenant.uuid)
+    OpenStackConnection.identity.create_ec2_credential(uuid, organization.primary_tenant.uuid)
     Rails.cache.delete("ec2_credentials_#{id}")
     remove_ceph_keys
     check_ceph_access

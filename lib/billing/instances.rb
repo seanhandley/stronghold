@@ -184,7 +184,7 @@ module Billing
         unless samples.any? {|sample| sample['resource_metadata']['event_type']}
           # This is a new instance and we don't know its current state.
           # Attempt to find out
-          if(os_instance = Fog::Compute.new(OPENSTACK_ARGS).servers.get(instance_id))
+          if(os_instance = OpenStackConnection.compute.servers.get(instance_id))
             instance.instance_states.create recorded_at: Time.now, state: os_instance.state.downcase,
                                             event_name: 'ping', billing_sync: sync,
                                             message_id: SecureRandom.hex

@@ -86,10 +86,10 @@ class Organization < ActiveRecord::Base
   def enable!
     unless Rails.env.test?
       tenants.each do |tenant|
-        Fog::Identity.new(OPENSTACK_ARGS).update_tenant(tenant.uuid, enabled: true)
+        OpenStackConnection.identity.update_tenant(tenant.uuid, enabled: true)
       end
       users.each do |user|
-        Fog::Identity.new(OPENSTACK_ARGS).update_user(user.uuid, enabled: true)
+        OpenStackConnection.identity.update_user(user.uuid, enabled: true)
       end
     end
     has_payment_methods!(true)
@@ -98,10 +98,10 @@ class Organization < ActiveRecord::Base
   def disable!
     unless Rails.env.test?
       tenants.each do |tenant|
-        Fog::Identity.new(OPENSTACK_ARGS).update_tenant(tenant.uuid, enabled: false)
+        OpenStackConnection.identity.update_tenant(tenant.uuid, enabled: false)
       end
       users.each do |user|
-        Fog::Identity.new(OPENSTACK_ARGS).update_user(user.uuid, enabled: false)
+        OpenStackConnection.identity.update_user(user.uuid, enabled: false)
       end
     end
     update_attributes(disabled: true)
@@ -182,15 +182,15 @@ class Organization < ActiveRecord::Base
 
   def create_default_network!
     tenants.collect(&:uuid).each do |tenant_id|
-      next if Fog::Network.new(OPENSTACK_ARGS).list_routers(tenant_id: tenant_id).body['routers'].count > 0
-      n = Fog::Network.new(OPENSTACK_ARGS).networks.create name: 'default', tenant_id: tenant_id
-      s = Fog::Network.new(OPENSTACK_ARGS).subnets.create name: 'default', cidr: '192.168.0.0/24',
+      next if OpenStackConnection.network.list_routers(tenant_id: tenant_id).body['routers'].count > 0
+      n = OpenStackConnection.network.networks.create name: 'default', tenant_id: tenant_id
+      s = OpenStackConnection.network.subnets.create name: 'default', cidr: '192.168.0.0/24',
                                    network_id: n.id, ip_version: 4, dns_nameservers: ['8.8.8.8', '8.8.4.4'],
                                    tenant_id: tenant_id
-      external_network = Fog::Network.new(OPENSTACK_ARGS).networks.select{|n| n.router_external == true }.first
-      r = Fog::Network.new(OPENSTACK_ARGS).routers.create name: 'default', tenant_id: tenant_id,
+      external_network = OpenStackConnection.network.networks.select{|n| n.router_external == true }.first
+      r = OpenStackConnection.network.routers.create name: 'default', tenant_id: tenant_id,
                                    external_gateway_info: external_network.id
-      Fog::Network.new(OPENSTACK_ARGS).add_router_interface(r.id, s.id)
+      OpenStackConnection.network.add_router_interface(r.id, s.id)
     end
   end
 
