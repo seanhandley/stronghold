@@ -2,6 +2,7 @@
 class Ext::ContactsController < ActionController::Base
 
   skip_authorization_check
+  skip_before_filter :verify_authenticity_token, :only => [:find]
 
   def find
     if find_params[:type] == "email" && user = User.find_by_email(find_params[:data])
