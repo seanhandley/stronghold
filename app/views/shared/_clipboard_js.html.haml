@@ -1,0 +1,25 @@
+= javascript_include_tag "https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.0/clipboard.min.js"
+
+:javascript
+
+  $(document).ready(function() {
+    var clipboard = new Clipboard('.btn-copy');
+
+    clipboard.on('success', function(e) {
+        $(e.trigger).data('title', "Copied!");
+        $(e.trigger).tooltip('show');
+        setTimeout(function() {
+          $('.btn-copy').tooltip('hide')
+        }, 1000);
+
+        e.clearSelection();
+    });
+
+    clipboard.on('error', function(e) {
+      $(e.trigger).data('title', "Press Ctrl+C to copy");
+      $(e.trigger).tooltip('show');
+      setTimeout(function() {
+        $('.btn-copy').tooltip('hide')
+      }, 1000);
+    });
+  });

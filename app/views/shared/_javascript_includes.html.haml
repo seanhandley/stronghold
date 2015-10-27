@@ -3,4 +3,4 @@
 - if content_for(:enable_angular)
   = javascript_include_tag 'application_with_angular'
 - else
-  = javascript_include_tag 'application', Rails.env.acceptance? ? {} : {'async' => true, 'cache' => true}
+  = javascript_include_tag 'application'
