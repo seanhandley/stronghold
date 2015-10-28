@@ -1,8 +1,5 @@
-require 'net/http'
-require 'net/protocol'
-
 module Net
-  class HTTP < Net::Protocol
+  class HTTP < Protocol
     alias default_timeout_initializer initialize
     def initialize(address, port = nil)
       default_timeout_initializer(address, port)
