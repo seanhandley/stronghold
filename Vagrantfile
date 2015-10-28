@@ -6,7 +6,7 @@ Vagrant.require_version '~> 1.7.2'
 
 Vagrant.configure('2') do |config|
   config.vm.box              = 'seanhandley/dc_rails'
-  config.vm.box_version      = '1.0.0'
+  config.vm.box_version      = '1.0.1'
   config.vm.box_check_update = true
 
   # Give every guest private networking
@@ -29,6 +29,6 @@ Vagrant.configure('2') do |config|
     virtualbox.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
   end
 
-  config.vm.synced_folder(".", "/vagrant", :type => 'nfs')
+  config.vm.synced_folder ".", "/vagrant", type: "rsync"
 
 end
