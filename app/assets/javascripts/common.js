@@ -9,3 +9,4 @@
 //= require bootstrap-select
 //= require starburst/starburst
 //= require hideShowPassword
+//= require clipboard

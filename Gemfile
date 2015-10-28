@@ -92,6 +92,7 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-bootstrap-select', '~> 1.7'
   gem 'rails-assets-hideShowPassword', '~> 2.0'
   gem 'rails-assets-normalize-css', '~> 3.0'
+  gem 'rails-assets-clipboard', '~> 1.5'
 end
 
 group :development do
