@@ -4,10 +4,10 @@ module StripeHelper
   rescue Stripe::CardError => e
     handler.call e.message
   rescue Stripe::APIConnectionError
-    notify_honeybadger(e)
+    Honeybadger.notify(e)
     handler.call "Payment provider isn't responding. Please try again."
   rescue Stripe::StripeError => e
-    notify_honeybadger(e)
+    Honeybadger.notify(e)
     handler.call "We're sorry - something went wrong. Our tech team has been notified."
   end
 
