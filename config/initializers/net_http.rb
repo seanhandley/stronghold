@@ -1,4 +1,6 @@
 require 'net/http'
+require 'net/protocol'
+
 module Net
   class HTTP < Protocol
     alias default_timeout_initializer initialize
