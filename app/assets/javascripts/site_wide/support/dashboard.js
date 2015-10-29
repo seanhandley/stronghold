@@ -23,4 +23,8 @@ $(document).ready(function() {
       $('span#object-storage').text(data.object_usage + ' GB')
     });
   }
+  $('#starburst-close').click(function() {
+    $(this).closest('form').submit();
+    $('#starburst-announcement').remove();
+  });
 });
