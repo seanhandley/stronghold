@@ -7,4 +7,15 @@ token = Rails.application.secrets.sirportly_token
 secret = Rails.application.secrets.sirportly_secret
 
 Sirportly.domain = domain
-SIRPORTLY = Sirportly::Client.new(token, secret)
+SIRPORTLY_CLIENT = Sirportly::Client.new(token, secret)
+
+
+class SirportlyWrapper
+  def method_missing(m, *args, &block)  
+    SIRPORTLY_CLIENT.send(m, *args, &block)
+  rescue Net::OpenTimeout => e
+    raise Sirportly::Error, e.message
+  end
+end
+
+SIRPORTLY = SirportlyWrapper.new

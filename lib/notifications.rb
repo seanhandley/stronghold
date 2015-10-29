@@ -6,7 +6,8 @@ module Notifications
     Notifications.constants
   end
 
-  def self.notify(key, message)
+  # Notify synchronously
+  def self.notify!(key, message)
     WebMock.allow_net_connect! if Rails.env.test?
     key = key.to_s
     notifiers.each do |n|
@@ -21,6 +22,11 @@ module Notifications
     end
   ensure
     WebMock.disable_net_connect! if Rails.env.test?
+  end
+
+  # Notify asynchronously
+  def self.notify(key, message)
+    SendNotificationJob.perform_later(key.to_s, message)
   end
 
 end

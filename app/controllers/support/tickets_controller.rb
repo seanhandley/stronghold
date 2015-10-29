@@ -34,7 +34,10 @@ class Support::TicketsController < SupportBaseController
     unless current_organization.colo? && current_user.has_permission?('access_requests.modify')
       @departments -= ['Access Requests']
     end
-
+  rescue Sirportly::Error => e
+    notify_honeybadger(e)
+    @departments = []
+    @priorities = []
   end
 
 end

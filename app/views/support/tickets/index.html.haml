@@ -26,7 +26,8 @@
         %p
           We can't load your support tickets right now.
         %p
-          Please check back later.
+          Please check back later or contact
+          = mail_to 'support@datacentred.co.uk'
 
     .col-md-12.space-after{:'ng-hide' => "isLoading || hasFailed !== false"}
 

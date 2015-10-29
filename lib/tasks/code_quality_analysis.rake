@@ -13,9 +13,9 @@ namespace :stronghold do
       v.count > 0 ? "#{v.count} modules rated #{k}" : nil
     end.compact
     if rated_modules.values.flatten.count > 0
-      Notifications.notify(:code_quality_analysis, "#{results.join('. ')}. Run rubycritic locally for more info.")
+      Notifications.notify!(:code_quality_analysis, "#{results.join('. ')}. Run rubycritic locally for more info.")
     else
-      Notifications.notify(:code_quality_analysis, "All modules are rated A & B :heart_eyes_cat:")
+      Notifications.notify!(:code_quality_analysis, "All modules are rated A & B :heart_eyes_cat:")
     end
     puts results.join('. ')
     exit 0

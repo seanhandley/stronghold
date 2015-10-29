@@ -109,7 +109,7 @@ end
 group :development, :test do
   gem 'traceroute'
   gem 'brakeman', :require => false
-  gem 'rack-mini-profiler'
+  gem 'rack-mini-profiler', :require => false
   gem 'bullet'
   gem 'rubycritic'
 end

@@ -1,13 +1,13 @@
 module StripeHelper
   def rescue_stripe_errors(handler, &blk)
     yield
-  rescue Stripe::CardError => e
-    handler.call e.message
-  rescue Stripe::APIConnectionError
-    Honeybadger.notify(e)
+  rescue Stripe::CardError => exception
+    handler.call exception.message
+  rescue Stripe::APIConnectionError => exception
+    Honeybadger.notify(exception)
     handler.call "Payment provider isn't responding. Please try again."
-  rescue Stripe::StripeError => e
-    Honeybadger.notify(e)
+  rescue Stripe::StripeError => exception
+    Honeybadger.notify(exception)
     handler.call "We're sorry - something went wrong. Our tech team has been notified."
   end
 

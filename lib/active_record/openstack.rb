@@ -12,6 +12,9 @@ module ActiveRecord
         rescue Excon::Errors::Unauthorized, NameError => e # Thrown when credentials are invalid
           Rails.logger.info e.inspect
           return false
+        rescue Excon::Errors::Timeout => e
+          Honeybadger.notify(e)
+          return false
         end
       end
     end
@@ -36,8 +39,17 @@ module ActiveRecord
         params[:as].constantize.find(uuid).update keystone_params
       end
 
+      define_method :can_sync_with_openstack do
+        begin
+          OpenStackConnection.identity.list_roles
+        rescue Excon::Errors::Timeout
+          errors.add(:base, "Sorry - we couldn't sync that with OpenStack. Please try later.")
+        end
+      end
+
       self.class_eval do
         unless Rails.env.test?
+          validate(:can_sync_with_openstack)
           after_create(:create_openstack_object)              if params[:actions].include? :create
           before_destroy(:delete_openstack_object)            if params[:actions].include? :destroy
           after_update(:update_openstack_object)              if params[:actions].include? :update
