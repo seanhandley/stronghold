@@ -1,5 +1,6 @@
 class CustomerSignup < ActiveRecord::Base
   include ActionView::Helpers::UrlHelper
+  include StripeHelper
 
   attr_reader :error_message
 
@@ -39,12 +40,8 @@ class CustomerSignup < ActiveRecord::Base
 
   def stripe_customer
     return nil unless stripe_customer_id.present?
-    Stripe::Customer.retrieve(stripe_customer_id)
-  rescue Stripe::InvalidRequestError => e
-    if e.message.include? 'No such customer'
-      return nil
-    else
-      raise
+    rescue_stripe_errors(lambda {|msg| msg.include?('No such customer') ? nil : raise(msg) }) do
+      @stripe_customer ||= Stripe::Customer.retrieve(stripe_customer_id)
     end
   end
 
