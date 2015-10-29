@@ -115,7 +115,9 @@ module Billing
 
       samples.collect do |s|
         if s['resource_metadata']['event_type']
-          Billing::ImageState.create image_id: billing_image.id, recorded_at: Time.zone.parse("#{s['recorded_at']} UTC"),
+          Billing::ImageState.create image_id: billing_image.id,
+                                      recorded_at: Time.zone.parse("#{s['recorded_at']} UTC"),
+                                      timestamp: Time.zone.parse("#{s['timestamp']} UTC"),
                                       size: bytes_to_terabytes(s['resource_metadata']['size'].to_i),
                                       event_name: s['resource_metadata']['event_type'], billing_sync: sync,
                                       message_id: s['message_id']

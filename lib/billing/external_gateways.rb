@@ -84,7 +84,9 @@ module Billing
         samples.collect do |sample|
           metadata = sample['resource_metadata']
           if sample['resource_metadata']['event_type']
-            Billing::ExternalGatewayState.create external_gateway_id: billing_external_gateway.id, recorded_at: Time.zone.parse("#{sample['recorded_at']} UTC"),
+            Billing::ExternalGatewayState.create external_gateway_id: billing_external_gateway.id,
+                                        recorded_at: Time.zone.parse("#{sample['recorded_at']} UTC"),
+                                        timestamp: Time.zone.parse("#{sample['timestamp']} UTC"),
                                         external_network_id: metadata['external_gateway_info.network_id'],
                                         event_name: metadata['event_type'], billing_sync: sync,
                                         message_id: sample['message_id'], address: sample['inferred_address']

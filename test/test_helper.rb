@@ -2,6 +2,8 @@ require 'simplecov'
 SimpleCov.start
 
 ENV["RAILS_ENV"] = "test"
+ENV["STRIPE_SECRET_KEY"] = 'dummy'
+
 require File.expand_path("../../config/environment", __FILE__)
 require "rails/test_help"
 require "minitest/rails"

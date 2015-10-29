@@ -53,7 +53,7 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { :host => 'stronghold.vagrant.devel:8080' }
   config.action_controller.asset_host = 'stronghold.vagrant.devel:8080'
 
-  config.stripe.secret_key = ENV["STRIPE_SECRET_KEY"] || ""
+  config.stripe.secret_key = ENV["STRIPE_SECRET_KEY"] || "dummy"
 
   config.after_initialize do
     Bullet.enable = true

@@ -8,10 +8,43 @@ module Billing
     belongs_to :instance_flavor, :class_name => "Billing::InstanceFlavor",
            :primary_key => 'flavor_id', :foreign_key => 'flavor_id'
 
-    def rate(arch)
-      arch = "x86_64" if arch == "None"
+    has_one :previous_state, class_name: "Billing::InstanceState", primary_key: 'previous_state_id', foreign_key: 'id'
+    has_one :next_state, class_name: "Billing::InstanceState", primary_key: 'next_state_id', foreign_key: 'id'
+
+    def hours_in_state
+      hours = read_attribute(:hours_in_state)
+      return hours if hours
+
+      if next_state
+        hours = TimeDifference.between(recorded_at, next_state.recorded_at).in_hours.ceil
+        write_attribute(:hours_in_state, hours)
+        save!
+        hours
+      else
+        TimeDifference.between(recorded_at, Time.now).in_hours.ceil
+      end
+    end
+
+    def billable_hours
+      billable? ? hours_in_state : 0
+    end
+
+    def cost
+      billable_hours * rate
+    end
+
+    def current_state?
+      !!next_state
+    end
+
+    def rate
+      billing_instance.arch == "None" ? arch = "x86_64" : arch = billing_instance.arch
       flavor = instance_flavor ? instance_flavor : Billing::InstanceFlavor.find_by_flavor_id(billing_instance.flavor_id)
       flavor.rates.where(arch: arch).first.rate.to_f rescue nil
+    end
+
+    def billable?
+      !["error", "building", "stopped", "suspended", "shutoff", "deleted"].include?(state.downcase)
     end
 
   end

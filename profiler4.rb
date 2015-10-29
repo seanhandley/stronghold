@@ -1,22 +1,16 @@
+require_relative './config/environment'
+
+require 'ruby-prof'
+
 module Billing
   module Instances
-
-    def self.sync!(from, to, sync)
-      Tenant.all.each do |tenant|
-        tenant_uuid = tenant.uuid
-        next unless tenant_uuid
-        Billing.fetch_samples(tenant_uuid, "instance", from, to).each do |instance_id, samples|
-          create_new_states(tenant_uuid, instance_id, samples, sync)
-        end
-      end
-    end
 
     def self.usage(tenant_id, from, to)
       instances = []
       if tenant_id.present?
-        instances = Billing::Instance.where(:tenant_id => tenant_id).to_a.compact.reject{|instance| instance.terminated_at && instance.terminated_at < from}
+        instances = Billing::Instance.where(:tenant_id => tenant_id).active.to_a.compact
       else
-        instances = Billing::Instance.all.to_a.compact.reject{|instance| instance.terminated_at && instance.terminated_at < from}
+        instances = Billing::Instance.all.includes(:instance_states).to_a.compact
       end
       instances = instances.collect do |instance|
         billable_seconds = seconds(instance, from, to)
@@ -49,19 +43,27 @@ module Billing
     end
 
     def self.cost(instance, from, to)
+      puts "Working out cost for #{instance.instance_id}..."
       flavors = instance.fetch_states(from, to).collect(&:flavor_id)
+      puts "Fetched flavours"
       if flavors.uniq.count > 1
         return split_cost(instance, from, to).nearest_penny
       else
         billable_seconds = seconds(instance, from, to)
+        puts "calcuated total seconds"
         billable_hours   = (billable_seconds / Billing::SECONDS_TO_HOURS).ceil
+        puts "calcuated total hours"
         return (billable_hours * instance.rate.to_f).nearest_penny
       end
+      
     end
 
     def self.split_cost(instance, from, to)
+      print "Working out split cost..."
       states = instance.fetch_states(from, to)
+      puts "fetched states"
       previous_state = instance.instance_states.where('recorded_at < ?', from).order('recorded_at DESC').limit(1).first
+      puts "got previous state"
       first_state = states.first
       last_state = states.last
 
@@ -71,14 +73,18 @@ module Billing
 
           if previous_state
             if billable?(previous_state.state)
+              print "Calculating start..."
               start = (first_state.recorded_at - from)
               start = start / Billing::SECONDS_TO_HOURS
+              puts "done"
               start * previous_state.rate
             end
           end
 
           previous = states.first
+          puts "doing the middle"
           middle = states.collect do |state|
+            puts "  -> #{state.state}"
             difference = 0
             if billable?(previous.state)
               difference = state.recorded_at - previous.recorded_at
@@ -87,15 +93,20 @@ module Billing
               difference = difference / Billing::SECONDS_TO_HOURS
               difference * previous.rate
             ensure
+              puts "ensure block called"
               previous = state
             end
           end.sum
 
+          puts "done"
+
           ending = 0
 
           if(billable?(last_state.state))
+            puts "calculating ending"
             ending = (to - last_state.recorded_at)
             ending = ending / Billing::SECONDS_TO_HOURS
+            puts "done"
             ending * last_state.rate
           end
 
@@ -122,6 +133,7 @@ module Billing
     end
 
     def self.seconds(instance, from, to)
+      print "Working out billable seconds for #{instance.instance_id}..."
       states = instance.fetch_states(from, to)
       previous_state = instance.instance_states.where('recorded_at < ?', from).order('recorded_at DESC').limit(1).first
       first_state = states.first
@@ -152,7 +164,6 @@ module Billing
           if(billable?(last_state.state))
             ending = (to - last_state.recorded_at)
           end
-
           return (start + middle + ending).round
         else
           # Only one sample for this period
@@ -170,61 +181,30 @@ module Billing
         end
       end
     end
-
-    def self.billable?(state)
-      !["error","building", "stopped", "suspended", "shutoff", "deleted"].include?(state.downcase)
-    end
-
-    def self.create_new_states(tenant_id, instance_id, samples, sync)
-      first_sample_metadata = samples.first['resource_metadata']
-      flavor_id = first_sample_metadata["instance_flavor_id"] ? first_sample_metadata["instance_flavor_id"] : first_sample_metadata["flavor.id"]
-      unless Billing::Instance.find_by_instance_id(instance_id)
-        instance = Billing::Instance.create(instance_id: instance_id, tenant_id: tenant_id, name: first_sample_metadata["display_name"],
-                                 flavor_id: flavor_id, image_id: first_sample_metadata["image_ref_url"].split('/').last)
-        unless samples.any? {|sample| sample['resource_metadata']['event_type']}
-          # This is a new instance and we don't know its current state.
-          # Attempt to find out
-          if(os_instance = OpenStackConnection.compute.servers.get(instance_id))
-            instance.instance_states.create recorded_at: Time.now, state: os_instance.state.downcase,
-                                            event_name: 'ping', billing_sync: sync,
-                                            message_id: SecureRandom.hex
-          end
-        end
-      end
-      unless Billing::InstanceFlavor.find_by_flavor_id(flavor_id)
-        if(os_flavor = OpenStack::Flavor.find(flavor_id))
-          Billing::InstanceFlavor.create(flavor_id: flavor_id, name: os_flavor.name,
-                                         ram: os_flavor.ram, disk: os_flavor.disk, vcpus: os_flavor.vcpus)
-        else
-          Billing::InstanceFlavor.create(flavor_id: flavor_id, name: first_sample_metadata['flavor.name'],
-                                         ram: first_sample_metadata['memory_mb'],
-                                         disk: first_sample_metadata['root_gb'],
-                                         vcpus: first_sample_metadata['vcpus'])
-        end
-      end
-      billing_instance = Billing::Instance.find_by_instance_id(instance_id)
-      
-      # Catch renames
-      if(billing_instance.name != first_sample_metadata["display_name"])
-        billing_instance.update_attributes(name: first_sample_metadata["display_name"])
-      end
-
-      samples.collect do |sample|
-        meta_data = sample['resource_metadata']
-        if meta_data['event_type']
-          Billing::InstanceState.create instance_id: billing_instance.id,
-                                        recorded_at: Time.zone.parse("#{sample['recorded_at']} UTC"),
-                                        timestamp: Time.zone.parse("#{sample['timestamp']} UTC"),
-                                        state: meta_data['state'] ? meta_data['state'].downcase : 'active',
-                                        event_name: meta_data['event_type'], billing_sync: sync,
-                                        message_id: sample['message_id'],
-                                        flavor_id: meta_data["instance_flavor_id"]
-          unless meta_data['architecture'].empty? || meta_data['architecture'].downcase == 'none'
-            billing_instance.update_attributes(arch: meta_data['architecture'])
-          end
-        end
-      end
-    end
-
   end
 end
+
+module Reports
+  class UsageReport
+    private
+
+    def organizations
+      Organization.where(test_account: false).includes(:tenants).select(&:cloud?)
+    end
+  end
+end
+
+
+
+# Profile the code
+RubyProf.start
+
+from = (Time.zone.now - 1.day).beginning_of_week
+to = (Time.zone.now - 1.day).end_of_week
+Reports::UsageReport.new(from, to).contents
+
+result = RubyProf.stop
+
+# Print a flat profile to text
+printer = RubyProf::FlatPrinter.new(result)
+printer.print(STDOUT)
