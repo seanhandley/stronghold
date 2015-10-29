@@ -10,7 +10,7 @@ namespace :stronghold do
       exit 0
     else
       msg = "There are #{analysis['scan_info']['security_warnings']} potential security issues. Run brakeman locally for more info."
-      Notifications.notify(:security_analysis, msg)
+      Notifications.notify!(:security_analysis, msg)
       puts msg
       exit 1
     end
