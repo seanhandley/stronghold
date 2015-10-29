@@ -26,7 +26,7 @@ module Notifications
 
   # Notify asynchronously
   def self.notify(key, message)
-    SendNotificationJob.perform_later(key, message)
+    SendNotificationJob.perform_later(key.to_s, message)
   end
 
 end
