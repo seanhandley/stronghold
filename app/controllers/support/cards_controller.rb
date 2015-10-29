@@ -12,6 +12,7 @@ class Support::CardsController < SupportBaseController
       redirect_to support_root_path
     else
       @location = GeoIp.geolocation(request.remote_ip)[:country_code] rescue 'GB'
+      @location = 'GB' unless ISO3166::Country.find_country_by_alpha2(@location)
       @customer_signup = current_organization.customer_signup
     end
   end
