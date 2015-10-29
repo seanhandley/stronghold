@@ -8,6 +8,7 @@ OPENSTACK_ARGS = {
   :openstack_tenant   => ENV["OPENSTACK_TENANT"]
 }
 
+Excon.defaults[:connect_timeout] = 5
 Excon.defaults[:write_timeout] = 120
 Excon.defaults[:read_timeout] = 120
 
