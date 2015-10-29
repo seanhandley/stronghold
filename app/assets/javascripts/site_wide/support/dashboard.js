@@ -17,4 +17,10 @@ $(document).ready(function() {
       });
     }
   });
+  if($('body').data('controller') == 'support/dashboard' && $('body').data('action') == 'index') {
+    $.getJSON('/account', {'authenticity_token': AUTH_TOKEN}, function(data) {
+      $('span#instances_active').text(data.instance_count);
+      $('span#object-storage').text(data.object_usage + ' GB')
+    });
+  }
 });
