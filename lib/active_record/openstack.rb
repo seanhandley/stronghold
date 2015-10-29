@@ -12,6 +12,9 @@ module ActiveRecord
         rescue Excon::Errors::Unauthorized, NameError => e # Thrown when credentials are invalid
           Rails.logger.info e.inspect
           return false
+        rescue Excon::Errors::Timeout => e
+          Honeybadger.notify(e)
+          return false
         end
       end
     end
