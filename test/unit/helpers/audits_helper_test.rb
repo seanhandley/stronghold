@@ -10,7 +10,7 @@ class AuditsHelperTest < Minitest::Test
   end
 
   def test_audit_detail
-    skip
+    flunk
   end
 
   def test_audit_colour
@@ -27,7 +27,7 @@ class AuditsHelperTest < Minitest::Test
   end
 
   def test_try_translate_permissions
-    skip
+    flunk
   end
 
 end

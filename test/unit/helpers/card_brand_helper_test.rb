@@ -9,8 +9,10 @@ class CardBrandHelperTest < Minitest::Test
     @model = TestModel.new
   end
 
-  def test_foo
-    flunk
+  def test_brand_to_font_awesome
+    assert_equal 'visa', @model.brand_to_font_awesome('VISA')
+    assert_equal 'mastercard', @model.brand_to_font_awesome('MasterCard')
+    assert_equal 'amex', @model.brand_to_font_awesome('American Express')
   end
 
 end

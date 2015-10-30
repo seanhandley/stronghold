@@ -9,8 +9,17 @@ class ConjugationHelperTest < Minitest::Test
     @model = TestModel.new
   end
 
-  def test_foo
-    flunk
+  def test_past_perfective
+    mock_verb = Minitest::Mock.new
+    options = {tense: :past, person: :third, aspect: :perfective}
+    mock_verb.expect(:conjugate, nil, [options])
+    mock = Minitest::Mock.new
+    mock.expect(:verb, mock_verb)
+
+    @model.past_perfective(mock)
+
+    mock_verb.verify
+    mock.verify
   end
 
 end
