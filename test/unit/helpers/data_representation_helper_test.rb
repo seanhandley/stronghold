@@ -9,8 +9,10 @@ class DataRepresentationHelperTest < Minitest::Test
     @model = TestModel.new
   end
 
-  def test_foo
-    flunk
+  def test_r
+    assert_equal 'foo', @model.r('foo')
+    assert_equal 'none', @model.r([])
+    assert_equal 'foo, bar', @model.r(['foo', 'bar'])
   end
 
 end
