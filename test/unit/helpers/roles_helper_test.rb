@@ -47,6 +47,10 @@ class RolesHelperTest < Minitest::Test
     assert_equal "<span class=\"label label-danger\"><i class=\"fa fa-envelope\"></i> UNDELIVERED</span> <p class='text-danger'><em>(Mail server responded: failed :-()</em></p>", @model.invite_status_label('failed :-(')
   end
 
+  def teardown
+    DatabaseCleaner.clean  
+  end  
+
 end
 
 

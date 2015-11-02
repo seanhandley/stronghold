@@ -1,4 +1,6 @@
 module ApplicationHelper
+  include ERB::Util
+  include ActionView::Helpers::TagHelper
 
   def display_flash
     flashes = flash.collect do |key,msg|

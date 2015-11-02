@@ -1,0 +1,39 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://devstack.datacentred.io:5000/v2.0/tokens
+    body:
+      encoding: UTF-8
+      string: '{"auth":{"passwordCredentials":{"username":"bar","password":"foo"},"tenantName":""}}'
+    headers:
+      User-Agent:
+      - fog/1.31.0 fog-core/1.31.1
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 401
+      message: ''
+    headers:
+      Date:
+      - Mon, 02 Nov 2015 10:22:42 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Vary:
+      - X-Auth-Token
+      X-Openstack-Request-Id:
+      - req-6288d4e5-8423-46b5-97e4-277c64e7bfa5
+      Www-Authenticate:
+      - Keystone uri="http://185.43.218.210:5000/"
+      Content-Length:
+      - '136'
+      Content-Type:
+      - application/json
+    body:
+      encoding: UTF-8
+      string: '{"error": {"message": "Could not find user: bar (Disable debug mode
+        to suppress these details.)", "code": 401, "title": "Unauthorized"}}'
+    http_version: 
+  recorded_at: Mon, 02 Nov 2015 10:22:41 GMT
+recorded_with: VCR 2.9.3

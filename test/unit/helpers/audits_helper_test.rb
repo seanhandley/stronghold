@@ -2,15 +2,17 @@ require 'test_helper'
 
 class TestModel
   include AuditsHelper
+  include DataRepresentationHelper
 end
 
 class AuditsHelperTest < Minitest::Test
   def setup
     @model = TestModel.new
+    @organization = Organization.make!
   end
 
   def test_audit_detail
-    flunk
+    assert_equal "'Name': '#{@organization.name}', 'Time zone': 'London', 'Locale': 'en', 'Billing address 1': '', 'Billing address 2': '', 'Billing city': '', 'Billing postcode': '', 'Billing country': '', 'Phone': ''.", @model.audit_detail(@organization.audits.first)
   end
 
   def test_audit_colour
@@ -27,7 +29,12 @@ class AuditsHelperTest < Minitest::Test
   end
 
   def test_try_translate_permissions
-    flunk
+    assert_equal 'Can modify roles and invite users', @model.try_translate_permissions(:permissions, 'roles.modify')
+    assert_equal 'blorbs.modify', @model.try_translate_permissions(:permissions, 'blorbs.modify')
   end
+
+  def teardown
+    DatabaseCleaner.clean  
+  end  
 
 end
