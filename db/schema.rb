@@ -177,6 +177,7 @@ ActiveRecord::Schema.define(version: 20151019083630) do
     t.integer "flavor_id", limit: 4
     t.string  "arch",      limit: 255
     t.float   "rate",      limit: 24
+    t.boolean "show",                  default: true, null: false
   end
 
   create_table "billing_storage_objects", force: :cascade do |t|

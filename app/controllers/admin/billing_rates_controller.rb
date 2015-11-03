@@ -1,7 +1,7 @@
 class Admin::BillingRatesController < AdminBaseController
 
   def index
-    @billing_rates = Billing::Rate.all.order('flavor_id', 'arch') || []
+    @billing_rates = Billing::Rate.visible || []
   end
 
   def update
