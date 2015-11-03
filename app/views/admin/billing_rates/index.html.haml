@@ -4,28 +4,6 @@
 
 %hr
 
-%h3 Storage/IPs*
-
-.table-responsive
-  %table.table.table-striped.table-hover
-    %thead
-      %th
-      %th Rate
-    %tbody
-      %tr
-        %td Block Storage
-        %td== £#{RateCard.block_storage} per TBh
-      %tr
-        %td Object Storage
-        %td== £#{RateCard.object_storage} per TBh
-      %tr
-        %td Additional Floating IPs
-        %td== #{number_to_currency(RateCard.ip_address, unit: '£')} per month
-
-.tiny * These are hard-coded. Inform the dev team if they need to be changed.
-
-%hr
-
 %h2 Instances
 
 .alert.alert-warning
@@ -62,3 +40,25 @@
 - else
   .push
   .alert.alert-warning No rates found.
+
+%hr
+
+%h3 Storage/IPs*
+
+.table-responsive
+  %table.table.table-striped.table-hover
+    %thead
+      %th
+      %th Rate
+    %tbody
+      %tr
+        %td Block Storage
+        %td== £#{RateCard.block_storage} per TBh
+      %tr
+        %td Object Storage
+        %td== £#{RateCard.object_storage} per TBh
+      %tr
+        %td Additional Floating IPs
+        %td== #{number_to_currency(RateCard.ip_address, unit: '£')} per month
+
+.tiny * These are hard-coded. Inform the dev team if they need to be changed.
