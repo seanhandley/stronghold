@@ -19,7 +19,8 @@ class User::Ability
 
     # Tickets
     # can :read, Ticket if user.has_permission?('tickets.read')
-    can :modify, Ticket if user.has_permission?('tickets.modify') || user.has_permission?('access_requests.modify')
+    can :modify, Ticket        if user.has_permission?('tickets.modify') || user.has_permission?('access_requests.modify')
+    can :modify, TicketComment if user.has_permission?('tickets.modify') || user.has_permission?('access_requests.modify')
 
     # Cloud
     can :read, :usage if user.has_permission?('usage.read')
