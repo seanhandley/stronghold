@@ -7,6 +7,7 @@ class AdminBaseController < AuthorizedController
   private
 
   def check_user_is_staff
+    return true if Rails.env.development?
     raise ActionController::RoutingError.new('Not Found') unless current_user.staff?
   end
 end
