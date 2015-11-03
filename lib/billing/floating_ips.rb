@@ -92,7 +92,11 @@ module Billing
           end
         end
       end
-      billing_ip_id = Billing::Ip.find_by_ip_id(ip_id).id
+      if Billing::Ip.find_by_ip_id(ip_id).nil?
+        puts '*' * 10
+        puts ip_id.inspect
+      end
+      billing_ip_id = Billing::Ip.find_by_ip_id(ip_id).id 
       samples.collect do |sample|
         meta_data = sample['resource_metadata']
         if meta_data['event_type']
