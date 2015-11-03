@@ -14,6 +14,13 @@ class ApplicationController < ActionController::Base
     render js: "window.location.replace('#{path}')"
   end
 
+  def safe_redirect_to(path)
+    respond_to do |format|
+      format.js   { javascript_redirect_to(path) }
+      format.html { redirect_to(path) }
+    end
+  end
+
   def ajax_response(model, action, success_path, *args)
     if model.send(action, *args)
       javascript_redirect_to success_path

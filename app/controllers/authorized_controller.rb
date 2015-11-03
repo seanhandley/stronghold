@@ -58,24 +58,24 @@ class AuthorizedController < ApplicationController
   def authenticate_user!
     current_path = request.fullpath
     unless current_user
-      redirect_to sign_in_path('next' => current_path)
+      safe_redirect_to sign_in_path('next' => current_path)
       return
     end
     if !current_organization.known_to_payment_gateway? || current_organization.in_review?
       return if allowed_paths_unactivated.include?(current_path) || is_tickets_path?(current_path)
       if current_organization.in_review?
-        redirect_to support_root_path
+        safe_redirect_to support_root_path
       else
-        redirect_to activate_path
+        safe_redirect_to activate_path
       end
     elsif !current_organization.has_payment_method?
       if !current_user.admin?
         reset_session
         flash.alert = "Payment method has expired. Please inform a user with admin rights."
-        redirect_to sign_in_path
+        safe_redirect_to sign_in_path
       else
         return if current_path == support_manage_cards_path
-        redirect_to support_manage_cards_path, alert: "Please add a valid card to continue."
+        safe_redirect_to support_manage_cards_path, alert: "Please add a valid card to continue."
       end
     end
   end
@@ -99,7 +99,7 @@ class AuthorizedController < ApplicationController
 
       if (Time.now.utc - Time.parse(session[:created_at].to_s).utc) > SESSION_TIMEOUT.minutes
         reset_session
-        redirect_to sign_in_path, notice: t(:signed_out_after_timeout)
+        safe_redirect_to sign_in_path
       end
     end
   end
