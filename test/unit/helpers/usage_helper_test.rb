@@ -60,6 +60,29 @@ class UsageHelperTest < Minitest::Test
     end
   end
 
+  def test_time_period_without_args
+    from_a, to_a = Time.zone.now.beginning_of_month, Time.zone.now
+    from_b, to_b = @model.get_time_period(nil,nil)
+    assert_in_delta from_a, from_b, 0.01
+    assert_in_delta to_a, to_b, 0.01
+  end
+
+  def test_usages_for_select
+    skip
+  end
+
+  def test_billing_range
+    skip
+  end
+
+  def test_architecture_human_name
+    
+  end
+
+  def test_state_with_icon
+    
+  end
+
   def teardown
     DatabaseCleaner.clean  
   end  
