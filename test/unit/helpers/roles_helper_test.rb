@@ -26,7 +26,7 @@ class RolesHelperTest < CleanTest
   end
 
   def test_users_for_select
-    assert_equal "<option value=\"#{@user2.id}\">#{@user2.name}</option>", @model.users_for_select(@role)
+    assert_equal "<option value=\"#{@user2.id}\">#{ERB::Util.html_escape(@user2.name)}</option>", @model.users_for_select(@role)
   end
 
   def test_active_tab
