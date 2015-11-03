@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
 
   rescue_from ActionController::InvalidAuthenticityToken do |exception|
     reset_session
-    redirect_to sign_in_url, alert: "There may be a problem with your browser's data. Please clear cookies and try again."
+    safe_redirect_to sign_in_url
   end
 
   before_filter :device_cookie
