@@ -45,6 +45,7 @@ Rails.application.routes.draw do
       resources :usage, only: [:index, :create]
       resources :sanity, only: [:index]
       resources :free_ips, only: [:index]
+      resources :billing_rates, only: [:index, :update]
       resources :vouchers, except: [:new, :edit, :show]
       resources :account_migrations, only: [:index, :create]
       resources :quotas, except: [:create, :new, :destroy, :show] do
