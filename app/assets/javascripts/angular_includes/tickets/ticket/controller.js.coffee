@@ -180,6 +180,7 @@ angularJS.controller "TicketsController", [
         return
       errorHandler = (response) ->
         $scope.staticError = "I couldn't submit your ticket. Sorry. (HTTP 500)"
+        window.location.replace('/account/tickets') if response.status == 401
         allHandler()
         return
       request = $http({
@@ -235,6 +236,7 @@ angularJS.controller "TicketsController", [
         return
       errorHandler = (response) ->
         $scope.staticError = "I couldn't submit your reply. Sorry. (HTTP 500)"
+        window.location.replace('/account/tickets') if response.status == 401
         allHandler()
         return
       request = $http({
@@ -271,6 +273,8 @@ angularJS.controller "TicketsController", [
         allHandler()
         return
       errorHandler = (response) ->
+        console.log(response)
+        window.location.replace('/account/tickets') if response.status == 401
         allHandler()
         return
       request = $http({

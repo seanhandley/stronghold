@@ -17,6 +17,7 @@ class ApplicationController < ActionController::Base
   def safe_redirect_to(path)
     respond_to do |format|
       format.js   { javascript_redirect_to(path) }
+      format.json { render :json => [], :status => :unauthorized }
       format.html { redirect_to(path) }
     end
   end
