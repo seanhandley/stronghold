@@ -14,11 +14,11 @@ class ApplicationController < ActionController::Base
     render js: "window.location.replace('#{path}')"
   end
 
-  def safe_redirect_to(path)
+  def safe_redirect_to(path, args={})
     respond_to do |format|
       format.js   { javascript_redirect_to(path) }
       format.json { render :json => [], :status => :unauthorized }
-      format.html { redirect_to(path) }
+      format.html { redirect_to(path), args }
     end
   end
 
