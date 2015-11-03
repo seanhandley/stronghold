@@ -4,7 +4,7 @@ class TestModel
   include CsvHelper
 end
 
-class CsvHelperTest < Minitest::Test
+class CsvHelperTest < CleanTest
   def setup
     @model = TestModel.new
     @data = [{:name => 'test', :vcpu_hours => 1, :ram_tb_hours => 1, :openstack_tb_hours => 1,

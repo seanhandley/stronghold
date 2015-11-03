@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class TestVoucherLifetimes < Minitest::Test
+class TestVoucherLifetimes < CleanTest
   def setup
     @voucher = Voucher.make!
     @organization = Organization.make!
@@ -109,7 +109,4 @@ class TestVoucherLifetimes < Minitest::Test
     assert_equal 0, @voucher2.remaining_uses
   end
 
-  def teardown
-    DatabaseCleaner.clean  
-  end
 end

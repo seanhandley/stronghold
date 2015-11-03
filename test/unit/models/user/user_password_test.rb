@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class TestUser < Minitest::Test
+class TestUser < CleanTest
   def setup
     @user_with_password = User.make
     @user_without_password = User.make(:without_password)
@@ -21,7 +21,4 @@ class TestUser < Minitest::Test
     @user_without_password.update_attributes(password: 'foo', password_confirmation: 'foo')
   end
 
-  def teardown
-    DatabaseCleaner.clean  
-  end
 end

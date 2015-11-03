@@ -4,7 +4,7 @@ class TestModel
   include DataRepresentationHelper
 end
 
-class DataRepresentationHelperTest < Minitest::Test
+class DataRepresentationHelperTest < CleanTest
   def setup
     @model = TestModel.new
   end

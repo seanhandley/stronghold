@@ -7,7 +7,7 @@ class TestModel
   def params ; end
 end
 
-class RolesHelperTest < Minitest::Test
+class RolesHelperTest < CleanTest
   def setup
     @model = TestModel.new
     @user = User.make!
@@ -46,10 +46,6 @@ class RolesHelperTest < Minitest::Test
     assert_equal "<span class=\"label label-success\"><i class=\"fa fa-envelope\"></i> DELIVERED</span>", @model.invite_status_label('delivered')
     assert_equal "<span class=\"label label-danger\"><i class=\"fa fa-envelope\"></i> UNDELIVERED</span> <p class='text-danger'><em>(Mail server responded: failed :-()</em></p>", @model.invite_status_label('failed :-(')
   end
-
-  def teardown
-    DatabaseCleaner.clean  
-  end  
 
 end
 

@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class TestRolePermissions < Minitest::Test
+class TestRolePermissions < CleanTest
   def setup
     @role = Role.make!
   end
@@ -33,10 +33,6 @@ class TestRolePermissions < Minitest::Test
         refute @role.has_permission? permission_name
       end
     end
-  end
-
-  def teardown
-    DatabaseCleaner.clean  
   end
 
 end

@@ -10,7 +10,7 @@ class TestModel
   class Honeybadger ; def self.notify ; end ; end
 end
 
-class StripeHelperTest < Minitest::Test
+class StripeHelperTest < CleanTest
   def setup
     @model = TestModel.new
   end

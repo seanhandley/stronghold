@@ -4,7 +4,7 @@ class TestModel
   include StatusIoHelper
 end
 
-class StatusIoHelperTest < Minitest::Test
+class StatusIoHelperTest < CleanTest
   def setup
     @model = TestModel.new
   end

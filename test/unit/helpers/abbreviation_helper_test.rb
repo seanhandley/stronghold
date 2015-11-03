@@ -4,7 +4,7 @@ class TestModel
   include AbbreviationHelper
 end
 
-class AbbreviationHelperTest < Minitest::Test
+class AbbreviationHelperTest < CleanTest
   def setup
     @model = TestModel.new
   end

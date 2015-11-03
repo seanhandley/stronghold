@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class TestOrganizationValidations < Minitest::Test
+class TestOrganizationValidations < CleanTest
   def setup
     @organization = Organization.make
   end
@@ -45,10 +45,6 @@ class TestOrganizationValidations < Minitest::Test
     organizations.each(&:save!)
 
     assert Organization.all.collect(&:reporting_code).uniq
-  end
-
-  def teardown
-    DatabaseCleaner.clean  
   end
 
 end

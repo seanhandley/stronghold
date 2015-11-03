@@ -160,6 +160,10 @@ class MailerTest < ActionMailer::TestCase
     assert_equal "Your account limits have changed", @email.subject  
   end
 
+  def teardown
+    DatabaseCleaner.clean
+  end
+
   private
 
   def usage_report_data

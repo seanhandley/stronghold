@@ -16,7 +16,7 @@ module ApplicationHelperTests
     end
   end
 
-  class ApplicationHelperTest < Minitest::Test
+  class ApplicationHelperTest < CleanTest
     def setup
       @flash = {
         'alert': "Gordon's alive!"
@@ -55,10 +55,6 @@ module ApplicationHelperTests
       ].each do |k,v|
         assert_equal v, @model.flash_key_to_bootstrap_class(k)
       end
-    end
-
-    def teardown
-      DatabaseCleaner.clean  
     end
 
   end

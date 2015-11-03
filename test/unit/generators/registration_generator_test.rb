@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class TestRegistrationGenerator < Minitest::Test
+class TestRegistrationGenerator < CleanTest
   def setup
     @invite = Invite.make!
     @power_invite = Invite.make!(:power_user)
@@ -62,10 +62,6 @@ class TestRegistrationGenerator < Minitest::Test
       assert registration.generate!
       refute registration.generate!
     end
-  end
-
-  def teardown
-    DatabaseCleaner.clean  
   end
 
 end

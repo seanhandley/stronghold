@@ -4,7 +4,7 @@ class TestModel
   include OpenstackPathHelper
 end
 
-class OpenstackPathHelperTest < Minitest::Test
+class OpenstackPathHelperTest < CleanTest
   def setup
     @model = TestModel.new
   end

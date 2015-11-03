@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class TestOrganizationScopes < Minitest::Test
+class TestOrganizationScopes < CleanTest
   def setup
     @orgs = [Organization.make!, Organization.make!,
              Organization.make!(test_account: true)]
@@ -27,12 +27,6 @@ class TestOrganizationScopes < Minitest::Test
     assert_equal @orgs.count, Organization.active.count
     @orgs.first.disable!
     assert_equal (@orgs.count - 1), Organization.active.count
-  end
-
-  # scope :active,    -> { all.select{|o| o.state == OrganizationStates::Active && !o.disabled?}}
-
-  def teardown
-    DatabaseCleaner.clean  
   end
 
 end

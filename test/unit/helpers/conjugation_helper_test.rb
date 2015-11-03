@@ -4,7 +4,7 @@ class TestModel
   include ConjugationHelper
 end
 
-class ConjugationHelperTest < Minitest::Test
+class ConjugationHelperTest < CleanTest
   def setup
     @model = TestModel.new
   end

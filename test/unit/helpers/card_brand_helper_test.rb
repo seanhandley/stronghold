@@ -4,7 +4,7 @@ class TestModel
   include CardBrandHelper
 end
 
-class CardBrandHelperTest < Minitest::Test
+class CardBrandHelperTest < CleanTest
   def setup
     @model = TestModel.new
   end

@@ -119,3 +119,9 @@ def load_instance_flavors
     Billing::Rate.create(flavor_id: rate[0], arch: rate[1], rate: rate[2])
   end
 end
+
+class CleanTest < Minitest::Test
+  def teardown
+    DatabaseCleaner.clean
+  end
+end

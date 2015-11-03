@@ -22,7 +22,7 @@ module UserTenantRoleHelperTests
     end
   end
 
-  class UserTenantRoleHelperTest < Minitest::Test
+  class UserTenantRoleHelperTest < CleanTest
     def setup
       @organization = Organization.make!
       @user1 = User.make!(organization: @organization)
@@ -82,10 +82,6 @@ module UserTenantRoleHelperTests
         assert_equal expected, @model.user_tenant_roles_attributes
       end
     end
-
-    def teardown
-      DatabaseCleaner.clean  
-    end  
 
   end
 end

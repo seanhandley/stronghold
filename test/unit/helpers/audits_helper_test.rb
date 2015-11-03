@@ -5,7 +5,7 @@ class TestModel
   include DataRepresentationHelper
 end
 
-class AuditsHelperTest < Minitest::Test
+class AuditsHelperTest < CleanTest
   def setup
     @model = TestModel.new
     @organization = Organization.make!
@@ -32,9 +32,5 @@ class AuditsHelperTest < Minitest::Test
     assert_equal 'Can modify roles and invite users', @model.try_translate_permissions(:permissions, 'roles.modify')
     assert_equal 'blorbs.modify', @model.try_translate_permissions(:permissions, 'blorbs.modify')
   end
-
-  def teardown
-    DatabaseCleaner.clean  
-  end  
 
 end
