@@ -11,5 +11,7 @@ module Billing
     default_scope -> { order('flavor_id', 'arch')}
 
     scope :visible, -> { where(show: true)}
+
+    scope :ordered_by_name_and_arch, -> { visible.sort{|x,y| x.instance_flavor.name <=> y.instance_flavor.name}}
   end
 end
