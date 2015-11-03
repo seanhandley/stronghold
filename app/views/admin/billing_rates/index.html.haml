@@ -2,9 +2,35 @@
   %i.fa.fa-gbp
   Billing Rates
 
+%hr
+
+%h3 Storage/IPs*
+
+.table-responsive
+  %table.table.table-striped.table-hover
+    %thead
+      %th
+      %th Rate
+    %tbody
+      %tr
+        %td Block Storage
+        %td== £#{RateCard.block_storage} per TBh
+      %tr
+        %td Object Storage
+        %td== £#{RateCard.object_storage} per TBh
+      %tr
+        %td Additional Floating IPs
+        %td== #{number_to_currency(RateCard.ip_address, unit: '£')} per month
+
+.tiny * These are hard-coded. Inform the dev team if they need to be changed.
+
+%hr
+
+%h2 Instances
+
 .alert.alert-warning
   %i.fa.fa-exclamation-triangle
-  Changes to rates will have an immediate effect on billing calculations.
+  Changes to instance rates will have an immediate effect on billing calculations.
 
 - if @billing_rates.any?
   .table-responsive
@@ -15,7 +41,7 @@
         %th CPUs
         %th RAM (MB)
         %th Disk (GB)
-        %th Rate £
+        %th Rate £/Hour
       %tbody
         - for rate in @billing_rates
           %tr
