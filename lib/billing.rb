@@ -16,7 +16,7 @@ module Billing
     sleep 30 # Because it can take a few seconds for events to get off the queue and into Mongo
     Billing::Instances.sync!(from, to, sync)
     Billing::Volumes.sync!(from, to, sync)
-    Billing::FloatingIps.sync!(from, to, sync)
+    # Billing::FloatingIps.sync!(from, to, sync)
     Billing::IpQuotas.sync!(sync)
     # Billing::ExternalGateways.sync!(from, to, sync)
     Billing::Images.sync!(from, to, sync)
