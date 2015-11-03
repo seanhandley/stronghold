@@ -8,7 +8,7 @@ module Billing
     validates :rate, presence: true, allow_blank: false
     validates :rate, numericality: { greater_than: 0, less_than_or_equal_to: 100 }
 
-    default_scope -> { order('flavor_id', 'arch')}
+    default_scope -> { order('rate', 'arch')}
 
     scope :visible, -> { where(show: true)}
 
