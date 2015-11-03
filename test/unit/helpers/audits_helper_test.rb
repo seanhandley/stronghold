@@ -13,6 +13,9 @@ class AuditsHelperTest < CleanTest
 
   def test_audit_detail
     assert_equal "'Name': '#{@organization.name}', 'Time zone': 'London', 'Locale': 'en', 'Billing address 1': '', 'Billing address 2': '', 'Billing city': '', 'Billing postcode': '', 'Billing country': '', 'Phone': ''.", @model.audit_detail(@organization.audits.first)
+    old_name = @organization.name
+    @organization.update_attributes(name: 'foo')
+    assert_equal "Name is now 'foo' (was '#{old_name}').", @model.audit_detail(@organization.audits.last)
   end
 
   def test_audit_colour
