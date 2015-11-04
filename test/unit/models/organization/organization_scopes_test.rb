@@ -29,4 +29,22 @@ class TestOrganizationScopes < CleanTest
     assert_equal (@orgs.count - 1), Organization.active.count
   end
 
+  def test_self_service_scope
+    assert_equal 3, Organization.self_service.count
+    @orgs.first.update_attributes(self_service: false)
+    assert_equal 2, Organization.self_service.count
+  end
+
+  def test_pending_scope
+    assert_equal 0, Organization.pending.count
+    @orgs.first.update_attributes(state: OrganizationStates::Fresh)
+    assert_equal 1, Organization.pending.count
+  end
+
+  def test_frozen_scope
+    assert_equal 0, Organization.frozen.count
+    @orgs.first.update_attributes(in_review: true)
+    assert_equal 1, Organization.frozen.count
+  end
+
 end
