@@ -83,6 +83,26 @@ class Organization < ActiveRecord::Base
     projects_limit - tenants.count
   end
 
+  def usage_value
+    0
+  end
+
+  def active_vouchers(from_date, to_date)
+    return [] if from_date > to_date
+    organization_vouchers.select do |v|
+      (from_date < v.updated_at && to_date >= v.updated_at) ||
+      (from_date < v.expires_at && to_date >= v.expires_at)
+    end
+  end
+
+  def payment_card_type
+    return nil unless customer_signup && customer_signup.stripe_customer && customer_signup.stripe_customer.respond_to?(:sources)
+    card = customer_signup.stripe_customer.sources.data.first
+    card ? "#{card.brand} #{card.funding}" : nil
+  end
+
+  # Mutative Methods
+
   def enable!
     unless Rails.env.test?
       tenants.each do |tenant|
@@ -121,14 +141,6 @@ class Organization < ActiveRecord::Base
     ActivateCloudResourcesJob.perform_later(self, args[:voucher])
   end
 
-  def active_vouchers(from_date, to_date)
-    return [] if from_date > to_date
-    organization_vouchers.select do |v|
-      (from_date < v.updated_at && to_date >= v.updated_at) ||
-      (from_date < v.expires_at && to_date >= v.expires_at)
-    end
-  end
-
   def has_payment_methods!(bool)
     if bool
       update_attributes(state: OrganizationStates::Active)
@@ -138,16 +150,6 @@ class Organization < ActiveRecord::Base
         Rails.cache.delete("org_#{Authorization.current_user.organization.id}_has_payment_method")
       end
     end
-  end
-
-  def usage_value
-    0
-  end
-
-  def payment_card_type
-    return nil unless customer_signup && customer_signup.stripe_customer && customer_signup.stripe_customer.respond_to?(:sources)
-    card = customer_signup.stripe_customer.sources.data.first
-    card ? "#{card.brand} #{card.funding}" : nil
   end
 
   private
