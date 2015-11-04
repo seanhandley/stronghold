@@ -14,6 +14,9 @@ require 'database_cleaner'
 require 'webmock/minitest'
 require 'vcr'
 
+require 'sidekiq/testing'
+Sidekiq::Testing.fake!
+
 VCR.configure do |c|
   c.cassette_library_dir = 'fixtures/vcr_cassettes'
   c.hook_into :webmock # or :fakeweb

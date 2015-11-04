@@ -47,6 +47,6 @@ class RoleUser < ActiveRecord::Base
   end
 
   def check_ceph_access
-    CheckCephAccessJob.perform_later(user) unless Rails.env.test?
+    CheckCephAccessJob.perform_later(user)
   end
 end
