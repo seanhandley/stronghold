@@ -54,17 +54,14 @@ Reset.blueprint do
 end
 
 Product.blueprint(:compute) do
-  id { 1 }
   name { 'Compute' }
 end
 
 Product.blueprint(:storage) do
-  id { 2 }
   name { 'Storage' }
 end
 
 Product.blueprint(:colocation) do
-  id { 3 }
   name { 'Colocation' }
 end
 
