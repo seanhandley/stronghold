@@ -41,7 +41,7 @@ class Support::UsersController < SupportBaseController
   end
 
   def check_user
-    raise ActionController::RoutingError.new('Not Found') unless current_user.id = params[:id]
+    slow_404 unless current_user.id = params[:id]
   end
 
 end

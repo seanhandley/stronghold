@@ -89,7 +89,7 @@ class SignupsController < ApplicationController
 
   def find_invite
     @invite = Invite.find_by_token(params[:token])
-    raise ActionController::RoutingError.new('Not Found') unless @invite && @invite.can_register?
+    slow_404 unless @invite && @invite.can_register?
   end
 
   def create_params

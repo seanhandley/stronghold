@@ -27,7 +27,7 @@ class ResetsController < ApplicationController
   def show
     reset_session
     @reset = Reset.find_by_token(params[:id])
-    raise ActionController::RoutingError.new('Not Found') unless @reset && !@reset.expired?
+    slow_404 unless @reset && !@reset.expired?
   end
 
   def update

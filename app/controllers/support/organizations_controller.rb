@@ -73,11 +73,11 @@ class Support::OrganizationsController < SupportBaseController
   end
 
   def check_organization
-    raise ActionController::RoutingError.new('Not Found') unless current_organization.id = params[:id]
+    slow_404 unless current_organization.id = params[:id]
   end
 
   def check_power_user
-    raise ActionController::RoutingError.new('Not Found') unless current_user.power_user?
+    slow_404 unless current_user.power_user?
   end
 
 end
