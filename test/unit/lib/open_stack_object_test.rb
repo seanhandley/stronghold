@@ -1,7 +1,7 @@
 require 'test_helper'
 require_relative '../../support/open_stack_mocks'
 
-class TestOpenStackObject < Minitest::Test
+class TestOpenStackObject < CleanTest
   def setup
     @foo = Foo.new(Mock.new)
   end

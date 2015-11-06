@@ -1,5 +1,9 @@
 require 'simplecov'
-SimpleCov.start
+SimpleCov.start('rails') do
+  add_group "Decorators", "app/decorators"
+  add_group "Generators", "app/generators"
+  add_group "Jobs", "app/jobs"
+end
 
 ENV["RAILS_ENV"] = "test"
 require File.expand_path("../../config/environment", __FILE__)
@@ -9,6 +13,9 @@ require File.expand_path(File.dirname(__FILE__) + '/blueprints')
 require 'database_cleaner'
 require 'webmock/minitest'
 require 'vcr'
+
+require 'sidekiq/testing'
+Sidekiq::Testing.fake!
 
 VCR.configure do |c|
   c.cassette_library_dir = 'fixtures/vcr_cassettes'
@@ -113,5 +120,11 @@ def load_instance_flavors
           [14, 'aarch64', 0.275]]
   rates.each do |rate|
     Billing::Rate.create(flavor_id: rate[0], arch: rate[1], rate: rate[2])
+  end
+end
+
+class CleanTest < Minitest::Test
+  def teardown
+    DatabaseCleaner.clean
   end
 end

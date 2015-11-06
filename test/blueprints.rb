@@ -49,18 +49,19 @@ Invite.blueprint(:expired) do
   created_at { Time.now - 14.days }
 end
 
+Reset.blueprint do
+  email { Faker::Internet.email }
+end
+
 Product.blueprint(:compute) do
-  id { 1 }
   name { 'Compute' }
 end
 
 Product.blueprint(:storage) do
-  id { 2 }
   name { 'Storage' }
 end
 
 Product.blueprint(:colocation) do
-  id { 3 }
   name { 'Colocation' }
 end
 
@@ -71,4 +72,9 @@ Voucher.blueprint do
   duration { 1 }
   discount_percent { 100 }
   expires_at { Time.now + 1.year }
+end
+
+CustomerSignup.blueprint do
+  organization_name { Faker::Company.name }
+  email { Faker::Internet.email }
 end

@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class TestVoucherValidations < Minitest::Test
+class TestVoucherValidations < CleanTest
   def setup
     @voucher = Voucher.make!
     @organization = Organization.make!
@@ -57,7 +57,4 @@ class TestVoucherValidations < Minitest::Test
     assert @voucher2.code.length > 0
   end
 
-  def teardown
-    DatabaseCleaner.clean  
-  end
 end

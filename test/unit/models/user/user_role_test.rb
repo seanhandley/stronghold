@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class TestUserRoles < Minitest::Test
+class TestUserRoles < CleanTest
   def setup
     @user  = User.make
     @role  = Role.make
@@ -23,9 +23,5 @@ class TestUserRoles < Minitest::Test
   def test_user_cannot_be_stripped_of_all_roles
     @role_user.destroy
     refute @role_user2.destroy
-  end
-
-  def teardown
-    DatabaseCleaner.clean  
   end
 end

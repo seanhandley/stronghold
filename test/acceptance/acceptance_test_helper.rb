@@ -1,5 +1,5 @@
-require 'simplecov'
-SimpleCov.start
+# require 'simplecov'
+# SimpleCov.start
 
 ENV["RAILS_ENV"] = "acceptance"
 # ENV["PERCY_ENABLE"] = "1"

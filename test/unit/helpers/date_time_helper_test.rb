@@ -4,7 +4,7 @@ class TestModel
   include DateTimeHelper
 end
 
-class DateTimeHelperTest < Minitest::Test
+class DateTimeHelperTest < CleanTest
   def setup
     @model = TestModel.new
   end
