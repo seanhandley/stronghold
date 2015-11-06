@@ -11,7 +11,7 @@
   = image_tag 'DC_Mono_B.png', class: 'sign-in-logo'
   .container#sign-in
     = yield
-  = render partial: 'shared/ga'
+  = render partial: 'shared/ga' if Rails.env.production?
 #loading-overlay.hide
   .spinner
     %i.fa.fa-cog.fa-spin

@@ -11,7 +11,7 @@
   .container#sign-in
     = yield
   .push
-  = render partial: 'shared/ga'
+  = render partial: 'shared/ga' if Rails.env.production?
 #loading-overlay.hide
   .spinner
     %i.fa.fa-cog.fa-spin
