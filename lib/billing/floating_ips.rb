@@ -88,7 +88,7 @@ module Billing
           if(os_ip = OpenStackConnection.network.ips.get(ip_id))
             ip.ip_states.create recorded_at: Time.now, port: os_ip.port_id,
                                          event_name: 'ping', billing_sync: sync,
-                                         message_id: SecureRandom.hex
+                                         message_id: SecureRandom.uuid
           end
         end
       end

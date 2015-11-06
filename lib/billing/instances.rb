@@ -188,7 +188,7 @@ module Billing
           if(os_instance = OpenStackConnection.compute.servers.get(instance_id))
             instance.instance_states.create recorded_at: Time.now, state: os_instance.state.downcase,
                                             event_name: 'ping', billing_sync: sync,
-                                            message_id: SecureRandom.hex
+                                            message_id: SecureRandom.uuid
           end
         end
       end

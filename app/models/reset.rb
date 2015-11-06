@@ -39,7 +39,7 @@ class Reset < ActiveRecord::Base
 
   def generate_token
     return if token
-    update_column(:token, SecureRandom.hex(16))
+    update_column(:token, SecureRandom.urlsafe_base64)
   end
 
   def email_looks_valid?

@@ -98,7 +98,7 @@ module Billing
           if(os_volume = OpenStackConnection.volume.volumes.get(volume_id))
             volume.volume_states.create recorded_at: Time.now, size: os_volume.size,
                                             event_name: 'ping', billing_sync: sync,
-                                            message_id: SecureRandom.hex
+                                            message_id: SecureRandom.uuid
           end
         end
       end

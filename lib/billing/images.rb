@@ -102,7 +102,7 @@ module Billing
           if(os_image = OpenStackConnection.image.images.get(image_id))
             image.image_states.create recorded_at: Time.now, size: bytes_to_terabytes(os_image.size.to_i),
                                             event_name: 'ping', billing_sync: sync,
-                                            message_id: SecureRandom.hex
+                                            message_id: SecureRandom.uuid
           end
         end
       end

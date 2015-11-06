@@ -47,9 +47,10 @@ class TestInviteValidations < CleanTest
     refute @invite.can_register?
   end
 
-  def test_has_32_char_token_by_default
+  def test_has_22_char_token_by_default
     assert @invite.token
-    assert_equal 32, @invite.token.length
+    puts @invite.token.length
+    assert_equal 22, @invite.token.length
   end
 
   def test_generates_new_token_for_each_invite

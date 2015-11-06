@@ -4,7 +4,7 @@ class CustomerSignup < ActiveRecord::Base
 
   attr_reader :error_message
 
-  after_create -> { update_column(:uuid, SecureRandom.hex) }
+  after_create -> { update_column(:uuid, SecureRandom.urlsafe_base64) }
   after_commit :send_email, on: :create, unless: -> { retro_migrated? }
 
   validate :email_valid, unless: -> { retro_migrated? }
