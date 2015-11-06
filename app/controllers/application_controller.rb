@@ -14,6 +14,11 @@ class ApplicationController < ActionController::Base
     render js: "window.location.replace('#{path}')"
   end
 
+  def slow_404
+    sleep 2
+    raise ActionController::RoutingError.new('Not Found')
+  end
+
   def safe_redirect_to(path, args={})
     respond_to do |format|
       format.js   { javascript_redirect_to path }

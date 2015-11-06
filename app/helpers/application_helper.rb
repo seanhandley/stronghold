@@ -20,11 +20,6 @@ module ApplicationHelper
     content_for(:title) { "DataCentred - #{page_title}" }
   end
 
-  def slow_404
-    sleep 2
-    raise ActionController::RoutingError.new('Not Found')
-  end
-
   def get_model_errors(model)
     errors = model.errors.messages.collect do |field, message|
       {
