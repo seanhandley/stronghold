@@ -97,10 +97,6 @@ class TestOrganizationProperties < CleanTest
     assert_equal 4, @organization.new_projects_remaining
   end
 
-  def test_usage_value
-    assert_equal 0, @organization.usage_value
-  end
-
   def test_active_vouchers
     assert_equal 0, @organization.active_vouchers(Time.now - 3.months, Time.now).count
     @organization.vouchers << Voucher.make!

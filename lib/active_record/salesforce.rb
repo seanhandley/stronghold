@@ -11,10 +11,20 @@ module ActiveRecord
           Billingcountry: Country.find_country_by_alpha2(billing_country), Phone: phone,
           c2g__CODAReportingCode__c: reporting_code,
           c2g__CODABillingMethod__c: self_service? ? 'Self-Service' : nil,
-          Usage_Value__c: usage_value,
           c2g__CODADescription1__c: payment_card_type,
           c2g__CODABaseDate1__c: "Invoice Date",
-          c2g__CODADaysOffset1__c: 0
+          c2g__CODADaysOffset1__c: 0,
+          Monthly_VCPU_Hours__c: monthly_vcpu_hours,
+          Monthly_RAM_TBh__c: monthly_ram_tbh,
+          Monthly_OpenStack_Storage_TBh__c: monthly_openstack_storage_tbh,
+          Monthly_Ceph_Storage_TBh__c: monthly_openstack_storage_tbh,
+          Usage_Value__c: monthly_usage_value,
+          Weekly_Ceph_Storage_TBh__c: monthly_ceph_storage_tbh,
+          Weekly_OpenStack_Storage_TBh__c: weekly_openstack_storage_tbh,
+          Weekly_RAM_TBh__c: weekly_ram_tbh,
+          Weekly_Usage_Value__c: weekly_usage_value,
+          Weekly_VCPU_Hours__c: weekly_vcpu_hours,
+          Discount_End_Date__c: discount_end_date
         }
       end
 

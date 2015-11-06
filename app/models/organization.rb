@@ -2,6 +2,7 @@ class Organization < ActiveRecord::Base
   include StripeHelper
   include Freezable
   include Migratable
+  include UsageInformation
 
   audited only: [:name, :time_zone, :locale, :billing_address1, :billing_address2,
                  :billing_city, :billing_postcode, :billing_country, :phone]
@@ -81,10 +82,6 @@ class Organization < ActiveRecord::Base
 
   def new_projects_remaining
     projects_limit - tenants.count
-  end
-
-  def usage_value
-    0
   end
 
   def active_vouchers(from_date, to_date)
