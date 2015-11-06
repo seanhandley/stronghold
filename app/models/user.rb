@@ -145,15 +145,11 @@ class User < ActiveRecord::Base
   end
 
   def check_openstack_access
-    unless Rails.env.test?
-      CheckOpenStackAccessJob.perform_later(self)
-    end
+    CheckOpenStackAccessJob.perform_later(self) unless Rails.env.test?
   end
 
   def check_ceph_access
-    unless Rails.env.test?
-      CheckCephAccessJob.perform_later(self)
-    end
+    CheckCephAccessJob.perform_later(self)
   end
 
   def remove_ceph_keys

@@ -36,14 +36,10 @@ class Role < ActiveRecord::Base
   end
 
   def check_openstack_access
-    unless Rails.env.test?
-      users.each {|user| CheckOpenStackAccessJob.perform_later(user)}
-    end
+    users.each {|user| CheckOpenStackAccessJob.perform_later(user)}
   end
 
   def check_ceph_access
-    unless Rails.env.test?
-      users.each {|user| CheckCephAccessJob.perform_later(user)}
-    end   
+    users.each {|user| CheckCephAccessJob.perform_later(user)}
   end
 end

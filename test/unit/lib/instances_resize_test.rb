@@ -4,7 +4,7 @@ class MockServers
   def get(instance_id); nil; end
 end
 
-class TestInstancesResize < Minitest::Test
+class TestInstancesResize < CleanTest
   def setup
     @from = Time.parse("2015-07-23 08:00:00")
     @to = Time.parse("2015-07-23 18:00:00")
@@ -44,10 +44,6 @@ class TestInstancesResize < Minitest::Test
         assert_equal 0.52, Billing::Instances.cost(instance, @from, @to).round(2)
       end
     end
-  end
-
-  def teardown
-    DatabaseCleaner.clean
   end
 
 end

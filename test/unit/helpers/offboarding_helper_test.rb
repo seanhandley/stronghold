@@ -7,7 +7,7 @@ class TestModel
   end
 end
 
-class OffboardingHelperTest < Minitest::Test
+class OffboardingHelperTest < CleanTest
   include OffboardingFixtures
   include OffboardingHelper
 

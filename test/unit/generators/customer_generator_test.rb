@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class TestCustomerGenerator < Minitest::Test
+class TestCustomerGenerator < CleanTest
   def setup
     @valid_params = {organization_name: 'Testy', email: 'testy@customer.com',
                      organization: {product_ids: [1,2]}, extra_tenants: ""}
@@ -72,10 +72,6 @@ class TestCustomerGenerator < Minitest::Test
       CustomerGenerator.new(@valid_params).generate!
       assert_equal 1, Invite.all.count
     end  
-  end
-
-  def teardown
-    DatabaseCleaner.clean  
   end
 
 end
