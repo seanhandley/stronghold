@@ -49,7 +49,6 @@ class TestInviteValidations < CleanTest
 
   def test_has_22_char_token_by_default
     assert @invite.token
-    puts @invite.token.length
     assert_equal 22, @invite.token.length
   end
 
