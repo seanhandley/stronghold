@@ -55,7 +55,9 @@ class CreateSalesforceObjectJob < ActiveJob::Base
   queue_as :default
 
   def perform(o)
-    o.update_column(:salesforce_id, Restforce.new.create('Account', o.salesforce_args))
+    id = Restforce.new.create('Account', o.salesforce_args)
+    raise(ArgumentError, o.salesforce_args) unless id
+    o.update_column(:salesforce_id, id)
     Mailer.notify_staff_of_signup(o).deliver_later
   end
 end
@@ -64,6 +66,7 @@ class UpdateSalesforceObjectJob < ActiveJob::Base
   queue_as :default
 
   def perform(o)
-    Restforce.new.update('Account', o.salesforce_args.dup.merge(Id: o.salesforce_id))
+    success = Restforce.new.update('Account', o.salesforce_args.dup.merge(Id: o.salesforce_id))
+    raise(ArgumentError, o.salesforce_args.dup.merge(Id: o.salesforce_id)) unless success
   end
 end
