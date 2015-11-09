@@ -41,7 +41,8 @@ module UsageInformation
   end
 
   def discount_end_date
-    0
+    # Needs to be a ruby date obj
+    nil
   end
 
 end

@@ -25,7 +25,7 @@ module ActiveRecord
           Weekly_Usage_Value__c: weekly_usage_value,
           Weekly_VCPU_Hours__c: weekly_vcpu_hours,
           Discount_End_Date__c: discount_end_date,
-          User_Accounts: users.count
+          User_Accounts__c: users.count
         }
       end
 
