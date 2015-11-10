@@ -11,16 +11,6 @@ module OffboardingFixtures
     compute_mock.expect(:list_servers_detail, servers_response, [Hash])
     compute_mock.expect(:delete_server, true, ['1'])
 
-    images_response = MiniTest::Mock.new
-    images = {'images' => [{'id' => '1', 'metadata' =>{'owner_id' => '1'}},
-      {'id' => '2', 'metadata' =>{'owner_id' => '1'}}]}
-    images_response.expect(:body, images)
-
-    compute_mock.expect(:list_images_detail, images_response, [Hash])
-    ['1', '2'].each do |n|
-      compute_mock.expect(:delete_image, true, [n])
-    end
-
     compute_mock
   end
 

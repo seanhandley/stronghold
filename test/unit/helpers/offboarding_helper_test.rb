@@ -16,9 +16,9 @@ class OffboardingHelperTest < CleanTest
   end
 
   def model_destroy
-    Fog::Compute.stub(:new, compute_mock) do
-      Fog::Network.stub(:new, network_mock) do
-        Fog::Volume.stub(:new, volume_mock) do
+    OpenStackConnection.stub(:compute, compute_mock) do
+      OpenStackConnection.stub(:network, network_mock) do
+        OpenStackConnection.stub(:volume, volume_mock) do
           assert offboard TestModel.new, {}
         end
       end
