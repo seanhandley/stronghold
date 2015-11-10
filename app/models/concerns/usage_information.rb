@@ -38,8 +38,8 @@ module UsageInformation
   end
 
   def discount_end_date
-    # Needs to be a ruby date obj
-    nil
+    vouchers = active_vouchers(Time.now-3.month, Time.now)
+    vouchers.any? ? vouchers.first.expires_at : nil
   end
 
   private
