@@ -15,14 +15,15 @@ module OffboardingHelper
       fog.delete_server(instance)
     end
 
-    images = fog.list_images_detail(owner: tenant.uuid).body['images'].map{|i| i['id']}
-    images.each do |image|
-      begin
-        Rails.logger.info "Deleting image #{image}"
-        fog.delete_image(image)
-      rescue Excon::Errors::Error
-      end
-    end
+    # There's no way currently with Glance to know which image belongs to who
+    # images = fog.list_images_detail(owner: tenant.uuid).body['images'].map{|i| i['id']}
+    # images.each do |image|
+    #   begin
+    #     Rails.logger.info "Deleting image #{image}"
+    #     fog.delete_image(image)
+    #   rescue Excon::Errors::Error
+    #   end
+    # end
 
     fog = Fog::Volume.new(os_args)
     snapshots = fog.list_snapshots(true, :all_tenants => true).body['snapshots'].select{|s| s["os-extended-snapshot-attributes:project_id"] == tenant.uuid}.map{|s| s['id']}
