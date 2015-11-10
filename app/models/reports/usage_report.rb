@@ -36,7 +36,7 @@ module Reports
 
         ceph_tb_hours  = objects.sum
 
-        {
+        result = {
           :name => organization.name,
           :contacts => organization.admin_users.collect(&:email),
           :vcpu_hours => ((vcpu_seconds / 60.0) / 60.0),
@@ -46,6 +46,8 @@ module Reports
           :paying => organization.paying?,
           :spend => [instances, volumes, images].map{|i| i.map{|j| j[:cost]}}.flatten.compact.sum
         }
+        organization.update_attributes(weekly_spend: result[:spend])
+        result
       end.sort{|x,y| y[:spend] <=> x[:spend]}.take(30)
     end
 
