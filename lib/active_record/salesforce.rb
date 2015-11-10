@@ -22,7 +22,7 @@ module ActiveRecord
           Weekly_Ceph_Storage_TBh__c: weekly_ceph_storage_tbh,
           Weekly_OpenStack_Storage_TBh__c: weekly_openstack_storage_tbh,
           Weekly_RAM_TBh__c: weekly_ram_tbh,
-          Weekly_Usage_Value__c: weekly_usage_value,
+          Weekly_Usage_Value__c: weekly_spend,
           Weekly_VCPU_Hours__c: weekly_vcpu_hours,
           Discount_End_Date__c: discount_end_date,
           User_Accounts__c: users.count

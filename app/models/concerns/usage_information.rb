@@ -37,10 +37,6 @@ module UsageInformation
     0
   end
 
-  def weekly_usage_value
-    0
-  end
-
   def discount_end_date
     # Needs to be a ruby date obj
     nil
