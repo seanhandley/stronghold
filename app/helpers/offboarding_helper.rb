@@ -8,7 +8,7 @@ module OffboardingHelper
     os_args.merge!(creds)
 
     # Delete all instances to clear ports
-    fog = Fog::Compute.new(os_args)
+    fog = OpenStackConnection.compute
     instances = fog.list_servers_detail(all_tenants: true).body['servers'].select{|s| s['tenant_id'] == tenant.uuid}.map{|s| s['id']}
     instances.each do |instance|
       Rails.logger.info "Deleting instance #{instance}"
@@ -25,7 +25,7 @@ module OffboardingHelper
     #   end
     # end
 
-    fog = Fog::Volume.new(os_args)
+    fog = OpenStackConnection.volume
     snapshots = fog.list_snapshots(true, :all_tenants => true).body['snapshots'].select{|s| s["os-extended-snapshot-attributes:project_id"] == tenant.uuid}.map{|s| s['id']}
     snapshots.each do |snapshot|
       Rails.logger.info "Deleting snapshot #{snapshot}"
@@ -38,7 +38,7 @@ module OffboardingHelper
       fog.delete_volume(volume)
     end
 
-    fog = Fog::Network.new(os_args)
+    fog = OpenStackConnection.network
     routers  = fog.list_routers(tenant_id:  tenant.uuid).body['routers'].map{|r| r['id']}
     subnets  = fog.list_subnets(tenant_id:  tenant.uuid).body['subnets'].map{|s| s['id']}
     networks = fog.list_networks(tenant_id: tenant.uuid).body['networks'].map{|n| n['id']}
