@@ -20,7 +20,7 @@ if Rails.env.production? || Rails.env.staging?
     UsageReportJob.perform_later
   end
 
-  every(1.day, 'salesforce_sync', :at => '12:01') do
+  every(1.week, 'salesforce_sync', :at => 'Monday 05:00') do
     SalesforceSyncAllJob.perform_later
   end
 
