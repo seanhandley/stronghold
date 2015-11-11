@@ -50,6 +50,7 @@ gem 'httparty', '~> 0.13'
 gem 'icalendar', '~> 2.3'
 gem 'holidays', '~> 2.2'
 gem 'ruby-prof'
+gem 'skylight'
 
 group :test, :acceptance do
   gem 'faker'
