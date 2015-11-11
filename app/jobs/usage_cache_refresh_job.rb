@@ -19,7 +19,7 @@ class UsageCacheRefreshJob < ActiveJob::Base
 
   def warm_cache(organization)
     sleep rand(500..5000) / 1000.0
-    ud = UsageDecorator.new(organization_plus_tenants_and_billing_items(organization))
+    ud = UsageDecorator.new(organization)
     ud.usage_data(from_date: Time.now.beginning_of_month, to_date: Time.now)
   end
 
@@ -42,18 +42,4 @@ class UsageCacheRefreshJob < ActiveJob::Base
     Organization.active.shuffle
   end
 
-  def organization_plus_tenants_and_billing_items(organization)
-    Organization.where(id: organization.id).includes(
-      :tenants => [
-        :billing_storage_objects,
-        :billing_ip_quotas,
-        {
-        billing_instances: :instance_states,
-        billing_volumes: :volume_states,
-        billing_images: :image_states,
-        billing_external_gateways: :external_gateway_states,
-        billing_ips: :ip_states
-      }]
-    ).first
-  end
 end
