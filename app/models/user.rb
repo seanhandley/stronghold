@@ -100,7 +100,7 @@ class User < ActiveRecord::Base
   def ec2_credentials
     cache = Rails.cache
     cache.delete("ec2_credentials_#{id}") unless cache.fetch("ec2_credentials_#{id}")
-    cache.fetch("ec2_credentials_#{id}", expires_in: 100.days.from_now) do
+    cache.fetch("ec2_credentials_#{id}", expires_in: 100.days.from_now.to_time.to_i) do
       OpenStackConnection.identity.list_ec2_credentials(uuid).body['credentials'].first
     end
   end

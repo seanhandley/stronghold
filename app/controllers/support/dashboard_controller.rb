@@ -33,13 +33,13 @@ class Support::DashboardController < SupportBaseController
   end
 
   def live_servers
-    Rails.cache.fetch("live_servers_dashboard", expires_in: 5.minutes.from_now) do
+    Rails.cache.fetch("live_servers_dashboard", expires_in: 5.minutes.from_now.to_time.to_i) do
       OpenStackConnection.compute.list_servers_detail(all_tenants: true).body['servers']
     end 
   end
 
   def object_usage
-    Rails.cache.fetch("object_usage_#{current_organization.primary_tenant.id}", expires_in: 5.minutes.from_now) do
+    Rails.cache.fetch("object_usage_#{current_organization.primary_tenant.id}", expires_in: 5.minutes.from_now.to_time.to_i) do
       ((Ceph::Usage.kilobytes_for(current_organization.primary_tenant.uuid) / 1024.0) / 1024.0).round(2) rescue 0
     end
   end

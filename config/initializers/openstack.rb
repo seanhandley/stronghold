@@ -41,7 +41,7 @@ module OpenStackConnection
   end
 
   def self.usage(from,to)
-    Rails.cache.fetch("compute_usage_#{from.strftime("%Y%m%d")}_#{to.strftime("%Y%m%d")}", expires_in: 1.week.from_now) do
+    Rails.cache.fetch("compute_usage_#{from.strftime("%Y%m%d")}_#{to.strftime("%Y%m%d")}", expires_in: 1.week.from_now.to_time.to_i) do
       compute.list_usages(from, to, true).body['tenant_usages']
     end
   end
