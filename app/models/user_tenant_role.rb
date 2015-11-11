@@ -28,7 +28,7 @@ class UserTenantRole < ActiveRecord::Base
   end
 
   def self.os_roles
-    Rails.cache.fetch("required_tenant_roles", expires_in: 1.day) do
+    Rails.cache.fetch("required_tenant_roles", expires_in: 1.day.from_now) do
       OpenStackConnection.identity.list_roles.body['roles']
     end
   end

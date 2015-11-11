@@ -36,7 +36,7 @@ module Billing
 
   def self.fetch_all_samples(measurement, from, to)
     key = "ceilometer_samples_#{measurement}_#{from.utc.strftime(timestamp_format)}_#{to.utc.strftime(timestamp_format)}"
-    Rails.cache.fetch(key, expires_in: 2.hours) do
+    Rails.cache.fetch(key, expires_in: 2.hours.from_now) do
       options = [{'field' => 'timestamp', 'op' => 'ge', 'value' => from.utc.strftime(timestamp_format)},
                  {'field' => 'timestamp', 'op' => 'lt', 'value' => to.utc.strftime(timestamp_format)}]
       tenant_samples = OpenStackConnection.metering.get_samples(measurement, options).body

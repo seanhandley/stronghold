@@ -31,7 +31,7 @@ class SessionsController < ApplicationController
             redirect_to support_root_path
           end
         else
-          Rails.cache.write("up_#{@user.uuid}", password, expires_in: 60.minutes)
+          Rails.cache.write("up_#{@user.uuid}", password, expires_in: 60.minutes.from_now)
           redirect_to new_support_card_path 
         end
         

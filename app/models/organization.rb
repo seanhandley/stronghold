@@ -45,7 +45,7 @@ class Organization < ActiveRecord::Base
   def has_payment_method?
     return true unless self_service?
     return false unless known_to_payment_gateway?
-    Rails.cache.fetch("org_#{id}_has_payment_method", expires_in: 1.hour) do
+    Rails.cache.fetch("org_#{id}_has_payment_method", expires_in: 1.hour.from_now) do
       rescue_stripe_errors(lambda {|msg| true}) do
         stripe_has_valid_source?(stripe_customer_id)
       end

@@ -53,7 +53,7 @@ class TicketAdapter
     end
 
     def departments
-      Rails.cache.fetch("stronghold_departments", expires_in: 1.day) do
+      Rails.cache.fetch("stronghold_departments", expires_in: 1.day.from_now) do
         dc = SIRPORTLY.brands.select do |b|
           b.name.downcase == 'datacentred'
         end
@@ -62,7 +62,7 @@ class TicketAdapter
     end
 
     def priorities
-      Rails.cache.fetch("stronghold_priorities", expires_in: 1.day) do
+      Rails.cache.fetch("stronghold_priorities", expires_in: 1.day.from_now) do
         SIRPORTLY.priorities.collect(&:name)
       end
     end
