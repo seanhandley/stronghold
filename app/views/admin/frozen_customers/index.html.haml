@@ -7,6 +7,7 @@
     %thead
       %th Reference
       %th Name
+      %th Signed Up
       %th
       %th
       %th
@@ -15,6 +16,7 @@
         %tr
           %td= customer.reporting_code
           %td= customer.name
+          %td= customer.created_at
           %td
             = link_to 'View Report', mail_admin_frozen_customer_path(customer), class: 'btn btn-info', 'data-method' => "post", 'data-confirm' => "The report will be emailed to you. Proceed?"
           %td
