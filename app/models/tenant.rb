@@ -73,21 +73,21 @@ class Tenant < ActiveRecord::Base
   end
 
   def compute_quota
-    Rails.cache.fetch("compute_quotas_for_#{uuid}", expires_in: 1.hour.from_now.to_time.to_i) do
+    Rails.cache.fetch("compute_quotas_for_#{uuid}", expires_in: 1.hour) do
       keys = ["instances", "cores", "ram"]
       OpenStackConnection.compute.get_quota(uuid).body['quota_set'].slice(*keys)
     end
   end
 
   def volume_quota
-    Rails.cache.fetch("volume_quotas_for_#{uuid}", expires_in: 1.hour.from_now.to_time.to_i) do
+    Rails.cache.fetch("volume_quotas_for_#{uuid}", expires_in: 1.hour) do
       keys = ["volumes", "snapshots", "gigabytes"]
       OpenStackConnection.volume.get_quota(uuid).body['quota_set'].slice(*keys)
     end
   end
 
   def network_quota
-    Rails.cache.fetch("network_quotas_for_#{uuid}", expires_in: 1.hour.from_now.to_time.to_i) do
+    Rails.cache.fetch("network_quotas_for_#{uuid}", expires_in: 1.hour) do
       keys = ["floatingip", "router"]
       OpenStackConnection.network.get_quota(uuid).body['quota'].slice(*keys)
     end

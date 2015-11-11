@@ -111,7 +111,7 @@ module Billing
     def self.fetch_all_router_samples_and_ports(from, to)
       timestamp_format = "%Y-%m-%dT%H:%M:%S"
       key = "ceilometer_samples_all_routers_#{from.utc.strftime(timestamp_format)}_#{to.utc.strftime(timestamp_format)}"
-      Rails.cache.fetch(key, expires_in: 2.hours.from_now.to_time.to_i) do
+      Rails.cache.fetch(key, expires_in: 2.hours) do
         options = [{'field' => 'timestamp', 'op' => 'ge', 'value' => from.strftime(timestamp_format)},
                    {'field' => 'timestamp', 'op' => 'lt', 'value' => to.strftime(timestamp_format)}]
         samples = OpenStackConnection.metering.get_samples("router", options).body

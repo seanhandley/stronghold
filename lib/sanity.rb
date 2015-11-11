@@ -6,10 +6,10 @@ module Sanity
     previous_results = cache.read(key)
     if previous_results
       duplicates = compare_sanity_states(previous_results, results)
-      cache.write(key, results, expires_in: 3.days.from_now.to_time.to_i)
+      cache.write(key, results, expires_in: 3.days)
       return duplicates.merge(:sane => duplicates.values.none?(&:present?))
     else
-      cache.write(key, results, expires_in: 3.days.from_now.to_time.to_i)
+      cache.write(key, results, expires_in: 3.days)
       return {sane: true}
     end
   end
@@ -83,19 +83,19 @@ module Sanity
   end
 
   def self.live_instances
-    Rails.cache.fetch('sanity_live_instances', expires_in: 10.minutes.from_now.to_time.to_i) do
+    Rails.cache.fetch('sanity_live_instances', expires_in: 10.minutes) do
       Hash[OpenStackConnection.compute.list_servers_detail(:all_tenants => true).body['servers'].collect{|server| [server['id'], {'status' => server['status'].downcase, 'name' => server['name'], 'tenant_id' => server['tenant_id']}]}]
     end
   end
 
   def self.live_images
-    Rails.cache.fetch('sanity_live_images', expires_in: 10.minutes.from_now.to_time.to_i) do
+    Rails.cache.fetch('sanity_live_images', expires_in: 10.minutes) do
       OpenStackConnection.compute.list_images.body['images'].collect{|image| image['id']}
     end
   end
 
   def self.live_routers
-    Rails.cache.fetch('sanity_live_routers', expires_in: 10.minutes.from_now.to_time.to_i) do
+    Rails.cache.fetch('sanity_live_routers', expires_in: 10.minutes) do
       OpenStackConnection.network.list_routers.body['routers'].collect{|router| router['id']}
     end
   end
