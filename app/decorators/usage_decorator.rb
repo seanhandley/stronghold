@@ -14,14 +14,7 @@ class UsageDecorator < ApplicationDecorator
     end
     raise(ArgumentError, 'Please supply :from_date and :to_date') unless from_date && to_date
     Rails.cache.fetch("org#{model.id}_#{from_date.strftime(timestamp_format)}_#{to_date.strftime(timestamp_format)}", expires_in: 30.days) do
-      threaded_usage
-    end
-  end
-
-  def threaded_usage
-    acc = {}
-    model.tenants.collect do |tenant|
-      Thread.new do
+      model.tenants.inject({}) do |acc, tenant|
         acc[tenant] = {
           instance_results: Billing::Instances.usage(tenant.uuid, from_date, to_date),
           volume_results: Billing::Volumes.usage(tenant.uuid, from_date, to_date),
@@ -31,9 +24,9 @@ class UsageDecorator < ApplicationDecorator
           external_gateway_results: Billing::ExternalGateways.usage(tenant.uuid, from_date, to_date),
           object_storage_results: Billing::StorageObjects.usage(tenant.uuid, from_date, to_date)
         }
+        acc
       end
-    end.each(&:join)
-    acc
+    end
   end
 
   def instance_total(tenant_id, flavor_id=nil)
