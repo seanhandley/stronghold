@@ -32,7 +32,11 @@
               %td.line_entry
             - instances.sort { |x,y| x[:name] <=> y[:name] }.each do |instance|
               %tr{class: "hide line_entry_row line_entry_#{flavor_id}"}
-                %td.line_entry &nbsp;
+                %td.line_entry
+                  - if instance[:windows]
+                    %i.fa.fa-windows
+                  - else
+                  &nbsp;
                 %td.line_entry= instance[:name]
                 %td.line_entry= instance[:uuid]
                 %td.line_entry= architecture_human_name(instance[:arch])

@@ -32,6 +32,7 @@ module Billing
                                        rate: instance.rate,
                                        billable_hours: billable_hours,
                                        cost: cost(instance, from, to),
+                                       windows: Windows.billable?(instance),
                                        arch: instance.arch,
                                        flavor: {
                                          flavor_id: instance.flavor_id,
@@ -55,7 +56,11 @@ module Billing
       else
         billable_seconds = seconds(instance, from, to)
         billable_hours   = (billable_seconds / Billing::SECONDS_TO_HOURS).ceil
-        return (billable_hours * instance.rate.to_f).nearest_penny
+        base = (billable_hours * instance.rate.to_f).nearest_penny
+        if Windows.billable?(instance)
+          base += (billable_hours * Windows.rate_for(instance.flavor_id)).nearest_penny
+        end
+        return base
       end
     end
 
@@ -74,7 +79,11 @@ module Billing
             if billable?(previous_state.state)
               start = (first_state.recorded_at - from)
               start = start / Billing::SECONDS_TO_HOURS
-              start * previous_state.rate(arch)
+              base = start * previous_state.rate(arch)
+              if Windows.billable?(instance)
+                base += (start * Windows.rate_for(instance.flavor_id))
+              end
+              start = base
             end
           end
 
@@ -86,7 +95,11 @@ module Billing
             end
             begin
               difference = difference / Billing::SECONDS_TO_HOURS
-              difference * previous.rate(arch)
+              base = difference * previous.rate(arch)
+              if Windows.billable?(instance)
+                base += (difference * Windows.rate_for(instance.flavor_id))
+              end
+              base
             ensure
               previous = state
             end
@@ -97,7 +110,11 @@ module Billing
           if(billable?(last_state.state))
             ending = (to - last_state.recorded_at)
             ending = ending / Billing::SECONDS_TO_HOURS
-            ending * last_state.rate(arch)
+            base = ending * last_state.rate(arch)
+            if Windows.billable?(instance)
+              base += (ending * Windows.rate_for(instance.flavor_id))
+            end
+            ending = base
           end
 
           return (start + middle + ending)
@@ -106,7 +123,11 @@ module Billing
           if billable?(first_state.state)
             time = (to - first_state.recorded_at)
             time = time / Billing::SECONDS_TO_HOURS
-            return time * first_state.rate(arch)
+            base = time * first_state.rate(arch)
+            if Windows.billable?(instance)
+              base += (time * Windows.rate_for(instance.flavor_id))
+            end
+            return base
           else
             return 0
           end
@@ -115,7 +136,11 @@ module Billing
         if previous_state && billable?(previous_state.state)
           time = (to - from)
           time = time / Billing::SECONDS_TO_HOURS
-          return time * previous_state.rate(arch)
+          base = time * previous_state.rate(arch)
+          if Windows.billable?(instance)
+            base += (time * Windows.rate_for(instance.flavor_id))
+          end
+          return base
         else
           return 0
         end
