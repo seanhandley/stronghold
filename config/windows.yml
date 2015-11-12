@@ -1,0 +1,91 @@
+default: &default
+  images:
+    - ca34f453-1fda-4dfc-8499-9fb583e2e339
+  prices:
+    78d43ae0-7c98-48d2-9adc-90e8f8f6fe99:
+      rate: 0.007
+      name: dc1.1x0
+    f0577618-9125-4948-b450-474e225bbc4c:
+      rate: 0.007
+      name: dc1.1x1 
+    5615f35f-cff0-4664-bbff-62e0778daa6e:
+      rate: 0.007
+      name: dc1.1x1.1
+    8e6069a3-d8c6-4741-8e0d-6373b2ca38cc:
+      rate: 0.007
+      name: dc1.1x1.20
+    718f2a6d-52c5-4f23-a774-49df51c6eedc:
+      rate: 0.007
+      name: dc1.1x1.80
+    b671216b-1c68-4765-b752-0e8e6b6d015f:
+      rate: 0.007
+      name: dc1.1x2
+    05a9e6d1-d29f-4e98-9eab-51c9a6beed44: 
+      rate: 0.007
+      name: dc1.1x2.20
+    b122c607-2b5b-43fd-8879-cf6cb742e102: 
+      rate: 0.007
+      name: dc1.1x2.80
+    bf6dbcab-f0a5-49d7-b427-0ee09cc5f583: 
+      rate: 0.007
+      name: dc1.2x2
+    a0d377c3-ea1d-47a4-96dd-2c57f86f5d78: 
+      rate: 0.007
+      name: dc1.2x2.1
+    c4b193d2-f331-4250-9b15-bbfde97c462a: 
+      rate: 0.007
+      name: dc1.2x2.40
+    8f4b7ae1-b8c2-431f-bb0c-362a5ece0381: 
+      rate: 0.026
+      name: dc1.2x4
+    196235bc-7ca5-4085-ac81-7e0242bda3f9: 
+      rate: 0.026
+      name: dc1.2x4.40
+    dcd2be06-0940-4410-9d1f-cbdc22a847e7: 
+      rate: 0.026
+      name: dc1.2x8 
+    d87de0ca-9c0e-4759-a704-8621883c3415: 
+      rate: 0.026
+      name: dc1.2x8.40
+    7e1d9f77-acdf-41bb-a5e8-572ee153d21f: 
+      rate: 0.026
+      name: dc1.4x8
+    9cf6e43b-e191-47ca-8665-f8592e2d6227: 
+      rate: 0.026
+      name: dc1.4x8
+    5e68b95a-61fe-464f-913d-df044c7e433d: 
+      rate: 0.076
+      name: dc1.4x16
+    c3ac228b-d74e-4e22-88a2-773d86b96469: 
+      rate: 0.076
+      name: dc1.8x16 
+    af2a80fe-ccad-43df-8cae-6418da948467: 
+      rate: 0.076
+      name: dc1.8x16
+    1bace3df-964f-498d-9fd3-d3d7ee915935: 
+      rate: 0.076
+      name: dc1.8x16.240
+    b8e8ab6a-5480-478c-b1de-b09050683d7d: 
+      rate: 0.076
+      name: dc1.8x32
+    3c0b9ef3-4d2d-4cca-ab8b-30e47506fee8: 
+      rate: 0.076
+      name: dc1.8x32.160
+    fd1c85a7-cc62-4906-afcf-000b9d693ea5: 
+      rate: 0.144
+      name: dc1.16x32
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+acceptance:
+  <<: *default
+
+staging:
+  <<: *default
+
+production:
+  <<: *default
