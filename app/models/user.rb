@@ -156,7 +156,7 @@ class User < ActiveRecord::Base
     begin
       Ceph::UserKey.destroy 'access-key' => self.ec2_credentials['access'] if self.ec2_credentials
     rescue Net::HTTPError => error
-      Honeybadger.notify(error) unless e.message.include? 'AccessDenied'
+      Honeybadger.notify(error) unless error.message.include? 'AccessDenied'
     end
   end
 
