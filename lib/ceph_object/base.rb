@@ -42,7 +42,8 @@ module CephObject
           true
         end
       else
-        raise Net::HTTPError.new(JSON.parse(response.body)['Code'], response)
+        message = JSON.parse(response.body)['Code'] rescue "Server returned #{response.code}"
+        raise Net::HTTPError.new(message, response)
       end
     end
 
