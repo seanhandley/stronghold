@@ -44,6 +44,10 @@ class RegistrationGenerator
                                        roles: roles
     @user.save!
     OpenStack::User.update_enabled(@user.uuid, false) unless @organization.has_payment_method?
+    UserTenantRole.required_role_ids.each do |role_uuid|
+      UserTenantRole.create(user_id: @user.id, tenant_id: @organization.primary_tenant.id,
+                            role_uuid: role_uuid)
+    end
     
     Notifications.notify(:new_user, "#{@user.name} added to organization #{@organization.name}.")
 
