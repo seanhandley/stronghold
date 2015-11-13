@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151110115756) do
+ActiveRecord::Schema.define(version: 20151113090146) do
 
   create_table "audits", force: :cascade do |t|
     t.string   "auditable_id",    limit: 255
@@ -236,6 +236,13 @@ ActiveRecord::Schema.define(version: 20151110115756) do
     t.string   "user_agent",          limit: 255
     t.string   "accept_language",     limit: 255
     t.boolean  "retro_migrated"
+  end
+
+  create_table "invite_tenants", force: :cascade do |t|
+    t.integer  "invite_id",  limit: 4
+    t.integer  "tenant_id",  limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "invites", force: :cascade do |t|
