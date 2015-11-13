@@ -56,11 +56,11 @@ module Billing
       else
         billable_seconds = seconds(instance, from, to)
         billable_hours   = (billable_seconds / Billing::SECONDS_TO_HOURS).ceil
-        base = (billable_hours * instance.rate.to_f).nearest_penny
+        base = (billable_hours * instance.rate.to_f)
         if Windows.billable?(instance)
-          base += (billable_hours * Windows.rate_for(instance.flavor_id)).nearest_penny
+          base += (billable_hours * Windows.rate_for(instance.flavor_id))
         end
-        return base
+        return base.nearest_penny
       end
     end
 
