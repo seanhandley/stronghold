@@ -61,7 +61,7 @@ class CustomerGenerator
       end
     end
     create_default_network(@organization) unless colo_only?
-    Invite.create! email: @email, power_invite: true, organization: @organization
+    Invite.create! email: @email, power_invite: true, organization: @organization, tenant_ids: [@organization.primary_tenant.id]
     Notifications.notify(:internal_signup, "New customer account created: #{@email} invited to organization #{@organization_name}")
   end
 

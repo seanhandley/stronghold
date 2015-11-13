@@ -34,7 +34,8 @@ class CustomerSignupGenerator
     @organization.primary_tenant.disable!
 
     @invite = Invite.create! email: @customer_signup.email, power_invite: true,
-                             organization: @organization, customer_signup: @customer_signup
+                             organization: @organization, customer_signup: @customer_signup,
+                             tenant_ids: [@organization.primary_tenant.id]
     @organization.send(:set_quotas!)
     Notifications.notify(:new_signup, "New user signed up: #{@customer_signup.email} becoming organization #{@organization.id}")
   end
