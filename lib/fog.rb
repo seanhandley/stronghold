@@ -1,5 +1,4 @@
 require 'fog'
-require 'fog/openstack/models/model'
 
 module Fog
   module Identity
