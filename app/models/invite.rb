@@ -81,8 +81,8 @@ class Invite < ActiveRecord::Base
   end
 
   def tenant_ids_belong?
-    tenant_ids.each do |tenant_id|
-      unless Tenant.find_by_id(tenant_id) && Tenant.find(tenant_id).organization_id == organization_id
+    tenants.each do |tenant|
+      unless tenant.organization_id == organization_id
         errors.add(:base, 'Invalid projects supplied. Please select valid projects for this user.')
       end
     end

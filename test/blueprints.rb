@@ -16,6 +16,7 @@ Role.blueprint do
   name        { Faker::Lorem.word }
   permissions { [] }
   power_user  { false }
+  organization { Organization.make! }
 end
 
 Organization.blueprint do
@@ -32,7 +33,8 @@ end
 Invite.blueprint do
   email { Faker::Internet.email }
   organization { Organization.make! }
-  roles { [Role.make!] }
+  roles { [Role.make!(organization: object.organization)] }
+  tenants { object.organization.tenants }
 end
 
 Invite.blueprint(:power_user) do
@@ -45,7 +47,7 @@ end
 Invite.blueprint(:expired) do
   email { Faker::Internet.email }
   organization { Organization.make! }
-  roles { [Role.make!] }
+  roles { [Role.make!(organization: object.organization)] }
   created_at { Time.now - 14.days }
 end
 
