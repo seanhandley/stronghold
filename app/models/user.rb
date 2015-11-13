@@ -42,7 +42,6 @@ class User < ActiveRecord::Base
 
   def keystone_params
     { email: email, name: email,
-      tenant_id: organization.primary_tenant.uuid,
       enabled: organization.has_payment_method? && has_permission?('cloud.read'),
       password: password
     }
