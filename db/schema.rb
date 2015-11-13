@@ -238,13 +238,6 @@ ActiveRecord::Schema.define(version: 20151113090146) do
     t.boolean  "retro_migrated"
   end
 
-  create_table "invite_tenants", force: :cascade do |t|
-    t.integer  "invite_id",  limit: 4
-    t.integer  "tenant_id",  limit: 4
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "invites", force: :cascade do |t|
     t.string   "email",              limit: 255
     t.datetime "created_at"
@@ -260,6 +253,13 @@ ActiveRecord::Schema.define(version: 20151113090146) do
   create_table "invites_roles", force: :cascade do |t|
     t.integer  "role_id",    limit: 4
     t.integer  "invite_id",  limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "invites_tenants", force: :cascade do |t|
+    t.integer  "invite_id",  limit: 4
+    t.integer  "tenant_id",  limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
