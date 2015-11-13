@@ -3,10 +3,6 @@ class Support::InvitesController < SupportBaseController
   load_and_authorize_resource param_method: :create_params
 
   def create
-    roles = [create_params[:role_ids]].flatten.compact.collect do |r|
-      current_organization.roles.find_by_id(r.to_i)
-    end.compact
-
     @invite = current_organization.invites.create(create_params)
     ajax_response(@invite, :save, support_roles_path)
   end
@@ -23,7 +19,7 @@ class Support::InvitesController < SupportBaseController
   private
 
   def create_params
-    params.require(:invite).permit(:email, :role_ids => [])
+    params.require(:invite).permit(:email, :role_ids => [], :tenant_ids => [])
   end
 
 end

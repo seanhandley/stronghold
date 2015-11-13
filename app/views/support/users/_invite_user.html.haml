@@ -21,6 +21,12 @@
               %span.input-group-addon
                 %i.fa.fa-key
               = f.select :role_ids, roles_for_select(current_organization), {}, class: "select-roles", multiple: true, placeholder: t(:assign_at_least_one_role)
+          - if current_organization.compute?
+            .form-group
+              .input-group.has-warning
+                %span.input-group-addon
+                  %i.fa.fa-folder-o
+                = f.select :tenant_ids, tenants_for_select(current_organization), {}, class: "select-tenants", multiple: true, placeholder: 'OpenStack Projects (Optional)'
         .modal-footer
           %button.btn.btn-default{'data-toggle' => "modal", 'data-dismiss' => "modal"}
             = t(:cancel)

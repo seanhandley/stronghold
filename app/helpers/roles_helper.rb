@@ -7,6 +7,10 @@ module RolesHelper
     options_for_select(organization.roles.collect{|r| [r.name, r.id]})
   end
 
+  def tenants_for_select(organization)
+    options_for_select(organization.tenants.collect{|r| [r.name, r.id]})
+  end
+
   def users_for_select(role)
     options_for_select([role.organization.users - role.users].flatten.collect{|u| [u.name, u.id]})
   end

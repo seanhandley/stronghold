@@ -14,6 +14,7 @@ class Invite < ActiveRecord::Base
   belongs_to :organization
   belongs_to :customer_signup
   has_and_belongs_to_many :roles
+  has_and_belongs_to_many :tenants, validate: false
 
   def can_register?
     if active? && !complete?
