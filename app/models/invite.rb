@@ -10,10 +10,13 @@ class Invite < ActiveRecord::Base
   validate :has_roles?
   validate :email_looks_valid?
   validate :no_user_has_that_email?
+  validate :role_ids_belong?
+  validate :tenant_ids_belong?
 
   belongs_to :organization
   belongs_to :customer_signup
   has_and_belongs_to_many :roles
+  has_and_belongs_to_many :tenants, validate: false
 
   def can_register?
     if active? && !complete?
@@ -67,6 +70,22 @@ class Invite < ActiveRecord::Base
 
   def no_user_has_that_email?
     errors.add(:email, 'already has an account. Please choose another email.') if email.present? && User.find_by_email(email.downcase) && !persisted?
+  end
+
+  def role_ids_belong?
+    roles.each do |role|
+      unless role.organization_id == organization_id
+        errors.add(:base, 'Invalid roles supplied. Please select valid roles for this user.')
+      end
+    end
+  end
+
+  def tenant_ids_belong?
+    tenants.each do |tenant|
+      unless tenant.organization_id == organization_id
+        errors.add(:base, 'Invalid projects supplied. Please select valid projects for this user.')
+      end
+    end
   end
 
   def send_email

@@ -45,9 +45,11 @@ class RegistrationGenerator
     @user.save!
     OpenStack::User.update_enabled(@user.uuid, false) unless @organization.has_payment_method?
     unless Rails.env.test?
-      UserTenantRole.required_role_ids.each do |role_uuid|
-        UserTenantRole.create(user_id: @user.id, tenant_id: @organization.primary_tenant.id,
-                              role_uuid: role_uuid)
+      invite.tenants.each do |tenant|
+        UserTenantRole.required_role_ids.each do |role_uuid|
+          UserTenantRole.create(user_id: @user.id, tenant_id: tenant.id,
+                                role_uuid: role_uuid)
+        end
       end
     end
     

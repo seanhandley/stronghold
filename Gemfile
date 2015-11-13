@@ -8,7 +8,8 @@ gem 'bcrypt', '~> 3.1'
 gem 'unicorn', '~> 4.8'
 gem 'haml', '~> 4.0'
 gem 'cancancan', '~> 1.9'
-gem 'fog', '~> 1.31', :require => "fog/openstack"
+# gem 'fog', '~> 1.31', :require => "fog/openstack"
+gem 'fog', git: 'https://github.com/seanhandley/fog.git', branch: 'tenant_not_required'
 gem 'gravatar_image_tag', '~> 1.2.0'
 gem 'js-routes', '~> 0.9.9'
 gem 'sidekiq', '~> 3.3'
@@ -50,7 +51,6 @@ gem 'httparty', '~> 0.13'
 gem 'icalendar', '~> 2.3'
 gem 'holidays', '~> 2.2'
 gem 'ruby-prof'
-gem 'skylight'
 
 group :test, :acceptance do
   gem 'faker'
@@ -117,5 +117,6 @@ end
 
 group :production do 
   gem 'unicorn-worker-killer', '~> 0.4.2'
+  gem 'skylight'
   # gem 'sidekiq_memlimit'
 end
