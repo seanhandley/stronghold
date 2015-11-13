@@ -22,5 +22,5 @@
           %em Same as your login password
       %tr
         %td
-          %strong Primary Tenant:
-        %td= current_organization.primary_tenant.reference
+          %strong Projects:
+        %td= current_user.tenants.any? ? current_user.tenants.map(&:name) : 'No projects configured for your user'
