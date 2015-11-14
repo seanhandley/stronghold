@@ -21,7 +21,7 @@ class UsageDecorator < ApplicationDecorator
           image_results: Billing::Images.usage(tenant.uuid, from_date, to_date),
           # floating_ip_results: Billing::FloatingIps.usage(tenant.uuid, from_date, to_date),
           ip_quota_results: Billing::IpQuotas.usage(tenant.uuid, from_date, to_date),
-          external_gateway_results: Billing::ExternalGateways.usage(tenant.uuid, from_date, to_date),
+          # external_gateway_results: Billing::ExternalGateways.usage(tenant.uuid, from_date, to_date),
           object_storage_results: Billing::StorageObjects.usage(tenant.uuid, from_date, to_date)
         }
         acc
