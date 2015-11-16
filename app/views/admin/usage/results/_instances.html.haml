@@ -34,7 +34,7 @@
               %tr{class: "hide line_entry_row line_entry_#{flavor_id}"}
                 %td.line_entry
                   - if instance[:windows]
-                    %i.fa.fa-windows
+                    %i.fa.fa-windows{title: 'Windows Instance †'}
                   - else
                   &nbsp;
                 %td.line_entry= instance[:name]
