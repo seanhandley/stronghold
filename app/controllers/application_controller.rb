@@ -55,7 +55,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_organization
 
   def current_path
-    request.method.downcase == 'get' ? request.fullpath : request.original_fullpath.split('?').first
+    request.get? ? request.fullpath : request.original_fullpath.split('?').first
   end
   helper_method :current_path
 
