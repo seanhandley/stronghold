@@ -93,7 +93,7 @@ class SessionsControllerTest < ActionController::TestCase
         @controller = Support::UsersController.new
         @controller.stub(:current_user, @user) do
           get :index
-          assert_redirected_to sign_in_path
+          assert_redirected_to sign_in_path(next: '/sessions')
         end
       end
     end
