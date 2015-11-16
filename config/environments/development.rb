@@ -50,8 +50,13 @@ Rails.application.configure do
       :password => ENV["MAIL_SERVER_PASSWORD"]
   }
 
-  config.action_mailer.default_url_options = { :host => 'stronghold.vagrant.devel:8080' }
-  config.action_controller.asset_host = 'stronghold.vagrant.devel:8080'
+  if File.directory?('/vagrant/')
+    config.action_mailer.default_url_options = { :host => 'stronghold.vagrant.devel:8080' }
+    config.action_controller.asset_host = 'stronghold.vagrant.devel:8080'
+  else
+    config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+    config.action_controller.asset_host = 'localhost:3000'
+  end
 
   config.stripe.secret_key = ENV["STRIPE_SECRET_KEY"] || ""
 
