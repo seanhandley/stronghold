@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
   after_commit :check_openstack_access, :check_ceph_access, on: :create
 
   after_create :set_local_password, :subscribe_to_status_io
-  before_destroy :remove_ceph_keys
+  before_destroy :remove_ceph_keys, :unsubscribe_from_status_io
   syncs_with_keystone as: 'OpenStack::User', actions: [:create, :destroy]
 
   has_and_belongs_to_many :roles
@@ -139,7 +139,13 @@ class User < ActiveRecord::Base
 
   def subscribe_to_status_io
     if Rails.env.production?
-      StatusIOSubscribeJob.perform_later(email)
+      StatusIOSubscribeJob.perform_later('add_subscriber', email)
+    end
+  end
+
+  def unsubscribe_from_status_io
+    if Rails.env.production?
+      StatusIOSubscribeJob.perform_later('remove_subscriber', email)
     end
   end
 

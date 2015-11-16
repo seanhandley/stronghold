@@ -14,6 +14,20 @@ module StatusIO
       raise
     end
 
+    def remove_subscriber(email)
+      subscriber_id = StatusIO.subscribers[email].try(:[], '_id')
+      return true unless subscriber_id
+      delete "/v2/subscriber/remove/#{Rails.application.secrets.status_io_page_id}/#{subscriber_id}"
+    rescue StandardError => e
+      Honeybadger.notify(e)
+      raise
+    end
+
+    def subscribers
+      subs = JSON.parse(get("/v2/subscriber/list/#{Rails.application.secrets.status_io_page_id}").body)
+      Hash[subs['result']['email'].map{|entry| [entry['address'], entry]}]
+    end
+
     def active_incidents
       Rails.cache.fetch("status_io_active_incidents", expires_in: 5.minutes) do
         list_items('incident', 'active_incidents')
@@ -43,6 +57,13 @@ module StatusIO
 
     def get(url)
       conn.get do |req|
+        req.url url
+        req.headers = shared_headers
+      end
+    end
+
+    def delete(url)
+      conn.delete do |req|
         req.url url
         req.headers = shared_headers
       end
