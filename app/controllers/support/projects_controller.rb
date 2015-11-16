@@ -14,8 +14,8 @@ class Support::ProjectsController < SupportBaseController
     @tenant = current_organization.tenants.create(name: tenant_params[:name])
     if @tenant.save
       @tenant.update(user_tenant_roles_attributes)
+      @tenant.update_attributes(quota_set: quota_params.to_h)
       @tenant.enable!
-      OpenStack::Tenant.set_self_service_quotas(@tenant.uuid, current_organization.limited_storage? ? 'restricted' : 'standard')
       javascript_redirect_to support_projects_path
     else
       respond_to do |format|
@@ -25,7 +25,7 @@ class Support::ProjectsController < SupportBaseController
   end
 
   def update
-    ajax_response(@tenant, :update, support_projects_path, user_tenant_roles_attributes.merge(name: tenant_params[:name]))
+    ajax_response(@tenant, :update, support_projects_path, user_tenant_roles_attributes.merge(name: tenant_params[:name], quota_set: quota_params.to_h))
   end
 
   def destroy
@@ -48,6 +48,12 @@ class Support::ProjectsController < SupportBaseController
 
   def tenant_params
     params.require(:tenant).permit(:name, :users => Hash[current_organization.users.map{|u| [u.id.to_s, true]}])
+  end
+
+   def quota_params
+    params.require(:quota).permit(:compute => [:instances, :cores, :ram],
+      :volume => [:volumes, :snapshots, :gigabytes],
+      :network => [:floatingip, :router])
   end
 
 end

@@ -5,7 +5,8 @@ class Support::QuotasController < SupportBaseController
   before_filter :check_power_user_and_cloud
 
   def index
-    @projects = current_organization.tenants
+    slow_404
+    # @projects = current_organization.tenants
   end
 
   def update

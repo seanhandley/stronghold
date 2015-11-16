@@ -15,9 +15,23 @@
             .form-group
               %label Name
               = f.text_field :name, :class => 'form-control'
-            .form-group
-              %label Members
-              = render partial: 'users', locals: {tenant: f.object}
+            %div{'role' => "tabpanel"}
+              %ul.nav.nav-tabs{role: "tablist"}
+                %li.active{role: "presentation"}
+                  %a{'href' => "#members-new", 'aria-controls' => "members-new", 'role' => "tab", 'data-toggle' => "tab"}
+                    Members
+                - unless DarkLaunch.hide?
+                  %li{role: "presentation"}
+                    %a{'href' => "#quotas-new", 'aria-controls' => "quotas-new", 'role' => "tab", 'data-toggle' => "tab"}
+                      Quotas
+
+            .tab-content
+              .tab-pane.active{role: "tabpanel", id: 'members-new'}
+                = render partial: 'users', locals: {tenant: f.object}
+              - unless DarkLaunch.hide?
+                .tab-pane{role: "tabpanel", id: 'quotas-new'}
+                  = render partial: 'quotas', locals: {tenant: f.object}
+
         .modal-footer
           %button.btn.btn-default{'data-toggle' => "modal", 'data-dismiss' => "modal"}
             = t(:cancel)

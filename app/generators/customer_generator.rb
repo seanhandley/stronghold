@@ -57,7 +57,7 @@ class CustomerGenerator
     end
     if colo_only?
       @organization.tenants.each do |tenant|
-        OpenStack::Tenant.find(tenant.uuid).zero_quotas
+        tenant.update_attributes(quota_set: StartingQuota['zero'])
       end
     end
     create_default_network(@organization) unless colo_only?

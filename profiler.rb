@@ -7,8 +7,7 @@ class Tenant < ActiveRecord::Base
       {
         "compute" => compute_quota,
         "volume"  => volume_quota,
-        "network" => network_quota,
-        "object_storage" => storage_quota
+        "network" => network_quota
       }
   end
 end

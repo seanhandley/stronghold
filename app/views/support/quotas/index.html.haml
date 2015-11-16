@@ -1,5 +1,4 @@
 - title "Limits"
-
 %h1
   %i.fa.fa-sliders
   Limits
@@ -10,19 +9,23 @@
   = link_to 'Raise a support ticket', support_tickets_path
   and let us know what you need.
 
-%p.pull-right
-  %strong Maximum number of projects:
-  = current_organization.projects_limit
 
-- for project in @projects
-  %h2= "Project: #{project.name}"
-  .container
-    .usage-back.row
-      - ['compute', 'volume', 'network', 'object_storage'].sort.each do |key|
-        .col-md-3
-          %h3= key.titleize
-          %ul.quota-list
-            - project.quotas[key].each do |k,v|
-              %li
-                = number_with_precision(v, :delimiter => ',', :separator => '.', :precision => 0)
-                = fix_abbreviation_case(k.humanize.titleize.pluralize(v))
+.container
+  .row
+    %h3
+      Your account is limited to
+      == #{pluralize current_organization.projects_limit, 'project'}.
+      Each project will be allowed a maximum of:
+  .usage-back.row
+    - ['compute', 'volume', 'network'].sort.each do |key|
+      .col-md-3
+        %h3= key.titleize
+        %ul.quota-list
+          - current_organization.quota_limit[key].each do |k,v|
+            %li
+              = number_with_precision(v, :delimiter => ',', :separator => '.', :precision => 0)
+              = fix_abbreviation_case(k.humanize.titleize.pluralize(v))
+    .col-md-3
+      %h3 Object Storage
+      %ul.quota-list
+        %li= current_organization.limited_storage? ? 'Unlimited' : '5GB'

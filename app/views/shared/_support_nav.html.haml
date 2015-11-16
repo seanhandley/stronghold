@@ -24,10 +24,10 @@
             %a{:href => support_projects_path}
               %i.fa.fa-folder-o
               Cloud Projects
-        %li
-          %a{:href => support_quotas_path}
-            %i.fa.fa-sliders
-            Limits 
+        -# %li
+        -#   %a{:href => support_quotas_path}
+        -#     %i.fa.fa-sliders
+        -#     Limits 
       - if current_organization.self_service?
         %li
           %a{:href => support_manage_cards_path}

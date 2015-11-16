@@ -26,8 +26,17 @@ class Tenant < ActiveRecord::Base
   before_destroy {|t| readonly! if t.persisted? && Tenant.find(id).staff_tenant? }
   before_destroy {|t| offboard(t, {})}
   validate :check_projects_limit, on: :create
+  validate :check_quota_set
+
+  after_commit :sync_quota_set
 
   accepts_nested_attributes_for :user_tenant_roles, allow_destroy: true
+
+  serialize :quota_set
+
+  def quota_set
+    read_attribute(:quota_set) || {}
+  end
 
   def staff_tenant?
     self.name == 'datacentred'
@@ -63,44 +72,48 @@ class Tenant < ActiveRecord::Base
     organization ? organization.primary_tenant_id == id : false
   end
 
-  def quotas
+   def quotas
     {
       "compute" => compute_quota,
       "volume"  => volume_quota,
-      "network" => network_quota,
-      "object_storage" => storage_quota
+      "network" => network_quota
     }
   end
 
   def compute_quota
-    Rails.cache.fetch("compute_quotas_for_#{uuid}", expires_in: 1.hour) do
-      keys = ["instances", "cores", "ram"]
-      OpenStackConnection.compute.get_quota(uuid).body['quota_set'].slice(*keys)
-    end
+    keys = ["instances", "cores", "ram"]
+    OpenStackConnection.compute.get_quota(uuid).body['quota_set'].slice(*keys)
   end
 
   def volume_quota
-    Rails.cache.fetch("volume_quotas_for_#{uuid}", expires_in: 1.hour) do
-      keys = ["volumes", "snapshots", "gigabytes"]
-      OpenStackConnection.volume.get_quota(uuid).body['quota_set'].slice(*keys)
-    end
+    keys = ["volumes", "snapshots", "gigabytes"]
+    OpenStackConnection.volume.get_quota(uuid).body['quota_set'].slice(*keys)
   end
 
   def network_quota
-    Rails.cache.fetch("network_quotas_for_#{uuid}", expires_in: 1.hour) do
-      keys = ["floatingip", "router"]
-      OpenStackConnection.network.get_quota(uuid).body['quota'].slice(*keys)
-    end
-  end
-
-  def storage_quota
-    { "" => organization.limited_storage? ? '5 GB' : 'Unlimited'}
+    keys = ["floatingip", "router"]
+    OpenStackConnection.network.get_quota(uuid).body['quota'].slice(*keys)
   end
 
   private
 
   def check_projects_limit
     errors.add(:base, "Your account limits only permit #{pluralize organization.projects_limit, 'project'}. #{link_to 'Raise a ticket to request more?', Rails.application.routes.url_helpers.support_tickets_path}".html_safe) unless organization.new_projects_remaining > 0
+  end
+
+  def check_quota_set
+    return unless quota_set.keys.count >= 3
+    ['compute', 'volume', 'network'].each do |key|
+      quota_set[key].each do |k,v|
+        if organization.quota_limit[key][k].to_i < v.to_i
+          return errors.add(:base, "Your requested quota for #{k.humanize} exceeds the maximum limit allowed for your account. #{link_to 'Raise a ticket to request more?', Rails.application.routes.url_helpers.support_tickets_path}".html_safe)
+        end
+      end
+    end
+  end
+
+  def sync_quota_set
+    # SyncQuotaSetJob.perform_later(self)
   end
 
 end
