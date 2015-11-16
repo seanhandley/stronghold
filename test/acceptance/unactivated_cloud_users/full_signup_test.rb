@@ -35,7 +35,7 @@ class FullSignupTests < CapybaraTestCase
       assert page.has_no_xpath?("//a[@href='#{support_roles_path}']")
       assert find(:xpath, "//a[@href='#{activate_path}']")
       assert find(:xpath, "//a[@href='#{support_usage_path}']")
-      assert find(:xpath, "//a[@href='#{support_tickets_path}']")
+      assert find(:xpath, "//a[@href='#{support_tickets_path}/']")
     end
 
     fill_in('idpc_input', :with => 'ID1 1QD')
@@ -67,7 +67,7 @@ class FullSignupTests < CapybaraTestCase
     within('.top-menu') do
       assert page.has_no_xpath?("//a[@href='#{activate_path}']")
       assert find(:xpath, "//a[@href='#{support_usage_path}']")
-      assert find(:xpath, "//a[@href='#{support_tickets_path}']")
+      assert find(:xpath, "//a[@href='#{support_tickets_path}/']")
       assert find(:xpath, "//a[@href='#{support_roles_path}']")
     end
 
