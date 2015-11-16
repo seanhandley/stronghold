@@ -56,7 +56,6 @@ class AuthorizedController < ApplicationController
   end
 
   def authenticate_user!
-    current_path = request.fullpath
     unless current_user
       safe_redirect_to sign_in_path('next' => current_path)
       return
@@ -99,7 +98,7 @@ class AuthorizedController < ApplicationController
 
       if (Time.now.utc - Time.parse(session[:created_at].to_s).utc) > SESSION_TIMEOUT.minutes
         reset_session
-        safe_redirect_to sign_in_path('next' => request.fullpath)
+        safe_redirect_to sign_in_path('next' => current_path)
       end
     end
   end

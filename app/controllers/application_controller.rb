@@ -54,6 +54,11 @@ class ApplicationController < ActionController::Base
   end
   helper_method :current_organization
 
+  def current_path
+    request.method.downcase == 'get' ? request.fullpath : ''
+  end
+  helper_method :current_path
+
   def device_cookie
     args = {value: SecureRandom.urlsafe_base64, expires: 2.years.from_now}
     cookies[:_d] = args unless cookies[:_d]
