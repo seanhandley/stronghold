@@ -1,61 +1,79 @@
 require 'honeybadger'
 
 module StatusIO
-  def self.add_subscriber(email)
-    conn.post do |req|
-      req.url '/v2/subscriber/add'
-      req.headers['Content-Type'] = 'application/json'
-      req.headers['API-ID'] = Rails.application.secrets.status_io_id
-      req.headers['API-KEY'] = Rails.application.secrets.status_io_key
-      req.headers['x-api-id'] = Rails.application.secrets.status_io_id
-      req.headers['x-api-key'] = Rails.application.secrets.status_io_key
-      req.body = {
-                    "meth" => "email",
-                    "address" => email,
-                    "silent" => '1'
-                  }.merge("statuspage_id" => Rails.application.secrets.status_io_page_id).to_json
+  class << self
+    def add_subscriber(email)
+      body = {
+               "meth" => "email",
+               "address" => email,
+               "silent" => '1'
+             }.merge("statuspage_id" => Rails.application.secrets.status_io_page_id).to_json
+      post '/v2/subscriber/add', body
+    rescue StandardError => e
+      Honeybadger.notify(e)
+      raise
     end
-  end
 
-  def self.list_items(key, filter)
-    resp = conn.get do |req|
-      req.url "/v2/#{key}/list/#{Rails.application.secrets.status_io_page_id}"
-      req.headers['Content-Type'] = 'application/json'
-      req.headers['x-api-id'] = Rails.application.secrets.status_io_id
-      req.headers['x-api-key'] = Rails.application.secrets.status_io_key
+    def active_incidents
+      Rails.cache.fetch("status_io_active_incidents", expires_in: 5.minutes) do
+        list_items('incident', 'active_incidents')
+      end
     end
-    resp = JSON.parse(resp.body)
-    raise resp['status']['message'] if resp['status']['error'] == 'yes'
-    resp['result'][filter]
-  rescue StandardError => e
-    Honeybadger.notify(e)
-    []
-  end
 
-  def self.active_incidents
-    Rails.cache.fetch("status_io_active_incidents", expires_in: 5.minutes) do
-      list_items('incident', 'active_incidents')
+    def active_maintenances
+      Rails.cache.fetch("status_io_active_maintenances", expires_in: 5.minutes) do
+        list_items('maintenance', 'active_maintenances')
+      end
     end
-  end
 
-  def self.active_maintenances
-    Rails.cache.fetch("status_io_active_maintenances", expires_in: 5.minutes) do
-      list_items('maintenance', 'active_maintenances')
+    def upcoming_maintenances
+      Rails.cache.fetch("status_io_upcoming_maintenances", expires_in: 5.minutes) do
+        list_items('maintenance', 'upcoming_maintenances')
+      end
     end
-  end
 
-  def self.upcoming_maintenances
-    Rails.cache.fetch("status_io_upcoming_maintenances", expires_in: 5.minutes) do
-      list_items('maintenance', 'upcoming_maintenances')
+    private
+
+    def conn
+      Faraday.new(:url => STATUS_IO_ARGS[:host]) do |faraday|
+        faraday.request  :url_encoded
+        faraday.adapter  Faraday.default_adapter
+      end
     end
-  end
 
-  private
+    def get(url)
+      conn.get do |req|
+        req.url url
+        req.headers = shared_headers
+      end
+    end
 
-  def self.conn
-    Faraday.new(:url => STATUS_IO_ARGS[:host]) do |faraday|
-      faraday.request  :url_encoded
-      faraday.adapter  Faraday.default_adapter
+    def post(url, body)
+      conn.post do |req|
+        req.url url
+        req.headers = shared_headers
+        req.body = body
+      end
+    end
+
+    def shared_headers
+      {
+        'Content-Type' => 'application/json',
+        'API-ID'       => Rails.application.secrets.status_io_id,
+        'API-KEY'      => Rails.application.secrets.status_io_key,
+        'x-api-id'     => Rails.application.secrets.status_io_id,
+        'x-api-key'    => Rails.application.secrets.status_io_key
+      }
+    end
+
+    def list_items(key, filter)
+      resp = get "/v2/#{key}/list/#{Rails.application.secrets.status_io_page_id}"
+      resp = JSON.parse(resp.body)
+      raise resp['status']['message'] if resp['status']['error'] == 'yes'
+      resp['result'][filter]
+    rescue StandardError => e
+      Honeybadger.notify(e)
+      []
     end
   end
 end
