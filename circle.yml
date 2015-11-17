@@ -20,6 +20,7 @@ database:
 
 test:
   override:
+    - bundle exec bundle-audit update
     - bundle exec bundle-audit
     - bundle exec rake test:unit_and_functional
     - bundle exec rake stronghold:test_coverage_percent
