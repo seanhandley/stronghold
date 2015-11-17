@@ -113,6 +113,7 @@ group :development, :test do
   gem 'rack-mini-profiler', :require => false
   gem 'bullet'
   gem 'rubycritic'
+  gem 'bundler-audit'
 end
 
 group :production do 
