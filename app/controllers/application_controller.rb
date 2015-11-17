@@ -27,6 +27,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def sanitize_path(path)
+    [URI(path).path, URI(path).query.present? ? URI(path).query : nil].compact.join('?')
+  end
+
   def ajax_response(model, action, success_path, *args)
     if model.send(action, *args)
       javascript_redirect_to success_path
