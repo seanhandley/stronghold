@@ -118,5 +118,6 @@ end
 group :production do 
   gem 'unicorn-worker-killer', '~> 0.4.2'
   gem 'skylight'
+  gem 'rbtrace'
   # gem 'sidekiq_memlimit'
 end

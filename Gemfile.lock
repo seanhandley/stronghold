@@ -215,6 +215,7 @@ GEM
     faraday_middleware (0.9.1)
       faraday (>= 0.7.4, < 0.10)
     fastercsv (1.5.5)
+    ffi (1.9.10)
     fission (0.5.0)
       CFPropertyList (~> 2.2)
     flay (2.4.0)
@@ -373,6 +374,7 @@ GEM
       minitest-rails (~> 2.1)
     momentjs-rails (2.8.3)
       railties (>= 3.1)
+    msgpack (0.7.0)
     multi_json (1.11.2)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
@@ -454,6 +456,10 @@ GEM
     rainbow (2.0.0)
     raindrops (0.13.0)
     rake (10.4.2)
+    rbtrace (0.4.7)
+      ffi (>= 1.0.6)
+      msgpack (>= 0.4.3)
+      trollop (>= 1.16.2)
     rdoc (4.2.0)
     recaptcha (0.4.0)
     redcarpet (3.3.2)
@@ -562,6 +568,7 @@ GEM
       hitimes
     traceroute (0.5.0)
       rails (>= 3.0.0)
+    trollop (2.1.2)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
     uglifier (2.7.0)
@@ -678,6 +685,7 @@ DEPENDENCIES
   rails-assets-clipboard (~> 1.5)!
   rails-assets-hideShowPassword (~> 2.0)!
   rails-assets-normalize-css (~> 3.0)!
+  rbtrace
   recaptcha
   redcarpet (~> 3.3)
   responders (~> 2.0)
