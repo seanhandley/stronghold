@@ -37,8 +37,8 @@ gem 'country_select', '~> 2.2'
 gem 'countries', '~> 0.11'
 gem "recaptcha", :require => "recaptcha/rails"
 gem 'tel_to_helper'
-gem 'rest-client', '~> 1.6'
-gem 'geo_ip', '~> 0.5'
+gem 'rest-client', '~> 1.8'
+gem 'geo_ip', git: 'https://github.com/seanhandley/geo_ip.git', branch: 'cve_fixes'
 gem 'world-flags', '~> 0.6'
 gem 'nokogiri', '~> 1.6'
 gem 'premailer-rails', '~> 1.8'
@@ -74,7 +74,7 @@ gem 'bootstrap-sass', '~> 3.3.5'
 gem 'jquery-rails', '~> 4.0.3'
 gem 'jquery-ui-rails'
 gem 'sass-rails', '~> 4.0.3'
-gem 'uglifier', '>= 1.3.0'
+gem 'uglifier', '>= 2.7'
 gem 'coffee-rails', '~> 4.0.0'
 gem 'therubyracer', '~> 0.12.2', platforms: :ruby
 gem 'momentjs-rails', '~> 2.8.3'
@@ -103,7 +103,7 @@ group :development do
   gem 'capistrano-bundler', '~> 1.1.2'
   gem 'net-ssh', '~> 2.8.0'
   gem 'spring', '~> 1.1.3'
-  gem 'web-console', '~> 2.0'
+  gem 'web-console', '~> 2.1'
   gem 'let_it_go'
 end
 
