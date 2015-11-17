@@ -26,7 +26,7 @@ class SessionsController < ApplicationController
 
         if @user.organization.known_to_payment_gateway?
           if params[:next]
-            redirect_to URI(params[:next]).path
+            redirect_to [URI(params[:next]).path, URI(params[:next]).query].join('?')
           else
             redirect_to support_root_path
           end
