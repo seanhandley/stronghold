@@ -47,15 +47,6 @@ GIT
       ipaddress (~> 0.5)
       nokogiri (~> 1.5, >= 1.5.11)
 
-GIT
-  remote: https://github.com/seanhandley/geo_ip.git
-  revision: 6c538a4e146f8a96d1afa18c7e07f2b39aba24d1
-  branch: cve_fixes
-  specs:
-    geo_ip (0.6.1)
-      json (~> 1.4)
-      rest-client (~> 1.8)
-
 GEM
   remote: https://rubygems.org/
   remote: https://rails-assets.org/
@@ -296,6 +287,9 @@ GEM
     font-awesome-sass (4.2.2)
       sass (~> 3.2)
     formatador (0.2.5)
+    geo_ip (0.6.1)
+      json (~> 1.4)
+      rest-client (~> 1.6)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
     gravatar_image_tag (1.2.0)
@@ -642,7 +636,7 @@ DEPENDENCIES
   faraday (~> 0.9)
   fog!
   font-awesome-sass (~> 4.2)
-  geo_ip!
+  geo_ip (~> 0.6)
   gravatar_image_tag (~> 1.2.0)
   haml (~> 4.0)
   hipchat (~> 1.3)

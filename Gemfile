@@ -38,7 +38,7 @@ gem 'countries', '~> 0.11'
 gem "recaptcha", :require => "recaptcha/rails"
 gem 'tel_to_helper'
 gem 'rest-client', '~> 1.8'
-gem 'geo_ip', git: 'https://github.com/seanhandley/geo_ip.git', branch: 'cve_fixes'
+gem 'geo_ip', '~> 0.6'
 gem 'world-flags', '~> 0.6'
 gem 'nokogiri', '~> 1.6'
 gem 'premailer-rails', '~> 1.8'
