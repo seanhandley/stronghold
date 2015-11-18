@@ -36,10 +36,10 @@ if Rails.env.production? || Rails.env.staging?
     CardReverificationJob.perform_later
   end
 
-  # every(303.minutes, 'restart_sidekiq', :thread => true) do
-  #   sleep 12 * 60
-  #   `restart sidekiq_stronghold`
-  # end
+  every(303.minutes, 'restart_sidekiq', :thread => true) do
+    sleep 12 * 60
+    `restart sidekiq_stronghold`
+  end
 
   every(1.day, 'billing_run', :at => '06:30') do
     BillingRunJob.perform_later if Time.now.day == 1
