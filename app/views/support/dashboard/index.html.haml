@@ -22,7 +22,7 @@
           API Details
 
   .container-fluid
-    %h3= "Project: #{current_organization.primary_tenant.name}"
+    %h3= "Project: #{current_organization.name}
     .row{style: "margin-top: 20px"}
       - if current_organization.compute? && can?(:read, :cloud)
         .col-md-6{style: 'text-align: center'}
