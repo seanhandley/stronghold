@@ -1,14 +1,14 @@
 development:
-  timeout: 60
+  timeout: 240
 
 test:
-  timeout: 60
+  timeout: 240
 
 acceptance:
-  timeout: 60
+  timeout: 240
 
 staging:
-  timeout: 60
+  timeout: 240
 
 production:
-  timeout: 60
+  timeout: 240
