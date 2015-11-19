@@ -14,9 +14,22 @@
             .form-group
               %label Name
               = f.text_field :name, :class => 'form-control', :readonly => project.staff_tenant?
-            .form-group
-              %label Members
-              = render partial: 'users', locals: {tenant: project}
+            %div{'role' => "tabpanel"}
+              %ul.nav.nav-tabs{role: "tablist"}
+                %li.active{role: "presentation"}
+                  %a{'href' => "#tab-members#{project.id}", 'aria-controls' => "tab-members#{project.id}", 'role' => "tab", 'data-toggle' => "tab"}
+                    Members
+                - unless DarkLaunch.hide?
+                  %li{role: "presentation"}
+                    %a{'href' => "#tab-quotas#{project.id}", 'aria-controls' => "tab-quotas#{project.id}", 'role' => "tab", 'data-toggle' => "tab"}
+                      Quotas
+              .tab-content
+                .tab-pane.active{role: "tabpanel", id: "tab-members#{project.id}"}
+                  = render partial: 'users', locals: {tenant: project}
+                - unless DarkLaunch.hide?
+                  .tab-pane{role: "tabpanel", id: "tab-quotas#{project.id}"}
+                    = render partial: 'quotas', locals: {tenant: project}
+
         .modal-footer
           %button.btn.btn-default{'data-toggle' => "modal", 'data-dismiss' => "modal"}
             = t(:cancel)

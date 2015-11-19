@@ -38,6 +38,12 @@ class Organization < ActiveRecord::Base
   scope :pending,      -> { all.select{|o| o.state == OrganizationStates::Fresh }}
   scope :frozen,       -> { where(in_review: true)}
 
+  serialize :quota_limit
+
+  def quota_limit
+    read_attribute(:quota_limit) || {}
+  end
+
   def staff?
     (reference == STAFF_REFERENCE)
   end
@@ -195,9 +201,8 @@ class Organization < ActiveRecord::Base
 
   def set_quotas!(voucher=nil)
     quota = (voucher && voucher.restricted?) ? 'restricted' : 'standard'
-    tenants.collect(&:uuid).each do |tenant_id|
-      OpenStack::Tenant.set_self_service_quotas(tenant_id, quota)
-    end
+    update_attributes(quota_limit: StartingQuota[quota])
+    tenants.each{|tenant| tenant.update_attributes(quota_set: StartingQuota[quota])}
     update_attributes(limited_storage: true) if voucher && voucher.restricted?
   end
 

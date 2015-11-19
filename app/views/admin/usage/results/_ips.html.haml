@@ -3,7 +3,7 @@
   %p.tiny== £#{number_with_precision(RateCard.ip_address.round(2), :delimiter => ',', :separator => '.', :precision => 2)} per address per month. One address included free of charge.
   %p
     %strong Current Quota:
-    == #{project.quotas['network']['floatingip']} addresses
+    == #{project.quota_set['network']['floatingip']} addresses
   - if ip_quotas && ip_quotas.any?
     .table-responsive
       %table.table.table-hover.phone-bill

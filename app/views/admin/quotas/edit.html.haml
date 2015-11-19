@@ -1,23 +1,27 @@
-%h1= "Quotas: #{@organization.name}"
+%h1= "Quota Limit: #{@organization.name}"
 
-- for project in @organization.tenants
-  %h2= "Project: #{project.name}"
-  = form_tag admin_quota_path(project), method: 'put', class: 'admin_quota_form' do
-    .container
-      .usage-back.row
-        - ['compute', 'volume', 'network'].each do |key|
-          .col-md-3
-            %h3= key.titleize
-            - project.quotas[key].each do |k,v|
-              .form-group
-                %label= fix_abbreviation_case(k.humanize.titleize.pluralize)
-                = number_field_tag "quota[#{key}][#{k}]", v, :class => 'form-control'
+.alert.alert-info This is the maximum quota set the organization can assign to a project.
+.alert.alert-danger Don't give them enough resources to take down the platform! ಠ_ಠ
+
+= form_tag admin_quota_path(@organization), method: 'put', class: 'admin_quota_form' do
+  .form-group
+    %label Maximum Projects
+    = number_field_tag "organization[projects_limit]", @organization.projects_limit, class: 'form-control'
+  .container
+    .usage-back.row
+      - ['compute', 'volume', 'network'].each do |key|
         .col-md-3
-          %h3 Object Storage
-          .checkbox
-            %label
-              = check_box_tag "quota[storage][limited_storage]", true, @organization.limited_storage?
-              Limited Quota (5GB)?
-            %p.help-block Unlimited users can use as much storage as they want.
-    = submit_tag 'Save', class: 'btn btn-primary'
-    = link_to 'Notify Customer', mail_admin_quota_path(@organization), class: 'btn btn-primary', data: {confirm: 'All done? Email the customer?', method: 'post'}
+          %h3= key.titleize
+          - @organization.quota_limit[key].each do |k,v|
+            .form-group
+              %label= fix_abbreviation_case(k.humanize.titleize.pluralize)
+              = number_field_tag "quota[#{key}][#{k}]", v, :class => 'form-control'
+      .col-md-3
+        %h3 Object Storage
+        .checkbox
+          %label
+            = check_box_tag "limited_storage", true, @organization.limited_storage?
+            Limited Quota (5GB)?
+          %p.help-block Unlimited users can use as much storage as they want.
+  = submit_tag 'Save', class: 'btn btn-primary'
+
