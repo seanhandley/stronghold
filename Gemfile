@@ -51,6 +51,7 @@ gem 'httparty', '~> 0.13'
 gem 'icalendar', '~> 2.3'
 gem 'holidays', '~> 2.2'
 gem 'ruby-prof'
+gem "paranoia", "~> 2.0"
 
 group :test, :acceptance do
   gem 'faker'

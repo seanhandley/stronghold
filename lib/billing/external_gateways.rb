@@ -2,7 +2,7 @@ module Billing
   module ExternalGateways
 
     def self.sync!(from, to, sync)
-      Tenant.all.each do |tenant|
+      Tenant.with_deleted.each do |tenant|
         fetch_router_samples(tenant.uuid, from, to).each do |router_id, samples|
           create_new_states(router_id, samples, sync)
         end

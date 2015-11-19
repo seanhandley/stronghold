@@ -2,7 +2,7 @@ module Billing
   module Images
 
     def self.sync!(from, to, sync)
-      Tenant.all.each do |tenant|
+      Tenant.with_deleted.each do |tenant|
         next unless tenant.uuid
         Billing.fetch_samples(tenant.uuid, "image", from, to).each do |image_id, samples|
           create_new_states(tenant.uuid, image_id, samples, sync)

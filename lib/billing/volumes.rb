@@ -2,7 +2,7 @@ module Billing
   module Volumes
 
     def self.sync!(from, to, sync)
-      Tenant.all.each do |tenant|
+      Tenant.with_deleted.each do |tenant|
         next unless tenant.uuid
         Billing.fetch_samples(tenant.uuid, "volume", from, to).each do |volume_id, samples|
           create_new_states(tenant.uuid, volume_id, samples, sync)

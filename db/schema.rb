@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151116150327) do
+ActiveRecord::Schema.define(version: 20151119094402) do
 
   create_table "audits", force: :cascade do |t|
     t.string   "auditable_id",    limit: 255
@@ -367,8 +367,10 @@ ActiveRecord::Schema.define(version: 20151116150327) do
     t.string  "uuid",            limit: 255
     t.integer "organization_id", limit: 4
     t.string  "quota_set",       limit: 255, default: "---\ncompute:\n  instances: 10\n  cores: 10\n  ram: 20480\nvolume:\n  volumes: 4\n  snapshots: 4\n  gigabytes: 40\nnetwork:\n  floatingip: 1\n  router: 1\n\n"
+    t.datetime "deleted_at"
   end
 
+  add_index "tenants", ["deleted_at"], name: "index_tenants_on_deleted_at", using: :btree
   create_table "user_tenant_roles", force: :cascade do |t|
     t.integer "user_id",   limit: 4
     t.integer "tenant_id", limit: 4

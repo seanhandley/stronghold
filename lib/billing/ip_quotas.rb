@@ -2,7 +2,7 @@ module Billing
   module IpQuotas
 
     def self.sync!(sync)
-      Tenant.all.each do |tenant|
+      Tenant.with_deleted.each do |tenant|
         next unless tenant.uuid
         quota = tenant.quota_set['network']['floatingip'].to_i
         latest = Billing::IpQuota.where(tenant_id: tenant.uuid).order('recorded_at').last

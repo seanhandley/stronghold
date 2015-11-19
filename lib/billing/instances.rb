@@ -2,7 +2,7 @@ module Billing
   module Instances
 
     def self.sync!(from, to, sync)
-      Tenant.all.each do |tenant|
+      Tenant.with_deleted.each do |tenant|
         tenant_uuid = tenant.uuid
         next unless tenant_uuid
         Billing.fetch_samples(tenant_uuid, "instance", from, to).each do |instance_id, samples|

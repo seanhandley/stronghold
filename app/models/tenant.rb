@@ -3,6 +3,8 @@ class Tenant < ActiveRecord::Base
   include ActionView::Helpers::TextHelper
   include ActionView::Helpers::UrlHelper
 
+  acts_as_paranoid
+
   belongs_to :organization
 
   validates :organization, :presence => true
