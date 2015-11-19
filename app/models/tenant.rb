@@ -113,7 +113,7 @@ class Tenant < ActiveRecord::Base
   end
 
   def sync_quota_set
-    # SyncQuotaSetJob.perform_later(self)
+    SyncQuotaSetJob.perform_later(self)
   end
 
 end
