@@ -11,7 +11,7 @@ module Billing
     end
 
     def self.usage(tenant_id, from, to)
-      images = Billing::Image.where(:tenant_id => tenant_id).includes(:image_states).to_a.compact
+      images = Billing::Image.where(:tenant_id => tenant_id).to_a.compact.reject{|image| image.deleted_at && image.deleted_at < from}
       images = images.collect do |image|
         tb_hours = terabyte_hours(image, from, to)
         { terabyte_hours: tb_hours,
