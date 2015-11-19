@@ -1,6 +1,7 @@
 default: &default
   images:
     - ca34f453-1fda-4dfc-8499-9fb583e2e339
+    - 07a93cc5-b3f1-499b-a7f2-ab420526ae1f
   prices:
     78d43ae0-7c98-48d2-9adc-90e8f8f6fe99:
       rate: 0.007
