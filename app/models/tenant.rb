@@ -28,7 +28,7 @@ class Tenant < ActiveRecord::Base
   validate :check_projects_limit, on: :create
   validate :check_quota_set
 
-  after_commit :sync_quota_set
+  after_commit :sync_quota_set, except: :destroy
 
   accepts_nested_attributes_for :user_tenant_roles, allow_destroy: true
 
