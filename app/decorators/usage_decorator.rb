@@ -19,9 +19,7 @@ class UsageDecorator < ApplicationDecorator
           instance_results: Billing::Instances.usage(tenant.uuid, from_date, to_date),
           volume_results: Billing::Volumes.usage(tenant.uuid, from_date, to_date),
           image_results: Billing::Images.usage(tenant.uuid, from_date, to_date),
-          # floating_ip_results: Billing::FloatingIps.usage(tenant.uuid, from_date, to_date),
           ip_quota_results: Billing::IpQuotas.usage(tenant.uuid, from_date, to_date),
-          # external_gateway_results: Billing::ExternalGateways.usage(tenant.uuid, from_date, to_date),
           object_storage_results: Billing::StorageObjects.usage(tenant.uuid, from_date, to_date)
         }
         acc
@@ -59,22 +57,6 @@ class UsageDecorator < ApplicationDecorator
     end
     return 0
   end
-
-  # def floating_ip_total(tenant_id)
-  #   usage_data.each do |tenant, results|
-  #     if(tenant_id == tenant.id)
-  #       return results[:floating_ip_results].collect{|i| i[:cost]}.sum
-  #     end
-  #   end
-  # end
-
-  # def external_gateway_total(tenant_id)
-  #   usage_data.each do |tenant, results|
-  #     if(tenant_id == tenant.id)
-  #       return results[:external_gateway_results].collect{|i| i[:cost]}.sum
-  #     end
-  #   end
-  # end
 
   def ip_quota_total(tenant_id)
     daily_rate = ((RateCard.ip_address * 12) / 365.0).round(2)
@@ -116,7 +98,6 @@ class UsageDecorator < ApplicationDecorator
     [
       instance_total(tenant_id), volume_total(tenant_id),
       image_total(tenant_id),
-      # floating_ip_total(tenant_id), external_gateway_total(tenant_id),
       ip_quota_total(tenant_id), 
       object_storage_total(tenant_id)
     ].sum
