@@ -4,8 +4,6 @@ Rails.application.routes.draw do
   require_relative "../lib/constraints/staff_constraint"
   mount Sidekiq::Web => '/queue', :constraints => StaffConstraint.new
 
-  # mount RailsAdmin::Engine => '/data', as: 'rails_admin'
-
   mount Starburst::Engine => "/starburst"
 
   namespace :support, path: 'account' do
