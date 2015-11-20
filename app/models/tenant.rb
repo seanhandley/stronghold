@@ -59,11 +59,11 @@ class Tenant < ActiveRecord::Base
   end
 
   def enable!
-    OpenStackConnection.identity.update_tenant(uuid, enabled: true)
+    OpenStackConnection.identity.update_tenant(uuid, enabled: true) unless Rails.env.test?
   end
 
   def disable!
-    OpenStackConnection.identity.update_tenant(uuid, enabled: false)
+    OpenStackConnection.identity.update_tenant(uuid, enabled: false) unless Rails.env.test?
   end
 
   def destroy_unless_primary

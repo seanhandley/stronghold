@@ -59,4 +59,12 @@ class DateTimeHelperTest < CleanTest
     run_office_hours_test "2015-12-28 12:00:00 GMT", :refute, 'office should be closed now (Late Boxing Day)'
   end
 
+  def test_short_date
+    assert_equal "2000.01.01", @model.short_date(Date.parse('2000-01-01'))
+  end
+
+  def test_long_time
+    assert_equal "00:00:00 GMT", @model.long_time(Time.parse('2000-01-01 00:00:00 GMT'))
+  end
+
 end

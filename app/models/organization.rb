@@ -155,6 +155,13 @@ class Organization < ActiveRecord::Base
     end
   end
 
+  def set_quotas!(voucher=nil)
+    quota = (voucher && voucher.restricted?) ? 'restricted' : 'standard'
+    update_attributes(quota_limit: StartingQuota[quota])
+    tenants.each{|tenant| tenant.update_attributes(quota_set: StartingQuota[quota])}
+    update_attributes(limited_storage: true) if voucher && voucher.restricted?
+  end
+
   private
 
   def generate_reference
@@ -197,13 +204,6 @@ class Organization < ActiveRecord::Base
                                    external_gateway_info: external_network.id
       OpenStackConnection.network.add_router_interface(r.id, s.id)
     end
-  end
-
-  def set_quotas!(voucher=nil)
-    quota = (voucher && voucher.restricted?) ? 'restricted' : 'standard'
-    update_attributes(quota_limit: StartingQuota[quota])
-    tenants.each{|tenant| tenant.update_attributes(quota_set: StartingQuota[quota])}
-    update_attributes(limited_storage: true) if voucher && voucher.restricted?
   end
 
   def check_limited_storage

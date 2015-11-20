@@ -29,6 +29,11 @@ class RolesHelperTest < CleanTest
     assert_equal "<option value=\"#{@user2.id}\">#{ERB::Util.html_escape(@user2.name)}</option>", @model.users_for_select(@role)
   end
 
+  def test_tenants_for_select
+    tenant = @user.organization.primary_tenant
+    assert_equal "<option value=\"#{tenant.id}\">#{tenant.name}</option>", @model.tenants_for_select(@user.organization)
+  end
+
   def test_active_tab
     @model.stub(:params, {tab: 'foo'}) do
       assert_equal '', @model.active_tab?('bar')
