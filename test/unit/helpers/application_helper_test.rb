@@ -19,7 +19,7 @@ module ApplicationHelperTests
   class ApplicationHelperTest < CleanTest
     def setup
       @flash = {
-        'alert': "Gordon's alive!"
+        'alert' => "Gordon's alive!"
       }
       @model = TestModel.new(@flash)
     end
