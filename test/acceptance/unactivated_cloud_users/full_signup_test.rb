@@ -53,7 +53,7 @@ class FullSignupTests < CapybaraTestCase
 
     # page.driver.debug
 
-    sleep(35)
+    sleep(60)
 
     # save_screenshot('/Users/sean/Desktop/screen.png', :full => true)
 
