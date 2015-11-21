@@ -25,7 +25,7 @@ module ApplicationHelperTests
     end
 
     def test_display_flash
-      assert_equal "<div class=\"alert alert-\"><p>Gordon&#39;s alive!</p></div>", @model.display_flash
+      assert_equal "<div class=\"alert alert-danger\"><p>Gordon&#39;s alive!</p></div>", @model.display_flash
     end
 
     def test_javascript_error_messages_for
