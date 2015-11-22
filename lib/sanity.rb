@@ -19,7 +19,6 @@ module Sanity
       missing_instances: build_missing_collection_hash(missing_instances, :instance_id),
       missing_volumes: build_missing_collection_hash(missing_volumes, :volume_id),
       missing_images: build_missing_collection_hash(missing_images, :image_id),
-      missing_routers: build_missing_collection_hash(missing_routers, :router_id),
       new_instances: Hash[new_instances.collect{|key,value| [key, {name: value['name'], tenant_id: value['tenant_id']}]}]
     }
   end
@@ -59,12 +58,6 @@ module Sanity
     end
   end
 
-  def self.missing_routers
-    Billing::ExternalGateway.active.reject do |router|
-      live_routers.include? router.router_id
-    end
-  end
-
   def self.build_missing_collection_hash(collection, id_method)
     Hash[collection.collect{|item| [item.send(id_method), {name: item.name, tenant_id: item.tenant_id}]}]
   end
@@ -91,12 +84,6 @@ module Sanity
   def self.live_images
     Rails.cache.fetch('sanity_live_images', expires_in: 10.minutes) do
       OpenStackConnection.compute.list_images.body['images'].collect{|image| image['id']}
-    end
-  end
-
-  def self.live_routers
-    Rails.cache.fetch('sanity_live_routers', expires_in: 10.minutes) do
-      OpenStackConnection.network.list_routers.body['routers'].collect{|router| router['id']}
     end
   end
 
