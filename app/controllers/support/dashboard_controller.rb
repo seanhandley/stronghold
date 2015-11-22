@@ -39,7 +39,7 @@ class Support::DashboardController < SupportBaseController
   end
 
   def object_usage
-    Rails.cache.fetch("object_usage_#{current_organization.primary_tenant.id}", expires_in: 5.minutes) do
+    Rails.cache.fetch("object_usage_#{current_organization.primary_tenant.id}", expires_in: 4.hours) do
       ((Ceph::Usage.kilobytes_for(current_organization.primary_tenant.uuid) / 1024.0) / 1024.0).round(2) rescue 0
     end
   end
