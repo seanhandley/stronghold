@@ -16,6 +16,10 @@ if Rails.env.production? || Rails.env.staging?
     UsageCacheRefreshJob.perform_later
   end
 
+  every(5.minutes, 'status_io_cache_warm') do
+    StatusIOCacheWarmJob.perform_later
+  end
+
   every(1.week, 'usage_report', :at => 'Monday 07:00') do
     UsageReportJob.perform_later
   end
