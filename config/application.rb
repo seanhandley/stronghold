@@ -23,7 +23,7 @@ module Stronghold
     config.autoload_paths += %W(#{config.root}/lib)
 
     # Enables New Relic to do cool things with GC stats
-    GC::Profiler.enable
+    # GC::Profiler.enable
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
@@ -32,6 +32,10 @@ module Stronghold
     config.active_job.queue_adapter = :sidekiq
 
     config.stripe.publishable_key = "pk_test_7MJ5VPJPLNmTgHLC21kuoYCh"
+
+    Haml.init_rails(binding)
+    Haml::Template.options[:format] = :html5
+    Haml::Template.options[:ugly] = true
 
   end
 end
