@@ -6,7 +6,7 @@ class Support::OrganizationsController < SupportBaseController
   before_filter :check_power_user
 
   def current_section
-    'roles'
+    action_name == 'index' ? '' : 'roles'
   end
 
   def index
