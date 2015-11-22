@@ -33,9 +33,5 @@ module Stronghold
 
     config.stripe.publishable_key = "pk_test_7MJ5VPJPLNmTgHLC21kuoYCh"
 
-    Haml.init_rails(binding)
-    Haml::Template.options[:format] = :html5
-    Haml::Template.options[:ugly] = true
-
   end
 end
