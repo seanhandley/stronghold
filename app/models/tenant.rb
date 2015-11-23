@@ -74,6 +74,29 @@ class Tenant < ActiveRecord::Base
     organization ? organization.primary_tenant_id == id : false
   end
 
+  def quotas
+    {
+      "compute" => compute_quota,
+      "volume"  => volume_quota,
+      "network" => network_quota
+    }
+  end
+
+  def compute_quota
+    keys = ["instances", "cores", "ram"]
+    OpenStackConnection.compute.get_quota(uuid).body['quota_set'].slice(*keys)
+  end
+
+  def volume_quota
+    keys = ["volumes", "snapshots", "gigabytes"]
+    OpenStackConnection.volume.get_quota(uuid).body['quota_set'].slice(*keys)
+  end
+
+  def network_quota
+    keys = ["floatingip", "router", "port", "subnet", "network", "security_group", "security_group_rule"])
+    OpenStackConnection.network.get_quota(uuid).body['quota'].slice(*keys)
+  end
+
   private
 
   def check_projects_limit
