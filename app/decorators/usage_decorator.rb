@@ -10,8 +10,8 @@ class UsageDecorator < ApplicationDecorator
     Rails.cache.exist?(key) ? present_with_tenants(fetch_usage_from_cache(key)) : latest_usage_data(from, to - 1.hour, count + 1)
   end
 
-  def present_with_tenants(usage_data)
-    Hash[usage_data.map {|k,v| [((k.is_a?(Integer) || k.is_a?(String)) ? Tenant.find(k.to_i) : k), v]}]
+  def present_with_tenants(ud)
+    Hash[ud.map {|k,v| [((k.is_a?(Integer) || k.is_a?(String)) ? Tenant.find(k.to_i) : k), v]}]
   end
 
   def usage_data(args=nil)
@@ -31,7 +31,7 @@ class UsageDecorator < ApplicationDecorator
         return present_with_tenants(usage_data)
       end
     else
-      present_with_tenants fetch_usage_from_cache(key)
+      return present_with_tenants(fetch_usage_from_cache(key))
     end
   end
 
