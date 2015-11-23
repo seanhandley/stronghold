@@ -7,7 +7,7 @@ class UsageDecorator < ApplicationDecorator
     @from_date, @to_date = from, to
     return usage_data(from_date: from, to_date: to) if count > 20
     key = "org#{model.id}_#{from.strftime(timestamp_format)}_#{to.strftime(timestamp_format)}"
-    Rails.cache.exist?(key) ? Rails.cache.fetch(key) : latest_usage_data(from, to - 1.hour, count + 1)
+    Rails.cache.exist?(key) ? present_with_tenants(fetch_usage_from_cache(key)) : latest_usage_data(from, to - 1.hour, count + 1)
   end
 
   def present_with_tenants(usage_data)
