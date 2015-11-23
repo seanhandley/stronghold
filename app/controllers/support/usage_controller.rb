@@ -15,7 +15,11 @@ class Support::UsageController < SupportBaseController
     else
       @usage = @usage_decorator.latest_usage_data
     end
+    
+    puts '*' * 10
+    puts @usage.inspect
     @usage = Hash[@usage.map {|k,v| [((k.is_a?(Integer) || k.is_a?(String)) ? Tenant.find(k.to_i) : k), v]}]
+    puts @usage.inspect
     @active_vouchers = current_organization.active_vouchers(@from_date, @to_date)
     @usage_nav = usages_for_select(current_organization)
   end
