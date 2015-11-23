@@ -33,7 +33,7 @@ class UsageDecorator < ApplicationDecorator
   def fetch_usage_from_cache(key)
     Rails.cache.fetch(key, expires_in: 30.days) do
       model.tenants.inject({}) do |acc, tenant|
-        acc[tenant] = {
+        acc[tenant.id] = {
           instance_results: Billing::Instances.usage(tenant.uuid, from_date, to_date),
           volume_results: Billing::Volumes.usage(tenant.uuid, from_date, to_date),
           image_results: Billing::Images.usage(tenant.uuid, from_date, to_date),
@@ -47,7 +47,7 @@ class UsageDecorator < ApplicationDecorator
 
   def instance_total(tenant_id, flavor_id=nil)
     usage_data.each do |tenant, results|
-      if(tenant_id == tenant.id)
+      if(tenant_id == tenant)
         results = results[:instance_results]
         if flavor_id
           results = results.select{|i| i[:flavor][:flavor_id] == flavor_id}
@@ -60,7 +60,7 @@ class UsageDecorator < ApplicationDecorator
 
   def volume_total(tenant_id)
     usage_data.each do |tenant, results|
-      if(tenant_id == tenant.id)
+      if(tenant_id == tenant)
         return results[:volume_results].collect{|i| i[:cost]}.sum
       end
     end
@@ -69,7 +69,7 @@ class UsageDecorator < ApplicationDecorator
 
   def image_total(tenant_id)
     usage_data.each do |tenant, results|
-      if(tenant_id == tenant.id)
+      if(tenant_id == tenant)
         return results[:image_results].collect{|i| i[:cost]}.sum
       end
     end
@@ -79,8 +79,9 @@ class UsageDecorator < ApplicationDecorator
   def ip_quota_total(tenant_id)
     daily_rate = ((RateCard.ip_address * 12) / 365.0).round(2)
     usage_data.collect do |tenant, results|
-      if(tenant_id == tenant.id)
+      if(tenant_id == tenant)
         if results[:ip_quota_results].none?
+          tenant = Tenant.find(tenant)
           quota = tenant.quota_set['network']['floatingip'].to_i - 1
           ((((to_date - from_date) / 60.0) / 60.0) / 24.0).round * daily_rate * quota
         else
@@ -105,7 +106,7 @@ class UsageDecorator < ApplicationDecorator
 
   def object_storage_total(tenant_id)
     usage_data.each do |tenant, results|
-      if(tenant_id == tenant.id)
+      if(tenant_id == tenant)
         return (results[:object_storage_results] * RateCard.object_storage).nearest_penny
       end
     end
