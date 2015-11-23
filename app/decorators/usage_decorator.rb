@@ -91,15 +91,15 @@ class UsageDecorator < ApplicationDecorator
         else
           start = from_date
           cost = results[:ip_quota_results].collect do |quota|
-            period = ((((quota.recorded_at - start) / 60.0) / 60.0) / 24.0).round
-            start = quota.recorded_at
+            period = ((((quota[:recorded_at] - start) / 60.0) / 60.0) / 24.0).round
+            start = quota[:recorded_at]
             total_rate = (period * daily_rate)
-            q = quota.previous ? quota.previous : 1
+            q = quota[:previous] ? quota[:previous] : 1
             (q - 1) * total_rate
           end.sum
 
-          q = results[:ip_quota_results].last.quota - 1
-          period = ((((to_date - results[:ip_quota_results].last.recorded_at) / 60.0) / 60.0) / 24.0).round
+          q = results[:ip_quota_results].last[:quota] - 1
+          period = ((((to_date - results[:ip_quota_results].last[:recorded_at]) / 60.0) / 60.0) / 24.0).round
           total_rate = (period * daily_rate)
           cost += (q * total_rate)
           cost
