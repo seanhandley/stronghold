@@ -17,12 +17,13 @@ class UsageDecorator < ApplicationDecorator
     raise(ArgumentError, 'Please supply :from_date and :to_date') unless from_date && to_date
     key = "org#{model.id}_#{from_date.strftime(timestamp_format)}_#{to_date.strftime(timestamp_format)}"
     if key.include?(full_month_cache_stamp(from_date))
-      if usage = model.usages.where(year: from_date.year, month: from_date.month).first
+      usage = model.usages.where(year: from_date.year, month: from_date.month).first
+      if usage
         return usage.usage_data
       else
         usage_data = fetch_usage_from_cache(key)
         model.usages.create(year: from_date.year, month: from_date.month, usage_data: usage_data)
-        usage_data
+        return usage_data
       end
     else
       fetch_usage_from_cache(key)
