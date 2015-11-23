@@ -10,6 +10,10 @@ class UsageDecorator < ApplicationDecorator
     Rails.cache.exist?(key) ? Rails.cache.fetch(key) : latest_usage_data(from, to - 1.hour, count + 1)
   end
 
+  def present_with_tenants(usage_data)
+    Hash[usage_data.map {|k,v| [((k.is_a?(Integer) || k.is_a?(String)) ? Tenant.find(k.to_i) : k), v]}]
+  end
+
   def usage_data(args=nil)
     if args && args[:from_date] && args[:to_date]
       @from_date, @to_date = args[:from_date], args[:to_date]
@@ -19,15 +23,15 @@ class UsageDecorator < ApplicationDecorator
     if key.include?(full_month_cache_stamp(from_date))
       usage = model.usages.where(year: from_date.year, month: from_date.month).first
       if usage
-        return usage.usage_data
+        return present_with_tenants(usage.usage_data)
       else
         Rails.cache.delete key
         usage_data = fetch_usage_from_cache(key)
         model.usages.create(year: from_date.year, month: from_date.month, usage_data: usage_data)
-        return usage_data
+        return present_with_tenants(usage_data)
       end
     else
-      fetch_usage_from_cache(key)
+      present_with_tenants fetch_usage_from_cache(key)
     end
   end
 
@@ -48,7 +52,7 @@ class UsageDecorator < ApplicationDecorator
 
   def instance_total(tenant_id, flavor_id=nil)
     usage_data.each do |tenant, results|
-      if(tenant_id == tenant)
+      if(tenant_id == tenant.id)
         results = results[:instance_results]
         if flavor_id
           results = results.select{|i| i[:flavor][:flavor_id] == flavor_id}
@@ -61,7 +65,7 @@ class UsageDecorator < ApplicationDecorator
 
   def volume_total(tenant_id)
     usage_data.each do |tenant, results|
-      if(tenant_id == tenant)
+      if(tenant_id == tenant.id)
         return results[:volume_results].collect{|i| i[:cost]}.sum
       end
     end
@@ -70,7 +74,7 @@ class UsageDecorator < ApplicationDecorator
 
   def image_total(tenant_id)
     usage_data.each do |tenant, results|
-      if(tenant_id == tenant)
+      if(tenant_id == tenant.id)
         return results[:image_results].collect{|i| i[:cost]}.sum
       end
     end
@@ -80,9 +84,8 @@ class UsageDecorator < ApplicationDecorator
   def ip_quota_total(tenant_id)
     daily_rate = ((RateCard.ip_address * 12) / 365.0).round(2)
     usage_data.collect do |tenant, results|
-      if(tenant_id == tenant)
+      if(tenant_id == tenant.id)
         if results[:ip_quota_results].none?
-          tenant = Tenant.find(tenant)
           quota = tenant.quota_set['network']['floatingip'].to_i - 1
           ((((to_date - from_date) / 60.0) / 60.0) / 24.0).round * daily_rate * quota
         else
@@ -107,7 +110,7 @@ class UsageDecorator < ApplicationDecorator
 
   def object_storage_total(tenant_id)
     usage_data.each do |tenant, results|
-      if(tenant_id == tenant)
+      if(tenant_id == tenant.id)
         return (results[:object_storage_results] * RateCard.object_storage).nearest_penny
       end
     end
