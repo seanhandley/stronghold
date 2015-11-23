@@ -1,4 +1,6 @@
 class UsageDecorator < ApplicationDecorator
+  include DateTimeHelper
+
   attr_reader :from_date, :to_date
 
   def latest_usage_data(from=Time.now.beginning_of_month, to=Time.now, count=0)
@@ -13,7 +15,22 @@ class UsageDecorator < ApplicationDecorator
       @from_date, @to_date = args[:from_date], args[:to_date]
     end
     raise(ArgumentError, 'Please supply :from_date and :to_date') unless from_date && to_date
-    Rails.cache.fetch("org#{model.id}_#{from_date.strftime(timestamp_format)}_#{to_date.strftime(timestamp_format)}", expires_in: 30.days) do
+    key = "org#{model.id}_#{from_date.strftime(timestamp_format)}_#{to_date.strftime(timestamp_format)}"
+    if key.include?(full_month_cache_stamp(from_date))
+      if usage = model.usages.where(year: from_date.year, month: from_date.month).first
+        return usage.usage_data
+      else
+        usage_data = fetch_usage_from_cache(key)
+        model.usages.create(year: from_date.year, month: from_date.month, usage_data: usage_data)
+        usage_data
+      end
+    else
+      fetch_usage_from_cache(key)
+    end
+  end
+
+  def fetch_usage_from_cache(key)
+    Rails.cache.fetch(key, expires_in: 30.days) do
       model.tenants.inject({}) do |acc, tenant|
         acc[tenant] = {
           instance_results: Billing::Instances.usage(tenant.uuid, from_date, to_date),
