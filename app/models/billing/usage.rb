@@ -4,6 +4,6 @@ module Billing
 
     belongs_to :organization
 
-    serialize :usage_data
+    serialize :usage_data, JSON
   end
 end
