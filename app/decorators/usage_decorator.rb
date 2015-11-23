@@ -11,7 +11,7 @@ class UsageDecorator < ApplicationDecorator
   end
 
   def present_with_tenants(ud)
-    Hash[ud.map {|k,v| [((k.is_a?(Integer) || k.is_a?(String)) ? Tenant.find(k.to_i) : k), v.symbolize_keys!]}]
+    Hash[ud.map {|k,v| [((k.is_a?(Integer) || k.is_a?(String)) ? Tenant.find(k.to_i) : k), v.deep_symbolize_keys!]}]
   end
 
   def usage_data(args=nil)
