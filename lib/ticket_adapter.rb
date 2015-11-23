@@ -27,7 +27,7 @@ class TicketAdapter
               ::TicketComment.new(ticket_reference: t['reference'], id: u['id'],
                                 email: u['from_address'], text: markdown(u['message']),
                                 time: Time.parse(u['posted_at']),
-                                staff: (u['author']["type"] == "User"),
+                                staff: (u['author'].try(:[], "type") == "User"),
                                 name: u['from_name'])
             end
           end.compact
