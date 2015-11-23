@@ -15,6 +15,7 @@ class Support::UsageController < SupportBaseController
     else
       @usage = @usage_decorator.latest_usage_data
     end
+    @usage = Hash[@usage.map {|k,v| [Tenant.find(k.to_i), v]}]
     @active_vouchers = current_organization.active_vouchers(@from_date, @to_date)
     @usage_nav = usages_for_select(current_organization)
   end

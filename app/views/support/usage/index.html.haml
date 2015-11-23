@@ -10,7 +10,6 @@
   %p.tiny= link_to 'View Pricing', 'http://www.datacentred.co.uk/pricing/', target: '_blank'
 
 - @usage.each do |tenant, results|
-  - tenant = Tenant.find(tenant)
   %h2
     %i.fa.fa-folder-o
     = tenant.name
