@@ -21,6 +21,7 @@ class UsageDecorator < ApplicationDecorator
       if usage
         return usage.usage_data
       else
+        Rails.cache.delete key
         usage_data = fetch_usage_from_cache(key)
         model.usages.create(year: from_date.year, month: from_date.month, usage_data: usage_data)
         return usage_data
