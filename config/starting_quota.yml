@@ -10,6 +10,11 @@ standard:
   network:
     floatingip: 1
     router: 1
+    security_group_rule: 100
+    security_group: 10
+    network: 10
+    port: 10
+    subnet: 10
 
 restricted:
   compute:
@@ -23,6 +28,11 @@ restricted:
   network:
     floatingip: 1
     router: 1
+    security_group_rule: 100
+    security_group: 10
+    network: 10
+    port: 10
+    subnet: 10
 
 zero:
   compute:

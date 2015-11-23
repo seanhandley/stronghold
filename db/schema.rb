@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151119094402) do
+ActiveRecord::Schema.define(version: 20151123133236) do
 
   create_table "audits", force: :cascade do |t|
     t.string   "auditable_id",    limit: 255
@@ -301,6 +301,7 @@ ActiveRecord::Schema.define(version: 20151119094402) do
     t.integer  "projects_limit",     limit: 4,     default: 1,        null: false
     t.float    "weekly_spend",       limit: 24,    default: 0.0,      null: false
     t.string   "quota_limit",        limit: 255, default: "---\ncompute:\n  instances: 10\n  cores: 10\n  ram: 20480\nvolume:\n  volumes: 4\n  snapshots: 4\n  gigabytes: 40\nnetwork:\n  floatingip: 1\n  router: 1\n\n"
+    t.string   "quota_limit",        limit: 255, default: "---\ncompute:\n  instances: 10\n  cores: 10\n  ram: 20480\nvolume:\n  volumes: 4\n  snapshots: 4\n  gigabytes: 40\nnetwork:\n  floatingip: 1\n  router: 1\n  security_group_rule: 100\n  security_group: 10\n  network: 10\n  port: 10\n  subnet: 10\n\n"
   end
 
   add_index "organizations", ["reporting_code"], name: "index_organizations_on_reporting_code", unique: true, using: :btree
@@ -367,6 +368,7 @@ ActiveRecord::Schema.define(version: 20151119094402) do
     t.string  "uuid",            limit: 255
     t.integer "organization_id", limit: 4
     t.string  "quota_set",       limit: 255, default: "---\ncompute:\n  instances: 10\n  cores: 10\n  ram: 20480\nvolume:\n  volumes: 4\n  snapshots: 4\n  gigabytes: 40\nnetwork:\n  floatingip: 1\n  router: 1\n\n"
+    t.string   "quota_set",       limit: 255, default: "---\ncompute:\n  instances: 10\n  cores: 10\n  ram: 20480\nvolume:\n  volumes: 4\n  snapshots: 4\n  gigabytes: 40\nnetwork:\n  floatingip: 1\n  router: 1\n  security_group_rule: 100\n  security_group: 10\n  network: 10\n  port: 10\n  subnet: 10\n\n"
     t.datetime "deleted_at"
   end
 
