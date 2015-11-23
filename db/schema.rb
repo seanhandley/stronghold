@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151123084921) do
+ActiveRecord::Schema.define(version: 20151123091939) do
 
   create_table "audits", force: :cascade do |t|
     t.string   "auditable_id",    limit: 255
@@ -195,10 +195,10 @@ ActiveRecord::Schema.define(version: 20151123084921) do
   end
 
   create_table "billing_usages", force: :cascade do |t|
-    t.integer "year",            limit: 4,     null: false
-    t.integer "month",           limit: 4,     null: false
-    t.integer "organization_id", limit: 4,     null: false
-    t.text    "usage_data",      limit: 65535, null: false
+    t.integer "year",            limit: 4,          null: false
+    t.integer "month",           limit: 4,          null: false
+    t.integer "organization_id", limit: 4,          null: false
+    t.text    "usage_data",      limit: 4294967295, null: false
   end
 
   create_table "billing_volume_states", force: :cascade do |t|

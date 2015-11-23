@@ -18,6 +18,12 @@ module DateTimeHelper
     time.strftime("%H:%M:%S %Z")
   end
 
+  def full_month_cache_stamp(date)
+    from, to = date.beginning_of_month, date.end_of_month
+    timestamp_format = "%Y%m%d%H"
+    "#{from.strftime(timestamp_format)}_#{to.strftime(timestamp_format)}"
+  end
+
   def uk_office_is_open?
     uk_office_is_workday? && uk_office_is_workhour? && !uk_office_is_on_public_holiday?
   end
