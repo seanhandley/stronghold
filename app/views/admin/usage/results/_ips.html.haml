@@ -19,12 +19,12 @@
           - ip_quotas.each do |quota|
             %tr
               %td &nbsp;
-              %td= quota.recorded_at
+              %td= quota[:recorded_at]
               %td
-                = quota.quota
+                = quota[:quota]
                 addresses
               %td
-                = quota.previous.nil? ? "-" : "#{quota.previous} addresses"
+                = quota[:previous].nil? ? "-" : "#{quota[:previous]} addresses"
 
     - if external_gateways && external_gateways.values.any?
       %h3 External Gateways

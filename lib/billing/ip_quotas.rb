@@ -19,7 +19,9 @@ module Billing
 
     def self.usage(tenant_id, from, to)
       Billing::IpQuota.where(:recorded_at => from..to,
-                              :tenant_id => tenant_id).order('recorded_at')
+                              :tenant_id => tenant_id).order('recorded_at').map do |ipq|
+        {recorded_at: ipq.recorded_at, previous: ipq.previous, quota: ipq.quota}
+      end
     end
 
   end
