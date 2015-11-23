@@ -28,7 +28,7 @@ class TicketAdapter
                                 email: u['from_address'], text: markdown(u['message']),
                                 time: Time.parse(u['posted_at']),
                                 staff: (u['author'].try(:[], "type") == "User"),
-                                name: u['from_name'])
+                                name: u['from_name'].present? ? u['from_name'] : u['from_address'])
             end
           end.compact
           description = (head ? head['message'] : nil)
