@@ -6,6 +6,8 @@ SimpleCov.start('rails') do
 end
 
 ENV["RAILS_ENV"] = "test"
+$VERBOSE = nil
+
 require File.expand_path("../../config/environment", __FILE__)
 require "rails/test_help"
 require "minitest/rails"
@@ -51,6 +53,16 @@ class ActiveSupport::TestCase
   fixtures :all
 
   # Add more helper methods to be used by all tests here...
+end
+
+def log_in(user)
+  session[:user_id]    = user.id
+  session[:created_at] = Time.now.utc
+  session[:token]      = SecureRandom.hex
+end
+
+def json_response
+  ActiveSupport::JSON.decode @response.body
 end
 
 def load_instance_flavors

@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
   end
 
   def slow_404
-    sleep 2
+    sleep 2 if Rails.env.production?
     raise ActionController::RoutingError.new('Not Found')
   end
 

@@ -121,12 +121,6 @@ class SessionsControllerTest < ActionController::TestCase
 
   private
 
-  def log_in(user)
-    session[:user_id]    = user.id
-    session[:created_at] = Time.now.utc
-    session[:token]      = SecureRandom.hex
-  end
-
   def create_session(known, has_payment, admin, os_auth='token', &blk)
     @organization.stub(:known_to_payment_gateway?, known) do
       @organization.stub(:has_payment_method?, has_payment) do
