@@ -54,7 +54,7 @@ module Sanity
 
   def self.missing_images
     Billing::Image.active.reject do |image|
-      live_images.include? image.image_id
+      live_images.include?(image.image_id) && image.size > 0
     end
   end
 
