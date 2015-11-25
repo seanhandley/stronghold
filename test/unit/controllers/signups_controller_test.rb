@@ -19,10 +19,14 @@ class SignupsControllerTest < ActionController::TestCase
 
   test "new path sets and renders" do
     get :new
-    assigns(:email)
-    assigns(:customer_signup)
+    assert assigns(:customer_signup)
     assert_template :new
     assert_template layout: "layouts/customer-sign-up"
+  end
+
+  test "new path sets and renders with email" do
+    get :new, email: 'foo@bar.com'
+    assert assigns(:email)
   end
 
   test "signup not enabled html" do
@@ -41,19 +45,19 @@ class SignupsControllerTest < ActionController::TestCase
 
   test "create path successful html" do
     post :create, email: 'foo@bar.com'
-    assigns(:customer_signup)
+    assert assigns(:customer_signup)
     assert_redirected_to thanks_path
   end
 
   test "create path successful json" do
     post :create, email: 'foo@bar.com', format: :json
-    assigns(:customer_signup)
+    assert assigns(:customer_signup)
     assert_response :ok
   end
 
   test "create path failure html" do
     post :create, email: 'foo'
-    assigns(:customer_signup)
+    assert assigns(:customer_signup)
     assert flash[:alert].length > 0
     assert_template :new
     assert_template layout: "layouts/customer-sign-up"
@@ -79,7 +83,7 @@ class SignupsControllerTest < ActionController::TestCase
 
   test "edit path with valid token" do
     get :edit, token: @invite.token
-    assigns(:registration)
+    assert assigns(:registration)
     assert_template :edit
     assert_template layout: "layouts/customer-sign-up"
   end

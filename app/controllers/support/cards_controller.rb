@@ -19,7 +19,7 @@ class Support::CardsController < SupportBaseController
 
   def create
     @customer_signup = CustomerSignup.find_by_uuid(create_params[:signup_uuid])
-    if @customer_signup.ready?
+    if @customer_signup && @customer_signup.ready?
       args = {
           billing_address1: create_params[:address_line1],
           billing_address2: create_params[:address_line2],
