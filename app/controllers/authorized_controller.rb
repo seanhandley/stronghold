@@ -80,7 +80,7 @@ class AuthorizedController < ApplicationController
   end
 
   def allowed_paths_unactivated
-    [activate_path, support_cards_path, support_root_path,
+    [activate_path, new_support_card_path, support_cards_path, support_root_path,
     support_profile_path, support_usage_path, support_edit_organization_path,
     support_user_path(current_user), support_organization_path(current_organization)]
   end

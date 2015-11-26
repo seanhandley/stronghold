@@ -1,6 +1,6 @@
 class SignupsController < ApplicationController
 
-  layout :set_layout
+  layout "customer-sign-up"
 
   before_filter :check_enabled, only: [:new, :create]
   before_filter :find_invite, except: [:new, :create, :thanks]
@@ -70,19 +70,6 @@ class SignupsController < ApplicationController
 
   private
 
-  def current_ability
-    @current_ability ||= User::Ability.new(current_user)
-  end
-
-  def set_layout
-    case action_name
-    when "new", "create", "thanks", "edit", "update"
-      "customer-sign-up"
-    else
-      "application"
-    end
-  end
-
   def update_params
     params.permit(:password)
   end
@@ -93,7 +80,7 @@ class SignupsController < ApplicationController
   end
 
   def create_params
-    params.permit(:organization_name, :email, :discount_code)
+    params.permit(:email, :discount_code)
   end
 
   def check_enabled
