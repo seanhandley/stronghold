@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151123133236) do
+ActiveRecord::Schema.define(version: 20151126121132) do
 
   create_table "audits", force: :cascade do |t|
     t.string   "auditable_id",    limit: 255
@@ -300,8 +300,7 @@ ActiveRecord::Schema.define(version: 20151123133236) do
     t.boolean  "limited_storage",                  default: false,    null: false
     t.integer  "projects_limit",     limit: 4,     default: 1,        null: false
     t.float    "weekly_spend",       limit: 24,    default: 0.0,      null: false
-    t.string   "quota_limit",        limit: 255, default: "---\ncompute:\n  instances: 10\n  cores: 10\n  ram: 20480\nvolume:\n  volumes: 4\n  snapshots: 4\n  gigabytes: 40\nnetwork:\n  floatingip: 1\n  router: 1\n\n"
-    t.string   "quota_limit",        limit: 255, default: "---\ncompute:\n  instances: 10\n  cores: 10\n  ram: 20480\nvolume:\n  volumes: 4\n  snapshots: 4\n  gigabytes: 40\nnetwork:\n  floatingip: 1\n  router: 1\n  security_group_rule: 100\n  security_group: 10\n  network: 10\n  port: 10\n  subnet: 10\n\n"
+    t.text     "quota_limit",        limit: 65535
   end
 
   add_index "organizations", ["reporting_code"], name: "index_organizations_on_reporting_code", unique: true, using: :btree
@@ -364,15 +363,15 @@ ActiveRecord::Schema.define(version: 20151123133236) do
   end
 
   create_table "tenants", force: :cascade do |t|
-    t.string  "name",            limit: 255
-    t.string  "uuid",            limit: 255
-    t.integer "organization_id", limit: 4
-    t.string  "quota_set",       limit: 255, default: "---\ncompute:\n  instances: 10\n  cores: 10\n  ram: 20480\nvolume:\n  volumes: 4\n  snapshots: 4\n  gigabytes: 40\nnetwork:\n  floatingip: 1\n  router: 1\n\n"
-    t.string   "quota_set",       limit: 255, default: "---\ncompute:\n  instances: 10\n  cores: 10\n  ram: 20480\nvolume:\n  volumes: 4\n  snapshots: 4\n  gigabytes: 40\nnetwork:\n  floatingip: 1\n  router: 1\n  security_group_rule: 100\n  security_group: 10\n  network: 10\n  port: 10\n  subnet: 10\n\n"
+    t.string   "name",            limit: 255
+    t.string   "uuid",            limit: 255
+    t.integer  "organization_id", limit: 4
+    t.text     "quota_set",       limit: 65535
     t.datetime "deleted_at"
   end
 
   add_index "tenants", ["deleted_at"], name: "index_tenants_on_deleted_at", using: :btree
+
   create_table "user_tenant_roles", force: :cascade do |t|
     t.integer "user_id",   limit: 4
     t.integer "tenant_id", limit: 4
