@@ -38,7 +38,7 @@ class Support::ManageCardsController < SupportBaseController
     rescue_stripe_errors(lambda {|msg| redirect_to support_manage_cards_path, alert: msg}) do
       if @stripe_customer.default_source != params[:id]
         @stripe_customer.sources.retrieve(params[:id]).delete
-        redirect_to support_manage_cards_path
+        redirect_to support_manage_cards_path, notice: "Card successfully deleted"
       else
         redirect_to support_manage_cards_path, alert: "You can't delete your default card. If you wish to remove a card, you must first add another."
       end
