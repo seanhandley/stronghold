@@ -37,7 +37,7 @@ class Tenant < ActiveRecord::Base
   serialize :quota_set
 
   def quota_set
-    read_attribute(:quota_set) || {}
+    read_attribute(:quota_set) || StartingQuota['standard']
   end
 
   def staff_tenant?
