@@ -20,7 +20,7 @@ module Notifications
     private
 
     def self.client
-      ::Slack::Notifier.new Rails.application.secrets.slack_webhook
+      ::Slack::Notifier.new Rails.application.secrets.slack_webhook, http_options: {open_timeout: 1, read_timeout: 1}
     end
   end
 end
