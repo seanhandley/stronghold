@@ -4,7 +4,7 @@ class Role < ActiveRecord::Base
 
   has_and_belongs_to_many :users
   belongs_to :organization
-  before_destroy :check_users, :check_power
+  before_destroy :check_power, :check_users
   after_commit :check_openstack_access, :check_ceph_access
 
   serialize :permissions

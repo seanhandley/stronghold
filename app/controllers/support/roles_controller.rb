@@ -36,7 +36,7 @@ class Support::RolesController < SupportBaseController
 
   def destroy
     if @role.destroy
-      redirect_to support_roles_path(tab: 'roles')
+      redirect_to support_roles_path(tab: 'roles'), notice: "Role removed successfully"
     else
       redirect_to support_roles_path(tab: 'roles'), notice: @role.errors.full_messages.join
     end
