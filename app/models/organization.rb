@@ -41,7 +41,7 @@ class Organization < ActiveRecord::Base
   serialize :quota_limit
 
   def quota_limit
-    read_attribute(:quota_limit) || {}
+    read_attribute(:quota_limit) || StartingQuota['standard']
   end
 
   def staff?
