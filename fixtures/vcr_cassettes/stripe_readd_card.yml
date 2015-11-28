@@ -1,0 +1,1052 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.stripe.com/v1/tokens
+    body:
+      encoding: US-ASCII
+      string: card[cvc]=345&card[exp_month]=3&card[exp_year]=2016&card[number]=4012888888881881
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.31.0
+      Authorization:
+      - Bearer sk_test_Kjoh9ZEB49K8Bsvc1lxWrlNP
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.31.0","lang":"ruby","lang_version":"2.2.3 p173 (2015-08-18)","platform":"x86_64-darwin15","engine":"ruby","publisher":"stripe","uname":"Darwin
+        MacBook-Pro-2.local 15.0.0 Darwin Kernel Version 15.0.0: Sat Sep 19 15:53:46
+        PDT 2015; root:xnu-3247.10.11~1/RELEASE_X86_64 x86_64","hostname":"MacBook-Pro-2.local"}'
+      Content-Length:
+      - '81'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Sat, 28 Nov 2015 11:54:29 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '781'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_7QzGIZFWdRT9so
+      Stripe-Version:
+      - '2015-02-18'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "id": "tok_17C7HdAR2MipIX2i84FOZBAW",
+          "object": "token",
+          "card": {
+            "id": "card_17C7HdAR2MipIX2i7ERoDcyX",
+            "object": "card",
+            "address_city": null,
+            "address_country": null,
+            "address_line1": null,
+            "address_line1_check": null,
+            "address_line2": null,
+            "address_state": null,
+            "address_zip": null,
+            "address_zip_check": null,
+            "brand": "Visa",
+            "country": "US",
+            "cvc_check": "unchecked",
+            "dynamic_last4": null,
+            "exp_month": 3,
+            "exp_year": 2016,
+            "fingerprint": "muiIRXrkvPfO6nTr",
+            "funding": "credit",
+            "last4": "1881",
+            "metadata": {},
+            "name": null,
+            "tokenization_method": null
+          },
+          "client_ip": "195.147.213.67",
+          "created": 1448711669,
+          "livemode": false,
+          "type": "card",
+          "used": false
+        }
+    http_version: 
+  recorded_at: Sat, 28 Nov 2015 11:54:29 GMT
+- request:
+    method: get
+    uri: https://api.stripe.com/v1/customers/cus_7QbAaReJ8NlEZS
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.31.0
+      Authorization:
+      - Bearer sk_test_Kjoh9ZEB49K8Bsvc1lxWrlNP
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.31.0","lang":"ruby","lang_version":"2.2.3 p173 (2015-08-18)","platform":"x86_64-darwin15","engine":"ruby","publisher":"stripe","uname":"Darwin
+        MacBook-Pro-2.local 15.0.0 Darwin Kernel Version 15.0.0: Sat Sep 19 15:53:46
+        PDT 2015; root:xnu-3247.10.11~1/RELEASE_X86_64 x86_64","hostname":"MacBook-Pro-2.local"}'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Sat, 28 Nov 2015 11:54:30 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '688'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_7QzG6lmJKXAWd5
+      Stripe-Version:
+      - '2015-02-18'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "id": "cus_7QbAaReJ8NlEZS",
+          "object": "customer",
+          "account_balance": 0,
+          "created": 1448622031,
+          "currency": null,
+          "default_source": null,
+          "delinquent": false,
+          "description": "Company: test@test.com, Signup UUID: HlxTBnjmKKa5ufwvOn0UoQ",
+          "discount": null,
+          "email": "test@test.com",
+          "livemode": false,
+          "metadata": {},
+          "shipping": null,
+          "sources": {
+            "object": "list",
+            "data": [],
+            "has_more": false,
+            "total_count": 0,
+            "url": "/v1/customers/cus_7QbAaReJ8NlEZS/sources"
+          },
+          "subscriptions": {
+            "object": "list",
+            "data": [],
+            "has_more": false,
+            "total_count": 0,
+            "url": "/v1/customers/cus_7QbAaReJ8NlEZS/subscriptions"
+          }
+        }
+    http_version: 
+  recorded_at: Sat, 28 Nov 2015 11:54:30 GMT
+- request:
+    method: get
+    uri: https://api.stripe.com/v1/customers/cus_7QbAaReJ8NlEZS/sources?object=card
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.31.0
+      Authorization:
+      - Bearer sk_test_Kjoh9ZEB49K8Bsvc1lxWrlNP
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.31.0","lang":"ruby","lang_version":"2.2.3 p173 (2015-08-18)","platform":"x86_64-darwin15","engine":"ruby","publisher":"stripe","uname":"Darwin
+        MacBook-Pro-2.local 15.0.0 Darwin Kernel Version 15.0.0: Sat Sep 19 15:53:46
+        PDT 2015; root:xnu-3247.10.11~1/RELEASE_X86_64 x86_64","hostname":"MacBook-Pro-2.local"}'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Sat, 28 Nov 2015 11:54:31 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '111'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_7QzG3SgDPlrG56
+      Stripe-Version:
+      - '2015-02-18'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "object": "list",
+          "data": [],
+          "has_more": false,
+          "url": "/v1/customers/cus_7QbAaReJ8NlEZS/sources"
+        }
+    http_version: 
+  recorded_at: Sat, 28 Nov 2015 11:54:31 GMT
+- request:
+    method: get
+    uri: https://api.stripe.com/v1/customers/cus_7QbAaReJ8NlEZS
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.31.0
+      Authorization:
+      - Bearer sk_test_Kjoh9ZEB49K8Bsvc1lxWrlNP
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.31.0","lang":"ruby","lang_version":"2.2.3 p173 (2015-08-18)","platform":"x86_64-darwin15","engine":"ruby","publisher":"stripe","uname":"Darwin
+        MacBook-Pro-2.local 15.0.0 Darwin Kernel Version 15.0.0: Sat Sep 19 15:53:46
+        PDT 2015; root:xnu-3247.10.11~1/RELEASE_X86_64 x86_64","hostname":"MacBook-Pro-2.local"}'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Sat, 28 Nov 2015 11:54:32 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '688'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_7QzGL8jyFe7ZrV
+      Stripe-Version:
+      - '2015-02-18'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "id": "cus_7QbAaReJ8NlEZS",
+          "object": "customer",
+          "account_balance": 0,
+          "created": 1448622031,
+          "currency": null,
+          "default_source": null,
+          "delinquent": false,
+          "description": "Company: test@test.com, Signup UUID: HlxTBnjmKKa5ufwvOn0UoQ",
+          "discount": null,
+          "email": "test@test.com",
+          "livemode": false,
+          "metadata": {},
+          "shipping": null,
+          "sources": {
+            "object": "list",
+            "data": [],
+            "has_more": false,
+            "total_count": 0,
+            "url": "/v1/customers/cus_7QbAaReJ8NlEZS/sources"
+          },
+          "subscriptions": {
+            "object": "list",
+            "data": [],
+            "has_more": false,
+            "total_count": 0,
+            "url": "/v1/customers/cus_7QbAaReJ8NlEZS/subscriptions"
+          }
+        }
+    http_version: 
+  recorded_at: Sat, 28 Nov 2015 11:54:32 GMT
+- request:
+    method: post
+    uri: https://api.stripe.com/v1/customers/cus_7QbAaReJ8NlEZS/sources
+    body:
+      encoding: US-ASCII
+      string: source=tok_17C7HdAR2MipIX2i84FOZBAW
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.31.0
+      Authorization:
+      - Bearer sk_test_Kjoh9ZEB49K8Bsvc1lxWrlNP
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.31.0","lang":"ruby","lang_version":"2.2.3 p173 (2015-08-18)","platform":"x86_64-darwin15","engine":"ruby","publisher":"stripe","uname":"Darwin
+        MacBook-Pro-2.local 15.0.0 Darwin Kernel Version 15.0.0: Sat Sep 19 15:53:46
+        PDT 2015; root:xnu-3247.10.11~1/RELEASE_X86_64 x86_64","hostname":"MacBook-Pro-2.local"}'
+      Content-Length:
+      - '35'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Sat, 28 Nov 2015 11:54:33 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '577'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_7QzGrHNrA0PRnM
+      Stripe-Version:
+      - '2015-02-18'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "id": "card_17C7HdAR2MipIX2i7ERoDcyX",
+          "object": "card",
+          "address_city": null,
+          "address_country": null,
+          "address_line1": null,
+          "address_line1_check": null,
+          "address_line2": null,
+          "address_state": null,
+          "address_zip": null,
+          "address_zip_check": null,
+          "brand": "Visa",
+          "country": "US",
+          "customer": "cus_7QbAaReJ8NlEZS",
+          "cvc_check": "pass",
+          "dynamic_last4": null,
+          "exp_month": 3,
+          "exp_year": 2016,
+          "fingerprint": "muiIRXrkvPfO6nTr",
+          "funding": "credit",
+          "last4": "1881",
+          "metadata": {},
+          "name": null,
+          "tokenization_method": null
+        }
+    http_version: 
+  recorded_at: Sat, 28 Nov 2015 11:54:33 GMT
+- request:
+    method: post
+    uri: https://api.stripe.com/v1/tokens
+    body:
+      encoding: US-ASCII
+      string: card[cvc]=345&card[exp_month]=3&card[exp_year]=2016&card[number]=4012888888881881
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.31.0
+      Authorization:
+      - Bearer sk_test_Kjoh9ZEB49K8Bsvc1lxWrlNP
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.31.0","lang":"ruby","lang_version":"2.2.3 p173 (2015-08-18)","platform":"x86_64-darwin15","engine":"ruby","publisher":"stripe","uname":"Darwin
+        MacBook-Pro-2.local 15.0.0 Darwin Kernel Version 15.0.0: Sat Sep 19 15:53:46
+        PDT 2015; root:xnu-3247.10.11~1/RELEASE_X86_64 x86_64","hostname":"MacBook-Pro-2.local"}'
+      Content-Length:
+      - '81'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Sat, 28 Nov 2015 11:54:34 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '781'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_7QzGh6EqbK3833
+      Stripe-Version:
+      - '2015-02-18'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "id": "tok_17C7HiAR2MipIX2iRiOA6jym",
+          "object": "token",
+          "card": {
+            "id": "card_17C7HiAR2MipIX2i0f3mCTaF",
+            "object": "card",
+            "address_city": null,
+            "address_country": null,
+            "address_line1": null,
+            "address_line1_check": null,
+            "address_line2": null,
+            "address_state": null,
+            "address_zip": null,
+            "address_zip_check": null,
+            "brand": "Visa",
+            "country": "US",
+            "cvc_check": "unchecked",
+            "dynamic_last4": null,
+            "exp_month": 3,
+            "exp_year": 2016,
+            "fingerprint": "muiIRXrkvPfO6nTr",
+            "funding": "credit",
+            "last4": "1881",
+            "metadata": {},
+            "name": null,
+            "tokenization_method": null
+          },
+          "client_ip": "195.147.213.67",
+          "created": 1448711674,
+          "livemode": false,
+          "type": "card",
+          "used": false
+        }
+    http_version: 
+  recorded_at: Sat, 28 Nov 2015 11:54:34 GMT
+- request:
+    method: get
+    uri: https://api.stripe.com/v1/customers/cus_7QbAaReJ8NlEZS
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.31.0
+      Authorization:
+      - Bearer sk_test_Kjoh9ZEB49K8Bsvc1lxWrlNP
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.31.0","lang":"ruby","lang_version":"2.2.3 p173 (2015-08-18)","platform":"x86_64-darwin15","engine":"ruby","publisher":"stripe","uname":"Darwin
+        MacBook-Pro-2.local 15.0.0 Darwin Kernel Version 15.0.0: Sat Sep 19 15:53:46
+        PDT 2015; root:xnu-3247.10.11~1/RELEASE_X86_64 x86_64","hostname":"MacBook-Pro-2.local"}'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Sat, 28 Nov 2015 11:54:35 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1447'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_7QzGOZLWJ1iCHJ
+      Stripe-Version:
+      - '2015-02-18'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "id": "cus_7QbAaReJ8NlEZS",
+          "object": "customer",
+          "account_balance": 0,
+          "created": 1448622031,
+          "currency": null,
+          "default_source": "card_17C7HdAR2MipIX2i7ERoDcyX",
+          "delinquent": false,
+          "description": "Company: test@test.com, Signup UUID: HlxTBnjmKKa5ufwvOn0UoQ",
+          "discount": null,
+          "email": "test@test.com",
+          "livemode": false,
+          "metadata": {},
+          "shipping": null,
+          "sources": {
+            "object": "list",
+            "data": [
+              {
+                "id": "card_17C7HdAR2MipIX2i7ERoDcyX",
+                "object": "card",
+                "address_city": null,
+                "address_country": null,
+                "address_line1": null,
+                "address_line1_check": null,
+                "address_line2": null,
+                "address_state": null,
+                "address_zip": null,
+                "address_zip_check": null,
+                "brand": "Visa",
+                "country": "US",
+                "customer": "cus_7QbAaReJ8NlEZS",
+                "cvc_check": "pass",
+                "dynamic_last4": null,
+                "exp_month": 3,
+                "exp_year": 2016,
+                "fingerprint": "muiIRXrkvPfO6nTr",
+                "funding": "credit",
+                "last4": "1881",
+                "metadata": {},
+                "name": null,
+                "tokenization_method": null
+              }
+            ],
+            "has_more": false,
+            "total_count": 1,
+            "url": "/v1/customers/cus_7QbAaReJ8NlEZS/sources"
+          },
+          "subscriptions": {
+            "object": "list",
+            "data": [],
+            "has_more": false,
+            "total_count": 0,
+            "url": "/v1/customers/cus_7QbAaReJ8NlEZS/subscriptions"
+          }
+        }
+    http_version: 
+  recorded_at: Sat, 28 Nov 2015 11:54:35 GMT
+- request:
+    method: get
+    uri: https://api.stripe.com/v1/customers/cus_7QbAaReJ8NlEZS/sources?object=card
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.31.0
+      Authorization:
+      - Bearer sk_test_Kjoh9ZEB49K8Bsvc1lxWrlNP
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.31.0","lang":"ruby","lang_version":"2.2.3 p173 (2015-08-18)","platform":"x86_64-darwin15","engine":"ruby","publisher":"stripe","uname":"Darwin
+        MacBook-Pro-2.local 15.0.0 Darwin Kernel Version 15.0.0: Sat Sep 19 15:53:46
+        PDT 2015; root:xnu-3247.10.11~1/RELEASE_X86_64 x86_64","hostname":"MacBook-Pro-2.local"}'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Sat, 28 Nov 2015 11:54:36 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '791'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_7QzGgtHbxXoQhZ
+      Stripe-Version:
+      - '2015-02-18'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "object": "list",
+          "data": [
+            {
+              "id": "card_17C7HdAR2MipIX2i7ERoDcyX",
+              "object": "card",
+              "address_city": null,
+              "address_country": null,
+              "address_line1": null,
+              "address_line1_check": null,
+              "address_line2": null,
+              "address_state": null,
+              "address_zip": null,
+              "address_zip_check": null,
+              "brand": "Visa",
+              "country": "US",
+              "customer": "cus_7QbAaReJ8NlEZS",
+              "cvc_check": "pass",
+              "dynamic_last4": null,
+              "exp_month": 3,
+              "exp_year": 2016,
+              "fingerprint": "muiIRXrkvPfO6nTr",
+              "funding": "credit",
+              "last4": "1881",
+              "metadata": {},
+              "name": null,
+              "tokenization_method": null
+            }
+          ],
+          "has_more": false,
+          "url": "/v1/customers/cus_7QbAaReJ8NlEZS/sources"
+        }
+    http_version: 
+  recorded_at: Sat, 28 Nov 2015 11:54:36 GMT
+- request:
+    method: post
+    uri: https://api.stripe.com/v1/customers/cus_7QbAaReJ8NlEZS/sources/card_17C7HdAR2MipIX2i7ERoDcyX
+    body:
+      encoding: US-ASCII
+      string: metadata[last_verified]=2015-11-28+11%3A54%3A36+UTC
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.31.0
+      Authorization:
+      - Bearer sk_test_Kjoh9ZEB49K8Bsvc1lxWrlNP
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.31.0","lang":"ruby","lang_version":"2.2.3 p173 (2015-08-18)","platform":"x86_64-darwin15","engine":"ruby","publisher":"stripe","uname":"Darwin
+        MacBook-Pro-2.local 15.0.0 Darwin Kernel Version 15.0.0: Sat Sep 19 15:53:46
+        PDT 2015; root:xnu-3247.10.11~1/RELEASE_X86_64 x86_64","hostname":"MacBook-Pro-2.local"}'
+      Content-Length:
+      - '51'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Sat, 28 Nov 2015 11:54:37 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '627'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_7QzGF189M6lxxU
+      Stripe-Version:
+      - '2015-02-18'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "id": "card_17C7HdAR2MipIX2i7ERoDcyX",
+          "object": "card",
+          "address_city": null,
+          "address_country": null,
+          "address_line1": null,
+          "address_line1_check": null,
+          "address_line2": null,
+          "address_state": null,
+          "address_zip": null,
+          "address_zip_check": null,
+          "brand": "Visa",
+          "country": "US",
+          "customer": "cus_7QbAaReJ8NlEZS",
+          "cvc_check": "pass",
+          "dynamic_last4": null,
+          "exp_month": 3,
+          "exp_year": 2016,
+          "fingerprint": "muiIRXrkvPfO6nTr",
+          "funding": "credit",
+          "last4": "1881",
+          "metadata": {
+            "last_verified": "2015-11-28 11:54:36 UTC"
+          },
+          "name": null,
+          "tokenization_method": null
+        }
+    http_version: 
+  recorded_at: Sat, 28 Nov 2015 11:54:37 GMT
+- request:
+    method: get
+    uri: https://api.stripe.com/v1/customers/cus_7QbAaReJ8NlEZS
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.31.0
+      Authorization:
+      - Bearer sk_test_Kjoh9ZEB49K8Bsvc1lxWrlNP
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.31.0","lang":"ruby","lang_version":"2.2.3 p173 (2015-08-18)","platform":"x86_64-darwin15","engine":"ruby","publisher":"stripe","uname":"Darwin
+        MacBook-Pro-2.local 15.0.0 Darwin Kernel Version 15.0.0: Sat Sep 19 15:53:46
+        PDT 2015; root:xnu-3247.10.11~1/RELEASE_X86_64 x86_64","hostname":"MacBook-Pro-2.local"}'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Sat, 28 Nov 2015 11:54:38 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1509'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_7QzGR1UE2ceGIU
+      Stripe-Version:
+      - '2015-02-18'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "id": "cus_7QbAaReJ8NlEZS",
+          "object": "customer",
+          "account_balance": 0,
+          "created": 1448622031,
+          "currency": null,
+          "default_source": "card_17C7HdAR2MipIX2i7ERoDcyX",
+          "delinquent": false,
+          "description": "Company: test@test.com, Signup UUID: HlxTBnjmKKa5ufwvOn0UoQ",
+          "discount": null,
+          "email": "test@test.com",
+          "livemode": false,
+          "metadata": {},
+          "shipping": null,
+          "sources": {
+            "object": "list",
+            "data": [
+              {
+                "id": "card_17C7HdAR2MipIX2i7ERoDcyX",
+                "object": "card",
+                "address_city": null,
+                "address_country": null,
+                "address_line1": null,
+                "address_line1_check": null,
+                "address_line2": null,
+                "address_state": null,
+                "address_zip": null,
+                "address_zip_check": null,
+                "brand": "Visa",
+                "country": "US",
+                "customer": "cus_7QbAaReJ8NlEZS",
+                "cvc_check": "pass",
+                "dynamic_last4": null,
+                "exp_month": 3,
+                "exp_year": 2016,
+                "fingerprint": "muiIRXrkvPfO6nTr",
+                "funding": "credit",
+                "last4": "1881",
+                "metadata": {
+                  "last_verified": "2015-11-28 11:54:36 UTC"
+                },
+                "name": null,
+                "tokenization_method": null
+              }
+            ],
+            "has_more": false,
+            "total_count": 1,
+            "url": "/v1/customers/cus_7QbAaReJ8NlEZS/sources"
+          },
+          "subscriptions": {
+            "object": "list",
+            "data": [],
+            "has_more": false,
+            "total_count": 0,
+            "url": "/v1/customers/cus_7QbAaReJ8NlEZS/subscriptions"
+          }
+        }
+    http_version: 
+  recorded_at: Sat, 28 Nov 2015 11:54:38 GMT
+- request:
+    method: post
+    uri: https://api.stripe.com/v1/customers/cus_7QbAaReJ8NlEZS/sources
+    body:
+      encoding: US-ASCII
+      string: source=tok_17C7HiAR2MipIX2iRiOA6jym
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.31.0
+      Authorization:
+      - Bearer sk_test_Kjoh9ZEB49K8Bsvc1lxWrlNP
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.31.0","lang":"ruby","lang_version":"2.2.3 p173 (2015-08-18)","platform":"x86_64-darwin15","engine":"ruby","publisher":"stripe","uname":"Darwin
+        MacBook-Pro-2.local 15.0.0 Darwin Kernel Version 15.0.0: Sat Sep 19 15:53:46
+        PDT 2015; root:xnu-3247.10.11~1/RELEASE_X86_64 x86_64","hostname":"MacBook-Pro-2.local"}'
+      Content-Length:
+      - '35'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Sat, 28 Nov 2015 11:54:39 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '577'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_7QzG4M36MC3iCX
+      Stripe-Version:
+      - '2015-02-18'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "id": "card_17C7HiAR2MipIX2i0f3mCTaF",
+          "object": "card",
+          "address_city": null,
+          "address_country": null,
+          "address_line1": null,
+          "address_line1_check": null,
+          "address_line2": null,
+          "address_state": null,
+          "address_zip": null,
+          "address_zip_check": null,
+          "brand": "Visa",
+          "country": "US",
+          "customer": "cus_7QbAaReJ8NlEZS",
+          "cvc_check": "pass",
+          "dynamic_last4": null,
+          "exp_month": 3,
+          "exp_year": 2016,
+          "fingerprint": "muiIRXrkvPfO6nTr",
+          "funding": "credit",
+          "last4": "1881",
+          "metadata": {},
+          "name": null,
+          "tokenization_method": null
+        }
+    http_version: 
+  recorded_at: Sat, 28 Nov 2015 11:54:39 GMT
+- request:
+    method: delete
+    uri: https://api.stripe.com/v1/customers/cus_7QbAaReJ8NlEZS/sources/card_17C7HiAR2MipIX2i0f3mCTaF
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.31.0
+      Authorization:
+      - Bearer sk_test_Kjoh9ZEB49K8Bsvc1lxWrlNP
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.31.0","lang":"ruby","lang_version":"2.2.3 p173 (2015-08-18)","platform":"x86_64-darwin15","engine":"ruby","publisher":"stripe","uname":"Darwin
+        MacBook-Pro-2.local 15.0.0 Darwin Kernel Version 15.0.0: Sat Sep 19 15:53:46
+        PDT 2015; root:xnu-3247.10.11~1/RELEASE_X86_64 x86_64","hostname":"MacBook-Pro-2.local"}'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Sat, 28 Nov 2015 11:54:39 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '63'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_7QzGroZ4e8s6f1
+      Stripe-Version:
+      - '2015-02-18'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "deleted": true,
+          "id": "card_17C7HiAR2MipIX2i0f3mCTaF"
+        }
+    http_version: 
+  recorded_at: Sat, 28 Nov 2015 11:54:40 GMT
+recorded_with: VCR 2.9.3
