@@ -50,7 +50,7 @@ class Support::ProjectsController < SupportBaseController
     params.require(:tenant).permit(:name, :users => Hash[current_organization.users.map{|u| [u.id.to_s, true]}])
   end
 
-   def quota_params
+  def quota_params
     params.require(:quota).permit(:compute => [:instances, :cores, :ram],
       :volume => [:volumes, :snapshots, :gigabytes],
       :network => [:floatingip, :router, :port, :subnet, :network, :security_group, :security_group_rule])
