@@ -27,7 +27,8 @@ class CustomerSignupGenerator
     @organization = Organization.create! name: @customer_signup.organization_name,
                                          customer_signup: @customer_signup,
                                          state: OrganizationStates::Fresh,
-                                         time_zone: 'UTC'
+                                         time_zone: 'UTC',
+                                         quota_limit: StartingQuota['standard']
     @organization.products << Product.find_by_name('Compute')
     @organization.products << Product.find_by_name('Storage')
     @organization.save!
