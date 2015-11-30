@@ -168,7 +168,7 @@ class User < ActiveRecord::Base
   end
 
   def dont_delete_self
-    if Authorization.current_user.id == id
+    if Authorization.current_user && Authorization.current_user.id == id
       errors.add(:base, "You can't delete yourself!")
       false
     end

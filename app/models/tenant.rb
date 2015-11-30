@@ -67,14 +67,7 @@ class Tenant < ActiveRecord::Base
   end
 
   def destroy_unless_primary
-    return false if primary_tenant?
-    destroy!
-  rescue ActiveRecord::RecordNotDestroyed
-    if Rails.env.test?
-      really_destroy!
-      return true
-    end
-    false
+    destroy unless primary_tenant?
   end
 
   def primary_tenant?

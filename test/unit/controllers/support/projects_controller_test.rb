@@ -104,10 +104,15 @@ class Support::ProjectsControllerTest < ActionController::TestCase
   end
 
   test "Can destroy if not primary tenant" do
-    tenant = @organization.tenants.create name: 'Foo'
-    delete :destroy, id: tenant.id
-    assert_redirected_to support_projects_path
-    assert flash[:notice].include? "success"
+    mock = Minitest::Mock.new
+    mock.expect(:destroy_unless_primary, true)
+    Tenant.stub(:find, mock) do
+      tenant = @organization.tenants.create name: 'Foo'
+      delete :destroy, id: tenant.id
+      assert_redirected_to support_projects_path
+      assert flash[:notice].include? "success"
+    end
+    mock.verify
   end
 
   test "Can't destroy if primary tenant" do
