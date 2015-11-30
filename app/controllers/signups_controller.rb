@@ -33,7 +33,7 @@ class SignupsController < ApplicationController
       respond_to do |format|
         format.html {
           flash.now.alert = @customer_signup.errors.full_messages.join('<br>').html_safe
-          render :new
+          render :new, status: :unprocessable_entity
         }
         format.json { render json: {errors: @customer_signup.errors.full_messages}, status: :unprocessable_entity }
       end
@@ -64,7 +64,7 @@ class SignupsController < ApplicationController
     else
       flash.clear
       flash.now.alert = @registration.errors.full_messages.join('<br>').html_safe
-      render :edit    
+      render :edit, status: :unprocessable_entity
     end
   end
 

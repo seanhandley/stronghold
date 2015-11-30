@@ -28,11 +28,11 @@ class Tenant < ActiveRecord::Base
   before_destroy {|t| readonly! if t.persisted? && Tenant.find(id).staff_tenant? }
   before_destroy {|t| offboard(t, {})}
   validate :check_projects_limit, on: :create
-  validate :check_quota_set
+  validate :check_quota_set, on: [:create, :update]
 
   after_commit :sync_quota_set, on: [:create, :update]
 
-  accepts_nested_attributes_for :user_tenant_roles, allow_destroy: true
+  accepts_nested_attributes_for :user_tenant_roles, allow_destroy: true, reject_if: proc { |attributes| User.find_by_id(attributes["user_id"]).blank? }
 
   serialize :quota_set
 
@@ -67,7 +67,14 @@ class Tenant < ActiveRecord::Base
   end
 
   def destroy_unless_primary
-    destroy unless primary_tenant?
+    return false if primary_tenant?
+    destroy!
+  rescue ActiveRecord::RecordNotDestroyed
+    if Rails.env.test?
+      really_destroy!
+      return true
+    end
+    false
   end
 
   def primary_tenant?

@@ -16,16 +16,28 @@ class Support::RolesController < SupportBaseController
 
   def update
     renamed = @role.name != role_params[:name]
-    @role.update!(role_params)
-    respond_to do |format|
-      format.js {
-        if renamed
-          javascript_redirect_to support_roles_path(tab: 'roles')
-        else
-          head :ok
-        end
-      }
-      format.html
+    if @role.update(role_params)
+      respond_to do |format|
+        format.js {
+          if renamed
+            javascript_redirect_to support_roles_path(tab: 'roles')
+          else
+            head :ok
+          end
+        }
+        format.html
+      end
+    else
+      respond_to do |format|
+        format.js {
+          if renamed
+            render :template => "shared/dialog_errors", :locals => {:object => @role }, status: :unprocessable_entity
+          else
+            head :unprocessable_entity
+          end
+        }
+        format.html
+      end 
     end
   end
 

@@ -59,6 +59,7 @@ class SignupsControllerTest < ActionController::TestCase
     post :create, email: 'foo'
     assert assigns(:customer_signup)
     assert flash[:alert].length > 0
+    assert_response :unprocessable_entity
     assert_template :new
     assert_template layout: "layouts/customer-sign-up"
   end
@@ -122,6 +123,7 @@ class SignupsControllerTest < ActionController::TestCase
   test "update path unsuccessful" do
     post :update, password: '', token: @invite.token
     assert flash[:alert].length > 0
+    assert_response :unprocessable_entity
     assert_template :edit
     assert_template layout: "layouts/customer-sign-up"
   end

@@ -22,7 +22,7 @@ class Support::OrganizationsController < SupportBaseController
       end
     else
       respond_to do |format|
-        format.js { render :template => "shared/dialog_errors", :locals => {:object => current_organization } }
+        format.js { render :template => "shared/dialog_errors", :locals => {:object => current_organization }, status: :unprocessable_entity }
       end
     end
   end
@@ -31,7 +31,7 @@ class Support::OrganizationsController < SupportBaseController
     if reauthenticate(reauthorise_params[:password])
       render json: {success: true }
     else
-      render json: {success: false }
+      render json: {success: false }, status: :unprocessable_entity
     end
   end
 

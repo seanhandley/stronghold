@@ -37,6 +37,7 @@ class Support::CardsControllerTest < ActionController::TestCase
   # before the :create action is called
   test "create when not ready" do
     post :create, {signup_uuid: @customer_signup.uuid}
+    assert_response :unprocessable_entity
     assert assigns(:customer_signup)
     assert_template :new
   end

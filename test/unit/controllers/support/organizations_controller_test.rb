@@ -29,6 +29,7 @@ class Support::OrganizationsControllerTest < ActionController::TestCase
 
   test "users can't change different orgs" do
     patch :update, {format: 'js', id: @organization2.id, organization: {name: 'foo'}}
+    assert_response :unprocessable_entity
     refute assigns(:organization)
   end
 
@@ -50,6 +51,7 @@ class Support::OrganizationsControllerTest < ActionController::TestCase
   test "User can't reauthorise with wrong password" do
     @controller.stub(:reauthenticate, false, "wrgon") do
       post :reauthorise, password: "wrgon", format: 'json'
+      assert_response :unprocessable_entity
       refute json_response['success']
     end
   end
@@ -86,6 +88,8 @@ class Support::OrganizationsControllerTest < ActionController::TestCase
         Ceph::User.stub(:update, Proc.new{ raise Net::HTTPError.new(500, 'foo') }) do
           Honeybadger.stub(:notify, true) do
             post :close, password: "UpperLower123"
+            assert_response :ok
+            assert_template :goodbye
           end
         end
       end

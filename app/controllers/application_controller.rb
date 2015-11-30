@@ -36,7 +36,7 @@ class ApplicationController < ActionController::Base
       javascript_redirect_to success_path
     else
       respond_to do |format|
-        format.js { render :template => "shared/dialog_errors", :locals => {:object => model } }
+        format.js { render :template => "shared/dialog_errors", :locals => {:object => model }, status: :unprocessable_entity}
       end
     end
   end

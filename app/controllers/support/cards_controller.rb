@@ -43,7 +43,7 @@ class Support::CardsController < SupportBaseController
         limit_field: 'id', limit_value: current_user.id)
       redirect_to activated_path
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 

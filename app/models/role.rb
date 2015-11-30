@@ -10,6 +10,7 @@ class Role < ActiveRecord::Base
   serialize :permissions
 
   validates :name, length: {minimum: 1}, allow_blank: false
+  validate :permissions_are_valid
 
   def permissions
     read_attribute(:permissions) || []
@@ -41,5 +42,12 @@ class Role < ActiveRecord::Base
 
   def check_ceph_access
     users.each {|user| CheckCephAccessJob.perform_later(user)}
+  end
+
+  def permissions_are_valid
+    return true unless permissions.any?
+    permissions.each do |permission|
+      return errors.add(:permissions, 'contain unrecognised values') unless Permissions.user.keys.include?(permission)
+    end
   end
 end
