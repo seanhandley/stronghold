@@ -16,11 +16,11 @@ class UserTenantRole < ActiveRecord::Base
   private
 
   def create_tenant_role
-    SyncUserTenantRolesJob.perform_later(true, *os_objects)
+    SyncUserTenantRolesJob.perform_later(true, *os_objects) unless Rails.env.test?
   end
 
   def destroy_tenant_role
-    SyncUserTenantRolesJob.perform_later(false, *os_objects)
+    SyncUserTenantRolesJob.perform_later(false, *os_objects) unless Rails.env.test?
   end
 
   def os_objects

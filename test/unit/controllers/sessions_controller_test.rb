@@ -59,7 +59,7 @@ class SessionsControllerTest < ActionController::TestCase
   test "admin user fails login because password is wrong" do
     create_session(true, true, true, false) do
       post :create, user: {email: @user.email, password: 'Wrongpassword123'}
-      assert_response :success
+      assert_response :unprocessable_entity
       assert_equal "Invalid credentials. Please try again.", session["flash"]["flashes"]["alert"]
     end
   end
@@ -114,7 +114,7 @@ class SessionsControllerTest < ActionController::TestCase
   test "blank credentials shows error" do
     create_session(true, true, true) do
       post :create, user: {email: '', password: ''}
-      assert_response :success
+      assert_response :unprocessable_entity
       assert_equal "Invalid credentials. Please try again.", session["flash"]["flashes"]["alert"]
     end
   end

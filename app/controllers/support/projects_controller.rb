@@ -12,14 +12,15 @@ class Support::ProjectsController < SupportBaseController
 
   def create
     @tenant = current_organization.tenants.create(name: tenant_params[:name])
-    if @tenant.save
-      @tenant.update(user_tenant_roles_attributes)
-      @tenant.update_attributes(quota_set: quota_params.to_h)
+    begin
+      @tenant.save!
+      @tenant.update!(user_tenant_roles_attributes)
+      @tenant.update_attributes!(quota_set: quota_params.to_h)
       @tenant.enable!
       javascript_redirect_to support_projects_path
-    else
+    rescue ActiveRecord::RecordInvalid
       respond_to do |format|
-        format.js { render :template => "shared/dialog_errors", :locals => {:object => @tenant } }
+        format.js { render :template => "shared/dialog_errors", :locals => {:object => @tenant }, status: :unprocessable_entity }
       end
     end
   end
@@ -30,7 +31,7 @@ class Support::ProjectsController < SupportBaseController
 
   def destroy
     if @tenant.destroy_unless_primary
-      redirect_to support_projects_path
+      redirect_to support_projects_path, notice: "Removed project successfully"
     else
       redirect_to support_projects_path, alert: "Couldn't delete project"
     end
@@ -50,7 +51,7 @@ class Support::ProjectsController < SupportBaseController
     params.require(:tenant).permit(:name, :users => Hash[current_organization.users.map{|u| [u.id.to_s, true]}])
   end
 
-   def quota_params
+  def quota_params
     params.require(:quota).permit(:compute => [:instances, :cores, :ram],
       :volume => [:volumes, :snapshots, :gigabytes],
       :network => [:floatingip, :router, :port, :subnet, :network, :security_group, :security_group_rule])

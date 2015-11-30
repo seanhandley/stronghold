@@ -38,11 +38,11 @@ class SessionsController < ApplicationController
       else
         flash.now.alert = "Invalid credentials. Please try again."
         Rails.logger.error "Invalid login: #{params_user[:email]}. Token=#{token.inspect}"
-        render :new
+        render :new, status: :unprocessable_entity
       end
     else
       flash.now.alert = "Invalid credentials. Please try again."
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 

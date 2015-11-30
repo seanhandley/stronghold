@@ -4,12 +4,13 @@ class Role < ActiveRecord::Base
 
   has_and_belongs_to_many :users
   belongs_to :organization
-  before_destroy :check_users, :check_power
+  before_destroy :check_power, :check_users
   after_commit :check_openstack_access, :check_ceph_access
 
   serialize :permissions
 
   validates :name, length: {minimum: 1}, allow_blank: false
+  validate :permissions_are_valid
 
   def permissions
     read_attribute(:permissions) || []
@@ -41,5 +42,12 @@ class Role < ActiveRecord::Base
 
   def check_ceph_access
     users.each {|user| CheckCephAccessJob.perform_later(user)}
+  end
+
+  def permissions_are_valid
+    return true unless permissions.any?
+    permissions.each do |permission|
+      return errors.add(:permissions, 'contain unrecognised values') unless Permissions.user.keys.include?(permission)
+    end
   end
 end
