@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
   before_filter :device_cookie
 
   def javascript_redirect_to(path)
-    render js: "window.location.replace('#{path}')"
+    render js: "window.location.replace('#{path}')", status: 302
   end
 
   def slow_404
