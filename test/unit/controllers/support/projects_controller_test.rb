@@ -18,15 +18,7 @@ class Support::ProjectsControllerTest < ActionController::TestCase
     ]
     log_in(@user)
   end
-
-  def assert_404(actions)
-    actions.each do |verb, action, args|
-      assert_raises(ActionController::RoutingError) do
-        send verb, action, args
-      end
-    end
-  end
-
+  
   test "Can't do anything unless power user" do
     @user.update_attributes(roles: [])
     assert_404(@controller_paths)
