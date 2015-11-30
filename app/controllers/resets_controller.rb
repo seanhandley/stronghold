@@ -32,8 +32,16 @@ class ResetsController < ApplicationController
 
   def update
     @reset = Reset.find_by_token(params[:id])
+    unless @reset && !@reset.expired?
+      slow_404
+    end
+
     if @reset.update_password(reset_update_params)
-      javascript_redirect_to sign_in_path
+      respond_to do |format|
+        format.js {
+          javascript_redirect_to sign_in_path  
+        }
+      end
     else
       render_errors(@reset)
     end
@@ -51,7 +59,7 @@ class ResetsController < ApplicationController
 
   def render_errors(reset)
     respond_to do |format|
-      format.js { render :template => "shared/dialog_errors", :locals => {:object => reset} }
+      format.js { render :template => "shared/dialog_errors", :locals => {:object => reset}, status: :unprocessable_entity }
     end
   end
 
