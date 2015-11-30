@@ -1,0 +1,284 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://login.salesforce.com/services/oauth2/token
+    body:
+      encoding: US-ASCII
+      string: grant_type=password&client_id=3MVG99qusVZJwhskGZb_ZkpJRcTJcHLERlYdqnMmS6ebt9VTQWojUHhxGrAGdEsFhXlf8x0PJFlBUeJeQ6n_P&client_secret=4606629602468353401&username=devops%40datacentred.co.uk&password=c7bKwEvXX4QVffyShg2csDYqWYjqOgGja90m3qG
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 19 Aug 2016 10:26:55 GMT
+      Strict-Transport-Security:
+      - max-age=10886400; includeSubDomains; preload
+      Content-Security-Policy-Report-Only:
+      - 'default-src https:; script-src https: ''unsafe-inline'' ''unsafe-eval'';
+        style-src https: ''unsafe-inline''; img-src https: data:; font-src https:
+        data:; report-uri /_/ContentDomainCSPNoAuth?type=login'
+      Set-Cookie:
+      - BrowserId=HXWjr3enQUygKAlAYgpv0Q;Path=/;Domain=.salesforce.com;Expires=Tue,
+        18-Oct-2016 10:26:55 GMT
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Pragma:
+      - no-cache
+      Cache-Control:
+      - no-cache, no-store
+      X-Readonlymode:
+      - 'false'
+      Content-Type:
+      - application/json;charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"access_token":"00Db0000000ILMf!ARQAQLEKV.dnhIdVwPJTwNF7QI9YsBZRdDziOXXAa7OAeIgb4irz4zaEy386d43JFh7PCjYXNgbRzEcii4xF5JFHecGudt4Y","instance_url":"https://eu2.salesforce.com","id":"https://login.salesforce.com/id/00Db0000000ILMfEAO/005b0000001NkX9AAK","token_type":"Bearer","issued_at":"1471602416173","signature":"KakJds8vL0fj1X3HW4uWjlpvk3m1wScYOEXO+HJoa2w="}'
+    http_version: 
+  recorded_at: Fri, 19 Aug 2016 10:26:56 GMT
+- request:
+    method: get
+    uri: https://eu2.salesforce.com/services/data/v32.0/query?q=select%20id,%20name%20from%20product2
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Authorization:
+      - OAuth 00Db0000000ILMf!ARQAQLEKV.dnhIdVwPJTwNF7QI9YsBZRdDziOXXAa7OAeIgb4irz4zaEy386d43JFh7PCjYXNgbRzEcii4xF5JFHecGudt4Y
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 19 Aug 2016 10:26:58 GMT
+      Set-Cookie:
+      - BrowserId=iEiGuEzJTNa4dV3iv3DfPw;Path=/;Domain=.salesforce.com;Expires=Tue,
+        18-Oct-2016 10:26:58 GMT
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Sforce-Limit-Info:
+      - api-usage=93/15000
+      Content-Type:
+      - application/json;charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"totalSize":111,"done":true,"records":[{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000002gHr0AAE"},"Id":"01tb0000002gHr0AAE","Name":"Remote
+        Hands"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb00000006lGMAAY"},"Id":"01tb00000006lGMAAY","Name":"Block
+        Storage (TBhours)"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000002fwoUAAQ"},"Id":"01tb0000002fwoUAAQ","Name":"Compute
+        Instances"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000002hyidAAA"},"Id":"01tb0000002hyidAAA","Name":"Instances
+        (2x8) - (Hours)"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb00000007OiCAAU"},"Id":"01tb00000007OiCAAU","Name":"Processing
+        - front end"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000002GfcAAAS"},"Id":"01tb0000002GfcAAAS","Name":"1.5kW
+        Power Allocation - Consumption Included"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000002GfcBAAS"},"Id":"01tb0000002GfcBAAS","Name":"3kW
+        Power Allocation - Consumption Included"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000002GfcCAAS"},"Id":"01tb0000002GfcCAAS","Name":"3kW
+        Power Allocation - Consumption Excluded"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000002GfcDAAS"},"Id":"01tb0000002GfcDAAS","Name":"6kW
+        Power Allocation - Consumption Included"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000002GfcEAAS"},"Id":"01tb0000002GfcEAAS","Name":"6kW
+        Power Allocation - Consumption Excluded"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000002GfcFAAS"},"Id":"01tb0000002GfcFAAS","Name":"Installation
+        - 32A Dual Feeds"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb00000007OiRAAU"},"Id":"01tb00000007OiRAAU","Name":"Colocation"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb00000007OiMAAU"},"Id":"01tb00000007OiMAAU","Name":"Processing
+        - back end"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000002GfcGAAS"},"Id":"01tb0000002GfcGAAS","Name":"Installation
+        - 32A Dual Feeds (Customer Supplied Rack)"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000002GfcHAAS"},"Id":"01tb0000002GfcHAAS","Name":"Installation
+        - 3 Phase Supply"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000002GfcIAAS"},"Id":"01tb0000002GfcIAAS","Name":"PDUs
+        - Standard Pair"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000002GfcJAAS"},"Id":"01tb0000002GfcJAAS","Name":"Additional
+        1kW Power"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000002GfcKAAS"},"Id":"01tb0000002GfcKAAS","Name":"Including
+        Chilling - Energy consumption rate, including chilling"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000002GfcLAAS"},"Id":"01tb0000002GfcLAAS","Name":"Excluding
+        Chilling - Energy consumption rate excluding chilling"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000002GfcMAAS"},"Id":"01tb0000002GfcMAAS","Name":"Remote
+        Hand - Pre-booked 5 hour block per month"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000002GfcNAAS"},"Id":"01tb0000002GfcNAAS","Name":"Remote
+        Hand - Pre-booked 10 hour block per month"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000002GfcOAAS"},"Id":"01tb0000002GfcOAAS","Name":"Remote
+        Hand - Hourly Rate"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000002GfcPAAS"},"Id":"01tb0000002GfcPAAS","Name":"Copper
+        Cross Connect"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000002GfcQAAS"},"Id":"01tb0000002GfcQAAS","Name":"Copper
+        Cross - Pair"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000002GfcRAAS"},"Id":"01tb0000002GfcRAAS","Name":"Copper
+        Cross - Bundle of 8 to MMR"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000002GfcSAAS"},"Id":"01tb0000002GfcSAAS","Name":"Fibre
+        Cross - Single"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000002GfcTAAS"},"Id":"01tb0000002GfcTAAS","Name":"Fibre
+        Cross - Pair"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000002GfcUAAS"},"Id":"01tb0000002GfcUAAS","Name":"Fibre
+        Cross - Bundle of 8 to MMR"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000002GfcVAAS"},"Id":"01tb0000002GfcVAAS","Name":"Installation
+        - Rate per Linear Metre"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000002GfcWAAS"},"Id":"01tb0000002GfcWAAS","Name":"Installation
+        - Door"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000002gHrtAAE"},"Id":"01tb0000002gHrtAAE","Name":"Power
+        (A)"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000002gpLPAAY"},"Id":"01tb0000002gpLPAAY","Name":"Fixed
+        Asset Disposal"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000002hyiJAAQ"},"Id":"01tb0000002hyiJAAQ","Name":"Instances
+        (8x16) - (Hours)"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000004BcSNAA0"},"Id":"01tb0000004BcSNAA0","Name":"80
+        Mtr 12 Fibre OS1 MTP-MTP"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000004BcSSAA0"},"Id":"01tb0000004BcSSAA0","Name":"12
+        Fibre LGX Cassette (SC Footprint)"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000004BcSXAA0"},"Id":"01tb0000004BcSXAA0","Name":"S13XXX00
+        Panel for LGX Cassette"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000004BcScAAK"},"Id":"01tb0000004BcScAAK","Name":"Installation
+        Costs - Man Days"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000002hyiiAAA"},"Id":"01tb0000002hyiiAAA","Name":"Instances
+        (4x8) - (Hours)"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000003QcnKAAS"},"Id":"01tb0000003QcnKAAS","Name":"ARM
+        Instances (1x1) - (Hours)"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000006JJbAAAW"},"Id":"01tb0000006JJbAAAW","Name":"Changes
+        to Cabling at BBC Test Lab Racks at DC- Item No 20"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000004rkJUAAY"},"Id":"01tb0000004rkJUAAY","Name":"Fibre
+        Bundle Charges-Item No 30"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000004rkJZAAY"},"Id":"01tb0000004rkJZAAY","Name":"Variable
+        charges-Item No 40"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000006JJHjAAO"},"Id":"01tb0000006JJHjAAO","Name":"Atos
+        Install Rack 12 AP8853- Item No 10"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000002ha3vAAA"},"Id":"01tb0000002ha3vAAA","Name":"Instances
+        (2x4) - (Hours)"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000002hl3GAAQ"},"Id":"01tb0000002hl3GAAQ","Name":"Barrel
+        Locks"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000003PLOQAA4"},"Id":"01tb0000003PLOQAA4","Name":"Professional
+        Services"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000002gc9TAAQ"},"Id":"01tb0000002gc9TAAQ","Name":"Setup
+        Charges"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000002hYg9AAE"},"Id":"01tb0000002hYg9AAE","Name":"3kW
+        Rack (Power Inclusive)"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000003Rl7vAAC"},"Id":"01tb0000003Rl7vAAC","Name":"Cloud
+        Services"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000003QcnjAAC"},"Id":"01tb0000003QcnjAAC","Name":"ARM
+        Instances (4x8) - (Hours)"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000003QcneAAC"},"Id":"01tb0000003QcneAAC","Name":"ARM
+        Instances (2x8) - (Hours)"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000002gpS4AAI"},"Id":"01tb0000002gpS4AAI","Name":"Scrap
+        Metal"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000003QcntAAC"},"Id":"01tb0000003QcntAAC","Name":"ARM
+        Instances (4x32) - (Hours)"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000004GkA2AAK"},"Id":"01tb0000004GkA2AAK","Name":"Rack
+        Patching"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000003QcnUAAS"},"Id":"01tb0000003QcnUAAS","Name":"ARM
+        Instances (2x2) - (Hours)"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000003QcnZAAS"},"Id":"01tb0000003QcnZAAS","Name":"ARM
+        Instances (2x4) - (Hours)"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000005p10lAAA"},"Id":"01tb0000005p10lAAA","Name":"VPN
+        Connection (Hours)"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000005p10qAAA"},"Id":"01tb0000005p10qAAA","Name":"Load
+        Balancer (Hours)"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000003QYoWAAW"},"Id":"01tb0000003QYoWAAW","Name":"Instances
+        (8x32) - (Hours)"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000002hYg4AAE"},"Id":"01tb0000002hYg4AAE","Name":"1kW
+        Rack (Power Inclusive)"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000002hbU2AAI"},"Id":"01tb0000002hbU2AAI","Name":"Object
+        Storage (TBhours)"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000003QcnPAAS"},"Id":"01tb0000003QcnPAAS","Name":"ARM
+        Instances (1x2) - (Hours)"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000003RjYUAA0"},"Id":"01tb0000003RjYUAA0","Name":"0.5kW
+        QTR Rack (Power Inclusive)"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000002hbUCAAY"},"Id":"01tb0000002hbUCAAY","Name":"IP
+        Addresses (month)"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000002elzQAAQ"},"Id":"01tb0000002elzQAAQ","Name":"Data
+        Migration"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000002hYgOAAU"},"Id":"01tb0000002hYgOAAU","Name":"Optical
+        Cross Connect"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000004BUs8AAG"},"Id":"01tb0000004BUs8AAG","Name":"Windows
+        Remote Desktop"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000002gc9OAAQ"},"Id":"01tb0000002gc9OAAQ","Name":"Rack"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000004BlVDAA0"},"Id":"01tb0000004BlVDAA0","Name":"Instances
+        (1x1.80) - (Hours)"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000002iRn5AAE"},"Id":"01tb0000002iRn5AAE","Name":"Network
+        and Power Leads"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000004BlV3AAK"},"Id":"01tb0000004BlV3AAK","Name":"Instances
+        (1x1.20) - (Hours)"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000004BlWpAAK"},"Id":"01tb0000004BlWpAAK","Name":"ARM
+        Instances (2x2.40) - (Hours)"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000004BlWzAAK"},"Id":"01tb0000004BlWzAAK","Name":"ARM
+        Instances (2x8.40) - (Hours)"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000004BlVXAA0"},"Id":"01tb0000004BlVXAA0","Name":"Instances
+        (2x2.40) - (Hours)"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000004BlVhAAK"},"Id":"01tb0000004BlVhAAK","Name":"Instances
+        (2x4.40) - (Hours)"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000004BlWVAA0"},"Id":"01tb0000004BlWVAA0","Name":"ARM
+        Instances (1x1.20) - (Hours)"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000004BlWfAAK"},"Id":"01tb0000004BlWfAAK","Name":"ARM
+        Instances (1x2.20) - (Hours)"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000004BlWkAAK"},"Id":"01tb0000004BlWkAAK","Name":"ARM
+        Instances (1x2.80) - (Hours)"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000004BlZFAA0"},"Id":"01tb0000004BlZFAA0","Name":"ARM
+        Instances (8x16) - (Hours)"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000004BlVNAA0"},"Id":"01tb0000004BlVNAA0","Name":"Instances
+        (1x2.80) - (Hours)"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000004BlWuAAK"},"Id":"01tb0000004BlWuAAK","Name":"ARM
+        Instances (2x4.40) - (Hours)"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000004BlZKAA0"},"Id":"01tb0000004BlZKAA0","Name":"ARM
+        Instances (1x0) - (Hours)"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000004BlVIAA0"},"Id":"01tb0000004BlVIAA0","Name":"Instances
+        (1x2.20) - (Hours)"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000004BlW1AAK"},"Id":"01tb0000004BlW1AAK","Name":"Instances
+        (16x32) - (Hours)"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000002ha3bAAA"},"Id":"01tb0000002ha3bAAA","Name":"Instances
+        (1x0) - (Hours)"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000004BlWaAAK"},"Id":"01tb0000004BlWaAAK","Name":"ARM
+        Instances (1x1.80) - (Hours)"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000003PNJKAA4"},"Id":"01tb0000003PNJKAA4","Name":"Power
+        (kWh)"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000004BlVwAAK"},"Id":"01tb0000004BlVwAAK","Name":"Instances
+        (2x8.40) - (Hours)"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000003QYobAAG"},"Id":"01tb0000003QYobAAG","Name":"Instances
+        (16x32) - (Hours)"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000002ha3lAAA"},"Id":"01tb0000002ha3lAAA","Name":"Instances
+        (1x2) - (Hours)"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000003QcnyAAC"},"Id":"01tb0000003QcnyAAC","Name":"Instances
+        (4x16) - (Hours)"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000002hYgEAAU"},"Id":"01tb0000002hYgEAAU","Name":"5kW
+        Rack (Power Inclusive)"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000003QcnoAAC"},"Id":"01tb0000003QcnoAAC","Name":"ARM
+        Instances (4x16) - (Hours)"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000002ha3gAAA"},"Id":"01tb0000002ha3gAAA","Name":"Instances
+        (1x1) - (Hours)"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000002ha3qAAA"},"Id":"01tb0000002ha3qAAA","Name":"Instances
+        (2x2) - (Hours)"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb000000567ufAAA"},"Id":"01tb000000567ufAAA","Name":"Block
+        Storage SSD (TBhours)"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000004BsnwAAC"},"Id":"01tb0000004BsnwAAC","Name":"1
+        GigE Service Installation"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000004Bso1AAC"},"Id":"01tb0000004Bso1AAC","Name":"GHIP-Systems
+        DWDM 5616 Multiplexer 16-Channel (ch 43-58)"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000004BsoBAAS"},"Id":"01tb0000004BsoBAAS","Name":"FlexOptix
+        multirate DWDM SFP 40km"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000004BsoGAAS"},"Id":"01tb0000004BsoGAAS","Name":"Fibre
+        Patches / Patch Cleaners"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000004BsoLAAS"},"Id":"01tb0000004BsoLAAS","Name":"Complete
+        Custom Cross Connect M310 Modular (48x)"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000004BsoQAAS"},"Id":"01tb0000004BsoQAAS","Name":"Cross
+        Connect Installation (Man Days)"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000004Bso6AAC"},"Id":"01tb0000004Bso6AAC","Name":"ADVA
+        Multirate DWDM SFP 40km"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000004rd3EAAQ"},"Id":"01tb0000004rd3EAAQ","Name":"Copper
+        Interconnect"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000004rd34AAA"},"Id":"01tb0000004rd34AAA","Name":"2kW
+        Rack (Power Inclusive)"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000004rdG8AAI"},"Id":"01tb0000004rdG8AAI","Name":"Goods
+        Charges-Item No 20"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000004rdGIAAY"},"Id":"01tb0000004rdGIAAY","Name":"Setup
+        Charges - Item No 10"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000004ByZvAAK"},"Id":"01tb0000004ByZvAAK","Name":"Cloud
+        Discount"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000003zESfAAM"},"Id":"01tb0000003zESfAAM","Name":"4kW
+        Rack (Power Inclusive)"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000003zDwcAAE"},"Id":"01tb0000003zDwcAAE","Name":"IP
+        Addresses (hour)"},{"attributes":{"type":"Product2","url":"/services/data/v32.0/sobjects/Product2/01tb0000003zYvWAAU"},"Id":"01tb0000003zYvWAAU","Name":"Windows
+        Instances (2x4) - (Hours)"}]}'
+    http_version: 
+  recorded_at: Fri, 19 Aug 2016 10:26:58 GMT
+- request:
+    method: post
+    uri: https://login.salesforce.com/services/oauth2/token
+    body:
+      encoding: US-ASCII
+      string: grant_type=password&client_id=3MVG99qusVZJwhskGZb_ZkpJRcTJcHLERlYdqnMmS6ebt9VTQWojUHhxGrAGdEsFhXlf8x0PJFlBUeJeQ6n_P&client_secret=4606629602468353401&username=devops%40datacentred.co.uk&password=c7bKwEvXX4QVffyShg2csDYqWYjqOgGja90m3qG
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 19 Aug 2016 10:27:00 GMT
+      Strict-Transport-Security:
+      - max-age=10886400; includeSubDomains; preload
+      Content-Security-Policy-Report-Only:
+      - 'default-src https:; script-src https: ''unsafe-inline'' ''unsafe-eval'';
+        style-src https: ''unsafe-inline''; img-src https: data:; font-src https:
+        data:; report-uri /_/ContentDomainCSPNoAuth?type=login'
+      Set-Cookie:
+      - BrowserId=AYiDoeZZS42zMi3matH6FQ;Path=/;Domain=.salesforce.com;Expires=Tue,
+        18-Oct-2016 10:27:00 GMT
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Pragma:
+      - no-cache
+      Cache-Control:
+      - no-cache, no-store
+      X-Readonlymode:
+      - 'false'
+      Content-Type:
+      - application/json;charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"access_token":"00Db0000000ILMf!ARQAQLEKV.dnhIdVwPJTwNF7QI9YsBZRdDziOXXAa7OAeIgb4irz4zaEy386d43JFh7PCjYXNgbRzEcii4xF5JFHecGudt4Y","instance_url":"https://eu2.salesforce.com","id":"https://login.salesforce.com/id/00Db0000000ILMfEAO/005b0000001NkX9AAK","token_type":"Bearer","issued_at":"1471602420523","signature":"bWc77gik1HE/vNxQgQWJyAz9maQhri96pz74oOLeTf8="}'
+    http_version: 
+  recorded_at: Fri, 19 Aug 2016 10:27:01 GMT
+- request:
+    method: get
+    uri: https://eu2.salesforce.com/services/data/v32.0/query?q=select%20product2id,%20unitprice%20from%20pricebookentry
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Authorization:
+      - OAuth 00Db0000000ILMf!ARQAQLEKV.dnhIdVwPJTwNF7QI9YsBZRdDziOXXAa7OAeIgb4irz4zaEy386d43JFh7PCjYXNgbRzEcii4xF5JFHecGudt4Y
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 19 Aug 2016 10:27:02 GMT
+      Set-Cookie:
+      - BrowserId=sJxlsjPwTICVEC6-wS9mCA;Path=/;Domain=.salesforce.com;Expires=Tue,
+        18-Oct-2016 10:27:02 GMT
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Sforce-Limit-Info:
+      - api-usage=93/15000
+      Content-Type:
+      - application/json;charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"totalSize":136,"done":true,"records":[{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000ra9jcAAA"},"Product2Id":"01tb0000004GkA2AAK","UnitPrice":0.0},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000r7VjOAAU"},"Product2Id":"01tb0000003RjYUAA0","UnitPrice":0.0},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000mmlpLAAQ"},"Product2Id":"01tb0000002hl3GAAQ","UnitPrice":0.0},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000ma2KFAAY"},"Product2Id":"01tb0000002hYg9AAE","UnitPrice":0.0},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000mbchXAAQ"},"Product2Id":"01tb0000002hbU2AAI","UnitPrice":0.0313},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000ma2KAAAY"},"Product2Id":"01tb0000002hYg4AAE","UnitPrice":0.0},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000kglwlAAA"},"Product2Id":"01tb0000002gpLPAAY","UnitPrice":0.0},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000v7zmqAAA"},"Product2Id":"01tb0000003zESfAAM","UnitPrice":0.0},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000v7zLfAAI"},"Product2Id":"01tb0000003zDwcAAE","UnitPrice":0.0027},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000t9Cf6AAE"},"Product2Id":"01tb0000004rd34AAA","UnitPrice":0.0},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000vbJ55AAE"},"Product2Id":"01tb0000005p10qAAA","UnitPrice":0.062},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000v8KTCAA2"},"Product2Id":"01tb0000003zYvWAAU","UnitPrice":0.0955},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000vbJ50AAE"},"Product2Id":"01tb0000005p10lAAA","UnitPrice":0.0313},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000t9CfGAAU"},"Product2Id":"01tb0000004rd3EAAQ","UnitPrice":0.0},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000soxF8AAI"},"Product2Id":"01tb0000004BcSSAA0","UnitPrice":0.0},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000spQwtAAE"},"Product2Id":"01tb0000004BlVhAAK","UnitPrice":0.066},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000soxFDAAY"},"Product2Id":"01tb0000004BcSXAA0","UnitPrice":0.0},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000spQxcAAE"},"Product2Id":"01tb0000004BlWuAAK","UnitPrice":0.1321},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000spQwUAAU"},"Product2Id":"01tb0000004BlVIAA0","UnitPrice":0.0331},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000spQwZAAU"},"Product2Id":"01tb0000004BlVNAA0","UnitPrice":0.0351},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000spQxIAAU"},"Product2Id":"01tb0000004BlWaAAK","UnitPrice":0.0389},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000spQxXAAU"},"Product2Id":"01tb0000004BlWpAAK","UnitPrice":0.0704},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000soxF3AAI"},"Product2Id":"01tb0000004BcSNAA0","UnitPrice":0.0},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000spQwFAAU"},"Product2Id":"01tb0000004BlV3AAK","UnitPrice":0.0168},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000spQwyAAE"},"Product2Id":"01tb0000004BlVwAAK","UnitPrice":0.1306},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000spQxhAAE"},"Product2Id":"01tb0000004BlWzAAK","UnitPrice":0.2613},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000spR1KAAU"},"Product2Id":"01tb0000004BlZFAA0","UnitPrice":0.5634},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000spR1PAAU"},"Product2Id":"01tb0000004BlZKAA0","UnitPrice":0.0178},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000soxFIAAY"},"Product2Id":"01tb0000004BcScAAK","UnitPrice":0.0},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000spQweAAE"},"Product2Id":"01tb0000004BlVXAA0","UnitPrice":0.0352},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000spQxDAAU"},"Product2Id":"01tb0000004BlWVAA0","UnitPrice":0.0336},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000spQxNAAU"},"Product2Id":"01tb0000004BlWfAAK","UnitPrice":0.0661},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000spQxSAAU"},"Product2Id":"01tb0000004BlWkAAK","UnitPrice":0.0703},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000seHn7AAE"},"Product2Id":"01tb0000004BUs8AAG","UnitPrice":30.0},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000spQx3AAE"},"Product2Id":"01tb0000004BlW1AAK","UnitPrice":1.05},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000spQwPAAU"},"Product2Id":"01tb0000004BlVDAA0","UnitPrice":0.0195},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub0000002LsHzAAK"},"Product2Id":"01tb00000006lGMAAY","UnitPrice":0.0313},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub0000002LsI0AAK"},"Product2Id":"01tb00000007OiCAAU","UnitPrice":0.0},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub0000002LsI1AAK"},"Product2Id":"01tb00000007OiMAAU","UnitPrice":0.0},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub0000002LsI2AAK"},"Product2Id":"01tb00000007OiRAAU","UnitPrice":0.0},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub0000002LsI3AAK"},"Product2Id":"01tb0000002GfcAAAS","UnitPrice":0.0},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub0000002LsI4AAK"},"Product2Id":"01tb0000002GfcBAAS","UnitPrice":0.0},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub0000002LsI5AAK"},"Product2Id":"01tb0000002GfcCAAS","UnitPrice":0.0},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub0000002LsI6AAK"},"Product2Id":"01tb0000002GfcDAAS","UnitPrice":0.0},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub0000002LsI7AAK"},"Product2Id":"01tb0000002GfcEAAS","UnitPrice":0.0},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub0000002LsI8AAK"},"Product2Id":"01tb0000002GfcFAAS","UnitPrice":0.0},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub0000002LsI9AAK"},"Product2Id":"01tb0000002GfcGAAS","UnitPrice":0.0},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub0000002LsIAAA0"},"Product2Id":"01tb0000002GfcHAAS","UnitPrice":0.0},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub0000002LsIBAA0"},"Product2Id":"01tb0000002GfcIAAS","UnitPrice":0.0},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub0000002LsICAA0"},"Product2Id":"01tb0000002GfcJAAS","UnitPrice":0.0},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub0000002LsIDAA0"},"Product2Id":"01tb0000002GfcKAAS","UnitPrice":0.0},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub0000002LsIEAA0"},"Product2Id":"01tb0000002GfcLAAS","UnitPrice":0.0},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub0000002LsIFAA0"},"Product2Id":"01tb0000002GfcMAAS","UnitPrice":0.0},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub0000002LsIGAA0"},"Product2Id":"01tb0000002GfcNAAS","UnitPrice":0.0},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub0000002LsIHAA0"},"Product2Id":"01tb0000002GfcOAAS","UnitPrice":0.0},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub0000002LsIIAA0"},"Product2Id":"01tb0000002GfcPAAS","UnitPrice":0.0},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub0000002LsIJAA0"},"Product2Id":"01tb0000002GfcQAAS","UnitPrice":0.0},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub0000002LsIKAA0"},"Product2Id":"01tb0000002GfcRAAS","UnitPrice":0.0},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub0000002LsILAA0"},"Product2Id":"01tb0000002GfcSAAS","UnitPrice":0.0},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub0000002LsIMAA0"},"Product2Id":"01tb0000002GfcTAAS","UnitPrice":0.0},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub0000002LsINAA0"},"Product2Id":"01tb0000002GfcUAAS","UnitPrice":0.0},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub0000002LsIOAA0"},"Product2Id":"01tb0000002GfcVAAS","UnitPrice":0.0},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub0000002LsIPAA0"},"Product2Id":"01tb0000002GfcWAAS","UnitPrice":0.0},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000ma2KKAAY"},"Product2Id":"01tb0000002hYgEAAU","UnitPrice":0.0},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000mbchmAAA"},"Product2Id":"01tb0000002hbUCAAY","UnitPrice":2.0},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000kglzXAAQ"},"Product2Id":"01tb0000002gpS4AAI","UnitPrice":0.0},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000ma2KUAAY"},"Product2Id":"01tb0000002hYgOAAU","UnitPrice":0.0},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000spkMyAAI"},"Product2Id":"01tb0000002fwoUAAQ","UnitPrice":1.0},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000spknNAAQ"},"Product2Id":"01tb0000004ByZvAAK","UnitPrice":-1.0},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000qUtOZAA0"},"Product2Id":"01tb0000003QcnjAAC","UnitPrice":0.2782},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000qUtOUAA0"},"Product2Id":"01tb0000003QcneAAC","UnitPrice":0.275},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000qUnzXAAS"},"Product2Id":"01tb0000002ha3qAAA","UnitPrice":0.0353},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000qUo0fAAC"},"Product2Id":"01tb0000003QYoWAAW","UnitPrice":0.525},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000qUnzNAAS"},"Product2Id":"01tb0000002ha3lAAA","UnitPrice":0.0348},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000qUnzDAAS"},"Product2Id":"01tb0000002ha3gAAA","UnitPrice":0.0177},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000qUo0kAAC"},"Product2Id":"01tb0000003QYobAAG","UnitPrice":0.5634},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000qUtOjAAK"},"Product2Id":"01tb0000003QcntAAC","UnitPrice":0.5634},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000qUtOoAAK"},"Product2Id":"01tb0000003QcnyAAC","UnitPrice":0.275},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000qUtOFAA0"},"Product2Id":"01tb0000003QcnPAAS","UnitPrice":0.0696},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000qUnxqAAC"},"Product2Id":"01tb0000002ha3bAAA","UnitPrice":0.0089},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000qUnzrAAC"},"Product2Id":"01tb0000002hyidAAA","UnitPrice":0.1375},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000qUtOPAA0"},"Product2Id":"01tb0000003QcnZAAS","UnitPrice":0.139},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000qUtOKAA0"},"Product2Id":"01tb0000003QcnUAAS","UnitPrice":0.0706},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000qUo01AAC"},"Product2Id":"01tb0000002hyiiAAA","UnitPrice":0.1391},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000qUo0BAAS"},"Product2Id":"01tb0000002hyiJAAQ","UnitPrice":0.2817},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000qUtOAAA0"},"Product2Id":"01tb0000003QcnKAAS","UnitPrice":0.0354},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000qUnzhAAC"},"Product2Id":"01tb0000002ha3vAAA","UnitPrice":0.0695},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000qUtOeAAK"},"Product2Id":"01tb0000003QcnoAAC","UnitPrice":0.55},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000tpOzEAAU"},"Product2Id":"01tb000000567ufAAA","UnitPrice":0.4112},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000v7zLgAAI"},"Product2Id":"01tb0000003zDwcAAE","UnitPrice":0.0027},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000vbJ56AAE"},"Product2Id":"01tb0000005p10qAAA","UnitPrice":0.0313},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000v8KTDAA2"},"Product2Id":"01tb0000003zYvWAAU","UnitPrice":0.0955},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000vbJ51AAE"},"Product2Id":"01tb0000005p10lAAA","UnitPrice":0.062},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000spQwuAAE"},"Product2Id":"01tb0000004BlVhAAK","UnitPrice":0.066},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000spQxdAAE"},"Product2Id":"01tb0000004BlWuAAK","UnitPrice":0.1321},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000spQwVAAU"},"Product2Id":"01tb0000004BlVIAA0","UnitPrice":0.0331},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000spQwaAAE"},"Product2Id":"01tb0000004BlVNAA0","UnitPrice":0.0351},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000spQxJAAU"},"Product2Id":"01tb0000004BlWaAAK","UnitPrice":0.0389},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000spQxYAAU"},"Product2Id":"01tb0000004BlWpAAK","UnitPrice":0.0704},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000spQwGAAU"},"Product2Id":"01tb0000004BlV3AAK","UnitPrice":0.0168},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000spQwzAAE"},"Product2Id":"01tb0000004BlVwAAK","UnitPrice":0.1306},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000spQxiAAE"},"Product2Id":"01tb0000004BlWzAAK","UnitPrice":0.2613},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000spR1LAAU"},"Product2Id":"01tb0000004BlZFAA0","UnitPrice":0.5634},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000spR1QAAU"},"Product2Id":"01tb0000004BlZKAA0","UnitPrice":0.0178},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000spQwfAAE"},"Product2Id":"01tb0000004BlVXAA0","UnitPrice":0.0352},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000spQxEAAU"},"Product2Id":"01tb0000004BlWVAA0","UnitPrice":0.0336},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000spQxOAAU"},"Product2Id":"01tb0000004BlWfAAK","UnitPrice":0.0661},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000spQxTAAU"},"Product2Id":"01tb0000004BlWkAAK","UnitPrice":0.0703},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000seHn8AAE"},"Product2Id":"01tb0000004BUs8AAG","UnitPrice":30.0},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000spQx4AAE"},"Product2Id":"01tb0000004BlW1AAK","UnitPrice":1.05},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000spQwQAAU"},"Product2Id":"01tb0000004BlVDAA0","UnitPrice":0.0195},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000spkN3AAI"},"Product2Id":"01tb0000002fwoUAAQ","UnitPrice":1.0},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000spknSAAQ"},"Product2Id":"01tb0000004ByZvAAK","UnitPrice":-1.0},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000qUtOaAAK"},"Product2Id":"01tb0000003QcnjAAC","UnitPrice":0.2782},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000qUo06AAC"},"Product2Id":"01tb0000002hyiiAAA","UnitPrice":0.1391},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000qUtOVAA0"},"Product2Id":"01tb0000003QcneAAC","UnitPrice":0.275},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000qUnzSAAS"},"Product2Id":"01tb0000002ha3lAAA","UnitPrice":0.0348},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000qUo0gAAC"},"Product2Id":"01tb0000003QYoWAAW","UnitPrice":0.525},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000qUnxvAAC"},"Product2Id":"01tb0000002ha3bAAA","UnitPrice":0.0089},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000qUnzwAAC"},"Product2Id":"01tb0000002hyidAAA","UnitPrice":0.1375},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000qUo0lAAC"},"Product2Id":"01tb0000003QYobAAG","UnitPrice":0.5634},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000qUtOkAAK"},"Product2Id":"01tb0000003QcntAAC","UnitPrice":0.5634},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000qUtOpAAK"},"Product2Id":"01tb0000003QcnyAAC","UnitPrice":0.275},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000qUnzmAAC"},"Product2Id":"01tb0000002ha3vAAA","UnitPrice":0.0695},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000qUnxlAAC"},"Product2Id":"01tb00000006lGMAAY","UnitPrice":0.0313},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000qUtOGAA0"},"Product2Id":"01tb0000003QcnPAAS","UnitPrice":0.0696},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000qUo0aAAC"},"Product2Id":"01tb0000002hbU2AAI","UnitPrice":0.0313},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000qUtOQAA0"},"Product2Id":"01tb0000003QcnZAAS","UnitPrice":0.139},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000qUtOLAA0"},"Product2Id":"01tb0000003QcnUAAS","UnitPrice":0.0706},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000qUnzcAAC"},"Product2Id":"01tb0000002ha3qAAA","UnitPrice":0.0353},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000qUo0GAAS"},"Product2Id":"01tb0000002hyiJAAQ","UnitPrice":0.2817},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000qUtOBAA0"},"Product2Id":"01tb0000003QcnKAAS","UnitPrice":0.0354},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000qUnzIAAS"},"Product2Id":"01tb0000002ha3gAAA","UnitPrice":0.0177},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000qUtOfAAK"},"Product2Id":"01tb0000003QcnoAAC","UnitPrice":0.55},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000qUo0QAAS"},"Product2Id":"01tb0000002hbUCAAY","UnitPrice":2.0},{"attributes":{"type":"PricebookEntry","url":"/services/data/v32.0/sobjects/PricebookEntry/01ub000000tpOzFAAU"},"Product2Id":"01tb000000567ufAAA","UnitPrice":0.4112}]}'
+    http_version: 
+  recorded_at: Fri, 19 Aug 2016 10:27:02 GMT
+recorded_with: VCR 2.9.3

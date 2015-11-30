@@ -1,22 +1,29 @@
 module RateCard
   class << self
     def block_storage
-      0.0313
+      price('block_storage')
     end
     def object_storage
-      0.0313
+      price('object_storage')
     end
     def ssd_storage
-      0.4111
+      price('ssd_block_storage')
     end
     def ip_address
-      0.0027
+      price('ip_addresses')
     end
     def lb_pool
-      0.0313
+      price('load_balancer')
     end
     def vpn_connection
-      0.062
+      price('vpn_connection')
+    end
+
+    private
+
+    def price(key)
+      product_id = SALESFORCE_PRODUCT_MAPPINGS[key]['salesforce_id']
+      Salesforce::Product.all[product_id][:price]
     end
   end
 end

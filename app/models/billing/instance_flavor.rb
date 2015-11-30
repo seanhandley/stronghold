@@ -4,8 +4,5 @@ module Billing
 
     has_many :billing_instances
 
-    def rates
-      Billing::Rate.where(flavor_id: id)
-    end
   end
 end

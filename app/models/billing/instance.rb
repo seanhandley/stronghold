@@ -25,31 +25,34 @@ module Billing
       end
     end
 
+    def reindex_states
+      instance_states.each_cons(2) do |first, second|
+        first.update_column(:next_state_id, second.id)
+        second.update_column(:previous_state_id, first.id)
+      end
+      instance_states&.first&.update_column(:previous_state_id, nil)
+      instance_states&.last&.update_column(:next_state_id, nil)
+    end
+
     def terminated_at
       terminated_at = read_attribute(:terminated_at)
       return terminated_at if terminated_at
-      terminated_at = instance_states.where(state: 'deleted').order('recorded_at').first.try(:recorded_at) { nil }
+      terminated_at = instance_states.where(state: 'deleted').first.try(:recorded_at) { nil }
       update_attributes terminated_at: terminated_at
       terminated_at
     end
-
+    
     def first_booted_at
-      instance_states.where(state: 'active').order('recorded_at').first.try(:recorded_at) { nil }
-    end
-
-    def rate
-      rate = instance_flavor.rates.where(arch: arch).first.rate rescue nil
-      return rate if rate
-      instance_flavor.rates.where(arch: 'x86_64').first.rate rescue nil
+      instance_states.where(state: 'active').first.try(:recorded_at) { nil }
     end
 
     def instance_flavor
-      flavor = instance_states.order('recorded_at').last.try(:instance_flavor)
+      flavor = instance_states.last.try(:instance_flavor)
       flavor || Billing::InstanceFlavor.find_by_flavor_id(flavor_id)
     end
 
     def fetch_states(from, to)
-      states = instance_states.where(:recorded_at => from..to).order('recorded_at')
+      states = instance_states.where(:recorded_at => from..to)
       if states.any?
         # Sometimes states arrive out of order and the final state by timestamp
         # isn't actually the final state. This can make instances appear to be
@@ -68,32 +71,59 @@ module Billing
       states
     end
 
-    def resizes(from, to)
-      comparison = nil
-      resizes = []
-      instance_states.where(:recorded_at => from..to).order('recorded_at').each do |state|
-        unless comparison
-          comparison = state
-          next
-        end
-        if comparison.flavor_id != state.flavor_id
-          resizes << "[#{state.recorded_at}] Resized from #{comparison.instance_flavor.try(:name)} to #{state.instance_flavor.try(:name)}."
-        end
-        comparison = state
+    def history(from, to)
+      history = fetch_states(from, to).to_a
+      history.unshift(history.first.previous_state) if history&.first&.previous_state
+      history = history.map do |state|
+        state.to_hash(from, to)
       end
-      resizes
+      return history if history.count > 0
+      latest_state = instance_states.where("recorded_at < ?", from).last
+
+      if latest_state && from >= latest_state.recorded_at
+        return [latest_state.to_hash(from, to)] if latest_state&.billable?
+      end
+      []
     end
 
-    def current_state
-      return 'terminated' if terminated_at
-      Instances.billable?(latest_state) ? 'active' : 'stopped'
+    def billable_history(from, to)
+      history(from, to).select{|i| i[:billable]}
+    end
+
+    def billable_seconds(from, to)
+      Hash[billable_history(from, to).group_by{|i| i[:flavor]}.map {|flavor, instances|
+        [flavor, instances.sum{|i| i[:seconds]}]
+      }]
+    end
+
+    def billable_hours(from, to)
+      Hash[billable_seconds(from, to).map {|flavor, seconds|
+        [flavor, (seconds / Billing::SECONDS_TO_HOURS).ceil]
+      }]
+    end
+
+    def cost(from, to)
+      cost_by_flavor(from, to).sum {|_,c| c}
+    end
+
+    def cost_by_flavor(from, to)
+      Hash[billable_hours(from, to).map {|flavor, hours|
+        begin
+          product_id = Salesforce.find_instance_product(flavor)['salesforce_id']
+          price = Salesforce::Product.all[product_id][:price]
+          [flavor, price * hours]
+        rescue StandardError => e
+          Honeybadger.notify(StandardError.new("No flavor: #{flavor}"))
+          nil
+        end
+      }.compact]
     end
 
     def latest_state(from, to)
       return 'terminated' if terminated_at && terminated_at <= to # and terminated between from, to
-      state = instance_states.where('recorded_at <= ?', to).order('recorded_at').last.try(:state)
+      state = instance_states.where('recorded_at <= ?', to).last
       if state
-        Instances.billable?(state) ? 'active' : 'stopped'
+        state.billable? ? 'active' : 'stopped'
       else
         'unknown'
       end

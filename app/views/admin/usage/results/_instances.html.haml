@@ -35,8 +35,6 @@
                 %td.line_entry
                   - if instance[:windows]
                     %i.fa.fa-windows{title: 'Windows Instance †'}
-                  - if instance[:resizes] && instance[:resizes].any?
-                    %i.fa.fa-arrows-alt{title: "This instance has been resized at least once. †\n\n#{instance[:resizes] ? instance[:resizes].join("\n") : 'No further details found.'}"}
                   &nbsp;
                 %td.line_entry= instance[:name]
                 %td.line_entry= instance[:uuid]
@@ -46,10 +44,9 @@
                 %td.line_entry= (instance[:terminated_at] && instance[:terminated_at] <= @to_date) ? instance[:terminated_at] : '-'
                 %td.line_entry
                   %i.fa.fa-clock-o
-                  == #{number_with_delimiter(instance[:billable_hours], :delimiter => ',')} of #{@total_hours}
-                - if instance[:flavor][:rate].present?
-                  - if current_organization.show_costs?
-                    %td.line_entry== £#{number_with_precision(instance[:cost], :delimiter => ',', :separator => '.', :precision => 4)}
+                  == #{number_with_delimiter(instance[:total_hours], :delimiter => ',')} of #{@total_hours}
+                - if current_organization.show_costs?
+                  %td.line_entry== £#{number_with_precision(instance[:cost], :delimiter => ',', :separator => '.', :precision => 4)}
             %tr.highlight.bottomline
               %td &nbsp;
               %td &nbsp;
@@ -58,7 +55,7 @@
               %td &nbsp;
               %td &nbsp;
               %td== Total #{instances.first[:flavor][:name]}:
-              %td== #{number_with_delimiter(instances.map{|i| i[:billable_hours]}.sum, :delimiter => ',')} hours
+              %td== #{number_with_delimiter(instances.map{|i| i[:total_hours]}.sum, :delimiter => ',')} hours
               - if current_organization.show_costs?
                 %td== £#{number_with_precision(@usage_decorator.instance_total(project.id, flavor_id), :delimiter => ',', :separator => '.', :precision => 2)}
             %tr

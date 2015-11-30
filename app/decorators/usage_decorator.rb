@@ -26,6 +26,7 @@ class UsageDecorator < ApplicationDecorator
           volume_usage: Billing::Volumes.usage(project.uuid, from_date, to_date),
           image_usage: Billing::Images.usage(project.uuid, from_date, to_date),
           ip_quota_usage: ip_quota_usage,
+          ip_quota_hours: ip_quota_hours(project, ip_quota_usage),
           object_storage_usage: Billing::StorageObjects.usage(project.uuid, from_date, to_date),
           current_ip_quota: project.quota_set['network']['floatingip'].to_i,
           ip_quota_total: ip_quota_cost(project, ip_quota_usage).nearest_penny,
@@ -95,27 +96,29 @@ class UsageDecorator < ApplicationDecorator
     return 0
   end
 
-  def ip_quota_cost(project, results)
+  def ip_quota_hours(project, results)
     results = results || []
     if results.none?
       quota = [project.quota_set['network']['floatingip'].to_i - 1, 0].max
-      return (((to_date - from_date) / 60.0) / 60.0).round * RateCard.ip_address * quota
+      return (((to_date - from_date) / 60.0) / 60.0).round * quota
     else
       start = from_date
-      cost = results.collect do |quota|
+      hours = results.collect do |quota|
         period = (((quota.recorded_at - start) / 60.0) / 60.0).round
         start = quota.recorded_at
-        total_rate = (period * RateCard.ip_address)
         q = quota.previous ? quota.previous : 1
-        (q - 1) * total_rate
+        (q - 1) * period
       end.sum
 
       q = [(results.last.quota || 1) - 1, 0].max
       period = (((to_date - results.last.recorded_at) / 60.0) / 60.0).round
-      total_rate = (period * RateCard.ip_address)
-      cost += (q * total_rate)
-      return cost
+      hours += (q * period)
+      return hours
     end
+  end
+
+  def ip_quota_cost(project, results)
+    ip_quota_hours(project, results) * RateCard.ip_address
   end
 
   def object_storage_total(project_id)

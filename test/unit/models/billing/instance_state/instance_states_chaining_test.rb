@@ -40,8 +40,6 @@ class TestInstanceStatesChaining < CleanTest
     end
     @state_4 = @instance.instance_states.create(@defaults.merge(recorded_at: Time.now - 1.minutes))
 
-    @instance.instance_states.each{|s| s.send(:link_previous); s.send(:link_next)}
-
     [@state_1, @state_2, @state_3, @state_4].each(&:reload)
 
     assert @state_1.first_state?

@@ -19,6 +19,7 @@ class Organization < ActiveRecord::Base
       Billingcity: billing_city, Billingpostalcode: billing_postcode,
       Billingcountry: Country.find_country_by_alpha2(billing_country).try(:name), Phone: phone,
       c2g__CODAReportingCode__c: reporting_code,
+      c2g__CODAAccountTradingCurrency__c: 'GBP',
       c2g__CODABillingMethod__c: self_service? ? 'Self-Service' : nil,
       c2g__CODADescription1__c: payment_card_type,
       c2g__CODABaseDate1__c: "Invoice Date",
