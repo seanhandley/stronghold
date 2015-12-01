@@ -93,7 +93,7 @@ class Tenant < ActiveRecord::Base
   end
 
   def network_quota
-    keys = ["floatingip", "router", "port", "subnet", "network", "security_group", "security_group_rule"]
+    keys = ["floatingip", "router", "port", "subnet", "network", "security_group", "security_group_rule", "pool"]
     OpenStackConnection.network.get_quota(uuid).body['quota'].slice(*keys)
   end
 
