@@ -15,6 +15,7 @@ standard:
     network: 10
     port: 10
     subnet: 10
+    pool: 10
 
 restricted:
   compute:
@@ -33,6 +34,7 @@ restricted:
     network: 10
     port: 10
     subnet: 10
+    pool: 10
 
 zero:
   compute:
@@ -56,4 +58,4 @@ zero:
     network: 0
     port: 0
     subnet: 0
-
+    pool: 0
