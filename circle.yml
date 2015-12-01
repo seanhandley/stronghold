@@ -21,7 +21,7 @@ database:
 test:
   override:
     - bundle exec bundle-audit update
-    - "if [ `git rev-parse --abbrev-ref HEAD` == 'master' ]; then bundle exec bundle-audit; fi"
+    - bundle exec bundle-audit
     - bundle exec rake test:unit_and_functional
     - bundle exec rake stronghold:test_coverage_percent
     - RACK_ENV=acceptance RAILS_ENV=acceptance bundle exec rake test:acceptance
