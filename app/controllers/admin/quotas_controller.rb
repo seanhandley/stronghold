@@ -31,7 +31,7 @@ class Admin::QuotasController < AdminBaseController
   def quota_params
     params.require(:quota).permit(:compute => [:instances, :cores, :ram],
       :volume => [:volumes, :snapshots, :gigabytes],
-      :network => [:floatingip, :router, :port, :subnet, :network, :security_group, :security_group_rule])
+      :network => [:floatingip, :router, :port, :subnet, :network, :security_group, :security_group_rule, :pool])
   end
 
   def storage_params
