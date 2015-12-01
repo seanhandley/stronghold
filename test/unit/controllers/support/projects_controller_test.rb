@@ -18,15 +18,7 @@ class Support::ProjectsControllerTest < ActionController::TestCase
     ]
     log_in(@user)
   end
-
-  def assert_404(actions)
-    actions.each do |verb, action, args|
-      assert_raises(ActionController::RoutingError) do
-        send verb, action, args
-      end
-    end
-  end
-
+  
   test "Can't do anything unless power user" do
     @user.update_attributes(roles: [])
     assert_404(@controller_paths)
@@ -52,14 +44,14 @@ class Support::ProjectsControllerTest < ActionController::TestCase
 
   test "Can create new tenant with just name" do
     post :create, tenant: { name: 'Foo'}, quota: {compute: {}, volume: {}, network: {}}, format: 'js'
-    assert_response :ok
+    assert_response 302
     assert @response.body.include? support_projects_path
   end
 
   test "Can create new tenant with users" do
     UserTenantRole.stub(:required_role_ids, ["foo"]) do
       post :create, tenant: { name: 'Foo', users: {@user.id.to_s => true}}, quota: {compute: {}, volume: {}, network: {}}, format: 'js'
-      assert_response :ok
+      assert_response 302
       assert_equal 1, UserTenantRole.all.count
       assert @response.body.include? support_projects_path
     end
@@ -67,7 +59,7 @@ class Support::ProjectsControllerTest < ActionController::TestCase
 
   test "Can create new tenant with quotas" do
     post :create, tenant: { name: 'Foo' }, quota: {compute: {"instances" => 1}, volume: {"gigabytes" => 10}, network: {"floatingip" => 1}}, format: 'js'
-    assert_response :ok
+    assert_response 302
     assert @response.body.include? support_projects_path
   end
 
@@ -76,24 +68,24 @@ class Support::ProjectsControllerTest < ActionController::TestCase
     assert_response :unprocessable_entity
     assert @response.body.include? "too short"
     post :create, tenant: { name: 'foo', users: {'300' => true}}, quota: {compute: {}, volume: {}, network: {}}, format: 'js'
-    assert_response :ok
+    assert_response 302
     assert_equal 0, UserTenantRole.all.count
   end
 
   test "Can update tenant with just name" do
     patch :update, id: @organization.primary_tenant.id, tenant: { name: 'Bar'}, quota: {compute: {}, volume: {}, network: {}}, format: 'js'
-    assert_response :ok
+    assert_response 302
     assert @response.body.include? support_projects_path
   end
 
   test "Can update tenant with users and remove users" do
     UserTenantRole.stub(:required_role_ids, ["foo"]) do
       patch :update, id: @organization.primary_tenant.id, tenant: { name: 'Foo', users: {@user.id.to_s => true, @user2.id.to_s => true}}, quota: {compute: {}, volume: {}, network: {}}, format: 'js'
-      assert_response :ok
+      assert_response 302
       assert_equal 2, UserTenantRole.all.count
       assert @response.body.include? support_projects_path
       patch :update, id: @organization.primary_tenant.id, tenant: { name: 'Foo', users: {@user2.id.to_s => true}}, quota: {compute: {}, volume: {}, network: {}}, format: 'js'
-      assert_response :ok
+      assert_response 302
       assert_equal 1, UserTenantRole.all.count
       assert @response.body.include? support_projects_path
     end
@@ -101,7 +93,7 @@ class Support::ProjectsControllerTest < ActionController::TestCase
 
   test "Can update tenant with quotas" do
     patch :update, id: @organization.primary_tenant.id, tenant: { name: 'Foo' }, quota: {compute: {"instances" => 3}, volume: {"gigabytes" => 20}, network: {"floatingip" => 1}}, format: 'js'
-    assert_response :ok
+    assert_response 302
     assert @response.body.include? support_projects_path
   end
 
@@ -112,10 +104,15 @@ class Support::ProjectsControllerTest < ActionController::TestCase
   end
 
   test "Can destroy if not primary tenant" do
-    tenant = @organization.tenants.create name: 'Foo'
-    delete :destroy, id: tenant.id
-    assert_redirected_to support_projects_path
-    assert flash[:notice].include? "success"
+    mock = Minitest::Mock.new
+    mock.expect(:destroy_unless_primary, true)
+    Tenant.stub(:find, mock) do
+      tenant = @organization.tenants.create name: 'Foo'
+      delete :destroy, id: tenant.id
+      assert_redirected_to support_projects_path
+      assert flash[:notice].include? "success"
+    end
+    mock.verify
   end
 
   test "Can't destroy if primary tenant" do

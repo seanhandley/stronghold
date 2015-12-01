@@ -9,7 +9,6 @@ class Support::UsersController < SupportBaseController
   end
 
   def update
-    check_user
     if current_user.update(update_params)
       respond_to do |format|
         format.js {
@@ -19,13 +18,13 @@ class Support::UsersController < SupportBaseController
       end
     else
       respond_to do |format|
-        format.js { render :template => "shared/dialog_errors", :locals => {:object => current_user } }
+        format.js { render :template => "shared/dialog_errors", :locals => {:object => current_user }, status: :unprocessable_entity }
       end
     end
   end
 
   def destroy
-    @user = User.find destroy_params[:id]
+    @user = User.find params[:id]
     ajax_response(@user, :destroy, support_roles_path)
   end
 
@@ -34,14 +33,6 @@ class Support::UsersController < SupportBaseController
   def update_params
     params.require(:user).permit(:first_name, :last_name,
                                  :password)
-  end
-
-  def destroy_params
-    params.permit(:id)
-  end
-
-  def check_user
-    slow_404 unless current_user.id = params[:id]
   end
 
 end

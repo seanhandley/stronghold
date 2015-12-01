@@ -93,7 +93,16 @@ class CapybaraTestCase < Minitest::Test
 end
 
 Minitest.after_run do
-  Organization.destroy_all
-  User.destroy_all
+  Tenant.all.each do |tenant|
+    tenant.delete_openstack_object
+    tenant.really_destroy! rescue tenant.delete
+  end
+  User.all.each do |user|
+    user.delete_openstack_object
+    user.destroy rescue user.delete
+  end
+  Organization.all.each do |organization|
+    organization.destroy rescue organization.delete
+  end
   DatabaseCleaner.clean
 end

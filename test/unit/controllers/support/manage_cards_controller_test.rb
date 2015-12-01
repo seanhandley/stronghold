@@ -25,14 +25,6 @@ class Support::ManageCardsControllerTest < ActionController::TestCase
     log_in(@user)
   end
 
-  def assert_404(actions)
-    actions.each do |verb, action, args|
-      assert_raises(ActionController::RoutingError) do
-        send verb, action, args
-      end
-    end
-  end
-
   def stripe_token(card)
     Stripe::Token.create(card).id
   end

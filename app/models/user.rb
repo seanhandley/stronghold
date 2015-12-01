@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
   after_commit :check_openstack_access, :check_ceph_access, on: :create
 
   after_create :set_local_password, :subscribe_to_status_io
-  before_destroy :remove_ceph_keys, :unsubscribe_from_status_io
+  before_destroy :dont_delete_self, :remove_ceph_keys, :unsubscribe_from_status_io
   syncs_with_keystone as: 'OpenStack::User', actions: [:create, :destroy]
 
   has_and_belongs_to_many :roles
@@ -158,10 +158,19 @@ class User < ActiveRecord::Base
   end
 
   def remove_ceph_keys
-    begin
-      Ceph::UserKey.destroy 'access-key' => self.ec2_credentials['access'] if self.ec2_credentials
-    rescue Net::HTTPError => error
-      Honeybadger.notify(error) unless error.message.include? 'AccessDenied'
+    if Rails.env.production?
+      begin
+        Ceph::UserKey.destroy 'access-key' => self.ec2_credentials['access'] if self.ec2_credentials
+      rescue Net::HTTPError => error
+        Honeybadger.notify(error) unless error.message.include? 'AccessDenied'
+      end
+    end
+  end
+
+  def dont_delete_self
+    if Authorization.current_user && Authorization.current_user.id == id
+      errors.add(:base, "You can't delete yourself!")
+      false
     end
   end
 

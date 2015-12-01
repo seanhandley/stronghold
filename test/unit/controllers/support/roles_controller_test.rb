@@ -22,7 +22,7 @@ class Support::RolesControllerTest < ActionController::TestCase
   test "can create new role" do
     post :create, role: {name: 'foo'}, format: 'js'
     assert assigns(:role)
-    assert_response :ok
+    assert_response 302
     assert @response.body.include? support_roles_path(tab: 'roles')
   end
 
@@ -34,7 +34,7 @@ class Support::RolesControllerTest < ActionController::TestCase
 
   test "can rename role" do
     patch :update, id: @role.id, role: {name: 'bar'}, format: 'js'
-    assert_response :ok
+    assert_response 302
     assert @response.body.include? support_roles_path(tab: 'roles')
   end
 
