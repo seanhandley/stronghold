@@ -15,11 +15,10 @@ class Permissions
         'tickets.modify' => { :description => I18n.t(:can_tickets_modify), :group => I18n.t(:tickets) }
 
       }
-      if Authorization.current_user && Authorization.current_user.organization.colo?
+      unless Authorization.current_user && !Authorization.current_user.organization.colo?
         perms.merge!({'access_requests.modify' => { :description => I18n.t(:can_access_requests_modify), :group => I18n.t(:access_requests) }})
       end
-
-      if Authorization.current_user && Authorization.current_user.organization.cloud?
+      unless Authorization.current_user && !Authorization.current_user.organization.cloud?
         perms.merge!('usage.read'   => { :description => I18n.t(:can_usage_read), :group => I18n.t(:cloud) })
         perms.merge!('cloud.read' => { :description => I18n.t(:can_cloud_access), :group => I18n.t(:cloud) })
         perms.merge!('storage.read' => { :description => I18n.t(:can_storage_access), :group => I18n.t(:cloud) })
