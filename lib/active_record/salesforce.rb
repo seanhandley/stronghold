@@ -1,32 +1,10 @@
 module ActiveRecord
   class Base
 
-    def self.syncs_with_salesforce
+    def self.syncs_with_salesforce(params)
 
-      define_method :salesforce_args do
-        {
-          Name: name, Type: 'Customer',
-          Billingstreet: [billing_address1, billing_address2].join("\n").strip,
-          Billingcity: billing_city, Billingpostalcode: billing_postcode,
-          Billingcountry: Country.find_country_by_alpha2(billing_country).try(:name), Phone: phone,
-          c2g__CODAReportingCode__c: reporting_code,
-          c2g__CODABillingMethod__c: self_service? ? 'Self-Service' : nil,
-          c2g__CODADescription1__c: payment_card_type,
-          c2g__CODABaseDate1__c: "Invoice Date",
-          c2g__CODADaysOffset1__c: 0,
-          Monthly_VCPU_Hours__c: monthly_vcpu_hours,
-          Monthly_RAM_TBh__c: monthly_ram_tbh,
-          Monthly_OpenStack_Storage_TBh__c: monthly_openstack_storage_tbh,
-          Monthly_Ceph_Storage_TBh__c: monthly_ceph_storage_tbh,
-          Usage_Value__c: monthly_usage_value,
-          Weekly_Ceph_Storage_TBh__c: weekly_ceph_storage_tbh,
-          Weekly_OpenStack_Storage_TBh__c: weekly_openstack_storage_tbh,
-          Weekly_RAM_TBh__c: weekly_ram_tbh,
-          Weekly_Usage_Value__c: weekly_spend,
-          Weekly_VCPU_Hours__c: weekly_vcpu_hours,
-          Discount_End_Date__c: discount_end_date,
-          User_Accounts__c: users.count
-        }
+      define_method :salesforce_class do
+        params[:as]
       end
 
       define_method :create_salesforce_object do
@@ -39,6 +17,10 @@ module ActiveRecord
 
       define_method :update_salesforce_object do
         UpdateSalesforceObjectJob.perform_later(self) if self.salesforce_id.present?
+      end
+
+      define_method :salesforce_object do
+        Restforce.new.find(salesforce_class, salesforce_id)
       end
 
       self.class_eval do
@@ -55,10 +37,9 @@ class CreateSalesforceObjectJob < ActiveJob::Base
   queue_as :default
 
   def perform(o)
-    id = Restforce.new.create('Account', o.salesforce_args)
-    raise(ArgumentError, o.salesforce_args) unless id
+    id = Restforce.new.create!(o.salesforce_class, o.salesforce_args)
     o.update_column(:salesforce_id, id)
-    Mailer.notify_staff_of_signup(o).deliver_later
+    Mailer.notify_staff_of_signup(o).deliver_later if o.salesforce_class == 'Account'
   end
 end
 
@@ -66,7 +47,6 @@ class UpdateSalesforceObjectJob < ActiveJob::Base
   queue_as :default
 
   def perform(o)
-    success = Restforce.new.update('Account', o.salesforce_args.dup.merge(Id: o.salesforce_id))
-    raise(ArgumentError, o.salesforce_args.dup.merge(Id: o.salesforce_id)) unless success
+    Restforce.new.update!(o.salesforce_class, o.salesforce_args.dup.merge(Id: o.salesforce_id))
   end
 end
