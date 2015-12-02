@@ -3,7 +3,19 @@ class User < ActiveRecord::Base
 
   attr_accessor :password, :password_confirmation, :token
 
+  syncs_with_salesforce as: 'Contact'
+
+  def salesforce_args
+    {
+      Email: email,
+      FirstName: first_name,
+      LastName: last_name,
+      AccountId: organization.salesforce_id
+    }
+  end
+
   authenticates_with_keystone
+
   after_save :update_password
   after_commit :generate_ec2_credentials, on: :create
   after_commit :check_openstack_access, :check_ceph_access, on: :create

@@ -39,7 +39,7 @@ module UsageInformation
 
   def discount_end_date
     vouchers = active_vouchers(Time.now-3.month, Time.now)
-    vouchers.any? ? vouchers.first.expires_at : nil
+    vouchers.any? ? vouchers.first.expires_at.to_date : nil
   end
 
   private
