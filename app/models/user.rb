@@ -10,7 +10,8 @@ class User < ActiveRecord::Base
       Email: email,
       FirstName: first_name.present? ? first_name : '-',
       LastName: last_name.present? ? last_name : '-',
-      AccountId: organization.salesforce_id
+      AccountId: organization.salesforce_id,
+      Contact_Info__c: admin? ? 'Admin User' : 'Non-Admin User'
     }
   end
 
