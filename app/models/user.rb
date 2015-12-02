@@ -8,8 +8,8 @@ class User < ActiveRecord::Base
   def salesforce_args
     {
       Email: email,
-      FirstName: first_name,
-      LastName: last_name,
+      FirstName: first_name.present? ? first_name : '-',
+      LastName: last_name.present? ? last_name : '-',
       AccountId: organization.salesforce_id
     }
   end
