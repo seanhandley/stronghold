@@ -16,6 +16,7 @@ standard:
     port: 10
     subnet: 10
     pool: 10
+    vip: 10
 
 restricted:
   compute:
@@ -35,6 +36,7 @@ restricted:
     port: 10
     subnet: 10
     pool: 10
+    vip: 10
 
 zero:
   compute:
@@ -59,3 +61,4 @@ zero:
     port: 0
     subnet: 0
     pool: 0
+    vip: 10

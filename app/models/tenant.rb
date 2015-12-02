@@ -83,17 +83,17 @@ class Tenant < ActiveRecord::Base
   end
 
   def compute_quota
-    keys = ["instances", "cores", "ram"]
+    keys = StartingQuota['standard']['compute'].keys.map(&:to_s)
     OpenStackConnection.compute.get_quota(uuid).body['quota_set'].slice(*keys)
   end
 
   def volume_quota
-    keys = ["volumes", "snapshots", "gigabytes"]
+    keys = StartingQuota['standard']['volume'].keys.map(&:to_s)
     OpenStackConnection.volume.get_quota(uuid).body['quota_set'].slice(*keys)
   end
 
   def network_quota
-    keys = ["floatingip", "router", "port", "subnet", "network", "security_group", "security_group_rule", "pool"]
+    keys = StartingQuota['standard']['network'].keys.map(&:to_s)
     OpenStackConnection.network.get_quota(uuid).body['quota'].slice(*keys)
   end
 
