@@ -31,7 +31,7 @@ class Admin::QuotasController < AdminBaseController
   def quota_params
     params.require(:quota).permit(:compute => StartingQuota['standard']['compute'].keys.map(&:to_sym),
       :volume => StartingQuota['standard']['volume'].keys.map(&:to_sym),
-      :network => StartingQuota['standard']['network'].keys.map(&:to_sym)
+      :network => StartingQuota['standard']['network'].keys.map(&:to_sym))
   end
 
   def storage_params
