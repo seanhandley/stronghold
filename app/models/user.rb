@@ -113,12 +113,12 @@ class User < ActiveRecord::Base
     cache = Rails.cache
     cache.delete("ec2_credentials_#{id}") unless cache.fetch("ec2_credentials_#{id}")
     cache.fetch("ec2_credentials_#{id}", expires_in: 30.days) do
-      OpenStackConnection.identity.list_ec2_credentials(uuid).body['credentials'].first
+      OpenStackConnection.identity.list_ec2_credentials(user_id: uuid).body['credentials'].first
     end
   end
 
   def refresh_ec2_credentials!   
-    OpenStackConnection.identity.list_ec2_credentials(uuid).body['credentials'].each do |credential|
+    OpenStackConnection.identity.list_ec2_credentials(user_id: uuid).body['credentials'].each do |credential|
       OpenStackConnection.identity.delete_ec2_credential(uuid, credential['access'])
     end
     OpenStackConnection.identity.create_ec2_credential(uuid, organization.primary_tenant.uuid)
