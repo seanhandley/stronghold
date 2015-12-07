@@ -1,8 +1,8 @@
 class UsageJob < ActiveJob::Base
   queue_as :default
 
-  def perform
-    Billing.sync! unless already_running?
+  def perform(to=Time.now)
+    Billing.sync!(to) unless already_running?
   end
 
   private
