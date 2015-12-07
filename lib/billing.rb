@@ -9,7 +9,7 @@ module Billing
   def self.sync!(to=nil)
     from = Billing::Sync.completed.last.started_at
     to = to ? from + to.minutes : Time.now
-    sync = Billing::Sync.create started_at: Time.now
+    sync = Billing::Sync.create(started_at: (to ? to : Time.now))
     sleep 30 # Because it can take a few seconds for events to get off the queue and into Mongo
     Billing::Instances.sync!(from, to, sync)
     Billing::Volumes.sync!(from, to, sync)
