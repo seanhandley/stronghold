@@ -6,8 +6,9 @@ module Billing
 
   SECONDS_TO_HOURS = 3600.0
 
-  def self.sync!(to=Time.now)
+  def self.sync!(to=nil)
     from = Billing::Sync.completed.last.started_at
+    to = to ? from + to.minutes : Time.now
     sync = Billing::Sync.create started_at: Time.now
     sleep 30 # Because it can take a few seconds for events to get off the queue and into Mongo
     Billing::Instances.sync!(from, to, sync)
@@ -21,6 +22,14 @@ module Billing
     raise
   ensure
     sync.destroy unless sync.completed_at
+  end
+
+  def self.logger
+    if Rails.env.production?
+      ::Logger.new("/var/log/rails/stronghold/usage_sync.log")
+    else
+      Rails.logger
+    end
   end
 
   def self.fetch_samples(tenant_id, measurement, from, to)
