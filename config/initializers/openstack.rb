@@ -8,9 +8,9 @@ OPENSTACK_ARGS = {
   :openstack_tenant   => ENV["OPENSTACK_TENANT"]
 }
 
-Excon.defaults[:connect_timeout] = 5
-Excon.defaults[:write_timeout] = 120
-Excon.defaults[:read_timeout] = 120
+Excon.defaults[:connect_timeout] = 10
+Excon.defaults[:write_timeout] = 180
+Excon.defaults[:read_timeout] = 180
 
 require_relative '../../lib/active_record/openstack'
 require_relative '../../lib/authorization'
