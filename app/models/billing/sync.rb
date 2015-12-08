@@ -10,7 +10,8 @@ module Billing
     has_many :image_states, dependent: :destroy
 
     def summary
-      "#{instance_states.count} instance state changes. #{volume_states.count} volume state changes. #{ip_states.count} IP state change. #{image_states.count} image state changes."
+      "Took #{(completed_at - started_at).round} seconds to sync #{instance_states.count} instance states, 
+      #{volume_states.count} volume states, #{ip_states.count} IP states, and #{image_states.count} image states."
     end
   end
 end
