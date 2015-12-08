@@ -209,7 +209,8 @@ module Billing
     def self.create_new_states(tenant_id, instance_id, samples, sync)
       first_sample_metadata = samples.first['resource_metadata']
       flavor_id = first_sample_metadata["instance_flavor_id"] ? first_sample_metadata["instance_flavor_id"] : first_sample_metadata["flavor.id"]
-      unless Billing::Instance.find_by_instance_id(instance_id)
+      billing_instance = Billing::Instance.find_by_instance_id(instance_id)
+      unless billing_instance
         instance = Billing::Instance.create(instance_id: instance_id, tenant_id: tenant_id, name: first_sample_metadata["display_name"],
                                  flavor_id: flavor_id, image_id: first_sample_metadata["image_ref_url"].split('/').last)
         unless samples.any? && samples.any? {|sample| sample['resource_metadata']['event_type']}
@@ -221,6 +222,7 @@ module Billing
                                             message_id: SecureRandom.uuid
           end
         end
+        billing_instance = instance
       end
       unless Billing::InstanceFlavor.find_by_flavor_id(flavor_id)
         if(os_flavor = OpenStack::Flavor.find(flavor_id))
@@ -233,7 +235,6 @@ module Billing
                                          vcpus: first_sample_metadata['vcpus'])
         end
       end
-      billing_instance = Billing::Instance.find_by_instance_id(instance_id)
       
       # Catch renames
       if(billing_instance.name != first_sample_metadata["display_name"])
