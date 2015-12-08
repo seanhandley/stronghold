@@ -207,7 +207,7 @@ module Billing
       unless Billing::Instance.find_by_instance_id(instance_id)
         instance = Billing::Instance.create(instance_id: instance_id, tenant_id: tenant_id, name: first_sample_metadata["display_name"],
                                  flavor_id: flavor_id, image_id: first_sample_metadata["image_ref_url"].split('/').last)
-        unless samples.any? {|sample| sample['resource_metadata']['event_type']}
+        unless samples.any? && samples.any? {|sample| sample['resource_metadata']['event_type']}
           # This is a new instance and we don't know its current state.
           # Attempt to find out
           if(os_instance = OpenStackConnection.compute.servers.get(instance_id))
