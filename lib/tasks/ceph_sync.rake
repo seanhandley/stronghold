@@ -13,7 +13,7 @@ namespace :stronghold do
         end
       end
       organization.users.each do |user|
-        credentials = OpenStackConnection.identity.list_ec2_credentials(user.uuid).body['credentials']
+        credentials = OpenStackConnection.identity.list_ec2_credentials(user_id: user.uuid).body['credentials']
         tenants_with_creds = credentials.collect{|c| c['tenant_id']}
         organization.tenants.each do |tenant|
           unless tenants_with_creds.include?(tenant.uuid)
