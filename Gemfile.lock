@@ -20,8 +20,8 @@ GIT
 
 GIT
   remote: https://github.com/seanhandley/fog.git
-  revision: e3cd481602d40c397ac350a76e0d5b2fdd463299
-  branch: fix_openstack_auth
+  revision: d52a04c74722d8a23e5e0fb8aae903e5bae81c47
+  ref: d52a04c74722d8a23e5e0fb8aae903e5bae81c47
   specs:
     fog (1.36.0)
       fog-aliyun (>= 0.1.0)
