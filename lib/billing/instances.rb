@@ -18,39 +18,34 @@ module Billing
       else
         instances = Billing::Instance.all.to_a.compact.reject{|instance| instance.terminated_at && instance.terminated_at < from}
       end
-      instances = []
-      threads = instances.collect do |instance|
-        Thread.new do
-          billable_seconds = seconds(instance, from, to)
-          billable_hours = (billable_seconds / Billing::SECONDS_TO_HOURS).ceil
-          instance_flavor = instance.instance_flavor
-          instance_image  = instance.image
-          instances << {billable_seconds: billable_seconds,
-                                         uuid: instance.instance_id,
-                                         name: instance.name,
-                                         tenant_id: instance.tenant_id,
-                                         first_booted_at: instance.first_booted_at,
-                                         latest_state: instance.latest_state(from,to),
-                                         terminated_at: instance.terminated_at,
-                                         rate: instance.rate,
-                                         billable_hours: billable_hours,
-                                         cost: cost(instance, from, to),
-                                         windows: Windows.billable?(instance),
-                                         arch: instance.arch,
-                                         flavor: {
-                                           flavor_id: instance.flavor_id,
-                                           name: instance_flavor.name,
-                                           vcpus_count: instance_flavor.vcpus,
-                                           ram_mb: instance_flavor.ram,
-                                           root_disk_gb: instance_flavor.disk,
-                                           rate: instance_flavor.rate},
-                                         image: {
-                                           image_id: instance.image_id,
-                                           name: instance_image ? instance_image.name : ''}
-                                         }
-        end
+      instances = instances.collect do |instance|
+        billable_seconds = seconds(instance, from, to)
+        billable_hours = (billable_seconds / Billing::SECONDS_TO_HOURS).ceil
+        instance_flavor = instance.instance_flavor
+        {billable_seconds: billable_seconds,
+                                       uuid: instance.instance_id,
+                                       name: instance.name,
+                                       tenant_id: instance.tenant_id,
+                                       first_booted_at: instance.first_booted_at,
+                                       latest_state: instance.latest_state(from,to),
+                                       terminated_at: instance.terminated_at,
+                                       rate: instance.rate,
+                                       billable_hours: billable_hours,
+                                       cost: cost(instance, from, to),
+                                       windows: Windows.billable?(instance),
+                                       arch: instance.arch,
+                                       flavor: {
+                                         flavor_id: instance.flavor_id,
+                                         name: instance_flavor.name,
+                                         vcpus_count: instance_flavor.vcpus,
+                                         ram_mb: instance_flavor.ram,
+                                         root_disk_gb: instance_flavor.disk,
+                                         rate: instance_flavor.rate},
+                                       image: {
+                                         image_id: instance.image_id,
+                                         name: instance.instance_image ? instance.instance_image.name : ''}
+                                       }
       end
-      threads.each(&:join)
       instances.select{|instance| instance[:billable_seconds] > 0}
     end
 
