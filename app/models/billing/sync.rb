@@ -8,5 +8,9 @@ module Billing
     has_many :volume_states, dependent: :destroy
     has_many :ip_states, dependent: :destroy
     has_many :image_states, dependent: :destroy
+
+    def summary
+      "#{instance_states.count} instance state changes. #{volume_states.count} volume state changes. #{ip_states.count} IP state change. #{image_states.count} image state changes."
+    end
   end
 end

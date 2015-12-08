@@ -12,13 +12,18 @@ module Billing
     sync = Billing::Sync.create(started_at: (to ? to : Time.now))
     Billing.logger.info "Starting sync #{sync.id}. From #{from} to #{to}..."
     sleep 30 # Because it can take a few seconds for events to get off the queue and into Mongo
+    Billing.logger.info "Syncing instances usage..."
     Billing::Instances.sync!(from, to, sync)
+    Billing.logger.info "Syncing volumes usage..."
     Billing::Volumes.sync!(from, to, sync)
+    Billing.logger.info "Syncing IP quotas usage..."
     Billing::IpQuotas.sync!(sync)
+    Billing.logger.info "Syncing images usage..."
     Billing::Images.sync!(from, to, sync)
+    Billing.logger.info "Syncing object storage usage..."
     Billing::StorageObjects.sync!(sync)
     sync.update_attributes(completed_at: Time.now)
-    Billing.logger.info "Completed sync #{sync.id}."
+    Billing.logger.info "Completed sync #{sync.id}. #{sync.summary}"
     true
   rescue StandardError => e
     Billing.logger.error "Encountered an error (#{e.message}). Removing sync #{sync.id}..."
@@ -37,8 +42,9 @@ module Billing
   end
 
   def self.fetch_samples(tenant_id, measurement, from, to)
-    tenant = Tenant.find_by_uuid(tenant_id)
-    Billing.logger.info "Extracting samples from cache for #{tenant.organization.name} (Project: #{tenant.name})..."
+    if tenant = Tenant.find_by_uuid(tenant_id)
+      Billing.logger.info "Extracting samples from cache for #{tenant.organization.name} (Project: #{tenant.name})..."
+    end
     tenant_samples = fetch_all_samples(measurement, from, to)[tenant_id]
     tenant_samples ? tenant_samples.group_by{|s| s['resource_id']} : {}
   end
