@@ -7,7 +7,8 @@ module Billing
   SECONDS_TO_HOURS = 3600.0
 
   def self.sync!(to=nil)
-    from = Billing::Sync.completed.last.to
+    last_sync = Billing::Sync.completed.last
+    from = last_sync.to || last_sync.started_at
     to = to ? from + to.minutes : Time.now
     sync = Billing::Sync.create(period_from: from, period_to: to, started_at: Time.now)
     Billing.logger.info "Starting sync #{sync.id}. From #{from} to #{to}..."
