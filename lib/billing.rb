@@ -10,6 +10,7 @@ module Billing
     from = Billing::Sync.completed.last.started_at
     to = to ? from + to.minutes : Time.now
     sync = Billing::Sync.create(started_at: (to ? to : Time.now))
+    Billing.logger.info "Starting sync #{sync.id}. From #{from} to #{to}..."
     sleep 30 # Because it can take a few seconds for events to get off the queue and into Mongo
     Billing::Instances.sync!(from, to, sync)
     Billing::Volumes.sync!(from, to, sync)
@@ -17,7 +18,10 @@ module Billing
     Billing::Images.sync!(from, to, sync)
     Billing::StorageObjects.sync!(sync)
     sync.update_attributes(completed_at: Time.now)
+    Billing.logger.info "Completed sync #{sync.id}."
+    true
   rescue StandardError => e
+    Billing.logger.error "Encountered an error (#{e.message}). Removing sync #{sync.id}..."
     sync.destroy
     raise
   ensure
@@ -39,6 +43,7 @@ module Billing
 
   def self.fetch_all_samples(measurement, from, to)
     key = "ceilometer_samples_#{measurement}_#{from.utc.strftime(timestamp_format)}_#{to.utc.strftime(timestamp_format)}"
+    Billing.logger.error "Fetching samples of type #{measurement} from #{from} to #{to}..."
     Rails.cache.fetch(key, expires_in: 2.hours) do
       options = [{'field' => 'timestamp', 'op' => 'ge', 'value' => from.utc.strftime(timestamp_format)},
                  {'field' => 'timestamp', 'op' => 'lt', 'value' => to.utc.strftime(timestamp_format)}]
