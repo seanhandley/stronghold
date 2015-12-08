@@ -12,7 +12,7 @@ module Billing
     to = to ? from + to.minutes : Time.now
     sync = Billing::Sync.create(period_from: from, period_to: to, started_at: Time.now)
     Billing.logger.info "Starting sync #{sync.id}. From #{from} to #{to}..."
-    sleep 30 # Because it can take a few seconds for events to get off the queue and into Mongo
+    sleep 10 # Because it can take a few seconds for events to get off the queue and into Mongo
     threads = []
     threads << Thread.new do
       Billing.logger.info "Syncing instances usage..."
