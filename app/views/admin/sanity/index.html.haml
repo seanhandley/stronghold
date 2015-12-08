@@ -8,13 +8,15 @@
 %table.table
   %thead
     %th ID
-    %th Started At
     %th Completed At
+    %th Period Start
+    %th Period End
     %th Summary
   %tbody
     - @syncs.each do |sync|
       %tr
         %td= sync.id
-        %td= sync.started_at
         %td= sync.completed_at
+        %td= sync.period_from
+        %td= sync.period_to
         %td= sync.summary
