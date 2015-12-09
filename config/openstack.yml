@@ -17,3 +17,4 @@ staging:
 production:
   <<: *default
   auth_url: "https://compute.datacentred.io:5000/v2.0/tokens"
+  identity_prefix: "/v2.0"
