@@ -72,6 +72,9 @@ module UsageInformation
 
   def tenant_usage(from, to)
     OpenStackConnection.usage(from,to).select{|u| tenants.map(&:uuid).include?(u['tenant_id'])}
+  rescue StandardError => e
+    Honeybadger.notify(e)
+    []
   end
 
 end
