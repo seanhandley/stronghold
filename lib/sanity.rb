@@ -46,7 +46,7 @@ module Sanity
     Billing::Volume.active.reject do |volume|
       begin
         OpenStackConnection.volume.get_volume_details(volume.volume_id)
-      rescue Fog::Compute::OpenStack::NotFound
+      rescue Fog::Volume::OpenStack::NotFound
         false
       end
     end
