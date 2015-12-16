@@ -77,8 +77,15 @@ module UsageHelper
       csv << ["Project", "Type", "Sub-Type", "Name", "Amount", "Unit", "Cost (£)"]
       data.each do |tenant, usage|
         usage[:instance_usage].each do |instance|
-          csv << [tenant, "Instance", instance[:flavor][:name], instance[:name], instance[:billable_hours], 'hours', instance[:cost].round(2)]
+          csv << [tenant.name, "Instance", instance[:flavor][:name], instance[:name], instance[:billable_hours], 'hours', instance[:cost].round(2)]
         end
+        usage[:volume_usage].each do |volume|
+          csv << [tenant.name, "Volume", nil, volume[:name], volume[:terabyte_hours], 'TB/h', volume[:cost].round(2)]
+        end
+        usage[:image_usage].each do |image|
+          csv << [tenant.name, "Image", nil, image[:name], image[:terabyte_hours], 'TB/h', image[:cost].round(2)]
+        end
+        csv << [tenant.name, "Object Storage", nil, nil, usage[:object_storage_usage].round(2), 'TB/h', (usage[:object_storage_usage] * RateCard.object_storage).round(2).nearest_penny]
       end
     end
   end
