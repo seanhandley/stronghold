@@ -21,6 +21,9 @@ class Support::UsageController < SupportBaseController
       format.json {
         render json: usage_data_as_json(@usage, @usage_decorator.grand_total)
       }
+      format.xml {
+        render xml: usage_data_as_xml(@usage, @usage_decorator.grand_total)
+      }
       # format.csv {
       #   render csv: usage_data_as_csv(@usage)
       # }

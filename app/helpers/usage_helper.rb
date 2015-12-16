@@ -60,8 +60,16 @@ module UsageHelper
     end    
   end
 
+  def usage_data_with_total(data, total)
+    Hash[data.map{|k,v| [k.name,v]}].merge(total: total.round(2))
+  end
+
   def usage_data_as_json(data, total)
-    Hash[data.map{|k,v| [k.name,v]}].merge(total: total.round(2)).to_json
+    usage_data_with_total(data, total).to_json
+  end
+
+  def usage_data_as_xml(data, total)
+    usage_data_with_total(data, total).to_xml(root: 'usage')
   end
 
   def usage_data_as_csv(data)
