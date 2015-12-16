@@ -59,4 +59,12 @@ module UsageHelper
       state
     end    
   end
+
+  def usage_data_as_json(data)
+    Hash[data.map{|k,v| [k.name,v]}].to_json
+  end
+
+  def usage_data_as_csv(data)
+    
+  end
 end

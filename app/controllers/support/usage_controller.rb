@@ -17,6 +17,15 @@ class Support::UsageController < SupportBaseController
     end
     @active_vouchers = current_organization.active_vouchers(@from_date, @to_date)
     @usage_nav = usages_for_select(current_organization)
+    respond_to do |format|
+      format.json {
+        render json: usage_data_as_json(@usage)
+      }
+      # format.csv {
+      #   render csv: usage_data_as_csv(@usage)
+      # }
+      format.html
+    end
   end
 
   private
