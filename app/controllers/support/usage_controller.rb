@@ -24,9 +24,9 @@ class Support::UsageController < SupportBaseController
       format.xml {
         render xml: usage_data_as_xml(@usage, @usage_decorator.grand_total)
       }
-      # format.csv {
-      #   render csv: usage_data_as_csv(@usage)
-      # }
+      format.csv {
+        render csv: usage_data_as_csv(@usage)
+      }
       format.html
     end
   end

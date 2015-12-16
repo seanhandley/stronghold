@@ -73,6 +73,13 @@ module UsageHelper
   end
 
   def usage_data_as_csv(data)
-    
+    CSV.generate do |csv|
+      csv << ["Project", "Type", "Sub-Type", "Name", "Amount", "Unit", "Cost (£)"]
+      data.each do |tenant, usage|
+        data[:instance_usage].each do |instance|
+          csv << [tenant, "Instance", instance[:flavor][:name], instance[:name], instance[:billable_hours], 'hours', instance[:cost].round(2)]
+        end
+      end
+    end
   end
 end
