@@ -18,13 +18,13 @@ class Admin::UsageController < AdminBaseController
 
         @usage.each do |project, results|
           if @project.id == project.id
-            @instance_results = results[:instance_results]
-            @volume_results = results[:volume_results]
-            @image_results = results[:image_results]
+            @instance_usage = results[:instance_usage]
+            @volume_usage = results[:volume_usage]
+            @image_usage = results[:image_usage]
             @floating_ip_results = results[:floating_ip_results]
-            @ip_quota_results = results[:ip_quota_results]
+            @ip_quota_usage = results[:ip_quota_usage]
             @external_gateway_results = results[:external_gateway_results]
-            @object_storage_results = results[:object_storage_results]
+            @object_storage_usage = results[:object_storage_usage]
           end
         end
         @active_vouchers = @organization.active_vouchers(@from_date, @to_date)

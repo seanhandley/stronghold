@@ -15,11 +15,11 @@
     = tenant.name
 
   = render partial: 'admin/usage/results/vouchers',  locals: { vouchers: @active_vouchers }
-  = render partial: 'admin/usage/results/instances', locals: { project: tenant, instances:         results[:instance_results]         }
-  = render partial: 'admin/usage/results/volumes',   locals: { project: tenant, volumes:           results[:volume_results]           }
-  = render partial: 'admin/usage/results/images',    locals: { project: tenant, images:            results[:image_results]            }
-  = render partial: 'admin/usage/results/objects',   locals: { project: tenant, tbh:               results[:object_storage_results]   }
-  = render partial: 'admin/usage/results/ips',       locals: { project: tenant, ip_quotas:         results[:ip_quota_results],                                                           external_gateways: results[:external_gateway_results]}
+  = render partial: 'admin/usage/results/instances', locals: { project: tenant, instances:         results[:instance_usage]         }
+  = render partial: 'admin/usage/results/volumes',   locals: { project: tenant, volumes:           results[:volume_usage]           }
+  = render partial: 'admin/usage/results/images',    locals: { project: tenant, images:            results[:image_usage]            }
+  = render partial: 'admin/usage/results/objects',   locals: { project: tenant, tbh:               results[:object_storage_usage]   }
+  = render partial: 'admin/usage/results/ips',       locals: { project: tenant, ip_quotas:         results[:ip_quota_usage],                                                           external_gateways: results[:external_gateway_results]}
 
 = render partial: 'total', locals: { sub_total: @usage_decorator.sub_total, grand_total: @usage_decorator.grand_total }
 .push
