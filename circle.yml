@@ -16,7 +16,7 @@ database:
   override:
     - cp config/database.yml.ci config/database.yml
     - RACK_ENV=test RAILS_ENV=test bundle exec rake db:create db:schema:load --trace
-    - RACK_ENV=acceptance RAILS_ENV=acceptance bundle exec rake db:create db:schema:load --trace
+    #- RACK_ENV=acceptance RAILS_ENV=acceptance bundle exec rake db:create db:schema:load --trace
 
 test:
   override:
