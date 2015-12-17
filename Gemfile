@@ -61,6 +61,7 @@ group :test, :acceptance do
   gem 'simplecov'
   gem 'timecop'
   gem 'launchy'
+  gem 'minitest-ci', :git => 'git@github.com:circleci/minitest-ci.git'
 end
 
 group :test do
