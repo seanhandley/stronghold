@@ -1,5 +1,5 @@
 module Stronghold
-  SIGNUPS_ENABLED=true
+  SIGNUPS_ENABLED=false
 end
 
 if Stronghold::SIGNUPS_ENABLED
