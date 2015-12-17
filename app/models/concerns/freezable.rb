@@ -81,25 +81,33 @@ module Freezable
 
   private
 
+  def cached_servers
+    Rails.cache.fetch("all_servers_for_freeze", expires_in: 2.minutes) do
+      OpenStackConnection.compute.list_servers_detail(all_tenants: true).body['servers']
+    end
+  end
+
   def toggle_instances!(state)
     fog = OpenStackConnection.compute
     instances = tenants.collect do |tenant|
-      fog.list_servers_detail(all_tenants: true).body['servers'].select{|server| server['tenant_id'] == tenant.uuid}.map{|server| server['id']}
+      cached_servers.select{|server| server['tenant_id'] == tenant.uuid}.map{|server| [server['id'], server['name'], tenant.name]}
     end.flatten
     if state
-      instances.each do |instance|
+      instances.each do |instance_id, name, tenant|
         begin
-          fog.unpause_server(instance)
-        rescue Excon::Errors::Conflict
-          # Already unpaused
+          fog.unpause_server(instance_id)
+          print '.'
+        rescue StandardError => e
+          "Couldn't unpause #{name} in project #{tenant}: #{e.message}"
         end
       end
     else
-      instances.each do |instance|
+      instances.each do |instance_id, name, tenant|
         begin
-          fog.pause_server(instance)
-        rescue Excon::Errors::Conflict
-          # Already paused
+          fog.pause_server(instance_id)
+          print '.'
+        rescue StandardError => e
+          "Couldn't pause #{name} in project #{tenant}: #{e.message}"
         end
       end
     end
