@@ -352,7 +352,7 @@ GEM
     launchy (2.4.3)
       addressable (~> 2.3)
     let_it_go (0.0.3)
-    libv8 (3.16.14.7)
+    libv8 (3.16.14.13)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
     machinist (2.0)
@@ -731,4 +731,4 @@ DEPENDENCIES
   world-flags (~> 0.6)
 
 BUNDLED WITH
-   1.10.6
+   1.11.2
