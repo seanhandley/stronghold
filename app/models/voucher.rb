@@ -1,5 +1,5 @@
-class Voucher < ActiveRecord::Base
-  has_many :organization_vouchers, {dependent: :destroy}, -> { uniq }
+class Voucher < ApplicationRecord
+  has_many :organization_vouchers, {dependent: :destroy}, -> { distinct }
   has_many :organizations, :through => :organization_vouchers
 
   before_validation :create_code, on: :create
@@ -49,8 +49,8 @@ class Voucher < ActiveRecord::Base
 
   def check_applied
     if applied?
-      errors.add(:base, "You can't delete a voucher that's been used by a customer.") 
-      false
+      errors.add(:base, "You can't delete a voucher that's been used by a customer.")
+      throw :abort
     end
   end
 

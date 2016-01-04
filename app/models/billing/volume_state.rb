@@ -1,5 +1,5 @@
 module Billing
-  class VolumeState < ActiveRecord::Base
+  class VolumeState < ApplicationRecord
     self.table_name = "billing_volume_states"
 
     after_save :touch_volume, on: :create

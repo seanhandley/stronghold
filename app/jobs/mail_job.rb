@@ -1,4 +1,4 @@
-class MailJob < ActiveJob::Base
+class MailJob < ApplicationJob
   queue_as :default
 
   def perform(mailer_action, *args)

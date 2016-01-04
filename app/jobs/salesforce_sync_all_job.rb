@@ -1,4 +1,4 @@
-class SalesforceSyncAllJob < ActiveJob::Base
+class SalesforceSyncAllJob < ApplicationJob
   queue_as :default
 
   def perform

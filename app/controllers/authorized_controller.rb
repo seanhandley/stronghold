@@ -1,10 +1,8 @@
-require 'open_stack_object'
-
 class AuthorizedController < ApplicationController
-  before_filter :current_user, :authenticate_user!, :timeout_session!
-  before_filter { Authorization.current_user = current_user }
-  before_filter { Authorization.current_user.token = session[:token] }
-  around_filter :user_time_zone, :if => :current_user
+  before_action :current_user, :authenticate_user!, :timeout_session!
+  before_action { Authorization.current_user = current_user }
+  before_action { Authorization.current_user.token = session[:token] }
+  around_action :user_time_zone, :if => :current_user
   before_action :set_locale
 
   check_authorization

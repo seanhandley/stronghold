@@ -1,5 +1,5 @@
 module Billing
-  class Ip < ActiveRecord::Base
+  class Ip < ApplicationRecord
     self.table_name = "billing_ips"
 
     validates :address, :project_id, :ip_type, :ip_id, presence: true

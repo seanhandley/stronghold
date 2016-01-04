@@ -16,7 +16,7 @@ class RegistrationGenerator
       errors.add :base,  I18n.t(:password_too_short)
     else
       error = nil
-      ActiveRecord::Base.transaction do
+      ApplicationRecord.transaction do
         begin
           create_registration
         rescue StandardError => e

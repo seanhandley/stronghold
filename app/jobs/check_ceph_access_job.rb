@@ -1,4 +1,4 @@
-class CheckCephAccessJob < ActiveJob::Base
+class CheckCephAccessJob < ApplicationJob
   queue_as :default
 
   def perform(user)

@@ -1,5 +1,5 @@
 require File.expand_path('../boot', __FILE__)
-
+require_relative 'boot'
 require 'rails/all'
 
 # Require the gems listed in Gemfile, including any gems
@@ -19,14 +19,13 @@ module Stronghold
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     config.i18n.default_locale = :en
-
-    config.autoload_paths += %W(#{config.root}/lib)
-
+    
     # Enables New Relic to do cool things with GC stats
     # GC::Profiler.enable
 
-    # Do not swallow errors in after_commit/after_rollback callbacks.
-    config.active_record.raise_in_transactional_callbacks = true
+    # Auto load lib and subdirectories
+    config.autoload_paths << "#{Rails.root}/lib"
+    config.autoload_paths << "#{Rails.root}/lib/**"
 
     # Use Sidekiq as the background worker
     config.active_job.queue_adapter = :sidekiq

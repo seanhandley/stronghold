@@ -1,8 +1,6 @@
-# require 'simplecov'
-# SimpleCov.start
-
 ENV["RAILS_ENV"] = "acceptance"
-# ENV["PERCY_ENABLE"] = "1"
+ENV["RACK_ENV"]  = "acceptance"
+
 require File.expand_path("../../../config/environment", __FILE__)
 require "rails/test_help"
 
@@ -47,18 +45,24 @@ end
 
 DatabaseCleaner.clean
 
-# seed
-require 'rake'
-Rake::Task.clear
-Stronghold::Application.load_tasks
-Rake::Task["db:seed"].invoke
+Product.find_or_create_by name: 'Compute'
+Product.find_or_create_by name: 'Storage'
+Product.find_or_create_by name: 'Colocation'
+
+rand = (0...8).map { ('a'..'z').to_a[rand(26)] }.join.downcase
+cg = CustomerGenerator.new(organization_name: rand, email: "#{rand}@test.com",
+  extra_projects: "", organization: { product_ids: Product.all.map{|p| p.id.to_s}})
+cg.generate!
+
+rg = RegistrationGenerator.new(Invite.first, password: '12345678')
+rg.generate!
+STAFF_REFERENCE = Organization.first.reference
 
 Capybara.register_driver :poltergeist do |app|
   Capybara::Poltergeist::Driver.new(app, :inspector => true, :timeout => 60,
     phantomjs_options: ['--ignore-ssl-errors=yes', '--ssl-protocol=any'])
 end
 
-# Capybara.javascript_driver = :poltergeist
 Capybara.javascript_driver = :poltergeist
 
 module LoggingIn

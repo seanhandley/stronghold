@@ -1,7 +1,7 @@
 require 'open-uri'
 
 module Billing
-  class Usage < ActiveRecord::Base
+  class Usage < ApplicationRecord
     self.table_name = "billing_usages"
 
     attr_accessor :blob

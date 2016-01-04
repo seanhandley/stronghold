@@ -1,4 +1,4 @@
-class ActivateCloudResourcesJob < ActiveJob::Base
+class ActivateCloudResourcesJob < ApplicationJob
   queue_as :default
 
   def perform(organization, voucher=nil)

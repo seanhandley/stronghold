@@ -35,9 +35,9 @@ class Support::ManageCardsControllerTest < ActionController::TestCase
     VCR.use_cassette('stripe_has_valid_sources') do
       assert_404([
         [:get, :index, nil],
-        [:post, :create, {id: 1, stripe_token: 'foo'}],
-        [:patch, :update, {id: 1}],
-        [:delete, :destroy, {id: 1}]
+        [:post, :create, {params: {id: 1, stripe_token: 'foo'}}],
+        [:patch, :update, {params: { id: 1}}],
+        [:delete, :destroy, {params: { id: 1}}]
       ])
     end
   end
@@ -51,7 +51,7 @@ class Support::ManageCardsControllerTest < ActionController::TestCase
 
   test "can add a new card" do
     VCR.use_cassette('stripe_add_new_card') do
-      post :create, {stripe_token: stripe_token(@card_1)}
+      post :create, params: {stripe_token: stripe_token(@card_1)}
       assert flash[:notice].include?('success')
       assert_redirected_to support_manage_cards_path
     end
@@ -59,11 +59,11 @@ class Support::ManageCardsControllerTest < ActionController::TestCase
 
   test "Can't re-add the same card" do
     VCR.use_cassette('stripe_readd_card') do
-      post :create, {stripe_token: stripe_token(@card_2)}
+      post :create, params: {stripe_token: stripe_token(@card_2)}
       assert flash[:notice].include?('success')
       assert_redirected_to support_manage_cards_path
       @controller.instance_variable_set(:@stripe_customer, nil)
-      post :create, {stripe_token: stripe_token(@card_2)}
+      post :create, params: {stripe_token: stripe_token(@card_2)}
       assert flash[:alert].include?('already')
       assert_redirected_to support_manage_cards_path
     end
@@ -71,7 +71,7 @@ class Support::ManageCardsControllerTest < ActionController::TestCase
 
   test "Can set a card to be the default card" do
     VCR.use_cassette('stripe_set_default') do
-      patch :update, {id: 'card_17C7HpAR2MipIX2iOeADBBJE'}
+      patch :update, params: {id: 'card_17C7HpAR2MipIX2iOeADBBJE'}
       assert flash[:notice].include?('success')
       assert_redirected_to support_manage_cards_path
     end
@@ -79,7 +79,7 @@ class Support::ManageCardsControllerTest < ActionController::TestCase
 
   test "Can destroy a card if it isn't default" do
     VCR.use_cassette('stripe_can_delete_non_default') do
-      delete :destroy, {id: 'card_17C7HdAR2MipIX2i7ERoDcyX'}
+      delete :destroy, params: {id: 'card_17C7HdAR2MipIX2i7ERoDcyX'}
       assert flash[:notice].include?('success')
       assert_redirected_to support_manage_cards_path
     end
@@ -87,7 +87,7 @@ class Support::ManageCardsControllerTest < ActionController::TestCase
 
   test "Can't destroy the default card" do
     VCR.use_cassette('stripe_cannot_delete_default') do
-      delete :destroy, {id: 'card_17C7HpAR2MipIX2iOeADBBJE'}
+      delete :destroy, params: {id: 'card_17C7HpAR2MipIX2iOeADBBJE'}
       assert flash[:alert].include?('add another')
       assert_redirected_to support_manage_cards_path
     end

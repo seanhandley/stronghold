@@ -1,17 +1,19 @@
-class Support::QuotasController < SupportBaseController
+module Support
+  class QuotasController < SupportBaseController
 
-  skip_authorization_check
+    skip_authorization_check
 
-  before_filter :check_power_user_and_cloud
+    before_action :check_power_user_and_cloud
 
-  def index
-    @projects = current_organization.projects
+    def index
+      @projects = current_organization.projects
+    end
+
+    private
+
+    def check_power_user_and_cloud
+      raise ActionController::RoutingError.new('Not Found') unless current_user.power_user? && current_organization.cloud?
+    end
+
   end
-
-  private
-
-  def check_power_user_and_cloud
-    raise ActionController::RoutingError.new('Not Found') unless current_user.power_user? && current_organization.cloud?
-  end
-
 end

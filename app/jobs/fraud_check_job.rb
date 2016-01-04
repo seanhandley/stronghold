@@ -1,4 +1,4 @@
-class FraudCheckJob < ActiveJob::Base
+class FraudCheckJob < ApplicationJob
   queue_as :default
 
   def perform(customer_signup)

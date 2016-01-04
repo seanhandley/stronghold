@@ -25,7 +25,7 @@ class SignupsControllerTest < ActionController::TestCase
   end
 
   test "new path sets and renders with email" do
-    get :new, email: 'foo@bar.com'
+    get :new, params: { email: 'foo@bar.com'}
     assert assigns(:email)
   end
 
@@ -44,19 +44,19 @@ class SignupsControllerTest < ActionController::TestCase
   end
 
   test "create path successful html" do
-    post :create, email: 'foo@bar.com'
+    post :create, params: { email: 'foo@bar.com'}
     assert assigns(:customer_signup)
     assert_redirected_to thanks_path
   end
 
   test "create path successful json" do
-    post :create, email: 'foo@bar.com', format: :json
+    post :create, params: { email: 'foo@bar.com'}, format: :json
     assert assigns(:customer_signup)
     assert_response :ok
   end
 
   test "create path failure html" do
-    post :create, email: 'foo'
+    post :create, params: { email: 'foo' }
     assert assigns(:customer_signup)
     assert flash[:alert].length > 0
     assert_response :unprocessable_entity
@@ -65,7 +65,7 @@ class SignupsControllerTest < ActionController::TestCase
   end
 
   test "create path failure json" do
-    post :create, email: 'foo', format: :json
+    post :create, params: { email: 'foo'}, format: :json
     assigns(:customer_signup)
     assert_response :unprocessable_entity
     assert json_response['errors'].length > 0
@@ -83,7 +83,7 @@ class SignupsControllerTest < ActionController::TestCase
   end
 
   test "edit path with valid token" do
-    get :edit, token: @invite.token
+    get :edit, params: { token: @invite.token }
     assert assigns(:registration)
     assert_template :edit
     assert_template layout: "layouts/customer-sign-up"
@@ -91,7 +91,7 @@ class SignupsControllerTest < ActionController::TestCase
 
   test "edit path without valid token" do
     assert_raises ActionController::RoutingError do
-      get :edit, token: 'foo'
+      get :edit, params: { token: 'foo' }
     end
   end
 
@@ -99,7 +99,7 @@ class SignupsControllerTest < ActionController::TestCase
     mock = Minitest::Mock.new
     mock.expect :unscoped_token, 'blah'
     Fog::Identity.stub(:new, mock) do
-      post :update, password: '12345678', token: @invite.token
+      post :update, params: { password: '12345678', token: @invite.token}
       assert session[:user_id]
       assert session[:created_at]
       assert session[:token]
@@ -112,7 +112,7 @@ class SignupsControllerTest < ActionController::TestCase
     mock = Minitest::Mock.new
     mock.expect :unscoped_token, 'blah'
     Fog::Identity.stub(:new, mock) do
-      post :update, password: '12345678', token: @invite.token
+      post :update, params: { password: '12345678', token: @invite.token}
       assert session[:user_id]
       assert session[:created_at]
       assert session[:token]
@@ -121,7 +121,7 @@ class SignupsControllerTest < ActionController::TestCase
   end
 
   test "update path unsuccessful" do
-    post :update, password: '', token: @invite.token
+    post :update, params: { password: '', token: @invite.token }
     assert flash[:alert].length > 0
     assert_response :unprocessable_entity
     assert_template :edit

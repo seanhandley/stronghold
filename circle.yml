@@ -11,22 +11,23 @@ dependencies:
     - sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4F4EA0AAE5267A6C
     - sudo apt-get update ; true
     - DEBIAN_FRONTEND=noninteractive sudo apt-get install -y mysql-server-5.6
+  post:
+    - bin/bundle-audit update
+    - bin/bundle-audit
 
 database:
   override:
     - cp config/database.yml.ci config/database.yml
-    - RACK_ENV=test RAILS_ENV=test bundle exec rake db:create db:schema:load --trace
-    - RACK_ENV=acceptance RAILS_ENV=acceptance bundle exec rake db:create db:schema:load --trace
+    - RACK_ENV=test RAILS_ENV=test bin/rails db:create db:schema:load --trace
+    - RACK_ENV=acceptance RAILS_ENV=acceptance bin/rails db:create db:schema:load --trace
 
 test:
   override:
-    - bundle exec bundle-audit update
-    - bundle exec bundle-audit
-    - RUBYOPT=W0 bundle exec rake test:unit_and_functional
-    - bundle exec rake stronghold:test_coverage_percent
-    - RUBYOPT=W0 RACK_ENV=acceptance RAILS_ENV=acceptance bundle exec rake test:acceptance
-    - bundle exec rake stronghold:security_analysis
-    - bundle exec rake stronghold:ssl_quality_check
+    - bin/rails test:unit_and_functional
+    - bin/rails stronghold:test_coverage_percent
+    - RUBYOPT=W0 RACK_ENV=acceptance RAILS_ENV=acceptance bin/rails test:acceptance
+    - bin/rails stronghold:security_analysis
+    - bin/rails stronghold:ssl_quality_check
     - git config --global user.email "circle@circleci.com"
     - git config --global user.name "Circle"
-    - bundle exec rake stronghold:code_quality_analysis
+    - bin/rails stronghold:code_quality_analysis

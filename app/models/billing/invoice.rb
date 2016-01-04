@@ -1,5 +1,5 @@
 module Billing
-  class Invoice < ActiveRecord::Base
+  class Invoice < ApplicationRecord
 
     self.table_name = "billing_invoices"
 

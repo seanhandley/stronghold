@@ -1,5 +1,5 @@
 module Billing
-  class Instance < ActiveRecord::Base
+  class Instance < ApplicationRecord
     self.table_name = "billing_instances"
 
     validates :instance_id, uniqueness: true

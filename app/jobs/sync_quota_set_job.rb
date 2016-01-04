@@ -1,4 +1,4 @@
-class SyncQuotaSetJob < ActiveJob::Base
+class SyncQuotaSetJob < ApplicationJob
   queue_as :default
 
   def perform(project)

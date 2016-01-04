@@ -1,4 +1,4 @@
-class ActivationReminderJob < ActiveJob::Base
+class ActivationReminderJob < ApplicationJob
   queue_as :default
 
   def perform

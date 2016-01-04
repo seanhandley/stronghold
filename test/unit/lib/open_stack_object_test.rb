@@ -45,7 +45,7 @@ class TestOpenStackObject < CleanTest
   end
 
   def test_method_find_returns_nil_if_not_found
-    assert_equal nil, Foo.find('bar')
+    refute Foo.find('bar')
   end
 
   def test_method_create_returns_a_foo

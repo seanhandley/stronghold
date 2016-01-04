@@ -2,9 +2,9 @@ class SignupsController < ApplicationController
 
   layout "customer-sign-up"
 
-  before_filter :check_enabled, only: [:new, :create]
-  before_filter :find_invite, except: [:new, :create, :thanks]
-  skip_before_filter :verify_authenticity_token, :only => [:create]
+  before_action :check_enabled, only: [:new, :create]
+  before_action :find_invite, except: [:new, :create, :thanks]
+  skip_before_action :verify_authenticity_token, :only => [:create], raise: false
 
   def new
     if current_user

@@ -1,6 +1,5 @@
-class Invite < ActiveRecord::Base
+class Invite < ApplicationRecord
   include Gravatar
-
   audited only: [:email]
 
   after_create :generate_token
@@ -67,21 +66,31 @@ class Invite < ActiveRecord::Base
   end
 
   def has_roles?
-    errors.add(:base, I18n.t(:please_give_user_at_least_one_role)) unless power_invite? || roles.present?
+    unless power_invite? || roles.present?
+      errors.add(:base, I18n.t(:please_give_user_at_least_one_role))
+      throw :abort
+    end
   end
 
   def email_looks_valid?
-    errors.add(:email, I18n.t(:is_not_a_valid_address)) unless email =~ /.+@.+\..+/
+    unless email =~ /.+@.+\..+/
+      errors.add(:email, I18n.t(:is_not_a_valid_address))
+      throw :abort
+    end
   end
 
   def no_user_has_that_email?
-    errors.add(:email, 'already has an account. Please choose another email.') if email.present? && User.find_by_email(email.downcase) && !persisted?
+    if email.present? && User.find_by_email(email.downcase) && !persisted?
+      errors.add(:email, 'already has an account. Please choose another email.') 
+      throw :abort
+    end
   end
 
   def role_ids_belong?
     roles.each do |role|
       unless role.organization_id == organization_id
         errors.add(:base, 'Invalid roles supplied. Please select valid roles for this user.')
+        throw :abort
       end
     end
   end
@@ -90,6 +99,7 @@ class Invite < ActiveRecord::Base
     projects.each do |project|
       unless project.organization_id == organization_id
         errors.add(:base, 'Invalid projects supplied. Please select valid projects for this user.')
+        throw :abort
       end
     end
   end

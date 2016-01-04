@@ -53,8 +53,10 @@ class MailerTest < ActionMailer::TestCase
     Organization.make!(customer_signup: @cs)
 
     VCR.use_cassette('fraud_check') do
-      @fraud_check = MailerPreview.new.fc
-      @email = Mailer.fraud_check_alert(@cs, @fraud_check).deliver_now
+      Stripe::Customer.stub(:retrieve, nil) do
+        @fraud_check = MailerPreview.new.fc
+        @email = Mailer.fraud_check_alert(@cs, @fraud_check).deliver_now
+      end
     end
 
     assert_not ActionMailer::Base.deliveries.empty?
@@ -63,7 +65,7 @@ class MailerTest < ActionMailer::TestCase
     assert_equal ['fraud@datacentred.co.uk'], @email.to
     assert_equal "Potential Fraud: #{@cs.organization_name}", @email.subject
 
-    assert @email.body.parts[1].to_s.include?('MaxMind Risk Score:</strong> 0.13 (out of 100)')
+    assert @email.body.parts[1].to_s.include?('MaxMind Risk Score:</strong> 89.29 (out of 100)')
   end
 
   def test_card_reverification_failure

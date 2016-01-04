@@ -1,4 +1,4 @@
-class InformWaitListJob < ActiveJob::Base
+class InformWaitListJob < ApplicationJob
   queue_as :default
 
   def perform

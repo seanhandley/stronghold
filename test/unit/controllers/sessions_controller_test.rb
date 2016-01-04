@@ -32,15 +32,15 @@ class SessionsControllerTest < ActionController::TestCase
   test "can log out" do
     log_in(@user)
     assert session.keys.count > 1
-    delete :destroy, id: @user.id
+    delete :destroy, params: { id: @user.id }
     assert_redirected_to sign_in_path
     assert_equal 1, session.keys.count
-    assert_equal "You have been signed out.", session["flash"]["flashes"]["notice"]
+    assert_equal "You have been signed out.", flash["notice"]
   end
 
   test "admin user logs in successfully" do
     create_session(true, true, true) do
-      post :create, user: {email: @user.email, password: 'Password1'}
+      post :create, params: { user: {email: @user.email, password: 'Password1'}}
       # puts @response.inspect
       assert_equal 'token', session[:token]
       assert_equal @user.id, session[:user_id]
@@ -51,44 +51,44 @@ class SessionsControllerTest < ActionController::TestCase
 
   test "admin user logs in and is redirected to the next uri" do
     create_session(true, true, true) do
-      post :create, {user: {email: @user.email, password: 'Password1'}, next: support_profile_path}
+      post :create, params: { user: {email: @user.email, password: 'Password1'}, next: support_profile_path}
       assert_redirected_to support_profile_path
     end
   end
 
   test "admin user fails login because password is wrong" do
     create_session(true, true, true, false) do
-      post :create, user: {email: @user.email, password: 'Wrongpassword123'}
+      post :create, params: { user: {email: @user.email, password: 'Wrongpassword123'}}
       assert_response :unprocessable_entity
-      assert_equal "Invalid credentials. Please try again.", session["flash"]["flashes"]["alert"]
+      assert_equal "Invalid credentials. Please try again.", flash["alert"]
     end
   end
 
   test "admin user logs in for the first time and adds the first card to the account" do
     create_session(false, false, true) do
-      post :create, user: {email: @user.email, password: 'Password1'}
+      post :create, params: { user: {email: @user.email, password: 'Password1'}}
       assert_redirected_to new_support_card_path 
       # allows destroy without redirect
-      delete :destroy, id: @user.id
+      delete :destroy, params: { id: @user.id }
       assert_redirected_to sign_in_path
     end
   end
 
   test "admin user redirected when payment method is failing" do
     create_session(true, false, true) do
-      post :create, user: {email: @user.email, password: 'Password1'}
+      post :create, params: { user: {email: @user.email, password: 'Password1'}}
       @controller = Support::UsersController.new
       @controller.stub(:current_user, @user) do
         get :index
         assert_redirected_to support_manage_cards_path
-        assert_equal "Please add a valid card to continue.", session["flash"]["flashes"]["alert"]
+        assert_equal "Please add a valid card to continue.", flash["alert"]
       end
     end
   end
 
   test "users gets logged out when session expires" do
     create_session(true, true, true) do
-      post :create, user: {email: @user.email, password: 'Password1'}
+      post :create, params: { user: {email: @user.email, password: 'Password1'}}
       Timecop.freeze(Time.now.utc + 4.hours) do
         @controller = Support::UsersController.new
         @controller.stub(:current_user, @user) do
@@ -101,21 +101,21 @@ class SessionsControllerTest < ActionController::TestCase
 
   test "non admin user logs in when payment method is failing" do
     create_session(true, false, false) do
-      post :create, user: {email: @user.email, password: 'Password1'}
+      post :create, params: { user: {email: @user.email, password: 'Password1'}}
       @controller = Support::UsersController.new
       @controller.stub(:current_user, @user) do
         get :index
         assert_redirected_to sign_in_path
-        assert_equal "Payment method has expired. Please inform a user with admin rights.", session["flash"]["flashes"]["alert"]
+        assert_equal "Payment method has expired. Please inform a user with admin rights.", flash["alert"]
       end
     end
   end
 
   test "blank credentials shows error" do
     create_session(true, true, true) do
-      post :create, user: {email: '', password: ''}
+      post :create, params: { user: {email: '', password: ''}}
       assert_response :unprocessable_entity
-      assert_equal "Invalid credentials. Please try again.", session["flash"]["flashes"]["alert"]
+      assert_equal "Invalid credentials. Please try again.", flash["alert"]
     end
   end
 

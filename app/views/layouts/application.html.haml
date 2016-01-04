@@ -30,4 +30,3 @@
 = render partial: 'shared/footer' if current_organization.known_to_payment_gateway?
 = render partial: 'shared/ga' if Rails.env.production?
 = render partial: 'shared/spinner'
-= stripe_javascript_tag

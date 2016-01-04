@@ -1,4 +1,4 @@
-class User < ActiveRecord::Base
+class User < ApplicationRecord
   include Trackable
   include Gravatar
 
@@ -153,6 +153,7 @@ class User < ActiveRecord::Base
     if password.present?
       if password.length < 8
         errors.add(:base, I18n.t(:password_too_short))
+        throw :abort
       end
     end
   end
@@ -203,7 +204,7 @@ class User < ActiveRecord::Base
   def dont_delete_self
     if Authorization.current_user && Authorization.current_user.id == id
       errors.add(:base, "You can't delete yourself!")
-      false
+      throw :abort
     end
   end
 

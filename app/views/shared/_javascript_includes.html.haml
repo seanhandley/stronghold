@@ -6,3 +6,4 @@
   = javascript_include_tag 'application_with_angular', default_args
 - else
   = javascript_include_tag 'application', default_args.merge(Rails.env.acceptance? ? {} : {'async' => true, 'cache' => true})
+= stripe_javascript_tag

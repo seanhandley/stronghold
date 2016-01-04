@@ -1,4 +1,4 @@
-class CustomerSignup < ActiveRecord::Base
+class CustomerSignup < ApplicationRecord
   include ActionView::Helpers::UrlHelper
   include StripeHelper
 
@@ -65,10 +65,11 @@ class CustomerSignup < ActiveRecord::Base
   private
 
   def email_valid
-    return errors.add(:email, I18n.t(:is_not_a_valid_address)) unless email =~ /.+@.+\..+/
-    return errors.add(:email, I18n.t(:is_not_a_valid_address)) unless email.length >= 5
-    return errors.add(:email, 'is already in use') if User.find_by_email(email.downcase) && email_changed?
-    return errors.add(:email, "already used to sign up! If you didn't receive a sign up email, please contact support@datacentred.co.uk") if CustomerSignup.find_by_email(email.downcase) && email_changed?
+    errors.add(:email, I18n.t(:is_not_a_valid_address)) unless email =~ /.+@.+\..+/
+    errors.add(:email, I18n.t(:is_not_a_valid_address)) unless email.length >= 5
+    errors.add(:email, 'is already in use') if User.find_by_email(email.downcase) && email_changed?
+    errors.add(:email, "already used to sign up! If you didn't receive a sign up email, please contact support@datacentred.co.uk") if CustomerSignup.find_by_email(email.downcase) && email_changed?
+    throw(:abort) if errors.any?
   end
 
   def address_check_passed?

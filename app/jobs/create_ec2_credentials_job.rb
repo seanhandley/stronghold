@@ -1,4 +1,4 @@
-class CreateEC2CredentialsJob < ActiveJob::Base
+class CreateEC2CredentialsJob < ApplicationJob
   queue_as :default
 
   def perform(user)

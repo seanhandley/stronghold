@@ -1,4 +1,4 @@
-class Project < ActiveRecord::Base
+class Project < ApplicationRecord
   include OffboardingHelper
   include ActionView::Helpers::TextHelper
   include ActionView::Helpers::UrlHelper
@@ -17,6 +17,7 @@ class Project < ActiveRecord::Base
   syncs_with_keystone as: 'OpenStack::Project', actions: [:create, :destroy, :update]
   syncs_with_ceph     as: 'Ceph::User',        actions: [:create, :destroy]
 
+  has_and_belongs_to_many :roles
   has_many :user_project_roles, dependent: :destroy
   has_many :users, -> { distinct }, :through => :user_project_roles
 
@@ -106,6 +107,7 @@ class Project < ActiveRecord::Base
 
   def check_projects_limit
     errors.add(:base, "This account's limits only permit #{pluralize organization.projects_limit, 'project'}. #{link_to 'Raise a ticket to request more?', Rails.application.routes.url_helpers.support_tickets_path}".html_safe) unless organization.new_projects_remaining > 0
+    throw :abort
   end
 
   def check_quota_set
@@ -113,7 +115,8 @@ class Project < ActiveRecord::Base
     ['compute', 'volume', 'network'].each do |key|
       quota_set[key].each do |k,v|
         if organization.quota_limit[key][k].to_i < v.to_i
-          return errors.add(:base, "Your requested quota for #{k.humanize} exceeds the maximum limit allowed for your account. #{link_to 'Raise a ticket to request more?', Rails.application.routes.url_helpers.support_tickets_path}".html_safe)
+          errors.add(:base, "Your requested quota for #{k.humanize} exceeds the maximum limit allowed for your account. #{link_to 'Raise a ticket to request more?', Rails.application.routes.url_helpers.support_tickets_path}".html_safe)
+          throw :abort
         end
       end
     end

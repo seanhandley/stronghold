@@ -5,7 +5,7 @@ module StarburstHelper
     stop_delivering_at = "#{params[:stop_delivering_at_date]}"+" "+"#{params[:stop_delivering_at_time]}"
     args = {body: body, start_delivering_at: start_delivering_at, stop_delivering_at: stop_delivering_at}
     if params[:filters]
-      filters = params[:filters].map do |field_name,_|
+      filters = params[:filters].to_h.map do |field_name,_|
         {
           :field => field_name,
           :value => true

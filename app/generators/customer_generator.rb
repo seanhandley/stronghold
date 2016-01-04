@@ -29,7 +29,7 @@ class CustomerGenerator
       errors.add :base, "Products invalid"
     else
       error = nil
-      ActiveRecord::Base.transaction do
+      ApplicationRecord.transaction do
         begin
           create_customer
         rescue StandardError => e

@@ -1,4 +1,4 @@
-class UsageSanityJob < ActiveJob::Base
+class UsageSanityJob < ApplicationJob
   queue_as :default
 
   def perform

@@ -7,14 +7,16 @@ class Support::CardsControllerTest < ActionController::TestCase
     @customer_signup = CustomerSignup.make!
     @organization.update_attributes customer_signup: @customer_signup
     @args = {
-      signup_uuid: @customer_signup.uuid,
-      stripe_token: SecureRandom.hex,
-      organization_name: "foo",
-      address_line1: "1 Street",
-      address_line2: "",
-      address_city: "Place",
-      postcode: 'A12 3BC',
-      address_country: ['GB']
+      params: {
+        signup_uuid: @customer_signup.uuid,
+        stripe_token: SecureRandom.hex,
+        organization_name: "foo",
+        address_line1: "1 Street",
+        address_line2: "",
+        address_city: "Place",
+        postcode: 'A12 3BC',
+        address_country: ['GB']
+      }
     }
     @voucher = Voucher.make!
     log_in(@user)
@@ -36,7 +38,7 @@ class Support::CardsControllerTest < ActionController::TestCase
   # If successful, the customer signup model is updated
   # before the :create action is called
   test "create when not ready" do
-    post :create, {signup_uuid: @customer_signup.uuid}
+    post :create, params: {signup_uuid: @customer_signup.uuid}
     assert_response :unprocessable_entity
     assert assigns(:customer_signup)
     assert_template :new
@@ -58,7 +60,7 @@ class Support::CardsControllerTest < ActionController::TestCase
     @customer_signup.stub(:ready?, true) do
       CustomerSignup.stub(:find_by_uuid, @customer_signup) do
         Rails.cache.stub(:fetch, 'Password1') do
-          post :create, @args.merge(discount_code: @voucher.code)
+          post :create, params: @args[:params].merge(discount_code: @voucher.code)
           assert_equal 1, @organization.vouchers.count
         end
       end

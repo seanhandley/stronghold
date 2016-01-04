@@ -1,4 +1,4 @@
-class Organization < ActiveRecord::Base
+class Organization < ApplicationRecord
   include StripeHelper
   include Freezable
   include Migratable
@@ -6,8 +6,7 @@ class Organization < ActiveRecord::Base
   include OrganizationTransitionable
 
   audited only: [:name, :time_zone, :locale, :billing_address1, :billing_address2,
-                 :billing_city, :billing_postcode, :billing_country, :phone, :billing_contact, :technical_contact]
-
+                :billing_city, :billing_postcode, :billing_country, :phone, :billing_contact, :technical_contact]
   has_associated_audits
 
   syncs_with_salesforce as: 'Account', actions: [:create, :update]
@@ -17,7 +16,7 @@ class Organization < ActiveRecord::Base
       Name: name, Type: 'Customer',
       Billingstreet: [billing_address1, billing_address2].join("\n").strip,
       Billingcity: billing_city, Billingpostalcode: billing_postcode,
-      Billingcountry: Country.find_country_by_alpha2(billing_country).try(:name), Phone: phone,
+      Billingcountry: ISO3166::Country.find_country_by_alpha2(billing_country).try(:name), Phone: phone,
       c2g__CODAReportingCode__c: reporting_code,
       c2g__CODAAccountTradingCurrency__c: 'GBP',
       c2g__CODABillingMethod__c: self_service? ? 'Self-Service' : nil,
@@ -52,8 +51,8 @@ class Organization < ActiveRecord::Base
   has_many :invites, dependent: :destroy
   has_many :invoices, class_name: 'Billing::Invoice', dependent: :destroy
   has_many :projects, dependent: :destroy
-  has_and_belongs_to_many :products, -> { uniq }
-  has_many :organization_vouchers, {dependent: :destroy}, -> { uniq }
+  has_and_belongs_to_many :products, -> { distinct }
+  has_many :organization_vouchers, {dependent: :destroy}, -> { distinct }
   has_many :vouchers, :through => :organization_vouchers
   has_many :usages
 

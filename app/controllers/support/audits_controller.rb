@@ -1,17 +1,19 @@
-class Support::AuditsController < SupportBaseController
+module Support
+  class AuditsController < SupportBaseController
 
-  skip_authorization_check
+    skip_authorization_check
 
-  before_filter :check_power_user
+    before_action :check_power_user
 
-  def index
-    @audits = Audit.for_organization_and_user(current_organization, current_user).order('created_at DESC')
-    @audits = @audits.page params[:page]
-  end
+    def index
+      @audits = Audit.for_organization_and_user(current_organization, current_user).order('created_at DESC')
+      @audits = @audits.page params[:page]
+    end
 
-  private
+    private
 
-  def check_power_user
-    raise ActionController::RoutingError.new('Not Found') unless current_user.power_user?
+    def check_power_user
+      raise ActionController::RoutingError.new('Not Found') unless current_user.power_user?
+    end
   end
 end
