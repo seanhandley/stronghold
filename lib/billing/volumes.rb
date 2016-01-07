@@ -13,14 +13,14 @@ module Billing
     def self.usage(tenant_id, from, to)
       volumes = Billing::Volume.where(:tenant_id => tenant_id).to_a.compact.reject{|volume| volume.deleted_at && volume.deleted_at < from}
       volumes = volumes.collect do |volume|
-        tb_hours = terabyte_hours(volume, from, to)
         { terabyte_hours: tb_hours,
-                                    cost: (tb_hours * RateCard.block_storage).nearest_penny,
+                                    cost: cost(volume, from, to),
                                     id: volume.volume_id,
                                     created_at: volume.created_at,
                                     deleted_at: volume.deleted_at,
                                     latest_size: volume.latest_size,
-                                    name: volume.name}
+                                    name: volume.name,
+                                    ssd: volume.ssd?}
       end
       volumes.select{|v| v[:terabyte_hours] > 0}
     end
@@ -76,6 +76,83 @@ module Billing
       end
     end
 
+    def self.cost(volume, from, to)
+      volume_states = volume.volume_states.where(:recorded_at => from..to).order('recorded_at')
+      rate = volume.ssd? ? RateCard.ssd_storage : RateCard.block_storage
+      if volume_states.collect(&:volume_type).uniq.count > 1
+        return split_cost(volume, volume_states, from, to).nearest_penny
+      else
+        tb_hours = terabyte_hours(volume, from, to)
+        return (tb_hours * rate).nearest_penny
+      end
+    end
+
+    def self.split_cost(volume, states, from, to)
+      previous_state = volume.volume_states.where('recorded_at < ?', from).order('recorded_at DESC').limit(1).first
+      first_state = states.first
+      last_state = states.last
+
+      if states.any?
+        if states.count > 1
+          start = 0
+
+          if previous_state
+            if billable?(previous_state.state)
+              start = (first_state.recorded_at - from)
+              start = start / Billing::SECONDS_TO_HOURS
+              base = start * previous_state.rate
+              start = base
+            end
+          end
+
+          previous = states.first
+          middle = states.collect do |state|
+            difference = 0
+            if billable?(previous.state)
+              difference = state.recorded_at - previous.recorded_at
+            end
+            begin
+              difference = difference / Billing::SECONDS_TO_HOURS
+              base = difference * previous.rate
+              base
+            ensure
+              previous = state
+            end
+          end.sum
+
+          ending = 0
+
+          if(billable?(last_state.state))
+            ending = (to - last_state.recorded_at)
+            ending = ending / Billing::SECONDS_TO_HOURS
+            base = ending * last_state.rate
+            ending = base
+          end
+
+          return (start + middle + ending)
+        else
+          # Only one sample for this period
+          if billable?(first_state.state)
+            time = (to - first_state.recorded_at)
+            time = time / Billing::SECONDS_TO_HOURS
+            base = time * first_state.rate
+            return base
+          else
+            return 0
+          end
+        end
+      else
+        if previous_state && billable?(previous_state.state)
+          time = (to - from)
+          time = time / Billing::SECONDS_TO_HOURS
+          base = time * previous_state.rate
+          return base
+        else
+          return 0
+        end
+      end
+    end
+
     def self.billable?(event)
       event != 'volume.delete.end'
     end
@@ -88,17 +165,26 @@ module Billing
       (gigabytes / 1024.0).round(2)
     end
 
+    def self.volume_name
+      {
+        '176419cf-21f3-459d-882b-660e884f8cf1' => 'Ceph SSD',
+        '965716f4-7fcb-441d-b2aa-ad48f44b41b7' => 'Ceph'
+      }
+    end
+
     def self.create_new_states(tenant_id, volume_id, samples, sync)
       first_sample_metadata = samples.first['resource_metadata']
       unless Billing::Volume.find_by_volume_id(volume_id)
-        volume = Billing::Volume.create(volume_id: volume_id, tenant_id: tenant_id, name: first_sample_metadata["display_name"])
+        volume = Billing::Volume.create(volume_id: volume_id, tenant_id: tenant_id,
+                                        name: first_sample_metadata["display_name"])
         unless samples.any? {|s| s['resource_metadata']['event_type']}
           # This is a new volume and we don't know its current size
           # Attempt to find out
           if(os_volume = OpenStackConnection.volume.volumes.get(volume_id))
             volume.volume_states.create recorded_at: Time.now, size: os_volume.size,
                                             event_name: 'ping', billing_sync: sync,
-                                            message_id: SecureRandom.uuid
+                                            message_id: SecureRandom.uuid,
+                                            volume_type: volume_name.key(os_volume.volume_type)
           end
         end
       end
@@ -114,7 +200,8 @@ module Billing
           Billing::VolumeState.create volume_id: billing_volume.id, recorded_at: Time.zone.parse("#{s['recorded_at']} UTC"),
                                       size: s['resource_metadata']['size'],
                                       event_name: s['resource_metadata']['event_type'], billing_sync: sync,
-                                      message_id: s['message_id']
+                                      message_id: s['message_id'],
+                                      volume_type: s['resource_metadata']['volume_type']
         end
       end
     end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151208075604) do
+ActiveRecord::Schema.define(version: 20160108104420) do
 
   create_table "audits", force: :cascade do |t|
     t.string   "auditable_id",    limit: 255
@@ -216,6 +216,7 @@ ActiveRecord::Schema.define(version: 20151208075604) do
     t.integer  "minutes_in_state",  limit: 4
     t.integer  "previous_state_id", limit: 4
     t.integer  "next_state_id",     limit: 4
+    t.string   "volume_type",       limit: 255
   end
 
   add_index "billing_volume_states", ["sync_id"], name: "volume_syncs", using: :btree

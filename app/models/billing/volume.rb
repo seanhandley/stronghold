@@ -21,8 +21,20 @@ module Billing
       volume_states.where(event_name: 'volume.delete.end').order('recorded_at').first.try(:recorded_at) { nil }
     end
 
+    def latest_state
+      @latest_state ||= volume_states.order('recorded_at').last
+    end
+
     def latest_size
-      volume_states.order('recorded_at').last.try(:size) { nil }
+      latest_state.try(:size) { nil }
+    end
+
+    def volume_type
+      latest_state.try(:volume_type) { nil }
+    end
+
+    def ssd?
+      latest_state.ssd?
     end
   end
 end
