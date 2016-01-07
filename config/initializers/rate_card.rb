@@ -6,9 +6,6 @@ module RateCard
     def object_storage
       0.0313
     end
-    def ssd_storage
-      0.4111
-    end
     def ip_address
       2.0
     end

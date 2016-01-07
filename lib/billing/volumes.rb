@@ -14,16 +14,13 @@ module Billing
       volumes = Billing::Volume.where(:tenant_id => tenant_id).to_a.compact.reject{|volume| volume.deleted_at && volume.deleted_at < from}
       volumes = volumes.collect do |volume|
         tb_hours = terabyte_hours(volume, from, to)
-        ssd = volume.volume_type ? volume_type.key(volume.volume_type).include?('SSD') : false
-        rate = ssd ? RateCard.ssd_storage : RateCard.block_storage
         { terabyte_hours: tb_hours,
-                                    cost: (tb_hours * rate).nearest_penny,
+                                    cost: (tb_hours * RateCard.block_storage).nearest_penny,
                                     id: volume.volume_id,
                                     created_at: volume.created_at,
                                     deleted_at: volume.deleted_at,
                                     latest_size: volume.latest_size,
-                                    name: volume.name,
-                                    ssd: ssd}
+                                    name: volume.name}
       end
       volumes.select{|v| v[:terabyte_hours] > 0}
     end
@@ -91,19 +88,10 @@ module Billing
       (gigabytes / 1024.0).round(2)
     end
 
-    def volume_type
-      {
-        '176419cf-21f3-459d-882b-660e884f8cf1' => 'Ceph SSD',
-        '965716f4-7fcb-441d-b2aa-ad48f44b41b7' => 'Ceph'
-      }
-    end
-
     def self.create_new_states(tenant_id, volume_id, samples, sync)
       first_sample_metadata = samples.first['resource_metadata']
       unless Billing::Volume.find_by_volume_id(volume_id)
-        volume = Billing::Volume.create(volume_id: volume_id, tenant_id: tenant_id,
-                                        name: first_sample_metadata["display_name"],
-                                        volume_type: first_sample_metadata['volume_type'])
+        volume = Billing::Volume.create(volume_id: volume_id, tenant_id: tenant_id, name: first_sample_metadata["display_name"])
         unless samples.any? {|s| s['resource_metadata']['event_type']}
           # This is a new volume and we don't know its current size
           # Attempt to find out

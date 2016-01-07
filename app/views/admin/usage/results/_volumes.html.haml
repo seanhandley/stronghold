@@ -12,7 +12,6 @@
             %th Created At
             %th Last Recorded Size
             %th Deleted At
-            %th SSD?
             %th
               %i.fa.fa-clock-o
               Terabyte Hours
@@ -30,7 +29,6 @@
                 = volume[:latest_size]
                 GB
               %td= volume[:deleted_at] ? volume[:deleted_at] : '-'
-              %td= volume[:ssd] ? '✔' : '✘'
               %td
                 = number_with_delimiter(volume[:terabyte_hours], :delimiter => ',')
                 TBh
@@ -40,7 +38,6 @@
             %td &nbsp
             %td &nbsp
             %td &nbsp
-            %td &nbsp;
             %td &nbsp;
             %td Total:
             %td
