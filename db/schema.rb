@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151208075604) do
+ActiveRecord::Schema.define(version: 20160107183002) do
 
   create_table "audits", force: :cascade do |t|
     t.string   "auditable_id",    limit: 255
@@ -222,9 +222,10 @@ ActiveRecord::Schema.define(version: 20151208075604) do
   add_index "billing_volume_states", ["volume_id"], name: "volume_states", using: :btree
 
   create_table "billing_volumes", force: :cascade do |t|
-    t.string "volume_id", limit: 255
-    t.string "name",      limit: 255
-    t.string "tenant_id", limit: 255
+    t.string "volume_id",   limit: 255
+    t.string "name",        limit: 255
+    t.string "tenant_id",   limit: 255
+    t.string "volume_type", limit: 255
   end
 
   add_index "billing_volumes", ["tenant_id"], name: "tenant_volumes", using: :btree
