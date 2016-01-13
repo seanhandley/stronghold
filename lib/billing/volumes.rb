@@ -20,7 +20,8 @@ module Billing
                                     deleted_at: volume.deleted_at,
                                     latest_size: volume.latest_size,
                                     name: volume.name,
-                                    ssd: volume.ssd?}
+                                    ssd: volume.ssd?,
+                                    volume_type_name: volume_name[volume.volume_type]}
       end
       volumes.select{|v| v[:terabyte_hours] > 0}
     end
