@@ -7,9 +7,9 @@ class StripeController < ApplicationController
 
     case params["type"]
     when "invoice.payment_succeeded"
-      Notifications.notify(:stripe_success, "Invoice #{stripe_info[:invoice_id]}: Customer successfully billed or £#{stripe_info[:total]}. #{strip_info[:customer_description]}.")
+      Notifications.notify(:stripe_success, "Invoice #{stripe_info[:invoice_id]}: Customer successfully billed or £#{stripe_info[:total]}. #{stripe_info[:customer_description]}.")
     when params["type"] == "invoice.payment_failed"
-      Notifications.notify(:stripe_fail, "Invoice #{stripe_info[:invoice_id]}: Payment of £#{stripe_info[:total]} for #{strip_info[:customer_description]} has failed.")
+      Notifications.notify(:stripe_fail, "Invoice #{stripe_info[:invoice_id]}: Payment of £#{stripe_info[:total]} for #{stripe_info[:customer_description]} has failed.")
     end
 
     render status: 200, json: nil
