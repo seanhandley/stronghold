@@ -12,9 +12,8 @@ module Billing
 
     def self.usage(tenant_id, from, to)
       volumes = Billing::Volume.where(:tenant_id => tenant_id).to_a.compact.reject{|volume| volume.deleted_at && volume.deleted_at < from}
-      tb_hours = terabyte_hours(volume, from, to)
       volumes = volumes.collect do |volume|
-        { terabyte_hours: tb_hours,
+        { terabyte_hours: terabyte_hours(volume, from, to),
                                     cost: cost(volume, from, to),
                                     id: volume.volume_id,
                                     created_at: volume.created_at,
