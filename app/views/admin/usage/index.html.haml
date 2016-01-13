@@ -17,4 +17,10 @@
       %label To Date
       = datetime_select :to, nil, default: @to_date, class: 'form-control', minute_step: 15
 
+    .form-group
+      %label 
+        = check_box_tag :clear_cache, nil
+        Clear Cached Results?
+      %p.help-block Slower, but will regenerate data from scratch
+
     = submit_tag 'Generate →', class: 'btn btn-primary'

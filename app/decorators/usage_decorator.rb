@@ -8,6 +8,10 @@ class UsageDecorator < ApplicationDecorator
     Rails.cache.exist?(key) ? Rails.cache.fetch(key) : latest_usage_data(from, to - 1.hour, count + 1)
   end
 
+  def remove_cached_data(from_date, to_date)
+    Rails.cache.delete("org#{model.id}_#{from_date.strftime(timestamp_format)}_#{to_date.strftime(timestamp_format)}")
+  end
+
   def usage_data(args=nil)
     if args && args[:from_date] && args[:to_date]
       @from_date, @to_date = args[:from_date], args[:to_date]

@@ -13,6 +13,7 @@ class Admin::UsageController < AdminBaseController
       if ((@organization = Organization.find(create_params[:organization])) &&
           (@project      = Tenant.find(create_params[:project])))
         @usage_decorator = UsageDecorator.new(@organization)
+        @usage_decorator.remove_cached_data(@from_date, @to_date) if create_params[:clear_cache]
         @usage = @usage_decorator.usage_data(from_date: @from_date, to_date: @to_date)
         @grand_total = @usage_decorator.grand_total
 
@@ -41,7 +42,7 @@ class Admin::UsageController < AdminBaseController
   private
 
   def create_params
-    params.permit(:organization, :project, :from => datetime_array, :to => datetime_array)
+    params.permit(:organization, :project, :clear_cache, :from => datetime_array, :to => datetime_array)
   end
 
   def get_organizations_and_projects
