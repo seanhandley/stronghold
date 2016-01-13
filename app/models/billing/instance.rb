@@ -54,6 +54,10 @@ module Billing
       states
     end
 
+    def resized?
+      instance_states.map(&:flavor_id).uniq.count > 1
+    end
+
     def current_state
       return 'terminated' if terminated_at
       Instances.billable?(latest_state) ? 'active' : 'stopped'

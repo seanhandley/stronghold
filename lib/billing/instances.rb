@@ -31,6 +31,7 @@ module Billing
                                        terminated_at: instance.terminated_at,
                                        rate: instance.rate,
                                        billable_hours: billable_hours,
+                                       resized: instance.resized?,
                                        cost: cost(instance, from, to),
                                        windows: Windows.billable?(instance),
                                        arch: instance.arch,
