@@ -97,7 +97,7 @@ module Billing
           start = 0
 
           if previous_state
-            if billable?(previous_state.state)
+            if billable?(previous_state.event_name)
               start = (first_state.recorded_at - from)
               start = start / Billing::SECONDS_TO_HOURS
               base = start * previous_state.rate
@@ -108,7 +108,7 @@ module Billing
           previous = states.first
           middle = states.collect do |state|
             difference = 0
-            if billable?(previous.state)
+            if billable?(previous.event_name)
               difference = state.recorded_at - previous.recorded_at
             end
             begin
@@ -122,7 +122,7 @@ module Billing
 
           ending = 0
 
-          if(billable?(last_state.state))
+          if(billable?(last_state.event_name))
             ending = (to - last_state.recorded_at)
             ending = ending / Billing::SECONDS_TO_HOURS
             base = ending * last_state.rate
@@ -132,7 +132,7 @@ module Billing
           return (start + middle + ending)
         else
           # Only one sample for this period
-          if billable?(first_state.state)
+          if billable?(first_state.event_name)
             time = (to - first_state.recorded_at)
             time = time / Billing::SECONDS_TO_HOURS
             base = time * first_state.rate
@@ -142,7 +142,7 @@ module Billing
           end
         end
       else
-        if previous_state && billable?(previous_state.state)
+        if previous_state && billable?(previous_state.event_name)
           time = (to - from)
           time = time / Billing::SECONDS_TO_HOURS
           base = time * previous_state.rate
