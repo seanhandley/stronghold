@@ -6,6 +6,7 @@ module Billing
     belongs_to :billing_sync, :class_name => "Billing::Sync", :foreign_key => 'sync_id'
 
     def ssd?
+      return false unless volume_type
       Volumes.volume_name[volume_type].upcase.include?('SSD')
     end
 
