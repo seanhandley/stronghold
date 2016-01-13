@@ -35,7 +35,7 @@ module Billing
                                        windows: Windows.billable?(instance),
                                        arch: instance.arch,
                                        flavor: {
-                                         flavor_id: instance.flavor_id,
+                                         flavor_id: instance_flavor.flavor_id,
                                          name: instance_flavor.name,
                                          vcpus_count: instance_flavor.vcpus,
                                          ram_mb: instance_flavor.ram,
