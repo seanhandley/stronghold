@@ -15,12 +15,12 @@ class StripeController < ApplicationController
     render status: 200, json: nil
   end
 
+  private
+
   def stripe_info
-    @stripe_info ||= do
-      customer = Stripe::Customer.retrieve(params['data']['object']['customer']) rescue OpenStruct.new(description: "unknown")
-      total = (params["data"]["object"]["total"] / 100.0).round(2)
-      total = "%.2f" % (total)
-      {customer_description: customer.description, total: total, invoice_id: params["data"]["object"]["id"]}
-    end
+    customer = Stripe::Customer.retrieve(params['data']['object']['customer']) rescue OpenStruct.new(description: "unknown")
+    total = (params["data"]["object"]["total"] / 100.0).round(2)
+    total = "%.2f" % (total)
+    {customer_description: customer.description, total: total, invoice_id: params["data"]["object"]["id"]}
   end
 end
