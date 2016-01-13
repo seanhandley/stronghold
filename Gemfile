@@ -51,6 +51,7 @@ gem 'icalendar', '~> 2.3'
 gem 'holidays', '~> 2.2'
 gem 'ruby-prof'
 gem "paranoia", "~> 2.0"
+gem 'minitest-ci', :git => 'git@github.com:circleci/minitest-ci.git'
 
 group :test, :acceptance do
   gem 'faker'
@@ -61,7 +62,6 @@ group :test, :acceptance do
   gem 'simplecov'
   gem 'timecop'
   gem 'launchy'
-  gem 'minitest-ci', :git => 'git@github.com:circleci/minitest-ci.git'
 end
 
 group :test do
