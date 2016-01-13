@@ -33,6 +33,14 @@ default: &default
       channel: '#webdev'
       color: 'warning'
       prefix: ':lock: Security Analysis Results: '
+    stripe_success:
+      channel: '#billing'
+      color: 'good'
+      prefix: ':beers: Good news!'
+    stripe_fail:
+      channel: '#billing'
+      color: 'warning'
+      prefix: ':crying_cat_face: Uh oh:'
 
 development:
   <<: *default
