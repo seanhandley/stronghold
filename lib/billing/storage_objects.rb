@@ -3,7 +3,7 @@ module Billing
 
     def self.sync!(sync)
       Tenant.with_deleted.each do |tenant|
-        next unless tenant.uuid && tenant.organization.storage?
+        next unless tenant.uuid && tenant.organization && tenant.organization.storage?
         tb = Ceph::Usage.kilobytes_for(tenant.uuid)
         Billing::ObjectStorage.create(tenant_id: tenant.uuid,
                                       size: tb,
