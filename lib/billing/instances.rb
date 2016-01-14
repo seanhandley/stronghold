@@ -32,7 +32,7 @@ module Billing
                                        rate: instance.rate,
                                        billable_hours: billable_hours,
                                        resized: instance.resized?,
-                                       resizes: instance.resizes,
+                                       resizes: instance.resizes(from, to),
                                        cost: cost(instance, from, to),
                                        windows: Windows.billable?(instance),
                                        arch: instance.arch,
