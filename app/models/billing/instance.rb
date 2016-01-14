@@ -69,7 +69,7 @@ module Billing
           next
         end
         if comparison.flavor_id != state.flavor_id
-          resizes << "[#{state.recorded_at}] Resized from #{comparison.instance_flavor.name} to #{state.instance_flavor.name}."
+          resizes << "[#{state.recorded_at}] Resized from #{comparison.instance_flavor.try(:name)} to #{state.instance_flavor.try(:name)}."
         end
         comparison = state
       end
