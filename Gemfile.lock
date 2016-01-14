@@ -26,11 +26,11 @@ GIT
       xml-simple
 
 GIT
-  remote: https://github.com/seanhandley/fog.git
-  revision: fd344e2e3d11a0df49dc7a3a509549f6a5bec19b
-  branch: fix_openstack_auth
+  remote: https://github.com/fog/fog.git
+  revision: 37c056c273052955e0bfc6fd8aa0348bda55ad6a
+  ref: 37c056c
   specs:
-    fog (1.36.0)
+    fog (1.37.0)
       fog-aliyun (>= 0.1.0)
       fog-atmos
       fog-aws (>= 0.6.0)
@@ -52,7 +52,7 @@ GIT
       fog-terremark
       fog-vmfusion
       fog-voxel
-      fog-vsphere (~> 0.2)
+      fog-vsphere (>= 0.4.0)
       fog-xenserver
       fog-xml (~> 0.1.1)
       ipaddress (~> 0.5)
