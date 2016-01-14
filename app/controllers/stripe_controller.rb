@@ -7,7 +7,7 @@ class StripeController < ApplicationController
 
     case params["type"]
     when "invoice.payment_succeeded"
-      Notifications.notify(:stripe_success, "Invoice #{stripe_info[:invoice_id]} for £#{stripe_info[:total]} successfully chared to #{stripe_info[:customer_description]}.")
+      Notifications.notify(:stripe_success, "Invoice #{stripe_info[:invoice_id]} for £#{stripe_info[:total]} successfully charged to #{stripe_info[:customer_description]}.")
     when "invoice.payment_failed"
       Notifications.notify(:stripe_fail, "Invoice #{stripe_info[:invoice_id]} for £#{stripe_info[:total]} could not be charged to #{stripe_info[:customer_description]}.")
     end
