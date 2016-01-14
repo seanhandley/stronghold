@@ -26,7 +26,9 @@ module Billing
     end
 
     def rate
-      instance_flavor.rates.where(arch: arch).first.rate rescue nil
+      rate = instance_flavor.rates.where(arch: arch).first.rate rescue nil
+      return rate if rate
+      instance_flavor.rates.where(arch: 'x86_64').first.rate rescue nil
     end
 
     def instance_flavor
