@@ -63,7 +63,7 @@ module Billing
     def resizes(from, to)
       comparison = nil
       resizes = []
-      instance_states.each do |state|
+      instance_states.where(:recorded_at => from..to).order('recorded_at').each do |state|
         unless comparison
           comparison = state
           next
