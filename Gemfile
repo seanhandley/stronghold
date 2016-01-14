@@ -9,7 +9,7 @@ gem 'unicorn', '~> 4.8'
 gem 'haml', '~> 4.0'
 gem 'cancancan', '~> 1.9'
 # gem 'fog', '~> 1.37', :require => "fog/openstack"
-gem 'fog', git: 'https://github.com/fog/fog.git', ref: '37c056c'
+gem 'fog', git: 'https://github.com/seanhandley/fog.git', ref: '2913002'
 gem 'gravatar_image_tag', '~> 1.2.0'
 gem 'js-routes', '~> 0.9.9'
 gem 'sidekiq', '~> 4.0'

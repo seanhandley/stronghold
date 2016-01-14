@@ -6,7 +6,8 @@ OPENSTACK_ARGS = {
   :openstack_username => ENV["OPENSTACK_USERNAME"],
   :openstack_api_key  => ENV["OPENSTACK_PASSWORD"],
   :openstack_tenant   => ENV["OPENSTACK_TENANT"],
-  :openstack_identity_prefix => settings['identity_prefix']
+  :openstack_identity_prefix => settings['identity_prefix'],
+  :openstack_endpoint_path_matches => //
 }
 
 Excon.defaults[:connect_timeout] = 10

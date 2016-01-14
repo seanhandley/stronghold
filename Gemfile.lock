@@ -26,9 +26,9 @@ GIT
       xml-simple
 
 GIT
-  remote: https://github.com/fog/fog.git
-  revision: 37c056c273052955e0bfc6fd8aa0348bda55ad6a
-  ref: 37c056c
+  remote: https://github.com/seanhandley/fog.git
+  revision: 2913002a0e64b521c3dc610d7885b665dcaddef1
+  ref: 2913002
   specs:
     fog (1.37.0)
       fog-aliyun (>= 0.1.0)
