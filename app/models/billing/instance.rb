@@ -60,6 +60,22 @@ module Billing
       instance_states.map(&:flavor_id).uniq.count > 1
     end
 
+    def resizes(from, to)
+      comparison = nil
+      resizes = []
+      instance_states.each do |state|
+        unless comparison
+          comparison = state
+          next
+        end
+        if comparison.flavor_id != state.flavor_id
+          resizes << "[#{state.recorded_at}] Resized from #{comparison.instance_flavor.name} to #{state.instance_flavor.name}."
+        end
+        comparison = state
+      end
+      resizes
+    end
+
     def current_state
       return 'terminated' if terminated_at
       Instances.billable?(latest_state) ? 'active' : 'stopped'

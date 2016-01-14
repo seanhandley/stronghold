@@ -34,7 +34,8 @@
                   - if instance[:windows]
                     %i.fa.fa-windows{title: 'Windows Instance †'}
                   - if instance[:resized]
-                    %i.fa.fa-arrows-alt{title: 'This instance has been resized at least once.'}
+                    %a{href: ''}
+                      %i.fa.fa-arrows-alt{title: "This instance has been resized at least once. †\n\n#{instance[:resizes].join('\n')}"}
                   &nbsp;
                 %td.line_entry= instance[:name]
                 %td.line_entry= instance[:uuid]
