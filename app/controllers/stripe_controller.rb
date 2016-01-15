@@ -2,6 +2,7 @@ require 'ostruct'
 
 class StripeController < ApplicationController
   protect_from_forgery :except => :webhook
+  before_action :verify_secret
 
   def webhook
 
@@ -22,5 +23,11 @@ class StripeController < ApplicationController
     total = (params["data"]["object"]["total"] / 100.0).round(2)
     total = "%.2f" % (total)
     {customer_description: customer.description, total: total, invoice_id: params["data"]["object"]["id"]}
+  end
+
+  def verify_secret
+    unless params['secret'] == Rails.application.secrets.stripe_webhook_secret
+      render status: 401, json: nil
+    end
   end
 end
