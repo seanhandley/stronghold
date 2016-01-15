@@ -64,7 +64,9 @@ class ApplicationController < ActionController::Base
   helper_method :current_path
 
   def device_cookie
-    args = {value: SecureRandom.urlsafe_base64, expires: 2.years.from_now}
+    args = {value: SecureRandom.urlsafe_base64,
+            expires: 2.years.from_now,
+            httponly: true}
     cookies[:_d] = args unless cookies[:_d]
     @device_cookie ||= cookies[:_d]
   end
