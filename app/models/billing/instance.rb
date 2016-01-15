@@ -56,10 +56,6 @@ module Billing
       states
     end
 
-    def resized?
-      instance_states.map(&:flavor_id).uniq.count > 1
-    end
-
     def resizes(from, to)
       comparison = nil
       resizes = []
