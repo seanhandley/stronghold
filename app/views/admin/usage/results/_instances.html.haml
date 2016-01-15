@@ -33,7 +33,7 @@
                 %td.line_entry
                   - if instance[:windows]
                     %i.fa.fa-windows{title: 'Windows Instance †'}
-                  - if instance[:resizes].any?
+                  - if instance[:resizes] && instance[:resizes].any?
                     %i.fa.fa-arrows-alt{title: "This instance has been resized at least once. †\n\n#{instance[:resizes] ? instance[:resizes].join("\n") : 'No further details found.'}"}
                   &nbsp;
                 %td.line_entry= instance[:name]
