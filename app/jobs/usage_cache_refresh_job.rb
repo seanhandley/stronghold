@@ -1,9 +1,9 @@
 class UsageCacheRefreshJob < ActiveJob::Base
   queue_as :usage_cache
 
-  def perform(organization=nil)
+  def perform(organization=nil,from=Time.now.beginning_of_month,to=Time.now)
     if organization
-      warm_cache(organization) unless already_running?(organization)
+      warm_cache(organization, from, to) unless already_running?(organization)
       return
     end
     
@@ -17,10 +17,10 @@ class UsageCacheRefreshJob < ActiveJob::Base
 
   private
 
-  def warm_cache(organization)
+  def warm_cache(organization, from, to)
     sleep rand(500..5000) / 1000.0
     ud = UsageDecorator.new(organization)
-    ud.usage_data(from_date: Time.now.beginning_of_month, to_date: Time.now)
+    ud.usage_data(from_date: from, to_date: to)
   end
 
   def already_running?(organization)
