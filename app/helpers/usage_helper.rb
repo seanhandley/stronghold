@@ -80,7 +80,7 @@ module UsageHelper
           csv << [tenant.name, "Instance", instance[:flavor][:name], instance[:name], instance[:billable_hours], 'hours', instance[:cost].round(2)]
         end
         usage[:volume_usage].each do |volume|
-          csv << [tenant.name, "Volume", nil, volume[:name], volume[:terabyte_hours], 'TB/h', volume[:cost].round(2)]
+          csv << [tenant.name, "Volume", volume[:volume_type_name], volume[:name], volume[:terabyte_hours], 'TB/h', volume[:cost].round(2)]
         end
         usage[:image_usage].each do |image|
           csv << [tenant.name, "Image", nil, image[:name], image[:terabyte_hours], 'TB/h', image[:cost].round(2)]
