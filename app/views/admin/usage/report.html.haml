@@ -2,25 +2,28 @@
   %h1.go-back
     %a{href: 'javascript:history.back()'}
       %i.fa.fa-area-chart
-      = @project.organization.name
-  %p
-    %strong Project:
-    = @project.name
+      = @organization.name
   %p
     %strong From:
     = @from_date
   %p
     %strong To:
     = @to_date
-
   %p
     %strong Total:
     == £#{number_with_precision(@grand_total, :delimiter => ',', :separator => '.', :precision => 2)}
 
-  = render partial: 'admin/usage/results/vouchers',  locals: { vouchers: @active_vouchers }
-  = render partial: 'admin/usage/results/instances', locals: { project: @project, instances:         @instance_usage            }
-  = render partial: 'admin/usage/results/volumes',   locals: { project: @project, volumes:           @volume_usage              }
-  = render partial: 'admin/usage/results/images',    locals: { project: @project, images:            @image_usage               }
-  = render partial: 'admin/usage/results/objects',   locals: { project: @project, tbh:               @object_storage_usage      }
-  = render partial: 'admin/usage/results/ips',       locals: { ip_quotas:         @ip_quota_usage,                                                           external_gateways: @external_gateway_results,
-                                                               project:           @project                     }
+  %br
+
+  - @usage.each do |project, results|
+    %h2
+      %strong Project:
+      = project.name
+
+    = render partial: 'admin/usage/results/vouchers',  locals: { vouchers: @active_vouchers }
+    = render partial: 'admin/usage/results/instances', locals: { project: project, instances:        results[:instance_usage]            }
+    = render partial: 'admin/usage/results/volumes',   locals: { project: project, volumes:           results[:volume_usage]              }
+    = render partial: 'admin/usage/results/images',    locals: { project: project, images:            results[:image_usage]             }
+    = render partial: 'admin/usage/results/objects',   locals: { project: project, tbh:               results[:external_gateway_results]      }
+    = render partial: 'admin/usage/results/ips',       locals: { ip_quotas:         results[:ip_quota_usage],                                                           external_gateways: @external_gateway_results,
+                                                                 project:           project                     }

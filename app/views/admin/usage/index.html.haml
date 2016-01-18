@@ -8,9 +8,6 @@
       %label Organization
       = select_tag :organization, options_for_select(@organizations, selected: params[:organization]), class: 'form-control'
     .form-group
-      %label Project
-      = select_tag :project, options_for_select(@projects, selected: params[:project]), class: 'form-control'
-    .form-group
       %label From Date
       = datetime_select :from, nil, default: @from_date, class: 'form-control', minute_step: 15
     .form-group

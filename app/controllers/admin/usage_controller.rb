@@ -1,6 +1,6 @@
 class Admin::UsageController < AdminBaseController
 
-  before_filter :get_organizations_and_projects
+  before_filter :get_organizations
 
   def index
     reset_dates
@@ -10,24 +10,12 @@ class Admin::UsageController < AdminBaseController
     begin
       @from_date, @to_date = parse_dates create_params
       @total_hours = ((@to_date - @from_date) / 1.hour).round
-      if ((@organization = Organization.find(create_params[:organization])) &&
-          (@project      = Tenant.find(create_params[:project])))
+      if (@organization = Organization.find(create_params[:organization]))
         @usage_decorator = UsageDecorator.new(@organization)
         @usage_decorator.remove_cached_data(@from_date, @to_date) if create_params[:clear_cache]
         @usage = @usage_decorator.usage_data(from_date: @from_date, to_date: @to_date)
         @grand_total = @usage_decorator.grand_total
 
-        @usage.each do |project, results|
-          if @project.id == project.id
-            @instance_usage = results[:instance_usage]
-            @volume_usage = results[:volume_usage]
-            @image_usage = results[:image_usage]
-            @floating_ip_results = results[:floating_ip_results]
-            @ip_quota_usage = results[:ip_quota_usage]
-            @external_gateway_results = results[:external_gateway_results]
-            @object_storage_usage = results[:object_storage_usage]
-          end
-        end
         @active_vouchers = @organization.active_vouchers(@from_date, @to_date)
       end
       render :report
@@ -42,12 +30,11 @@ class Admin::UsageController < AdminBaseController
   private
 
   def create_params
-    params.permit(:organization, :project, :clear_cache, :from => datetime_array, :to => datetime_array)
+    params.permit(:organization, :clear_cache, :from => datetime_array, :to => datetime_array)
   end
 
-  def get_organizations_and_projects
+  def get_organizations
     @organizations ||= Organization.billable.collect{|organization| [organization.name, organization.id]}
-    @projects ||= Organization.billable.map(&:tenants).flatten.collect{|tenant| [tenant.name, tenant.id, class: "#{tenant.organization.id}"]}
   end
 
   def datetime_array
