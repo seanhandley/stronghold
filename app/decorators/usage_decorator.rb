@@ -19,14 +19,15 @@ class UsageDecorator < ApplicationDecorator
     raise(ArgumentError, 'Please supply :from_date and :to_date') unless from_date && to_date
     Rails.cache.fetch("org#{model.id}_#{from_date.strftime(timestamp_format)}_#{to_date.strftime(timestamp_format)}", expires_in: 30.days) do
       model.tenants.inject({}) do |acc, tenant|
+        ip_quota_usage = Billing::IpQuotas.usage(tenant.uuid, from_date, to_date)
         acc[tenant] = {
           instance_usage: Billing::Instances.usage(tenant.uuid, from_date, to_date),
           volume_usage: Billing::Volumes.usage(tenant.uuid, from_date, to_date),
           image_usage: Billing::Images.usage(tenant.uuid, from_date, to_date),
-          ip_quota_usage: Billing::IpQuotas.usage(tenant.uuid, from_date, to_date),
+          ip_quota_usage: ip_quota_usage,
           object_storage_usage: Billing::StorageObjects.usage(tenant.uuid, from_date, to_date),
           current_ip_quota: tenant.quota_set['network']['floatingip'],
-          ip_quota_total: ip_quota_total(tenant.id)
+          ip_quota_total: ip_quota(ip_quota_usage)
         }
         acc
       end
@@ -68,27 +69,31 @@ class UsageDecorator < ApplicationDecorator
     daily_rate = ((RateCard.ip_address * 12) / 365.0).round(2)
     usage_data.collect do |tenant, results|
       if(tenant_id == tenant.id)
-        if results[:ip_quota_usage].none?
-          quota = tenant.quota_set['network']['floatingip'].to_i - 1
-          ((((to_date - from_date) / 60.0) / 60.0) / 24.0).round * daily_rate * quota
-        else
-          start = from_date
-          cost = results[:ip_quota_usage].collect do |quota|
-            period = ((((quota.recorded_at - start) / 60.0) / 60.0) / 24.0).round
-            start = quota.recorded_at
-            total_rate = (period * daily_rate)
-            q = quota.previous ? quota.previous : 1
-            (q - 1) * total_rate
-          end.sum
-
-          q = results[:ip_quota_usage].last.quota - 1
-          period = ((((to_date - results[:ip_quota_usage].last.recorded_at) / 60.0) / 60.0) / 24.0).round
-          total_rate = (period * daily_rate)
-          cost += (q * total_rate)
-          cost
-        end
+        ip_quota_cost(usage_data[:ip_quota_usage])
       end
     end.compact.sum
+  end
+
+  def ip_quota_cost(results)
+    if results.none?
+      quota = tenant.quota_set['network']['floatingip'].to_i - 1
+      return ((((to_date - from_date) / 60.0) / 60.0) / 24.0).round * daily_rate * quota
+    else
+      start = from_date
+      cost = results.collect do |quota|
+        period = ((((quota.recorded_at - start) / 60.0) / 60.0) / 24.0).round
+        start = quota.recorded_at
+        total_rate = (period * daily_rate)
+        q = quota.previous ? quota.previous : 1
+        (q - 1) * total_rate
+      end.sum
+
+      q = results.last.quota - 1
+      period = ((((to_date - results.last.recorded_at) / 60.0) / 60.0) / 24.0).round
+      total_rate = (period * daily_rate)
+      cost += (q * total_rate)
+      return cost
+    end
   end
 
   def object_storage_total(tenant_id)
