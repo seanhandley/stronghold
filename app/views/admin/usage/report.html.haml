@@ -13,9 +13,8 @@
     %strong Total:
     == £#{number_with_precision(@grand_total, :delimiter => ',', :separator => '.', :precision => 2)}
 
-  %br
-
   - @usage.each do |project, results|
+    %hr
     %h2
       %strong Project:
       = project.name
