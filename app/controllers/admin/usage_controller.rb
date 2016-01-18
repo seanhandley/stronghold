@@ -1,4 +1,5 @@
 class Admin::UsageController < AdminBaseController
+  include UsageHelper
 
   before_filter :get_organizations
 
@@ -18,7 +19,18 @@ class Admin::UsageController < AdminBaseController
 
         @active_vouchers = @organization.active_vouchers(@from_date, @to_date)
       end
-      render :report
+
+      case params[:format].try :downcase
+      when 'json'
+        render json: usage_data_as_json(@usage, @usage_decorator.grand_total)
+      when 'xml'
+        render xml: usage_data_as_xml(@usage, @usage_decorator.grand_total)
+      when 'csv'
+        headers['Content-Type'] ||= 'text/csv'
+        render text: usage_data_as_csv(@usage)
+      else
+        render :report
+      end
     rescue ArgumentError => error
       flash.now[:alert] = error.message
       notify_honeybadger(error)
