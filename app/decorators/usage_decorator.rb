@@ -88,7 +88,7 @@ class UsageDecorator < ApplicationDecorator
         (q - 1) * total_rate
       end.sum
 
-      q = results.last.quota - 1
+      q = (results.last.quota || 1) - 1
       period = ((((to_date - results.last.recorded_at) / 60.0) / 60.0) / 24.0).round
       total_rate = (period * daily_rate)
       cost += (q * total_rate)
