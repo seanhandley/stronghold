@@ -2,6 +2,7 @@ class UsageCacheRefreshJob < ActiveJob::Base
   queue_as :usage_cache
 
   def perform(organization=nil,from=Time.now.beginning_of_month,to=Time.now)
+    from, to = Time.parse(from.to_s), Time.parse(to.to_s)
     if organization
       warm_cache(organization, from, to) unless already_running?(organization)
       return
