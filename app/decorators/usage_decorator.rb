@@ -26,8 +26,8 @@ class UsageDecorator < ApplicationDecorator
           image_usage: Billing::Images.usage(tenant.uuid, from_date, to_date),
           ip_quota_usage: ip_quota_usage,
           object_storage_usage: Billing::StorageObjects.usage(tenant.uuid, from_date, to_date),
-          current_ip_quota: tenant.quota_set['network']['floatingip'],
-          ip_quota_total: ip_quota_cost(tenant, ip_quota_usage)
+          current_ip_quota: tenant.quota_set['network']['floatingip'].to_i,
+          ip_quota_total: ip_quota_cost(tenant, ip_quota_usage).nearest_penny
         }
         acc
       end

@@ -32,7 +32,7 @@ module Billing
                                        rate: instance.rate,
                                        billable_hours: billable_hours,
                                        resizes: instance.resizes(from, to),
-                                       cost: cost(instance, from, to),
+                                       cost: cost(instance, from, to).nearest_penny,
                                        windows: Windows.billable?(instance),
                                        arch: instance.arch,
                                        flavor: {
