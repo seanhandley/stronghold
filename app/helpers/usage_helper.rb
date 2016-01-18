@@ -90,7 +90,7 @@ module UsageHelper
           change = "From #{ip_quota.previous} IPs to #{ip_quota.quota} IPs"
           csv << [tenant.name, "Quota Change", nil, ip_quota.recorded_at, change, 'floating IPs', nil]
         end
-        csv << [tenant.name, "Current IP quota", nil, nil, tenant.quota_set['network']['floatingip'], 'floating IPs', nil]
+        csv << [tenant.name, "IP quota", nil, nil, tenant.quota_set['network']['floatingip'], 'floating IPs', usage[:ip_quota_total]]
       end
     end
   end
