@@ -24,6 +24,7 @@ class ApplicationController < ActionController::Base
       format.js   { javascript_redirect_to path }
       format.json { render :json => [], :status => :unauthorized }
       format.html { redirect_to path, args }
+      format.csv { redirect_to path, args }
     end
   end
 
