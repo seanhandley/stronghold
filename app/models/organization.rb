@@ -59,7 +59,7 @@ class Organization < ActiveRecord::Base
   scope :paying,       -> { where('started_paying_at is not null') }
   scope :billable,     -> { all.select{|o| !o.test_account?} }
   scope :cloud,        -> { all.select(&:cloud?) }
-  scope :active,       -> { all.select{|o| o.state == OrganizationStates::Active && !o.disabled?}}
+  scope :active,       -> { all.select{|o| o.state == OrganizationStates::Active && !o.disabled? && !o.in_review?}}
   scope :self_service, -> { where('self_service = true') }
   scope :pending,      -> { all.select{|o| o.state == OrganizationStates::Fresh }}
   scope :frozen,       -> { where(in_review: true)}
