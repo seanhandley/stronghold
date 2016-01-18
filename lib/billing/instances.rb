@@ -22,29 +22,30 @@ module Billing
         billable_seconds = seconds(instance, from, to)
         billable_hours = (billable_seconds / Billing::SECONDS_TO_HOURS).ceil
         instance_flavor = instance.instance_flavor
-        {billable_seconds: billable_seconds,
-                                       uuid: instance.instance_id,
-                                       name: instance.name,
-                                       tenant_id: instance.tenant_id,
-                                       first_booted_at: instance.first_booted_at,
-                                       latest_state: instance.latest_state(from,to),
-                                       terminated_at: instance.terminated_at,
-                                       billable_hours: billable_hours,
-                                       resizes: instance.resizes(from, to),
-                                       cost: cost(instance, from, to).nearest_penny,
-                                       windows: Windows.billable?(instance),
-                                       arch: instance.arch,
-                                       flavor: {
-                                         flavor_id: instance_flavor.flavor_id,
-                                         name: instance_flavor.name,
-                                         vcpus_count: instance_flavor.vcpus,
-                                         ram_mb: instance_flavor.ram,
-                                         root_disk_gb: instance_flavor.disk,
-                                         rate: instance_flavor.rate},
-                                       image: {
-                                         image_id: instance.image_id,
-                                         name: instance.instance_image ? instance.instance_image.name : ''}
-                                       }
+        {
+          uuid: instance.instance_id,
+          name: instance.name,
+          tenant_id: instance.tenant_id,
+          first_booted_at: instance.first_booted_at,
+          latest_state: instance.latest_state(from,to),
+          terminated_at: instance.terminated_at,
+          billable_hours: billable_hours,
+          resizes: instance.resizes(from, to),
+          cost: cost(instance, from, to).nearest_penny,
+          windows: Windows.billable?(instance),
+          arch: instance.arch,
+          flavor: {
+            flavor_id: instance_flavor.flavor_id,
+            name: instance_flavor.name,
+            vcpus_count: instance_flavor.vcpus,
+            ram_mb: instance_flavor.ram,
+            root_disk_gb: instance_flavor.disk,
+            rate: instance_flavor.rate},
+          image: {
+            image_id: instance.image_id,
+            name: instance.instance_image ? instance.instance_image.name : ''
+          }
+        }
       end
       instances.select{|instance| instance[:billable_seconds] > 0}
     end
