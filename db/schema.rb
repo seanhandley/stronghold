@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160108104420) do
+ActiveRecord::Schema.define(version: 20160118121019) do
 
   create_table "audits", force: :cascade do |t|
     t.string   "auditable_id",    limit: 255
@@ -380,8 +380,11 @@ ActiveRecord::Schema.define(version: 20160108104420) do
     t.integer  "organization_id", limit: 4
     t.text     "quota_set",       limit: 65535
     t.datetime "deleted_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
+  add_index "tenants", ["deleted_at"], name: "ignore_soft_deleted", using: :btree
   add_index "tenants", ["deleted_at"], name: "index_tenants_on_deleted_at", using: :btree
 
   create_table "user_tenant_roles", force: :cascade do |t|
