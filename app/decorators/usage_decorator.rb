@@ -27,7 +27,7 @@ class UsageDecorator < ApplicationDecorator
           ip_quota_usage: ip_quota_usage,
           object_storage_usage: Billing::StorageObjects.usage(tenant.uuid, from_date, to_date),
           current_ip_quota: tenant.quota_set['network']['floatingip'],
-          ip_quota_total: ip_quota_cost(ip_quota_usage)
+          ip_quota_total: ip_quota_cost(tenant, ip_quota_usage)
         }
         acc
       end
@@ -69,12 +69,12 @@ class UsageDecorator < ApplicationDecorator
     daily_rate = ((RateCard.ip_address * 12) / 365.0).round(2)
     usage_data.collect do |tenant, results|
       if(tenant_id == tenant.id)
-        ip_quota_cost(usage_data[:ip_quota_usage])
+        ip_quota_cost(tenant, usage_data[:ip_quota_usage])
       end
     end.compact.sum
   end
 
-  def ip_quota_cost(results)
+  def ip_quota_cost(tenant, results)
     if results.none?
       quota = tenant.quota_set['network']['floatingip'].to_i - 1
       return ((((to_date - from_date) / 60.0) / 60.0) / 24.0).round * daily_rate * quota
