@@ -3,9 +3,13 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-  rescue_from ActionController::InvalidAuthenticityToken do |exception|
+  rescue_from ActionController::InvalidAuthenticityToken do |_|
     reset_session
     safe_redirect_to sign_in_url
+  end
+
+  rescue_from ActionController::UnknownFormat do |_|
+    slow_404
   end
 
   before_filter :device_cookie
