@@ -66,7 +66,6 @@ class UsageDecorator < ApplicationDecorator
   end
 
   def ip_quota_total(tenant_id)
-    daily_rate = ((RateCard.ip_address * 12) / 365.0).round(2)
     usage_data.collect do |tenant, results|
       if(tenant_id == tenant.id)
         ip_quota_cost(tenant, usage_data[:ip_quota_usage])
@@ -75,6 +74,7 @@ class UsageDecorator < ApplicationDecorator
   end
 
   def ip_quota_cost(tenant, results)
+    daily_rate = ((RateCard.ip_address * 12) / 365.0).round(2)
     if results.none?
       quota = tenant.quota_set['network']['floatingip'].to_i - 1
       return ((((to_date - from_date) / 60.0) / 60.0) / 24.0).round * daily_rate * quota
