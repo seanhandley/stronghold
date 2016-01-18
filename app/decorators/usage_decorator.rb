@@ -75,7 +75,8 @@ class UsageDecorator < ApplicationDecorator
 
   def ip_quota_cost(tenant, results)
     daily_rate = ((RateCard.ip_address * 12) / 365.0).round(2)
-    if results.nil?
+    results = results || []
+    if results.none?
       quota = tenant.quota_set['network']['floatingip'].to_i - 1
       return ((((to_date - from_date) / 60.0) / 60.0) / 24.0).round * daily_rate * quota
     else
