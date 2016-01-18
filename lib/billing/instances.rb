@@ -47,7 +47,7 @@ module Billing
           }
         }
       end
-      instances.select{|instance| instance[:billable_seconds] > 0}
+      instances.select{|instance| instance[:billable_hours] > 0}
     end
 
     def self.cost(instance, from, to)
