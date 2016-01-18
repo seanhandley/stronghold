@@ -18,17 +18,15 @@ class Support::UsageController < SupportBaseController
     @active_vouchers = current_organization.active_vouchers(@from_date, @to_date)
     @usage_nav = usages_for_select(current_organization)
     respond_to do |format|
-      if current_organization.staff?
-        format.json {
-          render json: usage_data_as_json(@usage, @usage_decorator.grand_total)
-        }
-        format.xml {
-          render xml: usage_data_as_xml(@usage, @usage_decorator.grand_total)
-        }
-        format.csv {
-          render text: usage_data_as_csv(@usage)
-        }
-      end
+      format.json {
+        render json: usage_data_as_json(@usage, @usage_decorator.grand_total)
+      }
+      format.xml {
+        render xml: usage_data_as_xml(@usage, @usage_decorator.grand_total)
+      }
+      format.csv {
+        render text: usage_data_as_csv(@usage)
+      }
       format.html
     end
   end
