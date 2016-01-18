@@ -86,6 +86,11 @@ module UsageHelper
           csv << [tenant.name, "Image", nil, image[:name], image[:terabyte_hours], 'TB/h', image[:cost].round(2)]
         end
         csv << [tenant.name, "Object Storage", nil, nil, usage[:object_storage_usage].round(2), 'TB/h', (usage[:object_storage_usage] * RateCard.object_storage).round(2).nearest_penny]
+        usage[:ip_quota_usage].each do |ip_quota|
+          change = "From #{ip_quota.previous} IPs to #{ip_quota.quota} IPs"
+          csv << [tenant.name, "Quota Change", nil, ip_quota.recorded_at, change, 'floating IPs', nil]
+        end
+        csv << [tenant.name, "Current IP quota", nil, nil, tenant.quota_set['network']['floatingip'], 'floating IPs', nil]
       end
     end
   end
