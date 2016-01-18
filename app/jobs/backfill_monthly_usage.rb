@@ -4,7 +4,7 @@ class BackfillMonthlyUsageJob < ActiveJob::Base
   def perform(months=1)
     Organization.active.shuffle.each do |organization|
       months.times.each_with_index do |_, i|
-        d = Time.now - 1.month
+        d = Time.now - i.months
         UsageCacheRefreshJob.perform_now(organization, d.beginning_of_month, d.end_of_month)
       end
     end
