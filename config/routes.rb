@@ -1,8 +1,9 @@
 Rails.application.routes.draw do
 
   require 'sidekiq/web'
-  require_relative "../lib/constraints/staff_constraint"
-  mount Sidekiq::Web => '/queue', :constraints => StaffConstraint.new
+  require_relative "../lib/constraints/client_cert_constraint"
+
+  mount Sidekiq::Web => '/queue', :constraints => ClientCertConstraint.new
 
   mount Starburst::Engine => "/starburst"
 
@@ -35,8 +36,7 @@ Rails.application.routes.draw do
     post '/contacts/find', :controller => 'contacts', :action => 'find'
   end
 
-  # TODO: Add subnets to lib/admin_constraint.rb
-  #constraints AdminConstraint.new do
+  constraints ClientCertConstraint.new do
     namespace :admin do
       root :to => 'dashboard#index'
       resources :customers, only: [:new, :create]
@@ -59,7 +59,7 @@ Rails.application.routes.draw do
       end
       resources :pending_invoices, only: [:index, :update, :destroy]
     end
-  #end
+  end
 
   resources :sessions, only: [:create, :destroy, :new, :index]
   resources :resets, only: [:create, :new, :show, :update]

@@ -10,7 +10,7 @@
         My Profile
     - if current_user.staff?
       %li
-        %a{:href => admin_root_path}
+        %a{:href => admin_root_url(host: 'https://admin-my.datacentred.io')}
           %i.fa.fa-shield
           = 'Admin'
     - if current_user.power_user?
