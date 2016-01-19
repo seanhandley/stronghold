@@ -77,7 +77,7 @@ module UsageHelper
       csv << ["Project", "Type", "Sub-Type", "ID", "Name", "Amount", "Unit", "Cost (£)"]
       data.each do |tenant, usage|
         usage[:instance_usage].each do |instance|
-          csv << [tenant.name, "Instance", "#{instance[:flavor][:name]} #{architecture_human_name(instance[:arch])}", instance[:uuid], instance[:name], instance[:billable_hours], 'hours', instance[:cost].round(2)]
+          csv << [tenant.name, "#{architecture_human_name(instance[:arch])} Instance", "#{instance[:flavor][:name]}", instance[:uuid], instance[:name], instance[:billable_hours], 'hours', instance[:cost].round(2)]
         end
         usage[:volume_usage].each do |volume|
           csv << [tenant.name, "Volume", volume[:volume_type_name], volume[:id], volume[:name], volume[:terabyte_hours], 'TB/h', volume[:cost].round(2)]
