@@ -74,23 +74,23 @@ module UsageHelper
 
   def usage_data_as_csv(data)
     CSV.generate do |csv|
-      csv << ["Project", "Type", "Sub-Type", "Name", "Amount", "Unit", "Cost (£)"]
+      csv << ["Project", "Type", "Sub-Type", "ID", "Name", "Amount", "Unit", "Cost (£)"]
       data.each do |tenant, usage|
         usage[:instance_usage].each do |instance|
-          csv << [tenant.name, "Instance", instance[:flavor][:name], instance[:name], instance[:billable_hours], 'hours', instance[:cost].round(2)]
+          csv << [tenant.name, "Instance", "#{instance[:flavor][:name]} #{architecture_human_name(instance[:arch])}", instance[:uuid], instance[:name], instance[:billable_hours], 'hours', instance[:cost].round(2)]
         end
         usage[:volume_usage].each do |volume|
-          csv << [tenant.name, "Volume", volume[:volume_type_name], volume[:name], volume[:terabyte_hours], 'TB/h', volume[:cost].round(2)]
+          csv << [tenant.name, "Volume", volume[:volume_type_name], volume[:id], volume[:name], volume[:terabyte_hours], 'TB/h', volume[:cost].round(2)]
         end
         usage[:image_usage].each do |image|
-          csv << [tenant.name, "Image", nil, image[:name], image[:terabyte_hours], 'TB/h', image[:cost].round(2)]
+          csv << [tenant.name, "Image", nil, image[:id], image[:name], image[:terabyte_hours], 'TB/h', image[:cost].round(2)]
         end
-        csv << [tenant.name, "Object Storage", nil, nil, usage[:object_storage_usage].round(2), 'TB/h', (usage[:object_storage_usage] * RateCard.object_storage).round(2).nearest_penny]
+        csv << [tenant.name, "Object Storage", nil, nil, nil, usage[:object_storage_usage].round(2), 'TB/h', (usage[:object_storage_usage] * RateCard.object_storage).round(2).nearest_penny]
         usage[:ip_quota_usage].each do |ip_quota|
           change = "From #{ip_quota.previous || '0'} IPs to #{ip_quota.quota} IPs"
-          csv << [tenant.name, "Quota Change", nil, ip_quota.recorded_at, change, 'floating IPs', nil]
+          csv << [tenant.name, "Quota Change", nil, nil, ip_quota.recorded_at, change, 'floating IPs', nil]
         end
-        csv << [tenant.name, "IP quota", nil, nil, tenant.quota_set['network']['floatingip'], 'floating IPs', usage[:ip_quota_total]]
+        csv << [tenant.name, "IP quota", nil, nil, nil, tenant.quota_set['network']['floatingip'], 'floating IPs', usage[:ip_quota_total]]
       end
     end
   end
