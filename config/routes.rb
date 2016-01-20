@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   require 'sidekiq/web'
   require_relative "../lib/constraints/client_cert_constraint"
 
-  mount Sidekiq::Web => '/admin/queue', :constraints => ClientCertConstraint.new
+  mount Sidekiq::Web => '/admin/queue', :constraints => StaffConstraint.new
 
   mount Starburst::Engine => "/starburst"
 
@@ -36,7 +36,7 @@ Rails.application.routes.draw do
     post '/contacts/find', :controller => 'contacts', :action => 'find'
   end
 
-  constraints ClientCertConstraint.new do
+  constraints StaffConstraint.new do
     namespace :admin do
       root :to => 'dashboard#index'
       resources :customers, only: [:new, :create]
