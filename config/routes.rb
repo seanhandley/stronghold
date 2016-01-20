@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
   require 'sidekiq/web'
-  require_relative "../lib/constraints/client_cert_constraint"
+  require_relative "../lib/constraints/staff_constraint"
 
   mount Sidekiq::Web => '/admin/queue', :constraints => StaffConstraint.new
 
