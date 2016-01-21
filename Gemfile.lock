@@ -396,7 +396,7 @@ GEM
     net-ssh (2.8.0)
     netrc (0.11.0)
     newrelic_rpm (3.9.9.275)
-    nokogiri (1.6.7.1)
+    nokogiri (1.6.7.2)
       mini_portile2 (~> 2.0.0.rc2)
     paranoia (2.1.4)
       activerecord (~> 4.0)
