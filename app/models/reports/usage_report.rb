@@ -26,12 +26,12 @@ module Reports
           Billing::StorageObjects.usage(tenant.uuid, from, to)
         end.flatten
 
-        vcpu_seconds   = instances.collect {|i| i[:billable_seconds] * i[:flavor][:vcpus_count]}.sum
-        ram_tb_seconds = instances.collect {|i| ((i[:flavor][:ram_mb] / 1024.0) / 1024.0) * i[:billable_seconds]}.sum
+        vcpu_hours   = instances.collect {|i| i[:billable_hours] * i[:flavor][:vcpus_count]}.sum
+        ram_tb_hours = instances.collect {|i| ((i[:flavor][:ram_mb] / 1024.0) / 1024.0) * i[:billable_hours]}.sum
 
         volumes_tb_hours = volumes.collect{|i| i[:terabyte_hours]}.sum
         images_tb_hours = images.collect{|i| i[:terabyte_hours]}.sum
-        instances_disk_tb_hours = instances.collect {|i| ((i[:billable_seconds] / 60.0) / 60.0) * (i[:flavor][:root_disk_gb] / 1024.0)}.sum
+        instances_disk_tb_hours = instances.collect {|i| i[:billable_hours] * (i[:flavor][:root_disk_gb] / 1024.0)}.sum
         openstack_tb_hours = volumes_tb_hours + images_tb_hours + instances_disk_tb_hours
 
         ceph_tb_hours  = objects.sum
@@ -39,8 +39,8 @@ module Reports
         result = {
           :name => organization.name,
           :contacts => organization.admin_users.collect(&:email),
-          :vcpu_hours => ((vcpu_seconds / 60.0) / 60.0),
-          :ram_tb_hours => ((ram_tb_seconds / 60.0) / 60.0),
+          :vcpu_hours => vcpu_hours,
+          :ram_tb_hours => ram_tb_hours,
           :openstack_tb_hours => openstack_tb_hours,
           :ceph_tb_hours => ceph_tb_hours,
           :paying => organization.paying?,
