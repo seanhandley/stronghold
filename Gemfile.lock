@@ -306,8 +306,8 @@ GEM
     fog-xml (0.1.2)
       fog-core
       nokogiri (~> 1.5, >= 1.5.11)
-    font-awesome-sass (4.2.2)
-      sass (~> 3.2)
+    font-awesome-sass (4.5.0)
+      sass (>= 3.2)
     formatador (0.2.5)
     geo_ip (0.6.1)
       json (~> 1.4)
@@ -660,7 +660,7 @@ DEPENDENCIES
   faker
   faraday (~> 0.9)
   fog!
-  font-awesome-sass (~> 4.2)
+  font-awesome-sass (~> 4.5)
   geo_ip (~> 0.6)
   gravatar_image_tag (~> 1.2.0)
   haml (~> 4.0)
