@@ -5,7 +5,7 @@
     = render partial: 'shared/head'
 
 %body{'data-controller' => controller.controller_path, 'data-action' => controller.action_name}
-  #wrap.he-man
+  #wrap{class: content_for?(:hm) ? 'he-man' : ''}
     .top-nav.navbar.navbar-default.navbar-fixed-top.admin-menu
       .container{style: "width:100%"}
         = render partial: 'shared/mob_menu'

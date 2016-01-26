@@ -20,6 +20,10 @@ module ApplicationHelper
     content_for(:title) { "DataCentred - #{page_title}" }
   end
 
+  def hm(o)
+    content_for(:hm) { o }
+  end
+
   def get_model_errors(model)
     errors = model.errors.messages.collect do |field, message|
       {
