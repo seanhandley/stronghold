@@ -1,8 +1,8 @@
 module ResellersHelper
   def usage_bar_colour(percentage)
-    if percentage < 50
+    if percentage < 70
       'success'
-    elsif percentage < 75
+    elsif percentage < 85
       'warning'
     else
       'danger'
