@@ -1,47 +1,53 @@
 .top-menu
-  - unless current_organization.known_to_payment_gateway?
-    %a{href: activate_path}
-      .top-menu-option{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => "Activate", 'class' => (current_section == 'activate' ? 'selected' : '')}
-        %i.top-menu-icon.fa.fa-plug
+  - if current_section == 'admin'
+    %a{href: admin_root_path}
+      .top-menu-option{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => "Admin", 'class' => 'selected'}
+        %i.top-menu-icon.fa.fa-shield
+    %a{href: support_root_path}
+      .top-menu-option{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => "Leave Admin"}
+        %i.top-menu-icon.fa.fa-share
+  - else 
+    - unless current_organization.known_to_payment_gateway?
+      %a{href: activate_path}
+        .top-menu-option{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => "Activate", 'class' => (current_section == 'activate' ? 'selected' : '')}
+          %i.top-menu-icon.fa.fa-plug
 
-  - if current_organization.cloud?
-    - if can?(:read, :cloud) || can?(:read, :storage)
-      %a{href: support_root_path}
-        .top-menu-option{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => 'Overview', 'class' => (current_section == 'cloud' ? 'selected' : '')}
-          %i.top-menu-icon.fa.fa-cloud
+    - if current_organization.cloud?
+      - if can?(:read, :cloud) || can?(:read, :storage)
+        %a{href: support_root_path}
+          .top-menu-option{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => 'Overview', 'class' => (current_section == 'cloud' ? 'selected' : '')}
+            %i.top-menu-icon.fa.fa-cloud
 
-    - if can? :read, :usage
-      %a{href: support_usage_path}
-        .top-menu-option{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => t(:usage), 'class' => (current_section == 'usage' ? 'selected' : '')}
+      - if can? :read, :usage
+        %a{href: support_usage_path}
+          .top-menu-option{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => t(:usage), 'class' => (current_section == 'usage' ? 'selected' : '')}
+            %i.top-menu-icon.fa.fa-area-chart
+      - else
+        .top-menu-option.top-menu-option-disabled{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => t(:usage)}
           %i.top-menu-icon.fa.fa-area-chart
-    - else
-      .top-menu-option.top-menu-option-disabled{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => t(:usage)}
-        %i.top-menu-icon.fa.fa-area-chart
 
-  - if current_organization.known_to_payment_gateway?
-    - if can? :read, Role
-      %a{href: support_roles_path}
-        .top-menu-option{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => "Team", 'class' => (current_section == 'roles' ? 'selected' : '')}
+    - if current_organization.known_to_payment_gateway?
+      - if can? :read, Role
+        %a{href: support_roles_path}
+          .top-menu-option{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => "Team", 'class' => (current_section == 'roles' ? 'selected' : '')}
+            %i.top-menu-icon.fa.fa-users
+      - else
+        .top-menu-option.top-menu-option-disabled{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => t(:users_slash_roles)}
           %i.top-menu-icon.fa.fa-users
+
+    - if can? :read, Ticket
+      %a{href: support_tickets_path+'/'}
+        .top-menu-option{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => t(:support), 'class' => (current_section == 'tickets' ? 'selected' : '')}
+          %i.top-menu-icon.fa.fa-life-ring
     - else
-      .top-menu-option.top-menu-option-disabled{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => t(:users_slash_roles)}
-        %i.top-menu-icon.fa.fa-users
-
-  - if can? :read, Ticket
-    %a{href: support_tickets_path+'/'}
-      .top-menu-option{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => t(:support), 'class' => (current_section == 'tickets' ? 'selected' : '')}
+      .top-menu-option.top-menu-option-disabled{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => t(:support_tickets)}
         %i.top-menu-icon.fa.fa-life-ring
-  - else
-    .top-menu-option.top-menu-option-disabled{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => t(:support_tickets)}
-      %i.top-menu-icon.fa.fa-life-ring
 
-  .not-yet-enabled
-    .top-menu-option.top-menu-option-disabled{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => t(:colo)}
-      = image_tag('server.svg')
-    .top-menu-option.top-menu-option-disabled{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => t(:billing)}
-      %i.top-menu-icon.fa.fa-money
-    .top-menu-option.top-menu-option-disabled{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => t(:colo)}
-      = image_tag('server.svg')
-    .top-menu-option.top-menu-option-disabled{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => t(:billing)}
-      %i.top-menu-icon.fa.fa-money
+    .not-yet-enabled
+      .top-menu-option.top-menu-option-disabled{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => t(:colo)}
+        = image_tag('server.svg')
+      .top-menu-option.top-menu-option-disabled{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => t(:billing)}
+        %i.top-menu-icon.fa.fa-money
+      .top-menu-option.top-menu-option-disabled{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => t(:colo)}
+        = image_tag('server.svg')
 

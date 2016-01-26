@@ -4,6 +4,10 @@ class AdminBaseController < AuthorizedController
 
   layout 'admin'
 
+  def current_section
+    'admin'
+  end
+
   private
 
   def check_user_is_staff

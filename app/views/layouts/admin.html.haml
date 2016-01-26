@@ -4,10 +4,20 @@
     %title DataCentred Admin Dashboard
     = render partial: 'shared/head'
 
-%body
-  = render partial: 'shared/environment'
+%body{'data-controller' => controller.controller_path, 'data-action' => controller.action_name}
   #wrap
-    #flashes= display_flash
+    .top-nav.navbar.navbar-default.navbar-fixed-top.admin-menu
+      .container{style: "width:100%"}
+        = render partial: 'shared/mob_menu'
+        %a{href: support_root_path, class: 'back-to-dash' }
+          %h1.logo
+        = render partial: 'shared/top_menu'
+        .context-nav
+          = render partial: 'shared/support_nav'
+      
     %div.page-body
+      = render partial: 'shared/environment'
       .container
+        %p &nbsp;
+        = display_flash
         = yield
