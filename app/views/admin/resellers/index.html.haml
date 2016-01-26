@@ -7,7 +7,7 @@
   Platform Stats
 
 %h3 VCPUs
-%p== #{@platform_stats[:vcpu][:percentage]}% (#{@platform_stats[:vcpu][:used]}/#{@platform_stats[:vcpu][:total]} cores)
+%p== #{@platform_stats[:vcpu][:percentage]}% (#{@platform_stats[:vcpu][:used].humanize}/#{@platform_stats[:vcpu][:total].humanize} cores)
 .progress
   %div{'role' => "progressbar", 'aria-valuenow' => @platform_stats[:vcpu][:used], 'aria-valuemin' => "0", 'aria-valuemax' => "100", 'style' => "width: #{@platform_stats[:vcpu][:percentage]}%", 'class' => "progress-bar progress-bar-striped progress-bar-#{usage_bar_colour(@platform_stats[:vcpu][:percentage])}"}
 

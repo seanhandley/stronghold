@@ -1,4 +1,6 @@
 class Admin::ResellersController < AdminBaseController
+  include ActionView::Helpers::NumberHelper
+
   def index
     @platform_stats = get_platform_stats
   end
@@ -11,18 +13,18 @@ class Admin::ResellersController < AdminBaseController
       stats = OpenStackConnection.compute.get_hypervisor_statistics(nil).body["hypervisor_statistics"]
       {
         vcpu: {
-          used:  stats['vcpus_used'],
-          total: stats['vcpus'],
+          used:  number_with_delimiter(stats['vcpus_used']),
+          total: number_with_delimiter(stats['vcpus']),
           percentage: ((stats['vcpus_used'].to_f / stats['vcpus'].to_f) * 100).round(2)
         },
         ram: {
-          used:  stats['memory_mb_used'],
-          total: stats['memory_mb'],
+          used:  number_with_delimiter(stats['memory_mb_used']),
+          total: number_with_delimiter(stats['memory_mb']),
           percentage: ((stats['memory_mb_used'].to_f / stats['memory_mb'].to_f) * 100).round(2)
         },
         disk: {
-          used:  stats['local_gb_used'],
-          total: stats['local_gb'],
+          used:  number_with_delimiter(stats['local_gb_used']),
+          total: number_with_delimiter(stats['local_gb']),
           percentage: ((stats['local_gb_used'].to_f / stats['local_gb'].to_f) * 100).round(2)
         }
       }
