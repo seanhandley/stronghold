@@ -1,0 +1,4 @@
+%h3= title
+%p== #{stats[:percentage]}% (#{stats[:used]}/#{stats[:total]} #{unit})
+.progress
+  %div{'role' => "progressbar", 'aria-valuenow' => stats[:used], 'aria-valuemin' => "0", 'aria-valuemax' => "100", 'style' => "width: #{stats[:percentage]}%", 'class' => "progress-bar progress-bar-striped progress-bar-#{usage_bar_colour(stats[:percentage])}"}

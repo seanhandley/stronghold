@@ -18,13 +18,13 @@ class Admin::ResellersController < AdminBaseController
           percentage: ((stats['vcpus_used'].to_f / stats['vcpus'].to_f) * 100).round(2)
         },
         ram: {
-          used:  number_with_delimiter(stats['memory_mb_used']),
-          total: number_with_delimiter(stats['memory_mb']),
+          used:  number_with_delimiter((stats['memory_mb_used'].to_f / 1048576.0).round(2)),
+          total: number_with_delimiter((stats['memory_mb'].to_f / 1048576.0).round(2)),
           percentage: ((stats['memory_mb_used'].to_f / stats['memory_mb'].to_f) * 100).round(2)
         },
         disk: {
-          used:  number_with_delimiter(stats['local_gb_used']),
-          total: number_with_delimiter(stats['local_gb']),
+          used:  number_with_delimiter((stats['local_gb_used'].to_f / 1048576.0).round(3)),
+          total: number_with_delimiter((stats['local_gb'].to_f / 1048576.0).round(3)),
           percentage: ((stats['local_gb_used'].to_f / stats['local_gb'].to_f) * 100).round(2)
         }
       }
