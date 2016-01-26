@@ -1,0 +1,23 @@
+%h1
+  %i.fa.fa-money
+  Resellers
+
+%h2
+  %i.fa.fa-dashboard
+  Platform Stats
+
+%h3 VCPUs
+%p== #{@platform_stats[:vcpu][:percentage]}% (#{@platform_stats[:vcpu][:used]}/#{@platform_stats[:vcpu][:total]} cores)
+.progress
+  %div{'role' => "progressbar", 'aria-valuenow' => @platform_stats[:vcpu][:used], 'aria-valuemin' => "0", 'aria-valuemax' => "100", 'style' => "width: #{@platform_stats[:vcpu][:percentage]}%", 'class' => "progress-bar progress-bar-striped progress-bar-#{usage_bar_colour(@platform_stats[:vcpu][:percentage])}"}
+
+%h3 RAM
+%p== #{@platform_stats[:ram][:percentage]}% (#{@platform_stats[:ram][:used]}/#{@platform_stats[:ram][:total]} MB)
+.progress
+  %div{'role' => "progressbar", 'aria-valuenow' => @platform_stats[:ram][:used], 'aria-valuemin' => "0", 'aria-valuemax' => "100", 'style' => "width: #{@platform_stats[:ram][:percentage]}%", 'class' => "progress-bar progress-bar-striped progress-bar-#{usage_bar_colour(@platform_stats[:ram][:percentage])}"}
+    
+
+%h3 Disk
+%p== #{@platform_stats[:disk][:percentage]}% (#{@platform_stats[:disk][:used]}/#{@platform_stats[:disk][:total]} GB)
+.progress
+  %div{'role' => "progressbar", 'aria-valuenow' => @platform_stats[:disk][:used], 'aria-valuemin' => "0", 'aria-valuemax' => "100", 'style' => "width: #{@platform_stats[:disk][:percentage]}%", 'class' => "progress-bar progress-bar-striped progress-bar-#{usage_bar_colour(@platform_stats[:disk][:percentage])}"}
