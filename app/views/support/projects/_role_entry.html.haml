@@ -1,0 +1,5 @@
+.col-md-6
+  .checkbox
+    %label
+      = check_box_tag "tenant[roles][#{role.id}]", true, tenant.roles.map(&:id).include?(role.id)
+      = role.name

@@ -1,0 +1,8 @@
+%br
+.alert.alert-info
+  If you give a role access to a project, all role members will be able to access it.
+%div{'style' => "overflow: auto; height: 180px"}
+  - current_organization.roles.each_slice(2) do |roles|
+    .row
+      - roles.each do |role|
+        = render partial: 'role_entry', locals: {role: role, tenant: tenant}

@@ -1,10 +1,27 @@
-= form_for role, :url => support_role_path(role), :html => { :class => 'form-horizontal'}, :remote => true do |f|
-  - for role_group_name, permissions in Permissions.user.group_by { |k,v| v[:group] }.sort_by{ |a, b| a }
-    .control-group
-      %h3= role_group_name
-      = hidden_field_tag 'role[name]', role.name
-      .controls
-        - for key, perms in permissions
-          %label.checkbox
-            = check_box_tag 'role[permissions][]', key, role.permissions.include?(key), :id => "permission-#{key}", :class => 'role-permission', :disabled => can?(:modify, Role) ? false : true
-            = "#{perms[:description]}?"
+- if current_organization.cloud?
+  %h3
+    Cloud Project Access
+  - if role.tenants.any?
+    - for tenant in role.tenants
+      %p
+        %strong
+          %i.fa.fa-folder-o
+          = tenant.name
+  - else
+    %i.fa.fa-folder-o
+    %em None
+
+- if role.power_user?
+  %br
+  = t(:owners_group_description)
+- else
+  = form_for role, :url => support_role_path(role), :html => { :class => 'form-horizontal'}, :remote => true do |f|
+    - for role_group_name, permissions in Permissions.user.group_by { |k,v| v[:group] }.sort_by{ |a, b| a }
+      .control-group
+        %h3= role_group_name
+        = hidden_field_tag 'role[name]', role.name
+        .controls
+          - for key, perms in permissions
+            %label.checkbox
+              = check_box_tag 'role[permissions][]', key, role.permissions.include?(key), :id => "permission-#{key}", :class => 'role-permission', :disabled => can?(:modify, Role) ? false : true
+              = "#{perms[:description]}?"
