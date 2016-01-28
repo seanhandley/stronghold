@@ -47,19 +47,20 @@
           %em
             {{selectedTicket.created_at | momentDateTime}}
   %div{'ng-show' => "selectedTicket.department == 'Access Requests'"}
-    %table
-      %tr
-        %td{style: 'width: 100px'}
-          %strong Who:
-        %td {{selectedTicket.visitor_names}}
-      %tr
-        %td{style: 'width: 100px'}
-          %strong When:
-        %td {{selectedTicket.date_of_visit}} at {{selectedTicket.time_of_visit}}
-      %tr
-        %td{style: 'width: 100px'}
-          %strong Access code:
-        %td {{selectedTicket.reference}}
+    .table-responsive
+      %table
+        %tr
+          %td{style: 'width: 100px'}
+            %strong Who:
+          %td {{selectedTicket.visitor_names}}
+        %tr
+          %td{style: 'width: 100px'}
+            %strong When:
+          %td {{selectedTicket.date_of_visit}} at {{selectedTicket.time_of_visit}}
+        %tr
+          %td{style: 'width: 100px'}
+            %strong Access code:
+          %td {{selectedTicket.reference}}
 
   - if can? :modify, Ticket
     %hr

@@ -3,26 +3,27 @@
   Frozen Customers
 
 - if @frozen_customers.any?
-  %table.table.table-striped.table-hover
-    %thead
-      %th Reference
-      %th Name
-      %th Signed Up
-      %th
-      %th
-      %th
-    %tbody
-      - for customer in @frozen_customers
-        %tr
-          %td= customer.reporting_code
-          %td= customer.name
-          %td= customer.created_at
-          %td
-            = link_to 'View Report', mail_admin_frozen_customer_path(customer), class: 'btn btn-info', 'data-method' => "post", 'data-confirm' => "The report will be emailed to you. Proceed?"
-          %td
-            = link_to 'Unfreeze?', admin_frozen_customer_path(customer), class: 'btn btn-success', 'data-method' => "put", 'data-confirm' => "Have you verified the customer's ID and payment method?"
-          %td
-            = link_to 'Delete', admin_frozen_customer_path(customer), class: 'btn btn-danger', 'data-method' => "delete", 'data-confirm' => "This can't be undone. Are you sure?"
+  .table-responsive
+    %table.table.table-striped.table-hover
+      %thead
+        %th Reference
+        %th Name
+        %th Signed Up
+        %th
+        %th
+        %th
+      %tbody
+        - for customer in @frozen_customers
+          %tr
+            %td= customer.reporting_code
+            %td= customer.name
+            %td= customer.created_at
+            %td
+              = link_to 'View Report', mail_admin_frozen_customer_path(customer), class: 'btn btn-info', 'data-method' => "post", 'data-confirm' => "The report will be emailed to you. Proceed?"
+            %td
+              = link_to 'Unfreeze?', admin_frozen_customer_path(customer), class: 'btn btn-success', 'data-method' => "put", 'data-confirm' => "Have you verified the customer's ID and payment method?"
+            %td
+              = link_to 'Delete', admin_frozen_customer_path(customer), class: 'btn btn-danger', 'data-method' => "delete", 'data-confirm' => "This can't be undone. Are you sure?"
 - else
   .push
   .alert.alert-warning No frozen customers found.

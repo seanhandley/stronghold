@@ -7,24 +7,25 @@
 .pull-right
   = link_to 'New Project', '', class: 'btn btn-success', 'data-toggle' => "modal", 'data-target' => "#addNewProject"
 
-%table.table.table-striped.table-hover
-  %thead
-    %th Name
-    %th UUID
-    %th Members
-    %th
-  %tbody
-    - for tenant in @tenants
-      %tr
-        %td= tenant.name
-        %td= tenant.uuid
-        %td= tenant.users.uniq.count
-        %td
-          .pull-right
-            = link_to 'Edit', '', class: 'btn btn-default', 'data-toggle' => "modal", 'data-target' => "#editProject#{tenant.id}", 'remote' => true, 'data' => { 'method' => :put }
+.table-responsive
+  %table.table.table-striped.table-hover
+    %thead
+      %th Name
+      %th UUID
+      %th Members
+      %th
+    %tbody
+      - for tenant in @tenants
+        %tr
+          %td= tenant.name
+          %td= tenant.uuid
+          %td= tenant.users.uniq.count
+          %td
+            .pull-right
+              = link_to 'Edit', '', class: 'btn btn-default', 'data-toggle' => "modal", 'data-target' => "#editProject#{tenant.id}", 'remote' => true, 'data' => { 'method' => :put }
 
-            - unless tenant.staff_tenant? || tenant.primary_tenant?
-              = link_to 'Remove', support_project_path(tenant.id), class: 'btn btn-danger', :data => {:confirm => 'Are you sure? This action cannot be undone.', :method => :delete}
-      = render partial: 'edit', locals: {project: tenant}
+              - unless tenant.staff_tenant? || tenant.primary_tenant?
+                = link_to 'Remove', support_project_path(tenant.id), class: 'btn btn-danger', :data => {:confirm => 'Are you sure? This action cannot be undone.', :method => :delete}
+        = render partial: 'edit', locals: {project: tenant}
 
 = render partial: 'new'

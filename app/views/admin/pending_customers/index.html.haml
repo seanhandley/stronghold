@@ -3,20 +3,21 @@
   Pending Customers
 
 - if @pending_customers.any?
-  %table.table.table-striped.table-hover
-    %thead
-      %th Signed Up
-      %th Email
-      %th IP Address
-      %th
-    %tbody
-      - for customer in @pending_customers
-        %tr
-          %td= customer.customer_signup.created_at
-          %td= customer.customer_signup.email
-          %td= customer.customer_signup.ip_address
-          %td
-            = link_to 'Activate Manually?', admin_pending_customer_path(customer), class: 'btn btn-success', 'data-method' => "put", 'data-confirm' => "Have you verified the customer's ID and payment method?"
+  .table-responsive
+    %table.table.table-striped.table-hover
+      %thead
+        %th Signed Up
+        %th Email
+        %th IP Address
+        %th
+      %tbody
+        - for customer in @pending_customers
+          %tr
+            %td= customer.customer_signup.created_at
+            %td= customer.customer_signup.email
+            %td= customer.customer_signup.ip_address
+            %td
+              = link_to 'Activate Manually?', admin_pending_customer_path(customer), class: 'btn btn-success', 'data-method' => "put", 'data-confirm' => "Have you verified the customer's ID and payment method?"
 - else
   .push
   .alert.alert-warning No pending customers found.

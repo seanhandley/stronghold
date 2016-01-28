@@ -6,27 +6,28 @@
   = link_to 'Finalized Invoices', admin_pending_invoices_path(finalized: true), class: 'btn btn-info'
 
 - if @pending_invoices.any?
-  %table.table.table-striped.table-hover
-    %thead
-      %th Reporting Code
-      %th Organization
-      %th Grand total (including tax and discounts)
-      %th Tax
-      %th Discount
-      %th
-    %tbody
-      - for invoice in @pending_invoices
-        = render partial: 'edit', locals: {invoice: invoice }
-        %tr
-          %td= invoice.organization.reporting_code
-          %td= invoice.organization.name
-          %td== £#{number_with_precision(invoice.grand_total, :delimiter => ',', :separator => '.', :precision => 2)}
-          %td== #{invoice.tax_percent}%
-          %td== #{invoice.discount_percent}%
-          %td
-            = link_to 'Finalize?', '', class: 'btn btn-success', 'data-toggle' => "modal", 'data-target' => "#editInvoice#{invoice.id}"
-          %td
-            = link_to 'Dismiss', admin_pending_invoice_path(invoice), 'class' => 'btn btn-danger', 'data-method' => "delete", 'data-confirm' => "This can't be undone. Are you sure?"
+  .table-responsive
+    %table.table.table-striped.table-hover
+      %thead
+        %th Reporting Code
+        %th Organization
+        %th Grand total (including tax and discounts)
+        %th Tax
+        %th Discount
+        %th
+      %tbody
+        - for invoice in @pending_invoices
+          = render partial: 'edit', locals: {invoice: invoice }
+          %tr
+            %td= invoice.organization.reporting_code
+            %td= invoice.organization.name
+            %td== £#{number_with_precision(invoice.grand_total, :delimiter => ',', :separator => '.', :precision => 2)}
+            %td== #{invoice.tax_percent}%
+            %td== #{invoice.discount_percent}%
+            %td
+              = link_to 'Finalize?', '', class: 'btn btn-success', 'data-toggle' => "modal", 'data-target' => "#editInvoice#{invoice.id}"
+            %td
+              = link_to 'Dismiss', admin_pending_invoice_path(invoice), 'class' => 'btn btn-danger', 'data-method' => "delete", 'data-confirm' => "This can't be undone. Are you sure?"
 - else
   .push
   .alert.alert-warning No pending invoices found.
