@@ -1,7 +1,7 @@
 !!!
 %html{'ng-app' => "angularJS"}
   %head
-    %title= content_for?(:title) ? content_for(:title) : "DataCentred"
+    %title= content_for?(:title) ? "DataCentred - #{content_for(:title)}" : "DataCentred"
     = render partial: 'shared/head'
 
 %body{'data-controller' => controller.controller_path, 'data-action' => controller.action_name}
