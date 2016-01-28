@@ -25,14 +25,7 @@
     %p.tiny
       = pluralize(role.users.count, t(:member))
     = render partial: 'support/users/images', locals: {role: role}
-
-
-
  
   .panel-collapse.collapse{:id => "role_#{role.id}"}
     .panel-body
-      - if role.power_user?
-        %br
-        = t(:owners_group_description)
-      - else
-        = render partial: 'permissions', locals: {role: role}
+      = render partial: 'permissions', locals: {role: role}

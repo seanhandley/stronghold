@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class Support::ProjectsControllerTest < ActionController::TestCase
+
   setup do
     @user = User.make!
     @organization = @user.organization
@@ -63,6 +64,14 @@ class Support::ProjectsControllerTest < ActionController::TestCase
     assert @response.body.include? support_projects_path
   end
 
+  test "Can create new tenant with roles" do
+    UserTenantRole.stub(:required_role_ids, ["foo"]) do
+      post :create, tenant: { name: 'Foo', roles: {@role.id.to_s => true}}, quota: {compute: {"instances" => 1}, volume: {"gigabytes" => 10}, network: {"floatingip" => 1}}, format: 'js'
+    end
+    assert_response 302
+    assert @response.body.include? support_projects_path   
+  end
+
   test "Can't create new tenant with bad params" do
     post :create, tenant: { name: ''}, quota: {compute: {}, volume: {}, network: {}}, format: 'js'
     assert_response :unprocessable_entity
@@ -93,6 +102,14 @@ class Support::ProjectsControllerTest < ActionController::TestCase
 
   test "Can update tenant with quotas" do
     patch :update, id: @organization.primary_tenant.id, tenant: { name: 'Foo' }, quota: {compute: {"instances" => 3}, volume: {"gigabytes" => 20}, network: {"floatingip" => 1}}, format: 'js'
+    assert_response 302
+    assert @response.body.include? support_projects_path
+  end
+
+  test "Can update tenant with roles" do
+    UserTenantRole.stub(:required_role_ids, ["foo"]) do
+      patch :update, id: @organization.primary_tenant.id, tenant: { name: 'Foo', roles: {@role.id.to_s => true} }, quota: {compute: {"instances" => 3}, volume: {"gigabytes" => 20}, network: {"floatingip" => 1}}, format: 'js'
+    end
     assert_response 302
     assert @response.body.include? support_projects_path
   end

@@ -3,6 +3,8 @@ class Role < ActiveRecord::Base
   has_associated_audits
 
   has_and_belongs_to_many :users
+  has_and_belongs_to_many :tenants
+  
   belongs_to :organization
   before_destroy :check_power, :check_users
   after_commit :check_openstack_access, :check_ceph_access

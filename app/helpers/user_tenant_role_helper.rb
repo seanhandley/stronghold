@@ -2,6 +2,15 @@ module UserTenantRoleHelper
   def user_tenant_roles_attributes
     users_in_this_org = current_organization.users.collect(&:id)
     users_destined_for_this_tenant = tenant_params[:users].present? ? tenant_params[:users].keys.map(&:to_i).select{|u| User.find_by_id(u)}.compact : []
+    if tenant_params[:roles].present?
+      tenant_params[:roles].keys.map(&:to_i).each do |role_id|
+        Role.find(role_id).users.each do |user|
+          users_destined_for_this_tenant << user.id
+        end
+      end
+    end
+    users_destined_for_this_tenant.uniq!
+
     users_not_destined_for_this_tenant = users_in_this_org - users_destined_for_this_tenant
 
     utrs_for_removal = users_not_destined_for_this_tenant.collect do |u|

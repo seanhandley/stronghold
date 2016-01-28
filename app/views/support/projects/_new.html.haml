@@ -21,12 +21,17 @@
                   %a{'href' => "#members-new", 'aria-controls' => "members-new", 'role' => "tab", 'data-toggle' => "tab"}
                     Members
                 %li{role: "presentation"}
+                  %a{'href' => "#roles-new", 'aria-controls' => "roles-new", 'role' => "tab", 'data-toggle' => "tab"}
+                    Roles
+                %li{role: "presentation"}
                   %a{'href' => "#quotas-new", 'aria-controls' => "quotas-new", 'role' => "tab", 'data-toggle' => "tab"}
                     Quotas
 
             .tab-content
               .tab-pane.active{role: "tabpanel", id: 'members-new'}
                 = render partial: 'users', locals: {tenant: f.object}
+              .tab-pane{role: "tabpanel", id: "roles-new"}
+                = render partial: 'roles', locals: {tenant: f.object}
               .tab-pane{role: "tabpanel", id: 'quotas-new'}
                 = render partial: 'quotas', locals: {tenant: f.object}
 

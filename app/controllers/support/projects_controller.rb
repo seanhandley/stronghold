@@ -16,6 +16,7 @@ class Support::ProjectsController < SupportBaseController
       @tenant.save!
       @tenant.update!(user_tenant_roles_attributes)
       @tenant.update_attributes!(quota_set: quota_params.to_h)
+      @tenant.update_attributes!(role_ids: tenant_params[:roles] ? tenant_params[:roles].keys.map(&:to_i) : [])
       @tenant.enable!
       javascript_redirect_to support_projects_path
     rescue ActiveRecord::RecordInvalid
@@ -26,7 +27,7 @@ class Support::ProjectsController < SupportBaseController
   end
 
   def update
-    ajax_response(@tenant, :update, support_projects_path, user_tenant_roles_attributes.merge(name: tenant_params[:name], quota_set: quota_params.to_h))
+    ajax_response(@tenant, :update, support_projects_path, user_tenant_roles_attributes.merge(role_ids: tenant_params[:roles] ? tenant_params[:roles].keys.map(&:to_i) : [], name: tenant_params[:name], quota_set: quota_params.to_h))
   end
 
   def destroy
@@ -48,7 +49,9 @@ class Support::ProjectsController < SupportBaseController
   end
 
   def tenant_params
-    params.require(:tenant).permit(:name, :users => Hash[current_organization.users.map{|u| [u.id.to_s, true]}])
+    params.require(:tenant).permit(:name,
+                                   :users => Hash[current_organization.users.map{|u| [u.id.to_s, true]}],
+                                   :roles => Hash[current_organization.roles.map{|r| [r.id.to_s, true]}])
   end
 
   def quota_params

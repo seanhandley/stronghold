@@ -16,6 +16,8 @@ class Tenant < ActiveRecord::Base
   has_many :user_tenant_roles, dependent: :destroy
   has_many :users, :through => :user_tenant_roles
 
+  has_and_belongs_to_many :roles
+
   has_many :billing_instances, primary_key: :uuid, class_name: 'Billing::Instance'
   has_many :billing_volumes, primary_key: :uuid, class_name: 'Billing::Volume'
   has_many :billing_images, primary_key: :uuid, class_name: 'Billing::Image'
