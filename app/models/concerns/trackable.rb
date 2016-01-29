@@ -1,5 +1,6 @@
 module Trackable
   include ActionView::Helpers::TagHelper
+  include ActionView::Helpers::DateHelper
 
   def seen_online!(request)
     agent = UserAgent.parse(request.headers["HTTP_USER_AGENT"])
