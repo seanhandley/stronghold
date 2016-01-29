@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  include Trackable
+  
   audited only: [:first_name, :last_name, :email]
 
   attr_accessor :password, :password_confirmation, :token
@@ -125,20 +127,6 @@ class User < ActiveRecord::Base
     Rails.cache.delete("ec2_credentials_#{id}")
     remove_ceph_keys
     check_ceph_access
-  end
-
-  def seen_online!(request)
-    Rails.cache.fetch("user_online_#{id}", expires_in: 5.minutes) do
-      {
-        agent: request.headers["HTTP_USER_AGENT"],
-        ip: request.remote_ip,
-        url: request.url
-      }
-    end
-  end
-
-  def online?
-    !!Rails.cache.read("user_online_#{id}")
   end
 
   private

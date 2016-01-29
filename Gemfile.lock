@@ -606,6 +606,7 @@ GEM
       equalizer (~> 0.0.9)
       parser (~> 2.2.2)
       procto (~> 0.0.2)
+    useragent (0.16.3)
     vcr (2.9.3)
     verbs (2.1.4)
       activesupport (>= 2.3.4)
@@ -730,6 +731,7 @@ DEPENDENCIES
   uglifier (>= 2.7)
   unicorn (~> 4.8)
   unicorn-worker-killer (~> 0.4.2)
+  useragent
   vcr
   verbs (~> 2.1.4)
   web-console (~> 2.1)

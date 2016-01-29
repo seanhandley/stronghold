@@ -1,0 +1,37 @@
+- title "Online Users"
+
+%h1
+  %i.fa.fa-globe
+  Online Users
+%p Active in the last five minutes.
+
+- if @users.any?
+  .table-responsive
+    %table.table.table-striped.table-hover
+      %thead
+        %th Name
+        %th Organization
+        %th IP
+        %th Operating System
+        %th Browser
+        %th URL last accessed
+      %tbody
+        - for user in @users
+          %tr
+            %td= user.name
+            %td
+              = user.organization.name
+              .tiny= user.organization.reference
+            %td= user.last_known_connection[:ip]
+            %td
+              = os_icon user.last_known_connection[:platform]
+              = user.last_known_connection[:platform]
+              .tiny= user.last_known_connection[:os]
+            %td
+              = browser_icon user.last_known_connection[:browser]
+              = user.last_known_connection[:browser]
+              .tiny= user.last_known_connection[:version]
+            %td= user.last_known_connection[:url]
+- else
+  %h3 Nobody's here
+  = image_tag 'tumbleweed.gif', style: 'width: 60%; height: auto'

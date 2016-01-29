@@ -52,6 +52,7 @@ gem 'holidays', '~> 2.2'
 gem 'ruby-prof'
 gem "paranoia", "~> 2.0"
 gem 'minitest-ci', :git => 'git@github.com:circleci/minitest-ci.git'
+gem "useragent"
 
 group :test, :acceptance do
   gem 'faker'
