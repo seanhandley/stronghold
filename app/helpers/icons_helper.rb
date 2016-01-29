@@ -9,6 +9,8 @@ module IconsHelper
       tag('i', class: ['fa', 'fa-edge'])
     when 'safari'
       tag('i', class: ['fa', 'fa-safari'])
+    when 'opera'
+      tag('i', class: ['fa', 'fa-opera'])
     else
       nil
     end
