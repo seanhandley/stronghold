@@ -12,7 +12,7 @@ module Trackable
       ip: request.remote_ip,
       url: request.url,
       timestamp: Time.now,
-      country: GeoIp.geolocation(request.remote_ip)[:country_code].to_sym
+      country: GeoIp.geolocation(request.remote_ip)[:country_code].downcase
     }
     Rails.cache.write("user_online_#{id}", info, expires_in: 1.day)
   end
