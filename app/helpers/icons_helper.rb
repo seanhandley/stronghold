@@ -20,6 +20,8 @@ module IconsHelper
       tag('i', class: ['fa', 'fa-windows'])
     when 'linux', 'x11'
       tag('i', class: ['fa', 'fa-linux'])
+    when 'android'
+      tag('i', class: ['fa', 'fa-android'])
     when 'macintosh'
       tag('i', class: ['fa', 'fa-apple'])
     else
