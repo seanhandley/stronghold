@@ -14,7 +14,6 @@
         %th IP
         %th Operating System
         %th Browser
-        %th URL last accessed
       %tbody
         - for user in @users
           %tr
@@ -31,7 +30,6 @@
               = browser_icon user.last_known_connection[:browser]
               = user.last_known_connection[:browser]
               .tiny= user.last_known_connection[:version]
-            %td= user.last_known_connection[:url]
 - else
   %h3 Nobody's here
   = image_tag 'tumbleweed.gif', style: 'width: 60%; height: auto'
