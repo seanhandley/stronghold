@@ -18,7 +18,7 @@ module IconsHelper
     case name.downcase
     when 'windows'
       tag('i', class: ['fa', 'fa-windows'])
-    when 'linux'
+    when 'linux', 'x11'
       tag('i', class: ['fa', 'fa-linux'])
     when 'macintosh'
       tag('i', class: ['fa', 'fa-apple'])
