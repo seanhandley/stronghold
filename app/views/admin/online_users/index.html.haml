@@ -9,6 +9,7 @@
   .table-responsive
     %table.table.table-striped.table-hover
       %thead
+        %th Status
         %th Name
         %th Organization
         %th IP
@@ -17,6 +18,7 @@
       %tbody
         - for user in @users
           %tr
+            %td= user.status
             %td= user.name
             %td
               = user.organization.name
@@ -31,5 +33,5 @@
               = user.last_known_connection[:browser]
               .tiny= user.last_known_connection[:version]
 - else
-  %h3 Nobody's here
+  %h3 Nobody's been here today :-(
   = image_tag 'tumbleweed.gif', style: 'width: 60%; height: auto'
