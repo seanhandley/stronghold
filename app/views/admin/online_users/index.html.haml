@@ -14,6 +14,7 @@
         %th IP
         %th Operating System
         %th Browser
+        %th Country
       %tbody
         - for user in @users
           %tr
@@ -22,7 +23,10 @@
             %td
               = user.organization.name
               .tiny= user.organization.reference
-            %td= user.last_known_connection[:ip]
+            %td
+              = flag_list 16 do
+                = flag(user.last_known_connection[:country])
+              = user.last_known_connection[:ip]
             %td
               = os_icon user.last_known_connection[:platform]
               = user.last_known_connection[:platform]
@@ -31,6 +35,7 @@
               = browser_icon user.last_known_connection[:browser]
               = user.last_known_connection[:browser]
               .tiny= user.last_known_connection[:version]
+              
 - else
   %h3 Nobody's been here today :-(
   = image_tag 'tumbleweed.gif', style: 'width: 60%; height: auto'

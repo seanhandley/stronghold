@@ -11,7 +11,8 @@ module Trackable
       version: agent.version,
       ip: request.remote_ip,
       url: request.url,
-      timestamp: Time.now
+      timestamp: Time.now,
+      country: GeoIp.geolocation(request.remote_ip)[:country_code]
     }
     Rails.cache.write("user_online_#{id}", info, expires_in: 1.day)
   end
