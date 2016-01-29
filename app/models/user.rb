@@ -127,6 +127,14 @@ class User < ActiveRecord::Base
     check_ceph_access
   end
 
+  def seen_online!
+    Rails.cache.write("user_online_#{id}", true, expires_in: 5.minutes)
+  end
+
+  def online?
+    !!Rails.cache.read("user_online_#{id}")
+  end
+
   private
 
   def password_complexity

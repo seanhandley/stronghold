@@ -54,7 +54,11 @@ class ApplicationController < ActionController::Base
 
   def current_user
     @current_user ||= User.find_by_id(session[:user_id]) if session[:user_id]
-    reset_session unless @current_user
+    if @current_user
+      @current_user.seen_online!
+    else
+      reset_session
+    end
     @current_user
   end
   helper_method :current_user
