@@ -128,7 +128,13 @@ class User < ActiveRecord::Base
   end
 
   def seen_online!(request)
-    Rails.cache.write("user_online_#{id}", request, expires_in: 5.minutes)
+    Rails.cache.fetch("user_online_#{id}", expires_in: 5.minutes) do
+      {
+        agent: request.headers["HTTP_USER_AGENT"],
+        ip: request.remote_ip,
+        url: request.url
+      }
+    end
   end
 
   def online?
