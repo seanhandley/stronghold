@@ -26,7 +26,7 @@
             %td
               = flag_list 16 do
                 = flag(user.last_known_connection[:country])
-              = user.last_known_connection[:ip]
+                = user.last_known_connection[:ip]
             %td
               = os_icon user.last_known_connection[:platform]
               = user.last_known_connection[:platform]
