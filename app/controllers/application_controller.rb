@@ -53,7 +53,6 @@ class ApplicationController < ActionController::Base
   before_action { Authorization.current_user = nil }
 
   def current_user
-    p request.headers
     @current_user ||= User.find_by_id(session[:user_id]) if session[:user_id]
     if @current_user
       @current_user.seen_online!(request)
