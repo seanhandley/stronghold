@@ -25,7 +25,7 @@ module Trackable
   end
 
   def status
-    online_now? ? tag('i', class: ['fa', 'fa-circle'], style: 'color: green;') + " Online" : tag('i', class: ['fa', 'fa-circle'], style: 'color: grey;') + " Last seen #{time_ago_in_words last_known_connection[:timestamp]}"
+    online_now? ? tag('i', class: ['fa', 'fa-circle'], style: 'color: green;') + " Online" : tag('i', class: ['fa', 'fa-circle'], style: 'color: grey;') + " Last seen #{time_ago_in_words last_known_connection[:timestamp]} ago"
   end
 
   def last_known_connection
