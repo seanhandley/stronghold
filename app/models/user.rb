@@ -127,8 +127,8 @@ class User < ActiveRecord::Base
     check_ceph_access
   end
 
-  def seen_online!
-    Rails.cache.write("user_online_#{id}", true, expires_in: 5.minutes)
+  def seen_online!(request)
+    Rails.cache.write("user_online_#{id}", request, expires_in: 5.minutes)
   end
 
   def online?
