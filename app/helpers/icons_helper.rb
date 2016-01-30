@@ -24,7 +24,7 @@ module IconsHelper
       tag('i', class: ['fa', 'fa-linux'])
     when 'android'
       tag('i', class: ['fa', 'fa-android'])
-    when 'macintosh'
+    when 'macintosh', 'iphone', 'ipad'
       tag('i', class: ['fa', 'fa-apple'])
     else
       nil
