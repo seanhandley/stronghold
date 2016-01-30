@@ -8,7 +8,7 @@ module Trackable
       platform: agent.platform,
       os: agent.os,
       browser: agent.browser,
-      version: agent.version.to_s,
+      version: agent.version,
       ip: request.remote_ip,
       url: request.url,
       country: GeoIp.geolocation(request.remote_ip)[:country_code].downcase
