@@ -12,7 +12,8 @@ class ApplicationController < ActionController::Base
     slow_404
   end
 
-  before_filter :device_cookie
+  before_action :device_cookie
+  before_action :seen_online
 
   def javascript_redirect_to(path)
     render js: "window.location.replace('#{path}')", status: 302
@@ -54,11 +55,7 @@ class ApplicationController < ActionController::Base
 
   def current_user
     @current_user ||= User.find_by_id(session[:user_id]) if session[:user_id]
-    if @current_user
-      @current_user.seen_online!(request)
-    else
-      reset_session
-    end
+    reset_session unless @current_user
     @current_user
   end
   helper_method :current_user
@@ -81,6 +78,10 @@ class ApplicationController < ActionController::Base
     @device_cookie ||= cookies[:_d]
   end
   helper_method :device_cookie
+
+  def seen_online
+    current_user && current_user.seen_online!(request)
+  end
 
   helper Starburst::AnnouncementsHelper
 
