@@ -11,10 +11,9 @@ module Trackable
       version: agent.version,
       ip: request.remote_ip,
       url: request.url,
-      timestamp: Time.now,
       country: GeoIp.geolocation(request.remote_ip)[:country_code].downcase
     }
-    Rails.cache.write("user_online_#{id}", info, expires_in: 1.day)
+    SeenOnlineJob.perform_later(info)
   end
 
   def online_today?
