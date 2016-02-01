@@ -26,7 +26,7 @@
               .input-group.has-warning
                 %span.input-group-addon
                   %i.fa.fa-folder-o
-                = f.select :tenant_ids, tenants_for_select(current_organization), {}, class: "select-tenants", multiple: true, placeholder: 'OpenStack Projects (Optional)'
+                = f.select :project_ids, projects_for_select(current_organization), {}, class: "select-projects", multiple: true, placeholder: 'OpenStack Projects (Optional)'
         .modal-footer
           %button.btn.btn-default{'data-toggle' => "modal", 'data-dismiss' => "modal"}
             = t(:cancel)

@@ -5,7 +5,7 @@ class Support::QuotasController < SupportBaseController
   before_filter :check_power_user_and_cloud
 
   def index
-    @projects = current_organization.tenants
+    @projects = current_organization.projects
   end
 
   def update

@@ -23,7 +23,7 @@ module OffboardingFixtures
                               {"os-vol-tenant-attr:tenant_id" => '54321', 'id' => '2'}]}
     volumes_response.expect(:body, volumes)
 
-    volume_mock.expect(:list_volumes, volumes_response, [true, Hash])
+    volume_mock.expect(:list_volumes_detailed, volumes_response, [Hash])
     volume_mock.expect(:delete_volume, true, ['1'])
 
     snapshots_response = MiniTest::Mock.new
@@ -32,7 +32,7 @@ module OffboardingFixtures
                               {"os-extended-snapshot-attributes:project_id" => '54321', 'id' => '2'}]}
     snapshots_response.expect(:body, snapshots)
 
-    volume_mock.expect(:list_snapshots, snapshots_response, [true, Hash])
+    volume_mock.expect(:list_snapshots_detailed, snapshots_response, [Hash])
     volume_mock.expect(:delete_snapshot, true, ['1'])
     volume_mock
   end

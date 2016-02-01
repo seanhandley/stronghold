@@ -29,8 +29,8 @@ class User < ActiveRecord::Base
 
   has_and_belongs_to_many :roles
   belongs_to :organization
-  has_many :user_tenant_roles, dependent: :destroy
-  has_many :tenants, :through => :user_tenant_roles
+  has_many :user_project_roles, dependent: :destroy
+  has_many :projects, :through => :user_project_roles
 
   validates :email, :uniqueness => true
   validates :email, :organization_id, :presence => true
@@ -115,15 +115,19 @@ class User < ActiveRecord::Base
     cache = Rails.cache
     cache.delete("ec2_credentials_#{id}") unless cache.fetch("ec2_credentials_#{id}")
     cache.fetch("ec2_credentials_#{id}", expires_in: 30.days) do
-      OpenStackConnection.identity.list_ec2_credentials(user_id: uuid).body['credentials'].first
+      blob = OpenStackConnection.identity.list_os_credentials(user_id: uuid).body['credentials'].first.try(:[], 'blob')
+      blob ? JSON.parse(blob) : nil
     end
   end
 
   def refresh_ec2_credentials!   
-    OpenStackConnection.identity.list_ec2_credentials(user_id: uuid).body['credentials'].each do |credential|
-      OpenStackConnection.identity.delete_ec2_credential(uuid, credential['access'])
+    OpenStackConnection.identity.list_os_credentials(user_id: uuid).body['credentials'].each do |credential|
+      OpenStackConnection.identity.delete_os_credential(credential['id'])
     end
-    OpenStackConnection.identity.create_ec2_credential(uuid, organization.primary_tenant.uuid)
+    OpenStackConnection.identity.create_os_credential(user_id: uuid,
+      project_id: organization.primary_project.uuid,
+      type: 'ec2',
+      blob: {'access' => SecureRandom.hex, 'secret' => SecureRandom.hex}.to_json)
     Rails.cache.delete("ec2_credentials_#{id}")
     remove_ceph_keys
     check_ceph_access
@@ -147,7 +151,7 @@ class User < ActiveRecord::Base
   end
 
   def generate_ec2_credentials
-    unless Rails.env.test? || Rails.env.staging?
+    unless Rails.env.test?
       CreateEC2CredentialsJob.perform_later(self)
     end
   end

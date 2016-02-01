@@ -6,26 +6,26 @@ namespace :stronghold do
       exit
     end
     if(organization = Organization.find_by_reference(ENV['REFERENCE']))
-      organization.tenants.each do |tenant|
-        unless Ceph::User.exists?('uid' => tenant.uuid)
-          Ceph::User.create 'uid' => tenant.uuid, 'display-name' => tenant.reference
-          puts "Added a Ceph user for tenant #{tenant.reference}"
+      organization.projects.each do |project|
+        unless Ceph::User.exists?('uid' => project.uuid)
+          Ceph::User.create 'uid' => project.uuid, 'display-name' => project.reference
+          puts "Added a Ceph user for project #{project.reference}"
         end
       end
       organization.users.each do |user|
         credentials = OpenStackConnection.identity.list_ec2_credentials(user_id: user.uuid).body['credentials']
-        tenants_with_creds = credentials.collect{|c| c['tenant_id']}
-        organization.tenants.each do |tenant|
-          unless tenants_with_creds.include?(tenant.uuid)
-            credential = OpenStackConnection.identity.create_ec2_credential(user.uuid, tenant.uuid).body['credential']
-            puts "Created new EC2 credential for tenant #{tenant.reference} for user #{user.name}"
+        projects_with_creds = credentials.collect{|c| c['project_id']}
+        organization.projects.each do |project|
+          unless projects_with_creds.include?(project.uuid)
+            credential = OpenStackConnection.identity.create_ec2_credential(user.uuid, project.uuid).body['credential']
+            puts "Created new EC2 credential for project #{project.reference} for user #{user.name}"
           else
-            credential = credentials.select{|c| c['tenant_id'] == tenant.uuid}.first
+            credential = credentials.select{|c| c['project_id'] == project.uuid}.first
           end
-          keys = Ceph::User.exists?('uid' => tenant.uuid)['keys'].collect{|k| k['access_key']}
+          keys = Ceph::User.exists?('uid' => project.uuid)['keys'].collect{|k| k['access_key']}
           unless keys.include?(credential['access'])
-            Ceph::UserKey.create 'uid' => tenant.uuid, 'access-key' => credential['access'], 'secret-key' => credential['secret']
-            puts "Added EC2 credential to Ceph for tenant #{tenant.reference} for user #{user.name}"
+            Ceph::UserKey.create 'uid' => project.uuid, 'access-key' => credential['access'], 'secret-key' => credential['secret']
+            puts "Added EC2 credential to Ceph for project #{project.reference} for user #{user.name}"
           end
         end
       end

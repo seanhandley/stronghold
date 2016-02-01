@@ -15,13 +15,11 @@ class AuthorizedController < ApplicationController
 
   def reauthenticate(password)
     if token = current_user.authenticate(password)
-      if token.is_a? String
-        session[:created_at] = Time.now.utc
-        session[:token]      = token
-        return true
-      else
-        return false
-      end
+      session[:created_at] = Time.now.utc
+      session[:token]      = token
+      return true
+    else
+      return false
     end
   end
 

@@ -112,13 +112,13 @@ module OpenStackObject
         args = OPENSTACK_ARGS.dup
         current_user = Authorization.current_user
         if current_user.present? && !current_user.admin?
-          username   = current_user.email
-          tenant     = current_user.organization.primary_tenant.reference
-          token      = current_user.token
-          args.merge!(:openstack_username   => username,
-                      :openstack_auth_token => token,
-                      :openstack_tenant     => tenant,
-                      :openstack_api_key    => nil)
+          username    = current_user.email
+          project     = current_user.organization.primary_project.reference
+          token       = current_user.token
+          args.merge!(:openstack_username         => username,
+                      :openstack_auth_token       => token,
+                      :openstack_project_name     => project,
+                      :openstack_api_key          => nil)
         end
         "Fog::#{object_name.to_s.titleize}".constantize.new(args)
       rescue NameError

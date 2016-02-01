@@ -8,7 +8,7 @@ class TestInstancesResize < CleanTest
   def setup
     @from = Time.parse("2015-07-23 08:00:00")
     @to = Time.parse("2015-07-23 18:00:00")
-    @tenant = Tenant.make!(name: 'datacentred', uuid: 'ed4431814d0a40dc8f10f5ac046267e9')
+    @project = Project.make!(name: 'datacentred', uuid: 'ed4431814d0a40dc8f10f5ac046267e9')
     @events = JSON.parse(File.read(File.expand_path("../../../../fixtures/dumps/resize_instance.json", __FILE__)))
     @servers_mock = OpenStruct.new(servers: MockServers.new)
     load_instance_flavors

@@ -27,9 +27,9 @@ class TestCustomerSignupGenerator < CleanTest
     @organization = Organization.make!
     mock = Minitest::Mock.new
     mock.expect(:disable!, nil)
-    mock.expect(:id, Tenant.first.id)
+    mock.expect(:id, Project.first.id)
     Organization.stub(:create!, @organization) do
-      @organization.stub(:primary_tenant, mock) do 
+      @organization.stub(:primary_project, mock) do 
         @customer.generate!
       end
     end
@@ -44,7 +44,7 @@ class TestCustomerSignupGenerator < CleanTest
 
   def test_sets_quotas
     @customer.generate!
-    assert Tenant.first.quota_set
+    assert Project.first.quota_set
   end
 
   def tests_notifies_of_signup

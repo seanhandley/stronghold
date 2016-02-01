@@ -24,7 +24,7 @@ Organization.blueprint do
   projects_limit { 100 }
 end
 
-Tenant.blueprint do
+Project.blueprint do
   organization { Organization.make! }
   name { Faker::Company.name }
   uuid { '1c483a77bbe44afcaf3a1d098a1a897f' }
@@ -34,7 +34,7 @@ Invite.blueprint do
   email { Faker::Internet.email }
   organization { Organization.make! }
   roles { [Role.make!(organization: object.organization)] }
-  tenants { object.organization.tenants }
+  projects { object.organization.projects }
 end
 
 Invite.blueprint(:power_user) do

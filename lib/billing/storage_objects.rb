@@ -2,19 +2,19 @@ module Billing
   module StorageObjects
 
     def self.sync!(sync)
-      Tenant.with_deleted.each do |tenant|
-        next unless tenant.uuid && tenant.organization && tenant.organization.storage?
-        tb = Ceph::Usage.kilobytes_for(tenant.uuid)
-        Billing::ObjectStorage.create(tenant_id: tenant.uuid,
+      Project.with_deleted.each do |project|
+        next unless project.uuid && project.organization && project.organization.storage?
+        tb = Ceph::Usage.kilobytes_for(project.uuid)
+        Billing::ObjectStorage.create(project_id: project.uuid,
                                       size: tb,
                                       recorded_at: Time.zone.now,
                                       billing_sync: sync)
       end
     end
 
-    def self.usage(tenant_id, from, to)
+    def self.usage(project_id, from, to)
       measurements = Billing::ObjectStorage.where(:recorded_at => from..to,
-                                                  :tenant_id => tenant_id).order('recorded_at')
+                                                  :project_id => project_id).order('recorded_at')
       last = measurements.first
       gbs = measurements.collect do |measurement|
         

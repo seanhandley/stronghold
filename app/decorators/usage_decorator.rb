@@ -18,25 +18,25 @@ class UsageDecorator < ApplicationDecorator
     end
     raise(ArgumentError, 'Please supply :from_date and :to_date') unless from_date && to_date
     Rails.cache.fetch("org#{model.id}_#{from_date.strftime(timestamp_format)}_#{to_date.strftime(timestamp_format)}", expires_in: 30.days) do
-      model.tenants.where("created_at < ?", to_date).select{|t| t.deleted_at.nil? || t.deleted_at > from_date}.inject({}) do |acc, tenant|
-        ip_quota_usage = Billing::IpQuotas.usage(tenant.uuid, from_date, to_date)
-        acc[tenant] = {
-          instance_usage: Billing::Instances.usage(tenant.uuid, from_date, to_date),
-          volume_usage: Billing::Volumes.usage(tenant.uuid, from_date, to_date),
-          image_usage: Billing::Images.usage(tenant.uuid, from_date, to_date),
+      model.projects.where("created_at < ?", to_date).select{|t| t.deleted_at.nil? || t.deleted_at > from_date}.inject({}) do |acc, project|
+        ip_quota_usage = Billing::IpQuotas.usage(project.uuid, from_date, to_date)
+        acc[project] = {
+          instance_usage: Billing::Instances.usage(project.uuid, from_date, to_date),
+          volume_usage: Billing::Volumes.usage(project.uuid, from_date, to_date),
+          image_usage: Billing::Images.usage(project.uuid, from_date, to_date),
           ip_quota_usage: ip_quota_usage,
-          object_storage_usage: Billing::StorageObjects.usage(tenant.uuid, from_date, to_date),
-          current_ip_quota: tenant.quota_set['network']['floatingip'].to_i,
-          ip_quota_total: ip_quota_cost(tenant, ip_quota_usage).nearest_penny
+          object_storage_usage: Billing::StorageObjects.usage(project.uuid, from_date, to_date),
+          current_ip_quota: project.quota_set['network']['floatingip'].to_i,
+          ip_quota_total: ip_quota_cost(project, ip_quota_usage).nearest_penny
         }
         acc
       end
     end
   end
 
-  def instance_total(tenant_id, flavor_id=nil)
-    usage_data.each do |tenant, results|
-      if(tenant_id == tenant.id)
+  def instance_total(project_id, flavor_id=nil)
+    usage_data.each do |project, results|
+      if(project_id == project.id)
         results = results[:instance_usage]
         if flavor_id
           results = results.select{|i| i[:flavor][:flavor_id] == flavor_id}
@@ -47,37 +47,37 @@ class UsageDecorator < ApplicationDecorator
     return 0
   end
 
-  def volume_total(tenant_id)
-    usage_data.each do |tenant, results|
-      if(tenant_id == tenant.id)
+  def volume_total(project_id)
+    usage_data.each do |project, results|
+      if(project_id == project.id)
         return results[:volume_usage].collect{|i| i[:cost]}.sum
       end
     end
     return 0
   end
 
-  def image_total(tenant_id)
-    usage_data.each do |tenant, results|
-      if(tenant_id == tenant.id)
+  def image_total(project_id)
+    usage_data.each do |project, results|
+      if(project_id == project.id)
         return results[:image_usage].collect{|i| i[:cost]}.sum
       end
     end
     return 0
   end
 
-  def ip_quota_total(tenant_id)
-    usage_data.collect do |tenant, results|
-      if(tenant_id == tenant.id)
-        ip_quota_cost(tenant, usage_data[:ip_quota_usage])
+  def ip_quota_total(project_id)
+    usage_data.collect do |project, results|
+      if(project_id == project.id)
+        ip_quota_cost(project, usage_data[:ip_quota_usage])
       end
     end.compact.sum
   end
 
-  def ip_quota_cost(tenant, results)
+  def ip_quota_cost(project, results)
     daily_rate = ((RateCard.ip_address * 12) / 365.0).round(2)
     results = results || []
     if results.none?
-      quota = tenant.quota_set['network']['floatingip'].to_i - 1
+      quota = project.quota_set['network']['floatingip'].to_i - 1
       return ((((to_date - from_date) / 60.0) / 60.0) / 24.0).round * daily_rate * quota
     else
       start = from_date
@@ -97,26 +97,26 @@ class UsageDecorator < ApplicationDecorator
     end
   end
 
-  def object_storage_total(tenant_id)
-    usage_data.each do |tenant, results|
-      if(tenant_id == tenant.id)
+  def object_storage_total(project_id)
+    usage_data.each do |project, results|
+      if(project_id == project.id)
         return (results[:object_storage_usage] * RateCard.object_storage).nearest_penny
       end
     end
     return 0
   end
 
-  def total(tenant_id)
+  def total(project_id)
     [
-      instance_total(tenant_id), volume_total(tenant_id),
-      image_total(tenant_id),
-      ip_quota_total(tenant_id), 
-      object_storage_total(tenant_id)
+      instance_total(project_id), volume_total(project_id),
+      image_total(project_id),
+      ip_quota_total(project_id), 
+      object_storage_total(project_id)
     ].sum
   end
 
   def sub_total
-    model.tenants.collect{|t| total(t.id)}.sum
+    model.projects.collect{|t| total(t.id)}.sum
   end
 
   def discounts?

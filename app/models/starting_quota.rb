@@ -7,7 +7,7 @@ module StartingQuota
     private
 
     def settings
-      @@settings ||= YAML.load_file("#{Rails.root}/config/starting_quota.yml")
+      @@settings ||= YAML.load_file("#{Rails.root}/config/starting_quota.yml")[Rails.env]
     end
   end
 end

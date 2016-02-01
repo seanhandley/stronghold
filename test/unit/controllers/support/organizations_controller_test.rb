@@ -43,7 +43,6 @@ class Support::OrganizationsControllerTest < ActionController::TestCase
   test "User can't reauthorise with wrong password" do
     @controller.stub(:reauthenticate, false, "wrgon") do
       post :reauthorise, password: "wrgon", format: 'json'
-      assert_response :unprocessable_entity
       refute json_response['success']
     end
   end

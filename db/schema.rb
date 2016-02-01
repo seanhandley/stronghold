@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160118121019) do
+ActiveRecord::Schema.define(version: 20160201145224) do
 
   create_table "audits", force: :cascade do |t|
     t.string   "auditable_id",    limit: 255
@@ -54,13 +54,13 @@ ActiveRecord::Schema.define(version: 20160118121019) do
   add_index "billing_external_gateway_states", ["sync_id"], name: "external_gateway_syncs", using: :btree
 
   create_table "billing_external_gateways", force: :cascade do |t|
-    t.string "router_id", limit: 255
-    t.string "address",   limit: 255
-    t.string "tenant_id", limit: 255
-    t.string "name",      limit: 255
+    t.string "router_id",  limit: 255
+    t.string "address",    limit: 255
+    t.string "project_id", limit: 255
+    t.string "name",       limit: 255
   end
 
-  add_index "billing_external_gateways", ["tenant_id"], name: "tenant_external_gateways", using: :btree
+  add_index "billing_external_gateways", ["project_id"], name: "project_external_gateways", using: :btree
 
   create_table "billing_image_states", force: :cascade do |t|
     t.datetime "recorded_at",                   precision: 3
@@ -79,13 +79,13 @@ ActiveRecord::Schema.define(version: 20160118121019) do
   add_index "billing_image_states", ["sync_id"], name: "image_syncs", using: :btree
 
   create_table "billing_images", force: :cascade do |t|
-    t.string "image_id",  limit: 255
-    t.string "name",      limit: 255
-    t.string "tenant_id", limit: 255
+    t.string "image_id",   limit: 255
+    t.string "name",       limit: 255
+    t.string "project_id", limit: 255
   end
 
   add_index "billing_images", ["image_id"], name: "index_billing_images_on_image_id", unique: true, using: :btree
-  add_index "billing_images", ["tenant_id"], name: "tenant_images", using: :btree
+  add_index "billing_images", ["project_id"], name: "project_images", using: :btree
 
   create_table "billing_instance_flavors", force: :cascade do |t|
     t.string  "flavor_id", limit: 255
@@ -118,13 +118,13 @@ ActiveRecord::Schema.define(version: 20160118121019) do
     t.string "name",        limit: 255
     t.string "flavor_id",   limit: 255
     t.string "image_id",    limit: 255
-    t.string "tenant_id",   limit: 255
+    t.string "project_id",  limit: 255
     t.string "arch",        limit: 255, default: "x86_64", null: false
   end
 
   add_index "billing_instances", ["flavor_id"], name: "instance_flavors", using: :btree
   add_index "billing_instances", ["instance_id"], name: "index_billing_instances_on_instance_id", unique: true, using: :btree
-  add_index "billing_instances", ["tenant_id"], name: "tenant_instances", using: :btree
+  add_index "billing_instances", ["project_id"], name: "project_instances", using: :btree
 
   create_table "billing_invoices", force: :cascade do |t|
     t.integer "organization_id",       limit: 4,                 null: false
@@ -139,14 +139,14 @@ ActiveRecord::Schema.define(version: 20160118121019) do
   end
 
   create_table "billing_ip_quotas", force: :cascade do |t|
-    t.string   "tenant_id",   limit: 255
+    t.string   "project_id",  limit: 255
     t.integer  "quota",       limit: 4
     t.datetime "recorded_at",             precision: 3
     t.integer  "sync_id",     limit: 4
     t.integer  "previous",    limit: 4
   end
 
-  add_index "billing_ip_quotas", ["tenant_id"], name: "tenant_ip_quotas", using: :btree
+  add_index "billing_ip_quotas", ["project_id"], name: "project_ip_quotas", using: :btree
 
   create_table "billing_ip_states", force: :cascade do |t|
     t.integer  "ip_id",             limit: 4
@@ -165,13 +165,13 @@ ActiveRecord::Schema.define(version: 20160118121019) do
   add_index "billing_ip_states", ["sync_id"], name: "ip_syncs", using: :btree
 
   create_table "billing_ips", force: :cascade do |t|
-    t.string  "ip_id",     limit: 255
-    t.string  "address",   limit: 255
-    t.string  "tenant_id", limit: 255
-    t.boolean "active",                default: true, null: false
+    t.string  "ip_id",      limit: 255
+    t.string  "address",    limit: 255
+    t.string  "project_id", limit: 255
+    t.boolean "active",                 default: true, null: false
   end
 
-  add_index "billing_ips", ["tenant_id"], name: "tenant_ips", using: :btree
+  add_index "billing_ips", ["project_id"], name: "project_ips", using: :btree
 
   create_table "billing_rates", force: :cascade do |t|
     t.integer "flavor_id", limit: 4
@@ -181,13 +181,13 @@ ActiveRecord::Schema.define(version: 20160118121019) do
   end
 
   create_table "billing_storage_objects", force: :cascade do |t|
-    t.string   "tenant_id",   limit: 255
+    t.string   "project_id",  limit: 255
     t.integer  "size",        limit: 8
     t.datetime "recorded_at",             precision: 3
     t.integer  "sync_id",     limit: 4
   end
 
-  add_index "billing_storage_objects", ["tenant_id"], name: "tenant_storage_objects", using: :btree
+  add_index "billing_storage_objects", ["project_id"], name: "project_storage_objects", using: :btree
 
   create_table "billing_syncs", force: :cascade do |t|
     t.datetime "completed_at", precision: 3
@@ -195,15 +195,6 @@ ActiveRecord::Schema.define(version: 20160118121019) do
     t.datetime "period_from",  precision: 3
     t.datetime "period_to",    precision: 3
   end
-
-  create_table "billing_usages", force: :cascade do |t|
-    t.integer "year",            limit: 4,          null: false
-    t.integer "month",           limit: 4,          null: false
-    t.integer "organization_id", limit: 4,          null: false
-    t.text    "usage_data",      limit: 4294967295, null: false
-  end
-
-  add_index "billing_usages", ["organization_id"], name: "index_billing_usages_on_organization_id", using: :btree
 
   create_table "billing_volume_states", force: :cascade do |t|
     t.datetime "recorded_at",                   precision: 3
@@ -223,12 +214,12 @@ ActiveRecord::Schema.define(version: 20160118121019) do
   add_index "billing_volume_states", ["volume_id"], name: "volume_states", using: :btree
 
   create_table "billing_volumes", force: :cascade do |t|
-    t.string "volume_id", limit: 255
-    t.string "name",      limit: 255
-    t.string "tenant_id", limit: 255
+    t.string "volume_id",  limit: 255
+    t.string "name",       limit: 255
+    t.string "project_id", limit: 255
   end
 
-  add_index "billing_volumes", ["tenant_id"], name: "tenant_volumes", using: :btree
+  add_index "billing_volumes", ["project_id"], name: "project_volumes", using: :btree
   add_index "billing_volumes", ["volume_id"], name: "index_billing_volumes_on_volume_id", unique: true, using: :btree
 
   create_table "customer_signups", force: :cascade do |t|
@@ -262,16 +253,16 @@ ActiveRecord::Schema.define(version: 20160118121019) do
     t.string   "remote_message_id",  limit: 255
   end
 
-  create_table "invites_roles", force: :cascade do |t|
-    t.integer  "role_id",    limit: 4
+  create_table "invites_projects", force: :cascade do |t|
     t.integer  "invite_id",  limit: 4
+    t.integer  "project_id", limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "invites_tenants", force: :cascade do |t|
+  create_table "invites_roles", force: :cascade do |t|
+    t.integer  "role_id",    limit: 4
     t.integer  "invite_id",  limit: 4
-    t.integer  "tenant_id",  limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -290,12 +281,12 @@ ActiveRecord::Schema.define(version: 20160118121019) do
     t.string   "name",               limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "time_zone",          limit: 255, default: "London", null: false
-    t.string   "locale",             limit: 255, default: "en",     null: false
-    t.integer  "primary_tenant_id",  limit: 4
+    t.string   "time_zone",          limit: 255,   default: "London", null: false
+    t.string   "locale",             limit: 255,   default: "en",     null: false
+    t.integer  "primary_project_id", limit: 4
     t.datetime "started_paying_at"
     t.string   "stripe_customer_id", limit: 255
-    t.boolean  "self_service",                   default: true,     null: false
+    t.boolean  "self_service",                     default: true,     null: false
     t.string   "salesforce_id",      limit: 255
     t.string   "billing_address1",   limit: 255
     t.string   "billing_address2",   limit: 255
@@ -329,6 +320,18 @@ ActiveRecord::Schema.define(version: 20160118121019) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "projects", force: :cascade do |t|
+    t.string   "name",            limit: 255
+    t.string   "uuid",            limit: 255
+    t.integer  "organization_id", limit: 4
+    t.text     "quota_set",       limit: 65535
+    t.datetime "deleted_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "projects", ["deleted_at"], name: "index_projects_on_deleted_at", using: :btree
 
   create_table "resets", force: :cascade do |t|
     t.string   "email",        limit: 255
@@ -374,26 +377,13 @@ ActiveRecord::Schema.define(version: 20160118121019) do
     t.text     "category",            limit: 65535
   end
 
-  create_table "tenants", force: :cascade do |t|
-    t.string   "name",            limit: 255
-    t.string   "uuid",            limit: 255
-    t.integer  "organization_id", limit: 4
-    t.text     "quota_set",       limit: 65535
-    t.datetime "deleted_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  create_table "user_project_roles", force: :cascade do |t|
+    t.integer "user_id",    limit: 4
+    t.integer "project_id", limit: 4
+    t.string  "role_uuid",  limit: 255
   end
 
-  add_index "tenants", ["deleted_at"], name: "ignore_soft_deleted", using: :btree
-  add_index "tenants", ["deleted_at"], name: "index_tenants_on_deleted_at", using: :btree
-
-  create_table "user_tenant_roles", force: :cascade do |t|
-    t.integer "user_id",   limit: 4
-    t.integer "tenant_id", limit: 4
-    t.string  "role_uuid", limit: 255
-  end
-
-  add_index "user_tenant_roles", ["user_id", "tenant_id", "role_uuid"], name: "index_user_tenant_roles_on_user_id_and_tenant_id_and_role_uuid", unique: true, using: :btree
+  add_index "user_project_roles", ["user_id", "project_id", "role_uuid"], name: "index_user_project_roles_on_user_id_and_project_id_and_role_uuid", unique: true, using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",           limit: 255
