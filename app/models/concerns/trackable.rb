@@ -2,6 +2,16 @@ module Trackable
   include ActionView::Helpers::TagHelper
   include ActionView::Helpers::DateHelper
 
+  def self.included(base)
+    base.class_eval do
+      def self.online
+        all.select(&:online_today?).sort do |x,y|
+          y.last_known_connection[:timestamp] <=> x.last_known_connection[:timestamp]
+        end
+      end
+    end
+  end
+
   def seen_online!(request)
     agent = UserAgent.parse(request.headers["HTTP_USER_AGENT"])
     country = GeoIp.geolocation(request.remote_ip)[:country_code].downcase rescue 'GB'
