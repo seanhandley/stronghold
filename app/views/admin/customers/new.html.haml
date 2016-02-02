@@ -18,8 +18,8 @@
   = collection_check_boxes(:organization, :product_ids, Product.all, :id, :name, {}, {})
   %hr
   .form-group
-    %label Extra tenants?
-    = text_field_tag :extra_tenants, @customer.extra_tenants, class: 'form-control'
-    %p.help-block Comma separate i.e "Tenant 1, Tenant 2"
+    %label Extra projects?
+    = text_field_tag :extra_projects, @customer.extra_projects, class: 'form-control'
+    %p.help-block Comma separate i.e "Project 1, Project 2"
 
   = submit_tag 'Continue →', class: 'btn btn-primary'

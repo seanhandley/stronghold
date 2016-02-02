@@ -11,12 +11,12 @@ class Invite < ActiveRecord::Base
   validate :email_looks_valid?
   validate :no_user_has_that_email?
   validate :role_ids_belong?
-  validate :tenant_ids_belong?
+  validate :project_ids_belong?
 
   belongs_to :organization
   belongs_to :customer_signup
   has_and_belongs_to_many :roles
-  has_and_belongs_to_many :tenants, validate: false
+  has_and_belongs_to_many :projects, validate: false
 
   def can_register?
     if active? && !complete?
@@ -80,9 +80,9 @@ class Invite < ActiveRecord::Base
     end
   end
 
-  def tenant_ids_belong?
-    tenants.each do |tenant|
-      unless tenant.organization_id == organization_id
+  def project_ids_belong?
+    projects.each do |project|
+      unless project.organization_id == organization_id
         errors.add(:base, 'Invalid projects supplied. Please select valid projects for this user.')
       end
     end

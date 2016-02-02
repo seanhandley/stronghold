@@ -25,7 +25,7 @@ class OffboardingHelperTest < CleanTest
     end
   end
 
-  def test_only_instances_on_this_tenant_are_destroyed
+  def test_only_instances_on_this_project_are_destroyed
     # Proved by mock expectations - see offboarding fixtures
   end
 

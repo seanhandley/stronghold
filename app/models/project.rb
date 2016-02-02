@@ -1,4 +1,4 @@
-class Tenant < ActiveRecord::Base
+class Project < ActiveRecord::Base
   include OffboardingHelper
   include ActionView::Helpers::TextHelper
   include ActionView::Helpers::UrlHelper
@@ -10,11 +10,11 @@ class Tenant < ActiveRecord::Base
   validates :organization, :presence => true
   validates :name, length: {minimum: 1}, allow_blank: false, :uniqueness => true
 
-  syncs_with_keystone as: 'OpenStack::Tenant', actions: [:create, :destroy, :update]
+  syncs_with_keystone as: 'OpenStack::Project', actions: [:create, :destroy, :update]
   syncs_with_ceph     as: 'Ceph::User',        actions: [:create, :destroy]
 
-  has_many :user_tenant_roles, dependent: :destroy
-  has_many :users, :through => :user_tenant_roles
+  has_many :user_project_roles, dependent: :destroy
+  has_many :users, :through => :user_project_roles
 
   has_many :billing_instances, primary_key: :uuid, class_name: 'Billing::Instance'
   has_many :billing_volumes, primary_key: :uuid, class_name: 'Billing::Volume'
@@ -24,15 +24,15 @@ class Tenant < ActiveRecord::Base
   has_many :billing_storage_objects, primary_key: :uuid, class_name: 'Billing::ObjectStorage'
   has_many :billing_ip_quotas, primary_key: :uuid, class_name: 'Billing::IpQuota'
 
-  validate {|t| readonly! if t.persisted? && Tenant.find(id).staff_tenant? && name_changed? }
-  before_destroy {|t| readonly! if t.persisted? && Tenant.find(id).staff_tenant? }
+  validate {|t| readonly! if t.persisted? && Project.find(id).staff_project? && name_changed? }
+  before_destroy {|t| readonly! if t.persisted? && Project.find(id).staff_project? }
   before_destroy {|t| offboard(t, {})}
   validate :check_projects_limit, on: :create
   validate :check_quota_set, on: [:create, :update]
 
   after_commit :sync_quota_set, on: [:create, :update]
 
-  accepts_nested_attributes_for :user_tenant_roles, allow_destroy: true, reject_if: proc { |attributes| User.find_by_id(attributes["user_id"]).blank? }
+  accepts_nested_attributes_for :user_project_roles, allow_destroy: true, reject_if: proc { |attributes| User.find_by_id(attributes["user_id"]).blank? }
 
   serialize :quota_set
 
@@ -40,7 +40,7 @@ class Tenant < ActiveRecord::Base
     read_attribute(:quota_set) || StartingQuota['standard']
   end
 
-  def staff_tenant?
+  def staff_project?
     self.name == 'datacentred'
   end
 
@@ -59,19 +59,19 @@ class Tenant < ActiveRecord::Base
   end
 
   def enable!
-    OpenStackConnection.identity.update_tenant(uuid, enabled: true) unless Rails.env.test?
+    OpenStackConnection.identity.update_project(uuid, enabled: true) unless Rails.env.test?
   end
 
   def disable!
-    OpenStackConnection.identity.update_tenant(uuid, enabled: false) unless Rails.env.test?
+    OpenStackConnection.identity.update_project(uuid, enabled: false) unless Rails.env.test?
   end
 
   def destroy_unless_primary
-    destroy unless primary_tenant?
+    destroy unless primary_project?
   end
 
-  def primary_tenant?
-    organization ? organization.primary_tenant_id == id : false
+  def primary_project?
+    organization ? organization.primary_project_id == id : false
   end
 
   def quotas

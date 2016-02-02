@@ -2,4 +2,4 @@
   - current_organization.users.each_slice(2) do |users|
     .row
       - users.each do |user|
-        = render partial: 'user_entry', locals: {user: user, tenant: tenant}
+        = render partial: 'user_entry', locals: {user: user, project: project}

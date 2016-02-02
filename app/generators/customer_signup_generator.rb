@@ -32,11 +32,11 @@ class CustomerSignupGenerator
     @organization.products << Product.find_by_name('Compute')
     @organization.products << Product.find_by_name('Storage')
     @organization.save!
-    @organization.primary_tenant.disable!
+    @organization.primary_project.disable!
 
     @invite = Invite.create! email: @customer_signup.email, power_invite: true,
                              organization: @organization, customer_signup: @customer_signup,
-                             tenant_ids: [@organization.primary_tenant.id]
+                             project_ids: [@organization.primary_project.id]
     @organization.set_quotas!
     Notifications.notify(:new_signup, "New user signed up: #{@customer_signup.email} becoming organization #{@organization.id}")
   end

@@ -7,7 +7,7 @@ module Billing
     has_many :instance_states
     belongs_to :instance_image, :class_name => "Billing::Image",
                :primary_key => 'image_id', :foreign_key => 'image_id'
-    belongs_to :tenant
+    belongs_to :project
 
     scope :active, -> { all.includes(:instance_states).select(&:active?) }
 

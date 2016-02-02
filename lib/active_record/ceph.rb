@@ -19,7 +19,7 @@ module ActiveRecord
       end
 
       self.class_eval do
-        unless Rails.env.test? || Rails.env.staging?
+        unless Rails.env.test?
           after_create(:create_ceph_object)             if params[:actions].include? :create
           after_destroy(:delete_ceph_object)            if params[:actions].include? :destroy
         end

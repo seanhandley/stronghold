@@ -3,7 +3,7 @@ require 'test_helper'
 class TestCustomerGenerator < CleanTest
   def setup
     @valid_params = {organization_name: 'Testy', email: 'testy@customer.com',
-                     organization: {product_ids: [1,2]}, extra_tenants: ""}
+                     organization: {product_ids: [1,2]}, extra_projects: ""}
     [:compute, :storage, :colocation].each {|p| Product.make!(p)}
   end
 
@@ -50,19 +50,19 @@ class TestCustomerGenerator < CleanTest
     assert customer.errors.present?
   end
 
-  def test_organization_creates_primary_tenant
+  def test_organization_creates_primary_project
     VCR.use_cassette('customer_generator_valid') do
       assert_equal 0, Organization.all.count
       CustomerGenerator.new(@valid_params).generate!
       assert_equal 1, Organization.all.count
-      assert Organization.first.primary_tenant
+      assert Organization.first.primary_project
     end  
   end
 
-  def test_creates_extra_tenants
-    VCR.use_cassette('customer_generator_valid_multiple_tenants') do
-      CustomerGenerator.new(@valid_params.merge(extra_tenants: 'foo,bar')).generate!
-      assert_equal 3, Organization.first.tenants.count
+  def test_creates_extra_projects
+    VCR.use_cassette('customer_generator_valid_multiple_projects') do
+      CustomerGenerator.new(@valid_params.merge(extra_projects: 'foo,bar')).generate!
+      assert_equal 3, Organization.first.projects.count
     end  
   end
 

@@ -1,36 +1,36 @@
 class Support::ProjectsController < SupportBaseController
-  include UserTenantRoleHelper
+  include UserProjectRoleHelper
 
   skip_authorization_check
 
   before_filter :check_power_user_and_cloud_and_unrestricted
-  before_filter :fetch_tenant, only: [:update, :destroy]
+  before_filter :fetch_project, only: [:update, :destroy]
 
   def index
-    @tenants = Tenant.where(organization: current_organization).includes(:users)
+    @projects = Project.where(organization: current_organization).includes(:users)
   end
 
   def create
-    @tenant = current_organization.tenants.create(name: tenant_params[:name])
+    @project = current_organization.projects.create(name: project_params[:name])
     begin
-      @tenant.save!
-      @tenant.update!(user_tenant_roles_attributes)
-      @tenant.update_attributes!(quota_set: quota_params.to_h)
-      @tenant.enable!
+      @project.save!
+      @project.update!(user_project_roles_attributes)
+      @project.update_attributes!(quota_set: quota_params.to_h)
+      @project.enable!
       javascript_redirect_to support_projects_path
     rescue ActiveRecord::RecordInvalid
       respond_to do |format|
-        format.js { render :template => "shared/dialog_errors", :locals => {:object => @tenant }, status: :unprocessable_entity }
+        format.js { render :template => "shared/dialog_errors", :locals => {:object => @project }, status: :unprocessable_entity }
       end
     end
   end
 
   def update
-    ajax_response(@tenant, :update, support_projects_path, user_tenant_roles_attributes.merge(name: tenant_params[:name], quota_set: quota_params.to_h))
+    ajax_response(@project, :update, support_projects_path, user_project_roles_attributes.merge(name: project_params[:name], quota_set: quota_params.to_h))
   end
 
   def destroy
-    if @tenant.destroy_unless_primary
+    if @project.destroy_unless_primary
       redirect_to support_projects_path, notice: "Removed project successfully"
     else
       redirect_to support_projects_path, alert: "Couldn't delete project"
@@ -39,16 +39,16 @@ class Support::ProjectsController < SupportBaseController
 
   private
 
-  def fetch_tenant
-    @tenant ||= Tenant.find(params[:id])
+  def fetch_project
+    @project ||= Project.find(params[:id])
   end
 
   def check_power_user_and_cloud_and_unrestricted
     raise ActionController::RoutingError.new('Not Found') unless current_user.power_user? && current_organization.cloud? && !current_organization.limited_storage?
   end
 
-  def tenant_params
-    params.require(:tenant).permit(:name, :users => Hash[current_organization.users.map{|u| [u.id.to_s, true]}])
+  def project_params
+    params.require(:project).permit(:name, :users => Hash[current_organization.users.map{|u| [u.id.to_s, true]}])
   end
 
   def quota_params

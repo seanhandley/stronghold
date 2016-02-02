@@ -2,8 +2,15 @@ class CreateEC2CredentialsJob < ActiveJob::Base
   queue_as :default
 
   def perform(user)
-    tenant = user.organization.primary_tenant
-    OpenStackConnection.identity.create_ec2_credential(user.uuid, tenant.uuid).body['credential']
+    project = user.organization.primary_project
+    OpenStackConnection.identity.create_os_credential(blob: blob.to_json, type: 'ec2', user_id: user.uuid, project_id: project.uuid).body['credential']
     CheckCephAccessJob.perform_later(user)
+  end
+
+  def blob
+     {
+       "access" => SecureRandom.hex,
+       "secret" => SecureRandom.hex
+     }
   end
 end

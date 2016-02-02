@@ -2,16 +2,16 @@ module Billing
   module Volumes
 
     def self.sync!(from, to, sync)
-      Tenant.with_deleted.each do |tenant|
-        next unless tenant.uuid
-        Billing.fetch_samples(tenant.uuid, "volume", from, to).each do |volume_id, samples|
-          create_new_states(tenant.uuid, volume_id, samples, sync)
+      Project.with_deleted.each do |project|
+        next unless project.uuid
+        Billing.fetch_samples(project.uuid, "volume", from, to).each do |volume_id, samples|
+          create_new_states(project.uuid, volume_id, samples, sync)
         end
       end
     end
 
-    def self.usage(tenant_id, from, to)
-      volumes = Billing::Volume.where(:tenant_id => tenant_id).to_a.compact.reject{|volume| volume.deleted_at && volume.deleted_at < from}
+    def self.usage(project_id, from, to)
+      volumes = Billing::Volume.where(:project_id => project_id).to_a.compact.reject{|volume| volume.deleted_at && volume.deleted_at < from}
       volumes = volumes.collect do |volume|
         { terabyte_hours: terabyte_hours(volume, from, to),
                                     cost: cost(volume, from, to).nearest_penny,
@@ -173,10 +173,10 @@ module Billing
       }
     end
 
-    def self.create_new_states(tenant_id, volume_id, samples, sync)
+    def self.create_new_states(project_id, volume_id, samples, sync)
       first_sample_metadata = samples.first['resource_metadata']
       unless Billing::Volume.find_by_volume_id(volume_id)
-        volume = Billing::Volume.create(volume_id: volume_id, tenant_id: tenant_id,
+        volume = Billing::Volume.create(volume_id: volume_id, project_id: project_id,
                                         name: first_sample_metadata["display_name"])
         unless samples.any? {|s| s['resource_metadata']['event_type']}
           # This is a new volume and we don't know its current size

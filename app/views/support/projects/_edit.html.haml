@@ -13,7 +13,7 @@
           #project-details
             .form-group
               %label Name
-              = f.text_field :name, :class => 'form-control', :readonly => project.staff_tenant?
+              = f.text_field :name, :class => 'form-control', :readonly => project.staff_project?
             %div{'role' => "tabpanel"}
               %ul.nav.nav-tabs{role: "tablist"}
                 %li.active{role: "presentation"}
@@ -24,9 +24,9 @@
                     Quotas
               .tab-content
                 .tab-pane.active{role: "tabpanel", id: "tab-members#{project.id}"}
-                  = render partial: 'users', locals: {tenant: project}
+                  = render partial: 'users', locals: {project: project}
                 .tab-pane{role: "tabpanel", id: "tab-quotas#{project.id}"}
-                  = render partial: 'quotas', locals: {tenant: project}
+                  = render partial: 'quotas', locals: {project: project}
 
         .modal-footer
           %button.btn.btn-default{'data-toggle' => "modal", 'data-dismiss' => "modal"}

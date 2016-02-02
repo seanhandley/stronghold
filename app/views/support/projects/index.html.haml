@@ -15,17 +15,17 @@
       %th Members
       %th
     %tbody
-      - for tenant in @tenants
+      - for project in @projects
         %tr
-          %td= tenant.name
-          %td= tenant.uuid
-          %td= tenant.users.uniq.count
+          %td= project.name
+          %td= project.uuid
+          %td= project.users.uniq.count
           %td
             .pull-right
-              = link_to 'Edit', '', class: 'btn btn-default', 'data-toggle' => "modal", 'data-target' => "#editProject#{tenant.id}", 'remote' => true, 'data' => { 'method' => :put }
+              = link_to 'Edit', '', class: 'btn btn-default', 'data-toggle' => "modal", 'data-target' => "#editProject#{project.id}", 'remote' => true, 'data' => { 'method' => :put }
 
-              - unless tenant.staff_tenant? || tenant.primary_tenant?
-                = link_to 'Remove', support_project_path(tenant.id), class: 'btn btn-danger', :data => {:confirm => 'Are you sure? This action cannot be undone.', :method => :delete}
-        = render partial: 'edit', locals: {project: tenant}
+              - unless project.staff_project? || project.primary_project?
+                = link_to 'Remove', support_project_path(project.id), class: 'btn btn-danger', :data => {:confirm => 'Are you sure? This action cannot be undone.', :method => :delete}
+        = render partial: 'edit', locals: {project: project}
 
 = render partial: 'new'

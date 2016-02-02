@@ -19,7 +19,7 @@ class Support::InvitesController < SupportBaseController
   private
 
   def create_params
-    params.require(:invite).permit(:email, :role_ids => [], :tenant_ids => [])
+    params.require(:invite).permit(:email, :role_ids => [], :project_ids => [])
   end
 
 end

@@ -44,7 +44,7 @@ class MailerTest < ActionMailer::TestCase
     data = usage_sanity_data
     email = Mailer.usage_sanity_failures(data)
     # This email isn't sent via SMTP, but as HTML via a Slack notification
-    text = "* test - 1234 - #{Tenant.first.organization.name}"
+    text = "* test - 1234 - #{Project.first.organization.name}"
     assert email.body.parts[0].to_s.include?(text), 'message body contains details'
   end
 
@@ -171,7 +171,7 @@ class MailerTest < ActionMailer::TestCase
   end
 
   def usage_sanity_data
-    {missing_instances: {'1234' => {name: 'test', tenant_id: Tenant.make!.uuid}}, missing_volumes: {}, missing_images: {}, missing_routers: {}, new_instances: {}, sane: false}
+    {missing_instances: {'1234' => {name: 'test', project_id: Project.make!.uuid}}, missing_volumes: {}, missing_images: {}, missing_routers: {}, new_instances: {}, sane: false}
   end
 end
 

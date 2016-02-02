@@ -4,15 +4,15 @@ module RolesHelper
   end
 
   def list_of_projects(user)
-    user.tenants.map(&:name).uniq.join(', ')
+    user.projects.map(&:name).uniq.join(', ')
   end
 
   def roles_for_select(organization)
     options_for_select(organization.roles.collect{|r| [r.name, r.id]})
   end
 
-  def tenants_for_select(organization)
-    options_for_select(organization.tenants.collect{|r| [r.name, r.id]})
+  def projects_for_select(organization)
+    options_for_select(organization.projects.collect{|r| [r.name, r.id]})
   end
 
   def users_for_select(role)

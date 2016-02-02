@@ -1,12 +1,12 @@
 class CustomerGenerator
   include ActiveModel::Validations
 
-  attr_reader :organization_name, :email, :products, :extra_tenants, :salesforce_id
+  attr_reader :organization_name, :email, :products, :extra_projects, :salesforce_id
 
   def initialize(params={})
     @organization_name = params[:organization_name]
     @email             = params[:email]
-    @extra_tenants     = params[:extra_tenants]
+    @extra_projects     = params[:extra_projects]
     @salesforce_id     = params[:salesforce_id]
     if params[:organization] && params[:organization][:product_ids]
       @products = params[:organization][:product_ids].select(&:present?)
@@ -46,22 +46,22 @@ class CustomerGenerator
   private
 
   def create_customer
-    @organization = Organization.create! name: @organization_name, self_service: false, salesforce_id: @salesforce_id, projects_limit: @extra_tenants.split(',').count + 1
+    @organization = Organization.create! name: @organization_name, self_service: false, salesforce_id: @salesforce_id, projects_limit: @extra_projects.split(',').count + 1
     @products.each do |product_id|
       @organization.products << Product.find(product_id)
     end
     @organization.save!
     @organization.enable!
-    @extra_tenants.split(',').map(&:strip).map(&:downcase).uniq.each do |tenant|
-      @organization.tenants.create(name: tenant)
+    @extra_projects.split(',').map(&:strip).map(&:downcase).uniq.each do |project|
+      @organization.projects.create(name: project)
     end
     if colo_only?
-      @organization.tenants.each do |tenant|
-        tenant.update_attributes(quota_set: StartingQuota['zero'])
+      @organization.projects.each do |project|
+        project.update_attributes(quota_set: StartingQuota['zero'])
       end
     end
     create_default_network(@organization) unless colo_only?
-    Invite.create! email: @email, power_invite: true, organization: @organization, tenant_ids: [@organization.primary_tenant.id]
+    Invite.create! email: @email, power_invite: true, organization: @organization, project_ids: [@organization.primary_project.id]
     Notifications.notify(:internal_signup, "New customer account created: #{@email} invited to organization #{@organization_name}")
   end
 
@@ -71,13 +71,13 @@ class CustomerGenerator
 
   def create_default_network(organization)
     if Rails.env.production?
-      organization.tenants.collect(&:uuid).each do |tenant_id|
-        n = OpenStackConnection.network.networks.create name: 'default', tenant_id: tenant_id
+      organization.projects.collect(&:uuid).each do |project_id|
+        n = OpenStackConnection.network.networks.create name: 'default', tenant_id: project_id
         s = OpenStackConnection.network.subnets.create name: 'default', cidr: '192.168.0.0/24',
                                      network_id: n.id, ip_version: 4, dns_nameservers: ['8.8.8.8', '8.8.4.4'],
-                                     tenant_id: tenant_id
+                                     tenant_id: project_id
         external_network = OpenStackConnection.network.networks.select{|n| n.router_external == true }.first
-        r = OpenStackConnection.network.routers.create name: 'default', tenant_id: tenant_id,
+        r = OpenStackConnection.network.routers.create name: 'default', tenant_id: project_id,
                                      external_gateway_info: external_network.id
         OpenStackConnection.network.add_router_interface(r.id, s.id)
 

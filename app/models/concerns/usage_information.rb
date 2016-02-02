@@ -26,11 +26,11 @@ module UsageInformation
   end
 
   def monthly_ceph_storage_tbh
-    tenants.map{|t| Billing::StorageObjects.usage(t.uuid, *last_month)}.sum.round(5)
+    projects.map{|t| Billing::StorageObjects.usage(t.uuid, *last_month)}.sum.round(5)
   end
 
   def weekly_ceph_storage_tbh
-    tenants.map{|t| Billing::StorageObjects.usage(t.uuid, *last_week)}.sum.round(5)
+    projects.map{|t| Billing::StorageObjects.usage(t.uuid, *last_week)}.sum.round(5)
   end
 
   def monthly_usage_value
@@ -63,15 +63,15 @@ module UsageInformation
   end
 
   def compute_usage_previous_week
-    tenant_usage(*last_week)
+    project_usage(*last_week)
   end
 
   def compute_usage_previous_month
-    tenant_usage(*last_month)
+    project_usage(*last_month)
   end
 
-  def tenant_usage(from, to)
-    OpenStackConnection.usage(from,to).select{|u| tenants.map(&:uuid).include?(u['tenant_id'])}
+  def project_usage(from, to)
+    OpenStackConnection.usage(from,to).select{|u| projects.map(&:uuid).include?(u['tenant_id'])}
   rescue StandardError => e
     Honeybadger.notify(e)
     []
