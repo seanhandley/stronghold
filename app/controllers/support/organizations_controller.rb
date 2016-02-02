@@ -31,7 +31,7 @@ class Support::OrganizationsController < SupportBaseController
     if reauthenticate(reauthorise_params[:password])
       render json: {success: true }
     else
-      render json: {success: false }, status: :unprocessable_entity
+      render json: {success: false }
     end
   end
 
@@ -42,11 +42,14 @@ class Support::OrganizationsController < SupportBaseController
       creds = {:openstack_username => current_user.email,
                :openstack_api_key  => nil,
                :openstack_auth_token => session[:token],
-               :openstack_tenant   => current_organization.primary_tenant.reference }
-      current_organization.tenants.each do |tenant|
-        offboard(tenant, creds)
+               :openstack_project_name   => current_organization.primary_project.reference,
+               :openstack_domain_id  => 'default',
+               :openstack_identity_prefix => 'v3',
+               :openstack_endpoint_path_matches => //}
+      current_organization.projects.each do |project|
+        offboard(project, creds)
         begin
-          Ceph::User.update('uid' => tenant.uuid, 'suspended' => true)
+          Ceph::User.update('uid' => project.uuid, 'suspended' => true)
         rescue Net::HTTPError => e
           Honeybadger.notify(e)
         end

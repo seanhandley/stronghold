@@ -6,9 +6,9 @@ module ActiveRecord
         return true
         begin
           args = OPENSTACK_ARGS.dup
-          args.merge!(:openstack_username   => email,
-                      :openstack_tenant     => organization.primary_tenant.reference,
-                      :openstack_api_key    => password)
+          args.merge!(:openstack_username         => email,
+                      :openstack_project_name     => organization.primary_project.reference,
+                      :openstack_api_key          => password)
           Fog::Identity.new(args).unscoped_token
         rescue Excon::Errors::Unauthorized, NameError => e # Thrown when credentials are invalid
           Rails.logger.info e.inspect
@@ -31,7 +31,7 @@ module ActiveRecord
         if params[:as] == 'OpenStack::User'
           OpenStackConnection.identity.delete_user uuid
         else
-          OpenStackConnection.identity.delete_tenant uuid
+          OpenStackConnection.identity.delete_project uuid
         end
       end
 

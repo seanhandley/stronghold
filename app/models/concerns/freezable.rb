@@ -3,7 +3,7 @@ module Freezable
   # Lock out of OpenStack, but leave instances and storage accessible
   def soft_freeze!
     disable_users!
-    disable_tenants!
+    disable_projects!
     update_attributes(in_review: true)
     true
   end
@@ -18,7 +18,7 @@ module Freezable
 
   def unfreeze!
     enable_users!
-    enable_tenants!
+    enable_projects!
     enable_storage!
     unpause_instances!
     update_attributes(in_review: false)
@@ -35,12 +35,12 @@ module Freezable
     toggle_openstack!('user', false)
   end
 
-  def enable_tenants!
-    toggle_openstack!('tenant', true)
+  def enable_projects!
+    toggle_openstack!('project', true)
   end
 
-  def disable_tenants!
-    toggle_openstack!('tenant', false)
+  def disable_projects!
+    toggle_openstack!('project', false)
   end
 
   def toggle_openstack!(coll, state)
@@ -61,9 +61,9 @@ module Freezable
 
   def toggle_ceph!(state)
     unless Rails.env.test?
-      tenants.each do |tenant|
+      projects.each do |project|
         begin
-          Ceph::User.update('uid' => tenant.uuid, 'suspended' => !state)
+          Ceph::User.update('uid' => project.uuid, 'suspended' => !state)
         rescue Net::HTTPError => error
           Honeybadger.notify(error)
         end
@@ -89,25 +89,25 @@ module Freezable
 
   def toggle_instances!(state)
     fog = OpenStackConnection.compute
-    instances = tenants.collect do |tenant|
-      cached_servers.select{|server| server['tenant_id'] == tenant.uuid}.map{|server| [server['id'], server['name'], tenant.name]}
+    instances = projects.collect do |project|
+      cached_servers.select{|server| server['tenant_id'] == project.uuid}.map{|server| [server['id'], server['name'], project.name]}
     end.flatten
     if state
-      instances.each do |instance_id, name, tenant|
+      instances.each do |instance_id, name, project|
         begin
           fog.unpause_server(instance_id)
           print '.'
         rescue StandardError => e
-          "Couldn't unpause #{name} in project #{tenant}: #{e.message}"
+          "Couldn't unpause #{name} in project #{project}: #{e.message}"
         end
       end
     else
-      instances.each do |instance_id, name, tenant|
+      instances.each do |instance_id, name, project|
         begin
           fog.pause_server(instance_id)
           print '.'
         rescue StandardError => e
-          "Couldn't pause #{name} in project #{tenant}: #{e.message}"
+          "Couldn't pause #{name} in project #{project}: #{e.message}"
         end
       end
     end

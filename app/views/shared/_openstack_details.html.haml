@@ -23,4 +23,4 @@
       %tr
         %td
           %strong Projects:
-        %td= current_user.tenants.any? ? current_user.tenants.map(&:name).uniq.join(', ') : 'No projects configured for your user'
+        %td= current_user.projects.any? ? current_user.projects.map(&:name).uniq.join(', ') : 'No projects configured for your user'

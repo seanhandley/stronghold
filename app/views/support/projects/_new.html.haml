@@ -1,7 +1,7 @@
 .modal.fade#addNewProject{'tabindex' => "-1", 'role' => "dialog", 'aria-labelledby' => "addNewProject", 'aria-hidden' => "true", 'data-backdrop' => 'static'}
   .modal-dialog
     .modal-content
-      = form_for Tenant.new, url: support_projects_path, id: 'add_new_project', remote: true do |f|
+      = form_for Project.new, url: support_projects_path, id: 'add_new_project', remote: true do |f|
         .modal-header
           %button{'type' => "button", 'class' => "close", 'data-dismiss' => "modal", 'aria-hidden' => "true"}
             &times;
@@ -26,9 +26,9 @@
 
             .tab-content
               .tab-pane.active{role: "tabpanel", id: 'members-new'}
-                = render partial: 'users', locals: {tenant: f.object}
+                = render partial: 'users', locals: {project: f.object}
               .tab-pane{role: "tabpanel", id: 'quotas-new'}
-                = render partial: 'quotas', locals: {tenant: f.object}
+                = render partial: 'quotas', locals: {project: f.object}
 
         .modal-footer
           %button.btn.btn-default{'data-toggle' => "modal", 'data-dismiss' => "modal"}

@@ -45,7 +45,7 @@ $ ->
 
   $('#invite_role_ids').select2();
   $('.select-user').select2();
-  $('.select-tenants').select2();
+  $('.select-projects').select2();
 
   $('#inviteUser #invite_email').keyup (e) ->
     state = validateEmail($(this))
@@ -57,10 +57,10 @@ $ ->
     toggleErrorState($(this).closest('.input-group'), state)
   $('#inviteUser select#invite_role_ids').change()
 
-  $('#inviteUser select#invite_tenant_ids').change (e) ->
+  $('#inviteUser select#invite_project_ids').change (e) ->
     state = validateRoles($(this))
     toggleErrorState($(this).closest('.input-group'), state)
-  $('#inviteUser select#invite_tenant_ids').change()
+  $('#inviteUser select#invite_project_ids').change()
 
   $('#user-role-tabs a[data-toggle="tab"]').on 'shown.bs.tab', (e) ->
     window.history.replaceState('', '', 'team?tab=' + $(e.target).data('name'))

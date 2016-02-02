@@ -13,17 +13,17 @@ Product.find_or_create_by name: 'Colocation'
 if ['test','development'].include?(Rails.env)
   Organization.skip_callback(:create, :after, :create_salesforce_object)
   Organization.skip_callback(:update, :after, :update_salesforce_object)
-  Tenant.skip_callback(:create, :after, :create_openstack_object)
-  Tenant.skip_callback(:create, :after, :create_ceph_object)
-  Tenant.skip_callback(:destroy, :after, :delete_ceph_object)
+  Project.skip_callback(:create, :after, :create_openstack_object)
+  Project.skip_callback(:create, :after, :create_ceph_object)
+  Project.skip_callback(:destroy, :after, :delete_ceph_object)
   User.skip_callback(:create, :after, :create_openstack_object)
   User.skip_callback(:save, :after, :update_password)
   User.skip_callback(:create, :after, :generate_ec2_credentials)
   User.skip_callback(:create, :after, :subscribe_to_status_io)
 
   organization = Organization.create(name: 'DataCentred', reference: STAFF_REFERENCE, self_service: false)
-  tenant = Tenant.create(name: 'datacentred', uuid: '612bfb90f93c4b6e9ba515d51bb16022', organization: organization)
-  organization.primary_tenant_id = tenant.id
+  project = Project.create(name: 'datacentred', uuid: '612bfb90f93c4b6e9ba515d51bb16022', organization: organization)
+  organization.primary_project_id = project.id
   organization.save!
 
   users = [{id: 1, email: 'sean.handley@datacentred.co.uk', first_name: 'Sean', last_name: 'Handley', uuid: '55a927f50f304db3af1306eacbafda32'}]
@@ -47,7 +47,7 @@ if ['test','development'].include?(Rails.env)
 elsif Rails.env == 'acceptance'
   rand = (0...8).map { ('a'..'z').to_a[rand(26)] }.join.downcase
   cg = CustomerGenerator.new(organization_name: rand, email: "#{rand}@test.com",
-    extra_tenants: "", organization: { product_ids: Product.all.map{|p| p.id.to_s}})
+    extra_projects: "", organization: { product_ids: Product.all.map{|p| p.id.to_s}})
   cg.generate!
   rg = RegistrationGenerator.new(Invite.first, password: '12345678')
   rg.generate!

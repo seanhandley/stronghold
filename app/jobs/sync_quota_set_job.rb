@@ -1,12 +1,12 @@
 class SyncQuotaSetJob < ActiveJob::Base
   queue_as :default
 
-  def perform(tenant)
+  def perform(project)
     return if Rails.env.acceptance?
-    quota = StartingQuota['standard'].deep_merge(tenant.quota_set)
+    quota = StartingQuota['standard'].deep_merge(project.quota_set)
 
-    OpenStackConnection.compute.update_quota tenant.uuid, Hash[quota['compute'].map{|k,v| [k, v.to_i]}]
-    OpenStackConnection.volume.update_quota  tenant.uuid, Hash[quota['volume'].map{|k,v| [k, v.to_i]}]
-    OpenStackConnection.network.update_quota tenant.uuid, Hash[quota['network'].map{|k,v| [k, v.to_i]}]
+    OpenStackConnection.compute.update_quota project.uuid, Hash[quota['compute'].map{|k,v| [k, v.to_i]}]
+    OpenStackConnection.volume.update_quota  project.uuid, Hash[quota['volume'].map{|k,v| [k, v.to_i]}]
+    OpenStackConnection.network.update_quota project.uuid, Hash[quota['network'].map{|k,v| [k, v.to_i]}]
   end
 end

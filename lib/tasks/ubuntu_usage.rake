@@ -9,8 +9,8 @@ namespace :stronghold do
     m = Time.parse("#{year}-#{month}-01 00:00:00 UTC")
     start_date, end_date = m, m.end_of_month
     usage = Billing::Instances.usage(nil, start_date, end_date)
-    usage = usage.reject{|u| Tenant.find_by_uuid(u[:tenant_id]).organization.test_account? rescue true}
-    usage = usage.select{|u| Tenant.find_by_uuid(u[:tenant_id]).organization.paying? rescue true}
+    usage = usage.reject{|u| Project.find_by_uuid(u[:project_id]).organization.test_account? rescue true}
+    usage = usage.select{|u| Project.find_by_uuid(u[:project_id]).organization.paying? rescue true}
     usage = usage.select{|u| u[:image][:name].downcase.include?('ubuntu')}.group_by{|u| u[:image][:name]}.collect do |name, results|
       [name, {hours_per_month: (results.collect{|r| r[:billable_hours]}.sum).ceil, arch: results.first[:arch]}]
     end
@@ -27,11 +27,11 @@ namespace :stronghold do
     m = Time.parse("#{year}-#{month}-01 00:00:00 UTC")
     start_date, end_date = m, m.end_of_month
     usage = Billing::Instances.usage(nil, start_date, end_date)
-    usage = usage.reject{|u| Tenant.find_by_uuid(u[:tenant_id]).organization.test_account? rescue true}
-    usage = usage.select{|u| Tenant.find_by_uuid(u[:tenant_id]).organization.paying? rescue true}
+    usage = usage.reject{|u| Project.find_by_uuid(u[:project_id]).organization.test_account? rescue true}
+    usage = usage.select{|u| Project.find_by_uuid(u[:project_id]).organization.paying? rescue true}
     usage = usage.select{|u| u[:image][:name].downcase.include?('ubuntu')}.collect do |r|
-      [r[:image][:name], r[:billable_hours], r[:arch], r[:name], r[:tenant_id]]
+      [r[:image][:name], r[:billable_hours], r[:arch], r[:name], r[:project_id]]
     end
-    puts CSV.generate {|csv| csv << ['Image Name', 'Billable Hours', 'Arch', 'Instance Name', 'Tenant']; usage.each{|u| csv << u}}
+    puts CSV.generate {|csv| csv << ['Image Name', 'Billable Hours', 'Arch', 'Instance Name', 'Project']; usage.each{|u| csv << u}}
   end
 end

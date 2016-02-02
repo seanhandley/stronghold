@@ -48,12 +48,12 @@ class Organization < ActiveRecord::Base
   has_many :roles, dependent: :destroy
   has_many :invites, dependent: :destroy
   has_many :invoices, class_name: 'Billing::Invoice', dependent: :destroy
-  has_many :tenants, dependent: :destroy
+  has_many :projects, dependent: :destroy
   has_and_belongs_to_many :products, -> { uniq }
   has_many :organization_vouchers, {dependent: :destroy}, -> { uniq }
   has_many :vouchers, :through => :organization_vouchers
 
-  belongs_to :primary_tenant, class_name: 'Tenant'
+  belongs_to :primary_project, class_name: 'Project'
   belongs_to :customer_signup
 
   scope :paying,       -> { where('started_paying_at is not null') }
@@ -113,7 +113,7 @@ class Organization < ActiveRecord::Base
   end
 
   def new_projects_remaining
-    projects_limit - tenants.count
+    projects_limit - projects.count
   end
 
   def active_vouchers(from_date, to_date)
@@ -134,8 +134,8 @@ class Organization < ActiveRecord::Base
 
   def enable!
     unless Rails.env.test?
-      tenants.each do |tenant|
-        OpenStackConnection.identity.update_tenant(tenant.uuid, enabled: true)
+      projects.each do |project|
+        OpenStackConnection.identity.update_project(project.uuid, enabled: true)
       end
       users.each do |user|
         OpenStackConnection.identity.update_user(user.uuid, enabled: true)
@@ -146,8 +146,8 @@ class Organization < ActiveRecord::Base
 
   def disable!
     unless Rails.env.test?
-      tenants.each do |tenant|
-        OpenStackConnection.identity.update_tenant(tenant.uuid, enabled: false)
+      projects.each do |project|
+        OpenStackConnection.identity.update_project(project.uuid, enabled: false)
       end
       users.each do |user|
         OpenStackConnection.identity.update_user(user.uuid, enabled: false)
@@ -184,7 +184,7 @@ class Organization < ActiveRecord::Base
   def set_quotas!(voucher=nil)
     quota = (voucher && voucher.restricted?) ? 'restricted' : 'standard'
     update_attributes(quota_limit: StartingQuota[quota])
-    tenants.each{|tenant| tenant.update_attributes(quota_set: StartingQuota[quota])}
+    projects.each{|project| project.update_attributes(quota_set: StartingQuota[quota])}
     update_attributes(limited_storage: true) if voucher && voucher.restricted?
   end
 
@@ -201,8 +201,8 @@ class Organization < ActiveRecord::Base
       generate_reference_step(ref, (count+1))
     else
       update_column(:reference, new_ref)
-      t = tenants.create name: "#{reference}_primary"
-      update_column(:primary_tenant_id, t.id)
+      t = projects.create name: "#{reference}_primary"
+      update_column(:primary_project_id, t.id)
     end
   end
 
@@ -220,14 +220,14 @@ class Organization < ActiveRecord::Base
 
   def create_default_network!
     if Rails.env.production?
-      tenants.collect(&:uuid).each do |tenant_id|
-        next if OpenStackConnection.network.list_routers(tenant_id: tenant_id).body['routers'].count > 0
-        n = OpenStackConnection.network.networks.create name: 'default', tenant_id: tenant_id
+      projects.collect(&:uuid).each do |project_id|
+        next if OpenStackConnection.network.list_routers(tenant_id: project_id).body['routers'].count > 0
+        n = OpenStackConnection.network.networks.create name: 'default', tenant_id: project_id
         s = OpenStackConnection.network.subnets.create name: 'default', cidr: '192.168.0.0/24',
                                      network_id: n.id, ip_version: 4, dns_nameservers: ['8.8.8.8', '8.8.4.4'],
-                                     tenant_id: tenant_id
+                                     tenant_id: project_id
         external_network = OpenStackConnection.network.networks.select{|n| n.router_external == true }.first
-        r = OpenStackConnection.network.routers.create name: 'default', tenant_id: tenant_id,
+        r = OpenStackConnection.network.routers.create name: 'default', tenant_id: project_id,
                                      external_gateway_info: external_network.id
         OpenStackConnection.network.add_router_interface(r.id, s.id)
       end

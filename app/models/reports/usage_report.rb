@@ -10,20 +10,20 @@ module Reports
     def contents
       return {} unless Organization.cloud.any?
       organizations.select(&:cloud?).reject(&:test_account).collect do |organization|
-        instances = organization.tenants.collect do |tenant|
-          Billing::Instances.usage(tenant.uuid, from, to)
+        instances = organization.projects.collect do |project|
+          Billing::Instances.usage(project.uuid, from, to)
         end.flatten
 
-        volumes = organization.tenants.collect do |tenant|
-          Billing::Volumes.usage(tenant.uuid, from, to)
+        volumes = organization.projects.collect do |project|
+          Billing::Volumes.usage(project.uuid, from, to)
         end.flatten
 
-        images = organization.tenants.collect do |tenant|
-          Billing::Images.usage(tenant.uuid, from, to)
+        images = organization.projects.collect do |project|
+          Billing::Images.usage(project.uuid, from, to)
         end.flatten
 
-        objects = organization.tenants.collect do |tenant|
-          Billing::StorageObjects.usage(tenant.uuid, from, to)
+        objects = organization.projects.collect do |project|
+          Billing::StorageObjects.usage(project.uuid, from, to)
         end.flatten
 
         vcpu_hours   = instances.collect {|i| i[:billable_hours] * i[:flavor][:vcpus_count]}.sum
@@ -55,7 +55,7 @@ module Reports
 
     def organizations
       Organization.includes(
-      :tenants => [
+      :projects => [
         :billing_storage_objects,
         :billing_ip_quotas,
         {

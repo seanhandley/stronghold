@@ -54,12 +54,12 @@ module Billing
     end
   end
 
-  def self.fetch_samples(tenant_id, measurement, from, to)
-    if tenant = Tenant.find_by_uuid(tenant_id)
-      Billing.logger.info "Extracting #{measurement} samples from cache for #{tenant.organization.name} (Project: #{tenant.name})..."
+  def self.fetch_samples(project_id, measurement, from, to)
+    if project = Project.find_by_uuid(project_id)
+      Billing.logger.info "Extracting #{measurement} samples from cache for #{project.organization.name} (Project: #{project.name})..."
     end
-    tenant_samples = fetch_all_samples(measurement, from, to)[tenant_id]
-    tenant_samples ? tenant_samples.group_by{|s| s['resource_id']} : {}
+    project_samples = fetch_all_samples(measurement, from, to)[project_id]
+    project_samples ? project_samples.group_by{|s| s['resource_id']} : {}
   end
 
   def self.fetch_all_samples(measurement, from, to)
@@ -68,8 +68,8 @@ module Billing
       Billing.logger.info "Cache miss. Fetching fresh samples of type #{measurement} from #{from} to #{to}..."
       options = [{'field' => 'timestamp', 'op' => 'ge', 'value' => from.utc.strftime(timestamp_format)},
                  {'field' => 'timestamp', 'op' => 'lt', 'value' => to.utc.strftime(timestamp_format)}]
-      tenant_samples = OpenStackConnection.metering.get_samples(measurement, options).body
-      tenant_samples.group_by{|s| s['project_id']}
+      project_samples = OpenStackConnection.metering.get_samples(measurement, options).body
+      project_samples.group_by{|s| s['project_id']}
     end 
   end
 
@@ -77,7 +77,7 @@ module Billing
   def self.fetch_raw_events_for_instance(instance, from, to)
     options = [{'field' => 'timestamp', 'op' => 'ge', 'value' => from.utc.strftime(timestamp_format)},
                      {'field' => 'timestamp', 'op' => 'lt', 'value' => to.utc.strftime(timestamp_format)},
-                     {'field' => 'project_id', 'op' => 'eq', 'value' => instance.tenant_id}]
+                     {'field' => 'project_id', 'op' => 'eq', 'value' => instance.project_id}]
 
     instance_usage = OpenStackConnection.metering.get_samples('instance', options).body
     grouped_results = instance_usage.group_by{|s| s['resource_id']}

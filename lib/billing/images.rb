@@ -2,16 +2,16 @@ module Billing
   module Images
 
     def self.sync!(from, to, sync)
-      Tenant.with_deleted.each do |tenant|
-        next unless tenant.uuid
-        Billing.fetch_samples(tenant.uuid, "image", from, to).each do |image_id, samples|
-          create_new_states(tenant.uuid, image_id, samples, sync)
+      Project.with_deleted.each do |project|
+        next unless project.uuid
+        Billing.fetch_samples(project.uuid, "image", from, to).each do |image_id, samples|
+          create_new_states(project.uuid, image_id, samples, sync)
         end
       end
     end
 
-    def self.usage(tenant_id, from, to)
-      images = Billing::Image.where(:tenant_id => tenant_id).to_a.compact.reject{|image| image.deleted_at && image.deleted_at < from}
+    def self.usage(project_id, from, to)
+      images = Billing::Image.where(:project_id => project_id).to_a.compact.reject{|image| image.deleted_at && image.deleted_at < from}
       images = images.collect do |image|
         tb_hours = terabyte_hours(image, from, to)
         { terabyte_hours: tb_hours,
@@ -92,10 +92,10 @@ module Billing
       terabytes.to_f * 1024.0
     end
 
-    def self.create_new_states(tenant_id, image_id, samples, sync)
+    def self.create_new_states(project_id, image_id, samples, sync)
       first_sample_metadata = samples.first['resource_metadata']
       unless Billing::Image.find_by_image_id(image_id)
-        image = Billing::Image.create(image_id: image_id, tenant_id: tenant_id, name: first_sample_metadata["name"])
+        image = Billing::Image.create(image_id: image_id, project_id: project_id, name: first_sample_metadata["name"])
         unless samples.any? {|s| s['resource_metadata']['event_type']}
           # This is a new image and we don't know its current size
           # Attempt to find out

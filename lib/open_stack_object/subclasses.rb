@@ -5,9 +5,9 @@ module OpenStackObject
       def self.object_name     ; :compute ; end
     end
 
-    class Tenant < Base
-      def self.collection_name ; :tenants  ; end
-      def self.object_name     ; :identity ; end
+    class Project < Base
+      def self.collection_name ; :projects  ; end
+      def self.object_name     ; :identity  ; end
     end
 
     class User < Base

@@ -19,7 +19,7 @@ module Sanity
       missing_instances: build_missing_collection_hash(missing_instances, :instance_id),
       missing_volumes: build_missing_collection_hash(missing_volumes, :volume_id),
       missing_images: build_missing_collection_hash(missing_images, :image_id),
-      new_instances: Hash[new_instances.collect{|key,value| [key, {name: value['name'], tenant_id: value['tenant_id']}]}]
+      new_instances: Hash[new_instances.collect{|key,value| [key, {name: value['name'], project_id: value['tenant_id']}]}]
     }
   end
 
@@ -59,7 +59,7 @@ module Sanity
   end
 
   def self.build_missing_collection_hash(collection, id_method)
-    Hash[collection.collect{|item| [item.send(id_method), {name: item.name, tenant_id: item.tenant_id}]}]
+    Hash[collection.collect{|item| [item.send(id_method), {name: item.name, project_id: item.project_id}]}]
   end
 
   def self.compare_sanity_states(previous_results, results)

@@ -2,19 +2,19 @@ module Billing
   module Instances
 
     def self.sync!(from, to, sync)
-      Tenant.with_deleted.each do |tenant|
-        tenant_uuid = tenant.uuid
-        next unless tenant_uuid
-        Billing.fetch_samples(tenant_uuid, "instance", from, to).each do |instance_id, samples|
-          create_new_states(tenant_uuid, instance_id, samples, sync)
+      Project.with_deleted.each do |project|
+        project_uuid = project.uuid
+        next unless project_uuid
+        Billing.fetch_samples(project_uuid, "instance", from, to).each do |instance_id, samples|
+          create_new_states(project_uuid, instance_id, samples, sync)
         end
       end
     end
 
-    def self.usage(tenant_id, from, to)
+    def self.usage(project_id, from, to)
       instances = []
-      if tenant_id.present?
-        instances = Billing::Instance.where(:tenant_id => tenant_id).to_a.compact.reject{|instance| instance.terminated_at && instance.terminated_at < from}
+      if project_id.present?
+        instances = Billing::Instance.where(:project_id => project_id).to_a.compact.reject{|instance| instance.terminated_at && instance.terminated_at < from}
       else
         instances = Billing::Instance.all.to_a.compact.reject{|instance| instance.terminated_at && instance.terminated_at < from}
       end
@@ -25,7 +25,7 @@ module Billing
         {
           uuid: instance.instance_id,
           name: instance.name,
-          tenant_id: instance.tenant_id,
+          project_id: instance.project_id,
           first_booted_at: instance.first_booted_at,
           latest_state: instance.latest_state(from,to),
           terminated_at: instance.terminated_at,
@@ -202,12 +202,12 @@ module Billing
       !["error","building", "stopped", "suspended", "shutoff", "deleted"].include?(state.downcase)
     end
 
-    def self.create_new_states(tenant_id, instance_id, samples, sync)
+    def self.create_new_states(project_id, instance_id, samples, sync)
       first_sample_metadata = samples.first['resource_metadata']
       flavor_id = first_sample_metadata["instance_flavor_id"] ? first_sample_metadata["instance_flavor_id"] : first_sample_metadata["flavor.id"]
       billing_instance = Billing::Instance.find_by_instance_id(instance_id)
       unless billing_instance
-        instance = Billing::Instance.create(instance_id: instance_id, tenant_id: tenant_id, name: first_sample_metadata["display_name"],
+        instance = Billing::Instance.create(instance_id: instance_id, project_id: project_id, name: first_sample_metadata["display_name"],
                                  flavor_id: flavor_id, image_id: first_sample_metadata["image_ref_url"].split('/').last)
         unless samples.any? && samples.any? {|sample| sample['resource_metadata']['event_type']}
           # This is a new instance and we don't know its current state.

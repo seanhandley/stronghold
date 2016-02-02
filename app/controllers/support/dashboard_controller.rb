@@ -13,7 +13,7 @@ class Support::DashboardController < SupportBaseController
       }
       format.html {
         @instance_count = instance_count(Rails.cache.fetch("live_servers_dashboard") || [])
-        @object_usage = Rails.cache.fetch("object_usage_#{current_organization.primary_tenant.id}") || '0'
+        @object_usage = Rails.cache.fetch("object_usage_#{current_organization.primary_project.id}") || '0'
       }
     end
   end
@@ -29,7 +29,7 @@ class Support::DashboardController < SupportBaseController
   private
 
   def instance_count(servers)
-    servers.select{|s| current_organization.tenants.map(&:uuid).include?(s['tenant_id'])}.count
+    servers.select{|s| current_organization.projects.map(&:uuid).include?(s['tenant_id'])}.count
   end
 
   def live_servers
@@ -39,8 +39,8 @@ class Support::DashboardController < SupportBaseController
   end
 
   def object_usage
-    Rails.cache.fetch("object_usage_#{current_organization.primary_tenant.id}", expires_in: 4.hours) do
-      ((Ceph::Usage.kilobytes_for(current_organization.primary_tenant.uuid) / 1024.0) / 1024.0).round(2) rescue 0
+    Rails.cache.fetch("object_usage_#{current_organization.primary_project.id}", expires_in: 4.hours) do
+      ((Ceph::Usage.kilobytes_for(current_organization.primary_project.uuid) / 1024.0) / 1024.0).round(2) rescue 0
     end
   end
 

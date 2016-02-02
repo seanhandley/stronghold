@@ -93,9 +93,9 @@ class CapybaraTestCase < Minitest::Test
 end
 
 Minitest.after_run do
-  Tenant.all.each do |tenant|
-    tenant.delete_openstack_object
-    tenant.really_destroy! rescue tenant.delete
+  Project.all.each do |project|
+    project.delete_openstack_object
+    project.really_destroy! rescue project.delete
   end
   User.all.each do |user|
     user.delete_openstack_object
