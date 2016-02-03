@@ -40,6 +40,12 @@ module OffboardingFixtures
   def network_mock
     network_mock = MiniTest::Mock.new
 
+    floating_ips_response = MiniTest::Mock.new
+    floating_ips = {'floatingips' => [{'id' => '1'}, {'id' => '2'}]}
+    floating_ips_response.expect(:body, floating_ips)
+
+    network_mock.expect(:list_floating_ips, floating_ips_response, [{tenant_id: "12345"}])
+
     routers_response = MiniTest::Mock.new
     routers = {'routers' => [{'id' => '1'}, {'id' => '2'}]}
     routers_response.expect(:body, routers)
@@ -74,6 +80,7 @@ module OffboardingFixtures
       network_mock.expect(:delete_subnet, true, [n])
       network_mock.expect(:delete_router, true, [n])
       network_mock.expect(:delete_network, true, [n])
+      network_mock.expect(:disassociate_floating_ip, true, [n])
     end
 
     network_mock
