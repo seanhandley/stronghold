@@ -13,7 +13,7 @@ $(document).ready(function() {
     return false;
   });
   if ("Card" in window) {
-    var card = new Card({form: 'form',container: '#card-display',
+    var card = new Card({form: 'form#cc-details',container: '#card-display',
       formSelectors: {
           numberInput: 'input#card_number',
           expiryInput: 'input#expiry',
