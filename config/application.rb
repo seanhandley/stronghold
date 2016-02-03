@@ -31,7 +31,11 @@ module Stronghold
     # Use Sidekiq as the background worker
     config.active_job.queue_adapter = :sidekiq
 
+    # Default to Stripe Test
     config.stripe.publishable_key = "pk_test_7MJ5VPJPLNmTgHLC21kuoYCh"
+
+    # Rack Attack
+    config.middleware.use Rack::Attack
 
   end
 end
