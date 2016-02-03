@@ -1,7 +1,7 @@
 .modal.fade#addNewCard{'tabindex' => "-1", 'role' => "dialog", 'aria-labelledby' => "addNewCard", 'aria-hidden' => "true", 'data-backdrop' => 'static'}
   .modal-dialog
     .modal-content
-      = form_tag support_manage_cards_path, id: 'add_new_card' do
+      = form_tag support_manage_cards_path, id: 'add_new_card', class: 'animated-card' do
         .modal-header
           %button{'type' => "button", 'class' => "close", 'data-dismiss' => "modal", 'aria-hidden' => "true"}
             &times;
