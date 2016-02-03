@@ -39,9 +39,14 @@ module OffboardingHelper
     end
 
     fog = OpenStackConnection.network
-    routers  = fog.list_routers(tenant_id:  project.uuid).body['routers'].map{|r| r['id']}
-    subnets  = fog.list_subnets(tenant_id:  project.uuid).body['subnets'].map{|s| s['id']}
-    networks = fog.list_networks(tenant_id: project.uuid).body['networks'].map{|n| n['id']}
+    floating_ips = fog.list_floating_ips(tenant_id:  project.uuid).body['floating_ips'].map{|r| r['id']}
+    routers      = fog.list_routers(tenant_id:  project.uuid).body['routers'].map{|r| r['id']}
+    subnets      = fog.list_subnets(tenant_id:  project.uuid).body['subnets'].map{|s| s['id']}
+    networks     = fog.list_networks(tenant_id: project.uuid).body['networks'].map{|n| n['id']}
+
+    # Iterate through floating IPs and delete all
+    Rails.logger.info "Disassociating floating IPs: #{floating_ips.inspect}"
+    floating_ips.each {|p| fog.disassociate_floating_ip(p)}
 
     # Iterate through routers and remove router interface
     routers.each do |router|
