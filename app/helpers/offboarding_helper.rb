@@ -39,7 +39,7 @@ module OffboardingHelper
     end
 
     fog = OpenStackConnection.network
-    floating_ips = fog.list_floating_ips(tenant_id:  project.uuid).body['floating_ips'].map{|r| r['id']}
+    floating_ips = fog.list_floating_ips(tenant_id:  project.uuid).body['floatingips'].map{|r| r['id']}
     routers      = fog.list_routers(tenant_id:  project.uuid).body['routers'].map{|r| r['id']}
     subnets      = fog.list_subnets(tenant_id:  project.uuid).body['subnets'].map{|s| s['id']}
     networks     = fog.list_networks(tenant_id: project.uuid).body['networks'].map{|n| n['id']}
