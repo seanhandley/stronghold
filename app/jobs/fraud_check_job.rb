@@ -2,7 +2,7 @@ class FraudCheckJob < ActiveJob::Base
   queue_as :default
 
   def perform(customer_signup)
-    unless Rails.env.test? || Rails.env.acceptance?
+    if Rails.env.production?
       fc = FraudCheck.new(customer_signup)
       return unless customer_signup.real_ip
       if fc.suspicious?
