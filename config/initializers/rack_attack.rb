@@ -38,6 +38,6 @@ end
 ActiveSupport::Notifications.subscribe("rack.attack") do |name, start, finish, request_id, req|
   if [:throttle, :blacklist].include?(req.env['rack.attack.match_type'])
     keys = ["CONTENT_LENGTH", "PATH_INFO", "QUERY_STRING", "REMOTE_ADDR", "REMOTE_HOST", "REQUEST_METHOD", "REQUEST_URI",  "HTTP_CONNECTION", "HTTP_CACHE_CONTROL", "HTTP_ACCEPT", "HTTP_ORIGIN", "HTTP_UPGRADE_INSECURE_REQUESTS", "HTTP_USER_AGENT", "HTTP_REFERER", "HTTP_ACCEPT_ENCODING", "HTTP_ACCEPT_LANGUAGE", "HTTP_VERSION", "REQUEST_PATH", "ORIGINAL_FULLPATH", "rack.attack.throttle_data",  "rack.attack.matched", "rack.attack.match_discriminator", "rack.attack.match_type", "rack.attack.match_data"]
-    RACK_ATTACK_LOGGER.debug "[#{Time.now}] #{keys.inject({}) {|acc, k| acc[k] = req.env[k]; acc}.to_json}"
+    RACK_ATTACK_LOGGER.debug "IP: #{req.remote_ip}. Action: #{req.env['rack.attack.match_type']}. Details: #{keys.inject({}) {|acc, k| acc[k] = req.env[k]; acc}.to_json}"
   end
 end
