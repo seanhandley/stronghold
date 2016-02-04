@@ -115,7 +115,7 @@ group :development, :test do
   gem 'brakeman', :require => false
   gem 'rack-mini-profiler', :require => false
   gem 'bullet'
-  gem 'rubycritic', '1.4.0'
+  gem 'rubycritic'
   gem 'bundler-audit'
 end
 

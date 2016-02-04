@@ -3,7 +3,10 @@ require 'json'
 namespace :stronghold do
   desc "Perform code quality analysis"
   task :code_quality_analysis => :environment do
-    analysis = JSON.parse `rubycritic app lib -f json`
+    command_output = `rubycritic app lib -f json`
+    matcher = /(.+)Score: \d+\.\d+$/
+    json = matcher.match(command_output.split("\n")[-1].strip)[1]
+    analysis = JSON.parse(json)
     c_and_below = analysis['analysed_modules'].reject{|m| ['A','B'].include?(m['rating'].upcase)}
     rated_modules = ['C', 'D', 'E', 'F'].inject({}) do |acc, r|
       acc[r] = c_and_below.select{|m| m['rating'].upcase == r}
