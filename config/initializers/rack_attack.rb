@@ -20,7 +20,7 @@ Rack::Attack.throttle('req/ip', :limit => 5, :period => 1.second) do |req|
 end
 
 Rack::Attack.throttle('logins/email', :limit => 6, :period => 60.seconds) do |req|
-  req.params['user']['email'] if req.path == '/sessions' && req.post?
+  req.params.try(:[], 'user').try(:[],'email') if req.path == '/sessions' && req.post?
 end
 
 Rack::Attack.blacklisted_response = lambda do |env|
