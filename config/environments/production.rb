@@ -106,4 +106,7 @@ Rails.application.configure do
 
   config.stripe.publishable_key = "pk_live_vzTCZElYj4BdVeSj5648NROM"
 
+  # Rack Attack
+  config.middleware.use Rack::Attack
+
 end

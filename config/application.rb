@@ -34,8 +34,5 @@ module Stronghold
     # Default to Stripe Test
     config.stripe.publishable_key = "pk_test_7MJ5VPJPLNmTgHLC21kuoYCh"
 
-    # Rack Attack
-    config.middleware.use Rack::Attack
-
   end
 end

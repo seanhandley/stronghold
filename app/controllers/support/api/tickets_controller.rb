@@ -2,7 +2,7 @@ class Support::Api::TicketsController < SupportBaseController#
 
   include ApplicationHelper
 
-  newrelic_ignore_apdex only: [:index]
+  newrelic_ignore_apdex only: [:index] if Rails.env.production? || Rails.env.staging?
   skip_before_filter :timeout_session!, only: [:index]
   load_and_authorize_resource :class => "Ticket"
 
