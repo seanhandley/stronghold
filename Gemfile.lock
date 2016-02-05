@@ -383,6 +383,10 @@ GEM
     newrelic_rpm (3.9.9.275)
     nokogiri (1.6.7.2)
       mini_portile2 (~> 2.0.0.rc2)
+    pagerduty-sdk (1.0.6)
+      activesupport
+      json
+      virtus
     paranoia (2.1.4)
       activerecord (~> 4.0)
     parser (2.3.0.2)
@@ -472,6 +476,8 @@ GEM
       private_attr (~> 1.1)
       rainbow (~> 2.0)
     ref (2.0.0)
+    responders (2.1.1)
+      railties (>= 4.2.0, < 5.1)
     rest-client (1.8.0)
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 3.0)
@@ -660,6 +666,7 @@ DEPENDENCIES
   net-ssh (~> 2.8.0)
   newrelic_rpm (~> 3.9)
   nokogiri (~> 1.6)
+  pagerduty-sdk
   paranoia (~> 2.0)
   poltergeist
   premailer-rails (~> 1.8)
@@ -680,6 +687,7 @@ DEPENDENCIES
   rails-assets-normalize-css (~> 3.0)!
   recaptcha
   redcarpet (~> 3.3)
+  responders (~> 2.0)
   rest-client (~> 1.8)
   restforce (~> 2.1)
   ruby-prof

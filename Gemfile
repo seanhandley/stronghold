@@ -48,6 +48,7 @@ gem 'ruby-prof'
 gem "paranoia", "~> 2.0"
 gem 'minitest-ci', :git => 'git@github.com:circleci/minitest-ci.git'
 gem "useragent"
+gem "pagerduty-sdk"
 
 group :test, :acceptance do
   gem 'faker'

@@ -1,0 +1,44 @@
+default: &default
+  subdomain: 'datacentred'
+  service_key: '9c9284c6a0f14c48aca26c6f0912a7da'
+  monitored_services:
+    sidekiq_stronghold:
+      start: sudo start sidekiq_stronghold
+      status: status sidekiq_stronghold
+      test: running
+    clockwork_stronghold:
+      start: sudo start clockwork_stronghold
+      status: status clockwork_stronghold
+      test: running
+    memcached:
+      start: sudo /etc/init.d/memcached start
+      status: /etc/init.d/memcached status
+      test: running
+
+development:
+  <<: *default
+  monitored_services:
+    sidekiq_stronghold:
+      start: sudo start sidekiq_stronghold
+      status: echo 'running'
+      test: running
+    clockwork_stronghold:
+      start: sudo start clockwork_stronghold
+      status: echo 'running'
+      test: running
+    memcached:
+      start: sudo /etc/init.d/memcached start
+      status: echo 'running'
+      test: running
+
+test:
+  <<: *default
+
+acceptance:
+  <<: *default
+
+staging:
+  <<: *default
+
+production:
+  <<: *default
