@@ -14,7 +14,7 @@ module Trackable
 
   def seen_online!(request)
     agent = UserAgent.parse(request.headers["HTTP_USER_AGENT"])
-    country = GeoIp.geolocation(request.remote_ip)[:country_code].downcase rescue 'GB'
+    country = GeoIp.geolocation(request.remote_ip) rescue OpenStruct.new(country_code: 'GB', country_name: "United Kingdom")
     info = {
       platform: agent.platform,
       os: agent.os,
@@ -23,7 +23,8 @@ module Trackable
       ip: request.remote_ip,
       url: request.url,
       timestamp: Time.now,
-      country: country
+      country: country[:country_code].downcase,
+      country_name: country[:country_name]
     }
     Rails.cache.write("user_online_#{id}", info, expires_in: 1.day)
   end

@@ -35,7 +35,7 @@ class CustomerSignup < ActiveRecord::Base
   end
 
   def country
-    @country ||= GeoIp.geolocation(ip_address)[:country_code].downcase rescue 'GB'
+    @country ||= GeoIp.geolocation(ip_address) rescue OpenStruct.new(country_code: 'GB', country_name: "United Kingdom")
   end
 
   def other_signups_from_device
