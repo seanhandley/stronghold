@@ -17,7 +17,7 @@ class Admin::PendingCustomersController < AdminBaseController
     end
   end
 
-  def delete
+  def destroy
     organization = Organization.find(params[:id])
     if organization.destroy
       redirect_to admin_pending_customers_path, notice: "Successfully deleted."
