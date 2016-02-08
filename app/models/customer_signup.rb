@@ -34,6 +34,10 @@ class CustomerSignup < ActiveRecord::Base
     Organization.find_by_customer_signup_id(id)
   end
 
+  def country
+    @country ||= GeoIp.geolocation(ip_address)[:country_code].downcase rescue 'GB'
+  end
+
   def other_signups_from_device
     return 0 unless device_id
     CustomerSignup.where(device_id: device_id).count - 1

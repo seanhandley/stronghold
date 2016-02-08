@@ -25,7 +25,7 @@
               .tiny= user.organization.reference
             %td{style: 'width: 78px'}
               = flag_list 16 do
-                = flag(user.last_known_connection[:country])
+                = flag(user.last_known_connection[:country]), title: true
                 = user.last_known_connection[:ip]
             %td{style: 'width: 78px'}
               = os_icon user.last_known_connection[:platform]

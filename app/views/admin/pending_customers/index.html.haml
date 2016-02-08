@@ -17,7 +17,10 @@
           %tr
             %td= customer.customer_signup.created_at
             %td= customer.customer_signup.email
-            %td= customer.customer_signup.ip_address
+            %td
+              = flag_list 16 do
+                = flag customer.customer_signup.country, title: true
+                = customer.customer_signup.ip_address
             %td
               = link_to 'Activate Manually?', admin_pending_customer_path(customer), class: 'btn btn-success', 'data-method' => "put", 'data-confirm' => "Have you verified the customer's ID and payment method?"
               = link_to 'Delete', admin_pending_customer_path(customer), class: 'btn btn-danger', 'data-method' => "delete", 'data-confirm' => "This can't be undone. Are you sure?"
