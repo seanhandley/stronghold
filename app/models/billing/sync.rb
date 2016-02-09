@@ -6,8 +6,8 @@ module Billing
 
     has_many :instance_states, dependent: :destroy
     has_many :volume_states, dependent: :destroy
-    has_many :ip_states, dependent: :destroy
     has_many :image_states, dependent: :destroy
+    has_many :ips, dependent: :destroy
 
     def summary
       "Took #{(completed_at - started_at).round} seconds to sync #{instance_states.count} instance states, #{volume_states.count} volume states, #{ips.count} IP allocations, and #{image_states.count} image states."
