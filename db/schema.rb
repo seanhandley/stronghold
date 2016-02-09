@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160201145224) do
+ActiveRecord::Schema.define(version: 20160208123219) do
 
   create_table "audits", force: :cascade do |t|
     t.string   "auditable_id",    limit: 255
@@ -35,32 +35,6 @@ ActiveRecord::Schema.define(version: 20160201145224) do
   add_index "audits", ["created_at"], name: "index_audits_on_created_at", using: :btree
   add_index "audits", ["organization_id"], name: "index_audits_on_organization_id", using: :btree
   add_index "audits", ["user_id", "user_type"], name: "user_index", using: :btree
-
-  create_table "billing_external_gateway_states", force: :cascade do |t|
-    t.integer  "external_gateway_id", limit: 4
-    t.string   "event_name",          limit: 255
-    t.string   "external_network_id", limit: 255
-    t.datetime "recorded_at",                     precision: 3
-    t.integer  "sync_id",             limit: 4
-    t.string   "message_id",          limit: 255
-    t.string   "address",             limit: 255
-    t.datetime "timestamp"
-    t.integer  "minutes_in_state",    limit: 4
-    t.integer  "previous_state_id",   limit: 4
-    t.integer  "next_state_id",       limit: 4
-  end
-
-  add_index "billing_external_gateway_states", ["external_gateway_id"], name: "external_gateway_states", using: :btree
-  add_index "billing_external_gateway_states", ["sync_id"], name: "external_gateway_syncs", using: :btree
-
-  create_table "billing_external_gateways", force: :cascade do |t|
-    t.string "router_id",  limit: 255
-    t.string "address",    limit: 255
-    t.string "project_id", limit: 255
-    t.string "name",       limit: 255
-  end
-
-  add_index "billing_external_gateways", ["project_id"], name: "project_external_gateways", using: :btree
 
   create_table "billing_image_states", force: :cascade do |t|
     t.datetime "recorded_at",                   precision: 3
@@ -148,21 +122,15 @@ ActiveRecord::Schema.define(version: 20160201145224) do
 
   add_index "billing_ip_quotas", ["project_id"], name: "project_ip_quotas", using: :btree
 
-  create_table "billing_ip_states", force: :cascade do |t|
-    t.integer  "ip_id",             limit: 4
-    t.string   "event_name",        limit: 255
-    t.string   "port",              limit: 255
-    t.datetime "recorded_at",                   precision: 3
-    t.string   "message_id",        limit: 255
-    t.integer  "sync_id",           limit: 4
-    t.datetime "timestamp"
-    t.integer  "minutes_in_state",  limit: 4
-    t.integer  "previous_state_id", limit: 4
-    t.integer  "next_state_id",     limit: 4
+  create_table "billing_ips", force: :cascade do |t|
+    t.string   "ip_id",       limit: 255
+    t.string   "address",     limit: 255
+    t.string   "project_id",  limit: 255
+    t.datetime "recorded_at",             precision: 3
+    t.string   "message_id",  limit: 255
+    t.string   "ip_type",     limit: 255
+    t.integer  "sync_id",     limit: 4
   end
-
-  add_index "billing_ip_states", ["ip_id"], name: "ip_states", using: :btree
-  add_index "billing_ip_states", ["sync_id"], name: "ip_syncs", using: :btree
 
   create_table "billing_ips", force: :cascade do |t|
     t.string  "ip_id",      limit: 255
