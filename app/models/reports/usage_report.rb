@@ -62,8 +62,6 @@ module Reports
         billing_instances: :instance_states,
         billing_volumes: :volume_states,
         billing_images: :image_states,
-        billing_external_gateways: :external_gateway_states,
-        billing_ips: :ip_states
       }]
     )
     end
