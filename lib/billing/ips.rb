@@ -16,7 +16,7 @@ module Billing
         if ip_type == 'router'
           if ["router.create.end", "router.update.end"].include? meta_data['event_type']
             if ip_info = meta_data["external_gateway_info.external_fixed_ips"]
-              ips = JSON.parse(ip_info)
+              ips = JSON.parse(ip_info.gsub("'","\""))
               if ips.any?
                 Billing::Ip.create project_id: project_id,
                                    ip_id: sample['resource_id'],
