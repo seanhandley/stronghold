@@ -34,6 +34,10 @@ module Billing
       Billing.logger.info "Syncing object storage usage..."
       Billing::StorageObjects.sync!(sync)
     end
+    threads << Thread.new do
+      Billing.logger.info "Syncing IP allocations..."
+      Billing::Ips.sync!(from, to, sync)
+    end
     threads.each(&:join)
     sync.update_attributes(completed_at: Time.now)
     Billing.logger.info "Completed sync #{sync.id}. #{sync.summary}"

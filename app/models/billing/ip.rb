@@ -2,10 +2,8 @@ module Billing
   class Ip < ActiveRecord::Base
     self.table_name = "billing_ips"
 
-    validates :address, :project_id, presence: true
+    validates :address, :project_id, :ip_type, :ip_id, presence: true
 
-    has_many :ip_states
-
-    scope :active, -> { where(active: true) }
+    belongs_to :billing_sync, :class_name => "Billing::Sync", :foreign_key => 'sync_id'
   end
 end
