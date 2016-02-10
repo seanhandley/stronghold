@@ -1,0 +1,10 @@
+<% 
+content = "<div class='infoMessage'><h3>#{h(message)}</h3>"
+%>
+
+$('.infoMessage').remove();
+$('.info').before('<%= escape_javascript(content).html_safe %>');
+
+setTimeout(function() {
+  $('.infoMessage').fadeOut();
+}, 3000)

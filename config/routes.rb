@@ -45,7 +45,11 @@ Rails.application.routes.draw do
       resources :free_ips, only: [:index]
       resources :resellers, only: [:index]
       resources :online_users, only: [:index]
-      resources :queue, only: [:index]
+      resources :queue, only: [:index] do
+        collection do
+          put 'restart'
+        end
+      end
       resources :system_info, only: [:index]
       resources :billing_rates, only: [:index, :update]
       resources :vouchers, except: [:new, :edit, :show]

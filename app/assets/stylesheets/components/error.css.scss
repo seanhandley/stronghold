@@ -47,7 +47,7 @@ div#flash p.notice:before {
   content: '✔ '
 }
 
-div.successMessage {
+div.successMessage, div.infoMessage {
   padding: 1px 5px 5px 5px;
   margin-bottom: 10px;
   font-size: 12px;
@@ -58,5 +58,13 @@ div.successMessage h3 {
 }
 
 div.successMessage h3:before {
+  content: '✔ '
+}
+
+div.infoMessage h3 {
+  color: $brand-info;
+}
+
+div.infoMessage h3:before {
   content: '✔ '
 }
