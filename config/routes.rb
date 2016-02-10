@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   require_relative "../lib/constraints/staff_constraint"
 
   mount Sidekiq::Web => '/admin/sidekiq', :constraints => StaffConstraint.new
+  mount ClockworkWeb::Engine => '/admin/clockwork', :constraints => StaffConstraint.new
 
   mount Starburst::Engine => "/starburst"
 
@@ -46,6 +47,11 @@ Rails.application.routes.draw do
       resources :resellers, only: [:index]
       resources :online_users, only: [:index]
       resources :queue, only: [:index] do
+        collection do
+          put 'restart'
+        end
+      end
+      resources :scheduler, only: [:index] do
         collection do
           put 'restart'
         end

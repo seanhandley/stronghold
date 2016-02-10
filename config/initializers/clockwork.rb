@@ -1,0 +1,1 @@
+ClockworkWeb.redis = Redis.new
