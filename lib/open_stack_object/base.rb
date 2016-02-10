@@ -111,7 +111,7 @@ module OpenStackObject
       def conn
         args = OPENSTACK_ARGS.dup
         current_user = Authorization.current_user
-        if current_user.present? && !current_user.admin?
+        if current_user.present? && !current_user.admin? && !current_user.staff?
           username    = current_user.email
           project     = current_user.organization.primary_project.reference
           token       = current_user.token
