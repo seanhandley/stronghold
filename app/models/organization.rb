@@ -56,13 +56,14 @@ class Organization < ActiveRecord::Base
   belongs_to :primary_project, class_name: 'Project'
   belongs_to :customer_signup
 
-  scope :paying,       -> { where('started_paying_at is not null') }
-  scope :billable,     -> { all.select{|o| !o.test_account?} }
-  scope :cloud,        -> { all.select(&:cloud?) }
-  scope :active,       -> { all.select{|o| o.state == OrganizationStates::Active && !o.disabled? && !o.in_review?}}
-  scope :self_service, -> { where('self_service = true') }
-  scope :pending,      -> { all.select{|o| o.state == OrganizationStates::Fresh }}
-  scope :frozen,       -> { where(in_review: true)}
+  scope :paying,                -> { where('started_paying_at is not null') }
+  scope :billable,              -> { all.select{|o| !o.test_account?} }
+  scope :cloud,                 -> { all.select(&:cloud?) }
+  scope :active,                -> { all.select{|o| o.state == OrganizationStates::Active && !o.disabled? && !o.in_review?}}
+  scope :self_service,          -> { where('self_service = true') }
+  scope :pending,               -> { all.select{|o| o.state == OrganizationStates::Fresh }}
+  scope :frozen,                -> { where(in_review: true)}
+  scope :pending_without_users, -> { all.select{|o| o.state == OrganizationStates::Fresh && o.users.count == 0}}
 
   serialize :quota_limit
 

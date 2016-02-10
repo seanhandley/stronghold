@@ -36,6 +36,10 @@ if Rails.env.production? || Rails.env.staging?
     UsageSanityJob.perform_later
   end
 
+  every(1.day, 'clear_stale_signups', :at => '01:00') do
+    ClearStaleSignupsJob.perform_later
+  end
+
   every(1.day, 'card_reverification', :at => '05:00') do
     CardReverificationJob.perform_later
   end
