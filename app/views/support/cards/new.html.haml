@@ -30,12 +30,12 @@
             %label Address
             = text_field_tag :organization_name, nil, :class => 'form-control', placeholder: 'Company (if applicable)'
           .form-group
-            = text_field_tag :address_line1, nil, :class => 'form-control', 'data-stripe' => 'address_line1', placeholder: 'Address Line 1'
+            = text_field_tag :address_line1, nil, :class => 'form-control', 'data-stripe' => 'address_line1', placeholder: 'Address Line 1 (required)', required: true
           .form-group
             = text_field_tag :address_line2, nil, :class => 'form-control', 'data-stripe' => 'address_line2', placeholder: 'Address Line 2'
           .form-group
             %label City
-            = text_field_tag :address_city, nil, :class => 'form-control', 'data-stripe' => 'address_city'
+            = text_field_tag :address_city, nil, :class => 'form-control', 'data-stripe' => 'address_city', required: true
           = hidden_field_tag :postcode, nil, 'data-stripe' => 'address_zip'
           .form-group
             .input-group

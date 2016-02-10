@@ -8,6 +8,7 @@ $(document).ready(function() {
 
     $('#loading-overlay').removeClass('hide');
 
+
     Stripe.card.createToken($form, Signup.stripeResponseHandler);
 
     return false;
@@ -40,7 +41,7 @@ $(document).ready(function() {
       post_town: '#address_city',
       postcode: '#postcode'
     },
-    input_label: "Post code / ZIP",
+    input_label: "Post code (required)",
     button_disabled_message: "Checking"
   });
 
