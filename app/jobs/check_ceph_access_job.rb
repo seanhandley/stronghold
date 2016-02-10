@@ -8,14 +8,20 @@ class CheckCephAccessJob < ActiveJob::Base
                              'access-key' => user.ec2_credentials['access'],
                              'secret-key' => user.ec2_credentials['secret'] if user.ec2_credentials
       rescue Net::HTTPError => e
-        Honeybadger.notify(e) unless e.message.include? 'BucketAlreadyExists'
+        unless e.message.include? 'BucketAlreadyExists'
+          Honeybadger.notify(e)
+          raise
+        end
       end
     else
       user.organization.projects.each do |project|
         begin
           Ceph::UserKey.destroy 'access-key' => user.ec2_credentials['access'] if user.ec2_credentials
         rescue Net::HTTPError => e
-          Honeybadger.notify(e) unless e.message.include? 'AccessDenied'
+          unless e.message.include? 'AccessDenied'
+            Honeybadger.notify(e) 
+            raise
+          end
         end
       end
     end
