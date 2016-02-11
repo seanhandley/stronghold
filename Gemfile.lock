@@ -481,7 +481,6 @@ GEM
       faraday_middleware (>= 0.8.8)
       hashie (>= 1.2.0, < 4.0)
       json (>= 1.7.5, < 1.9.0)
-    ruby-prof (0.15.8)
     ruby2ruby (2.2.0)
       ruby_parser (~> 3.1)
       sexp_processor (~> 4.0)
@@ -685,7 +684,6 @@ DEPENDENCIES
   responders (~> 2.0)
   rest-client (~> 1.8)
   restforce (~> 2.1)
-  ruby-prof
   rubycritic
   sass-rails (~> 4.0.3)
   sdoc (~> 0.4.0)

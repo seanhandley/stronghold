@@ -44,7 +44,6 @@ gem "deep_merge", '~> 1.0'
 gem 'stripe-rails', '~> 0.3'
 gem 'deliverhq', '~> 0.0.1'
 gem 'holidays', '~> 2.2'
-gem 'ruby-prof'
 gem "paranoia", "~> 2.0"
 gem 'minitest-ci', :git => 'git@github.com:circleci/minitest-ci.git'
 gem "useragent"
