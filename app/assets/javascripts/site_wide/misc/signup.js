@@ -8,6 +8,10 @@ $(document).ready(function() {
 
     $('#loading-overlay').removeClass('hide');
 
+    // Hack to force a zip code check
+    if($('#postcode').val().length == 0) {
+      $('#postcode').val('N/A')
+    }
 
     Stripe.card.createToken($form, Signup.stripeResponseHandler);
 
@@ -41,7 +45,7 @@ $(document).ready(function() {
       post_town: '#address_city',
       postcode: '#postcode'
     },
-    input_label: "Post code (required)",
+    input_label: "Post code / ZIP",
     button_disabled_message: "Checking"
   });
 
