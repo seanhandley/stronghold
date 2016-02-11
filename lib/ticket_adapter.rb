@@ -102,7 +102,6 @@ class TicketAdapter
     def change_status(reference, status)
       ticket = SIRPORTLY.ticket(reference)
       ticket.update(:status => status.downcase == 'open' ? 'New' : 'Resolved')      
-      # Hipchat.notify('Sirportly', 'Support', "<strong>#{Authorization.current_user.name}</strong> has updated ticket status (<a href=\"https://helpdesk.datacentred.io/staff/tickets/#{reference}\">#{reference}</a>) to #{status}.")
     end
 
   end
