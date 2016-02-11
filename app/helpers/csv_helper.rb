@@ -1,3 +1,5 @@
+require 'csv'
+
 module CsvHelper
   def build_usage_report_csv(data)
     CSV.generate do |csv|
