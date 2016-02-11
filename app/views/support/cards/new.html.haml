@@ -34,7 +34,7 @@
           .form-group
             = text_field_tag :address_line2, nil, :class => 'form-control', 'data-stripe' => 'address_line2', placeholder: 'Address Line 2'
           .form-group
-            %label City
+            %label City/Town (required)
             = text_field_tag :address_city, nil, :class => 'form-control', 'data-stripe' => 'address_city', required: true
           = hidden_field_tag :postcode, nil, 'data-stripe' => 'address_zip'
           .form-group
