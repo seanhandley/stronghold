@@ -8,7 +8,7 @@ class MailerTest < ActionMailer::TestCase
     email = Mailer.signup(@invite.id).deliver_now
     assert_not ActionMailer::Base.deliveries.empty?
  
-    assert_equal ["noreply@datacentred.co.uk"], email.from
+    assert email.from.include?("noreply@datacentred.co.uk")
     assert_equal [@invite.email], email.to
     assert_equal 'Confirm your account', email.subject
     assert email.body.parts[1].to_s.include?(@invite.token), 'mail body contains invite token'
@@ -20,7 +20,7 @@ class MailerTest < ActionMailer::TestCase
     email = Mailer.reset(@reset.id).deliver_now
     assert_not ActionMailer::Base.deliveries.empty?
  
-    assert_equal ["noreply@datacentred.co.uk"], email.from
+    assert email.from.include?("noreply@datacentred.co.uk")
     assert_equal [@reset.email], email.to
     assert_equal 'Password reset', email.subject
     assert email.body.parts[1].to_s.include?(@reset.token), 'mail body contains reset token'
@@ -33,7 +33,7 @@ class MailerTest < ActionMailer::TestCase
     email = Mailer.usage_report(from.to_s, to.to_s, data).deliver_now
     assert_not ActionMailer::Base.deliveries.empty?
  
-    assert_equal ["noreply@datacentred.co.uk"], email.from
+    assert email.from.include?("noreply@datacentred.co.uk")
     assert_equal ['usage@datacentred.co.uk'], email.to
     assert_equal 'Weekly Platform Usage', email.subject
     
@@ -59,7 +59,7 @@ class MailerTest < ActionMailer::TestCase
     
     assert_not ActionMailer::Base.deliveries.empty?
  
-    assert_equal ["noreply@datacentred.co.uk"], @email.from
+    assert @email.from.include?("noreply@datacentred.co.uk")
     assert_equal ['fraud@datacentred.co.uk'], @email.to
     assert_equal "Potential Fraud: #{@cs.organization_name}", @email.subject
 
@@ -74,7 +74,7 @@ class MailerTest < ActionMailer::TestCase
     end
     assert_not ActionMailer::Base.deliveries.empty? 
 
-    assert_equal ["noreply@datacentred.co.uk"], @email.from
+    assert @email.from.include?("noreply@datacentred.co.uk")
     assert_equal [@user.email], @email.to
     assert_equal ['fraud@datacentred.co.uk'], @email.bcc
     assert_equal "There's a problem with your card", @email.subject
@@ -84,7 +84,7 @@ class MailerTest < ActionMailer::TestCase
     @email = Mailer.notify_wait_list_entry("foo@bar.com").deliver_now
     assert_not ActionMailer::Base.deliveries.empty? 
 
-    assert_equal ["noreply@datacentred.co.uk"], @email.from
+    assert @email.from.include?("noreply@datacentred.co.uk")
     assert_equal ["foo@bar.com"], @email.to
     assert_equal "We're back!", @email.subject 
   end
@@ -94,7 +94,7 @@ class MailerTest < ActionMailer::TestCase
     @email = Mailer.goodbye(@admins).deliver_now
     assert_not ActionMailer::Base.deliveries.empty? 
 
-    assert_equal ["noreply@datacentred.co.uk"], @email.from
+    assert @email.from.include?("noreply@datacentred.co.uk")
     assert_equal @admins.map(&:email), @email.to
     assert_equal "Account closed", @email.subject     
   end
@@ -103,7 +103,7 @@ class MailerTest < ActionMailer::TestCase
     @email = Mailer.activation_reminder("foo@bar.com").deliver_now
     assert_not ActionMailer::Base.deliveries.empty? 
 
-    assert_equal ["noreply@datacentred.co.uk"], @email.from
+    assert @email.from.include?("noreply@datacentred.co.uk")
     assert_equal ["foo@bar.com"], @email.to
     assert_equal "Activate your DataCented account", @email.subject     
   end
@@ -113,7 +113,7 @@ class MailerTest < ActionMailer::TestCase
     @email = Mailer.notify_staff_of_signup(@organization).deliver_now
     assert_not ActionMailer::Base.deliveries.empty? 
 
-    assert_equal ["noreply@datacentred.co.uk"], @email.from
+    assert @email.from.include?("noreply@datacentred.co.uk")
     assert_equal ["signups@datacentred.co.uk"], @email.to
     assert_equal "New Signup: #{@organization.name}", @email.subject   
   end
@@ -129,7 +129,7 @@ class MailerTest < ActionMailer::TestCase
 
     assert_not ActionMailer::Base.deliveries.empty? 
 
-    assert_equal ["noreply@datacentred.co.uk"], @email.from
+    assert @email.from.include?("noreply@datacentred.co.uk")
     assert_equal [@user.email], @email.to
     assert_equal "Account Review: Please respond ASAP", @email.subject  
   end
@@ -142,7 +142,7 @@ class MailerTest < ActionMailer::TestCase
 
     assert_not ActionMailer::Base.deliveries.empty? 
 
-    assert_equal ["noreply@datacentred.co.uk"], @email.from
+    assert @email.from.include?("noreply@datacentred.co.uk")
     assert_equal [@user.email], @email.to
     assert_equal "Account Review Completed", @email.subject  
   end
@@ -155,7 +155,7 @@ class MailerTest < ActionMailer::TestCase
 
     assert_not ActionMailer::Base.deliveries.empty? 
 
-    assert_equal ["noreply@datacentred.co.uk"], @email.from
+    assert @email.from.include?("noreply@datacentred.co.uk")
     assert_equal [@user.email], @email.to
     assert_equal "Your account limits have changed", @email.subject  
   end
