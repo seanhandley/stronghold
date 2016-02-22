@@ -3,7 +3,7 @@ class Mailer < ActionMailer::Base
   add_template_helper(AbbreviationHelper)
   include CsvHelper
 
-  default :from => "DataCentred noreply@datacentred.co.uk"
+  default :from => "DataCentred <noreply@datacentred.co.uk>"
   
   def signup(invite_id)
     @invite = Invite.find(invite_id)
