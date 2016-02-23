@@ -9,7 +9,7 @@ module Reports
 
     def contents
       return {} unless Organization.cloud.any?
-      Organization.active.collect do |organization|
+      Organization.active.reject(&:test_account?).collect do |organization|
         instances = organization.projects.collect do |project|
           Billing::Instances.usage(project.uuid, from, to)
         end.flatten
