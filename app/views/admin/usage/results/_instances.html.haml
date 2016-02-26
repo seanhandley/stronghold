@@ -28,7 +28,8 @@
               %td.line_entry
               %td.line_entry
               %td.line_entry
-              %td.line_entry
+              - unless current_organization.test_account?
+                %td.line_entry
             - instances.sort { |x,y| x[:name] <=> y[:name] }.each do |instance|
               %tr
                 %td.line_entry
