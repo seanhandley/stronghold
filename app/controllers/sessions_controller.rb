@@ -2,6 +2,8 @@ class SessionsController < ApplicationController
 
   layout 'customer-sign-up'
   before_filter :check_for_user, except: [:destroy]
+
+  skip_before_filter :verify_authenticity_token, :only => [:create]
   
   def new
     reset_session
