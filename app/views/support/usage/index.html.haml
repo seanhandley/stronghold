@@ -13,21 +13,26 @@
   - else
     %p.tiny= link_to 'View Pricing', 'http://www.datacentred.co.uk/pricing/', target: '_blank'
 
-- @usage.each do |project, results|
-  %h2
-    %i.fa.fa-folder-o
-    = project.name
+- if @usage.any?
+  - @usage.each do |project, results|
+    %h2
+      %i.fa.fa-folder-o
+      = project.name
 
-  = render partial: 'admin/usage/results/vouchers',  locals: { vouchers: @active_vouchers }
-  = render partial: 'admin/usage/results/instances', locals: { project: project, instances:         results[:instance_usage]         }
-  = render partial: 'admin/usage/results/volumes',   locals: { project: project, volumes:           results[:volume_usage]           }
-  = render partial: 'admin/usage/results/images',    locals: { project: project, images:            results[:image_usage]            }
-  = render partial: 'admin/usage/results/objects',   locals: { project: project, tbh:               results[:object_storage_usage]   }
-  = render partial: 'admin/usage/results/ips',       locals: { project: project, ip_quotas:         results[:ip_quota_usage],                                                           external_gateways: results[:external_gateway_results]}
+    = render partial: 'admin/usage/results/vouchers',  locals: { vouchers: @active_vouchers }
+    = render partial: 'admin/usage/results/instances', locals: { project: project, instances:         results[:instance_usage]         }
+    = render partial: 'admin/usage/results/volumes',   locals: { project: project, volumes:           results[:volume_usage]           }
+    = render partial: 'admin/usage/results/images',    locals: { project: project, images:            results[:image_usage]            }
+    = render partial: 'admin/usage/results/objects',   locals: { project: project, tbh:               results[:object_storage_usage]   }
+    = render partial: 'admin/usage/results/ips',       locals: { project: project, ip_quotas:         results[:ip_quota_usage],                                                           external_gateways: results[:external_gateway_results]}
+- else
+  %h3
+    %em No usage data collected yet.
 
 - unless current_organization.test_account?
   = render partial: 'total', locals: { sub_total: @usage_decorator.sub_total, grand_total: @usage_decorator.grand_total }
 .push
+
 %p.tiny
   * Usage information is updated automatically every hour and accounts for instance resizing.
   %br
