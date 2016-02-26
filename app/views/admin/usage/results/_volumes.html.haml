@@ -16,9 +16,10 @@
             %th
               %i.fa.fa-clock-o
               Terabyte Hours
-            %th
-              %i.fa.fa-gbp
-              Total
+            - unless current_organization.test_account? 
+              %th
+                %i.fa.fa-gbp
+                Total
         %tbody
           - volumes.each do |volume|
             %tr
@@ -34,7 +35,8 @@
               %td
                 = number_with_delimiter(volume[:terabyte_hours], :delimiter => ',')
                 TBh
-              %td== £#{number_with_precision(volume[:cost], :delimiter => ',', :separator => '.', :precision => 2)}
+              - unless current_organization.test_account?
+                %td== £#{number_with_precision(volume[:cost], :delimiter => ',', :separator => '.', :precision => 2)}
           %tr.highlight.bottomline
             %td &nbsp
             %td &nbsp
@@ -46,6 +48,7 @@
             %td
               = number_with_delimiter(volumes.collect{|v| v[:terabyte_hours]}.sum.round(2), :delimiter => ',')
               TBh
-            %td
-              == £#{number_with_precision(@usage_decorator.volume_total(project.id), :delimiter => ',', :separator => '.', :precision => 2)}
+            - unless current_organization.test_account?
+              %td
+                == £#{number_with_precision(@usage_decorator.volume_total(project.id), :delimiter => ',', :separator => '.', :precision => 2)}
 

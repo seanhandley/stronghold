@@ -21,7 +21,8 @@
   = render partial: 'admin/usage/results/objects',   locals: { project: project, tbh:               results[:object_storage_usage]   }
   = render partial: 'admin/usage/results/ips',       locals: { project: project, ip_quotas:         results[:ip_quota_usage],                                                           external_gateways: results[:external_gateway_results]}
 
-= render partial: 'total', locals: { sub_total: @usage_decorator.sub_total, grand_total: @usage_decorator.grand_total }
+- unless current_organization.test_account?
+  = render partial: 'total', locals: { sub_total: @usage_decorator.sub_total, grand_total: @usage_decorator.grand_total }
 .push
 %p.tiny
   * Usage information is updated automatically every hour and accounts for instance resizing.
