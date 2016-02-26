@@ -7,7 +7,11 @@
 = select_tag :month_year, @usage_nav, class: 'hide'
 
 .pull-right
-  %p.tiny= link_to 'View Pricing', 'http://www.datacentred.co.uk/pricing/', target: '_blank'
+  - if current_organization.test_account?
+    %p.tiny
+      %em This is a test account and will not be billed for usage.
+  - else
+    %p.tiny= link_to 'View Pricing', 'http://www.datacentred.co.uk/pricing/', target: '_blank'
 
 - @usage.each do |project, results|
   %h2
