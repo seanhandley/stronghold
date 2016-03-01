@@ -16,7 +16,7 @@
               %td Terminated
               %td
                 Hours Active This Period
-              - if current_organization.show_costs??
+              - if current_organization.show_costs?
                 %td
                   Total
             %tr
@@ -28,7 +28,7 @@
               %td.line_entry
               %td.line_entry
               %td.line_entry
-              - if current_organization.show_costs??
+              - if current_organization.show_costs?
                 %td.line_entry
             - instances.sort { |x,y| x[:name] <=> y[:name] }.each do |instance|
               %tr
