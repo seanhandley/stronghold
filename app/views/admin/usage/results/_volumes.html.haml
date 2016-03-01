@@ -16,7 +16,7 @@
             %th
               %i.fa.fa-clock-o
               Terabyte Hours
-            - unless current_organization.test_account? 
+            - if current_organization.show_costs?? 
               %th
                 %i.fa.fa-gbp
                 Total
@@ -35,7 +35,7 @@
               %td
                 = number_with_delimiter(volume[:terabyte_hours], :delimiter => ',')
                 TBh
-              - unless current_organization.test_account?
+              - if current_organization.show_costs??
                 %td== £#{number_with_precision(volume[:cost], :delimiter => ',', :separator => '.', :precision => 2)}
           %tr.highlight.bottomline
             %td &nbsp
@@ -48,7 +48,7 @@
             %td
               = number_with_delimiter(volumes.collect{|v| v[:terabyte_hours]}.sum.round(2), :delimiter => ',')
               TBh
-            - unless current_organization.test_account?
+            - if current_organization.show_costs??
               %td
                 == £#{number_with_precision(@usage_decorator.volume_total(project.id), :delimiter => ',', :separator => '.', :precision => 2)}
 

@@ -75,6 +75,10 @@ class Organization < ActiveRecord::Base
     (reference == STAFF_REFERENCE)
   end
 
+  def show_costs?
+    !test_account? || staff?
+  end
+
   def has_payment_method?
     return true unless self_service?
     return false unless known_to_payment_gateway?

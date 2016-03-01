@@ -16,7 +16,7 @@
               %td Terminated
               %td
                 Hours Active This Period
-              - unless current_organization.test_account?
+              - if current_organization.show_costs??
                 %td
                   Total
             %tr
@@ -28,7 +28,7 @@
               %td.line_entry
               %td.line_entry
               %td.line_entry
-              - unless current_organization.test_account?
+              - if current_organization.show_costs??
                 %td.line_entry
             - instances.sort { |x,y| x[:name] <=> y[:name] }.each do |instance|
               %tr
@@ -48,7 +48,7 @@
                   %i.fa.fa-clock-o
                   == #{number_with_delimiter(instance[:billable_hours], :delimiter => ',')} of #{@total_hours}
                 - if instance[:flavor][:rate].present?
-                  - unless current_organization.test_account?
+                  - if current_organization.show_costs??
                     %td.line_entry== £#{number_with_precision(instance[:cost], :delimiter => ',', :separator => '.', :precision => 2)}
             %tr.highlight.bottomline
               %td &nbsp;
@@ -59,7 +59,7 @@
               %td &nbsp;
               %td== Total #{instances.first[:flavor][:name]}:
               %td== #{number_with_delimiter(instances.map{|i| i[:billable_hours]}.sum, :delimiter => ',')} hours
-              - unless current_organization.test_account?
+              - if current_organization.show_costs??
                 %td== £#{number_with_precision(@usage_decorator.instance_total(project.id, flavor_id), :delimiter => ',', :separator => '.', :precision => 2)}
             %tr
               %td &nbsp;
@@ -70,5 +70,5 @@
               %td &nbsp;
               %td &nbsp;
               %td &nbsp;
-              - unless current_organization.test_account?
+              - if current_organization.show_costs??
                 %td &nbsp;

@@ -29,7 +29,7 @@
   %h3
     %em No usage data collected yet.
 
-- unless current_organization.test_account?
+- if current_organization.show_costs??
   = render partial: 'total', locals: { sub_total: @usage_decorator.sub_total, grand_total: @usage_decorator.grand_total }
 .push
 
