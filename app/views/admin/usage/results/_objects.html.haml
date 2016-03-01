@@ -10,7 +10,7 @@
             %th
               %i.fa.fa-clock-o
               Terabyte Hours
-            - if current_organization.show_costs??
+            - if current_organization.show_costs?
               %th
                 %i.fa.fa-gbp
                 Total
@@ -21,7 +21,7 @@
             %td
               = number_with_delimiter(tbh.round(2), :delimiter => ',')
               TBh
-            - if current_organization.show_costs??
+            - if current_organization.show_costs?
               %td
                 == £#{number_with_precision((tbh * RateCard.object_storage).nearest_penny, :delimiter => ',', :separator => '.', :precision => 2)}
 
