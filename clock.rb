@@ -40,9 +40,9 @@ if Rails.env.production? || Rails.env.staging?
     ClearStaleSignupsJob.perform_later
   end
 
-  every(1.day, 'card_reverification', :at => '05:00') do
-    CardReverificationJob.perform_later
-  end
+  # every(1.day, 'card_reverification', :at => '05:00') do
+  #   CardReverificationJob.perform_later
+  # end
 
   every(303.minutes, 'restart_sidekiq', :thread => true) do
     sleep 12 * 60
