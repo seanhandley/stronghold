@@ -26,3 +26,4 @@
     = render partial: 'admin/usage/results/objects',   locals: { project: project, tbh:               results[:object_storage_usage]   }
     = render partial: 'admin/usage/results/ips',       locals: { ip_quotas:         results[:ip_quota_usage],                                                           external_gateways: @external_gateway_results,
                                                                  project:           project                     }
+    = render partial: 'admin/usage/results/load_balancers',      locals: { load_balancers: results[:load_balancer_usage], project: project }

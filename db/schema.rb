@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160208123219) do
+ActiveRecord::Schema.define(version: 20160304143520) do
 
   create_table "audits", force: :cascade do |t|
     t.string   "auditable_id",    limit: 255
@@ -140,6 +140,16 @@ ActiveRecord::Schema.define(version: 20160208123219) do
   end
 
   add_index "billing_ips", ["project_id"], name: "project_ips", using: :btree
+  create_table "billing_load_balancers", force: :cascade do |t|
+    t.string   "lb_id",         limit: 255
+    t.string   "name",          limit: 255
+    t.string   "project_id",    limit: 255
+    t.datetime "started_at"
+    t.datetime "terminated_at"
+    t.integer  "sync_id",       limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "billing_rates", force: :cascade do |t|
     t.integer "flavor_id", limit: 4
