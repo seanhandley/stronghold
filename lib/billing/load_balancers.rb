@@ -2,6 +2,7 @@ module Billing
   module LoadBalancers
 
     def self.sync!(from, to, sync)
+      Rails.cache.delete("active_load_balancers")
       Project.with_deleted.each do |project|
         next unless project.uuid
         Billing.fetch_samples(project.uuid, "network.services.lb.pool.create", from, to).each do |lb_id, samples|
