@@ -1,0 +1,46 @@
+- if load_balancers && load_balancers.any?
+  %div.usage-back
+    %h3 Load Balancer Usage
+    .table-responsive
+      %table.table.table-hover.phone-bill
+        %thead
+          %tr
+            %th.icon
+              %i.fa.fa-balance-scale
+            %th Name
+            %th Unique Identifier
+            %th Created At
+            %th Terminated At
+            %th
+              %i.fa.fa-clock-o
+              Hours
+            - if current_organization.show_costs? 
+              %th
+                %i.fa.fa-gbp
+                Total
+        %tbody
+          - load_balancers.each do |lb|
+            %tr
+              %td &nbsp;
+              %td= lb[:name]
+              %td= lb[:lb_id]
+              %td= lb[:created_at]
+              %td= lb[:terminated_at] ? lb[:terminated_at] : '-'
+              %td
+                = number_with_delimiter(lb[:hours], :delimiter => ',')
+                hours
+              - if current_organization.show_costs?
+                %td== £#{number_with_precision(lb[:cost], :delimiter => ',', :separator => '.', :precision => 2)}
+          %tr.highlight.bottomline
+            %td &nbsp
+            %td &nbsp
+            %td &nbsp
+            %td &nbsp;
+            %td Total:
+            %td
+              = number_with_delimiter(load_balancers.collect{|v| v[:hours]}.sum.round(2), :delimiter => ',')
+              hours
+            - if current_organization.show_costs?
+              %td
+                == £#{number_with_precision(@usage_decorator.load_balancer_total(project.id), :delimiter => ',', :separator => '.', :precision => 2)}
+
