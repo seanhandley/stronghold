@@ -12,7 +12,11 @@ module Billing
 
     def self.usage(project_id, from, to)
       lbs = Billing::LoadBalancer.where(project_id: project_id)
-      lbs.map(&:status)
+      lbs.reject(&:terminated_at).each do |lb|
+        unless active_load_balancers.include?(lb.lb_id)
+          lb.update_columns terminated_at: Time.now
+        end
+      end
       lbs = lbs.select do |lb|
         !lb.terminated_at || (lb.terminated_at < to && lb.terminated_at > from) || (lb.started_at < to && lb.started_at > from)
       end
@@ -28,6 +32,12 @@ module Billing
           hours: hours,
           cost:  (hours * RateCard.lb_pool).nearest_penny
         }
+      end
+    end
+
+    def self.active_load_balancers
+      Rails.cache.fetch("active_load_balancers", expires: 10.minutes) do
+        OpenStackConnection.network.list_lb_pools.body['pools'].map{|lb| lb['id']}
       end
     end
 
