@@ -19,13 +19,13 @@ module Billing
       lbs.collect do |lb|
         start  = [lb.started_at, from].max
         finish = lb.terminated_at ? [lb.terminated_at, to].min : to
-        hours = ((finish - start) / (60 ** 2))
+        hours = ((finish - start) / (60 ** 2)).ceil
         {
           lb_id: lb.lb_id,
           name:  lb.name,
           started_at: lb.started_at,
           terminated_at: lb.terminated_at,
-          hours: hours.round(2),
+          hours: hours,
           cost:  (hours * RateCard.lb_pool).nearest_penny
         }
       end
