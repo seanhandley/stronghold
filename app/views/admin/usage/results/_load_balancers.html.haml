@@ -24,7 +24,7 @@
               %td &nbsp;
               %td= lb[:name]
               %td= lb[:lb_id]
-              %td= lb[:created_at]
+              %td= lb[:started_at]
               %td= lb[:terminated_at] ? lb[:terminated_at] : '-'
               %td
                 = number_with_delimiter(lb[:hours], :delimiter => ',')
