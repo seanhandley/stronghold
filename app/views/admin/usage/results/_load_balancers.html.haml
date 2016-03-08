@@ -27,7 +27,7 @@
               %td= lb[:started_at]
               %td= lb[:terminated_at] ? lb[:terminated_at] : '-'
               %td
-                == #{number_with_delimiter(lb[:hours].to_i, :delimiter => ',')} of #{@total_hours}
+                == #{number_with_delimiter(lb[:hours], :delimiter => ',')} of #{@total_hours}
               - if current_organization.show_costs?
                 %td== £#{number_with_precision(lb[:cost], :delimiter => ',', :separator => '.', :precision => 2)}
           %tr.highlight.bottomline
@@ -37,7 +37,7 @@
             %td &nbsp;
             %td Total:
             %td
-              = number_with_delimiter(load_balancers.collect{|v| v[:hours]}.sum.round(2), :delimiter => ',')
+              = number_with_delimiter(load_balancers.collect{|v| v[:hours]}.sum, :delimiter => ',')
               hours
             - if current_organization.show_costs?
               %td
