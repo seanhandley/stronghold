@@ -73,14 +73,14 @@ class CustomerSignup < ActiveRecord::Base
 
   def address_check_passed?
     return false unless stripe_customer
-    return false unless ['pass','unavailable'].include?(stripe_customer.sources.data.first.address_line1_check)
-    return false unless ['pass','unavailable'].include?(stripe_customer.sources.data.first.address_zip_check)
+    return false unless ['pass','unavailable', 'unchecked'].include?(stripe_customer.sources.data.first.address_line1_check)
+    return false unless ['pass','unavailable', 'unchecked'].include?(stripe_customer.sources.data.first.address_zip_check)
     true
   end
 
   def cvc_check_passed?
     return false unless stripe_customer
-    return false unless ['pass','unavailable'].include?(stripe_customer.sources.data.first.cvc_check)
+    return false unless ['pass','unavailable', 'unchecked'].include?(stripe_customer.sources.data.first.cvc_check)
     true
   end
 
