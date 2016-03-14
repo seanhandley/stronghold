@@ -33,7 +33,8 @@ module OpenStackConnection
   end
   
   def self.network
-    @@network ||= Fog::Network.new(OPENSTACK_ARGS)
+    # @@network ||= Fog::Network.new(OPENSTACK_ARGS)
+    Fog::Network.new(OPENSTACK_ARGS)
   end
   
   def self.image
