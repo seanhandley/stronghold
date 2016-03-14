@@ -15,5 +15,8 @@ module RateCard
     def lb_pool
       0.0313
     end
+    def vpn_connection
+      0.0313
+    end
   end
 end

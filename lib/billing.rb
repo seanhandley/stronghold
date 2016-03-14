@@ -42,6 +42,10 @@ module Billing
       Billing.logger.info "Syncing load balancers..."
       Billing::LoadBalancers.sync!(from, to, sync)
     end
+    threads << Thread.new do
+      Billing.logger.info "Syncing VPN connections..."
+      Billing::VpnConnections.sync!(from, to, sync)
+    end
     threads.each(&:join)
     sync.update_attributes(completed_at: Time.now)
     Billing.logger.info "Completed sync #{sync.id}. #{sync.summary}"

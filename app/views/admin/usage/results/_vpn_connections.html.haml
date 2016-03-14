@@ -1,0 +1,45 @@
+- if vpn_connections && vpn_connections.any?
+  %div.usage-back
+    %h3 VPN Connection Usage
+    .table-responsive
+      %table.table.table-hover.phone-bill
+        %thead
+          %tr
+            %th.icon
+              %i.fa.fa-lock
+            %th Name
+            %th Unique Identifier
+            %th Created At
+            %th Terminated At
+            %th
+              %i.fa.fa-clock-o
+              Hours
+            - if current_organization.show_costs? 
+              %th
+                %i.fa.fa-gbp
+                Total
+        %tbody
+          - vpn_connections.each do |vpn|
+            %tr
+              %td &nbsp;
+              %td= vpn[:name]
+              %td= vpn[:lb_id]
+              %td= vpn[:started_at]
+              %td= vpn[:terminated_at] ? vpn[:terminated_at] : '-'
+              %td
+                == #{number_with_delimiter(vpn[:hours], :delimiter => ',')} of #{@total_hours}
+              - if current_organization.show_costs?
+                %td== £#{number_with_precision(vpn[:cost], :delimiter => ',', :separator => '.', :precision => 2)}
+          %tr.highlight.bottomline
+            %td &nbsp
+            %td &nbsp
+            %td &nbsp
+            %td &nbsp;
+            %td Total:
+            %td
+              = number_with_delimiter(vpn_connections.collect{|v| v[:hours]}.sum, :delimiter => ',')
+              hours
+            - if current_organization.show_costs?
+              %td
+                == £#{number_with_precision(@usage_decorator.vpn_connection_total(project.id), :delimiter => ',', :separator => '.', :precision => 2)}
+
