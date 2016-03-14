@@ -8,7 +8,8 @@ OPENSTACK_ARGS = {
   :openstack_project_name          => ENV["OPENSTACK_PROJECT_NAME"],
   :openstack_domain_id             => 'default',
   :openstack_identity_prefix       => settings['identity_prefix'],
-  :openstack_endpoint_path_matches => //
+  :openstack_endpoint_path_matches => //,
+  :persistent                      => true
 }
 
 Excon.defaults[:connect_timeout] = 10
