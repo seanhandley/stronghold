@@ -1,4 +1,4 @@
-require 'fog'
+require 'fog/openstack'
 require 'audited-activerecord'
 require_relative '../active_record/fake_model'
 
