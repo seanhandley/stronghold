@@ -26,6 +26,9 @@ module Trackable
       country: country[:country_code].downcase,
       country_name: country[:country_name]
     }
+    Rails.cache.fetch("last_seen_online_#{id}", expires_in: 5.minutes) do
+      Authorization.current_user&.update_attributes last_seen_online: Time.now
+    end
     Rails.cache.write("user_online_#{id}", info, expires_in: 1.day)
   end
 
