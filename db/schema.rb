@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160304143520) do
+ActiveRecord::Schema.define(version: 20160316134148) do
 
   create_table "audits", force: :cascade do |t|
     t.string   "auditable_id",    limit: 255
@@ -373,6 +373,7 @@ ActiveRecord::Schema.define(version: 20160304143520) do
     t.string   "uuid",            limit: 255
     t.string   "password_digest", limit: 255
     t.string   "salesforce_id",   limit: 255
+    t.datetime "last_seen_online"
   end
 
   create_table "vouchers", force: :cascade do |t|
