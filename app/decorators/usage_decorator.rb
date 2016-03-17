@@ -70,7 +70,7 @@ class UsageDecorator < ApplicationDecorator
   def load_balancer_total(project_id)
     usage_data.each do |project, results|
       if(project_id == project.id)
-        return results[:load_balancer_usage].collect{|i| i[:cost]}.sum
+        return results[:load_balancer_usage]&.collect{|i| i[:cost]}.sum || 0
       end
     end
     return 0
@@ -79,7 +79,7 @@ class UsageDecorator < ApplicationDecorator
   def vpn_connection_total(project_id)
     usage_data.each do |project, results|
       if(project_id == project.id)
-        return results[:vpn_connection_usage].collect{|i| i[:cost]}.sum
+        return results[:vpn_connection_usage]&.collect{|i| i[:cost]}.sum || 0
       end
     end
     return 0
