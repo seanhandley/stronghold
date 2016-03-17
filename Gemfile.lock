@@ -25,17 +25,6 @@ GIT
       mime-types
       xml-simple
 
-GIT
-  remote: https://github.com/fog/fog-openstack
-  revision: 3471ba3d3719ebfd9983b4af9553010f05883afb
-  ref: 3471ba3
-  specs:
-    fog-openstack (0.1.0)
-      fog-core (>= 1.35)
-      fog-json (>= 1.0)
-      fog-xml (>= 0.1)
-      ipaddress (>= 0.8)
-
 GEM
   remote: https://rubygems.org/
   remote: https://rails-assets.org/
@@ -203,6 +192,11 @@ GEM
     fog-json (1.0.2)
       fog-core (~> 1.0)
       multi_json (~> 1.10)
+    fog-openstack (0.1.2)
+      fog-core (>= 1.35)
+      fog-json (>= 1.0)
+      fog-xml (>= 0.1)
+      ipaddress (>= 0.8)
     fog-xml (0.1.2)
       fog-core
       nokogiri (~> 1.5, >= 1.5.11)
@@ -535,7 +529,7 @@ DEPENDENCIES
   deliverhq (~> 0.0.1)
   faker
   faraday (~> 0.9)
-  fog-openstack!
+  fog-openstack (~> 0.1)
   font-awesome-sass (~> 4.5)
   geo_ip (~> 0.6)
   gravatar_image_tag (~> 1.2.0)
