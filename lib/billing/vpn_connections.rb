@@ -1,5 +1,5 @@
 module Billing
-  module VPNConnections
+  module VpnConnections
 
     def self.sync!(from, to, sync)
       Rails.cache.delete("active_vpn_connections")
@@ -12,7 +12,7 @@ module Billing
     end
 
     def self.usage(project_id, from, to)
-      vpns = Billing::VPNConnection.where(project_id: project_id)
+      vpns = Billing::VpnConnection.where(project_id: project_id)
       vpns.reject(&:terminated_at).each do |vpn|
         unless active_vpn_connections.include?(vpn.vpn_connection_id)
           vpn.update_columns terminated_at: Time.now
@@ -45,7 +45,7 @@ module Billing
 
     def self.create_new_vpn_connection(project_id, vpn_connection_id, samples, sync)
       first_sample = samples[0]
-      VPNConnection.create vpn_connection_id: vpn_connection_id, project_id: project_id,
+      VpnConnection.create vpn_connection_id: vpn_connection_id, project_id: project_id,
                           started_at: first_sample['recorded_at'],
                           name: first_sample['resource_metadata']['name'],
                           sync_id: sync.id
