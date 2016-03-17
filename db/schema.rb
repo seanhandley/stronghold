@@ -200,6 +200,17 @@ ActiveRecord::Schema.define(version: 20160316134148) do
   add_index "billing_volumes", ["project_id"], name: "project_volumes", using: :btree
   add_index "billing_volumes", ["volume_id"], name: "index_billing_volumes_on_volume_id", unique: true, using: :btree
 
+  create_table "billing_vpn_connections", force: :cascade do |t|
+    t.string   "vpn_connection_id", limit: 255
+    t.string   "name",              limit: 255
+    t.string   "project_id",        limit: 255
+    t.datetime "started_at"
+    t.datetime "terminated_at"
+    t.integer  "sync_id",           limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "customer_signups", force: :cascade do |t|
     t.string   "uuid",                limit: 255
     t.string   "email",               limit: 255

@@ -28,7 +28,8 @@ class UsageDecorator < ApplicationDecorator
           object_storage_usage: Billing::StorageObjects.usage(project.uuid, from_date, to_date),
           current_ip_quota: project.quota_set['network']['floatingip'].to_i,
           ip_quota_total: ip_quota_cost(project, ip_quota_usage).nearest_penny,
-          load_balancer_usage: Billing::LoadBalancers.usage(project.uuid, from_date, to_date)
+          load_balancer_usage: Billing::LoadBalancers.usage(project.uuid, from_date, to_date),
+          vpn_connection_usage: Billing::VpnConnections.usage(project.uuid, from_date, to_date)
         }
         acc
       end
@@ -70,6 +71,15 @@ class UsageDecorator < ApplicationDecorator
     usage_data.each do |project, results|
       if(project_id == project.id)
         return results[:load_balancer_usage].collect{|i| i[:cost]}.sum
+      end
+    end
+    return 0
+  end
+
+  def vpn_connection_total(project_id)
+    usage_data.each do |project, results|
+      if(project_id == project.id)
+        return results[:vpn_connection_usage].collect{|i| i[:cost]}.sum
       end
     end
     return 0
@@ -122,7 +132,8 @@ class UsageDecorator < ApplicationDecorator
       image_total(project_id),
       ip_quota_total(project_id), 
       object_storage_total(project_id),
-      load_balancer_total(project_id)
+      load_balancer_total(project_id),
+      vpn_connection_total(project_id)
     ].sum
   end
 
