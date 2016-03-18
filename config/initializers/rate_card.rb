@@ -16,7 +16,7 @@ module RateCard
       0.0313
     end
     def vpn_connection
-      0.0313
+      0.062
     end
   end
 end
