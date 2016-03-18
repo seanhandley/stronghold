@@ -18,6 +18,7 @@ module Billing
           vpn.update_columns terminated_at: Time.now
         end
       end
+      vpns = Billing::VpnConnection.where(project_id: project_id)
       vpns = vpns.select do |vpn|
         !vpn.terminated_at || (vpn.terminated_at < to && vpn.terminated_at > from) || (vpn.started_at < to && vpn.started_at > from)
       end

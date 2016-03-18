@@ -18,6 +18,7 @@ module Billing
           lb.update_columns terminated_at: Time.now
         end
       end
+      lbs = Billing::LoadBalancer.where(project_id: project_id)
       lbs = lbs.select do |lb|
         !lb.terminated_at || (lb.terminated_at < to && lb.terminated_at > from) || (lb.started_at < to && lb.started_at > from)
       end
