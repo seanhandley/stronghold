@@ -34,6 +34,7 @@ module Billing
           cost:  (hours * RateCard.lb_pool).nearest_penny
         }
       end
+      lbs.select{|lb| lb[:hours] > 0 }
     end
 
     def self.active_load_balancers

@@ -34,6 +34,7 @@ module Billing
           cost:  (hours * RateCard.vpn_connection).nearest_penny
         }
       end
+      vpns.select{|vpn| vpn[:hours] > 0 }
     end
 
     def self.active_vpn_connections
