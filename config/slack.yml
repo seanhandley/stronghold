@@ -25,6 +25,10 @@ default: &default
       channel: '#webdev'
       color: 'warning'
       prefix: ':gem: Code Quality Results: '
+    ssl_quality_check:
+      channel: '#webdev'
+      color: 'warning'
+      prefix: ':lock: SSL Labs Quality Check: '
     test_coverage_percent:
       channel: '#webdev'
       color: 'warning'

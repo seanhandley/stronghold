@@ -26,6 +26,7 @@ test:
     - bundle exec rake stronghold:test_coverage_percent
     - RACK_ENV=acceptance RAILS_ENV=acceptance bundle exec rake test:acceptance
     - bundle exec rake stronghold:security_analysis
+    - bundle exec rake stronghold:ssl_quality_check
     - git config --global user.email "circle@circleci.com"
     - git config --global user.name "Circle"
     - bundle exec rake stronghold:code_quality_analysis
