@@ -22,9 +22,9 @@ test:
   override:
     - bundle exec bundle-audit update
     - bundle exec bundle-audit
-    - bundle exec rake test:unit_and_functional
+    - RUBYOPT=W0 bundle exec rake test:unit_and_functional
     - bundle exec rake stronghold:test_coverage_percent
-    - RACK_ENV=acceptance RAILS_ENV=acceptance bundle exec rake test:acceptance
+    - RUBYOPT=W0 RACK_ENV=acceptance RAILS_ENV=acceptance bundle exec rake test:acceptance
     - bundle exec rake stronghold:security_analysis
     - bundle exec rake stronghold:ssl_quality_check
     - git config --global user.email "circle@circleci.com"
