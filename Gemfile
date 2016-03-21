@@ -69,7 +69,7 @@ gem "select2-rails", '~> 3.5.9.1'
 gem 'bootstrap-sass', '~> 3.3.5'
 gem 'jquery-rails', '~> 4.0.3'
 gem 'jquery-ui-rails'
-gem 'sass-rails', '~> 4.0.3'
+gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 2.7'
 gem 'coffee-rails', '~> 4.0.0'
 gem 'therubyracer', '~> 0.12.2', platforms: :ruby
