@@ -1,6 +1,8 @@
 = javascript_tag "var AUTH_TOKEN = '#{form_authenticity_token}';" if protect_against_forgery?
 
+- default_args = {integrity: true, crossorigin: 'anonymous'}
+
 - if content_for(:enable_angular)
-  = javascript_include_tag 'application_with_angular', integrity: true
+  = javascript_include_tag 'application_with_angular', default_args
 - else
-  = javascript_include_tag 'application', (Rails.env.acceptance? ? {} : {'async' => true, 'cache' => true}).merge(integrity: true)
+  = javascript_include_tag 'application', default_args.merge(Rails.env.acceptance? ? {} : {'async' => true, 'cache' => true})
