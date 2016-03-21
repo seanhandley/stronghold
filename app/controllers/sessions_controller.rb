@@ -2,6 +2,7 @@ class SessionsController < ApplicationController
 
   layout 'customer-sign-up'
   before_filter :check_for_user, except: [:destroy]
+  before_filter :clear_cookies, only: [:new]
 
   skip_before_filter :verify_authenticity_token, :only => [:create]
   
@@ -59,6 +60,12 @@ class SessionsController < ApplicationController
 
   def check_for_user
     raise ActionController::RoutingError.new('Not Found') if current_user
+  end
+
+  def clear_cookies
+    response.headers["Cache-Control"] = "no-cache, must-revalidate"
+    response.headers["Expires"]       = "Thu, 1 Jan 1970 00:00:00 GMT"
+    response.headers["Pragma"]        = "no-cache"
   end
 
 end
