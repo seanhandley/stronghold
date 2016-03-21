@@ -66,6 +66,6 @@ class SessionsController < ApplicationController
     response.headers["Cache-Control"] = "no-cache, must-revalidate"
     response.headers["Expires"]       = "Thu, 1 Jan 1970 00:00:00 GMT"
     response.headers["Pragma"]        = "no-cache"
+    response.headers["Set-Cookie"]    = "_stronghold_session=deleted; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT"
   end
-
 end
