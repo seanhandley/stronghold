@@ -10,7 +10,7 @@ class SupportSectionTests < CapybaraTestCase
     page.has_content?('Create a new ticket')
     find(:xpath, "//a[@ng-click='ticketDialogShow()']").click
     sleep(1)
-    select('Support', :from => 'new_ticket_department')
+    select('Staging', :from => 'new_ticket_department')
     sleep(1)
     fill_in('new_ticket_title', :with => 'Test')
     fill_in('new_ticket_description', :with => 'Test')
