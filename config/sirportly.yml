@@ -1,5 +1,6 @@
 default: &default
   domain: https://helpdesk.datacentred.io
+  brand: Staging
 
 development:
   <<: *default
@@ -15,3 +16,4 @@ staging:
 
 production:
   <<: *default
+  brand: DataCentred

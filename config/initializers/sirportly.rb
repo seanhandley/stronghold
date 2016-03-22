@@ -1,8 +1,8 @@
 require 'sirportly'
 
-settings = YAML.load_file("#{Rails.root}/config/sirportly.yml")[Rails.env]
+SIRPORTLY_ARGS = YAML.load_file("#{Rails.root}/config/sirportly.yml")[Rails.env]
 
-domain = settings['domain']
+domain = SIRPORTLY_ARGS['domain']
 token = Rails.application.secrets.sirportly_token
 secret = Rails.application.secrets.sirportly_secret
 

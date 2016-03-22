@@ -55,7 +55,7 @@ class TicketAdapter
     def departments
       Rails.cache.fetch("stronghold_departments", expires_in: 1.day) do
         dc = SIRPORTLY.brands.select do |b|
-          b.name.downcase == 'datacentred'
+          b.name.downcase == SIRPORTLY_ARGS['brand'].downcase
         end
         dc.present? ? dc.first.departments.reject(&:private).collect(&:name).sort : []
       end
@@ -73,7 +73,7 @@ class TicketAdapter
         return
       end
       properties = {
-        :brand => 'DataCentred',
+        :brand => SIRPORTLY_ARGS['brand'],
         :department => ticket.department,
         :status => 'New',
         :priority => ticket.priority,
