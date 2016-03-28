@@ -91,6 +91,7 @@ Rails.application.configure do
   config.action_mailer.smtp_settings = {
       :address => 'smtp.deliverhq.com',
       :domain => 'datacentred.co.uk',
+      :port => 2525,
       :authentication => :cram_md5,
       :user_name => ENV["MAIL_SERVER_USERNAME"],
       :password => ENV["MAIL_SERVER_PASSWORD"]
