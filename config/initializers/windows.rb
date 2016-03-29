@@ -4,7 +4,7 @@ BILLABLE_METADATA       = settings['metadata']
 
 module Windows
   def self.billable?(instance)
-    metadata.include? instance.metadata&.fetch('os') { nil }
+    metadata['os'].include? instance.metadata&.fetch('os') { nil }
   end
 
   def self.rate_for(instance_flavor)
