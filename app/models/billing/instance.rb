@@ -11,6 +11,20 @@ module Billing
 
     scope :active, -> { all.includes(:instance_states).select(&:active?) }
 
+    def metadata
+      images = Rails.cache.fetch("billing_images", expires_in: 1.hour) do
+        OpenStackConnection.compute.list_images_detail.body['images']
+      end
+
+      images = images.select{|image| image['id'] == image_id}
+
+      if images.any?
+        images[0]['metadata']
+      else
+        {}
+      end
+    end
+
     def active?
       return false if instance_states.collect{|i| i.state.downcase }.include?('deleted')
       latest_state = instance_states.order('recorded_at').last
