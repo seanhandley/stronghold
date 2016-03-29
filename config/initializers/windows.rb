@@ -4,7 +4,7 @@ BILLABLE_METADATA       = settings['metadata']
 
 module Windows
   def self.billable?(instance)
-    os = instance.metadata&.fetch('os')
+    os = instance.metadata&.fetch('os') { nil }
     if os
       metadata['os'].include?(os)
     else
