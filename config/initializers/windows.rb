@@ -1,18 +1,18 @@
-settings = YAML.load_file("#{Rails.root}/config/windows.yml")[Rails.env]
-BILLABLE_WINDOWS_IMAGES = settings['images']
+settings                = YAML.load_file("#{Rails.root}/config/windows.yml")[Rails.env]
 BILLABLE_WINDOWS_PRICES = settings['prices']
+BILLABLE_METADATA       = settings['metadata']
 
 module Windows
   def self.billable?(instance)
-    billable_images.include? instance.image_id
+    metadata.include? instance.metadata&.fetch('os') { nil }
   end
 
   def self.rate_for(instance_flavor)
     prices[instance_flavor]['rate']
   end
 
-  def self.billable_images
-    BILLABLE_WINDOWS_IMAGES
+  def self.metadata
+    BILLABLE_METADATA
   end
 
   def self.prices

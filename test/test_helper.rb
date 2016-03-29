@@ -36,6 +36,14 @@ class UserNoCallbacks < User
   skip_callback :save, :after, :update_password
 end
 
+module Billing
+  class Instance < ActiveRecord::Base
+    def metadata
+      {}
+    end
+  end
+end
+
 # To add Capybara feature tests add `gem "minitest-rails-capybara"`
 # to the test group in the Gemfile and uncomment the following:
 # require "minitest/rails/capybara"
