@@ -80,7 +80,11 @@ class ApplicationController < ActionController::Base
   helper_method :device_cookie
 
   def seen_online
-    current_user && current_user.seen_online!(request)
+    begin
+      current_user && current_user.seen_online!(request)
+    rescue StandardError => ex
+      Honeybadger.notify(ex)
+    end
   end
 
   helper Starburst::AnnouncementsHelper
