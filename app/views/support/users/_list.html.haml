@@ -57,7 +57,7 @@
     %tbody
       - users.each do |user|
         %tr
-          %td= image_tag "default_user.png", "class" => "gravatar", "alt" => "Gravatar", "data-gravatar_hash" => user.gravatar_hash
+          %td= image_tag asset_path("default_user.png"), "class" => "gravatar img-circle", "alt" => "Gravatar", "data-gravatar_hash" => user.gravatar_hash
           %td= link_to user.name, "#user_#{user.id}", 'data-toggle' => 'collapse', 'data-parent' => '#accordionUsers'
           %td= link_to user.email, "mailto:#{user.email}"
           %td
