@@ -1,6 +1,6 @@
 filters = angular.module("filters", [])
 
-filters.filter "momentDateTime", ->
+filters.filter "momentDateTime", -> # used twice in _ticket.html
   (time) ->
     return if !time
     moment.locale 'en', {
@@ -13,14 +13,14 @@ filters.filter "momentDateTime", ->
             'sameElse' : 'Do MMMM YYYY'
        }
     }
-    
+
     moment(time).calendar()
 
-filters.filter "lowerCaseStart", ->
+filters.filter "lowerCaseStart", -> # never used
   (text) ->
     text.charAt(0).toLowerCase() + text.slice(1)
 
-filters.filter "capitalize", ->
+filters.filter "capitalize", -> # never used
   (input, all) ->
     return input.replace /([^\W_]+[^\s-]*) */g, (txt) ->
       txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()

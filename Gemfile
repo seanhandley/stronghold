@@ -77,6 +77,7 @@ gem 'therubyracer', '~> 0.12.2', platforms: :ruby
 gem 'momentjs-rails', '~> 2.8.3'
 gem 'font-awesome-sass', '~> 4.5'
 
+
 source 'https://rails-assets.org' do
   gem 'rails-assets-angular', '~> 1.2.24'
   gem 'rails-assets-angular-resource', '~> 1.2.24'
@@ -90,6 +91,7 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-hideShowPassword', '~> 2.0'
   gem 'rails-assets-normalize-css', '~> 3.0'
   gem 'rails-assets-clipboard', '~> 1.5'
+  gem 'rails-assets-jquery-async-gravatar', '~> 1.0.0'
 end
 
 group :development do
@@ -112,7 +114,7 @@ group :development, :test do
   gem 'bundler-audit'
 end
 
-group :production do 
+group :production do
   gem 'unicorn-worker-killer', '~> 0.4.2'
   gem 'rack-attack'
 end

@@ -27,4 +27,9 @@ $(document).ready(function() {
     $(this).closest('form').submit();
     $('#starburst-announcement').remove();
   });
+
+  $( ".gravatar" ).asyncGravatar( {
+    "size": "30"
+    "default_img": "default_user.png"
+  });
 });
