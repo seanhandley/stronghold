@@ -30,6 +30,5 @@ $(document).ready(function() {
 
   $( ".gravatar" ).asyncGravatar( {
     "size": "30"
-    "default_img": "default_user.png"
   });
 });
