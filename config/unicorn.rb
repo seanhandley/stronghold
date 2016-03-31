@@ -69,4 +69,5 @@ after_fork do |server, worker|
   # and Redis.  TokyoCabinet file handles are safe to reuse
   # between any number of forked children (assuming your kernel
   # correctly implements pread()/pwrite() system calls)
+  pager_duty_loop
 end

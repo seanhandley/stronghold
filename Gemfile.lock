@@ -276,6 +276,10 @@ GEM
     newrelic_rpm (3.9.9.275)
     nokogiri (1.6.7.2)
       mini_portile2 (~> 2.0.0.rc2)
+    pagerduty-sdk (1.0.6)
+      activesupport
+      json
+      virtus
     paranoia (2.1.4)
       activerecord (~> 4.0)
     parser (2.3.0.2)
@@ -550,6 +554,7 @@ DEPENDENCIES
   net-ssh (~> 2.8.0)
   newrelic_rpm (~> 3.9)
   nokogiri (~> 1.6)
+  pagerduty-sdk
   paranoia (~> 2.0)
   poltergeist
   premailer-rails (~> 1.9)
