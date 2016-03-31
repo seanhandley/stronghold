@@ -91,7 +91,6 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-hideShowPassword', '~> 2.0'
   gem 'rails-assets-normalize-css', '~> 3.0'
   gem 'rails-assets-clipboard', '~> 1.5'
-  gem 'rails-assets-jquery-async-gravatar', '~> 1.0.0'
 end
 
 group :development do
