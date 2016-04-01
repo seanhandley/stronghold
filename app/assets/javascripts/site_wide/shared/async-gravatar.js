@@ -31,7 +31,7 @@
 
         // HTTP & HTTPS URLs.
         urls: {
-            http: "http://www.gravatar.com/avatar",
+            http: "http://www.gravatar.com",
             https: "https://secure.gravatar.com"
         }
     };
@@ -84,7 +84,7 @@
                     size = ( $( this ).attr( $.gravatar.options.attr.size ) ? $( this ).attr( $.gravatar.options.attr.size ) : $.gravatar.options.size ),
                     rating = ( $( this ).attr( $.gravatar.options.attr.rating ) ? $( this ).attr( $.gravatar.options.attr.rating ) : $.gravatar.options.rating ),
                     default_img = ( $( this ).attr( $.gravatar.options.attr.default ) ? $( this ).attr( $.gravatar.options.attr.default ) : $.gravatar.options.default_img ),
-                    src = $.gravatar.url + "/" + encodeURIComponent( hash ) +
+                    src = $.gravatar.url + "/avatar/" + encodeURIComponent( hash ) +
                     "?s=" + encodeURIComponent( size ) +
                     "&r=" + encodeURIComponent( rating ) +
                     "&d=" + encodeURIComponent( default_img );
