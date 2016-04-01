@@ -1,3 +1,5 @@
+require 'csv'
+
 namespace :stronghold do
   desc "Get Ubuntu Usage"
   task :ubuntu_usage => :environment do
