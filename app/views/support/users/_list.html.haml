@@ -28,7 +28,7 @@
       %tbody
         - open_invites.each do |invite|
           %tr
-            %td= gravatar_image_tag(invite.email, title: invite.email, alt: invite.email, class: 'img-circle')
+            %td= image_tag asset_path("default_user.png"), "class" => "gravatar img-circle", "alt" => "Gravatar", "data-gravatar_hash" => invite.gravatar_hash
             %td= invite.email
             %td= invite.roles.collect(&:name).join ", "
             %td= invite_status_label(invite.delivery_status)
