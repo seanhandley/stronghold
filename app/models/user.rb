@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   include Trackable
-  
+  include Gravatar
+
   audited only: [:first_name, :last_name, :email]
 
   attr_accessor :password, :password_confirmation, :token
@@ -92,13 +93,13 @@ class User < ActiveRecord::Base
     end
     token || authed
   end
-  
+
   def setup_password_from_openstack(unencrypted_password)
     if authenticate_openstack(unencrypted_password)
       set_local_password(unencrypted_password)
     end
   end
-  
+
   def set_local_password(new_password=nil)
     if new_password
       password = new_password
@@ -120,7 +121,7 @@ class User < ActiveRecord::Base
     end
   end
 
-  def refresh_ec2_credentials!   
+  def refresh_ec2_credentials!
     OpenStackConnection.identity.list_os_credentials(user_id: uuid).body['credentials'].each do |credential|
       OpenStackConnection.identity.delete_os_credential(credential['id'])
     end

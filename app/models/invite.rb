@@ -1,4 +1,5 @@
 class Invite < ActiveRecord::Base
+  include Gravatar
 
   audited only: [:email]
 
@@ -89,6 +90,6 @@ class Invite < ActiveRecord::Base
   end
 
   def send_email
-    DeliverhqMailJob.perform_later(self) 
+    DeliverhqMailJob.perform_later(self)
   end
 end

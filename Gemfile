@@ -76,6 +76,7 @@ gem 'therubyracer', '~> 0.12.2', platforms: :ruby
 gem 'momentjs-rails', '~> 2.8.3'
 gem 'font-awesome-sass', '~> 4.5'
 
+
 source 'https://rails-assets.org' do
   gem 'rails-assets-angular', '~> 1.2.24'
   gem 'rails-assets-angular-resource', '~> 1.2.24'
@@ -111,7 +112,7 @@ group :development, :test do
   gem 'bundler-audit'
 end
 
-group :production do 
+group :production do
   gem 'unicorn-worker-killer', '~> 0.4.2'
   gem 'rack-attack'
 end
