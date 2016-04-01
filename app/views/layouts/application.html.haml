@@ -27,8 +27,7 @@
         = yield
         .push
 = render partial: 'shared/footer' if current_organization.known_to_payment_gateway?
-= render partial: 'shared/ga' if Rails.env.production?
+= javascript_include_tag 'ga.js' if Rails.env.production?
 #loading-overlay.hide
   .spinner
     %i.fa.fa-cog.fa-spin
-  = stripe_javascript_tag

@@ -117,8 +117,4 @@
           %button.btn.btn-primary{:'ng-click' => 'ticketDialogSubmit()'}
             = t(:submit)
 
-:javascript
-
-  $(document).ready(function() {
-    $('#tickets-container').removeClass('hide');
-  });
+= javascript_include_tag "show_tickets"
