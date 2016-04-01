@@ -28,7 +28,7 @@
       %tbody
         - open_invites.each do |invite|
           %tr
-            %td= image_tag asset_path("default_user.png"), "class" => "gravatar img-circle", "alt" => "Gravatar", "data-gravatar_hash" => invite.gravatar_hash
+            %td= image_tag asset_path("assets/default_user.png"), "class" => "gravatar img-circle", "alt" => "Gravatar", "data-gravatar_hash" => invite.gravatar_hash
             %td= invite.email
             %td= invite.roles.collect(&:name).join ", "
             %td= invite_status_label(invite.delivery_status)
@@ -57,7 +57,7 @@
     %tbody
       - users.each do |user|
         %tr
-          %td= image_tag asset_path("default_user.png"), "class" => "gravatar img-circle", "alt" => "Gravatar", "data-gravatar_hash" => user.gravatar_hash
+          %td= image_tag asset_path("assets/default_user.png"), "class" => "gravatar img-circle", "alt" => "Gravatar", "data-gravatar_hash" => user.gravatar_hash
           %td= link_to user.name, "#user_#{user.id}", 'data-toggle' => 'collapse', 'data-parent' => '#accordionUsers'
           %td= link_to user.email, "mailto:#{user.email}"
           %td
