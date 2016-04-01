@@ -29,6 +29,7 @@ $(document).ready(function() {
   });
 
   $( ".gravatar" ).asyncGravatar( {
-    "size": "30"
+    "size": "30",
+    "force_https": true
   });
 });
