@@ -99,10 +99,13 @@ module Billing
         unless samples.any? {|s| s['resource_metadata']['event_type']}
           # This is a new image and we don't know its current size
           # Attempt to find out
-          if(os_image = OpenStackConnection.image.images.get(image_id))
-            image.image_states.create recorded_at: Time.now, size: bytes_to_terabytes(os_image.size.to_i),
-                                            event_name: 'ping', billing_sync: sync,
-                                            message_id: SecureRandom.uuid
+          begin
+            if(os_image = OpenStackConnection.image.images.get(image_id))
+              image.image_states.create recorded_at: Time.now, size: bytes_to_terabytes(os_image.size.to_i),
+                                              event_name: 'ping', billing_sync: sync,
+                                              message_id: SecureRandom.uuid
+            end
+          rescue Fog::Image::OpenStack::NotFound
           end
         end
       end
