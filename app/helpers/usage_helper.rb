@@ -77,15 +77,15 @@ module UsageHelper
       csv << ["Project", "Type", "Sub-Type", "ID", "Name", "Amount", "Unit", "Cost (£)"]
       data.each do |project, usage|
         usage[:instance_usage].each do |instance|
-          csv << [project.name, "#{architecture_human_name(instance[:arch])} Instance", "#{instance[:flavor][:name]}", instance[:uuid], instance[:name], instance[:billable_hours], 'hours', instance[:cost].round(2)]
+          csv << [project.name, "#{architecture_human_name(instance[:arch])} Instance", "#{instance[:flavor][:name]}", instance[:uuid], instance[:name], instance[:billable_hours], 'hours', instance[:cost]]
         end
         usage[:volume_usage].each do |volume|
-          csv << [project.name, "Volume", volume[:volume_type_name], volume[:id], volume[:name], volume[:terabyte_hours], 'TB/h', volume[:cost].round(2)]
+          csv << [project.name, "Volume", volume[:volume_type_name], volume[:id], volume[:name], volume[:terabyte_hours], 'TB/h', volume[:cost]]
         end
         usage[:image_usage].each do |image|
-          csv << [project.name, "Image", nil, image[:id], image[:name], image[:terabyte_hours], 'TB/h', image[:cost].round(2)]
+          csv << [project.name, "Image", nil, image[:id], image[:name], image[:terabyte_hours], 'TB/h', image[:cost]]
         end
-        csv << [project.name, "Object Storage", nil, nil, nil, usage[:object_storage_usage].round(2), 'TB/h', (usage[:object_storage_usage] * RateCard.object_storage).round(2).nearest_penny]
+        csv << [project.name, "Object Storage", nil, nil, nil, usage[:object_storage_usage].round(2), 'TB/h', (usage[:object_storage_usage] * RateCard.object_storage).nearest_penny]
         usage[:ip_quota_usage].each do |ip_quota|
           change = "From #{ip_quota.previous || '0'} IPs to #{ip_quota.quota} IPs"
           csv << [project.name, "Quota Change", nil, nil, ip_quota.recorded_at, change, 'floating IPs', nil]
