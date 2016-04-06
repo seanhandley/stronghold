@@ -91,6 +91,12 @@ module UsageHelper
           csv << [project.name, "Quota Change", nil, nil, ip_quota.recorded_at, change, 'floating IPs', nil]
         end
         csv << [project.name, "IP quota", nil, nil, nil, project.quota_set['network']['floatingip'], 'floating IPs', usage[:ip_quota_total]]
+        usage[:load_balancer_usage].each do |load_balancer|
+          csv << [project.name, "Load Balancer", nil, load_balancer[:lb_id], load_balancer[:name], load_balancer[:hours], "hours", load_balancer[:cost]]
+        end
+        usage[:vpn_connection_usage].each do |vpn_connection|
+          csv << [project.name, "VPN Connection", nil, vpn_connection[:vpn_connection_id], vpn_connection[:name], vpn_connection[:hours], "hours", vpn_connection[:cost]]
+        end
       end
     end
   end
