@@ -182,12 +182,15 @@ module Billing
 
           return (start + middle + ending).round
         else
+          time = 0
           # Only one sample for this period
           if billable?(first_state.state)
-            return (to - first_state.recorded_at).round
-          else
-            return 0
+            time += (to - first_state.recorded_at).round
           end
+          if previous_state && billable?(previous_state.state)
+            time += (first_state.recorded_at - from).round
+          end
+          return time
         end
       else
         if previous_state && billable?(previous_state.state)
