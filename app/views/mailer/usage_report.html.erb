@@ -12,6 +12,8 @@
         <th>RAM</th>
         <th>OpenStack Storage</th>
         <th>Ceph Storage</th>
+        <th>Load Balancers</th>
+        <th>VPN Connections</th>
         <th>Admin Contact</th>
         <th>Spend</th>
         <th>Paying?</th>
@@ -25,6 +27,8 @@
             <td><%= number_with_delimiter(entry[:ram_tb_hours].round(1), :delimiter => ',') %> TBh</td>
             <td><%= number_with_delimiter(entry[:openstack_tb_hours].round(1), :delimiter => ',') %> TBh</td>
             <td><%= number_with_delimiter(entry[:ceph_tb_hours].round(1), :delimiter => ',') %> TBh</td>
+            <td><%= number_with_delimiter(entry[:load_balancer_hours].round(1), :delimiter => ',') %> hours</td>
+            <td><%= number_with_delimiter(entry[:vpn_connection_hours].round(1), :delimiter => ',') %> hours</td>
             <td><%= mail_to entry[:contacts].first %></td>
             <td><%= number_to_currency(entry[:spend], unit: '£', separator: '.', delimiter: ',' ) %></td>
             <td><%= entry[:paying] ? '✔' : '✘' %></td>

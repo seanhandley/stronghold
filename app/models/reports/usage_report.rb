@@ -26,6 +26,14 @@ module Reports
           Billing::StorageObjects.usage(project.uuid, from, to)
         end.flatten
 
+        load_balancers = organization.projects.collect do |project|
+          Billing::LoadBalancers.usage(project.uuid, from, to)
+        end.flatten
+
+        vpn_connections = organization.projects.collect do |project|
+          Billing::VpnConnections.usage(project.uuid, from, to)
+        end.flatten
+
         vcpu_hours   = instances.collect {|i| i[:billable_hours] * i[:flavor][:vcpus_count]}.sum
         ram_tb_hours = instances.collect {|i| ((i[:flavor][:ram_mb] / 1024.0) / 1024.0) * i[:billable_hours]}.sum
 
@@ -35,6 +43,10 @@ module Reports
         openstack_tb_hours = volumes_tb_hours + images_tb_hours + instances_disk_tb_hours
 
         ceph_tb_hours  = objects.sum
+        ceph_cost = [{cost: ceph_tb_hours * RateCard.object_storage}]
+
+        load_balancer_hours  = load_balancers.collect  {|i| i[:hours]}.sum
+        vpn_connection_hours = vpn_connections.collect {|i| i[:hours]}.sum
 
         result = {
           :name => organization.name,
@@ -43,8 +55,10 @@ module Reports
           :ram_tb_hours => ram_tb_hours,
           :openstack_tb_hours => openstack_tb_hours,
           :ceph_tb_hours => ceph_tb_hours,
+          :load_balancer_hours => load_balancer_hours,
+          :vpn_connection_hours => vpn_connection_hours,
           :paying => organization.paying?,
-          :spend => [instances, volumes, images].map{|i| i.map{|j| j[:cost]}}.flatten.compact.sum
+          :spend => [instances, volumes, images, load_balancers, vpn_connections, ceph_cost].map{|i| i.map{|j| j[:cost]}}.flatten.compact.sum
         }
         organization.update_attributes(weekly_spend: result[:spend])
         result
