@@ -29,7 +29,7 @@
               %td
                 == #{number_with_delimiter(vpn[:hours], :delimiter => ',')} of #{@total_hours}
               - if current_organization.show_costs?
-                %td== £#{number_with_precision(vpn[:cost], :delimiter => ',', :separator => '.', :precision => 2)}
+                %td== £#{number_with_precision(vpn[:cost], :delimiter => ',', :separator => '.', :precision => 4)}
           %tr.highlight.bottomline
             %td &nbsp
             %td &nbsp

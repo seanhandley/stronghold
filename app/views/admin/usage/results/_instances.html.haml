@@ -49,7 +49,7 @@
                   == #{number_with_delimiter(instance[:billable_hours], :delimiter => ',')} of #{@total_hours}
                 - if instance[:flavor][:rate].present?
                   - if current_organization.show_costs?
-                    %td.line_entry== £#{number_with_precision(instance[:cost], :delimiter => ',', :separator => '.', :precision => 2)}
+                    %td.line_entry== £#{number_with_precision(instance[:cost], :delimiter => ',', :separator => '.', :precision => 4)}
             %tr.highlight.bottomline
               %td &nbsp;
               %td &nbsp;
