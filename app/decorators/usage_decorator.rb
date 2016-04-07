@@ -14,10 +14,11 @@ class UsageDecorator < ApplicationDecorator
 
   def usage_data(args=nil)
     if args && args[:from_date] && args[:to_date]
+      @usage_data = nil
       @from_date, @to_date = args[:from_date], args[:to_date]
     end
     raise(ArgumentError, 'Please supply :from_date and :to_date') unless from_date && to_date
-    Rails.cache.fetch("org#{model.id}_#{from_date.strftime(timestamp_format)}_#{to_date.strftime(timestamp_format)}", expires_in: 30.days) do
+    @usage_data ||= Rails.cache.fetch("org#{model.id}_#{from_date.strftime(timestamp_format)}_#{to_date.strftime(timestamp_format)}", expires_in: 30.days) do
       model.projects.where("created_at < ?", to_date).select{|t| t.deleted_at.nil? || t.deleted_at > from_date}.inject({}) do |acc, project|
         ip_quota_usage = Billing::IpQuotas.usage(project.uuid, from_date, to_date)
         acc[project] = {
