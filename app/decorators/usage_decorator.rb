@@ -96,24 +96,23 @@ class UsageDecorator < ApplicationDecorator
   end
 
   def ip_quota_cost(project, results)
-    daily_rate = ((RateCard.ip_address * 12) / 365.0).round(2)
     results = results || []
     if results.none?
       quota = project.quota_set['network']['floatingip'].to_i - 1
-      return ((((to_date - from_date) / 60.0) / 60.0) / 24.0).round * daily_rate * quota
+      return (((to_date - from_date) / 60.0) / 60.0).round * RateCard.ip_address * quota
     else
       start = from_date
       cost = results.collect do |quota|
-        period = ((((quota.recorded_at - start) / 60.0) / 60.0) / 24.0).round
+        period = (((quota.recorded_at - start) / 60.0) / 60.0).round
         start = quota.recorded_at
-        total_rate = (period * daily_rate)
+        total_rate = (period * RateCard.ip_address)
         q = quota.previous ? quota.previous : 1
         (q - 1) * total_rate
       end.sum
 
       q = (results.last.quota || 1) - 1
-      period = ((((to_date - results.last.recorded_at) / 60.0) / 60.0) / 24.0).round
-      total_rate = (period * daily_rate)
+      period = (((to_date - results.last.recorded_at) / 60.0) / 60.0).round
+      total_rate = (period * RateCard.ip_address)
       cost += (q * total_rate)
       return cost
     end

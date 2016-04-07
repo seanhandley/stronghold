@@ -10,7 +10,7 @@ module RateCard
       0.4111
     end
     def ip_address
-      2.0
+      0.0027
     end
     def lb_pool
       0.0313
