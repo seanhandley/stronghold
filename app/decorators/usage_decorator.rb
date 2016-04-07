@@ -89,7 +89,7 @@ class UsageDecorator < ApplicationDecorator
   def ip_quota_total(project_id)
     usage_data.each do |project, results|
       if(project_id == project.id)
-        return ip_quota_cost(project, usage_data[:ip_quota_usage]).nearest_penny
+        return ip_quota_cost(project, results[:ip_quota_usage]).nearest_penny
       end
     end
     return 0
