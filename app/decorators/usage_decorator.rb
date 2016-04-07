@@ -87,11 +87,12 @@ class UsageDecorator < ApplicationDecorator
   end
 
   def ip_quota_total(project_id)
-    usage_data.collect do |project, results|
+    usage_data.each do |project, results|
       if(project_id == project.id)
-        ip_quota_cost(project, usage_data[:ip_quota_usage])
+        return ip_quota_cost(project, usage_data[:ip_quota_usage])
       end
-    end.compact.sum
+    end
+    return 0
   end
 
   def ip_quota_cost(project, results)
