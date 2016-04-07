@@ -49,8 +49,8 @@ class Project < ActiveRecord::Base
   end
 
   def keystone_params
-    { name: reference,
-      description: "Customer: #{organization.name}, Project: #{name}" 
+    { name: reference.to_ascii,
+      description: "Customer: #{organization.name}, Project: #{name}".to_ascii 
     }
   end
 
