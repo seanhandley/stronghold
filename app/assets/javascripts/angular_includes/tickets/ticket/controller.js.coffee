@@ -4,7 +4,9 @@ angularJS.controller "TicketsController", [
   "$interval",
   "TicketFactory",
   "TicketStatusFactory",
-  ($http, $scope, $interval, TicketFactory, TicketStatusFactory) ->
+  "TicketPriorityFactory",
+  ($http, $scope, $interval, TicketFactory, TicketStatusFactory, TicketPriorityFactory) ->
+
 
     $scope.clearErrors = () ->
       $scope.staticError = null
@@ -12,8 +14,8 @@ angularJS.controller "TicketsController", [
 
     $scope.staticError = null
     $scope.errors = []
-
     $scope.statuses = TicketStatusFactory.getTicketStatuses()
+    $scope.priorities = TicketPriorityFactory.getTicketPriorities()
     $scope.tickets = null
     $scope.hasFailed = null
 
@@ -138,7 +140,7 @@ angularJS.controller "TicketsController", [
       # ticketDateDay.val("")
       # ticketDateMonth.val("")
       # ticketDateYear.val("")
-      $("#newTicket").on("shown.bs.modal", () -> 
+      $("#newTicket").on("shown.bs.modal", () ->
         ticketTitleInput.focus()
       )
       $("#newTicket").modal('show')
@@ -208,13 +210,13 @@ angularJS.controller "TicketsController", [
       commentTextArea = $("#new_comment_text")
       commentSubmitButton = $($("#newComment button.btn-primary")[0])
       commentTextArea.val("")
-      $("#newComment").on("shown.bs.modal", () -> 
+      $("#newComment").on("shown.bs.modal", () ->
         commentTextArea.focus()
       )
       $("#newComment").modal('show')
       false
 
-    $scope.commentDialogHide = -> 
+    $scope.commentDialogHide = ->
       $('#newComment').modal('hide')
       false
 
@@ -273,15 +275,44 @@ angularJS.controller "TicketsController", [
         allHandler()
         return
       errorHandler = (response) ->
-        console.log(response)
         window.location.replace('/account/tickets') if response.status == 401
         allHandler()
         return
       request = $http({
         method: "patch",
-        url: url
+        url: url,
         data: data
       })
       request.then successHandler, errorHandler
 
+    $scope.changePriority = (priority_name) ->
+      if priority_name == 'Emergency' and !confirm("Are you sure?")
+        return
+        
+      priorityDropdownSpan = $("#priorityDropdown > span").not(".caret")
+      priorityDropdownSpan.html("Changing...")
+      url = "/account/api/tickets/" + $scope.selectedTicket.reference + "/"
+
+      allHandler = () ->
+        setTimeout(() ->
+          $scope.$apply() if !$scope.$$phase
+        , 100)
+
+      successHandler = (response) ->
+        if not response.data
+          errorHandler()
+        allHandler()
+
+      errorHandler = (response) ->
+        console.log("There was an error")
+
+      request = $http({
+        method: "patch",
+        url: url,
+        data: {
+          "priority": priority_name
+        }
+      })
+
+      request.then successHandler, errorHandler
 ]

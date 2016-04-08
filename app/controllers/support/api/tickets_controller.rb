@@ -37,12 +37,10 @@ class Support::Api::TicketsController < SupportBaseController#
   end
 
   def update
+    result = TicketAdapter.update(update_params)
     respond_to do |format|
       format.json {
-        render :json => TicketAdapter.change_status(
-          update_params[:id],
-          update_params[:status]
-        )
+        render :json => result
       }
     end
   end
@@ -55,7 +53,7 @@ class Support::Api::TicketsController < SupportBaseController#
   end
 
   def update_params
-    params.permit(:id, :status)
+    params.permit(:id, :status, :priority)
   end
 
 end

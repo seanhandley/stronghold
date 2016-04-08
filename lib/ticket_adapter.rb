@@ -99,10 +99,12 @@ class TicketAdapter
       ""
     end
 
-    def change_status(reference, status)
-      ticket = SIRPORTLY.ticket(reference)
-      ticket.update(:status => status.downcase == 'open' ? 'New' : 'Resolved')      
-    end
+    def update(params)
+      ticket = SIRPORTLY.ticket(params[:id])
+      params.delete(:id)
+      params[:status] = (params[:status].downcase == 'open' ? 'New' : 'Resolved') if params[:status]
 
+      ticket.update(params)
+    end
   end
 end
