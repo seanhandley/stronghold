@@ -63,7 +63,7 @@ Capybara.javascript_driver = :poltergeist
 
 module LoggingIn
   include Capybara::DSL
-  
+
   def login(username=nil, password=nil)
     u = username || User.first.email
     p = password || "12345678"
@@ -75,7 +75,7 @@ module LoggingIn
 
   def logout
     Capybara.reset_sessions!
-  end     
+  end
 end
 
 class CapybaraTestCase < Minitest::Test
@@ -84,9 +84,9 @@ class CapybaraTestCase < Minitest::Test
   include LoggingIn
 
   def setup
-    login  
+    login
   end
-  
+
   def teardown
     Capybara.reset_sessions!
   end

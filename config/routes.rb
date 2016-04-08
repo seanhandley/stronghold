@@ -58,6 +58,7 @@ Rails.application.routes.draw do
       end
       resources :system_info, only: [:index]
       resources :billing_rates, only: [:index, :update]
+      resources :announcements, only: [:index, :create, :destroy]
       resources :vouchers, except: [:new, :edit, :show]
       resources :account_migrations, only: [:index, :create]
       resources :quotas, except: [:create, :new, :destroy, :show] do
