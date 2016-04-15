@@ -15,6 +15,18 @@
         %li{:'ng-repeat' => "status in statuses"}
           %a{:'href' => "", :'ng-click' => "changeStatus(status.name)"}
             {{status.name}}
+
+    %div.btn-group.pull-right
+      %button.btn.btn-default.dropdown-toggle{:type => "button", :'id' => "priorityDropdown", :'data-toggle' => "dropdown", :'dropdown-toggle' => ""}
+        %i.fa.fa-exclamation{:'ng-class' => "'icon-' + selectedTicket.priority"}
+        %span#selectedPriority
+          Priority: {{selectedTicket.priority}}
+        %span.caret
+      %ul.dropdown-menu{:role => "menu"}
+        %li{:'ng-repeat' => "priority in priorities"}
+          %a{:'href' => "", :'ng-click' => "changePriority(priority.name)"}
+            {{priority.name}}
+
   - else
     %div.btn-group.pull-right
       %i.fa.fa-tag{:'ng-class' => "selectedTicket.status_name"}
@@ -31,10 +43,7 @@
       %i.fa.fa-tag
       {{selectedTicket.reference}}
     &nbsp;
-    %span.label{:'ng-class' => "selectedTicket.priority"}
-      %i.fa.fa-exclamation
-      {{selectedTicket.priority}} Priority
-    
+
   %ul.media-list
     %li.media
       %a.pull-left.gravatar

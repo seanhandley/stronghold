@@ -14,3 +14,8 @@ angularJS.factory "TicketStatusFactory", ->
 
     #Return Statuses
     statuses
+
+angularJS.factory "TicketPriorityFactory", ->
+  getTicketPriorities: ->
+
+   [new TicketPriority("Low"), new TicketPriority("Normal"), new TicketPriority("High"), new TicketPriority("Emergency")]
