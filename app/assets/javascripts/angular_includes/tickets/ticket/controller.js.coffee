@@ -286,7 +286,8 @@ angularJS.controller "TicketsController", [
       request.then successHandler, errorHandler
 
     $scope.changePriority = (priority_name) ->
-      if priority_name == 'Emergency' and !confirm("Are you sure?")
+      emergency_message = "Emergency tickets will be answered ASAP by on-call staff and should not be used unless absolutely necessary. Do you wish to proceed?"
+      if priority_name == 'Emergency' and !confirm(emergency_message)
         return
         
       priorityDropdownSpan = $("#priorityDropdown > span").not(".caret")
