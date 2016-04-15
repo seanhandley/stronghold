@@ -92,6 +92,14 @@ class CapybaraTestCase < Minitest::Test
   end
 end
 
+cg = CustomerGenerator.new(organization_name: 'capybara', email: "capybara@test.com",
+  extra_projects: "", organization: { product_ids: Product.all.map{|p| p.id.to_s}})
+cg.generate!
+rg = RegistrationGenerator.new(Invite.last, password: '12345678')
+rg.generate!
+
+Organization.last.update_attributes reporting_code: 'capybara'
+
 Minitest.after_run do
   Project.all.each do |project|
     project.delete_openstack_object

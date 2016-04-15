@@ -3,14 +3,6 @@ require_relative '../acceptance_test_helper'
 class SupportSectionTests < CapybaraTestCase
 
   def setup
-    cg = CustomerGenerator.new(organization_name: 'capybara', email: "capybara@test.com",
-      extra_projects: "", organization: { product_ids: Product.all.map{|p| p.id.to_s}})
-    cg.generate!
-    rg = RegistrationGenerator.new(Invite.last, password: '12345678')
-    rg.generate!
-
-    Organization.last.update_attributes reporting_code: 'capybara'
-
     login("capybara@test.com", '12345678')
   end
 
@@ -75,6 +67,7 @@ class SupportSectionTests < CapybaraTestCase
 
   def teardown
     TicketAdapter.all.map(&:reference).each{|ref| SIRPORTLY.ticket(ref).destroy }
+    Capybara.reset_sessions!
   end
 
 end
