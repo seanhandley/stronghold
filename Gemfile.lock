@@ -1,6 +1,6 @@
 GIT
   remote: git@github.com:circleci/minitest-ci.git
-  revision: 5ff612993491fcf8355a3d4b196345af82337a3a
+  revision: 9ab0f71b0c3d683c3dcb94ba053358e04f134d8d
   specs:
     minitest-ci (3.0.4.pre)
       minitest (~> 5.0, >= 5.0.6)
@@ -372,6 +372,12 @@ GEM
       faraday_middleware (>= 0.8.8)
       hashie (>= 1.2.0, < 4.0)
       json (>= 1.7.5, < 1.9.0)
+    rspec-core (3.4.4)
+      rspec-support (~> 3.4.0)
+    rspec-support (3.4.1)
+    rspec_junit_formatter (0.2.2)
+      builder (< 4)
+      rspec-core (>= 2, < 4, != 2.12.0)
     ruby2ruby (2.2.0)
       ruby_parser (~> 3.1)
       sexp_processor (~> 4.0)
@@ -573,6 +579,7 @@ DEPENDENCIES
   responders (~> 2.0)
   rest-client (~> 1.8)
   restforce (~> 2.1)
+  rspec_junit_formatter (= 0.2.2)
   rubycritic
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
