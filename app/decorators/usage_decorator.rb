@@ -98,7 +98,7 @@ class UsageDecorator < ApplicationDecorator
   def ip_quota_cost(project, results)
     results = results || []
     if results.none?
-      quota = project.quota_set['network']['floatingip'].to_i - 1
+      quota = [project.quota_set['network']['floatingip'].to_i - 1, 0].max
       return (((to_date - from_date) / 60.0) / 60.0).round * RateCard.ip_address * quota
     else
       start = from_date
@@ -110,7 +110,7 @@ class UsageDecorator < ApplicationDecorator
         (q - 1) * total_rate
       end.sum
 
-      q = (results.last.quota || 1) - 1
+      q = [(results.last.quota || 1) - 1, 0].max
       period = (((to_date - results.last.recorded_at) / 60.0) / 60.0).round
       total_rate = (period * RateCard.ip_address)
       cost += (q * total_rate)
