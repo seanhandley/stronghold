@@ -5,8 +5,9 @@ class FullSignupTests < CapybaraTestCase
   def setup
     logout
   end
-  
+
   def test_full_signup
+    Starburst::Announcement.destroy_all
     visit('/signup')
     fill_in('email', :with => 'test@test.com')
     click_button('Create Account')

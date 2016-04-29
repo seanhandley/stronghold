@@ -48,6 +48,18 @@ class User < ActiveRecord::Base
     organization.cloud?
   end
 
+  def compute?
+    organization.compute?
+  end
+
+  def storage?
+    organization.storage?
+  end
+
+  def colo?
+    organization.colo?
+  end
+
   def admin?
     roles.any?(&:power_user?)
   end

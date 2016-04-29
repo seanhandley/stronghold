@@ -43,7 +43,7 @@ if ['test','development'].include?(Rails.env)
   end
 
   organization.products << Product.all
-  
+
 elsif Rails.env == 'acceptance'
   rand = (0...8).map { ('a'..'z').to_a[rand(26)] }.join.downcase
   cg = CustomerGenerator.new(organization_name: rand, email: "#{rand}@test.com",
@@ -51,4 +51,5 @@ elsif Rails.env == 'acceptance'
   cg.generate!
   rg = RegistrationGenerator.new(Invite.first, password: '12345678')
   rg.generate!
+  STAFF_REFERENCE = Organization.first.reference
 end

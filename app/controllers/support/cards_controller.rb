@@ -39,8 +39,8 @@ class Support::CardsController < SupportBaseController
 
       reauthenticate(Rails.cache.fetch("up_#{current_user.uuid}"))
       Rails.cache.delete("up_#{current_user.uuid}")
-      Announcement.create(title: 'Welcome', body: "Your account has been activated! Please check out our #{link_to 'Getting Started Guide', 'https://docs.datacentred.io/x/WQAJ', target: '_blank'}.".html_safe,
-        limit_field: 'id', limit_value: current_user.id)
+      Starburst::Announcement.create!(body: "<strong><i class='fa fa-bullhorn'></i> Welcome:</strong> Your account has been activated! Please check out our #{link_to 'Getting Started Guide', 'https://docs.datacentred.io/x/WQAJ', target: '_blank'}.".html_safe,
+        limit_to_users: [{field: 'id', value: current_user.id}])
       redirect_to activated_path
     else
       render :new, status: :unprocessable_entity

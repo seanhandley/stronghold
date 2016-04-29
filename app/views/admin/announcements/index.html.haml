@@ -1,0 +1,16 @@
+- title "Announcements"
+
+%h2
+  %i.fa.fa-bullhorn
+  Announcements
+
+.pull-right
+  %button.btn.btn-primary{id: "new-announcement", "data-toggle": "modal", "data-target": "#modalAnnouncement"} New Announcement
+= render partial: 'new'
+
+.announcements-list
+  %h3 Active Announcements
+  = render partial: 'announcements', locals: {collection: @active}
+
+  %h3 Scheduled Announcements
+  = render partial: 'announcements', locals: {collection: @scheduled}
