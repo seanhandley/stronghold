@@ -4,7 +4,7 @@ require File.expand_path('config/environment', File.dirname(__FILE__))
 include Clockwork
 
 if Rails.env.production? || Rails.env.staging?
-  every(30.minutes, 'usage_sync') do
+  every(Billing::SYNC_INTERVAL_MINUTES.minutes, 'usage_sync') do
     UsageJob.perform_later
   end
 
