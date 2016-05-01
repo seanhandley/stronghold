@@ -6,7 +6,6 @@ class UsageJob < ActiveJob::Base
     while(mins_since_sync > Billing::SYNC_INTERVAL_MINUTES) do
       Billing.sync!(Billing::SYNC_INTERVAL_MINUTES)
     end
-    Billing.sync!
   end
 
   private
