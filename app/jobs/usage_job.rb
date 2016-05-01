@@ -13,7 +13,7 @@ class UsageJob < ActiveJob::Base
 
   def mins_since_sync
     last_sync = Billing::Sync.completed.last
-    (Time.now - last_sync.period_to) * 60.0
+    (Time.now - last_sync.period_to) / 60.0
   end
 
   def already_running?
