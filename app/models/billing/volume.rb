@@ -34,7 +34,7 @@ module Billing
     end
 
     def ssd?
-      latest_state.ssd?
+      latest_state&.ssd?
     end
   end
 end
