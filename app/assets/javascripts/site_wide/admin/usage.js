@@ -11,4 +11,6 @@ $(document).ready(function() {
     }
   });
   $('a.toggle_line_entry').click();
+
+  $('.select-organizations').select2();
 });

@@ -46,7 +46,7 @@ class Admin::UsageController < AdminBaseController
   end
 
   def get_organizations
-    @organizations ||= Organization.billable.collect{|organization| [organization.name, organization.id]}
+    @organizations ||= Organization.billable.collect{|organization| ["#{organization.name} (#{organization.reporting_code})", organization.id]}
   end
 
   def datetime_array

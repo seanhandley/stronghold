@@ -57,7 +57,7 @@ module UsageHelper
       "<i class='fa fa-eject text-danger'></i> Terminated".html_safe
     else
       state
-    end    
+    end
   end
 
   def usage_data_with_total(data, total)
