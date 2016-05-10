@@ -44,9 +44,22 @@ class TestAntiFraud < CleanTest
   end
 
 
-  # def test_charge_fails_to_create_charge
-  #   flunk # TO DO: Make this pass
-  # end
+  def test_charge_fails_to_create_charge
+    mock_charge = Minitest::Mock.new
+
+    mock_charge.expect(:id, "foo")
+    mock_charge.expect(:status, "failed")
+
+    charge_args = {amount: AntiFraud::TEST_CHARGE_AMOUNT, currency: 'gbp',
+                   customer: "foo", description: "Test failed charge for foo"}
+
+    Stripe::Charge.stub(:create, mock_charge, {charge: "foo"}) do
+      status, message = AntiFraud.test_charge_succeeds?(@organization)
+      refute status
+      refute_equal "Test charge succeeded.", message
+    end
+    mock_charge.verify
+  end
   #
   # def test_charge_fails_to_create_refund
   #   flunk # TO DO: Make this pass
