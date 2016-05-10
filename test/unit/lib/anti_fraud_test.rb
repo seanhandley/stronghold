@@ -28,18 +28,31 @@ class TestAntiFraud < CleanTest
   end
 
   def test_charge_organization_has_no_stripe_id
-    flunk # TO DO: Make this pass
+    @organization = Organization.make!(stripe_customer_id: nil)
+    mock_charge = Minitest::Mock.new
+
+    charge_args = {amount: AntiFraud::TEST_CHARGE_AMOUNT, currency: 'gbp',
+                   customer: 'foo', description: "Test charge for customer with no stripe id"}
+
+
+    Stripe::Charge.stub(:create, mock_charge, {charge: "foo"}) do
+      status, message = AntiFraud.test_charge_succeeds?(@organization)
+      refute status
+      refute_equal "Test charge succeeded.", message
+    end
+    mock_charge.verify
   end
 
-  def test_charge_fails_to_create_charge
-    flunk # TO DO: Make this pass
-  end
 
-  def test_charge_fails_to_create_refund
-    flunk # TO DO: Make this pass
-  end
-
-  def test_charge_handles_stripe_api_errors
-    flunk # TO DO: Make this pass
-  end
+  # def test_charge_fails_to_create_charge
+  #   flunk # TO DO: Make this pass
+  # end
+  #
+  # def test_charge_fails_to_create_refund
+  #   flunk # TO DO: Make this pass
+  # end
+  #
+  # def test_charge_handles_stripe_api_errors
+  #   flunk # TO DO: Make this pass
+  # end
 end
