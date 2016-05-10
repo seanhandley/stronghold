@@ -17,5 +17,8 @@ module AntiFraud
     else
       [false, charge.status == 'succeeded' ? refund.status : charge.status]
     end
+  rescue Stripe::StripeError => exception
+    Honeybadger.notify(exception)
+    [false, exception.message]
   end
 end
