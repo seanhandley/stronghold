@@ -3,6 +3,7 @@ module AntiFraud
 
   def self.test_charge_succeeds?(organization)
     customer_id = organization.stripe_customer_id
+    return [false, "Organization #{organization.id} has no stripe id associated."] unless customer_id
 
     charge = Stripe::Charge.create amount:      TEST_CHARGE_AMOUNT,
                                    currency:    "gbp",
