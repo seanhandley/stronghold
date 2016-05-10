@@ -18,9 +18,9 @@ module AntiFraud
     )
 
     if charge.status == 'succeeded' && refund.status == 'succeeded'
-      return true
+      [true, 'Test charge succeeded.']
     else
-      return false
+      [false, charge.status == 'succeeded' ? refund.status : charge.status]
     end
   end
 end
