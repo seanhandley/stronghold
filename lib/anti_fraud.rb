@@ -10,13 +10,9 @@ module AntiFraud
                                    customer:    customer_id,
                                    description: "Test charge for #{customer_id}"
 
-    refund = Stripe::Refund.create charge: charge.id
+    Stripe::Refund.create charge: charge.id
 
-    if [charge, refund].all?{|e| e.status == 'succeeded'}
-      [true, 'Test charge succeeded.']
-    else
-      [false, charge.status == 'succeeded' ? refund.status : charge.status]
-    end
+    [true, 'Test charge succeeded.']
   rescue Stripe::StripeError => exception
     Honeybadger.notify(exception)
     [false, exception.message]
