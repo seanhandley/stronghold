@@ -36,7 +36,7 @@ class Admin::FrozenCustomersController < AdminBaseController
     if status
       redirect_to admin_frozen_customers_path, notice: 'Success. The amount of £1 was charged and refunded to the customer.'
     else
-      redirect_to admin_frozen_customers_path, alert: "Failed. Couldn't charge the customer"
+      redirect_to admin_frozen_customers_path, alert: "Failed. Payment provider says: #{message}"
     end
   end
 
