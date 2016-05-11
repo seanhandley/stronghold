@@ -27,6 +27,8 @@
               = link_to 'Unfreeze?', admin_frozen_customer_path(customer), class: 'btn btn-success', 'data-method' => "put", 'data-confirm' => "Have you verified the customer's ID and payment method?"
             %td
               = link_to 'Delete', admin_frozen_customer_path(customer), class: 'btn btn-danger', 'data-method' => "delete", 'data-confirm' => "This can't be undone. Are you sure?"
+            %td
+              = link_to 'Test Charge', charge_admin_frozen_customer_path(customer), class: 'btn btn-info', 'data-method' => "post", 'data-confirm' => "This will charge and refund £1 to the customer card. Did they give you permission to do this?"
 - else
   .push
   .alert.alert-warning No frozen customers found.

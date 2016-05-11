@@ -71,6 +71,9 @@ Rails.application.routes.draw do
         member do
           post 'mail'
         end
+        member do
+          post 'charge'
+        end
       end
       resources :pending_invoices, only: [:index, :update, :destroy]
     end
