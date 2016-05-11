@@ -34,9 +34,9 @@ class Admin::FrozenCustomersController < AdminBaseController
     organization = Organization.find(params[:id])
     status, message = AntiFraud.test_charge_succeeds?(organization)
     if status
-      redirect_to admin_frozen_customers_path, notice: 'Success. The amount of 1£ was charged and refounded to the customer.'
+      redirect_to admin_frozen_customers_path, notice: 'Success. The amount of £1 was charged and refunded to the customer.'
     else
-      redirect_to admin_frozen_customers_path, notice: "Failed. Couldn't charge the customer"
+      redirect_to admin_frozen_customers_path, notice: "Failed. Couldn't charge the customer: #{message}"
     end
   end
 
