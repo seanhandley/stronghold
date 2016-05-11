@@ -14,7 +14,6 @@ module AntiFraud
 
     [true, 'Test charge succeeded.']
   rescue Stripe::StripeError => exception
-    Honeybadger.notify(exception)
     [false, exception.message]
   end
 end
