@@ -30,6 +30,7 @@ en:
   billing_address1: "Billing Address 1"
   billing_address2: "Billing Address 2"
   billing_city: "Billing City"
+  billing_contact: "Billing Contact"
   billing_postcode: "Billing Postcode"
   billing_country: "Billing Country"
   can_access_requests_modify: "Can raise and modify access requests"

@@ -27,7 +27,7 @@ class Support::OrganizationsController < SupportBaseController
     end
   end
 
-  def reauthorise  
+  def reauthorise
     if reauthenticate(reauthorise_params[:password])
       render json: {success: true }
     else
@@ -68,7 +68,7 @@ class Support::OrganizationsController < SupportBaseController
   def update_params
     params.require(:organization).permit(:name, :time_zone, :billing_address1, :billing_address2,
                                          :billing_postcode, :billing_city, :billing_country,
-                                         :phone)
+                                         :phone, :billing_contact)
   end
 
   def reauthorise_params
