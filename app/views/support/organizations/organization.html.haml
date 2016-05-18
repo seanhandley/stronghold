@@ -21,6 +21,9 @@
       .form-group
         %label= t(:time_zone)
         = f.time_zone_select :time_zone, nil, {include_blank: false}, {class: "form-control"}
+      .form-group
+        %label Billing Contact
+        = f.email_field :billing_contact, class: "form-control"
     .col-md-6
       %h3 Billing Address
       .form-group
@@ -42,7 +45,7 @@
         .form-group
           .pull-right
             = link_to 'Close Account', '', 'data-toggle' => "modal", 'data-target' => "#closeAccount"
-            
+
 
   = submit_tag t(:save), class: 'btn btn-primary', data: { disable_with: t(:saving) }
 
@@ -69,7 +72,7 @@
               If you have any questions, or require assistance please
               = link_to 'raise a support ticket', support_tickets_path
               \.
-            
+
             .form-group
               %label Confirm password to proceed
               = password_field_tag :password, nil, class: 'form-control wink-password'

@@ -5,7 +5,7 @@ class Organization < ActiveRecord::Base
   include UsageInformation
 
   audited only: [:name, :time_zone, :locale, :billing_address1, :billing_address2,
-                 :billing_city, :billing_postcode, :billing_country, :phone]
+                 :billing_city, :billing_postcode, :billing_country, :phone, :billing_contact]
 
   has_associated_audits
 
@@ -22,6 +22,7 @@ class Organization < ActiveRecord::Base
       c2g__CODADescription1__c: payment_card_type,
       c2g__CODABaseDate1__c: "Invoice Date",
       c2g__CODADaysOffset1__c: 0,
+      #c2g__CODAInvoiceEmail__c: billing_contact,
       Monthly_VCPU_Hours__c: monthly_vcpu_hours,
       Monthly_RAM_TBh__c: monthly_ram_tbh,
       Monthly_OpenStack_Storage_TBh__c: monthly_openstack_storage_tbh,
@@ -41,8 +42,8 @@ class Organization < ActiveRecord::Base
   before_save :check_limited_storage, :if => Proc.new{|o| o.limited_storage_changed? }
 
   validates :name, length: {minimum: 1}, allow_blank: false
-  validates :reference,      :uniqueness => true, :if => Proc.new{|o| o.reference.present? } 
-  validates :reporting_code, :uniqueness => true, :if => Proc.new{|o| o.reporting_code.present? } 
+  validates :reference,      :uniqueness => true, :if => Proc.new{|o| o.reference.present? }
+  validates :reporting_code, :uniqueness => true, :if => Proc.new{|o| o.reporting_code.present? }
 
   has_many :users, dependent: :destroy
   has_many :roles, dependent: :destroy
@@ -162,7 +163,7 @@ class Organization < ActiveRecord::Base
   end
 
   def manually_activate!
-    return false unless state == OrganizationStates::Fresh 
+    return false unless state == OrganizationStates::Fresh
     update_attributes(started_paying_at: Time.now.utc, self_service: false)
     enable!
     create_default_network!
