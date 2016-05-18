@@ -240,7 +240,7 @@ GEM
     kgio (2.9.2)
     launchy (2.4.3)
       addressable (~> 2.3)
-    libv8 (3.16.14.13)
+    libv8 (3.16.14.15)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
     machinist (2.0)
@@ -593,7 +593,7 @@ DEPENDENCIES
   starburst (~> 1.0)
   stripe-rails (~> 0.3)
   tel_to_helper
-  therubyracer (~> 0.12.2)
+  therubyracer (~> 0.5)
   timecop
   traceroute
   uglifier (>= 2.7)

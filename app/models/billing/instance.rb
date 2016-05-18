@@ -9,7 +9,7 @@ module Billing
                :primary_key => 'image_id', :foreign_key => 'image_id'
     belongs_to :project
 
-    scope :active, -> { all.includes(:instance_states).select(&:active?) }
+    scope :active, -> { where(terminated_at: nil) }
 
     def metadata
       images = Rails.cache.fetch("billing_images", expires_in: 1.hour) do
@@ -25,14 +25,12 @@ module Billing
       end
     end
 
-    def active?
-      return false if instance_states.collect{|i| i.state.downcase }.include?('deleted')
-      latest_state = instance_states.order('recorded_at').last
-      latest_state ? Billing::Instances.billable?(latest_state.state) : true
-    end
-
     def terminated_at
-      instance_states.where(state: 'deleted').order('recorded_at').first.try(:recorded_at) { nil }
+      terminated_at = read_attribute(:terminated_at)
+      return terminated_at if terminated_at
+      terminated_at = instance_states.where(state: 'deleted').order('recorded_at').first.try(:recorded_at) { nil }
+      update_attributes terminated_at: terminated_at
+      terminated_at
     end
 
     def first_booted_at

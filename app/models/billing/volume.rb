@@ -6,7 +6,7 @@ module Billing
 
     has_many :volume_states
 
-    scope :active, -> { all.includes(:volume_states).select(&:active?) }
+    scope :active, -> { where(deleted_at: nil) }
 
     def active?
       latest_state = volume_states.order('recorded_at').last
@@ -18,7 +18,11 @@ module Billing
     end
 
     def deleted_at
-      volume_states.where(event_name: 'volume.delete.end').order('recorded_at').first.try(:recorded_at) { nil }
+      deleted_at = read_attribute(:deleted_at)
+      return deleted_at if deleted_at
+      deleted_at = volume_states.where(event_name: 'volume.delete.end').order('recorded_at').first.try(:recorded_at) { nil }
+      update_attributes deleted_at: deleted_at
+      deleted_at
     end
 
     def latest_state
