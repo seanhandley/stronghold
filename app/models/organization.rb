@@ -22,7 +22,7 @@ class Organization < ActiveRecord::Base
       c2g__CODADescription1__c: payment_card_type,
       c2g__CODABaseDate1__c: "Invoice Date",
       c2g__CODADaysOffset1__c: 0,
-      c2g__CODAInvoiceEmail__c: billing_contact,
+      # c2g__CODAInvoiceEmail__c: billing_contact,
       Monthly_VCPU_Hours__c: monthly_vcpu_hours,
       Monthly_RAM_TBh__c: monthly_ram_tbh,
       Monthly_OpenStack_Storage_TBh__c: monthly_openstack_storage_tbh,
