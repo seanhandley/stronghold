@@ -10,3 +10,4 @@
 //= require starburst/starburst
 //= require hideShowPassword
 //= require clipboard
+//=require jquery.soulmate

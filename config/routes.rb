@@ -8,6 +8,7 @@ Rails.application.routes.draw do
 
   mount Starburst::Engine => "/starburst"
 
+
   namespace :support, path: 'account' do
     root :to => 'dashboard#index'
     resources :instances
@@ -39,28 +40,12 @@ Rails.application.routes.draw do
 
   constraints StaffConstraint.new do
     namespace :admin do
-      root :to => 'dashboard#index'
-      resources :customers, only: [:new, :create]
-      resources :usage, only: [:index, :create]
-      resources :sanity, only: [:index]
+      mount Soulmate::Server, :at => "/sm"
+      root :to => 'customers#index'
+      resources :customers, except: [:destroy]
+      resources :usage, only: [:show, :update]
       resources :free_ips, only: [:index]
-      resources :resellers, only: [:index]
-      resources :online_users, only: [:index]
-      resources :queue, only: [:index] do
-        collection do
-          put 'restart'
-        end
-      end
-      resources :scheduler, only: [:index] do
-        collection do
-          put 'restart'
-        end
-      end
-      resources :system_info, only: [:index]
-      resources :billing_rates, only: [:index, :update]
-      resources :announcements, only: [:index, :create, :destroy]
-      resources :vouchers, except: [:new, :edit, :show]
-      resources :account_migrations, only: [:index, :create]
+      resources :account_migrations, only: [:update]
       resources :quotas, except: [:create, :new, :destroy, :show] do
         member do
           post 'mail'
@@ -76,8 +61,30 @@ Rails.application.routes.draw do
         end
       end
       resources :pending_invoices, only: [:index, :update, :destroy]
+
+      namespace :utilities do
+        root :to => 'dashboard#index'
+        resources :resellers, only: [:index]
+        resources :announcements, only: [:index, :create, :destroy]
+        resources :vouchers, except: [:new, :edit, :show]
+        resources :billing_rates, only: [:index, :update]
+        resources :sanity, only: [:index]
+        resources :online_users, only: [:index]
+        resources :queue, only: [:index] do
+          collection do
+            put 'restart'
+          end
+        end
+        resources :scheduler, only: [:index] do
+          collection do
+            put 'restart'
+          end
+        end
+        resources :system_info, only: [:index]
+      end
     end
   end
+
 
   resources :sessions, only: [:create, :destroy, :new, :index]
   resources :resets, only: [:create, :new, :show, :update]

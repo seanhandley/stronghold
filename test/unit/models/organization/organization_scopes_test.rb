@@ -43,7 +43,7 @@ class TestOrganizationScopes < CleanTest
 
   def test_frozen_scope
     assert_equal 0, Organization.frozen.count
-    @orgs.first.update_attributes(in_review: true)
+    @orgs.first.update_attributes(state: OrganizationStates::Frozen)
     assert_equal 1, Organization.frozen.count
   end
 

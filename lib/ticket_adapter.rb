@@ -5,7 +5,7 @@ class TicketAdapter
   extend ActionView::Helpers::TextHelper
 
   class << self
-    def all(page=1)
+    def all(page=1, organization=Authorization.current_user.organization)
       tickets = []
       limit = 15
       page = page.to_i
@@ -18,7 +18,7 @@ class TicketAdapter
                    custom_field.date_of_visit
                    custom_field.time_of_visit
                   }
-      spql = "SELECT #{columns.join(',')} FROM tickets WHERE contacts.company = \"#{Authorization.current_user.organization.reference}\" GROUP BY submitted_at ORDER BY submitted_at DESC LIMIT #{limit.join(',')}"
+      spql = "SELECT #{columns.join(',')} FROM tickets WHERE contacts.company = \"#{organization.reference}\" GROUP BY submitted_at ORDER BY submitted_at DESC LIMIT #{limit.join(',')}"
       SIRPORTLY.request("tickets/spql", spql: spql)["results"].map{|t| Hash[columns.zip(t)]}.map do |t|
         Thread.new do
           head, *tail = SIRPORTLY.request("ticket_updates/all", ticket: t['reference']).sort_by{|t| t['posted_at']}

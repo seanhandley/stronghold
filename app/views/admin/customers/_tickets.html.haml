@@ -1,0 +1,20 @@
+.table-responsive
+  %table.table.table-hover
+    %thead
+      %th Title
+      %th Description
+      %th Priority
+      %th Link
+    %tbody
+      - if @tickets.any?
+        - @tickets.each do |ticket|
+          - if ticket[:status_name] == 'Open'
+            %tr
+              %td= ticket[:title]
+              %td= ticket[:description]
+              %td= ticket[:priority]
+              %td= link_to '→', "https://helpdesk.datacentred.io/staff/tickets/#{ticket[:reference]}"
+      - else
+        %tr
+          %td
+            %em No tickets.

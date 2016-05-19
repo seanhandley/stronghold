@@ -1,0 +1,18 @@
+.table-responsive
+  %table.table.table-hover
+    %thead
+      %th Name
+      %th
+      %th Email
+
+    %tbody
+      - if @users.any?
+        - @users.each do |user|
+          %tr
+            %td= user[:first_name]
+            %td= user[:last_name]
+            %td= user[:email]
+      - else
+        %tr
+          %td
+            %em No users.

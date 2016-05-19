@@ -20,7 +20,7 @@
   </ul>
 
   <div style: "padding: 30px; margin: 30px">
-    <a class="confirm" target='_blank' href="<%= admin_frozen_customers_url %>">Review</a>
+    <%= link_to 'Review', admin_frozen_customers_url, class: 'confirm', target: '_blank', 'data-method' => "get" %>
   </div>
 
   <hr>

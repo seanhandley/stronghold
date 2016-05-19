@@ -1,17 +1,16 @@
 class Admin::UsageController < AdminBaseController
   include UsageHelper
 
-  before_filter :get_organizations
-
-  def index
+  def show
     reset_dates
+    @organization = Organization.find(params[:id])
   end
 
-  def create
+  def update
     begin
       @from_date, @to_date = parse_dates create_params
       @total_hours = ((@to_date - @from_date) / 1.hour).round
-      if (@organization = Organization.find(create_params[:organization]))
+      if (@organization = Organization.find(params[:id]))
         @usage_decorator = UsageDecorator.new(@organization)
         @usage_decorator.remove_cached_data(@from_date, @to_date) if create_params[:clear_cache]
         @usage = @usage_decorator.usage_data(from_date: @from_date, to_date: @to_date)
@@ -35,7 +34,7 @@ class Admin::UsageController < AdminBaseController
       flash.now[:alert] = error.message
       notify_honeybadger(error)
       reset_dates
-      render :index
+      render :show
     end
   end
 
@@ -43,10 +42,6 @@ class Admin::UsageController < AdminBaseController
 
   def create_params
     params.permit(:organization, :clear_cache, :from => datetime_array, :to => datetime_array)
-  end
-
-  def get_organizations
-    @organizations ||= Organization.billable.collect{|organization| ["#{organization.name} (#{organization.reporting_code})", organization.id]}
   end
 
   def datetime_array

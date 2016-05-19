@@ -1,0 +1,19 @@
+
+%h4
+  Weekly Spend:
+  %strong= number_to_currency(@organization.weekly_spend, :unit => "£")
+
+- if @organization.usage_types.present?
+  = @organization.usage_types
+- else
+  %em No usage data
+
+
+%br
+  %strong
+    Last activity:
+  - if @organization.most_recent_usage_recorded_at.present?
+    = @organization.most_recent_usage_recorded_at
+  - else
+    %em No recent activity
+%br

@@ -7,13 +7,13 @@
   %h1#dashboard-overview
     Account Overview
 
-  - if current_organization.in_review?
+  - if current_organization.frozen?
     .alert.alert-warning
       %i.fa.fa-info-circle
       Your account is currently in review mode while we perform additional checks. Please check your email for further instructions.
 
   #dashboard_buttons.pull-right
-    - unless current_organization.in_review?
+    - unless current_organization.frozen?
       - if current_organization.compute? && can?(:read, :cloud)
         %a{class: "btn btn-primary has-tooltip", href: openstack_path, target: '_blank', 'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => 'Log in using your username/password',}
           OpenStack Dashboard
@@ -30,7 +30,7 @@
             %h2
               %i.fa.fa-rocket
               Compute
-            Instances active: 
+            Instances active:
             %span#instances_active= @instance_count
       - if current_organization.storage? && can?(:read, :storage)
         .col-md-6{style: 'text-align: center'}
@@ -50,4 +50,3 @@
     %p== This is the DataCentred online control panel.
 
     %em== If you have any questions or issues, please report them via the #{link_to 'Support Tickets', support_tickets_path} section.
-

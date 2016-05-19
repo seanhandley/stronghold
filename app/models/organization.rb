@@ -60,13 +60,21 @@ class Organization < ActiveRecord::Base
   scope :paying,                -> { where('started_paying_at is not null') }
   scope :billable,              -> { all.select{|o| !o.test_account?} }
   scope :cloud,                 -> { all.select(&:cloud?) }
-  scope :active,                -> { all.select{|o| o.state == OrganizationStates::Active && !o.disabled? && !o.in_review?}}
+  scope :active,                -> { all.select{|o| o.state == OrganizationStates::Active && !o.disabled? && !o.frozen?}}
   scope :self_service,          -> { where('self_service = true') }
   scope :pending,               -> { all.select{|o| o.state == OrganizationStates::Fresh }}
-  scope :frozen,                -> { where(in_review: true)}
+  scope :frozen,                -> { where(state: 'frozen')}
   scope :pending_without_users, -> { all.select{|o| o.state == OrganizationStates::Fresh && o.users.count == 0}}
 
   serialize :quota_limit
+
+  def frozen?
+    state == 'frozen'
+  end
+
+  def fresh?
+    state == 'fresh'
+  end
 
   def quota_limit
     read_attribute(:quota_limit) || StartingQuota['standard']
@@ -88,6 +96,10 @@ class Organization < ActiveRecord::Base
         stripe_has_valid_source?(stripe_customer_id)
       end
     end
+  end
+
+  def account_type
+   self_service? ? 'Self Service' : 'Invoiced/Trial'
   end
 
   def known_to_payment_gateway?
@@ -164,7 +176,7 @@ class Organization < ActiveRecord::Base
 
   def manually_activate!
     return false unless state == OrganizationStates::Fresh
-    update_attributes(started_paying_at: Time.now.utc, self_service: false)
+    update_attributes(started_paying_at: Time.now.utc, self_service: false, state: 'active')
     enable!
     create_default_network!
     set_quotas!
@@ -192,6 +204,7 @@ class Organization < ActiveRecord::Base
     update_attributes(quota_limit: StartingQuota[quota])
     projects.each{|project| project.update_attributes(quota_set: StartingQuota[quota])}
     update_attributes(limited_storage: true) if voucher && voucher.restricted?
+    true
   end
 
   private
@@ -250,4 +263,5 @@ module OrganizationStates
   HasNoPaymentMethods = 'no_payment_methods'
   Disabled = 'disabled'
   Fresh = 'fresh'
+  Frozen = 'frozen'
 end

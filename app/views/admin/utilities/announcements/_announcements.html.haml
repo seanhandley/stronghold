@@ -1,0 +1,23 @@
+.table-responsive
+  %table.table.table-striped.table-hover
+    %thead
+      %tr
+        %th Message
+        %th Start Date
+        %th Stop Date
+        %th Limited to Users
+        %th Seen by
+        %th
+    %tbody
+      - for announcement in collection do
+        %tr
+          %td= truncate(announcement.body, length: 120, separator: ' ', escape: false, omission: '... (continued)').html_safe
+          %td= announcement.start_delivering_at
+          %td= announcement.stop_delivering_at
+          %td= announcement.pretty_filters
+          %td{style: 'width:200px'}
+            .progress
+              .progress-bar{"role"=>"progressbar", "aria-valuenow"=>announcement.percentage_viewed, "aria-valuemin"=>"0", "aria-valuemax"=>"100", "style"=>"font-size:10px;min-width: 2em;width: #{announcement.percentage_viewed}%"}
+                = "#{announcement.percentage_viewed} %"
+          %td
+            = link_to 'Deactivate', admin_utilities_announcement_path(announcement), method: :delete, id: "deactivate_btn#{announcement.id}", class: 'btn btn-danger', 'data-confirm' => "This can't be undone. Are you sure?"

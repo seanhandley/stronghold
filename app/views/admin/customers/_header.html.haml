@@ -1,0 +1,14 @@
+.container.customer-header
+  %div.customer-header-title
+    %div.pull-left
+      %h1
+        %i.fa.fa-briefcase
+        = @organization.name
+      %h3
+        Reference:
+        = @organization.reporting_code
+
+    %div.search-and-back.pull-right
+      %input{id: "search-input", type: "text", name: "q", value: "", autocomplete: "off", class: 'form-control small-customer-search glyphicon', placeholder: "&#xe028 Search customers"}
+
+      = link_to "← Back to #{@organization.name}", admin_customer_path(organization), id: 'back-to-dashboard'

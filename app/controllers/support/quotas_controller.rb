@@ -8,10 +8,6 @@ class Support::QuotasController < SupportBaseController
     @projects = current_organization.projects
   end
 
-  def update
-    
-  end
-
   private
 
   def check_power_user_and_cloud

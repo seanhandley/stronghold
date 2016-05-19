@@ -301,7 +301,6 @@ ActiveRecord::Schema.define(version: 20160608114510) do
     t.boolean  "disabled",                         default: false,    null: false
     t.boolean  "test_account",                     default: false,    null: false
     t.string   "reporting_code",     limit: 255
-    t.boolean  "in_review",                        default: false,    null: false
     t.boolean  "limited_storage",                  default: false,    null: false
     t.integer  "projects_limit",     limit: 4,     default: 1,        null: false
     t.float    "weekly_spend",       limit: 24,    default: 0.0,      null: false
@@ -310,6 +309,7 @@ ActiveRecord::Schema.define(version: 20160608114510) do
   end
 
   add_index "organizations", ["reporting_code"], name: "index_organizations_on_reporting_code", unique: true, using: :btree
+  add_index "organizations", ["state"], name: "index_organizations_on_state", using: :btree
 
   create_table "organizations_products", force: :cascade do |t|
     t.integer  "organization_id", limit: 4
