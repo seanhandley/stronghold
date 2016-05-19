@@ -1,26 +1,3 @@
 - title "Audit Log"
 
-%h3= t(:audit_log)
-.table-responsive
-  %table.table.table-striped
-    %thead
-      %tr
-        %th
-        %th= t(:date_word)
-        %th= t(:time_word)
-        %th= t(:user)
-        %th= t(:action)
-    %tbody
-      - @audits.each do |audit|
-        %tr
-          %td
-            = gravatar_image_tag(audit.user ? audit.user.email : '')
-          %td
-            = short_date(audit.created_at)
-          %td
-            = long_time(audit.created_at)
-          %td
-            = audit.user ? audit.user.name : t(:system).upcase
-          %td
-            = render partial: "support/audits/table/#{audit.auditable_type.underscore}", locals: { audit: audit }
-= pagination @audits
+= render partial: "support/audits/audits", locals: {audits: @audits}

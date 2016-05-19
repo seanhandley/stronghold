@@ -1,25 +1,25 @@
 class Admin::FrozenCustomersController < AdminBaseController
 
   def index
-    @frozen_customers = Organization.frozen.reverse
   end
 
   def update
-    organization = Organization.find(params[:id])
-    if organization.unfreeze!
-      Mailer.review_mode_successful(organization).deliver_later
-      redirect_to admin_frozen_customers_path, notice: "Customer has been unfrozen."
+    @organization = Organization.find(params[:id])
+
+    if @organization.unfreeze!
+      Mailer.review_mode_successful(@organization).deliver_later
+      redirect_to admin_customer_path, notice: "Customer has been unfrozen."
     else
-      redirect_to admin_frozen_customers_path, alert: "Couldn't unfreeze!"
+      redirect_to admin_customer_path, alert: "Couldn't unfreeze!"
     end
   end
 
   def destroy
     organization = Organization.find(params[:id])
     if organization.destroy
-      redirect_to admin_frozen_customers_path, notice: "Customer has been deleted."
+      redirect_to admin_customer_path, notice: "Customer has been deleted."
     else
-      redirect_to admin_frozen_customers_path, alert: "Couldn't delete!"
+      redirect_to admin_customer_path, alert: "Couldn't delete!"
     end
   end
 

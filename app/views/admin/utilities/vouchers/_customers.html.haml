@@ -1,0 +1,30 @@
+.modal.fade{'tabindex' => "-1", 'role' => "dialog", 'aria-labelledby' => "viewCustomers#{voucher.id}", 'aria-hidden' => "true", 'data-backdrop' => 'static', 'id' => "viewCustomers#{voucher.id}"}
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button{'type' => "button", 'class' => "close", 'data-dismiss' => "modal", 'aria-hidden' => "true"}
+          &times;
+        %h4.modal-title
+          %i.fa.fa-cart-arrow-down
+          = voucher.name
+      .modal-body
+        .alert.alert-info= "Code #{voucher.code}, #{voucher.discount_percent}% discount for #{pluralize(voucher.duration, 'month')}"
+        #customers{'style' => 'height: 200px; overflow: scroll;'}
+          .table-responsive
+            %table.table.table-striped.table-hover
+              %thead
+                %th Customer
+                %th 1st Applied At
+                %th Active?
+                %th
+              %tbody
+                - for ov in voucher.organization_vouchers
+                  %tr
+                    %td= ov.organization.name
+                    %td= ov.created_at
+                    %td= ov.active? ? "Active until #{ov.expires_at}" : "Expired #{ov.expires_at}"
+                    %td= link_to 'Extend?', admin_utilities_voucher_path(ov.id, :extend => true), class: 'btn btn-success', 'data' => { 'method' => 'put'} unless ov.active?
+
+      .modal-footer
+        %button.btn.btn-primary{'data-toggle' => "modal", 'data-dismiss' => "modal"}
+          = "OK"

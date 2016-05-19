@@ -26,7 +26,7 @@ module OpenStackObject
     # Meaningful representation of an OpenStack object
     #
     # e.g.
-    # 
+    #
     #   instance.to_s # => #<OpenStack::Instance:23122dfc-8aee-421a-8503-874c92ab0900 @name="Foo", @state="ACTIVE", @all_addresses=[]>
     #
     def to_s

@@ -1,0 +1,15 @@
+.info
+
+.pull-right
+  %a{href: restart_admin_utilities_scheduler_index_path, class: 'btn btn-warning', data: {confirm: 'This will take a few seconds. Are you sure?', method: 'PUT', remote: true}}
+    %i.fa.fa-clock-o
+    Restart scheduler?
+
+%h1
+  %i.fa.fa-clock-o
+  Background Scheduler
+.alert.alert-info
+  %i.fa.fa-refresh
+  Some tasks need to be run periodically and the scheduler handles these.
+
+%iframe{src: clockwork_web_path, frameborder: 0, style: 'border: solid 1px', height: "1000px", width: "100%"}

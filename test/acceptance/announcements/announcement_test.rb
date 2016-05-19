@@ -5,7 +5,7 @@ class AnnouncementTests < CapybaraTestCase
   def setup
     User.first.organization.products = [Product.first, Product.second, Product.third]
     login
-    visit(admin_announcements_path)
+    visit(admin_utilities_announcements_path)
   end
 
   def create_announcement(params={})
@@ -49,7 +49,7 @@ class AnnouncementTests < CapybaraTestCase
     title, body = create_announcement
 
     announcement = Starburst::Announcement.last
-  
+
     within('body') do
       assert has_content?(title)
     end
@@ -59,7 +59,7 @@ class AnnouncementTests < CapybaraTestCase
     within('body') do
       assert has_content?('Successfully deactivated')
     end
-    visit(admin_announcements_path)
+    visit(admin_utilities_announcements_path)
     within('body') do
       refute has_content?(title)
       refute has_content?(body)
@@ -117,7 +117,7 @@ class AnnouncementTests < CapybaraTestCase
 
     User.first.organization.products = [Product.find_by_name("Compute")]
     sleep 1
-    
+
     visit('/')
 
     within('body') do
@@ -138,7 +138,7 @@ class AnnouncementTests < CapybaraTestCase
 
     User.first.organization.products = [Product.find_by_name("Storage")]
     sleep 1
-    
+
     visit('/')
 
     within('body') do
@@ -159,7 +159,7 @@ class AnnouncementTests < CapybaraTestCase
 
     User.first.organization.products = [Product.find_by_name("Colocation")]
     sleep 1
-    
+
     visit('/')
 
     within('body') do

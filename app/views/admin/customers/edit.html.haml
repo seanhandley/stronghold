@@ -1,0 +1,36 @@
+- title "Edit Customer"
+
+= render partial: 'admin/customers/header', locals: { organization: @organization }
+%h3 Edit Customer:
+
+= form_for @organization, url: admin_customer_path(@organization), :html => {:role => 'form'} do |f|
+  = javascript_error_messages_for(@organization)
+  = javascript_success_messages_for(@organization)
+  .form-group
+    %label Name
+    = f.text_field :name, class: 'form-control'
+  .form-group
+    %label Billing Contact
+    = f.text_field :billing_contact, class: 'form-control'
+  .form-group
+    %label Stripe Customer ID
+    = f.text_field :stripe_customer_id, class: 'form-control'
+  .form-group
+    %label Salesforce ID
+    = f.text_field :salesforce_id, class: 'form-control'
+  .form-group
+    %label Billing Address
+    = f.text_field :billing_address1, class: 'form-control'
+  .form-group
+    %label Billing City
+    = f.text_field :billing_city, class: 'form-control'
+  .form-group
+    %label Billing Post Code
+    = f.text_field :billing_postcode, class: 'form-control'
+  .form-group
+    %label Billing Country
+    = f.text_field :billing_country, class: 'form-control'
+  .form-group
+    %label Phone
+    = f.text_field :phone, class: 'form-control'
+  = f.submit 'Save', class: 'btn btn-primary'

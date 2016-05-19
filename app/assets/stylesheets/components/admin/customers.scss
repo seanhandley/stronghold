@@ -1,0 +1,97 @@
+div.admin-customer-header {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+div.admin-customer-search {
+  position: relative;
+  margin-top: 120px;
+  width: 100%;
+}
+
+div.customer-search-header {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+div.header-search {
+  position: relative;
+  width: 100%;
+}
+
+div.admin-customer-section div.btn-unfreeze {
+  margin-top: 10px;
+}
+
+div.admin-customer-section a.btn-activate-manually {
+  margin-top: 10px;
+}
+
+div.admin-customer-section a.btn-migrate {
+  margin-top: 10px;
+}
+
+div.admin-customer-section a.link-usage-data {
+  float: right;
+}
+
+div.admin-customer-section .panel-body.panel-padding {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+div.admin-customer-section .panel-body.panel-padding ul li {
+  list-style-type: none;
+  padding: 10px 10px 10px 10px;
+}
+
+div.admin-customer-section div.row.info-list ul li {
+  list-style-type: none;
+}
+
+div.admin-customer-section .customer-information {
+  width: auto;
+}
+
+div.admin-customer-search input.customer-search, div.header-search input.customer-search {
+  opacity: 0.6;
+  text-align: center;
+  font-size: 28px;
+  height: 43px;
+  font-style: normal;
+  font-weight: normal;
+  position: relative;
+  background: #fcfcfc;
+  border: 1px solid #aaa;
+  border-radius: 5px;
+}
+
+div.header-search input.customer-search.small-search {
+  min-width: 280px;
+  font-size: 14px;
+  height: 32px;
+}
+
+div.admin-customer-search span.small-search-icon, div.header-search span.small-search-icon {
+  position: relative;
+  color: #CC142F;
+  top: 25px;
+  left: 10px;
+}
+
+div.admin-customer-search span.main-search-icon {
+  position: absolute;
+  color: #CC142F;
+  top: 7px;
+  left: 20px;
+}
+
+div.admin-customer-search div.usage-form {
+  padding-top: 25px;
+}
+
+div.customer-search-header div.back_to_dashboard {
+  padding-top: 35px;
+}
