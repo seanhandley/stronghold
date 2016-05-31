@@ -2,6 +2,8 @@ module Billing
   class InstanceState < ActiveRecord::Base
     self.table_name = "billing_instance_states"
 
+    after_save :touch_instance, on: :create
+
     belongs_to :billing_instance, :class_name => "Billing::Instance", :foreign_key => 'instance_id'
     belongs_to :billing_sync, :class_name => "Billing::Sync", :foreign_key => 'sync_id'
 
@@ -12,6 +14,12 @@ module Billing
       arch = "x86_64" if arch == "None"
       flavor = instance_flavor ? instance_flavor : Billing::InstanceFlavor.find_by_flavor_id(billing_instance.flavor_id)
       flavor.rates.where(arch: arch).first.rate.to_f rescue nil
+    end
+
+    private
+
+    def touch_instance
+      billing_instance.update_attributes(terminated_at: recorded_at) if state == 'deleted'
     end
 
   end
