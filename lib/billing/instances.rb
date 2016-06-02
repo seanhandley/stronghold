@@ -19,9 +19,12 @@ module Billing
         instances = Billing::Instance.where("terminated_at is null or terminated_at > ?", from)
       end
       instances = instances.collect do |instance|
-        billable_seconds = seconds(instance, from, to)
+        billable_seconds = instance.billable_seconds ? instance.billable_seconds : seconds(instance, from, to)
+        instance.update_attributes(billable_seconds: billable_seconds) if instance.terminated_at
         billable_hours = (billable_seconds / Billing::SECONDS_TO_HOURS).ceil
         instance_flavor = instance.instance_flavor
+        cost = instance.cost ? instance.cost : cost(instance, from, to).nearest_penny
+        instance.update_attributes(cost: cost) if instance.terminated_at
         {
           uuid: instance.instance_id,
           name: instance.name,
@@ -31,7 +34,7 @@ module Billing
           terminated_at: instance.terminated_at,
           billable_hours: billable_hours,
           resizes: instance.resizes(from, to),
-          cost: cost(instance, from, to).nearest_penny,
+          cost: cost,
           windows: Windows.billable?(instance),
           arch: instance.arch,
           flavor: {
