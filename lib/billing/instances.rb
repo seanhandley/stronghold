@@ -14,9 +14,9 @@ module Billing
     def self.usage(project_id, from, to)
       instances = []
       if project_id.present?
-        instances = Billing::Instance.where(:project_id => project_id).to_a.compact.reject{|instance| instance.terminated_at && instance.terminated_at < from}
+        instances = Billing::Instance.where("project_id = ? AND (terminated_at is null or terminated_at >= ?)", project_id, from)
       else
-        instances = Billing::Instance.all.to_a.compact.reject{|instance| instance.terminated_at && instance.terminated_at < from}
+        instances = Billing::Instance.where("terminated_at is null or terminated_at > ?", from)
       end
       instances = instances.collect do |instance|
         billable_seconds = seconds(instance, from, to)

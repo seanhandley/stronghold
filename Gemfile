@@ -72,7 +72,7 @@ gem 'jquery-ui-rails'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 2.7'
 gem 'coffee-rails', '~> 4.0.0'
-gem 'therubyracer', '~> 0.12.2', platforms: :ruby
+gem 'therubyracer', '~> 0.5', platforms: :ruby
 gem 'momentjs-rails', '~> 2.8.3'
 gem 'font-awesome-sass', '~> 4.5'
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160516132329) do
+ActiveRecord::Schema.define(version: 20160601142938) do
 
   create_table "audits", force: :cascade do |t|
     t.string   "auditable_id",    limit: 255
@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(version: 20160516132329) do
   end
 
   add_index "billing_image_states", ["image_id"], name: "image_states", using: :btree
+  add_index "billing_image_states", ["recorded_at"], name: "index_billing_image_states_on_recorded_at", using: :btree
   add_index "billing_image_states", ["sync_id"], name: "image_syncs", using: :btree
 
   create_table "billing_images", force: :cascade do |t|
@@ -85,6 +86,7 @@ ActiveRecord::Schema.define(version: 20160516132329) do
   end
 
   add_index "billing_instance_states", ["instance_id"], name: "instance_states", using: :btree
+  add_index "billing_instance_states", ["recorded_at"], name: "index_billing_instance_states_on_recorded_at", using: :btree
   add_index "billing_instance_states", ["sync_id"], name: "instance_syncs", using: :btree
 
   create_table "billing_instances", force: :cascade do |t|
@@ -94,11 +96,13 @@ ActiveRecord::Schema.define(version: 20160516132329) do
     t.string "image_id",    limit: 255
     t.string "project_id",  limit: 255
     t.string "arch",        limit: 255, default: "x86_64", null: false
+    t.datetime "terminated_at"
   end
 
   add_index "billing_instances", ["flavor_id"], name: "instance_flavors", using: :btree
   add_index "billing_instances", ["instance_id"], name: "index_billing_instances_on_instance_id", unique: true, using: :btree
   add_index "billing_instances", ["project_id"], name: "project_instances", using: :btree
+  add_index "billing_instances", ["terminated_at"], name: "index_billing_instances_on_terminated_at", using: :btree
 
   create_table "billing_invoices", force: :cascade do |t|
     t.integer "organization_id",       limit: 4,                 null: false
@@ -121,6 +125,7 @@ ActiveRecord::Schema.define(version: 20160516132329) do
   end
 
   add_index "billing_ip_quotas", ["project_id"], name: "project_ip_quotas", using: :btree
+  add_index "billing_ip_quotas", ["recorded_at"], name: "index_billing_ip_quotas_on_recorded_at", using: :btree
 
   create_table "billing_ips", force: :cascade do |t|
     t.string   "ip_id",       limit: 255
@@ -137,6 +142,7 @@ ActiveRecord::Schema.define(version: 20160516132329) do
     t.string  "address",    limit: 255
     t.string  "project_id", limit: 255
     t.boolean "active",                 default: true, null: false
+  add_index "billing_ips", ["recorded_at"], name: "index_billing_ips_on_recorded_at", using: :btree
   end
 
   add_index "billing_ips", ["project_id"], name: "project_ips", using: :btree
@@ -165,7 +171,8 @@ ActiveRecord::Schema.define(version: 20160516132329) do
     t.integer  "sync_id",     limit: 4
   end
 
-  add_index "billing_storage_objects", ["project_id"], name: "project_storage_objects", using: :btree
+  add_index "billing_storage_objects", ["project_id"], name: "index_billing_storage_objects_on_project_id", using: :btree
+  add_index "billing_storage_objects", ["recorded_at"], name: "index_billing_storage_objects_on_recorded_at", using: :btree
 
   create_table "billing_syncs", force: :cascade do |t|
     t.datetime "completed_at", precision: 3
@@ -188,6 +195,7 @@ ActiveRecord::Schema.define(version: 20160516132329) do
     t.string   "volume_type",       limit: 255
   end
 
+  add_index "billing_volume_states", ["recorded_at"], name: "index_billing_volume_states_on_recorded_at", using: :btree
   add_index "billing_volume_states", ["sync_id"], name: "volume_syncs", using: :btree
   add_index "billing_volume_states", ["volume_id"], name: "volume_states", using: :btree
 
@@ -195,9 +203,11 @@ ActiveRecord::Schema.define(version: 20160516132329) do
     t.string "volume_id",  limit: 255
     t.string "name",       limit: 255
     t.string "project_id", limit: 255
+    t.datetime "deleted_at"
   end
 
   add_index "billing_volumes", ["project_id"], name: "project_volumes", using: :btree
+  add_index "billing_volumes", ["deleted_at"], name: "index_billing_volumes_on_deleted_at", using: :btree
   add_index "billing_volumes", ["volume_id"], name: "index_billing_volumes_on_volume_id", unique: true, using: :btree
 
   create_table "billing_vpn_connections", force: :cascade do |t|

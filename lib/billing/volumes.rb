@@ -11,7 +11,7 @@ module Billing
     end
 
     def self.usage(project_id, from, to)
-      volumes = Billing::Volume.where(:project_id => project_id).to_a.compact.reject{|volume| volume.deleted_at && volume.deleted_at < from}
+      volumes = Billing::Volume.where("project_id = ? AND (deleted_at is null or deleted_at >= ?)", project_id, from)
       volumes = volumes.collect do |volume|
         { terabyte_hours: terabyte_hours(volume, from, to),
                                     cost: cost(volume, from, to).nearest_penny,

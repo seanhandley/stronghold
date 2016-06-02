@@ -20,12 +20,12 @@ class InstancesTest < Minitest::Test
   end
 
   def test_machines_on_steady_incur_full_usage
-      usage = Billing::Instances.usage(@test_project.uuid, Time.parse('2014-11-21 16:10:00'), Time.parse('2014-11-21 16:15:00'))
-      assert_equal 1, usage.count
-      measurement_1 = usage.first[:billable_hours]
-      usage = Billing::Instances.usage(@test_project.uuid, Time.parse('2014-11-21 16:10:00'), Time.parse('2014-11-21 17:15:00'))
-      measurement_2 = usage.first[:billable_hours]
-      assert_equal 1, measurement_2 - measurement_1
+    usage = Billing::Instances.usage(@test_project.uuid, Time.parse('2014-11-21 16:10:00'), Time.parse('2014-11-21 16:15:00'))
+    assert_equal 1, usage.count
+    measurement_1 = usage.first[:billable_hours]
+    usage = Billing::Instances.usage(@test_project.uuid, Time.parse('2014-11-21 16:10:00'), Time.parse('2014-11-21 17:15:00'))
+    measurement_2 = usage.first[:billable_hours]
+    assert_equal 1, measurement_2 - measurement_1
   end
 
   def teardown
