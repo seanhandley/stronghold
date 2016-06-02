@@ -97,6 +97,8 @@ ActiveRecord::Schema.define(version: 20160601142938) do
     t.string "project_id",  limit: 255
     t.string "arch",        limit: 255, default: "x86_64", null: false
     t.datetime "terminated_at"
+    t.integer  "billable_seconds", limit: 4
+    t.float    "cost",             limit: 24
   end
 
   add_index "billing_instances", ["flavor_id"], name: "instance_flavors", using: :btree
