@@ -5,10 +5,12 @@ module Billing
       Project.with_deleted.each do |project|
         next unless project.uuid && project.organization && project.organization.storage?
         tb = Ceph::Usage.kilobytes_for(project.uuid)
-        Billing::ObjectStorage.create(project_id: project.uuid,
-                                      size: tb,
-                                      recorded_at: Time.zone.now,
-                                      billing_sync: sync)
+        unless tb == 0 && Billing::ObjectStorage.where(:project_id => project.uuid).none?
+          Billing::ObjectStorage.create(project_id: project.uuid,
+                                        size: tb,
+                                        recorded_at: Time.zone.now,
+                                        billing_sync: sync)
+        end
       end
     end
 
