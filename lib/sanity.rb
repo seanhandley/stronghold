@@ -90,6 +90,8 @@ module Sanity
   def self.check_instance_state(live, recorded)
     if live.include?('rescue')
       return recorded.include?('rescue')
+    elsif live.include?('shutoff')
+      return ['shutoff', 'stopped'].include?(recorded)
     else
       live == recorded
     end
