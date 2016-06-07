@@ -3,6 +3,10 @@ class UsageSanityJob < ActiveJob::Base
 
   def perform
     check = Sanity.check
-    Sanity.notify!(check) unless check[:sane]
+    if check[:sane]
+      Notifications.notify(:good, 'Sanity check passed.')
+    else
+      Sanity.notify!(check)
+    end
   end
 end

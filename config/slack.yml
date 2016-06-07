@@ -45,6 +45,10 @@ default: &default
       channel: '#billing'
       color: 'warning'
       prefix: ':crying_cat_face: Uh oh:'
+    good:
+      channel: '#webdev'
+      color: 'good'
+      prefix: ':white_check_mark: Lovely: '
 
 development:
   <<: *default
