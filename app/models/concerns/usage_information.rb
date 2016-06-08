@@ -42,6 +42,31 @@ module UsageInformation
     vouchers.any? ? vouchers.first.expires_at.to_date : nil
   end
 
+  def usage_types
+    projects.map do |p|
+      [
+        Billing::InstanceState.joins(:billing_instance).where("billing_instances.project_id = ?", p.uuid).any? ? 'Compute'        : nil,
+        Billing::VolumeState.joins(:billing_volume).where("billing_volumes.project_id = ?",       p.uuid).any? ? 'Volume'         : nil,
+        Billing::ImageState.joins(:billing_image).where("billing_images.project_id = ?",          p.uuid).any? ? 'Image'          : nil,
+        Billing::LoadBalancer.where(project_id: p.uuid).any?                                                   ? 'Load Balancer'  : nil,
+        Billing::ObjectStorage.where(project_id: p.uuid).any?{|o| o.size > 0}                                  ? 'Object Storage' : nil,
+        Billing::VpnConnection.where(project_id: p.uuid).any?                                                  ? 'VPN'            : nil
+      ]
+    end.flatten.compact.uniq.join(", ")
+  end
+
+  def most_recent_usage_recorded_at
+    projects.map do |p|
+      [
+        Billing::InstanceState.joins(:billing_instance).where("billing_instances.project_id = ?", p.uuid).last&.recorded_at,
+        Billing::VolumeState.joins(:billing_volume).where("billing_volumes.project_id = ?",       p.uuid).last&.recorded_at,
+        Billing::ImageState.joins(:billing_image).where("billing_images.project_id = ?",          p.uuid).last&.recorded_at,
+        Billing::LoadBalancer.where(project_id: p.uuid).last&.created_at,
+        Billing::VpnConnection.where(project_id: p.uuid).last&.created_at
+      ]
+    end.flatten.compact.max
+  end
+
   private
 
   def last_week
