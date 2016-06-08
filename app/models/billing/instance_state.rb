@@ -20,6 +20,11 @@ module Billing
 
     def touch_instance
       billing_instance.update_attributes(terminated_at: recorded_at) if state == 'deleted'
+      if billing_instance.started_at.nil?
+        billing_instance.update_attributes(started_at: recorded_at)
+      elsif(recorded_at < billing_instance.started_at)
+        billing_instance.update_attributes(started_at: recorded_at)
+      end
     end
 
   end
