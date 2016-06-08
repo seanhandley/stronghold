@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160601142938) do
+ActiveRecord::Schema.define(version: 20160608083450) do
 
   create_table "audits", force: :cascade do |t|
     t.string   "auditable_id",    limit: 255
@@ -334,6 +334,7 @@ ActiveRecord::Schema.define(version: 20160601142938) do
   end
 
   add_index "projects", ["deleted_at"], name: "index_projects_on_deleted_at", using: :btree
+  add_index "projects", ["organization_id"], name: "index_projects_on_organization_id", using: :btree
 
   create_table "resets", force: :cascade do |t|
     t.string   "email",        limit: 255
