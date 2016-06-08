@@ -8,9 +8,11 @@
   %table.table.table-striped
     %thead
       %th Organization
+      %th Reference Number
       %th
     %tbody
       - for organization in @organizations
         %tr
           %td= organization.name 
+          %td= organization.reporting_code
           %td= link_to 'Update Quotas', edit_admin_quota_path(organization)
