@@ -14,9 +14,9 @@ module Billing
     def self.usage(project_id, from, to)
       instances = []
       if project_id.present?
-        instances = Billing::Instance.where("project_id = ? AND (terminated_at is null or terminated_at >= ?)", project_id, from)
+        instances = Billing::Instance.where("project_id = ? AND (terminated_at is null or terminated_at >= ?) AND started_at < ?", project_id, from, to)
       else
-        instances = Billing::Instance.where("terminated_at is null or terminated_at > ?", from)
+        instances = Billing::Instance.where("(terminated_at is null or terminated_at >= ?) AND started_at < ?", from, to)
       end
       instances = instances.collect do |instance|
         billable_seconds = instance.billable_seconds ? instance.billable_seconds : seconds(instance, from, to)
