@@ -76,15 +76,27 @@ div.row.info-list ul li {
   width: auto;
 }
 
-input.small-customer-search {
+input.form-control.small-customer-search {
+  opacity: 0.6;
+  text-align: center;
   font-family: FontAwesome, "Open Sans", Verdana, sans-serif;
   font-style: normal;
   font-weight: normal;
   text-decoration: inherit;
+  background: #fcfcfc;
+  border: 1px solid #aaa;
+  border-radius: 5px;
+}
+
+span.fa-search.fa-lg { 
+  position: absolute;
+  color: #CC142F;
+  top: 10px;
+  left: 20px;
 }
 
 input.customer-search-bar {
-  opacity: 0.8;
+  opacity: 0.6;
   text-align: center;
   font-size: 28px;
   height: 43px;
@@ -96,19 +108,13 @@ input.customer-search-bar {
   background: #fcfcfc;
   border: 1px solid #aaa;
   border-radius: 5px;
-  box-shadow: 0 0 3px #ccc, 0 10px 15px #ebebeb inset;
 }
-
-
-
 
 span.fa-search { 
   position: absolute;
   color: #CC142F;
   top: 7px;
   left: 10px;
-
- 
 }
 
 .account-type-title {
