@@ -46,6 +46,7 @@ gem 'holidays', '~> 2.2'
 gem "paranoia", "~> 2.0"
 gem 'minitest-ci', :git => 'git@github.com:circleci/minitest-ci.git'
 gem "useragent"
+gem 'rack-contrib'
 gem 'soulmate', :require => 'soulmate/server'
 gem 'soulmatejs-rails'
 gem 'redis-namespace'

@@ -206,6 +206,7 @@ GEM
     geo_ip (0.6.1)
       json (~> 1.4)
       rest-client (~> 1.6)
+    git-version-bump (0.15.1)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
     gravatar_image_tag (1.2.0)
@@ -297,6 +298,9 @@ GEM
     rack (1.6.4)
     rack-attack (4.3.1)
       rack
+    rack-contrib (1.4.0)
+      git-version-bump (~> 0.15)
+      rack (~> 1.4)
     rack-mini-profiler (0.9.7)
       rack (>= 1.1.3)
     rack-protection (1.5.3)
@@ -573,6 +577,7 @@ DEPENDENCIES
   poltergeist
   premailer-rails (~> 1.9)
   rack-attack
+  rack-contrib
   rack-mini-profiler
   rails (~> 4.2.5)
   rails-assets-angular (~> 1.2.24)!
