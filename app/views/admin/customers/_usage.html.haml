@@ -3,17 +3,18 @@
   Weekly Spend:
   %strong= number_to_currency(@organization.weekly_spend, :unit => "£")
 
-- if @organization.usage_types.present?
-  = @organization.usage_types
-- else
-  %em No usage data
-
-
-%br
+%h4
+  Type of Usage:
   %strong
-    Last activity:
-  - if @organization.most_recent_usage_recorded_at.present?
-    = @organization.most_recent_usage_recorded_at
-  - else
-    %em No recent activity
-%br
+    - if @organization.usage_types.present?
+      = @organization.usage_types
+    - else
+      %em No usage data recorded
+
+%h4
+  Last recorded usage:
+  %strong
+    - if @organization.most_recent_usage_recorded_at.present?
+      = long_date @organization.most_recent_usage_recorded_at
+    - else
+      %em No recent activity
