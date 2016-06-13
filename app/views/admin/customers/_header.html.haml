@@ -1,16 +1,14 @@
-.container
+.container.customer-header
   .customer-search-header
-    %row
-      .col-md-9
-        %h1
-          %i.fa.fa-briefcase
-          = @organization.name
-        %h3
-          Reference:
-          = @organization.reporting_code
+    %div.pull-left.header-title
+      %h1
+        %i.fa.fa-briefcase
+        = @organization.name
+      %h3
+        Reference:
+        = @organization.reporting_code
 
-      .col-md-3
-        %input{id: "search-input", type: "text", name: "q", value: "", autocomplete: "off", class: 'form-control small-customer-search fa fa-search', placeholder: "Search customers"}
-
+    %div.pull-right
+      = render partial: 'admin/customers/search'
+      %div.back_to_dashboard
         = link_to "← Back to #{@organization.name}", admin_customer_path(organization), id: 'back_to_dashboard'
-
