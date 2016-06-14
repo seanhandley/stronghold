@@ -27,6 +27,7 @@ class Admin::CustomersController < AdminBaseController
     @usage_decorator = UsageDecorator.new(@organization)
     @tickets         = decorated_tickets(@organization)
     @users           = @organization.users
+    @users           = @users.page(params[:page]).per(10)
     @audits          = Audit.for_organization(@organization).order('created_at DESC')
     @audits          = @audits.page params[:page]
   end

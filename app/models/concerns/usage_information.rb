@@ -43,28 +43,32 @@ module UsageInformation
   end
 
   def usage_types
-    projects.map do |p|
-      [
-        Billing::InstanceState.joins(:billing_instance).where("billing_instances.project_id = ?", p.uuid).any? ? 'Compute'        : nil,
-        Billing::VolumeState.joins(:billing_volume).where("billing_volumes.project_id = ?",       p.uuid).any? ? 'Volume'         : nil,
-        Billing::ImageState.joins(:billing_image).where("billing_images.project_id = ?",          p.uuid).any? ? 'Image'          : nil,
-        Billing::LoadBalancer.where(project_id: p.uuid).any?                                                   ? 'Load Balancer'  : nil,
-        Billing::ObjectStorage.where(project_id: p.uuid).any?{|o| o.size > 0}                                  ? 'Object Storage' : nil,
-        Billing::VpnConnection.where(project_id: p.uuid).any?                                                  ? 'VPN'            : nil
-      ]
-    end.flatten.compact.uniq.join(", ")
+    Rails.cache.fetch("usage_types_#{id}", expires_in: 1.day) do
+      projects.map do |p|
+        [
+          Billing::InstanceState.joins(:billing_instance).where("billing_instances.project_id = ?", p.uuid).any? ? 'Compute'        : nil,
+          Billing::VolumeState.joins(:billing_volume).where("billing_volumes.project_id = ?",       p.uuid).any? ? 'Volume'         : nil,
+          Billing::ImageState.joins(:billing_image).where("billing_images.project_id = ?",          p.uuid).any? ? 'Image'          : nil,
+          Billing::LoadBalancer.where(project_id: p.uuid).any?                                                   ? 'Load Balancer'  : nil,
+          Billing::ObjectStorage.where(project_id: p.uuid).any?{|o| o.size > 0}                                  ? 'Object Storage' : nil,
+          Billing::VpnConnection.where(project_id: p.uuid).any?                                                  ? 'VPN'            : nil
+        ]
+      end.flatten.compact.uniq.join(", ")
+    end
   end
 
   def most_recent_usage_recorded_at
-    projects.map do |p|
-      [
-        Billing::InstanceState.joins(:billing_instance).where("billing_instances.project_id = ?", p.uuid).last&.recorded_at,
-        Billing::VolumeState.joins(:billing_volume).where("billing_volumes.project_id = ?",       p.uuid).last&.recorded_at,
-        Billing::ImageState.joins(:billing_image).where("billing_images.project_id = ?",          p.uuid).last&.recorded_at,
-        Billing::LoadBalancer.where(project_id: p.uuid).last&.created_at,
-        Billing::VpnConnection.where(project_id: p.uuid).last&.created_at
-      ]
-    end.flatten.compact.max
+    Rails.cache.fetch("most_recent_usage_recorded_at_#{id}", expires_in: 1.day) do
+      projects.map do |p|
+        [
+          Billing::InstanceState.joins(:billing_instance).where("billing_instances.project_id = ?", p.uuid).last&.recorded_at,
+          Billing::VolumeState.joins(:billing_volume).where("billing_volumes.project_id = ?",       p.uuid).last&.recorded_at,
+          Billing::ImageState.joins(:billing_image).where("billing_images.project_id = ?",          p.uuid).last&.recorded_at,
+          Billing::LoadBalancer.where(project_id: p.uuid).last&.created_at,
+          Billing::VpnConnection.where(project_id: p.uuid).last&.created_at
+        ]
+      end.flatten.compact.max
+    end
   end
 
   private

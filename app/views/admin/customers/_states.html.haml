@@ -1,9 +1,8 @@
 Change States:
 - if @organization.fresh?
-  = select_tag :state, options_for_states(@organization), class: 'form-control', id: 'state-dropdown', 'data-organization': @organization.id
+  .btn-activate-manually= link_to 'Activate Manually?', admin_pending_customer_path(@organization), class: 'btn btn-primary btn-activate-manually', 'data-method' => "put", 'data-confirm' => "Have you verified the customer's ID and payment method?"
 - else
-  .btn-activate-manually
-    = link_to 'Activate Manually?', admin_pending_customer_path(@organization), class: 'btn btn-primary btn-activate-manually', 'data-method' => "put", 'data-confirm' => "Have you verified the customer's ID and payment method?"
+  = select_tag :state, options_for_states(@organization), class: 'form-control', id: 'state-dropdown', 'data-organization': @organization.id
 
 - if @organization.frozen?
   .btn-unfreeze
