@@ -39,7 +39,7 @@
           = render partial: "support/audits/audits", locals: {audits: @audits}
 
     .col-md-4
-      %div{class: ["panel", @organization.self_service? ? "panel-info" : "panel-danger"].join(" ")}
+      %div{class: ["panel", @organization.self_service? ? "panel-info" : "panel-warning"].join(" ")}
         .panel-heading
           %div{style: "display: flex; justify-content: space-between;"}
             %div
@@ -62,7 +62,7 @@
           = render partial: 'admin/customers/usage'
           = link_to 'See Usage Data', admin_usage_path(@organization), class: 'link-usage-data'
 
-      .panel.panel-info
+      .panel.panel-info#users-panel
         .panel-heading
           %i.fa.fa-user
           Users
