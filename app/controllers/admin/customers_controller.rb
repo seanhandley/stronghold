@@ -78,7 +78,7 @@ class Admin::CustomersController < AdminBaseController
   def update_params
     params.require(:organization).permit(:reporting_code, :reference, :stripe_customer_id, :salesforce_id,
                                          :billing_address1, :billing_city, :billing_postcode,
-                                         :billing_country, :phone, :state, :id)
+                                         :billing_country, :phone, :state, :id, :billing_contact)
   end
 
   def get_products
