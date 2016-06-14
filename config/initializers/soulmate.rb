@@ -1,4 +1,4 @@
-SOULMATE_SEARCHABLE_MODELS = ["organization"]
+SOULMATE_SEARCHABLE_MODELS = ["organization", "reporting_code"]
 
 if Rails.env.development?
   begin
