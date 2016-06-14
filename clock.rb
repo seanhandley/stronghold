@@ -20,6 +20,10 @@ if Rails.env.production? || Rails.env.staging?
     StatusIOCacheWarmJob.perform_later
   end
 
+  every(1.hour, 'load_soulmate') do
+    SoulmateJob.perform_later
+  end
+
   every(1.week, 'usage_report', :at => 'Monday 07:00') do
     UsageReportJob.perform_later
   end
