@@ -22,4 +22,6 @@ $(document).ready(function() {
       data: {"organization[state]": $(this).val(), "organization[id]": id}
     });
   });
+
+  $('#q').focus();
 });
