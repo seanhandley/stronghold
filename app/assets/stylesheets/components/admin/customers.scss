@@ -1,4 +1,4 @@
-.panel-body.div-padding {
+.panel-body.panel-padding {
   padding-top: 20px;
   padding-bottom: 20px;
 }
@@ -8,22 +8,12 @@
   padding-bottom: 20px;
 }
 
-.back_to_dashboard_link {
-  float: right;
-  clear:both;
-  padding-top: 50px;
-}
-
-a.btn-search-customer {
-  float: right;
-}
-
 .header-container {
   padding-left: 0;
   padding-right: 0;
 }
 
-.container.search-customer-container {
+div .search-customer {
   position: relative;
   margin-top: 120px;
   width: 100%;
@@ -33,17 +23,8 @@ a.btn-search-customer {
   padding: 20px 20px 20px 20px;
 }
 
-div.container {
+div.container.customer-header {
   padding-left: 0px;
-  padding-right: 0px;
-}
-
-div.col-md-9 {
-  padding-left: 0px;
-  padding-right: 0px;
-}
-
-div.col-md-3 {
   padding-right: 0px;
 }
 
@@ -51,7 +32,7 @@ div.btn-unfreeze {
   margin-top: 10px;
 }
 
-a.btn.btn-primary.btn-activate-manually {
+a.btn-activate-manually {
   margin-top: 10px;
 }
 
@@ -63,7 +44,7 @@ a.link-usage-data {
   float: right;
 }
 
-.panel-body.div-padding ul li {
+.panel-body.panel-padding ul li {
   list-style-type: none;
   padding: 10px 10px 10px 10px;
 }
@@ -72,35 +53,34 @@ div.row.info-list ul li {
   list-style-type: none;
 }
 
-.container.information-partial {
+.admin-customer-section .customer-information {
   width: auto;
 }
 
 input.form-control.small-customer-search {
   opacity: 0.6;
   text-align: center;
-  font-family: FontAwesome, "Open Sans", Verdana, sans-serif;
   font-style: normal;
   font-weight: normal;
   text-decoration: inherit;
   background: #fcfcfc;
   border: 1px solid #aaa;
   border-radius: 5px;
+  min-width: 280px;
 }
 
-span.fa-search.fa-lg { 
-  position: absolute;
+span.fa-search.fa-lg.small-search-icon {
+  position: relative;
   color: #CC142F;
-  top: 10px;
-  left: 20px;
+  top: 25px;
+  left: 10px;
 }
 
-input.customer-search-bar {
+input #customer-search-bar {
   opacity: 0.6;
   text-align: center;
   font-size: 28px;
   height: 43px;
-  font-family: FontAwesome, "Open Sans", Verdana, sans-serif;
   font-style: normal;
   font-weight: normal;
   text-decoration: inherit;
@@ -110,22 +90,20 @@ input.customer-search-bar {
   border-radius: 5px;
 }
 
-span.fa-search { 
+span .main-search-icon {
   position: absolute;
   color: #CC142F;
   top: 7px;
-  left: 10px;
+  left: 20px;
 }
 
-.account-type-title {
-  text-align: right;
+div.usage-form {
+  padding-top: 25px;
 }
 
-select {
-  padding-bottom: 10px;
-  clear: both;
+div.back_to_dashboard{
+  padding-top: 35px;
 }
-
-.usage-form {
+div.header-search-and-back {
   padding-top: 25px;
 }

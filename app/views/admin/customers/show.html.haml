@@ -8,12 +8,10 @@
       %h3
         Reference:
         = @organization.reporting_code
-    .col-md-3
-      %span.fa.fa-search.fa-lg
-      %input{id: "search-input", type: "text", name: "q", value: "", autocomplete: "off", class: 'form-control small-customer-search', placeholder: "Search customers"}
+    .pull-right
+      = render partial: 'search'
 
-
-.container-customer
+.admin-customer-section
   .row
     .col-md-8
       .panel.panel-info
@@ -21,7 +19,7 @@
           %i.fa.fa-info
           Information
         .panel-body
-          .container.information-partial
+          .container.customer-information
             = render partial: 'admin/customers/info'
           = link_to 'Edit', edit_admin_customer_path(@organization), class: 'btn btn-primary information-edit-dashboard'
 
@@ -37,7 +35,7 @@
           %i.fa.fa-check-square-o
           Audits Logs
         .panel-body
-          = render partial: 'admin/customers/audits'
+          = render partial: "support/audits/audits", locals: {audits: @audits}
 
     .col-md-4
       %div{class: ["panel", @organization.self_service? ? "panel-info" : "panel-danger"].join(" ")}
@@ -52,14 +50,14 @@
               Account:
               %strong
                 = @organization.account_type
-        .panel-body.div-padding
+        .panel-body.panel-padding
           = render partial: 'admin/customers/states'
 
       .panel.panel-info
         .panel-heading
           %i.fa.fa-area-chart
           Usage
-        .panel-body.div-padding
+        .panel-body.panel-padding
           = render partial: 'admin/customers/usage'
           = link_to 'See Usage Data', admin_usage_path(@organization), class: 'link-usage-data'
 
@@ -67,12 +65,12 @@
         .panel-heading
           %i.fa.fa-user
           Users
-        .panel-body.div-padding
+        .panel-body.panel-padding
           = render partial: 'admin/customers/users'
 
       .panel.panel-info
         .panel-heading
           %i.fa.fa-pie-chart
           Manage Customer Quotas
-        .panel-body.div-padding
+        .panel-body.panel-padding
           = link_to 'Edit Quotas', edit_admin_quota_path(@organization), class: 'btn btn-primary'
