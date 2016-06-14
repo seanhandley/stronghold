@@ -43,7 +43,7 @@ module UsageInformation
   end
 
   def usage_types
-    Rails.cache.fetch("usage_types_#{uuid}", expires_in: 1.day) do
+    Rails.cache.fetch("usage_types_#{id}", expires_in: 1.day) do
       projects.map do |p|
         [
           Billing::InstanceState.joins(:billing_instance).where("billing_instances.project_id = ?", p.uuid).any? ? 'Compute'        : nil,
@@ -58,7 +58,7 @@ module UsageInformation
   end
 
   def most_recent_usage_recorded_at
-    Rails.cache.fetch("most_recent_usage_recorded_at_#{uuid}", expires_in: 1.day) do
+    Rails.cache.fetch("most_recent_usage_recorded_at_#{id}", expires_in: 1.day) do
       projects.map do |p|
         [
           Billing::InstanceState.joins(:billing_instance).where("billing_instances.project_id = ?", p.uuid).last&.recorded_at,
