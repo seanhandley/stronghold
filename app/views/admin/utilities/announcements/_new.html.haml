@@ -1,0 +1,59 @@
+%div.modal.fade{:tabindex=> "-1", :role=> "dialog", :id=> "modalAnnouncement"}
+  %div.modal-dialog
+    = form_tag(admin_utilities_announcements_path, 'starburst_announcements' => 'form') do
+      .modal-content
+        .modal-header
+          %h4.modal-title New Announcement
+          %p Please enter a title and a message for your announcement.
+        .modal-body
+          .form-group
+            %label Title
+            = text_field_tag :title, "",class: 'form-control', required: true
+          .form-group
+            %label Message
+            = text_field_tag :body, "",class: 'form-control', required: true
+          %div.limit-to-users
+            %label Limit to users?
+          .checkbox-inline
+            %label
+              = check_box_tag 'filters[admin?]', :value => "true", :type => "checkbox",  :class => 'checkbox-inline'
+              Admin
+          .checkbox-inline
+            %label
+              = check_box_tag 'filters[compute?]', :type => "checkbox", :value => "true", :class => 'checkbox-inline'
+              Compute
+          .checkbox-inline
+            %label
+              = check_box_tag 'filters[storage?]', :type => "checkbox", :value => "true", :class => 'checkbox-inline'
+              Storage
+          .checkbox-inline
+            %label
+              = check_box_tag 'filters[colo?]', :type => "checkbox", :value => "true", :class => 'checkbox-inline'
+              Colocation
+          .form-group
+            %h4 Schedule annoucements
+            .row
+              .col-md-6
+                %label From
+                .input-group
+                  %span.input-group-addon
+                    %i.fa.fa-calendar
+                  = date_field_tag :start_delivering_at_date, "", type: 'date', class: 'form-control datetimepicker', id: 'start-date'
+                .input-group
+                  %span.input-group-addon
+                    %i.fa.fa-clock-o
+                  = time_field_tag :start_delivering_at_time, "", type: 'time', class: 'form-control datetimepicker', id: 'start-time'
+              .col-md-6
+                %label To
+                .input-group
+                  %span.input-group-addon
+                    %i.fa.fa-calendar
+                  = date_field_tag :stop_delivering_at_date, "", type: 'date', class: 'form-control datetimepicker', id: 'stop-date'
+                .input-group
+                  %span.input-group-addon
+                    %i.fa.fa-clock-o
+                  = time_field_tag :stop_delivering_at_time, "", type: 'time', class: 'form-control datetimepicker', id: 'stop-time'
+        .modal-footer
+          .button-div.col-md-12
+            %button{'type' => "button", 'class' => "close", 'data-dismiss' => "modal", 'class'=>'btn btn-default'} Close
+            = submit_tag 'Create', class: "btn btn-primary"

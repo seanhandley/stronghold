@@ -1,0 +1,56 @@
+.modal.fade#addNewVoucher{'tabindex' => "-1", 'role' => "dialog", 'aria-labelledby' => "addNewVoucher", 'aria-hidden' => "true", 'data-backdrop' => 'static'}
+  .modal-dialog
+    .modal-content
+      = form_for Voucher.new, url: admin_utilities_vouchers_path, remote: true do |f|
+        .modal-header
+          %button{'type' => "button", 'class' => "close", 'data-dismiss' => "modal", 'aria-hidden' => "true"}
+            &times;
+          %h4.modal-title#addNewVoucher
+            %i.fa.fa-cart-arrow-down
+            Add New Discount Code
+          %p Please enter the discount details
+        .modal-body
+          = javascript_error_messages_for(f.object)
+          #voucher-details
+            .row
+              .col-md-6
+                .form-group
+                  %label Name
+                  = f.text_field :name, :class => 'form-control'
+                .form-group
+                  %label Description
+                  = f.text_field :description, :class => 'form-control'
+                  %p.help-block Displayed to customer at checkout
+                .form-group
+                  %label Number of uses
+                  = f.number_field :usage_limit, min: 1, step: 1, :class => 'form-control', placeholder: "Leave blank for unlimited usage"
+                .form-group
+                  %label Code
+                  = f.text_field :code, :class => 'form-control', placeholder: "Leave blank to auto-generate a code", maxlength: 20
+                  %p.help-block Entered by the customer to activate discount
+              .col-md-6
+                .form-group
+                  %label Discount Percent
+                  .input-group
+                    = f.number_field :discount_percent, min: 1, max: 100, step: 1, size: 3, :class => 'form-control'
+                    .input-group-addon %
+                .form-group
+                  %label Discount Duration
+                  .input-group
+                    = f.number_field :duration, min: 1, step: 1, :class => 'form-control'
+                    .input-group-addon months
+                  %p.help-block Length of discount once applied
+                .form-group
+                  %label Expires
+                  = f.date_field :expires_at, min: Date.today + 1.day, :class => 'form-control'
+                  %p.help-block The date on which this discount expires. Leave blank to create a discount that never expires.
+                .checkbox
+                  %label
+                    = f.check_box :restricted
+                    Restricted Quota?
+                  %p.help-block Users starts with a restricted quota. Use for free trials.
+
+        .modal-footer
+          %button.btn.btn-default{'data-toggle' => "modal", 'data-dismiss' => "modal"}
+            = t(:cancel)
+          = submit_tag 'Create', class: 'btn btn-primary', id: 'submit_button'

@@ -1,28 +1,24 @@
 class Admin::PendingCustomersController < AdminBaseController
 
-  def index
-    @pending_customers = Organization.pending.reverse
-  end
-
   def update
     organization = Organization.find(params[:id])
     if organization.manually_activate!
-      Announcement.create(title: 'Welcome', body: 'Your identity is verified and you may now begin using cloud services!',
-        limit_field: 'id', limit_value: organization.users.first.id)
+      Starburst::Announcement.create!(body: "<strong><i class='fa fa-bullhorn'></i> Welcome:</strong> Your identity is verified and you may now begin using cloud services!".html_safe,
+        limit_to_users: [{field: 'id', value: organization.users.first.id}]) if organization.users.any?
 
       Notifications.notify(:new_signup, "#{organization.name} is a paying customer! (Manually activated by #{current_user.name})")
-      redirect_to admin_pending_customers_path, notice: 'Success!'
+      redirect_to admin_customer_path, notice: 'Success!'
     else
-      redirect_to admin_pending_customers_path, alert: 'Failed to activate...'
+      redirect_to admin_customer_path, alert: 'Failed to activate...'
     end
   end
 
   def destroy
     organization = Organization.find(params[:id])
     if organization.destroy
-      redirect_to admin_pending_customers_path, notice: "Successfully deleted."
+      redirect_to admin_customer_path, notice: "Successfully deleted."
     else
-      redirect_to admin_pending_customers_path, alert: "Failed to destroy"
+      redirect_to admin_customer_path, alert: "Failed to destroy"
     end
   end
 

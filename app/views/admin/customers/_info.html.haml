@@ -1,0 +1,41 @@
+%row.info-list
+  .col-md-6
+    %h5
+      %strong
+        Billing Address:
+    - if @organization.billing_address1?
+      %ul
+        %li
+          = @organization.billing_address1
+        %li
+          = @organization.billing_city? ? @organization.billing_city : 'None'
+        %li
+          = @organization.billing_postcode? ? @organization.billing_postcode : 'None'
+    - else
+      None
+  .col-md-6
+    %ul
+      %li
+        %h5
+          %strong
+            Billing Contact:
+          - if @organization.billing_contact?
+            = mail_to @organization.billing_contact
+          - else
+            None
+      %li
+        %h5
+          %strong
+            Salesforce Customer ID:
+          - if @organization.salesforce_id?
+            = link_to @organization.salesforce_id, "https://eu2.salesforce.com/#{@organization.salesforce_id}"
+          - else
+            None
+      %li
+        %h5
+          %strong
+            Stripe Customer ID:
+          - if @organization.stripe_customer_id?
+            = link_to @organization.stripe_customer_id, "https://dashboard.stripe.com/customers/#{@organization.stripe_customer_id}"
+          - else
+            None

@@ -4,7 +4,7 @@ module Freezable
   def soft_freeze!
     disable_users!
     disable_projects!
-    update_attributes(in_review: true)
+    update_attributes(state: 'frozen')
     true
   end
 
@@ -21,7 +21,7 @@ module Freezable
     enable_projects!
     enable_storage!
     unpause_instances!
-    update_attributes(in_review: false)
+    update_attributes(state: 'active')
     true
   end
 

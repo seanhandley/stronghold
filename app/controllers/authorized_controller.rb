@@ -58,9 +58,9 @@ class AuthorizedController < ApplicationController
       safe_redirect_to sign_in_path('next' => current_path)
       return
     end
-    if !current_organization.known_to_payment_gateway? || current_organization.in_review?
+    if !current_organization.known_to_payment_gateway? || current_organization.frozen?
       return if allowed_paths_unactivated.include?(current_path) || is_tickets_path?(current_path)
-      if current_organization.in_review?
+      if current_organization.frozen?
         safe_redirect_to support_root_path
       else
         safe_redirect_to activate_path

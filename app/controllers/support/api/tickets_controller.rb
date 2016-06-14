@@ -1,15 +1,14 @@
 class Support::Api::TicketsController < SupportBaseController#
-
   include ApplicationHelper
+  include TicketsHelper
 
   newrelic_ignore_apdex only: [:index] if Rails.env.production? || Rails.env.staging?
   skip_before_filter :timeout_session!, only: [:index]
   load_and_authorize_resource :class => "Ticket"
 
   def index
-    @tickets = TicketAdapter.all(params[:page]).collect do |t|
-      TicketDecorator.new(t).decorate
-    end
+    @tickets = decorated_tickets
+
     respond_to do |format|
       format.json {
         render :json => @tickets
