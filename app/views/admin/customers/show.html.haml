@@ -2,14 +2,15 @@
 .header-section
   %row
     .col-md-9
+      .pull-right
+        = render partial: 'search'
       %h1
         %i.fa.fa-briefcase
         = @organization.name
       %h3
         Reference:
         = @organization.reporting_code
-    .pull-right
-      = render partial: 'search'
+    
 
 .admin-customer-section
   .row
