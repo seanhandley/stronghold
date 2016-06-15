@@ -1,14 +1,15 @@
 .container.customer-header
-  .customer-search-header
-    %div.pull-left.header-title
+  .header-section
+  %row
+    .col-md-9
+      .pull-right
+        = render partial: 'admin/customers/search'
       %h1
         %i.fa.fa-briefcase
         = @organization.name
       %h3
         Reference:
         = @organization.reporting_code
-
-    %div.pull-right
-      = render partial: 'admin/customers/search'
-      %div.back_to_dashboard
-        = link_to "← Back to #{@organization.name}", admin_customer_path(organization)
+      = link_to "← Back to #{@organization.name}", admin_customer_path(organization)
+  
+  

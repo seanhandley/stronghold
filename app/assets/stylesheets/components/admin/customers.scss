@@ -6,6 +6,7 @@
 .customer-search-header {
   padding-top: 20px;
   padding-bottom: 100px;
+  width: 50%;
 }
 
 .header-section {
@@ -106,6 +107,7 @@ div.usage-form {
 div.back_to_dashboard{
   padding-top: 35px;
 }
+
 div.header-search {
   position: relative;
   width: 100%;
@@ -113,6 +115,7 @@ div.header-search {
 
 @media (min-width: 992px) {
   div.col-md-9 {
+    padding-left: 0px;
     width: 100%;
     padding-right: 0px;
   }
