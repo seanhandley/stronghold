@@ -1,4 +1,6 @@
-= render partial: 'admin/customers/header', locals: { organization: @organization }
+.admin-customer-header
+  = render partial: 'admin/customers/header', locals: { organization: @organization }
+  = render partial: 'admin/customers/back_button', locals: { organization: @organization }
 %h3
   = "Quota Limit:"
 

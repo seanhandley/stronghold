@@ -19,6 +19,8 @@ div.customer-search-header {
   padding-bottom: 20px;
   padding-left: 0px;
   padding-right: 0px;
+  display: flex;
+  justify-content: space-between;
 }
 
 div.header-search {
@@ -68,6 +70,7 @@ div.admin-customer-section .customer-information {
 div.admin-customer-search input.customer-search, div.header-search input.customer-search {
   opacity: 0.6;
   text-align: center;
+  padding-left: 50px;
   font-size: 28px;
   height: 43px;
   font-style: normal;
@@ -79,7 +82,7 @@ div.admin-customer-search input.customer-search, div.header-search input.custome
 }
 
 div.header-search input.customer-search.small-search {
-  min-width: 280px;
+  padding-left: 30px;
   font-size: 14px;
   height: 32px;
 }
@@ -104,4 +107,56 @@ div.admin-customer-search div.usage-form {
 
 div.customer-search-header div.back_to_dashboard {
   padding-top: 35px;
+}
+
+div.header-search {
+  position: relative;
+  width: 100%;
+}
+
+.customer-margin {
+  padding-left: 0px;
+  padding-right: 0px;
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
+@media (max-width: 2000px) {
+  div.admin-customer-header input.small-search {
+    min-width: 358px;
+  }
+}
+
+@media (max-width: 1199px) {
+  div.admin-customer-header input.small-search {
+    min-width: 291px;
+  }
+
+}
+
+@media (max-width: 991px) {
+  div.admin-customer-header input.small-search {
+    min-width: 291px;
+  }
+
+  div.customer-search-header {
+    
+    flex-direction: column-reverse;
+    justify-content: flex-start;
+  }
+}
+
+input#organization_projects_limit {
+  margin-bottom: 10px;
+}
+
+div.container.customer-margin {
+  padding-left: 0px;
+  padding-right: 0px;
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
+div.container.usage_data_container {
+  padding-left: 0px;
 }
