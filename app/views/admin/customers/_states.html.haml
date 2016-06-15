@@ -9,6 +9,10 @@ Change States:
     = link_to 'Unfreeze?', admin_frozen_customer_path(@organization), class: 'btn btn-primary', 'data-method' => "put", 'data-confirm' => "Have you verified the customer's ID and payment method?"
     = link_to 'View Report', mail_admin_frozen_customer_path(@organization), class: 'btn btn-primary', 'data-method' => "post", 'data-confirm' => "The report will be emailed to you. Proceed?"
     = link_to 'Test Charge', charge_admin_frozen_customer_path(@organization), class: 'btn btn-primary', 'data-method' => "post", 'data-confirm' => "This will charge and refund £1 to the customer card. Did they give you permission to do this?"
+- else
+  .btn-freeze
+    = link_to 'Hard Freeze', hard_freeze_admin_frozen_customer_path(@organization), class: 'btn btn-primary', 'data-method' => "post", 'data-confirm' => "Are you sure you want to Hard Freeze this customer? This will lock out of OpenStack and Ceph, and pause all instances."
+    = link_to 'Soft Freeze', soft_freeze_admin_frozen_customer_path(@organization), class: 'btn btn-primary', 'data-method' => "post", 'data-confirm' => "Are you sure you want to Soft Freeze this customer? This will lock out of OpenStack, but leave instances and storage accessible."
 
 - unless @organization.staff?
   = link_to "Migrate to #{@organization.self_service? ?  'Invoiced/Trial' : 'Self Service'}", admin_account_migration_path(@organization), class: 'btn btn-primary btn-migrate', 'data-method' => "put", 'data-confirm' => 'Are you sure?'

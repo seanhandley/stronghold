@@ -59,6 +59,12 @@ Rails.application.routes.draw do
         member do
           post 'charge'
         end
+        member do
+          post 'soft_freeze'
+        end
+        member do
+          post 'hard_freeze'
+        end
       end
       resources :pending_invoices, only: [:index, :update, :destroy]
 

@@ -13,6 +13,7 @@ module Freezable
     soft_freeze!
     disable_storage!
     pause_instances!
+    update_attributes(state: 'frozen')
     true
   end
 

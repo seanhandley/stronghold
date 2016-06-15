@@ -14,6 +14,24 @@ class Admin::FrozenCustomersController < AdminBaseController
     end
   end
 
+  def hard_freeze
+    @organization = Organization.find(params[:id])
+    if @organization.hard_freeze!
+      redirect_to admin_customer_path, notice: "Customer has been hard frozen."
+    else
+      redirect_to admin_customer_path, alert: "Couldn't freeze!"
+    end
+  end
+
+  def soft_freeze
+    @organization = Organization.find(params[:id])
+    if @organization.soft_freeze!
+      redirect_to admin_customer_path, notice: "Customer has been soft frozen."
+    else
+      redirect_to admin_customer_path, alert: "Couldn't freeze!"
+    end
+  end
+
   def destroy
     organization = Organization.find(params[:id])
     if organization.destroy
