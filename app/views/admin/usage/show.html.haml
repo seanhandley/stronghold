@@ -1,9 +1,9 @@
 - title "Usage Data"
-.container
+.container.usage-show-container
   = render partial: 'admin/customers/header', locals: { organization: @organization }
+.usage-form
   %h3
     Usage Data:
-.usage-form
   = form_tag(admin_usage_path(@organization), 'role' => 'form', 'method' => 'put') do
     .form-group
       %label From Date
