@@ -52,6 +52,11 @@ div.admin-customer-section .panel-body ul li {
   padding: 10px 10px 10px 10px;
 }
 
+div.admin-customer-section .panel#users-panel {
+  max-height: 500px;
+  overflow: auto;
+}
+
 div.admin-customer-section div.row.info-list ul li {
   list-style-type: none;
 }
