@@ -1,5 +1,6 @@
-.container.usage_data_container
-= render partial: 'admin/customers/header', locals: { organization: @organization }
+- title "Quota Limit"
+.container.usage_data_container.customer-margin
+  = render partial: 'admin/customers/header', locals: { organization: @organization }
 
 .alert.alert-info This is the maximum quota set the organization can assign to a project.
 .alert.alert-danger Don't give them enough resources to take down the platform! ಠ_ಠ
@@ -8,11 +9,10 @@
   = "Quota Limit:"
 
 = form_tag admin_quota_path(@organization), method: 'put', class: 'admin_quota_form' do
-
+  .container.customer-margin
   .form-group
     %label Maximum Projects
     = number_field_tag "organization[projects_limit]", @organization.projects_limit, class: 'form-control'
-  .container
     .usage-back.row
       - ['compute', 'volume', 'network'].each do |key|
         .col-md-3

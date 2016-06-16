@@ -132,6 +132,8 @@ div.usage-form {
 
 .form-control {
   width: 100%;
+  padding-right: 10px;
+    padding-left: 10px;
 }
 
 div.back_to_dashboard{
@@ -140,6 +142,13 @@ div.back_to_dashboard{
 
 div.header-search {
   position: relative;
+}
+
+.customer-margin {
+  padding-left: 0px;
+  padding-right: 0px;
+  margin-right: 5px;
+  margin-left: 5px;
 }
 
 @media (min-width: 992px) {
@@ -200,7 +209,14 @@ input#organization_projects_limit.form-control {
   margin-bottom: 10px;
 }
 
-div.container {
+div.container.customer-margin {
+  padding-left: 0px;
+  padding-right: 0px;
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
+div.container.usage_data_container {
   padding-left: 0px;
 }
 
