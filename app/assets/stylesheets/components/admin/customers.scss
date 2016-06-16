@@ -7,6 +7,11 @@ div.admin-customer-search {
   position: relative;
   margin-top: 120px;
   width: 100%;
+  background: #eee;
+  padding: 10px;
+  opacity: 0.9;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
 div.customer-search-header {
@@ -84,7 +89,7 @@ div.admin-customer-search span.small-search-icon, div.header-search span.small-s
 div.admin-customer-search span.main-search-icon {
   position: absolute;
   color: #CC142F;
-  top: 7px;
+  top: 18px;
   left: 20px;
 }
 
