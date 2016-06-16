@@ -1,7 +1,7 @@
 - title "Usage Data"
 .container
   = render partial: 'admin/customers/header', locals: { organization: @organization }
-  %h3
+  %h3.usage_data_label
     Usage Data:
 .usage-form
   = form_tag(admin_usage_path(@organization), 'role' => 'form', 'method' => 'put') do

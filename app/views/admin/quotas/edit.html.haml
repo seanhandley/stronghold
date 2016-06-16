@@ -5,23 +5,23 @@
 
 %h3
   = "Quota Limit:"
-  
+
 = form_tag admin_quota_path(@organization), method: 'put', class: 'admin_quota_form' do
 
   .form-group
     %label Maximum Projects
     = number_field_tag "organization[projects_limit]", @organization.projects_limit, class: 'form-control'
-  .container
+  
     .usage-back.row
       - ['compute', 'volume', 'network'].each do |key|
         .col-md-3
-          %h3= key.titleize
+          %h4= key.titleize
           - @organization.quota_limit[key].each do |k,v|
             .form-group
               %label= fix_abbreviation_case(k.humanize.titleize.pluralize)
               = number_field_tag "quota[#{key}][#{k}]", v, :class => 'form-control'
       .col-md-3
-        %h3 Object Storage
+        %h4 Object Storage
         .checkbox
           %label
             = check_box_tag "limited_storage", true, @organization.limited_storage?

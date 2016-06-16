@@ -24,6 +24,34 @@ div .search-section {
   padding: 20px 20px 20px 20px;
 }
 
+div.container.form.admin_quota_form {
+  width: 100%;
+}
+
+.alert-info {
+  width: 100%;
+  background-color: #d9edf7;
+  border-color: #bce8f1;
+  color: #31708f;
+  margin-top: 20px;
+}
+
+h3.usage_data_label {
+  padding-left: 15px;
+}
+
+div.usage-back.row {
+  margin-right: 0px;
+  margin-left: 0px;
+}
+
+.alert-danger {
+  width: 100%;
+  background-color: #d9edf7;
+  border-color: #bce8f1;
+  color: #31708f;
+}
+
 div.container.customer-header {
   padding-left: 0px;
   padding-right: 0px;
@@ -102,6 +130,11 @@ span.main-search-icon {
 
 div.usage-form {
   padding-top: 25px;
+  padding-left: 15px;
+}
+
+.form-control {
+  width: 100%;
 }
 
 div.back_to_dashboard{
@@ -121,10 +154,19 @@ div.header-search {
   }
 }
 
-@media (min-width: 340px) {
+@media (min-width: 500px) {
+  div.col-md-9 {
+    padding-left: 0px;
+    width: 100%;
+    padding-right: 0px;
+  }
+}
+
+@media (min-width: 140px) {
   div.col-md-9 {
     width: 100%;
     padding-right: 0px;
+    padding-left: 0px;
   }
 }
 
@@ -156,5 +198,9 @@ div.header-search {
     min-width: 358px;
     position: relative;
   }
+}
+
+input#organization_projects_limit.form-control {
+ margin-bottom: 10px;
 }
 
