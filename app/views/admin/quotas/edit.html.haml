@@ -1,3 +1,4 @@
+.container.usage_data_container
 = render partial: 'admin/customers/header', locals: { organization: @organization }
 
 .alert.alert-info This is the maximum quota set the organization can assign to a project.
@@ -11,7 +12,7 @@
   .form-group
     %label Maximum Projects
     = number_field_tag "organization[projects_limit]", @organization.projects_limit, class: 'form-control'
-  
+  .container
     .usage-back.row
       - ['compute', 'volume', 'network'].each do |key|
         .col-md-3

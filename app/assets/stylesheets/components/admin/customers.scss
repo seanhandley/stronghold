@@ -36,10 +36,6 @@ div.container.form.admin_quota_form {
   margin-top: 20px;
 }
 
-h3.usage_data_label {
-  padding-left: 15px;
-}
-
 div.usage-back.row {
   margin-right: 0px;
   margin-left: 0px;
@@ -55,6 +51,7 @@ div.usage-back.row {
 div.container.customer-header {
   padding-left: 0px;
   padding-right: 0px;
+
 }
 
 div.btn-unfreeze {
@@ -130,7 +127,7 @@ span.main-search-icon {
 
 div.usage-form {
   padding-top: 25px;
-  padding-left: 15px;
+  padding-left: 0px;
 }
 
 .form-control {
@@ -143,7 +140,6 @@ div.back_to_dashboard{
 
 div.header-search {
   position: relative;
-  width: 100%;
 }
 
 @media (min-width: 992px) {
@@ -171,7 +167,7 @@ div.header-search {
 }
 
 @media (min-width: 992px) {
-      input#search-input.form-control.small-search {
+  input#search-input.form-control.small-search {
     opacity: 0.6;
     text-align: center;
     font-style: normal;
@@ -186,7 +182,7 @@ div.header-search {
 }
 
 @media (min-width: 1200px) {
-      input#search-input.form-control.small-search {
+  input#search-input.form-control.small-search {
     opacity: 0.6;
     text-align: center;
     font-style: normal;
@@ -201,6 +197,11 @@ div.header-search {
 }
 
 input#organization_projects_limit.form-control {
- margin-bottom: 10px;
+  margin-bottom: 10px;
 }
+
+div.container {
+  padding-left: 0px;
+}
+
 
