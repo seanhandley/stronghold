@@ -32,7 +32,7 @@ class Admin::CustomersController < AdminBaseController
 
   def update
     organization = Organization.find(params[:id])
-    if organization.update(update_params)
+    if organization.update_including_state(update_params)
       respond_to do |format|
         format.js {
           javascript_redirect_to admin_customer_path(organization)
@@ -50,15 +50,6 @@ class Admin::CustomersController < AdminBaseController
           redirect_to edit_admin_customer_path(organization), alert: organization.errors.full_messages.join
         }
       end
-    end
-  end
-
-  def destroy
-    organization = Organization.find(params[:id])
-    if organization.destroy
-      redirect_to admin_frozen_customers_path, notice: "Customer has been deleted."
-    else
-      redirect_to admin_frozen_customers_path, alert: "Couldn't delete!"
     end
   end
 

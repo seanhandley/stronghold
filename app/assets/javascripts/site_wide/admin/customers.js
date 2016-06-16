@@ -15,12 +15,21 @@ $(document).ready(function() {
   };
 
   $('#state-dropdown').on('change', function() {
+    new_state = $(this).val();
     id = $(this).data('organization');
-    $.ajax({
-      url: '/admin/customers/' + id,
-      type: 'put',
-      data: {"organization[state]": $(this).val(), "organization[id]": id}
-    });
+    name = $(this).data('organization-name');
+    if(new_state.length > 0) {
+      if(confirm("Are you sure you wish to change " + name + "'s state to " + new_state + "?")) {
+        $.ajax({
+          url: '/admin/customers/' + id,
+          type: 'put',
+          data: {"organization[state]": $(this).val(), "organization[id]": id}
+        });
+        $('#loading-overlay').removeClass('hide');
+      } else {
+        $(this).val('')
+      }
+    }
   });
 
   $('#q').focus();

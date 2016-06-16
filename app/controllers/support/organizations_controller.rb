@@ -1,5 +1,4 @@
 class Support::OrganizationsController < SupportBaseController
-  include OffboardingHelper
 
   skip_authorization_check
 
@@ -38,24 +37,7 @@ class Support::OrganizationsController < SupportBaseController
   # Close this user's account
   def close
     if reauthenticate(reauthorise_params[:password]) && !current_user.staff?
-      Notifications.notify(:account_alert, "#{current_organization.name} (REF: #{current_organization.reference}) has requested account termination.")
-      creds = {:openstack_username => current_user.email,
-               :openstack_api_key  => nil,
-               :openstack_auth_token => session[:token],
-               :openstack_project_name   => current_organization.primary_project.reference,
-               :openstack_domain_id  => 'default',
-               :openstack_identity_prefix => 'v3',
-               :openstack_endpoint_path_matches => //}
-      current_organization.projects.each do |project|
-        offboard(project, creds)
-        begin
-          Ceph::User.update('uid' => project.uuid, 'suspended' => true)
-        rescue Net::HTTPError => e
-          Honeybadger.notify(e)
-        end
-      end
-      current_organization.disable!
-      Mailer.goodbye(current_organization.admin_users).deliver_later
+      current_organization.transition_to!(:closed, current_user: current_user, auth_token: session['token'])
       reset_session
       render :goodbye
     else

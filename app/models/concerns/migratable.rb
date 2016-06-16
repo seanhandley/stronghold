@@ -9,7 +9,7 @@ module Migratable
   private
 
   def migrate_self_service_to_invoiced
-    ActivateCloudResourcesJob.perform_later(self) if state == OrganizationStates::Fresh
+    ActivateCloudResourcesJob.perform_later(self) if fresh?
   end
 
   def migrate_invoiced_to_self_service

@@ -3,6 +3,7 @@ require 'test_helper'
 class TestOrganizationMutativeMethods < CleanTest
   def setup
     @organization = Organization.make!
+    @organization.transition_to(:active)
     @user = User.make!(organization: @organization)
   end
 
@@ -19,24 +20,20 @@ class TestOrganizationMutativeMethods < CleanTest
     end
   end
 
-  def test_enable!
-    enable_or_disable(true) do
-      @organization.enable!
-    end
-    assert_equal OrganizationStates::Active, @organization.state
-  end
-
   def test_disable!
     enable_or_disable(false) do
-      @organization.disable!
+      @organization.transition_to(:disabled)
     end
-    assert @organization.disabled?
+    assert_equal 'disabled', @organization.current_state
   end
 
-  def test_manually_activate!
-    skip
-    # refute @organization.manually_activate!
-    # @organization.update_attributes(state: OrganizationStates::Fresh)
-    # assert @organization.manually_activate!
+  def test_enable!
+    enable_or_disable(false) do
+      @organization.transition_to(:disabled)
+    end
+    enable_or_disable(true) do
+      @organization.transition_to(:active)
+    end
+    assert_equal 'active', @organization.current_state
   end
 end

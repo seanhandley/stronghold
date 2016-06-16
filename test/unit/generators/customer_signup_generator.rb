@@ -14,7 +14,7 @@ class TestCustomerSignupGenerator < CleanTest
 
   def test_set_state_to_fresh
     @customer.generate!
-    assert_equal OrganizationStates::Fresh, Organization.first.state
+    assert_equal 'fresh', Organization.first.current_state
   end
 
   def test_sets_products

@@ -27,8 +27,6 @@ class Support::ManageCardsController < SupportBaseController
         card.delete
         redirect_to support_manage_cards_path, alert: "You've already added that card"
       else
-        Rails.cache.delete("org_#{current_organization.id}_has_payment_method")
-        current_organization.has_payment_methods!(true)
         redirect_to support_manage_cards_path, notice: "New card added successfully"
       end
     end

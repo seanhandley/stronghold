@@ -33,7 +33,7 @@ class Support::CardsController < SupportBaseController
         current_organization.vouchers << voucher
         signup_args.merge!(voucher: voucher)
       end
-      current_organization.complete_signup!(signup_args)
+      current_organization.transition_to!(:active, signup_args: signup_args)
       FraudCheckJob.set(wait: 10.seconds).perform_later(@customer_signup)
       Notifications.notify(:new_signup, "#{current_organization.name} has activated their account! Discount code: #{create_params[:discount_code].present? ? create_params[:discount_code] : 'N/A'}")
 
