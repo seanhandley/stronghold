@@ -4,7 +4,7 @@ $(document).ready(function() {
       url: '/admin/sm/search',
       types: $('html').data('searchable-models').split(" "),
       renderCallback: function(term, data, type) {
-        return term;
+        return term + ' (' + data.reporting_code + ')';
       },
       selectCallback: function(term, data, type) {
         document.location.href = data['url'];
