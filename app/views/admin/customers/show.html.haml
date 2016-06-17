@@ -1,17 +1,8 @@
 - title "Dashboard"
 
 .admin-customer-header
-  %row
-    .col-md-9
-      %h1
-        %i.fa.fa-briefcase
-        = @organization.name
-      %h3
-        Reference:
-        = @organization.reporting_code
-    .pull-right
-      = render partial: 'search'
-
+  = render partial: 'admin/customers/header', locals: { organization: @organization }
+  
 .admin-customer-section
   .row
     .col-md-8

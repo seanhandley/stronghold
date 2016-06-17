@@ -1,5 +1,5 @@
 .customer-search-header
-  .pull-left.header-title
+  .header-title
     %h1
       %i.fa.fa-briefcase
       = @organization.name
@@ -7,7 +7,6 @@
       Reference:
       = @organization.reporting_code
 
-  .pull-right
+  .header-nav
     = render partial: 'admin/customers/search'
-    %div.back_to_dashboard
-      = link_to "← Back to #{@organization.name}", admin_customer_path(organization)
+    
