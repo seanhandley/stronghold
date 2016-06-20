@@ -10,17 +10,15 @@
   <p><strong>MaxMind Risk Score:</strong> <%= @fraud_check.response_fields[:risk_score] %> (out of 100)</p>
   <p><strong>Activation Attempts:</strong> <%= @customer_signup.activation_attempts %></p>
   <p><strong>Other Signup Attempts From Same Device:</strong> <%= @customer_signup.other_signups_from_device %></p>
-  <p>This alert is triggered if:</p>
+  <p>This alert is triggered because:</p>
   <ul>
-    <li>The risk score is greater than 5</li>
-    <li>The user makes more than 5 activation attempts</li>
-    <li>More than 3 different signups are made from the same device</li>
-    <li>The card is a prepaid card</li>
-    <li>The card has no CVC</li>
+    <% @reasons.each do |reason| %>
+      <li><%= reason %>.</li>
+    <% end %>
   </ul>
 
   <div style: "padding: 30px; margin: 30px">
-    <%= link_to 'Review', admin_frozen_customers_url, class: 'confirm', target: '_blank', 'data-method' => "get" %>
+    <%= link_to 'Review', admin_customer_url(@customer_signup.organization), class: 'confirm', target: '_blank', 'data-method' => "get" %>
   </div>
 
   <hr>

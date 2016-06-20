@@ -33,7 +33,8 @@ class Mailer < ActionMailer::Base
 
   def fraud_check_alert(customer_signup, fraud_check, recipient="fraud@datacentred.co.uk")
     @customer_signup = customer_signup
-    @fraud_check = fraud_check
+    @fraud_check     = fraud_check
+    @reasons         = fraud_check.suspicious?
     mail(:to => recipient, :subject => "Potential Fraud: #{customer_signup.organization_name}")
   end
 
