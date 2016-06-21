@@ -19,6 +19,6 @@ class SeenOnlineJob < ActiveJob::Base
     Rails.cache.fetch("last_seen_online_#{user.id}", expires_in: 5.minutes) do
       user&.update_attributes last_seen_online: Time.now
     end
-    Rails.cache.write("user_online_#{id}", info, expires_in: 1.day)
+    Rails.cache.write("user_online_#{user.id}", info, expires_in: 1.day)
   end
 end
