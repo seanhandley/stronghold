@@ -12,7 +12,7 @@ class SeenOnlineJob < ActiveJob::Base
       version: agent.version,
       ip: params[:remote_ip],
       url: params[:url],
-      timestamp: params[:time],
+      timestamp: Time.parse(params[:time]),
       country: country[:country_code].downcase,
       country_name: country[:country_name]
     }

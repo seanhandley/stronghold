@@ -18,7 +18,7 @@ module Trackable
       remote_ip:  request.remote_ip,
       user_id:    id,
       url:        request.url,
-      time:       Time.now
+      time:       Time.now.to_s
     })
   end
 
