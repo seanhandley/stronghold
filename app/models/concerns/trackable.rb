@@ -13,23 +13,13 @@ module Trackable
   end
 
   def seen_online!(request)
-    agent = UserAgent.parse(request.headers["HTTP_USER_AGENT"])
-    country = GeoIp.geolocation(request.remote_ip) rescue OpenStruct.new(country_code: 'GB', country_name: "United Kingdom")
-    info = {
-      platform: agent.platform,
-      os: agent.os,
-      browser: agent.browser,
-      version: agent.version,
-      ip: request.remote_ip,
-      url: request.url,
-      timestamp: Time.now,
-      country: country[:country_code].downcase,
-      country_name: country[:country_name]
-    }
-    Rails.cache.fetch("last_seen_online_#{id}", expires_in: 5.minutes) do
-      Authorization.current_user&.update_attributes last_seen_online: Time.now
-    end
-    Rails.cache.write("user_online_#{id}", info, expires_in: 1.day)
+    SeenOnlineJob.perform_later({
+      user_agent: request.headers["HTTP_USER_AGENT"],
+      remote_ip:  request.remote_ip,
+      user_id:    id,
+      url:        request.url,
+      time:       Time.now
+    })
   end
 
   def online_today?
