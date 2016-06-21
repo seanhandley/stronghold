@@ -83,9 +83,9 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     :user_name => 'devops@datacentred.co.uk',
-    :password => 'FtrwuKFmqWgU',
+    :password => 'jgeBRHnDMH4pB5c',
     :domain => 'datacentred.co.uk',
-    :address => 'mail.smtp2go.com',
+    :address => 'smtp-pulse.com',
     :port => 2525,
     :authentication => :plain,
     :enable_starttls_auto => true
