@@ -39,7 +39,7 @@ class CustomerGenerator
 
       raise error if error
       return true
-    end 
+    end
     false
   end
 
@@ -51,7 +51,7 @@ class CustomerGenerator
       @organization.products << Product.find(product_id)
     end
     @organization.save!
-    @organization.enable!
+    @organization.transition_to!(:active)
     @extra_projects.split(',').map(&:strip).map(&:downcase).uniq.each do |project|
       @organization.projects.create(name: project)
     end

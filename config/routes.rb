@@ -52,8 +52,7 @@ Rails.application.routes.draw do
           post 'mail'
         end
       end
-      resources :pending_customers, only: [:index, :update, :destroy]
-      resources :frozen_customers, only: [:index, :update, :destroy] do
+      resources :frozen_customers, only: [:index, :update] do
         member do
           post 'mail'
         end

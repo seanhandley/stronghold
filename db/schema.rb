@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160608114510) do
+ActiveRecord::Schema.define(version: 20160616102709) do
 
   create_table "audits", force: :cascade do |t|
     t.string   "auditable_id",    limit: 255
@@ -268,6 +268,19 @@ ActiveRecord::Schema.define(version: 20160608114510) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "organization_transitions", force: :cascade do |t|
+    t.string   "to_state",        limit: 255,   null: false
+    t.text     "metadata",        limit: 65535
+    t.integer  "sort_key",        limit: 4,     null: false
+    t.integer  "organization_id", limit: 4,     null: false
+    t.boolean  "most_recent"
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+  end
+
+  add_index "organization_transitions", ["organization_id", "most_recent"], name: "index_organization_transitions_parent_most_recent", unique: true, using: :btree
+  add_index "organization_transitions", ["organization_id", "sort_key"], name: "index_organization_transitions_parent_sort", unique: true, using: :btree
 
   create_table "organization_vouchers", force: :cascade do |t|
     t.integer  "organization_id", limit: 4

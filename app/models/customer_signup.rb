@@ -12,7 +12,7 @@ class CustomerSignup < ActiveRecord::Base
   scope :not_reminded, -> { where(reminder_sent: false)}
 
   def ready?
-    return false unless organization.state == OrganizationStates::Fresh
+    return false unless organization.fresh?
     @error_message = nil
     unless address_check_passed?
       @error_message = 'The address does not match the card. Try activating by phone?'
@@ -89,5 +89,3 @@ class CustomerSignup < ActiveRecord::Base
   end
 
 end
-
-

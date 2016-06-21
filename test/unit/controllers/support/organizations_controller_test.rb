@@ -8,6 +8,7 @@ class Support::OrganizationsControllerTest < ActionController::TestCase
     @organization2 = Organization.make!
     @role = Role.make!(organization: @organization, power_user: true)
     @user.update_attributes(roles: [@role])
+    [@organization, @organization2].each{|o| o.transition_to(:active)}
     log_in(@user)
   end
 
@@ -55,34 +56,12 @@ class Support::OrganizationsControllerTest < ActionController::TestCase
   end
 
   test "User can close account with right password" do
-    mail_mock = Minitest::Mock.new
-    mail_mock.expect(:deliver_later, true, [])
     @controller.stub(:reauthenticate, true, "UpperLower123") do
-      @controller.stub(:offboard, true) do
-        Ceph::User.stub(:update, true) do
-          Mailer.stub(:goodbye, mail_mock) do
-            post :close, password: "UpperLower123"
-            assert Organization.first.disabled?
-            refute session[:user_id]
-            refute session[:token]
-            assert_template :goodbye
-          end
-        end
-      end
-    end
-    mail_mock.verify
-  end
-
-  test "Handles Ceph errors" do
-    @controller.stub(:reauthenticate, true, "UpperLower123") do
-      @controller.stub(:offboard, true) do
-        Ceph::User.stub(:update, Proc.new{ raise Net::HTTPError.new(500, 'foo') }) do
-          Honeybadger.stub(:notify, true) do
-            post :close, password: "UpperLower123"
-            assert_response :ok
-            assert_template :goodbye
-          end
-        end
+      @controller.current_organization.stub(:transition_to!, true) do
+        post :close, password: "UpperLower123"
+        refute session[:user_id]
+        refute session[:token]
+        assert_template :goodbye
       end
     end
   end

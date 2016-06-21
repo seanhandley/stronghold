@@ -45,7 +45,7 @@ class MailerPreview < ActionMailer::Preview
   end
 
   def review_mode_alert
-    Mailer.review_mode_alert(CustomerSignup.last)
+    Mailer.review_mode_alert(Organization.last)
   end
 
   def review_mode_successful

@@ -3,6 +3,7 @@ class Organization < ActiveRecord::Base
   include Freezable
   include Migratable
   include UsageInformation
+  include OrganizationTransitionable
 
   audited only: [:name, :time_zone, :locale, :billing_address1, :billing_address2,
                  :billing_city, :billing_postcode, :billing_country, :phone, :billing_contact]
@@ -58,15 +59,20 @@ class Organization < ActiveRecord::Base
   belongs_to :customer_signup
 
   scope :paying,                -> { where('started_paying_at is not null') }
-  scope :billable,              -> { all.select{|o| !o.test_account?} }
+  scope :billable,              -> { where(test_account: false) }
   scope :cloud,                 -> { all.select(&:cloud?) }
-  scope :active,                -> { all.select{|o| o.state == OrganizationStates::Active && !o.disabled? && !o.frozen?}}
+  scope :active,                -> { where(state: 'active')}
   scope :self_service,          -> { where('self_service = true') }
-  scope :pending,               -> { all.select{|o| o.state == OrganizationStates::Fresh }}
+  scope :pending,               -> { where(state: 'fresh')}
   scope :frozen,                -> { where(state: 'frozen')}
-  scope :pending_without_users, -> { all.select{|o| o.state == OrganizationStates::Fresh && o.users.count == 0}}
+  scope :pending_without_users, -> { all.select{|o| o.fresh? && o.users.count == 0}}
 
   serialize :quota_limit
+
+  def update_including_state(params={})
+    transition_to!(params[:state]) if params[:state]
+    update(params)
+  end
 
   def frozen?
     state == 'frozen'
@@ -74,6 +80,10 @@ class Organization < ActiveRecord::Base
 
   def fresh?
     state == 'fresh'
+  end
+
+  def closed?
+    current_state == 'closed'
   end
 
   def quota_limit
@@ -148,55 +158,12 @@ class Organization < ActiveRecord::Base
     card ? "#{card.brand} #{card.funding}" : nil
   end
 
-  # Mutative Methods
-
-  def enable!
-    unless Rails.env.test?
-      projects.each do |project|
-        OpenStackConnection.identity.update_project(project.uuid, enabled: true)
-      end
-      users.each do |user|
-        OpenStackConnection.identity.update_user(user.uuid, enabled: true)
-      end
-    end
-    has_payment_methods!(true)
-  end
-
-  def disable!
-    unless Rails.env.test?
-      projects.each do |project|
-        OpenStackConnection.identity.update_project(project.uuid, enabled: false)
-      end
-      users.each do |user|
-        OpenStackConnection.identity.update_user(user.uuid, enabled: false)
-      end
-    end
-    update_attributes(disabled: true)
-  end
-
   def manually_activate!
-    return false unless state == OrganizationStates::Fresh
+    return false unless fresh?
     update_attributes(started_paying_at: Time.now.utc, self_service: false, state: 'active')
     enable!
     create_default_network!
     set_quotas!
-  end
-
-  def complete_signup!(args)
-    update_attributes(stripe_customer_id: args[:stripe_customer_id])
-    update_attributes(started_paying_at: Time.now.utc)
-    ActivateCloudResourcesJob.perform_later(self, args[:voucher])
-  end
-
-  def has_payment_methods!(bool)
-    if bool
-      update_attributes(state: OrganizationStates::Active)
-    else
-      update_attributes(state: OrganizationStates::HasNoPaymentMethods)
-      if Authorization.current_user
-        Rails.cache.delete("org_#{Authorization.current_user.organization.id}_has_payment_method")
-      end
-    end
   end
 
   def set_quotas!(voucher=nil)
@@ -256,12 +223,4 @@ class Organization < ActiveRecord::Base
   def check_limited_storage
     SetCephQuotaJob.perform_later(self)
   end
-end
-
-module OrganizationStates
-  Active = 'active'
-  HasNoPaymentMethods = 'no_payment_methods'
-  Disabled = 'disabled'
-  Fresh = 'fresh'
-  Frozen = 'frozen'
 end

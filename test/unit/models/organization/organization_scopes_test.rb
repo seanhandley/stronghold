@@ -25,7 +25,7 @@ class TestOrganizationScopes < CleanTest
 
   def test_active_scope
     assert_equal @orgs.count, Organization.active.count
-    @orgs.first.disable!
+    @orgs.first.update_attributes(state: 'disabled')
     assert_equal (@orgs.count - 1), Organization.active.count
   end
 
@@ -37,13 +37,13 @@ class TestOrganizationScopes < CleanTest
 
   def test_pending_scope
     assert_equal 0, Organization.pending.count
-    @orgs.first.update_attributes(state: OrganizationStates::Fresh)
+    @orgs.first.update_column(:state, 'fresh')
     assert_equal 1, Organization.pending.count
   end
 
   def test_frozen_scope
     assert_equal 0, Organization.frozen.count
-    @orgs.first.update_attributes(state: OrganizationStates::Frozen)
+    @orgs.first.update_column(:state, 'frozen')
     assert_equal 1, Organization.frozen.count
   end
 

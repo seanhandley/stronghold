@@ -63,8 +63,8 @@ class Mailer < ActionMailer::Base
     mail(:to => 'signups@datacentred.co.uk', :subject => "New Signup: #{@organization.name}")   
   end
 
-  def review_mode_alert(customer_signup)
-    mail(:to => customer_signup.organization.admin_users.collect(&:email).join(', '),
+  def review_mode_alert(organization)
+    mail(:to => organization.admin_users.collect(&:email).join(', '),
          :subject => "Account Review: Please respond ASAP")
   end
 

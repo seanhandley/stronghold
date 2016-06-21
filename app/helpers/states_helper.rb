@@ -1,11 +1,8 @@
 module StatesHelper
   include ActionView::Helpers::FormOptionsHelper
   def options_for_states(organization)
-    states = Organization::OrganizationStates.constants.map do |k|
-      [k.to_s.underscore.humanize.titleize, Organization::OrganizationStates.const_get(k)]
-    end.reject do |e|
-      Organization::OrganizationStates::Fresh == e[1]
-    end
-    options_for_select(states, selected: organization.state)
+    states = organization.allowed_transitions - ['closed', organization.current_state]
+    states = states.map{|state| [state.underscore.humanize.titleize, state]}.sort{|x,y| x[0] <=> y[0]}
+    options_for_select(states)
   end
 end

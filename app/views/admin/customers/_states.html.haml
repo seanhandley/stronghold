@@ -1,14 +1,10 @@
-Change States:
-- if @organization.fresh?
-  .btn-activate-manually= link_to 'Activate Manually?', admin_pending_customer_path(@organization), class: 'btn btn-primary btn-activate-manually', 'data-method' => "put", 'data-confirm' => "Have you verified the customer's ID and payment method?"
-- else
-  = select_tag :state, options_for_states(@organization), class: 'form-control', id: 'state-dropdown', 'data-organization': @organization.id
+Change state to...
+= select_tag :state, options_for_states(@organization), include_blank: true, class: 'form-control', id: 'state-dropdown', 'data-organization': @organization.id, 'data-organization-name': @organization.name
 
 - if @organization.frozen?
   .btn-unfreeze
-    = link_to 'Unfreeze?', admin_frozen_customer_path(@organization), class: 'btn btn-primary', 'data-method' => "put", 'data-confirm' => "Have you verified the customer's ID and payment method?"
-    = link_to 'View Report', mail_admin_frozen_customer_path(@organization), class: 'btn btn-primary', 'data-method' => "post", 'data-confirm' => "The report will be emailed to you. Proceed?"
-    = link_to 'Test Charge', charge_admin_frozen_customer_path(@organization), class: 'btn btn-primary', 'data-method' => "post", 'data-confirm' => "This will charge and refund £1 to the customer card. Did they give you permission to do this?"
+    = link_to 'Run Fraud Report?', mail_admin_frozen_customer_path(@organization), class: 'btn btn-primary', 'data-method' => "post", 'data-confirm' => "The report will be emailed to you. Proceed?"
+    = link_to '£1 Test Charge', charge_admin_frozen_customer_path(@organization), class: 'btn btn-primary', 'data-method' => "post", 'data-confirm' => "This will charge and refund £1 to the customer card. Did they give you permission to do this?"
 
 - unless @organization.staff?
   = link_to "Migrate to #{@organization.self_service? ?  'Invoiced/Trial' : 'Self Service'}", admin_account_migration_path(@organization), class: 'btn btn-primary btn-migrate', 'data-method' => "put", 'data-confirm' => 'Are you sure?'

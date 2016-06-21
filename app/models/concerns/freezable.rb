@@ -2,9 +2,7 @@ module Freezable
 
   # Lock out of OpenStack, but leave instances and storage accessible
   def soft_freeze!
-    disable_users!
-    disable_projects!
-    update_attributes(state: 'frozen')
+    disable_users_and_projects!
     true
   end
 
@@ -17,12 +15,20 @@ module Freezable
   end
 
   def unfreeze!
-    enable_users!
-    enable_projects!
+    enable_users_and_projects!
     enable_storage!
     unpause_instances!
-    update_attributes(state: 'active')
     true
+  end
+
+  def disable_users_and_projects!
+    disable_users!
+    disable_projects!
+  end
+
+  def enable_users_and_projects!
+    enable_users!
+    enable_projects!
   end
 
   private

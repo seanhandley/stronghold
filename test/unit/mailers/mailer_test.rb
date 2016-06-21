@@ -123,7 +123,7 @@ class MailerTest < ActionMailer::TestCase
     @user = User.make!
     @user.organization.stub(:admin_users, [@user]) do
       @cs.stub(:organization, @user.organization) do
-        @email = Mailer.review_mode_alert(@cs).deliver_now
+        @email = Mailer.review_mode_alert(@cs.organization).deliver_now
       end
     end
 
