@@ -28,6 +28,8 @@
           Audits Logs
         .panel-body
           = render partial: "support/audits/audits", locals: {audits: @audits}
+          - if @audits.any?
+            = link_to 'See more', admin_audit_path(@organization)
 
     .col-md-4
       %div{class: ["panel", @organization.self_service? ? "panel-info" : "panel-warning"].join(" ")}
