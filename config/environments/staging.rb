@@ -82,11 +82,13 @@ Rails.application.configure do
   config.action_mailer.raise_delivery_errors = false
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-      :address => 'smtp.deliverhq.com',
-      :domain => 'datacentred.co.uk',
-      :authentication => :cram_md5,
-      :user_name => 'yvnkigkbn5',
-      :password => '7y7qh820t4'
+    :user_name => 'devops@datacentred.co.uk',
+    :password => 'jgeBRHnDMH4pB5c',
+    :domain => 'datacentred.co.uk',
+    :address => 'smtp-pulse.com',
+    :port => 2525,
+    :authentication => :plain,
+    :enable_starttls_auto => true
   }
   APP_DOMAIN = "staging-my.datacentred.io"
   config.action_controller.asset_host = "//#{APP_DOMAIN}"
