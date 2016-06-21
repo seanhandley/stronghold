@@ -13,6 +13,7 @@ module Trackable
   end
 
   def seen_online!(request)
+    return true if online_now?
     SeenOnlineJob.perform_later({
       user_agent: request.headers["HTTP_USER_AGENT"],
       remote_ip:  request.remote_ip,
