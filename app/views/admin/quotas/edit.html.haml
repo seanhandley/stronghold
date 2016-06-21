@@ -1,9 +1,4 @@
-.admin-customer-header
-  = render partial: 'admin/customers/header', locals: { organization: @organization }
-  = render partial: 'admin/customers/back_button', locals: { organization: @organization }
-%h3
-  = "Quota Limit:"
-
+%h1 Quota Limit
 
 .alert.alert-info This is the maximum quota set the organization can assign to a project.
 .alert.alert-danger Don't give them enough resources to take down the platform! ಠ_ಠ
