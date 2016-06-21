@@ -21,7 +21,7 @@ require_relative '../../lib/authorization'
 
 module OpenStackConnection
   def self.identity
-    @@identity ||= Fog::Identity.new(OPENSTACK_ARGS)
+    Fog::Identity.new(OPENSTACK_ARGS)
   end
 
   def self.compute
