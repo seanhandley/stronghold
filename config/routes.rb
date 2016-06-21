@@ -46,6 +46,7 @@ Rails.application.routes.draw do
       resources :usage, only: [:show, :update]
       resources :free_ips, only: [:index]
       resources :account_migrations, only: [:update]
+      resources :audits, only: [:show]
       resources :quotas, except: [:create, :new, :destroy, :show] do
         member do
           post 'mail'

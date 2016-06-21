@@ -1,3 +1,4 @@
 - title "Audit Log"
 
-= render partial: "support/audits/audits", locals: {audits: @audits}
+= render partial: "support/audits/audits", locals: {audits: @audits, organization: @organization}
+= pagination @audits
