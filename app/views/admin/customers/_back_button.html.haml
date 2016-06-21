@@ -1,2 +1,3 @@
-%div.back_to_dashboard
-  = link_to "← Back to #{organization.name}", admin_customer_path(organization)
+- unless current_path == admin_customer_path(organization)
+  %div.back_to_dashboard
+    = link_to "← Back to customer main view", admin_customer_path(organization)

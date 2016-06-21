@@ -15,7 +15,10 @@
         .context-nav
           = render partial: 'shared/support_nav'
 
-    %div.page-body
+    - if @organization
+      = render partial: 'admin/customers/header', locals: { organization: @organization }
+      
+    %div{class: @organization ? '' : 'page-body'}
       = render partial: 'shared/environment'
       .container
         %p &nbsp;

@@ -26,9 +26,9 @@
               - if expired
                 = link_to 'Re-Activate?', '', class: 'btn btn-info', 'data-toggle' => "modal", 'data-target' => "#editVoucher#{voucher.id}"
               - else
-                = link_to 'Expire Early?', utilities_voucher_path(voucher, expires_at: Date.today), class: 'btn btn-info', 'remote' => true, 'data' => { 'method' => :put, 'confirm' => 'Are you sure? Note that customers currently using this discount will still have the discount applied for the original duration.'}
+                = link_to 'Expire Early?', admin_utilities_voucher_path(voucher, expires_at: Date.today), class: 'btn btn-info', 'remote' => true, 'data' => { 'method' => :put, 'confirm' => 'Are you sure? Note that customers currently using this discount will still have the discount applied for the original duration.'}
               - unless voucher.applied?
-                = link_to 'Delete', utilities_voucher_path(voucher), class: 'btn btn-danger', 'data' => { 'method' => :delete, 'confirm' => 'Are you sure?'}
+                = link_to 'Delete', admin_utilities_voucher_path(voucher), class: 'btn btn-danger', 'data' => { 'method' => :delete, 'confirm' => 'Are you sure?'}
 
   - for voucher in vouchers
     = render partial: 'edit', locals: {voucher: voucher }

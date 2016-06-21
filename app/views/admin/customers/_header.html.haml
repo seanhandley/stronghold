@@ -1,12 +1,15 @@
-.customer-search-header
-  .header-title
-    %h1
-      %i.fa.fa-briefcase
-      = @organization.name
-    %h3
-      Reference:
-      = @organization.reporting_code
+.admin-customer-header
+  .container
+    .customer-search-header
+      .header-title
+        %h3
+          = @organization.name
+        %h4
+          %em
+            Reference:
+            = @organization.reporting_code
 
-  .header-nav
-    = render partial: 'admin/customers/search'
+      .header-nav
+        = render partial: 'admin/customers/search'
+    = render partial: 'admin/customers/back_button', locals: { organization: @organization }
     
