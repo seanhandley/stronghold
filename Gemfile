@@ -51,6 +51,7 @@ gem 'soulmate', :require => 'soulmate/server'
 gem 'soulmatejs-rails'
 gem 'redis-namespace'
 gem 'statesman', '~> 2.0'
+gem 'parallel'
 
 group :test, :acceptance do
   gem 'faker'

@@ -278,6 +278,7 @@ GEM
     nokogiri (1.6.8)
       mini_portile2 (~> 2.1.0)
       pkg-config (~> 1.1.7)
+    parallel (1.9.0)
     paranoia (2.1.4)
       activerecord (~> 4.0)
     parser (2.3.0.2)
@@ -574,6 +575,7 @@ DEPENDENCIES
   net-ssh (~> 2.8.0)
   newrelic_rpm (~> 3.9)
   nokogiri (~> 1.6)
+  parallel
   paranoia (~> 2.0)
   poltergeist
   premailer-rails (~> 1.9)
