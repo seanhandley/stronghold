@@ -7,6 +7,7 @@ $(document).ready(function() {
         return term + ' (' + data.reporting_code + ')';
       },
       selectCallback: function(term, data, type) {
+        $('#loading-overlay').removeClass('hide');
         document.location.href = data['url'];
       },
       minQueryLength: 2,
