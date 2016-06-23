@@ -1,0 +1,202 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://devstack.datacentred.io:5000/v3/auth/tokens
+    body:
+      encoding: UTF-8
+      string: '{"auth":{"identity":{"methods":["password"],"password":{"user":{"password":"[redacted]","domain":{"id":"default"},"name":"admin"}}},"scope":{"project":{"name":"admin","domain":{"id":"default"}}}}}'
+    headers:
+      User-Agent:
+      - fog-core/1.36.0
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 201
+      message: ''
+    headers:
+      Date:
+      - Tue, 12 Jul 2016 09:34:42 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      X-Subject-Token:
+      - 5b7a1e97fc194646ae238b74d13cb191
+      Vary:
+      - X-Auth-Token
+      X-Openstack-Request-Id:
+      - req-dd328341-eacd-4d03-9218-9d9afa02c16f
+      Content-Length:
+      - '7750'
+      Content-Type:
+      - application/json
+    body:
+      encoding: UTF-8
+      string: '{"token": {"methods": ["password"], "roles": [{"id": "1cdbf6fab7f544898c2d5e9260645209",
+        "name": "admin"}], "expires_at": "2016-07-12T10:34:43.048683Z", "project":
+        {"domain": {"id": "default", "name": "Default"}, "id": "06a9a90c60074cdeae5f7fdd0048d9ac",
+        "name": "admin"}, "catalog": [{"endpoints": [{"region_id": "RegionOne", "url":
+        "http://185.43.218.210:8777/", "region": "RegionOne", "interface": "internal",
+        "id": "0740555784874fdd8d6d1f92c04541bf"}, {"region_id": "RegionOne", "url":
+        "http://185.43.218.210:8777/", "region": "RegionOne", "interface": "public",
+        "id": "9f71abc341544cc4941be8261e94a6fc"}, {"region_id": "RegionOne", "url":
+        "http://185.43.218.210:8777/", "region": "RegionOne", "interface": "admin",
+        "id": "ac15153252bf4a4f88896c7562aaaba1"}], "type": "metering", "id": "04053abbdf7f47a396f2a432ab0ba567",
+        "name": "ceilometer"}, {"endpoints": [{"region_id": "RegionOne", "url": "http://185.43.218.210:9696/",
+        "region": "RegionOne", "interface": "admin", "id": "5ec8ef9e98024c42a3a5fbdf44acc722"},
+        {"region_id": "RegionOne", "url": "http://185.43.218.210:9696/", "region":
+        "RegionOne", "interface": "public", "id": "6b2fb734a8864c80acca5e3ed470d8c5"},
+        {"region_id": "RegionOne", "url": "http://185.43.218.210:9696/", "region":
+        "RegionOne", "interface": "internal", "id": "7617e2f654f249c69fa916ee9ea6b7de"}],
+        "type": "network", "id": "1d162306531542bbb5f83c7effffa54b", "name": "neutron"},
+        {"endpoints": [{"region_id": "RegionOne", "url": "http://185.43.218.210:8004/v1/06a9a90c60074cdeae5f7fdd0048d9ac",
+        "region": "RegionOne", "interface": "public", "id": "23e641b39cb24aa0b5a83877aaa0bc9a"},
+        {"region_id": "RegionOne", "url": "http://185.43.218.210:8004/v1/06a9a90c60074cdeae5f7fdd0048d9ac",
+        "region": "RegionOne", "interface": "admin", "id": "92142643d1b24c69bb283b0d4b6b8122"},
+        {"region_id": "RegionOne", "url": "http://185.43.218.210:8004/v1/06a9a90c60074cdeae5f7fdd0048d9ac",
+        "region": "RegionOne", "interface": "internal", "id": "ae0e69f6b4774de2bbd5d6e832597e6a"}],
+        "type": "orchestration", "id": "5e852cb5054d469584d4261533c44843", "name":
+        "heat"}, {"endpoints": [{"region_id": "RegionOne", "url": "http://185.43.218.210:8773/",
+        "region": "RegionOne", "interface": "internal", "id": "2a43be9cae314363bce788fce7353486"},
+        {"region_id": "RegionOne", "url": "http://185.43.218.210:8773/", "region":
+        "RegionOne", "interface": "admin", "id": "80a83326212c49078384c84421662632"},
+        {"region_id": "RegionOne", "url": "http://185.43.218.210:8773/", "region":
+        "RegionOne", "interface": "public", "id": "afe18a687c0e4dc6ad54e36b86419872"}],
+        "type": "ec2", "id": "5ed5d5d136cc43b998539b75f50f2c93", "name": "ec2"}, {"endpoints":
+        [{"region_id": "RegionOne", "url": "http://185.43.218.210:5000/", "region":
+        "RegionOne", "interface": "public", "id": "1551d6417ce44f0b9638a40615fced6d"},
+        {"region_id": "RegionOne", "url": "http://185.43.218.210:5000/", "region":
+        "RegionOne", "interface": "internal", "id": "3fed2ded55be4df78e1fbe8d6495547e"},
+        {"region_id": "RegionOne", "url": "http://185.43.218.210:35357/", "region":
+        "RegionOne", "interface": "admin", "id": "c9e7c746c3c04aadbfa236b493e56bf6"}],
+        "type": "identity", "id": "6d1dcaf88063470fbe7736c3122df873", "name": "keystone"},
+        {"endpoints": [{"region_id": "RegionOne", "url": "http://185.43.218.210:3333",
+        "region": "RegionOne", "interface": "internal", "id": "8ac5418d62e4415f865c6edf76192120"},
+        {"region_id": "RegionOne", "url": "http://185.43.218.210:3333", "region":
+        "RegionOne", "interface": "admin", "id": "95a1eb19c34b4c8d965bb785e5f0dc12"},
+        {"region_id": "RegionOne", "url": "http://185.43.218.210:3333", "region":
+        "RegionOne", "interface": "public", "id": "9db8b3984bc14aeaa975c154028dc79e"}],
+        "type": "s3", "id": "8d38e0e990aa429a858265d9c124b186", "name": "s3"}, {"endpoints":
+        [{"region_id": "RegionOne", "url": "http://185.43.218.210:8000/v1", "region":
+        "RegionOne", "interface": "internal", "id": "24cc1987fa5541828daff00cc8f8fea9"},
+        {"region_id": "RegionOne", "url": "http://185.43.218.210:8000/v1", "region":
+        "RegionOne", "interface": "admin", "id": "72e3aeaf983944eab7cfa576d5a8f550"},
+        {"region_id": "RegionOne", "url": "http://185.43.218.210:8000/v1", "region":
+        "RegionOne", "interface": "public", "id": "d997374240414c9d93935f53dd4a5b25"}],
+        "type": "cloudformation", "id": "8f69a18b7f124a90884a6ffe83a6bfbf", "name":
+        "heat-cfn"}, {"endpoints": [{"region_id": "RegionOne", "url": "http://185.43.218.210:8776/v2/06a9a90c60074cdeae5f7fdd0048d9ac",
+        "region": "RegionOne", "interface": "admin", "id": "08c0cee724e14d24a71bcb3dc3386d6b"},
+        {"region_id": "RegionOne", "url": "http://185.43.218.210:8776/v2/06a9a90c60074cdeae5f7fdd0048d9ac",
+        "region": "RegionOne", "interface": "public", "id": "2f24ba9cedba4988b8591a5d9c648ec2"},
+        {"region_id": "RegionOne", "url": "http://185.43.218.210:8776/v2/06a9a90c60074cdeae5f7fdd0048d9ac",
+        "region": "RegionOne", "interface": "internal", "id": "760d6c16b91348f1acc78d240325f4a8"}],
+        "type": "volumev2", "id": "b66ee3a8d48f49759ea64fbd374e0557", "name": "cinderv2"},
+        {"endpoints": [{"region_id": "RegionOne", "url": "http://185.43.218.210:8774/v2/06a9a90c60074cdeae5f7fdd0048d9ac",
+        "region": "RegionOne", "interface": "public", "id": "19b08d694d8b4dd1a760a33b2d3f32eb"},
+        {"region_id": "RegionOne", "url": "http://185.43.218.210:8774/v2/06a9a90c60074cdeae5f7fdd0048d9ac",
+        "region": "RegionOne", "interface": "internal", "id": "59e1509b62aa4c4fbc17c3ade929f93f"},
+        {"region_id": "RegionOne", "url": "http://185.43.218.210:8774/v2/06a9a90c60074cdeae5f7fdd0048d9ac",
+        "region": "RegionOne", "interface": "admin", "id": "b19ddabe733b4e188e23f532d8934177"}],
+        "type": "compute", "id": "b9553cbac273482d86481c6bbc5ef52f", "name": "nova"},
+        {"endpoints": [{"region_id": "RegionOne", "url": "http://185.43.218.210:9292",
+        "region": "RegionOne", "interface": "public", "id": "7f2726d743a4404c9fcc72394555e334"},
+        {"region_id": "RegionOne", "url": "http://185.43.218.210:9292", "region":
+        "RegionOne", "interface": "internal", "id": "b55dbe4c2dab4abea91ce1ec15aad0ba"},
+        {"region_id": "RegionOne", "url": "http://185.43.218.210:9292", "region":
+        "RegionOne", "interface": "admin", "id": "e83810ff0edb4fbf9d6fdf2e2b863fca"}],
+        "type": "image", "id": "c4b8542ae5a94e21957830578399b7b8", "name": "glance"},
+        {"endpoints": [{"region_id": "RegionOne", "url": "http://185.43.218.210:8774/v2.1/06a9a90c60074cdeae5f7fdd0048d9ac",
+        "region": "RegionOne", "interface": "public", "id": "0e054ae877a247e0aae1f208b1b6b7e7"},
+        {"region_id": "RegionOne", "url": "http://185.43.218.210:8774/v2.1/06a9a90c60074cdeae5f7fdd0048d9ac",
+        "region": "RegionOne", "interface": "admin", "id": "365dac7720e2411785d6c8dafbe94e4e"},
+        {"region_id": "RegionOne", "url": "http://185.43.218.210:8774/v2.1/06a9a90c60074cdeae5f7fdd0048d9ac",
+        "region": "RegionOne", "interface": "internal", "id": "3c43888219cf4c69a3e44295ee1c64dd"}],
+        "type": "computev21", "id": "cb772618fc8b439a81110c2cca41a505", "name": "novav21"},
+        {"endpoints": [{"region_id": "RegionOne", "url": "http://185.43.218.210:8776/v1/06a9a90c60074cdeae5f7fdd0048d9ac",
+        "region": "RegionOne", "interface": "public", "id": "39e666c79e434d9e9d1cfc16430e6c35"},
+        {"region_id": "RegionOne", "url": "http://185.43.218.210:8776/v1/06a9a90c60074cdeae5f7fdd0048d9ac",
+        "region": "RegionOne", "interface": "admin", "id": "3c886264e5184727b6f0e0373cd983ea"},
+        {"region_id": "RegionOne", "url": "http://185.43.218.210:8776/v1/06a9a90c60074cdeae5f7fdd0048d9ac",
+        "region": "RegionOne", "interface": "internal", "id": "6b694d03d6b743f6a003fd0703d00e12"}],
+        "type": "volume", "id": "f25b427186f34fb0889ad752a7a2a750", "name": "cinder"}],
+        "extras": {}, "user": {"domain": {"id": "default", "name": "Default"}, "id":
+        "20746f49211e4037a91269df6a3fbf7b", "name": "admin"}, "audit_ids": ["0sS3NhRSRrqWv8JyUXS0dw"],
+        "issued_at": "2016-07-12T09:34:43.048765Z"}}'
+    http_version: 
+  recorded_at: Tue, 12 Jul 2016 09:34:43 GMT
+- request:
+    method: get
+    uri: http://185.43.218.210:9696/
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog-core/1.36.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token:
+      - 5b7a1e97fc194646ae238b74d13cb191
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '122'
+      Date:
+      - Tue, 12 Jul 2016 09:34:43 GMT
+    body:
+      encoding: UTF-8
+      string: '{"versions": [{"status": "CURRENT", "id": "v2.0", "links": [{"href":
+        "http://185.43.218.210:9696/v2.0", "rel": "self"}]}]}'
+    http_version: 
+  recorded_at: Tue, 12 Jul 2016 09:34:43 GMT
+- request:
+    method: get
+    uri: http://185.43.218.210:9696/v2.0/floatingips
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog-core/1.36.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token:
+      - 5b7a1e97fc194646ae238b74d13cb191
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '931'
+      X-Openstack-Request-Id:
+      - req-cb37fab1-a6c5-476f-a2e5-5990fe4a8f53
+      Date:
+      - Tue, 12 Jul 2016 09:34:43 GMT
+    body:
+      encoding: UTF-8
+      string: '{"floatingips": [{"floating_network_id": "6c26271f-cb22-4f0a-9274-8a7c29263ab2",
+        "router_id": "f21588e3-2fbd-4ce7-9dff-385191a0c57a", "fixed_ip_address": "192.168.0.2",
+        "floating_ip_address": "172.24.4.216", "tenant_id": "0604abc562db4a3a8d4518025fca5822",
+        "status": "DOWN", "port_id": "c88c667b-10d3-4e7d-8a5a-ed3f9cf1b774", "id":
+        "06ff91df-3c1c-46ae-b52a-f40d900b270c"}, {"floating_network_id": "6c26271f-cb22-4f0a-9274-8a7c29263ab2",
+        "router_id": null, "fixed_ip_address": null, "floating_ip_address": "172.24.4.214",
+        "tenant_id": "06a9a90c60074cdeae5f7fdd0048d9ac", "status": "DOWN", "port_id":
+        null, "id": "24ef48cf-6999-42ef-8533-e5eb2835e00f"}, {"floating_network_id":
+        "6c26271f-cb22-4f0a-9274-8a7c29263ab2", "router_id": null, "fixed_ip_address":
+        null, "floating_ip_address": "172.24.4.213", "tenant_id": "06a9a90c60074cdeae5f7fdd0048d9ac",
+        "status": "DOWN", "port_id": null, "id": "726b0342-89a9-41c6-a979-5005d00ce1b4"}]}'
+    http_version: 
+  recorded_at: Tue, 12 Jul 2016 09:34:43 GMT
+recorded_with: VCR 2.9.3

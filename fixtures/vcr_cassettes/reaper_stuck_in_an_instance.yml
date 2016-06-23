@@ -1,0 +1,211 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://devstack.datacentred.io:5000/v3/auth/tokens
+    body:
+      encoding: UTF-8
+      string: '{"auth":{"identity":{"methods":["password"],"password":{"user":{"password":"[redacted]","domain":{"id":"default"},"name":"admin"}}},"scope":{"project":{"name":"admin","domain":{"id":"default"}}}}}'
+    headers:
+      User-Agent:
+      - fog-core/1.36.0
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 201
+      message: ''
+    headers:
+      Date:
+      - Tue, 12 Jul 2016 10:23:23 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      X-Subject-Token:
+      - 1bacf7fa4368485fa8d35b376252d8c4
+      Vary:
+      - X-Auth-Token
+      X-Openstack-Request-Id:
+      - req-5a5f6062-707a-42a3-a33c-9aaafcac1411
+      Content-Length:
+      - '7750'
+      Content-Type:
+      - application/json
+    body:
+      encoding: UTF-8
+      string: '{"token": {"methods": ["password"], "roles": [{"id": "1cdbf6fab7f544898c2d5e9260645209",
+        "name": "admin"}], "expires_at": "2016-07-12T11:23:23.537755Z", "project":
+        {"domain": {"id": "default", "name": "Default"}, "id": "06a9a90c60074cdeae5f7fdd0048d9ac",
+        "name": "admin"}, "catalog": [{"endpoints": [{"region_id": "RegionOne", "url":
+        "http://185.43.218.210:8777/", "region": "RegionOne", "interface": "internal",
+        "id": "0740555784874fdd8d6d1f92c04541bf"}, {"region_id": "RegionOne", "url":
+        "http://185.43.218.210:8777/", "region": "RegionOne", "interface": "public",
+        "id": "9f71abc341544cc4941be8261e94a6fc"}, {"region_id": "RegionOne", "url":
+        "http://185.43.218.210:8777/", "region": "RegionOne", "interface": "admin",
+        "id": "ac15153252bf4a4f88896c7562aaaba1"}], "type": "metering", "id": "04053abbdf7f47a396f2a432ab0ba567",
+        "name": "ceilometer"}, {"endpoints": [{"region_id": "RegionOne", "url": "http://185.43.218.210:9696/",
+        "region": "RegionOne", "interface": "admin", "id": "5ec8ef9e98024c42a3a5fbdf44acc722"},
+        {"region_id": "RegionOne", "url": "http://185.43.218.210:9696/", "region":
+        "RegionOne", "interface": "public", "id": "6b2fb734a8864c80acca5e3ed470d8c5"},
+        {"region_id": "RegionOne", "url": "http://185.43.218.210:9696/", "region":
+        "RegionOne", "interface": "internal", "id": "7617e2f654f249c69fa916ee9ea6b7de"}],
+        "type": "network", "id": "1d162306531542bbb5f83c7effffa54b", "name": "neutron"},
+        {"endpoints": [{"region_id": "RegionOne", "url": "http://185.43.218.210:8004/v1/06a9a90c60074cdeae5f7fdd0048d9ac",
+        "region": "RegionOne", "interface": "public", "id": "23e641b39cb24aa0b5a83877aaa0bc9a"},
+        {"region_id": "RegionOne", "url": "http://185.43.218.210:8004/v1/06a9a90c60074cdeae5f7fdd0048d9ac",
+        "region": "RegionOne", "interface": "admin", "id": "92142643d1b24c69bb283b0d4b6b8122"},
+        {"region_id": "RegionOne", "url": "http://185.43.218.210:8004/v1/06a9a90c60074cdeae5f7fdd0048d9ac",
+        "region": "RegionOne", "interface": "internal", "id": "ae0e69f6b4774de2bbd5d6e832597e6a"}],
+        "type": "orchestration", "id": "5e852cb5054d469584d4261533c44843", "name":
+        "heat"}, {"endpoints": [{"region_id": "RegionOne", "url": "http://185.43.218.210:8773/",
+        "region": "RegionOne", "interface": "internal", "id": "2a43be9cae314363bce788fce7353486"},
+        {"region_id": "RegionOne", "url": "http://185.43.218.210:8773/", "region":
+        "RegionOne", "interface": "admin", "id": "80a83326212c49078384c84421662632"},
+        {"region_id": "RegionOne", "url": "http://185.43.218.210:8773/", "region":
+        "RegionOne", "interface": "public", "id": "afe18a687c0e4dc6ad54e36b86419872"}],
+        "type": "ec2", "id": "5ed5d5d136cc43b998539b75f50f2c93", "name": "ec2"}, {"endpoints":
+        [{"region_id": "RegionOne", "url": "http://185.43.218.210:5000/", "region":
+        "RegionOne", "interface": "public", "id": "1551d6417ce44f0b9638a40615fced6d"},
+        {"region_id": "RegionOne", "url": "http://185.43.218.210:5000/", "region":
+        "RegionOne", "interface": "internal", "id": "3fed2ded55be4df78e1fbe8d6495547e"},
+        {"region_id": "RegionOne", "url": "http://185.43.218.210:35357/", "region":
+        "RegionOne", "interface": "admin", "id": "c9e7c746c3c04aadbfa236b493e56bf6"}],
+        "type": "identity", "id": "6d1dcaf88063470fbe7736c3122df873", "name": "keystone"},
+        {"endpoints": [{"region_id": "RegionOne", "url": "http://185.43.218.210:3333",
+        "region": "RegionOne", "interface": "internal", "id": "8ac5418d62e4415f865c6edf76192120"},
+        {"region_id": "RegionOne", "url": "http://185.43.218.210:3333", "region":
+        "RegionOne", "interface": "admin", "id": "95a1eb19c34b4c8d965bb785e5f0dc12"},
+        {"region_id": "RegionOne", "url": "http://185.43.218.210:3333", "region":
+        "RegionOne", "interface": "public", "id": "9db8b3984bc14aeaa975c154028dc79e"}],
+        "type": "s3", "id": "8d38e0e990aa429a858265d9c124b186", "name": "s3"}, {"endpoints":
+        [{"region_id": "RegionOne", "url": "http://185.43.218.210:8000/v1", "region":
+        "RegionOne", "interface": "internal", "id": "24cc1987fa5541828daff00cc8f8fea9"},
+        {"region_id": "RegionOne", "url": "http://185.43.218.210:8000/v1", "region":
+        "RegionOne", "interface": "admin", "id": "72e3aeaf983944eab7cfa576d5a8f550"},
+        {"region_id": "RegionOne", "url": "http://185.43.218.210:8000/v1", "region":
+        "RegionOne", "interface": "public", "id": "d997374240414c9d93935f53dd4a5b25"}],
+        "type": "cloudformation", "id": "8f69a18b7f124a90884a6ffe83a6bfbf", "name":
+        "heat-cfn"}, {"endpoints": [{"region_id": "RegionOne", "url": "http://185.43.218.210:8776/v2/06a9a90c60074cdeae5f7fdd0048d9ac",
+        "region": "RegionOne", "interface": "admin", "id": "08c0cee724e14d24a71bcb3dc3386d6b"},
+        {"region_id": "RegionOne", "url": "http://185.43.218.210:8776/v2/06a9a90c60074cdeae5f7fdd0048d9ac",
+        "region": "RegionOne", "interface": "public", "id": "2f24ba9cedba4988b8591a5d9c648ec2"},
+        {"region_id": "RegionOne", "url": "http://185.43.218.210:8776/v2/06a9a90c60074cdeae5f7fdd0048d9ac",
+        "region": "RegionOne", "interface": "internal", "id": "760d6c16b91348f1acc78d240325f4a8"}],
+        "type": "volumev2", "id": "b66ee3a8d48f49759ea64fbd374e0557", "name": "cinderv2"},
+        {"endpoints": [{"region_id": "RegionOne", "url": "http://185.43.218.210:8774/v2/06a9a90c60074cdeae5f7fdd0048d9ac",
+        "region": "RegionOne", "interface": "public", "id": "19b08d694d8b4dd1a760a33b2d3f32eb"},
+        {"region_id": "RegionOne", "url": "http://185.43.218.210:8774/v2/06a9a90c60074cdeae5f7fdd0048d9ac",
+        "region": "RegionOne", "interface": "internal", "id": "59e1509b62aa4c4fbc17c3ade929f93f"},
+        {"region_id": "RegionOne", "url": "http://185.43.218.210:8774/v2/06a9a90c60074cdeae5f7fdd0048d9ac",
+        "region": "RegionOne", "interface": "admin", "id": "b19ddabe733b4e188e23f532d8934177"}],
+        "type": "compute", "id": "b9553cbac273482d86481c6bbc5ef52f", "name": "nova"},
+        {"endpoints": [{"region_id": "RegionOne", "url": "http://185.43.218.210:9292",
+        "region": "RegionOne", "interface": "public", "id": "7f2726d743a4404c9fcc72394555e334"},
+        {"region_id": "RegionOne", "url": "http://185.43.218.210:9292", "region":
+        "RegionOne", "interface": "internal", "id": "b55dbe4c2dab4abea91ce1ec15aad0ba"},
+        {"region_id": "RegionOne", "url": "http://185.43.218.210:9292", "region":
+        "RegionOne", "interface": "admin", "id": "e83810ff0edb4fbf9d6fdf2e2b863fca"}],
+        "type": "image", "id": "c4b8542ae5a94e21957830578399b7b8", "name": "glance"},
+        {"endpoints": [{"region_id": "RegionOne", "url": "http://185.43.218.210:8774/v2.1/06a9a90c60074cdeae5f7fdd0048d9ac",
+        "region": "RegionOne", "interface": "public", "id": "0e054ae877a247e0aae1f208b1b6b7e7"},
+        {"region_id": "RegionOne", "url": "http://185.43.218.210:8774/v2.1/06a9a90c60074cdeae5f7fdd0048d9ac",
+        "region": "RegionOne", "interface": "admin", "id": "365dac7720e2411785d6c8dafbe94e4e"},
+        {"region_id": "RegionOne", "url": "http://185.43.218.210:8774/v2.1/06a9a90c60074cdeae5f7fdd0048d9ac",
+        "region": "RegionOne", "interface": "internal", "id": "3c43888219cf4c69a3e44295ee1c64dd"}],
+        "type": "computev21", "id": "cb772618fc8b439a81110c2cca41a505", "name": "novav21"},
+        {"endpoints": [{"region_id": "RegionOne", "url": "http://185.43.218.210:8776/v1/06a9a90c60074cdeae5f7fdd0048d9ac",
+        "region": "RegionOne", "interface": "public", "id": "39e666c79e434d9e9d1cfc16430e6c35"},
+        {"region_id": "RegionOne", "url": "http://185.43.218.210:8776/v1/06a9a90c60074cdeae5f7fdd0048d9ac",
+        "region": "RegionOne", "interface": "admin", "id": "3c886264e5184727b6f0e0373cd983ea"},
+        {"region_id": "RegionOne", "url": "http://185.43.218.210:8776/v1/06a9a90c60074cdeae5f7fdd0048d9ac",
+        "region": "RegionOne", "interface": "internal", "id": "6b694d03d6b743f6a003fd0703d00e12"}],
+        "type": "volume", "id": "f25b427186f34fb0889ad752a7a2a750", "name": "cinder"}],
+        "extras": {}, "user": {"domain": {"id": "default", "name": "Default"}, "id":
+        "20746f49211e4037a91269df6a3fbf7b", "name": "admin"}, "audit_ids": ["4ZR5a2zFS0y8-P4oT7za1Q"],
+        "issued_at": "2016-07-12T10:23:23.537825Z"}}'
+    http_version: 
+  recorded_at: Tue, 12 Jul 2016 10:23:23 GMT
+- request:
+    method: get
+    uri: http://185.43.218.210:8774/v2/06a9a90c60074cdeae5f7fdd0048d9ac/servers/detail.json?all_tenants=True
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog-core/1.36.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token:
+      - 1bacf7fa4368485fa8d35b376252d8c4
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '4938'
+      X-Compute-Request-Id:
+      - req-565b27d0-55c8-480e-ad63-bb3ab4e18b32
+      Date:
+      - Tue, 12 Jul 2016 10:23:24 GMT
+    body:
+      encoding: UTF-8
+      string: '{"servers": [{"status": "ERROR", "updated": "2016-07-12T09:29:33Z",
+        "hostId": "7a67c54f5f42907c28e8a7f56404b413c20248a52c20c7e8501a3537", "OS-EXT-SRV-ATTR:host":
+        "devstack", "addresses": {"default": [{"OS-EXT-IPS-MAC:mac_addr": "fa:16:3e:31:67:ff",
+        "version": 4, "addr": "192.168.0.2", "OS-EXT-IPS:type": "fixed"}, {"OS-EXT-IPS-MAC:mac_addr":
+        "fa:16:3e:31:67:ff", "version": 4, "addr": "172.24.4.216", "OS-EXT-IPS:type":
+        "floating"}]}, "links": [{"href": "http://185.43.218.210:8774/v2/06a9a90c60074cdeae5f7fdd0048d9ac/servers/a458bea2-a9c9-468b-b788-ee1a943b2a3d",
+        "rel": "self"}, {"href": "http://185.43.218.210:8774/06a9a90c60074cdeae5f7fdd0048d9ac/servers/a458bea2-a9c9-468b-b788-ee1a943b2a3d",
+        "rel": "bookmark"}], "key_name": "My Public Key", "image": {"id": "57a67f8a-7bae-4578-b684-b9b4dcd48d7f",
+        "links": [{"href": "http://185.43.218.210:8774/06a9a90c60074cdeae5f7fdd0048d9ac/images/57a67f8a-7bae-4578-b684-b9b4dcd48d7f",
+        "rel": "bookmark"}]}, "OS-EXT-STS:task_state": null, "OS-EXT-STS:vm_state":
+        "error", "OS-EXT-SRV-ATTR:instance_name": "instance-0000000c", "OS-SRV-USG:launched_at":
+        null, "OS-EXT-SRV-ATTR:hypervisor_hostname": "devstack", "flavor": {"id":
+        "42", "links": [{"href": "http://185.43.218.210:8774/06a9a90c60074cdeae5f7fdd0048d9ac/flavors/42",
+        "rel": "bookmark"}]}, "id": "a458bea2-a9c9-468b-b788-ee1a943b2a3d", "security_groups":
+        [{"name": "default"}], "OS-SRV-USG:terminated_at": null, "OS-EXT-AZ:availability_zone":
+        "nova", "user_id": "20746f49211e4037a91269df6a3fbf7b", "name": "test", "created":
+        "2016-07-12T09:29:24Z", "tenant_id": "0604abc562db4a3a8d4518025fca5822", "OS-DCF:diskConfig":
+        "AUTO", "os-extended-volumes:volumes_attached": [], "accessIPv4": "", "accessIPv6":
+        "", "fault": {"message": "No valid host was found. There are not enough hosts
+        available.", "code": 500, "details": "  File \"/opt/stack/nova/nova/conductor/manager.py\",
+        line 671, in build_instances\n    request_spec, filter_properties)\n  File
+        \"/opt/stack/nova/nova/scheduler/utils.py\", line 337, in wrapped\n    return
+        func(*args, **kwargs)\n  File \"/opt/stack/nova/nova/scheduler/client/__init__.py\",
+        line 52, in select_destinations\n    context, request_spec, filter_properties)\n  File
+        \"/opt/stack/nova/nova/scheduler/client/__init__.py\", line 37, in __run_method\n    return
+        getattr(self.instance, __name)(*args, **kwargs)\n  File \"/opt/stack/nova/nova/scheduler/client/query.py\",
+        line 34, in select_destinations\n    context, request_spec, filter_properties)\n  File
+        \"/opt/stack/nova/nova/scheduler/rpcapi.py\", line 117, in select_destinations\n    request_spec=request_spec,
+        filter_properties=filter_properties)\n  File \"/usr/local/lib/python2.7/dist-packages/oslo_messaging/rpc/client.py\",
+        line 156, in call\n    retry=self.retry)\n  File \"/usr/local/lib/python2.7/dist-packages/oslo_messaging/transport.py\",
+        line 90, in _send\n    timeout=timeout, retry=retry)\n  File \"/usr/local/lib/python2.7/dist-packages/oslo_messaging/_drivers/amqpdriver.py\",
+        line 350, in send\n    retry=retry)\n  File \"/usr/local/lib/python2.7/dist-packages/oslo_messaging/_drivers/amqpdriver.py\",
+        line 341, in _send\n    raise result\n", "created": "2016-07-12T09:29:34Z"},
+        "OS-EXT-STS:power_state": 0, "config_drive": "", "metadata": {}}, {"status":
+        "ACTIVE", "updated": "2016-03-07T08:25:42Z", "hostId": "f5ea01262720d02e886508bc4fa994782c516557d232c72aeb79638e",
+        "OS-EXT-SRV-ATTR:host": "devstack", "addresses": {"public": [{"OS-EXT-IPS-MAC:mac_addr":
+        "fa:16:3e:4d:cc:9b", "version": 4, "addr": "172.24.4.212", "OS-EXT-IPS:type":
+        "fixed"}]}, "links": [{"href": "http://185.43.218.210:8774/v2/06a9a90c60074cdeae5f7fdd0048d9ac/servers/e18ebdfb-e5f5-4a45-929f-4cc9926dc2c7",
+        "rel": "self"}, {"href": "http://185.43.218.210:8774/06a9a90c60074cdeae5f7fdd0048d9ac/servers/e18ebdfb-e5f5-4a45-929f-4cc9926dc2c7",
+        "rel": "bookmark"}], "key_name": "My Public Key", "image": {"id": "57a67f8a-7bae-4578-b684-b9b4dcd48d7f",
+        "links": [{"href": "http://185.43.218.210:8774/06a9a90c60074cdeae5f7fdd0048d9ac/images/57a67f8a-7bae-4578-b684-b9b4dcd48d7f",
+        "rel": "bookmark"}]}, "OS-EXT-STS:task_state": null, "OS-EXT-STS:vm_state":
+        "active", "OS-EXT-SRV-ATTR:instance_name": "instance-0000000b", "OS-SRV-USG:launched_at":
+        "2016-03-07T08:25:42.000000", "OS-EXT-SRV-ATTR:hypervisor_hostname": "devstack",
+        "flavor": {"id": "2", "links": [{"href": "http://185.43.218.210:8774/06a9a90c60074cdeae5f7fdd0048d9ac/flavors/2",
+        "rel": "bookmark"}]}, "id": "e18ebdfb-e5f5-4a45-929f-4cc9926dc2c7", "security_groups":
+        [{"name": "Test SSH"}], "OS-SRV-USG:terminated_at": null, "OS-EXT-AZ:availability_zone":
+        "nova", "user_id": "20746f49211e4037a91269df6a3fbf7b", "name": "Test 2", "created":
+        "2016-03-07T08:25:34Z", "tenant_id": "06a9a90c60074cdeae5f7fdd0048d9ac", "OS-DCF:diskConfig":
+        "MANUAL", "os-extended-volumes:volumes_attached": [], "accessIPv4": "", "accessIPv6":
+        "", "progress": 0, "OS-EXT-STS:power_state": 1, "config_drive": "True", "metadata":
+        {}}]}'
+    http_version: 
+  recorded_at: Tue, 12 Jul 2016 10:23:23 GMT
+recorded_with: VCR 2.9.3

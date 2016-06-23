@@ -5,14 +5,16 @@ class OrganizationStateMachine
   state :fresh, initial: true
   state :active
   state :disabled
+  state :dormant
   state :no_payment_methods
   state :frozen
   state :closed
 
   transition from: :fresh,              to: [:fresh, :active, :frozen, :disabled]
-  transition from: :active,             to: [:active, :frozen, :disabled, :no_payment_methods, :closed]
+  transition from: :active,             to: [:active, :frozen, :dormant, :disabled, :no_payment_methods, :closed]
   transition from: :frozen,             to: [:frozen, :active, :closed]
   transition from: :disabled,           to: [:disabled, :active, :frozen, :closed]
+  transition from: :dormant,            to: [:dormant, :active]
   transition from: :no_payment_methods, to: [:no_payment_methods, :frozen, :disabled, :active]
   transition from: :closed,             to: [:closed, :active]
 
@@ -36,6 +38,18 @@ class OrganizationStateMachine
   before_transition(from: :frozen, to: :active) do |organization, transition|
     organization.unfreeze!
     Mailer.review_mode_successful(organization).deliver_later
+  end
+
+  before_transition(from: :dormant, to: :active) do |organization, transition|
+    organization.projects.each do |project|
+      ProjectResources.new(project.uuid).reattach_router_gateways
+    end
+  end
+
+  before_transition(from: :active, to: :dormant) do |organization, transition|
+    organization.projects.each do |project|
+      ProjectResources.new(project.uuid).clear_router_gateways
+    end
   end
 
   [:fresh, :active, :no_payment_methods].each do |before_state|
