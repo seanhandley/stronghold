@@ -30,13 +30,8 @@ module Sanity
       else
         from = instance.instance_states.order('recorded_at').first.recorded_at
         to   = instance.instance_states.order('recorded_at').last.recorded_at
-        if instance.billable_seconds
-          check_instance_state(live_instances[instance.instance_id]['status'].downcase,
-                     instance.fetch_states(from, to).last.state.downcase)
-        else
-          instance.update_attributes(terminated_at: to)
-          true
-        end
+        check_instance_state(live_instances[instance.instance_id]['status'].downcase,
+                   instance.fetch_states(from, to).last.state.downcase)
       end
     end
   end
