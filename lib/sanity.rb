@@ -33,8 +33,8 @@ module Sanity
         if instance.billable_seconds
           check_instance_state(live_instances[instance.instance_id]['status'].downcase,
                      instance.fetch_states(from, to).last.state.downcase)
-        else
-          instance.update_attributes(terminated_at: to) unless live_instances[instance.instance_id]
+        elsif !instance.terminated_at && !live_instances[instance.instance_id]
+          instance.update_attributes(terminated_at: to) unless 
           true
         end
       end
