@@ -22,9 +22,13 @@ module ActiveRecord
 
     def self.syncs_with_keystone(params)
       define_method :create_openstack_object do
-        raise ArgumentError, 'Model must define keystone_params' unless respond_to?(:keystone_params)
-        o = params[:as].constantize.create keystone_params
-        update_column(:uuid, o.id)
+        begin
+          raise ArgumentError, 'Model must define keystone_params' unless respond_to?(:keystone_params)
+          o = params[:as].constantize.create keystone_params
+          update_column(:uuid, o.id)
+        rescue Excon::Errors::Conflict
+          raise ActiveRecord::RecordInvalid, "Project with that name already exists."
+        end
       end
 
       define_method :delete_openstack_object do
