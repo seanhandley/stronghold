@@ -27,7 +27,8 @@ module ActiveRecord
           o = params[:as].constantize.create keystone_params
           update_column(:uuid, o.id)
         rescue Excon::Errors::Conflict
-          raise ActiveRecord::RecordInvalid, "Project with that name already exists."
+          errors.add(:base, "A project with that name already exists.")
+          raise ActiveRecord::RecordInvalid, self
         end
       end
 
