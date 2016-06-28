@@ -25,7 +25,7 @@ module ActiveRecord
         begin
           raise ArgumentError, 'Model must define keystone_params' unless respond_to?(:keystone_params)
           o = params[:as].constantize.create keystone_params
-          update_column(:uuid, o.id)
+          self.uuid = o.id
         rescue Excon::Errors::Conflict
           errors.add(:name, "has already been taken")
           return false
