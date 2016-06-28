@@ -18,7 +18,7 @@ class Support::ProjectsController < SupportBaseController
       @project.update_attributes!(quota_set: quota_params.to_h)
       @project.enable!
       javascript_redirect_to support_projects_path
-    rescue ActiveRecord::RecordInvalid
+    rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotSaved
       respond_to do |format|
         format.js { render :template => "shared/dialog_errors", :locals => {:object => @project }, status: :unprocessable_entity }
       end
