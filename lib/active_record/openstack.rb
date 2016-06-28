@@ -28,7 +28,6 @@ module ActiveRecord
           update_column(:uuid, o.id)
         rescue Excon::Errors::Conflict
           errors.add(:base, "A project with that name already exists.")
-          raise ActiveRecord::RecordInvalid, self
         end
       end
 
@@ -56,7 +55,7 @@ module ActiveRecord
       self.class_eval do
         unless Rails.env.test?
           validate(:can_sync_with_openstack)
-          after_create(:create_openstack_object)              if params[:actions].include? :create
+          before_create(:create_openstack_object)             if params[:actions].include? :create
           before_destroy(:delete_openstack_object)            if params[:actions].include? :destroy
           after_update(:update_openstack_object)              if params[:actions].include? :update
         end
