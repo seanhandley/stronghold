@@ -28,6 +28,7 @@ module ActiveRecord
           update_column(:uuid, o.id)
         rescue Excon::Errors::Conflict
           errors.add(:base, "A project with that name already exists.")
+          return false
         end
       end
 
