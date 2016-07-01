@@ -60,7 +60,7 @@ Rails.application.routes.draw do
           post 'charge'
         end
       end
-      resources :pending_invoices, only: [:index, :update, :destroy]
+      
 
       namespace :utilities do
         root :to => 'dashboard#index'
@@ -70,6 +70,7 @@ Rails.application.routes.draw do
         resources :billing_rates, only: [:index, :update]
         resources :sanity, only: [:index]
         resources :online_users, only: [:index]
+        resources :pending_invoices, only: [:index, :update, :destroy]
         resources :queue, only: [:index] do
           collection do
             put 'restart'

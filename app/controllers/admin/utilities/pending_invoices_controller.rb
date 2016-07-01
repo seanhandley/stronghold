@@ -1,4 +1,4 @@
-class Admin::PendingInvoicesController < AdminBaseController
+class Admin::Utilities::PendingInvoicesController < UtilitiesBaseController
 
   def index
     if show_finalized?
@@ -12,15 +12,15 @@ class Admin::PendingInvoicesController < AdminBaseController
   def update
     @invoice = Billing::Invoice.find(params[:id])
     @invoice.update(update_params)
-    ajax_response(@invoice, :finalize!, admin_pending_invoices_path)
+    ajax_response(@invoice, :finalize!, admin_utilities_pending_invoices_path)
   end
 
   def destroy
     @invoice = Billing::Invoice.find(params[:id])
     if @invoice.destroy
-      redirect_to admin_pending_invoices_path
+      redirect_to admin_utilities_pending_invoices_path
     else
-      redirect_to admin_pending_invoices_path, alert: "Couldn't destroy invoice"
+      redirect_to admin_utilities_pending_invoices_path, alert: "Couldn't destroy invoice"
     end
   end
 
