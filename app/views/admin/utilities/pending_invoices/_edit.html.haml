@@ -1,7 +1,7 @@
 .modal.fade{'tabindex' => "-1", 'role' => "dialog", 'aria-labelledby' => "editInvoice#{invoice.id}", 'aria-hidden' => "true", 'data-backdrop' => 'static', 'id' => "editInvoice#{invoice.id}"}
   .modal-dialog
     .modal-content
-      = form_for invoice, url: admin_pending_invoice_path(invoice), remote: true do |f|
+      = form_for invoice, url: admin_utilities_pending_invoice_path(invoice), remote: true do |f|
         .modal-header
           %button{'type' => "button", 'class' => "close", 'data-dismiss' => "modal", 'aria-hidden' => "true"}
             &times;
