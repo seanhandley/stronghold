@@ -1,9 +1,9 @@
 default: &default
   standard:
     compute:
-      instances: 10
-      cores: 10
-      ram: 20480
+      instances: 5
+      cores: 5
+      ram: 10240
     volume:
       volumes: 4
       snapshots: 4
