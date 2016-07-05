@@ -34,7 +34,7 @@ module Sanity
           check_instance_state(live_instances[instance.instance_id]['status'].downcase,
                      instance.fetch_states(from, to).last.state.downcase)
         elsif !instance.terminated_at && !live_instances[instance.instance_id]
-          instance.update_attributes(terminated_at: to) unless 
+          instance.update_attributes(terminated_at: to)
           true
         end
       end
