@@ -210,7 +210,7 @@ module Billing
 
     def self.cached_instances
       Rails.cache.fetch('all_recorded_instance_ids', expires_in: 5.minutes) do
-        Billing::Instance.active.pluck(:id, :instance_id, :name).inject({}) do |hash, e|
+        Billing::Instance.all.pluck(:id, :instance_id, :name).inject({}) do |hash, e|
           hash[e[1]] = {id: e[0], name: e[2]}
           hash
         end
