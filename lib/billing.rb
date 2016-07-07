@@ -67,9 +67,18 @@ module Billing
     end
   end
 
+  def self.cached_projects
+    Rails.cache.fetch('cached_project_info', expires_in: 5.minutes) do
+      Project.includes(:organization).pluck("projects.uuid", "projects.name", "organizations.name").inject({}) do |hash, e|
+        hash[e[0]] = {project_name: e[1], organization_name: [e[2]]}
+        hash
+      end
+    end
+  end
+
   def self.fetch_samples(project_id, measurement, from, to)
-    if project = Project.find_by_uuid(project_id)
-      Billing.logger.info "Extracting #{measurement} samples from cache for #{project.organization.name} (Project: #{project.name})..."
+    if project = cached_projects[project_id]
+      Billing.logger.info "Extracting #{measurement} samples from cache for #{project[:organization_name]} (Project: #{project[:project_name]})..."
     end
     project_samples = fetch_all_samples(measurement, from, to)[project_id]
     project_samples ? project_samples.group_by{|s| s['resource_id']} : {}
