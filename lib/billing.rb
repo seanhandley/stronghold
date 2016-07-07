@@ -87,7 +87,6 @@ module Billing
         project_samples.group_by{|s| s['project_id']}
       end
     end
-    memoized_samples[key]
   end
 
   # No caching - use for auditing
