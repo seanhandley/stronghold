@@ -72,7 +72,7 @@ module Billing
   def self.cached_projects
     Rails.cache.fetch('cached_project_info', expires_in: 5.minutes) do
       Project.includes(:organization).pluck("projects.uuid", "projects.name", "organizations.name").inject({}) do |hash, e|
-        hash[e[0]] = {project_name: e[1], organization_name: [e[2]]}
+        hash[e[0]] = {project_name: e[1], organization_name: e[2]}
         hash
       end
     end
@@ -105,6 +105,7 @@ module Billing
         project_samples.group_by{|s| s['project_id']}
       end
     end
+    memoized_samples[key]
   end
 
   # No caching - use for auditing
