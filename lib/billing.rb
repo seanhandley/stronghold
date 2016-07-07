@@ -18,8 +18,6 @@ module Billing
     Billing::Volumes.sync!(from, to, sync)
     Billing.logger.info "Syncing IP quotas usage..."
     Billing::IpQuotas.sync!(sync)
-    Billing.logger.info "Syncing images usage..."
-    Billing::Images.sync!(from, to, sync)
     Billing.logger.info "Syncing object storage usage..."
     Billing::StorageObjects.sync!(sync)
     Billing.logger.info "Syncing IP allocations..."
@@ -28,6 +26,8 @@ module Billing
     Billing::LoadBalancers.sync!(from, to, sync)
     Billing.logger.info "Syncing VPN connections..."
     Billing::VpnConnections.sync!(from, to, sync)
+    Billing.logger.info "Syncing images usage..."
+    Billing::Images.sync!(from, to, sync)
     Billing.logger.info "Syncing instances usage..."
     Billing::Instances.sync!(from, to, sync)
     sync.update_attributes(completed_at: Time.now)
