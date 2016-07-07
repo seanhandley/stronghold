@@ -14,8 +14,6 @@ module Billing
     sync = Billing::Sync.create(period_from: from, period_to: to, started_at: Time.now)
     Billing.logger.info "Starting sync #{sync.id}. From #{from} to #{to}..."
     sleep 10 # Because it can take a few seconds for events to get off the queue and into Mongo
-    Billing.logger.info "Syncing instances usage..."
-    Billing::Instances.sync!(from, to, sync)
     Billing.logger.info "Syncing volumes usage..."
     Billing::Volumes.sync!(from, to, sync)
     Billing.logger.info "Syncing IP quotas usage..."
@@ -30,6 +28,8 @@ module Billing
     Billing::LoadBalancers.sync!(from, to, sync)
     Billing.logger.info "Syncing VPN connections..."
     Billing::VpnConnections.sync!(from, to, sync)
+    Billing.logger.info "Syncing instances usage..."
+    Billing::Instances.sync!(from, to, sync)
     sync.update_attributes(completed_at: Time.now)
     Billing.logger.info "Completed sync #{sync.id}. #{sync.summary}"
     true
