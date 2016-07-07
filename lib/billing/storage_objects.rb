@@ -2,7 +2,7 @@ module Billing
   module StorageObjects
 
     def self.sync!(sync)
-      Project.with_deleted.each do |project|
+      Project.includes(:organization).with_deleted.each do |project|
         next unless project.uuid && project.organization && project.organization.storage?
         tb = Ceph::Usage.kilobytes_for(project.uuid)
         unless tb == 0 && Billing::ObjectStorage.where(:project_id => project.uuid).none?
