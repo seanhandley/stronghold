@@ -225,6 +225,7 @@ module Billing
       flavor_id = first_sample_metadata["instance_flavor_id"] ? first_sample_metadata["instance_flavor_id"] : first_sample_metadata["flavor.id"]
       billing_instance = cached_instance_ids.include?(instance_id) ? Billing::Instance.find_by_instance_id(instance_id) : nil
       unless billing_instance
+        Rails.cache.delete('all_recorded_instance_ids')
         instance = Billing::Instance.create(instance_id: instance_id, project_id: project_id, name: first_sample_metadata["display_name"],
                                  flavor_id: flavor_id, image_id: first_sample_metadata["image_ref_url"].split('/').last)
         unless samples.any? && samples.any? {|sample| sample['resource_metadata']['event_type']}
@@ -239,6 +240,7 @@ module Billing
         billing_instance = instance
       end
       unless cached_flavor_ids.include?(flavor_id)
+        Rails.cache.delete('instance_flavor_ids')
         if(os_flavor = OpenStack::Flavor.find(flavor_id))
           Billing::InstanceFlavor.create(flavor_id: flavor_id, name: os_flavor.name,
                                          ram: os_flavor.ram, disk: os_flavor.disk, vcpus: os_flavor.vcpus)
@@ -258,7 +260,6 @@ module Billing
       samples.collect do |sample|
         meta_data = sample['resource_metadata']
         if meta_data['event_type']
-          billing_instance.save!
           Billing::InstanceState.create instance_id: billing_instance.id, recorded_at: Time.zone.parse("#{sample['recorded_at']} UTC"),
                                         state: meta_data['state'] ? meta_data['state'].downcase : 'active',
                                         event_name: meta_data['event_type'], billing_sync: sync,

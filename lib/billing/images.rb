@@ -101,6 +101,7 @@ module Billing
     def self.create_new_states(project_id, image_id, samples, sync)
       first_sample_metadata = samples.first['resource_metadata']
       unless cached_images.keys.include?(image_id)
+        Rails.cache.delete('all_recorded_image_ids')
         image = Billing::Image.create(image_id: image_id, project_id: project_id, name: first_sample_metadata["name"])
         unless samples.any? {|s| s['resource_metadata']['event_type']}
           # This is a new image and we don't know its current size
