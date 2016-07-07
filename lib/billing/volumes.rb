@@ -173,9 +173,15 @@ module Billing
       }
     end
 
+    def self.cached_volumes
+      Rails.cache.fetch('all_recorded_volume_ids', expires_in: 5.minutes) do
+        Hash[Billing::Volume.active.pluck(:volume_id, :name)]
+      end
+    end
+
     def self.create_new_states(project_id, volume_id, samples, sync)
       first_sample_metadata = samples.first['resource_metadata']
-      unless Billing::Volume.find_by_volume_id(volume_id)
+      unless cached_volumes.keys.include?(volume_id)
         volume = Billing::Volume.create(volume_id: volume_id, project_id: project_id,
                                         name: first_sample_metadata["display_name"])
         unless samples.any? {|s| s['resource_metadata']['event_type']}
@@ -189,10 +195,10 @@ module Billing
           end
         end
       end
-      billing_volume = Billing::Volume.find_by_volume_id(volume_id)
 
       # Catch renames
-      if(billing_volume.name != first_sample_metadata["display_name"])
+      if(cached_volumes[volume_id] != first_sample_metadata["display_name"])
+        billing_volume = Billing::Volume.find_by_volume_id(volume_id)
         billing_volume.update_attributes(name: first_sample_metadata["display_name"])
       end
 
