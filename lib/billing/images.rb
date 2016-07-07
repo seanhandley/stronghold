@@ -94,7 +94,10 @@ module Billing
 
     def self.cached_images
       Rails.cache.fetch('all_recorded_image_ids', expires_in: 5.minutes) do
-        Hash[Billing::Image.active.map{|i| [i.image_id, i.name]}]
+        Billing::Image.active.map{|i| [i.id, i.image_id, i.name]}.inject({}) do |hash, e|
+          hash[e[1]] = {id: e[0], name: e[2]}
+          hash
+        end
       end
     end
 
@@ -118,13 +121,14 @@ module Billing
       end
 
       # Catch renames
-      if(cached_images[image_id] != first_sample_metadata["name"])
+      if(cached_images[image_id][:name] != first_sample_metadata["name"])
+        billing_image = Billing::Image.find(cached_images[image_id][:id])
         billing_image.update_attributes(name: first_sample_metadata["name"])
       end
 
       samples.collect do |s|
         if s['resource_metadata']['event_type']
-          Billing::ImageState.create image_id: billing_image.id, recorded_at: Time.zone.parse("#{s['recorded_at']} UTC"),
+          Billing::ImageState.create image_id: cached_images[image_id][:id], recorded_at: Time.zone.parse("#{s['recorded_at']} UTC"),
                                       size: bytes_to_terabytes(s['resource_metadata']['size'].to_i),
                                       event_name: s['resource_metadata']['event_type'], billing_sync: sync,
                                       message_id: s['message_id']
