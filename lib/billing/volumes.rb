@@ -202,7 +202,7 @@ module Billing
 
       # Catch renames
       cached_volume = cached_volumes[volume_id]
-      if(cached_volume[:name] != first_sample_metadata["display_name"])
+      if(cached_volume && first_sample_metadata && cached_volume[:name] != first_sample_metadata["display_name"])
         billing_volume = Billing::Volume.find_by_volume_id(volume_id)
         billing_volume.update_attributes(name: first_sample_metadata["display_name"])
       end
