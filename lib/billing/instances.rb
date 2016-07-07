@@ -255,6 +255,16 @@ module Billing
       
       # Catch renames
       cached_instance = cached_instances[instance_id]
+      unless cached_instance
+        if(i = Billing::Instance.find_by_instance_id(instance_id))
+          cached_instance = {
+            name: i.name,
+            id: i.id
+          }
+        else
+          Honeybadger.notify(ArgumentError.new("Instance #{instance_id} is missing from the DB."))
+        end
+      end
       if(cached_instance && first_sample_metadata && cached_instance[:name] != first_sample_metadata["display_name"])
         billing_instance = Billing::Instance.find(cached_instance[:id])
         billing_instance.update_attributes(name: first_sample_metadata["display_name"])
