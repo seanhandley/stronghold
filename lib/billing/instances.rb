@@ -258,7 +258,8 @@ module Billing
       samples.collect do |sample|
         meta_data = sample['resource_metadata']
         if meta_data['event_type']
-          Billing::InstanceState.create instance_id: instance.id, recorded_at: Time.zone.parse("#{sample['recorded_at']} UTC"),
+          billing_instance.save!
+          Billing::InstanceState.create instance_id: billing_instance.id, recorded_at: Time.zone.parse("#{sample['recorded_at']} UTC"),
                                         state: meta_data['state'] ? meta_data['state'].downcase : 'active',
                                         event_name: meta_data['event_type'], billing_sync: sync,
                                         message_id: sample['message_id'],
