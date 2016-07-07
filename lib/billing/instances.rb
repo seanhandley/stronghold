@@ -208,10 +208,22 @@ module Billing
       !["error","building", "stopped", "suspended", "shutoff", "deleted", "resized"].include?(state.downcase)
     end
 
+    def self.cached_instance_ids
+      Rails.cache.fetch('all_recorded_instance_ids', expires_in: 5.minutes) do
+        Billing::Instance.active.pluck(:instance_id)
+      end
+    end
+
+    def self.cached_flavor_ids
+      Rails.cache.fetch('instance_flavor_ids', expires_in: 5.minutes) do
+        Billing::InstanceFlavor.all.pluck(:flavor_id)
+      end
+    end
+
     def self.create_new_states(project_id, instance_id, samples, sync)
       first_sample_metadata = samples.first['resource_metadata']
       flavor_id = first_sample_metadata["instance_flavor_id"] ? first_sample_metadata["instance_flavor_id"] : first_sample_metadata["flavor.id"]
-      billing_instance = Billing::Instance.find_by_instance_id(instance_id)
+      billing_instance = cached_instance_ids.include?(instance_id) ? Billing::Instance.find_by_instance_id(instance_id) : nil
       unless billing_instance
         instance = Billing::Instance.create(instance_id: instance_id, project_id: project_id, name: first_sample_metadata["display_name"],
                                  flavor_id: flavor_id, image_id: first_sample_metadata["image_ref_url"].split('/').last)
@@ -226,7 +238,7 @@ module Billing
         end
         billing_instance = instance
       end
-      unless Billing::InstanceFlavor.find_by_flavor_id(flavor_id)
+      unless cached_flavor_ids.include?(flavor_id)
         if(os_flavor = OpenStack::Flavor.find(flavor_id))
           Billing::InstanceFlavor.create(flavor_id: flavor_id, name: os_flavor.name,
                                          ram: os_flavor.ram, disk: os_flavor.disk, vcpus: os_flavor.vcpus)

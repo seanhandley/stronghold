@@ -92,9 +92,15 @@ module Billing
       terabytes.to_f * 1024.0
     end
 
+    def self.cached_images
+      Rails.cache.fetch('all_recorded_image_ids', expires_in: 5.minutes) do
+        Hash[Billing::Image.active.map{|i| [i.image_id, i.name]}]
+      end
+    end
+
     def self.create_new_states(project_id, image_id, samples, sync)
       first_sample_metadata = samples.first['resource_metadata']
-      unless Billing::Image.find_by_image_id(image_id)
+      unless cached_images.keys.include?(image_id)
         image = Billing::Image.create(image_id: image_id, project_id: project_id, name: first_sample_metadata["name"])
         unless samples.any? {|s| s['resource_metadata']['event_type']}
           # This is a new image and we don't know its current size
@@ -109,10 +115,9 @@ module Billing
           end
         end
       end
-      billing_image = Billing::Image.find_by_image_id(image_id)
 
       # Catch renames
-      if(billing_image.name != first_sample_metadata["name"])
+      if(cached_images[image_id] != first_sample_metadata["name"])
         billing_image.update_attributes(name: first_sample_metadata["name"])
       end
 
