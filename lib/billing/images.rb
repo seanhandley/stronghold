@@ -2,6 +2,7 @@ module Billing
   module Images
 
     def self.sync!(from, to, sync)
+      Rails.cache.delete('all_recorded_image_ids')
       Project.with_deleted.each do |project|
         next unless project.uuid
         Billing.fetch_samples(project.uuid, "image", from, to).each do |image_id, samples|

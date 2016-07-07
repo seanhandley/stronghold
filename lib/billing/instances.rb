@@ -2,6 +2,8 @@ module Billing
   module Instances
 
     def self.sync!(from, to, sync)
+      Rails.cache.delete('all_recorded_instance_ids')
+      Rails.cache.delete('instance_flavor_ids')
       Project.with_deleted.each do |project|
         project_uuid = project.uuid
         next unless project_uuid

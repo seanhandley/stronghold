@@ -2,6 +2,7 @@ module Billing
   module Volumes
 
     def self.sync!(from, to, sync)
+      Rails.cache.delete('all_recorded_volume_ids')
       Project.with_deleted.each do |project|
         next unless project.uuid
         Billing.fetch_samples(project.uuid, "volume", from, to).each do |volume_id, samples|
