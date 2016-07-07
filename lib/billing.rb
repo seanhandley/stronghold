@@ -8,6 +8,7 @@ module Billing
   SYNC_INTERVAL_MINUTES = 30
 
   def self.sync!(to=nil)
+    clear_memoized_samples
     last_sync = Billing::Sync.completed.last
     from = last_sync.period_to || last_sync.started_at
     to = to ? from + to.minutes : Time.now
@@ -31,6 +32,7 @@ module Billing
     Billing.logger.info "Syncing instances usage..."
     Billing::Instances.sync!(from, to, sync)
     sync.update_attributes(completed_at: Time.now)
+    clear_memoized_samples
     Billing.logger.info "Completed sync #{sync.id}. #{sync.summary}"
     true
   rescue StandardError => e
@@ -66,15 +68,26 @@ module Billing
     project_samples ? project_samples.group_by{|s| s['resource_id']} : {}
   end
 
+  def self.memoized_samples
+    @@memoized_samples ||= {}
+  end
+
+  def self.clear_memoized_samples
+    @@memoized_samples = {}
+  end
+
   def self.fetch_all_samples(measurement, from, to)
     key = "ceilometer_samples_#{measurement}_#{from.utc.strftime(timestamp_format)}_#{to.utc.strftime(timestamp_format)}"
-    Rails.cache.fetch(key, expires_in: 2.hours) do
-      Billing.logger.info "Cache miss. Fetching fresh samples of type #{measurement} from #{from} to #{to}..."
-      options = [{'field' => 'timestamp', 'op' => 'ge', 'value' => from.utc.strftime(timestamp_format)},
-                 {'field' => 'timestamp', 'op' => 'lt', 'value' => to.utc.strftime(timestamp_format)}]
-      project_samples = OpenStackConnection.metering.get_samples(measurement, options).body
-      project_samples.group_by{|s| s['project_id']}
-    end 
+    unless memoized_samples.keys.include?(key)
+      memoized_samples[key] = Rails.cache.fetch(key, expires_in: 2.hours) do
+        Billing.logger.info "Cache miss. Fetching fresh samples of type #{measurement} from #{from} to #{to}..."
+        options = [{'field' => 'timestamp', 'op' => 'ge', 'value' => from.utc.strftime(timestamp_format)},
+                   {'field' => 'timestamp', 'op' => 'lt', 'value' => to.utc.strftime(timestamp_format)}]
+        project_samples = OpenStackConnection.metering.get_samples(measurement, options).body
+        project_samples.group_by{|s| s['project_id']}
+      end
+    end
+    memoized_samples[key]
   end
 
   # No caching - use for auditing
