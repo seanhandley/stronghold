@@ -255,7 +255,7 @@ module Billing
       
       # Catch renames
       cached_instance = cached_instances[instance_id]
-      if(cached_instance[:name] != first_sample_metadata["display_name"])
+      if(cached_instance && first_sample_metadata && cached_instance[:name] != first_sample_metadata["display_name"])
         billing_instance = Billing::Instance.find(cached_instance[:id])
         billing_instance.update_attributes(name: first_sample_metadata["display_name"])
       end
