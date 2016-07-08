@@ -46,6 +46,7 @@ module Billing
     end
 
     def link_previous
+      return unless billing_instance
       prev = (billing_instance.instance_states.where('recorded_at <= ?', recorded_at).order(:recorded_at).to_a - [self]).last
       update_column(:previous_state_id, prev.id) if prev
     end
