@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160616102709) do
+ActiveRecord::Schema.define(version: 20160708074158) do
 
   create_table "audits", force: :cascade do |t|
     t.string   "auditable_id",    limit: 255
@@ -86,6 +86,8 @@ ActiveRecord::Schema.define(version: 20160616102709) do
   end
 
   add_index "billing_instance_states", ["instance_id"], name: "instance_states", using: :btree
+  add_index "billing_instance_states", ["next_state_id"], name: "index_billing_instance_states_on_next_state_id", using: :btree
+  add_index "billing_instance_states", ["previous_state_id"], name: "index_billing_instance_states_on_previous_state_id", using: :btree
   add_index "billing_instance_states", ["recorded_at"], name: "index_billing_instance_states_on_recorded_at", using: :btree
   add_index "billing_instance_states", ["sync_id"], name: "instance_syncs", using: :btree
 

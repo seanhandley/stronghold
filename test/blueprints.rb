@@ -80,3 +80,19 @@ CustomerSignup.blueprint do
   organization_name { Faker::Company.name }
   email { Faker::Internet.email }
 end
+
+Billing::InstanceFlavor.blueprint do
+  flavor_id { 'flavor_id' }
+  name      { 'medium'    }
+  ram       { 4096        }
+  disk      { 40          }
+  vcpus     { 2           }
+  rate      { 1.0         }
+end
+
+Billing::Instance.blueprint do
+  name        { 'test' }
+  instance_id { SecureRandom.hex }
+  project_id  { SecureRandom.hex }
+  flavor_id   { 'flavor_id' }
+end
