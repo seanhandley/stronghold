@@ -1,6 +1,6 @@
 class OrganizationStateMachine
   include Statesman::Machine
-  include OffboardingHelper
+  extend OffboardingHelper
 
   state :fresh, initial: true
   state :active
@@ -48,16 +48,18 @@ class OrganizationStateMachine
     before_transition(from: before_state, to: :closed) do |organization, transition|
       auth_token           = transition.metadata['auth_token']
       current_user         = transition.metadata['current_user']
-      current_organization = current_user.organization
-      Notifications.notify(:account_alert, "#{current_organization.name} (REF: #{current_organization.reference}) has requested account termination.")
-      creds = {:openstack_username => current_user.email,
-               :openstack_api_key  => nil,
-               :openstack_auth_token => auth_token,
-               :openstack_project_name   => current_organization.primary_project.reference,
-               :openstack_domain_id  => 'default',
-               :openstack_identity_prefix => 'v3',
-               :openstack_endpoint_path_matches => //}
-      current_organization.projects.each do |project|
+      creds = {}
+      if current_user
+        Notifications.notify(:account_alert, "#{organization.name} (REF: #{organization.reference}) has requested account termination.")
+        creds = {:openstack_username => current_user.email,
+                 :openstack_api_key  => nil,
+                 :openstack_auth_token => auth_token,
+                 :openstack_project_name   => organization.primary_project.reference,
+                 :openstack_domain_id  => 'default',
+                 :openstack_identity_prefix => 'v3',
+                 :openstack_endpoint_path_matches => //}
+      end
+      organization.projects.each do |project|
         offboard(project, creds)
         begin
           Ceph::User.update('uid' => project.uuid, 'suspended' => true)
@@ -65,7 +67,7 @@ class OrganizationStateMachine
           Honeybadger.notify(e)
         end
       end
-      Mailer.goodbye(current_organization.admin_users).deliver_later
+      Mailer.goodbye(organization.admin_users).deliver_later
     end
   end
 
