@@ -52,7 +52,7 @@ module Billing
     end
 
     def link_next
-      previous_state.update_column(:next_state_id, id) if previous_state
+      previous_state.update_column(:next_state_id, id) if previous_state && previous_state.next_state_id.nil?
     end
 
   end
