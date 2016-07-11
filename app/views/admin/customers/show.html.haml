@@ -1,5 +1,5 @@
 - title "Dashboard"
-  
+
 .admin-customer-section
   .row
     .col-md-8
@@ -29,18 +29,23 @@
             = link_to 'See more', admin_audit_path(@organization)
 
     .col-md-4
-      %div{class: ["panel", @organization.self_service? ? "panel-info" : "panel-warning"].join(" ")}
+      %div.panel.panel-info
         .panel-heading
-          %div{style: "display: flex; justify-content: space-between;"}
+          %div#paying_and_account_type{style: "display: flex; justify-content: space-between;"}
             %div
-              %i.fa.fa-toggle-on
-              State:
-              %strong
-                = @organization.current_state.titleize
+              = form_for @organization, url: admin_customer_path(@organization), :remote => true, :html => {:role => 'form', :id => 'paying_form'} do |f|
+                .form-group
+                  = f.check_box :started_paying_at?, {:id=>"toggle-paying", class:'toggle', data: {:paying => @organization.paying?},
+                                'data-toggle'=>"toggle", 'data-on'=>"Paying",
+                                'data-off'=>"Not paying", 'data-size'=> "small", 'data-onstyle'=>"info", 'data-offstyle'=>"danger"}
             %div
-              Account:
-              %strong
-                = @organization.account_type
+              - unless @organization.staff?
+                = form_for @organization, url: admin_account_migration_path(@organization), :remote => true, :html => {:role => 'form', :id => 'account_form'} do |f|
+                  .form-group
+                    = f.check_box :self_service?, {:id=>"toggle-account", class:'toggle', data: {:account => @organization.self_service},
+                                  'data-toggle'=>"toggle", 'data-on'=>"Self-Service",
+                                  'data-off'=>"Invoiced/Trial", 'data-size'=> "small", 'data-onstyle'=>"info", 'data-offstyle'=>"primary"}
+
         .panel-body.panel-padding
           = render partial: 'admin/customers/states'
 

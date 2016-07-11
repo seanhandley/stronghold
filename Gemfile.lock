@@ -334,6 +334,7 @@ GEM
       rails-assets-angular (= 1.2.28)
     rails-assets-bootstrap-select (1.7.3)
       rails-assets-jquery (>= 1.8)
+    rails-assets-bootstrap-toggle (2.2.2)
     rails-assets-chained (1.0.0)
     rails-assets-clipboard (1.5.0)
     rails-assets-hideShowPassword (2.0.7)
@@ -591,6 +592,7 @@ DEPENDENCIES
   rails-assets-angular-resource (~> 1.2.24)!
   rails-assets-angular-sanitize (~> 1.2.24)!
   rails-assets-bootstrap-select (~> 1.7)!
+  rails-assets-bootstrap-toggle!
   rails-assets-chained (~> 1.0.0)!
   rails-assets-clipboard (~> 1.5)!
   rails-assets-hideShowPassword (~> 2.0)!

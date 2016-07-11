@@ -32,7 +32,7 @@ class Admin::CustomersController < AdminBaseController
 
   def update
     organization = Organization.find(params[:id])
-    if organization.update_including_state(update_params)
+    if organization.update_including_state(sanitised_update_params)
       respond_to do |format|
         format.js {
           javascript_redirect_to admin_customer_path(organization)
@@ -67,7 +67,12 @@ class Admin::CustomersController < AdminBaseController
   def update_params
     params.require(:organization).permit(:reporting_code, :reference, :stripe_customer_id, :salesforce_id,
                                          :billing_address1, :billing_city, :billing_postcode,
-                                         :billing_country, :phone, :state, :id)
+                                         :billing_country, :phone, :state, :id, :started_paying_at)
+  end
+
+  def sanitised_update_params
+    return update_params unless update_params[:started_paying_at]
+    update_params.merge(started_paying_at: update_params[:started_paying_at] == '1' ? Time.now : nil)
   end
 
   def get_products

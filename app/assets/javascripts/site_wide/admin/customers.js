@@ -34,4 +34,12 @@ $(document).ready(function() {
   });
 
   $('#q').focus();
+
+  $('#toggle-paying').on('change', function() {
+    $('#paying_form').trigger('submit.rails');
+  });
+
+  $('#toggle-account').on('change', function() {
+    $('#account_form').trigger('submit.rails');
+  });
 });
