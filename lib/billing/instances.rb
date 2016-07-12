@@ -228,9 +228,10 @@ module Billing
     def self.create_new_states(project_id, instance_id, samples, sync)
       first_sample_metadata = samples.first['resource_metadata']
       flavor_id = first_sample_metadata["instance_flavor_id"] ? first_sample_metadata["instance_flavor_id"] : first_sample_metadata["flavor.id"]
-      unless cached_instances.keys.include?(instance_id)
+      cached_instance = cached_instances[instance_id] || Billing::Instance.find_by_instance_id(instance_id)&.attributes.slice('id', 'name')
+      unless cached_instance
         Rails.cache.delete('all_recorded_instance_ids')
-        instance = Billing::Instance.find_or_create_by(instance_id: instance_id) do |instance|
+        billing_instance = Billing::Instance.find_or_create_by(instance_id: instance_id) do |instance|
           instance.instance_id = instance_id,
           instance.project_id  = project_id,
           instance.name        = first_sample_metadata["display_name"],
