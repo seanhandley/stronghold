@@ -230,7 +230,7 @@ module Billing
       flavor_id = first_sample_metadata["instance_flavor_id"] ? first_sample_metadata["instance_flavor_id"] : first_sample_metadata["flavor.id"]
       unless cached_instances.keys.include?(instance_id)
         Rails.cache.delete('all_recorded_instance_ids')
-        instance = Billing::Instance.create(instance_id: instance_id, project_id: project_id, name: first_sample_metadata["display_name"],
+        instance = Billing::Instance.create!(instance_id: instance_id, project_id: project_id, name: first_sample_metadata["display_name"],
                                  flavor_id: flavor_id, image_id: first_sample_metadata["image_ref_url"].split('/').last)
         unless samples.any? && samples.any? {|sample| sample['resource_metadata']['event_type']}
           # This is a new instance and we don't know its current state.
