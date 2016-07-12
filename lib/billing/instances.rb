@@ -2,7 +2,6 @@ module Billing
   module Instances
 
     def self.sync!(from, to, sync)
-      Rails.cache.delete('all_recorded_instance_ids')
       Rails.cache.delete('instance_flavor_ids')
       Project.with_deleted.each do |project|
         project_uuid = project.uuid
@@ -210,15 +209,6 @@ module Billing
       !["error","building", "stopped", "suspended", "shutoff", "deleted", "resized"].include?(state.downcase)
     end
 
-    def self.cached_instances
-      Rails.cache.fetch('all_recorded_instance_ids', expires_in: 5.minutes) do
-        Billing::Instance.active.pluck(:id, :instance_id, :name).inject({}) do |hash, e|
-          hash[e[1]] = {id: e[0], name: e[2]}
-          hash
-        end
-      end
-    end
-
     def self.cached_flavor_ids
       Rails.cache.fetch('instance_flavor_ids', expires_in: 5.minutes) do
         Billing::InstanceFlavor.all.pluck(:flavor_id)
@@ -228,9 +218,8 @@ module Billing
     def self.create_new_states(project_id, instance_id, samples, sync)
       first_sample_metadata = samples.first['resource_metadata']
       flavor_id = first_sample_metadata["instance_flavor_id"] ? first_sample_metadata["instance_flavor_id"] : first_sample_metadata["flavor.id"]
-      cached_instance = cached_instances[instance_id] || Billing::Instance.find_by_instance_id(instance_id)&.attributes&.slice('id', 'name')
-      unless cached_instance
-        Rails.cache.delete('all_recorded_instance_ids')
+      billing_instance = Billing::Instance.find_by_instance_id(instance_id)
+      unless billing_instance
         billing_instance = Billing::Instance.find_or_create_by(instance_id: instance_id) do |instance|
           instance.instance_id = instance_id,
           instance.project_id  = project_id,
@@ -262,15 +251,14 @@ module Billing
       end
       
       # Catch renames
-      if(cached_instance && first_sample_metadata && cached_instance[:name] != first_sample_metadata["display_name"])
-        billing_instance = Billing::Instance.find(cached_instance[:id])
+      if(billing_instance && first_sample_metadata && billing_instance.name != first_sample_metadata["display_name"])
         billing_instance.update_attributes(name: first_sample_metadata["display_name"])
       end
 
       samples.collect do |sample|
         meta_data = sample['resource_metadata']
         if meta_data['event_type']
-          Billing::InstanceState.create instance_id: cached_instance[:id], recorded_at: Time.zone.parse("#{sample['recorded_at']} UTC"),
+          Billing::InstanceState.create instance_id: billing_instance[:id], recorded_at: Time.zone.parse("#{sample['recorded_at']} UTC"),
                                         state: meta_data['state'] ? meta_data['state'].downcase : 'active',
                                         event_name: meta_data['event_type'], billing_sync: sync,
                                         message_id: sample['message_id'],
