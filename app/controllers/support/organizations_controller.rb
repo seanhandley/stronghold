@@ -37,7 +37,7 @@ class Support::OrganizationsController < SupportBaseController
   # Close this user's account
   def close
     if reauthenticate(reauthorise_params[:password]) && !current_user.staff?
-      current_organization.transition_to!(:closed, current_user: current_user, auth_token: session['token'])
+      current_organization.transition_to!(:closed, user_email: current_user.email, auth_token: session['token'])
       reset_session
       render :goodbye
     else

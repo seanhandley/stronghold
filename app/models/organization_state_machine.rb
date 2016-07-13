@@ -46,12 +46,12 @@ class OrganizationStateMachine
 
   [:frozen, :active].each do |before_state|
     before_transition(from: before_state, to: :closed) do |organization, transition|
-      auth_token           = transition.metadata['auth_token']
-      current_user         = transition.metadata['current_user']
+      auth_token         = transition.metadata['auth_token']
+      user_email         = transition.metadata['user_email']
       creds = {}
-      if current_user
+      if user_email
         Notifications.notify(:account_alert, "#{organization.name} (REF: #{organization.reference}) has requested account termination.")
-        creds = {:openstack_username => current_user.email,
+        creds = {:openstack_username => user_email,
                  :openstack_api_key  => nil,
                  :openstack_auth_token => auth_token,
                  :openstack_project_name   => organization.primary_project.reference,
