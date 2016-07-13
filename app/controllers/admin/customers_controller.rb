@@ -30,6 +30,10 @@ class Admin::CustomersController < AdminBaseController
     @audits          = Audit.for_organization(@organization).order('created_at DESC').first(7)
   end
 
+  def edit
+    @organization = Organization.find(params[:id])
+  end
+
   def update
     organization = Organization.find(params[:id])
     if organization.update_including_state(sanitised_update_params)
@@ -58,10 +62,6 @@ class Admin::CustomersController < AdminBaseController
   def create_params
     params.permit(:organization_name, :email, :extra_projects, :salesforce_id,
                   :organization => {:product_ids => []})
-  end
-
-  def edit
-    @organization = Organization.find(params[:id])
   end
 
   def update_params

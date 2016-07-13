@@ -1,0 +1,14 @@
+- title "State History for #{@organization.name}"
+%h3 State history
+
+.table-responsive
+  %table.table.table-striped.table-hover
+    %thead
+      %tr
+        %th State
+        %th Date
+    %tbody
+      - for transition in @transitions do
+        %tr
+          %td= transition.to_state.capitalize
+          %td= transition.created_at
