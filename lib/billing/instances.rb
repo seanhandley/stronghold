@@ -221,9 +221,9 @@ module Billing
       billing_instance = Billing::Instance.find_by_instance_id(instance_id)
       unless billing_instance
         billing_instance = Billing::Instance.find_or_create_by(instance_id: instance_id) do |instance|
-          instance.project_id  = project_id,
-          instance.name        = first_sample_metadata["display_name"],
-          instance.flavor_id   = flavor_id,
+          instance.project_id  = project_id
+          instance.name        = first_sample_metadata["display_name"]
+          instance.flavor_id   = flavor_id
           instance.image_id    = first_sample_metadata["image_ref_url"].split('/').last
         end
         unless samples.any? && samples.any? {|sample| sample['resource_metadata']['event_type']}
