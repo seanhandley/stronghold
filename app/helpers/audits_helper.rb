@@ -5,12 +5,12 @@ module AuditsHelper
       details = audit.audited_changes.collect do |k,v|
         previous_val = try_translate_permissions(k,v[0])
         current_val  = try_translate_permissions(k,v[1])
-        "#{I18n.t(k.to_s.underscore.to_sym).capitalize.humanize} #{I18n.t(:is_now)} '#{current_val}' (#{I18n.t(:used_to_be)} '#{previous_val}')"
+        "#{I18n.t(k.to_s.underscore.to_sym, default: k).capitalize.humanize} #{I18n.t(:is_now)} '#{current_val}' (#{I18n.t(:used_to_be)} '#{previous_val}')"
       end.join '. '
     else
       details = audit.audited_changes.collect do |k,v|
         val = try_translate_permissions(k,v)
-        "'#{I18n.t(k.to_s.underscore.to_sym).capitalize.humanize}': '#{val}'"
+        "'#{I18n.t(k.to_s.underscore.to_sym, default: k).capitalize.humanize}': '#{val}'"
       end.join ', '
     end
     details += '.'
@@ -29,7 +29,7 @@ module AuditsHelper
     else
       'text-info'
     end
-      
+
   end
 
   def try_translate_permissions(k,v)

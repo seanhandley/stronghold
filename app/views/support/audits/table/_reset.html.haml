@@ -1,0 +1,5 @@
+%i.fa.fa-lightbulb-o{class: audit_colour(audit)}
+= t(:reset)
+= t("was_#{past_perfective(audit.action)}".to_sym)
+%p.tiny
+  = audit_detail(audit)

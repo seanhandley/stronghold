@@ -3,6 +3,9 @@ class Project < ActiveRecord::Base
   include ActionView::Helpers::TextHelper
   include ActionView::Helpers::UrlHelper
 
+  audited only: [:name, :uuid], :associated_with => :organization
+  has_associated_audits
+
   acts_as_paranoid
 
   belongs_to :organization
