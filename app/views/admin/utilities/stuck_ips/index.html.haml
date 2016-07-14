@@ -1,0 +1,40 @@
+- title "Stuck IPs"
+
+%h2
+  Stuck IPs
+
+.alert.alert-info
+  %p Stuck IPs are assigned to inactive instances belonging to customers who haven't had any recorded usage of the platfom for three months.
+  %p Other public IPs are reclaimed automatically by a scheduled reaper process.
+
+- if @stuck_ips.any?
+  .table-responsive
+    %table.table.table-striped.table-hover
+      %thead
+        %th Address
+        %th Instance
+        %th Organization
+        %th
+      %tbody
+        - for ip in @stuck_ips
+          %tr
+            %td= ip.public_ip
+            %td
+              = ip.instance.name
+              %p.tiny
+                Instance UUID: 
+                = ip.instance.instance_id
+            %td
+              = link_to ip.organization.name, admin_customer_path(ip.organization)
+              %p.tiny
+                Project UUID:
+                = ip.project.uuid
+                (
+                = ip.project.name
+                )
+            %td
+              = link_to 'Remove from Instance', admin_utilities_stuck_ip_path(id: ip.instance_id, ip_address: ip.public_ip), class: 'btn btn-danger', data: { method: :delete, confirm: 'Are you sure?'}
+
+- else
+  .push
+  .alert.alert-warning No stuck IPs found.

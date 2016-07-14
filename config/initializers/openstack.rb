@@ -25,24 +25,23 @@ module OpenStackConnection
   end
 
   def self.compute
-    @@compute ||= Fog::Compute.new(OPENSTACK_ARGS)
+    Fog::Compute.new(OPENSTACK_ARGS)
   end
   
   def self.volume
-    @@volume ||= Fog::Volume.new(OPENSTACK_ARGS)
+    Fog::Volume.new(OPENSTACK_ARGS)
   end
   
   def self.network
-    # @@network ||= Fog::Network.new(OPENSTACK_ARGS)
     Fog::Network.new(OPENSTACK_ARGS)
   end
   
   def self.image
-    @@image ||= Fog::Image.new(OPENSTACK_ARGS)
+    Fog::Image.new(OPENSTACK_ARGS)
   end
   
   def self.metering
-    @@metering ||= Fog::Metering.new(OPENSTACK_ARGS)
+    Fog::Metering.new(OPENSTACK_ARGS)
   end
 
   def self.usage(from,to)

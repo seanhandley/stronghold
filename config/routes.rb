@@ -70,6 +70,7 @@ Rails.application.routes.draw do
         resources :billing_rates, only: [:index, :update]
         resources :sanity, only: [:index]
         resources :online_users, only: [:index]
+        resources :stuck_ips, only: [:index, :destroy]
         resources :pending_invoices, only: [:index, :update, :destroy]
         resources :queue, only: [:index] do
           collection do

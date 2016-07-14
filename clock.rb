@@ -12,6 +12,10 @@ if Rails.env.production? || Rails.env.staging?
     ActivationReminderJob.perform_later
   end
 
+  every(1.day, 'reaper', :at => '03:00') do
+    ReaperJob.perform_later
+  end
+
   every(80.minutes, 'usage_cache_refresh') do
     UsageCacheRefreshJob.perform_later
   end

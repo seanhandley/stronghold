@@ -5,7 +5,7 @@ http_interactions:
     uri: http://devstack.datacentred.io:5000/v2.0/tokens
     body:
       encoding: UTF-8
-      string: '{"auth":{"passwordCredentials":{"username":"admin","password":"L7joid2rTaokFJ"},"tenantName":"admin"}}'
+      string: '{"auth":{"passwordCredentials":{"username":"admin","password":"[redacted]"},"tenantName":"admin"}}'
     headers:
       User-Agent:
       - fog/1.27.0 fog-core/1.27.3
@@ -147,7 +147,7 @@ http_interactions:
     uri: http://devstack.datacentred.io:5000/v2.0/tokens
     body:
       encoding: UTF-8
-      string: '{"auth":{"passwordCredentials":{"username":"admin","password":"L7joid2rTaokFJ"},"tenantName":"admin"}}'
+      string: '{"auth":{"passwordCredentials":{"username":"admin","password":"[redacted]"},"tenantName":"admin"}}'
     headers:
       User-Agent:
       - fog/1.27.0 fog-core/1.27.3
@@ -294,7 +294,7 @@ http_interactions:
     uri: http://devstack.datacentred.io:5000/v2.0/tokens
     body:
       encoding: UTF-8
-      string: '{"auth":{"passwordCredentials":{"username":"admin","password":"L7joid2rTaokFJ"},"tenantName":"admin"}}'
+      string: '{"auth":{"passwordCredentials":{"username":"admin","password":"[redacted]"},"tenantName":"admin"}}'
     headers:
       User-Agent:
       - fog/1.27.0 fog-core/1.27.3
@@ -441,7 +441,7 @@ http_interactions:
     uri: http://devstack.datacentred.io:5000/v2.0/tokens
     body:
       encoding: UTF-8
-      string: '{"auth":{"passwordCredentials":{"username":"admin","password":"L7joid2rTaokFJ"},"tenantName":"admin"}}'
+      string: '{"auth":{"passwordCredentials":{"username":"admin","password":"[redacted]"},"tenantName":"admin"}}'
     headers:
       User-Agent:
       - fog/1.27.0 fog-core/1.27.3
@@ -607,7 +607,7 @@ http_interactions:
     uri: http://devstack.datacentred.io:5000/v2.0/tokens
     body:
       encoding: UTF-8
-      string: '{"auth":{"passwordCredentials":{"username":"admin","password":"L7joid2rTaokFJ"},"tenantName":"admin"}}'
+      string: '{"auth":{"passwordCredentials":{"username":"admin","password":"[redacted]"},"tenantName":"admin"}}'
     headers:
       User-Agent:
       - fog/1.27.0 fog-core/1.27.3
@@ -754,7 +754,7 @@ http_interactions:
     uri: http://devstack.datacentred.io:5000/v2.0/tokens
     body:
       encoding: UTF-8
-      string: '{"auth":{"passwordCredentials":{"username":"admin","password":"L7joid2rTaokFJ"},"tenantName":"admin"}}'
+      string: '{"auth":{"passwordCredentials":{"username":"admin","password":"[redacted]"},"tenantName":"admin"}}'
     headers:
       User-Agent:
       - fog/1.27.0 fog-core/1.27.3
@@ -899,7 +899,7 @@ http_interactions:
     uri: http://devstack.datacentred.io:5000/v2.0/tokens
     body:
       encoding: UTF-8
-      string: '{"auth":{"passwordCredentials":{"username":"admin","password":"L7joid2rTaokFJ"},"tenantName":"admin"}}'
+      string: '{"auth":{"passwordCredentials":{"username":"admin","password":"[redacted]"},"tenantName":"admin"}}'
     headers:
       User-Agent:
       - fog/1.27.0 fog-core/1.27.3
@@ -1046,7 +1046,7 @@ http_interactions:
     uri: http://devstack.datacentred.io:5000/v2.0/tokens
     body:
       encoding: UTF-8
-      string: '{"auth":{"passwordCredentials":{"username":"admin","password":"L7joid2rTaokFJ"},"tenantName":"admin"}}'
+      string: '{"auth":{"passwordCredentials":{"username":"admin","password":"[redacted]"},"tenantName":"admin"}}'
     headers:
       User-Agent:
       - fog/1.27.0 fog-core/1.27.3
@@ -1193,7 +1193,7 @@ http_interactions:
     uri: http://devstack.datacentred.io:5000/v2.0/tokens
     body:
       encoding: UTF-8
-      string: '{"auth":{"passwordCredentials":{"username":"admin","password":"L7joid2rTaokFJ"},"tenantName":"admin"}}'
+      string: '{"auth":{"passwordCredentials":{"username":"admin","password":"[redacted]"},"tenantName":"admin"}}'
     headers:
       User-Agent:
       - fog/1.27.0 fog-core/1.27.3
@@ -1364,7 +1364,7 @@ http_interactions:
     uri: http://devstack.datacentred.io:5000/v2.0/tokens
     body:
       encoding: UTF-8
-      string: '{"auth":{"passwordCredentials":{"username":"admin","password":"L7joid2rTaokFJ"},"tenantName":"admin"}}'
+      string: '{"auth":{"passwordCredentials":{"username":"admin","password":"[redacted]"},"tenantName":"admin"}}'
     headers:
       User-Agent:
       - fog/1.27.0 fog-core/1.27.3
@@ -1511,7 +1511,7 @@ http_interactions:
     uri: http://devstack.datacentred.io:5000/v2.0/tokens
     body:
       encoding: UTF-8
-      string: '{"auth":{"passwordCredentials":{"username":"admin","password":"L7joid2rTaokFJ"},"tenantName":"admin"}}'
+      string: '{"auth":{"passwordCredentials":{"username":"admin","password":"[redacted]"},"tenantName":"admin"}}'
     headers:
       User-Agent:
       - fog/1.27.0 fog-core/1.27.3
@@ -1656,7 +1656,7 @@ http_interactions:
     uri: http://devstack.datacentred.io:5000/v2.0/tokens
     body:
       encoding: UTF-8
-      string: '{"auth":{"passwordCredentials":{"username":"admin","password":"L7joid2rTaokFJ"},"tenantName":"admin"}}'
+      string: '{"auth":{"passwordCredentials":{"username":"admin","password":"[redacted]"},"tenantName":"admin"}}'
     headers:
       User-Agent:
       - fog/1.27.0 fog-core/1.27.3
@@ -1803,7 +1803,7 @@ http_interactions:
     uri: http://devstack.datacentred.io:5000/v2.0/tokens
     body:
       encoding: UTF-8
-      string: '{"auth":{"passwordCredentials":{"username":"admin","password":"L7joid2rTaokFJ"},"tenantName":"admin"}}'
+      string: '{"auth":{"passwordCredentials":{"username":"admin","password":"[redacted]"},"tenantName":"admin"}}'
     headers:
       User-Agent:
       - fog/1.27.0 fog-core/1.27.3
@@ -1950,7 +1950,7 @@ http_interactions:
     uri: http://devstack.datacentred.io:5000/v2.0/tokens
     body:
       encoding: UTF-8
-      string: '{"auth":{"passwordCredentials":{"username":"admin","password":"L7joid2rTaokFJ"},"tenantName":"admin"}}'
+      string: '{"auth":{"passwordCredentials":{"username":"admin","password":"[redacted]"},"tenantName":"admin"}}'
     headers:
       User-Agent:
       - fog/1.27.0 fog-core/1.27.3
@@ -2126,7 +2126,7 @@ http_interactions:
     uri: http://devstack.datacentred.io:5000/v2.0/tokens
     body:
       encoding: UTF-8
-      string: '{"auth":{"passwordCredentials":{"username":"admin","password":"L7joid2rTaokFJ"},"tenantName":"admin"}}'
+      string: '{"auth":{"passwordCredentials":{"username":"admin","password":"[redacted]"},"tenantName":"admin"}}'
     headers:
       User-Agent:
       - fog/1.27.0 fog-core/1.27.3
@@ -2273,7 +2273,7 @@ http_interactions:
     uri: http://devstack.datacentred.io:5000/v2.0/tokens
     body:
       encoding: UTF-8
-      string: '{"auth":{"passwordCredentials":{"username":"admin","password":"L7joid2rTaokFJ"},"tenantName":"admin"}}'
+      string: '{"auth":{"passwordCredentials":{"username":"admin","password":"[redacted]"},"tenantName":"admin"}}'
     headers:
       User-Agent:
       - fog/1.27.0 fog-core/1.27.3

@@ -120,6 +120,10 @@ class Organization < ActiveRecord::Base
     products.collect(&:name).include? 'Colocation'
   end
 
+  def colo_only?
+    products.collect(&:name).include?('Colocation') && products.count == 1
+  end
+
   def storage?
     products.collect(&:name).include? 'Storage'
   end
@@ -158,14 +162,6 @@ class Organization < ActiveRecord::Base
     card ? "#{card.brand} #{card.funding}" : nil
   end
 
-  def manually_activate!
-    return false unless fresh?
-    update_attributes(started_paying_at: Time.now.utc, self_service: false, state: 'active')
-    enable!
-    create_default_network!
-    set_quotas!
-  end
-
   def set_quotas!(voucher=nil)
     quota = (voucher && voucher.restricted?) ? 'restricted' : 'standard'
     update_attributes(quota_limit: StartingQuota[quota])
@@ -201,22 +197,6 @@ class Organization < ActiveRecord::Base
       generate_reporting_code
     else
       update_column(:reporting_code, code)
-    end
-  end
-
-  def create_default_network!
-    if Rails.env.production?
-      projects.collect(&:uuid).each do |project_id|
-        next if OpenStackConnection.network.list_routers(tenant_id: project_id).body['routers'].count > 0
-        n = OpenStackConnection.network.networks.create name: 'default', tenant_id: project_id
-        s = OpenStackConnection.network.subnets.create name: 'default', cidr: '192.168.0.0/24',
-                                     network_id: n.id, ip_version: 4, dns_nameservers: ['8.8.8.8', '8.8.4.4'],
-                                     tenant_id: project_id
-        external_network = OpenStackConnection.network.networks.select{|n| n.router_external == true }.first
-        r = OpenStackConnection.network.routers.create name: 'default', tenant_id: project_id,
-                                     external_gateway_info: external_network.id
-        OpenStackConnection.network.add_router_interface(r.id, s.id)
-      end
     end
   end
 

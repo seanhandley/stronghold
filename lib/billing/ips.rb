@@ -30,15 +30,13 @@ module Billing
           end
         elsif ip_type == 'ip.floating'
           if ["floatingip.update.end", "floatingip.create.end"].include? meta_data['event_type']
-            if [meta_data['port_id'], meta_data['fixed_ip_address']].all?{|data| data.downcase != 'none'}
-              Billing::Ip.create project_id: project_id,
-                                 ip_id: sample['resource_id'],
-                                 ip_type: ip_type,
-                                 address: meta_data['floating_ip_address'],
-                                 recorded_at: Time.zone.parse("#{sample['recorded_at']} UTC"),
-                                 message_id: sample['message_id'],
-                                 sync_id: sync.id
-            end
+            Billing::Ip.create project_id: project_id,
+                               ip_id: sample['resource_id'],
+                               ip_type: ip_type,
+                               address: meta_data['floating_ip_address'],
+                               recorded_at: Time.zone.parse("#{sample['recorded_at']} UTC"),
+                               message_id: sample['message_id'],
+                               sync_id: sync.id
           end
         end
       end
