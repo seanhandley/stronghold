@@ -36,10 +36,18 @@ $(document).ready(function() {
   $('#q').focus();
 
   $('#toggle-paying').on('change', function() {
-    $('#paying_form').trigger('submit.rails');
+    if(confirm('Are you sure?')) {
+      $('#paying_form').trigger('submit.rails');
+    } else {
+      window.location.reload();
+    }
   });
 
   $('#toggle-account').on('change', function() {
-    $('#account_form').trigger('submit.rails');
+    if(confirm('Are you sure?')) {
+      $('#account_form').trigger('submit.rails');
+    } else {
+      window.location.reload();
+    }
   });
 });
