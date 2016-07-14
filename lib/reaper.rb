@@ -84,8 +84,8 @@ class Reaper
     end
     organizations = dormant_routers.map do |router|
       project = Project.find_by_uuid(router[:tenant_id])
-      project.organization
-    end
+      project&.organization
+    end.compact
     organizations.uniq.each do |organization|
       organization.transition_to!(:dormant) unless dry_run
       logger.info "Transitioning #{organization.name} (#{organization.reporting_code}) to dormant state"
