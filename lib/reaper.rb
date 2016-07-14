@@ -64,8 +64,8 @@ class Reaper
   def dormant_routers
     # Find routers that belong to customers who've been inactive for over 3 months
     routers.select{|r| r.external_gateway_info}.reject do |router|
-      organization_is_paying(router.tenant_id) &&
-      organization_is_active(router.tenant_id) &&
+      (organization_is_paying(router.tenant_id) &&
+      organization_is_active(router.tenant_id)) ||
       organization_is_staff(router.tenant_id)
     end.map do |router|
       router.external_gateway_info['external_fixed_ips'].map do |ip|
