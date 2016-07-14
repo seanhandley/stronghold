@@ -4,6 +4,7 @@
   %span.fa.fa-search.fa-2x.main-search-icon
   = text_field_tag :q, '', autocomplete: 'off', placeholder: "What are you looking for?", class: 'form-control customer-search'
   %p{style: 'text-align: center'}
-    Type a customer name or
-    = link_to 'create a new customer', new_admin_customer_path, class: 'text-danger'
-    \.
+    Type a name, email address, OpenStack UUID etc
+    %br
+    Or
+    = link_to 'create a new customer?', new_admin_customer_path, class: 'text-danger'

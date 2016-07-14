@@ -4,7 +4,7 @@ $(document).ready(function() {
       url: '/admin/sm/search',
       types: $('html').data('searchable-models').split(" "),
       renderCallback: function(term, data, type) {
-        return term + ' (' + data.reporting_code + ')';
+        return term + ' (' + data.additional_info + ')';
       },
       selectCallback: function(term, data, type) {
         $('#loading-overlay').removeClass('hide');
