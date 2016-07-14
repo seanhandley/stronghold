@@ -1,7 +1,4 @@
-require_relative './fog_refinements'
-
 class ProjectResources
-  using FogRefinements
   attr_reader :project_uuid
 
   def initialize(project_uuid)

@@ -1,6 +1,39 @@
 ---
 http_interactions:
 - request:
+  method: get
+  uri: https://compute.datacentred.io:8777/
+  body:
+    encoding: UTF-8
+    string: '{"auth":{"passwordCredentials":{"username":"stronghold","password":"sLWB94kcryfbpJ"},"tenantName":"datacentred"}}'
+  headers:
+    User-Agent:
+    - fog/1.24.0
+    Content-Type:
+    - application/json
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      Vary:
+      - X-Auth-Token
+      X-Distribution:
+      - Ubuntu
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '10716'
+      Date:
+      - Wed, 10 Dec 2014 09:58:42 GMT
+      Strict-Transport-Security:
+      - max-age=60
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version: 
+  recorded_at: Wed, 10 Dec 2014 09:58:40 GMT
+- request:
     method: post
     uri: https://compute.datacentred.io:5000/v2.0/tokens
     body:
