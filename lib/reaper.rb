@@ -55,8 +55,8 @@ class Reaper
         nil
       end
     end.flatten.compact.reject do |instance|
-      organization_is_paying(instance[:tenant_id]) &&
-      organization_is_active(instance[:tenant_id]) &&
+      (organization_is_paying(instance[:tenant_id]) &&
+      organization_is_active(instance[:tenant_id])) ||
       organization_is_staff(instance[:tenant_id])
     end.map{|r| StuckIp.new r}
   end
