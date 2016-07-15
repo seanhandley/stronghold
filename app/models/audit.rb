@@ -33,8 +33,6 @@ class Audit < ActiveRecord::Base
     k.camelize.gsub('Id','')
   end
 
-  private
-
   def try_to_set_organization
     return if organization_id
     update_column(:organization_id, user&.organization_id)
