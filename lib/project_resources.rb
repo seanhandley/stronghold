@@ -48,6 +48,7 @@ class ProjectResources
     routers.each do |router|
       subnets.each do |subnet|
         begin
+          fog_network.update_router router,  external_gateway_info: {network_id: external_network.id}
           fog_network.add_router_interface(router, subnet)
         rescue Fog::Network::OpenStack::NotFound
           # Ignore
