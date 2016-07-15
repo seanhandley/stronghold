@@ -29,7 +29,7 @@ class Reaper
       }
     end.select do |ip|
       billing_ip = Billing::Ip.where(ip_id: ip[:ip_id]).order("recorded_at").last
-      billing_ip && (billing_ip.recorded_at + 24.hours) < Time.now
+      billing_ip && (billing_ip.recorded_at + stuck_in_a_project_max_time) < Time.now
     end.reject do |ip|
       organization_is_staff(ip[:tenant_id])
     end
@@ -122,5 +122,9 @@ class Reaper
     project = Project.find_by_uuid(tenant_id)
     return nil unless project
     project.organization.staff?
+  end
+
+  def stuck_in_a_project_max_time
+    1.week
   end
 end
