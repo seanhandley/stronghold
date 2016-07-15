@@ -6,6 +6,11 @@ class Audit < ActiveRecord::Base
 
   after_save :try_to_set_organization
 
+  def initialize(params)
+    try_to_set_organization
+    super
+  end
+
   # Take the serialized object hash '{'foo_id' => 1, 'bar_id' => 2}'
   # and return:
   #
