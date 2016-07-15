@@ -37,7 +37,7 @@ class Audit < ActiveRecord::Base
 
   def try_to_set_organization
     return if organization_id
-    update_column(:organization_id, User.find(user_id).organization_id) rescue nil
+    update_column(:organization_id, user&.organization_id)
   end
 
 end
