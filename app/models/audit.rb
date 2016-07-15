@@ -4,6 +4,8 @@ class Audit < ActiveRecord::Base
   belongs_to :organization
   serialize :audited_changes
 
+  after_save :try_to_set_organization, if: -> { organization_id.nil? }
+
   # Take the serialized object hash '{'foo_id' => 1, 'bar_id' => 2}'
   # and return:
   #
@@ -29,6 +31,12 @@ class Audit < ActiveRecord::Base
 
   def extract_associated_object_type(k)
     k.camelize.gsub('Id','')
+  end
+
+  private
+
+  def try_to_set_organization
+    update_column(:organization_id, User.find(user_id).organization_id) rescue nil
   end
 
 end
