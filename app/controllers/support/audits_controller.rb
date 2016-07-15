@@ -5,7 +5,7 @@ class Support::AuditsController < SupportBaseController
   before_filter :check_power_user
 
   def index
-    @audits = Audit.for_organization(current_organization).order('created_at DESC')
+    @audits = Audit.for_organization_and_user(current_organization, current_user).order('created_at DESC')
     @audits = @audits.page params[:page]
   end
 

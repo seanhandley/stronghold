@@ -27,7 +27,7 @@ class Admin::CustomersController < AdminBaseController
     @usage_decorator = UsageDecorator.new(@organization)
     @tickets         = decorated_tickets(@organization)
     @users           = @organization.users
-    @audits          = Audit.for_organization(@organization).order('created_at DESC').first(7)
+    @audits          = Audit.for_organization_and_user(@organization, current_user).order('created_at DESC').first(7)
   end
 
   def edit

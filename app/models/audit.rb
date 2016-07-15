@@ -17,8 +17,8 @@ class Audit < ActiveRecord::Base
     Hash[audited_changes.map{|k,v| [extract_associated_object_type(k), extract_associated_object(k,v)] } ]
   end
 
-  def self.for_organization(organization)
-    Audit.where('organization_id is null').each(&:try_to_set_organization)
+  def self.for_organization_and_user(organization, user)
+    Audit.where(user_id: user.id).where('organization_id is null').each(&:try_to_set_organization)
     where(organization_id: organization.id).includes(:user => :roles)
   end
 
