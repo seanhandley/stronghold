@@ -24,7 +24,8 @@ class Audit < ActiveRecord::Base
 
   def self.for_organization(organization)
     where(organization_id: organization.id).includes(:user => :roles).each(&:touch)
-
+  end
+  
   private
 
   def extract_associated_object(k,v)
