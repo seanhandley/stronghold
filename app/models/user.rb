@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
   include Gravatar
 
   audited only: [:first_name, :last_name, :email]
+  has_associated_audits
 
   attr_accessor :password, :password_confirmation, :token
 

@@ -1,4 +1,7 @@
 class UserProjectRole < ActiveRecord::Base
+
+  audited only: [:user_id, :project_id, :role_uuid]
+
   belongs_to :user
   belongs_to :project
 

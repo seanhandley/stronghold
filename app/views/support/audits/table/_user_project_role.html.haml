@@ -1,0 +1,20 @@
+%i.fa.fa-gavel{class: audit_colour(audit)}
+= t(:user_project_role)
+= t("was_#{past_perfective(audit.action)}".to_sym)
+%p.tiny
+  = t(:openstack_role)
+  = "'#{audit.audited_changes['role_uuid']}'"
+  = audit.action == 'create' ? t(:was_added_to) : t(:was_removed_from)
+  = t(:project)
+  = "'#{audit.audited_objects['Project'].uuid}'"
+  = t(:for)
+  = "'#{audit.audited_objects['User'].email}'"
+
+-# %i.fa.fa-user{class: audit_colour(audit)}
+-# - if audit.audited_objects['Role']
+-#   = t(:role)
+-#   = "'#{audit.audited_objects['Role'].name}': "
+-#   = audit.action == 'create' ? t(:user_was_added) : t(:user_was_removed)
+-#   = "('#{audit.audited_objects['User'] ? audit.audited_objects['User'].name : 'SYSTEM'}')"
+-# - else
+-#   = t(:role_subsequently_removed)

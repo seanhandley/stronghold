@@ -1,5 +1,7 @@
 class Reset < ActiveRecord::Base
 
+  audited only: [:email, :completed_at, :created_at]
+
   after_create :generate_token
 
   validates :email, length: {minimum: 5}, allow_blank: false
