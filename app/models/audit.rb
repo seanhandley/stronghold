@@ -18,8 +18,7 @@ class Audit < ActiveRecord::Base
   end
 
   def self.for_organization(organization)
-    where(organization_id: organization.id).includes(:user => :roles).each(&:try_to_set_organization)
-  end
+    where(organization_id: organization.id).includes(:user => :roles).each(&:touch)
 
   private
 
