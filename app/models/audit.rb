@@ -6,11 +6,6 @@ class Audit < ActiveRecord::Base
 
   after_save :try_to_set_organization
 
-  def initialize(params)
-    try_to_set_organization
-    super
-  end
-
   # Take the serialized object hash '{'foo_id' => 1, 'bar_id' => 2}'
   # and return:
   #
@@ -23,7 +18,13 @@ class Audit < ActiveRecord::Base
   end
 
   def self.for_organization(organization)
+    Audit.where('organization_id is null').each(&:try_to_set_organization)
     where(organization_id: organization.id).includes(:user => :roles)
+  end
+
+  def try_to_set_organization
+    return if organization_id
+    update_column(:organization_id, user&.organization_id)
   end
 
   private
@@ -36,11 +37,6 @@ class Audit < ActiveRecord::Base
 
   def extract_associated_object_type(k)
     k.camelize.gsub('Id','')
-  end
-
-  def try_to_set_organization
-    return if organization_id
-    update_column(:organization_id, user&.organization_id)
   end
 
 end
