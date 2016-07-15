@@ -6,6 +6,6 @@
   = "'#{audit.audited_changes['role_uuid']}'"
   = audit.action == 'create' ? t(:was_added_to) : t(:was_removed_from)
   = t(:project)
-  = "'#{Project.find(audit.audited_changes['project_id']).uuid}'"
+  = "'#{audit.audited_objects['Project']&.uuid}'"
   = t(:for)
-  = "'#{audit.audited_objects['User'].email}'"
+  = "'#{audit.audited_objects['User']&.email}'"
