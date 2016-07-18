@@ -40,6 +40,8 @@ en:
   can_roles_read: "Can view roles"
   can_storage_access: "Can access/modify buckets via Ceph/S3"
   can_tickets_modify: "Can create and comment on support tickets"
+  can_raise_access_request_for_others: "Can raise access request for others"
+  can_raise_access_request_for_self: "Can raise access request for self"
   can_tickets_read: "Can view support tickets"
   can_usage_read: "Can view usage data"
   can_cloud_access: "Can access/modify cloud services via OpenStack"

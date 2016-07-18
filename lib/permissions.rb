@@ -12,7 +12,9 @@ class Permissions
 
         # Support Tickets
         #'tickets.read' => { :description => I18n.t(:can_tickets_read), :group => I18n.t(:tickets) },
-        'tickets.modify' => { :description => I18n.t(:can_tickets_modify), :group => I18n.t(:tickets) }
+        'tickets.modify' => { :description => I18n.t(:can_tickets_modify), :group => I18n.t(:tickets) },
+        'tickets.raise_for_others' => { :description => I18n.t(:can_raise_access_request_for_others), :group => I18n.t(:tickets) },
+        'tickets.raise_for_self' => { :description => I18n.t(:can_raise_access_request_for_self), :group => I18n.t(:tickets) }
 
       }
       unless Authorization.current_user && !Authorization.current_user.organization.colo?

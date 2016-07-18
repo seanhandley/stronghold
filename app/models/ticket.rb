@@ -9,7 +9,7 @@ class Ticket
   validates :title,       length: {minimum: 1, maximum: 200}, allow_blank: false, unless: :access_request?
   validates :description, length: {minimum: 1}, allow_blank: false, unless: :access_request?
   validates :department, :priority, :presence => true
-  validates :visitor_names, :nature_of_visit, length: {minimum: 1}, allow_blank: false, if: :access_request?
+  validates :nature_of_visit, length: {minimum: 1}, allow_blank: false, if: :access_request?
   validate :date_time_of_visit, if: :access_request?
 
   def initialize(params)
