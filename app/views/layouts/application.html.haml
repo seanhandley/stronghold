@@ -19,7 +19,7 @@
     %div.page-body
       = render partial: 'shared/environment'
       .container
-        - if [support_root_url, activated_url, root_url].include?(request.url)
+        - if [support_root_url, activated_url, root_url].include?(request.path)
           = render partial: 'shared/cloud_services'
           = render partial: "announcements/starburst/announcement_bootstrap"
         %p &nbsp;
