@@ -339,6 +339,7 @@ GEM
     rails-assets-clipboard (1.5.0)
     rails-assets-hideShowPassword (2.0.7)
       rails-assets-jquery (>= 2.1.3, < 3)
+    rails-assets-highcharts (4.2.5)
     rails-assets-jquery (2.1.4)
     rails-assets-normalize-css (3.0.3)
     rails-deprecated_sanitizer (1.0.3)
@@ -596,6 +597,7 @@ DEPENDENCIES
   rails-assets-chained (~> 1.0.0)!
   rails-assets-clipboard (~> 1.5)!
   rails-assets-hideShowPassword (~> 2.0)!
+  rails-assets-highcharts!
   rails-assets-normalize-css (~> 3.0)!
   recaptcha
   redcarpet (~> 3.3)

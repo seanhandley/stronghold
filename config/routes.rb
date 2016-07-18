@@ -32,6 +32,7 @@ Rails.application.routes.draw do
     resources :invites, only: [:create, :destroy]
     resources :audits, only: [:index]
     get '/usage', :controller => 'usage', :action => 'index'
+    get '/graph/data', :controller => 'graphs', :action => 'data', :defaults => { :format => 'json' }
   end
 
   namespace :ext do

@@ -97,6 +97,7 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-normalize-css', '~> 3.0'
   gem 'rails-assets-clipboard', '~> 1.5'
   gem 'rails-assets-bootstrap-toggle'
+  gem 'rails-assets-highcharts'
 end
 
 group :development do
