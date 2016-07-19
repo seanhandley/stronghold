@@ -32,16 +32,16 @@ var StrongholdGraphs = {
         [coresAvailable + ' Available', coresAvailable],
       ],
       memorySeries: [
-        [memoryUsed + ' Mb ' + 'Used', memoryUsed],
-        [memoryAvailable + ' Mb ' + 'Available', memoryAvailable],
+        [memoryUsed + ' MB ' + 'Used', memoryUsed],
+        [memoryAvailable + ' MB ' + 'Available', memoryAvailable],
       ],
       volumesSeries: [
         [volumesUsed + ' Active', volumesUsed],
         [volumesAvailable + ' Available', volumesAvailable],
       ],
       storageSeries: [
-        [storageUsed + ' Gb ' + ' Used', storageUsed],
-        [storageAvailable + ' Gb '+'Available', storageAvailable],
+        [storageUsed + ' GB ' + ' Used', storageUsed],
+        [storageAvailable + ' GB '+'Available', storageAvailable],
       ],
       floatingIpSeries: [
         ['Active', floatingIpUsed],
@@ -50,18 +50,18 @@ var StrongholdGraphs = {
       poolsSeries: [
         [poolsUsed + ' Used',    poolsUsed],
         [poolsAvailable + ' Available', poolsAvailable],
-      ]}
+    ]}
   },
   createCharts: function(series) {
     Highcharts.setOptions(Highcharts.theme1);
     $('#container-instance').highcharts(StrongholdGraphOptions.semiPieChartOptions(series.instancesSeries));
     $('#container-flavor').highcharts(StrongholdGraphOptions.pieChartOptions("flavors", series.flavorsSeries));
 
-    Highcharts.setOptions(Highcharts.theme2);
+    Highcharts.setOptions(Highcharts.theme3);
     $('#container-cores').highcharts(StrongholdGraphOptions.semiPieChartOptions(series.coresSeries));
     $('#container-memory').highcharts(StrongholdGraphOptions.semiPieChartOptions(series.memorySeries));
 
-    Highcharts.setOptions(Highcharts.theme3);
+    Highcharts.setOptions(Highcharts.theme2);
     $('#container-volume').highcharts(StrongholdGraphOptions.semiPieChartOptions(series.volumesSeries));
     $('#container-storage').highcharts(StrongholdGraphOptions.semiPieChartOptions(series.storageSeries));
 

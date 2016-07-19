@@ -18,7 +18,7 @@ var StrongholdGraphOptions = {
         text: ''
       },
       tooltip: {
-        pointFormat: ''
+        pointFormat: '<b>{point.percentage:.1f}%</b>'
       },
       plotOptions: {
         pie: {
@@ -26,10 +26,11 @@ var StrongholdGraphOptions = {
             enabled: true,
             distance: -50,
             style: {
-              fontWeight: 'bold',
               color: 'white',
               textShadow: '0px 1px 2px black',
-              fontFamily: "'Signika', arial, sans-serif"
+              fontFamily: "'Signika', arial, sans-serif",
+              fontSize: '11px',
+              width: '60px',
             }
           },
           startAngle: -90,
