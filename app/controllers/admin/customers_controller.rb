@@ -61,7 +61,7 @@ class Admin::CustomersController < AdminBaseController
 
   def create_params
     params.permit(:organization_name, :email, :extra_projects, :salesforce_id,
-                  :organization => {:product_ids => []})
+                  :organization => {:metadata => '', :product_ids => []})
   end
 
   def update_params

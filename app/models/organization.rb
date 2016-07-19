@@ -68,6 +68,7 @@ class Organization < ActiveRecord::Base
   scope :pending_without_users, -> { all.select{|o| o.fresh? && o.users.count == 0}}
 
   serialize :quota_limit
+  serialize :metadata
 
   def update_including_state(params={})
     transition_to!(params[:state]) if params[:state]

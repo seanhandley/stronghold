@@ -18,6 +18,9 @@
   .form-group
     %label Salesforce ID
     = text_field_tag :salesforce_id, @customer.salesforce_id, class: 'form-control', placeholder: 'If they already have one'
+  .form-group
+    %label Metadata
+    = text_field_tag :metadata, @customer.metadata, class: 'form-control'
   %h4 Products
   = collection_check_boxes(:organization, :product_ids, Product.all, :id, :name, {}, {})
   %hr

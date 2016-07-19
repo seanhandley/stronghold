@@ -1,7 +1,7 @@
 class CustomerGenerator
   include ActiveModel::Validations
 
-  attr_reader :organization_name, :email, :products, :extra_projects, :salesforce_id
+  attr_reader :organization_name, :email, :products, :extra_projects, :salesforce_id, :metadata
 
   def initialize(params={})
     @organization_name = params[:organization_name]
@@ -12,6 +12,11 @@ class CustomerGenerator
       @products = params[:organization][:product_ids].select(&:present?)
     else
       @products = []
+    end
+    if params[:organization] && params[:organization][:metadata]
+      @metadata = params[:organization][:metadata]
+    else
+      @metadata = nil
     end
   end
 
