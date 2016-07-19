@@ -20,6 +20,10 @@ module ApplicationHelper
     content_for(:title) { page_title }
   end
 
+  def body_classes(body_classes)
+    content_for(:body_classes) { body_classes.join(' ')}
+  end
+
   def hm(o)
     content_for(:hm) { o }
   end

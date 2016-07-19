@@ -4,7 +4,8 @@
     %title= content_for?(:title) ? "DataCentred Admin - #{content_for(:title)}" : "DataCentred Admin"
     = render partial: 'shared/head'
 
-%body{'data-controller' => controller.controller_path, 'data-action' => controller.action_name}
+%body{'data-controller' => controller.controller_path, 'data-action' => controller.action_name,
+      'class' => content_for(:body_classes)}
   #wrap{class: content_for?(:hm) ? 'he-man' : ''}
     .top-nav.navbar.navbar-default.navbar-fixed-top.admin-menu
       .container{style: "width:100%"}

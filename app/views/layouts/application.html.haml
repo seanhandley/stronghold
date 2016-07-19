@@ -4,7 +4,8 @@
     %title= content_for?(:title) ? "DataCentred - #{content_for(:title)}" : "DataCentred"
     = render partial: 'shared/head'
 
-%body{'data-controller' => controller.controller_path, 'data-action' => controller.action_name}
+%body{'data-controller' => controller.controller_path, 'data-action' => controller.action_name,
+      'class' => content_for(:body_classes)}
   = render partial: 'shared/google_tags'
   #wrap
     .top-nav.navbar.navbar-default.navbar-fixed-top
