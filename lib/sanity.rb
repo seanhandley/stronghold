@@ -28,8 +28,9 @@ module Sanity
       if !live_instances.include?(instance.instance_id)
         false
       else
-        from = instance.instance_states.order('recorded_at').first.recorded_at
-        to   = instance.instance_states.order('recorded_at').last.recorded_at
+        from = instance.instance_states.order('recorded_at').first&.recorded_at
+        to   = instance.instance_states.order('recorded_at').last&.recorded_at
+        return false unless from && to
         if !instance.terminated_at && !live_instances[instance.instance_id]
           instance.update_attributes(terminated_at: to)
           true
