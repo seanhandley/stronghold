@@ -7,6 +7,12 @@ $(document).ready(function () {
       dataType: 'json',
       success: function (data) {
         StrongholdGraphs.createCharts(StrongholdGraphs.buildSeries(data));
+        $(document).on( 'shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
+          $( ".individual-graph").each(function() {
+            var chart = $(this).highcharts();
+            chart.reflow()
+          });
+        })
         capacityUsed = data.overall.capacity.used_percent;
         if(capacityUsed >= 70 && capacityUsed < 90) {
           $('#capacity-used div:first-child').removeClass("progress-bar-success");
@@ -27,3 +33,4 @@ $(document).ready(function () {
     $('#compute-volume-network-tabs a:first').tab('show');
   }
 });
+
