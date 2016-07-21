@@ -81,6 +81,8 @@ class OrganizationStateMachine
           Honeybadger.notify(e)
         end
       end
+      organization.disable_users_and_projects!
+      organization.update_column(:disabled, true)
       Mailer.goodbye(organization.admin_users).deliver_later
     end
   end
