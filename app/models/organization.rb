@@ -183,7 +183,7 @@ class Organization < ActiveRecord::Base
       generate_reference_step(ref, (count+1))
     else
       update_column(:reference, new_ref)
-      t = projects.create name: "#{reference}_primary"
+      t = projects.create! name: "#{reference}_primary"
       update_column(:primary_project_id, t.id)
     end
   end
