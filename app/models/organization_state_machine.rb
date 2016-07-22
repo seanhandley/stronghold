@@ -10,13 +10,12 @@ class OrganizationStateMachine
   state :frozen
   state :closed
 
-  transition from: :fresh,              to: [:fresh, :active, :frozen, :disabled]
-  transition from: :active,             to: [:active, :frozen, :dormant, :disabled, :no_payment_methods, :closed]
-  transition from: :frozen,             to: [:frozen, :active, :closed]
-  transition from: :disabled,           to: [:disabled, :active, :frozen, :closed]
-  transition from: :dormant,            to: [:dormant, :active]
-  transition from: :no_payment_methods, to: [:no_payment_methods, :frozen, :disabled, :active]
-  transition from: :closed,             to: [:closed, :active]
+  transition from: :fresh,              to: [:active, :frozen, :disabled]
+  transition from: :active,             to: [:frozen, :dormant, :disabled, :no_payment_methods, :closed]
+  transition from: :frozen,             to: [:active, :closed]
+  transition from: :disabled,           to: [:active, :frozen, :closed]
+  transition from: :dormant,            to: [:active]
+  transition from: :no_payment_methods, to: [:frozen, :disabled, :active]
 
   before_transition(from: :fresh, to: :active) do |organization, transition|
     organization.enable_users_and_projects!
