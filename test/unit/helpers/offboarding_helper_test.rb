@@ -57,6 +57,25 @@ class OffboardingHelperTest < CleanTest
     # Proved by mock expectations - see offboarding fixtures
   end
 
+  def test_with_auto_retry
+    @retries = 0
+    @mock = Minitest::Mock.new
+    @mock.expect :ping, true
+    assert(with_auto_retry(3) do
+      @mock.ping
+    end)
+    @mock.verify
+
+    @retries = 0
+    assert_raises(Fog::Errors::Error) do
+      with_auto_retry(3,0) do
+        @retries += 1
+        raise Fog::Errors::Error, 'foo'
+      end
+    end
+    assert_equal 3, @retries
+  end
+
   def test_destroy_passes_expectations
     model_destroy
   end
