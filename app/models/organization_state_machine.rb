@@ -81,6 +81,8 @@ class OrganizationStateMachine
         end
       end
       organization.disable_users_and_projects!
+      organization.users.each(&:destroy)
+      organization.projects.each(&:destroy)
       organization.update_column(:disabled, true)
     end
   end
