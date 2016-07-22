@@ -12,7 +12,7 @@ module OffboardingHelper
     instances = fog.list_servers_detail(all_tenants: true).body['servers'].select{|s| s['tenant_id'] == project.uuid}.map{|s| s['id']}
     instances.each do |instance|
       Rails.logger.info "Deleting instance #{instance}"
-      fog.delete_server(instance)
+      with_auto_retry(3) { fog.delete_server(instance)}
     end
 
     # There's no way currently with Glance to know which image belongs to who
@@ -29,13 +29,13 @@ module OffboardingHelper
     snapshots = fog.list_snapshots_detailed(:all_tenants => true).body['snapshots'].select{|s| s["os-extended-snapshot-attributes:project_id"] == project.uuid}.map{|s| s['id']}
     snapshots.each do |snapshot|
       Rails.logger.info "Deleting snapshot #{snapshot}"
-      fog.delete_snapshot(snapshot)
+      with_auto_retry(3) { fog.delete_snapshot(snapshot) }
     end
 
     volumes = fog.list_volumes_detailed(:all_tenants => true).body['volumes'].select{|v| v["os-vol-tenant-attr:tenant_id"] == project.uuid}.map{|v| v['id']}
     volumes.each do |volume|
       Rails.logger.info "Deleting volume #{volume}"
-      fog.delete_volume(volume)
+      with_auto_retry(3) { fog.delete_volume(volume) }
     end
 
     fog = OpenStackConnection.network
@@ -46,7 +46,9 @@ module OffboardingHelper
 
     # Iterate through floating IPs and delete all
     Rails.logger.info "Disassociating floating IPs: #{floating_ips.inspect}"
-    floating_ips.each {|p| fog.disassociate_floating_ip(p)}
+    floating_ips.each do |p|
+      with_auto_retry(3) { fog.disassociate_floating_ip(p) }
+    end
 
     # Iterate through routers and remove router interface
     routers.each do |router|
@@ -62,17 +64,31 @@ module OffboardingHelper
     ports    = fog.list_ports(tenant_id:    project.uuid).body['ports'].map{|p| p['id']}
     # Iterate through ports and delete all
     Rails.logger.info "Deleting ports: #{ports.inspect}"
-    ports.each    {|p| fog.delete_port(p)}
+    ports.each    {|p| with_auto_retry(3) { fog.delete_port(p) }}
     # Iterate through routers and delete all
     Rails.logger.info "Deleting routers: #{routers.inspect}"
-    routers.each  {|r| fog.delete_router(r)}
+    routers.each  {|r| with_auto_retry(3) { fog.delete_router(r) }}
     # Iterate through subnets and delete all
     Rails.logger.info "Deleting subnets: #{subnets.inspect}"
-    subnets.each  {|s| fog.delete_subnet(s)}
+    subnets.each  {|s| with_auto_retry(3) { fog.delete_subnet(s) }}
     # Iterate through networks and delete all
     Rails.logger.info "Deleting networks: #{networks.inspect}"
-    networks.each {|n| fog.delete_network(n)}
+    networks.each {|n| with_auto_retry(3) { fog.delete_network(n) }}
 
     true
+  end
+
+  def with_auto_retry(retries, wait=2, &blk)
+    last_error = nil
+    retries.times do
+      begin
+        yield
+        return true
+      rescue Fog::Errors::Error => e
+        last_error = e
+        sleep wait
+      end
+    end
+    raise last_error
   end
 end
