@@ -54,6 +54,10 @@ class OrganizationGraphDecorator < ApplicationDecorator
     }
   end
 
+  def self.refresh_caches
+    live_servers(true); live_volumes(true); live_floating_ips(true); live_lb_pools(true)
+  end
+
   private
 
   def used_percent
@@ -100,31 +104,6 @@ class OrganizationGraphDecorator < ApplicationDecorator
     live_lb_pools.count
   end
 
-  def live_lb_pools
-    return [] unless Rails.env.production? # Because LB support isn't on DevStack yet...
-    Rails.cache.fetch("live_lb_poools_dashboard", expires_in: 5.minutes) do
-      OpenStackConnection.network.list_lb_pools.body['pools']
-    end.select{|s| model.projects.map(&:uuid).include?(s['tenant_id'])}
-  end
-
-  def live_floating_ips
-    Rails.cache.fetch("live_floating_ips_dashboard", expires_in: 5.minutes) do
-      OpenStackConnection.network.list_floating_ips.body['floatingips']
-    end.select{|s| model.projects.map(&:uuid).include?(s['tenant_id'])}
-  end
-
-  def live_servers
-    Rails.cache.fetch("live_servers_dashboard", expires_in: 5.minutes) do
-      OpenStackConnection.compute.list_servers_detail(all_tenants: true).body['servers']
-    end.select{|s| model.projects.map(&:uuid).include?(s['tenant_id'])}
-  end
-
-  def live_volumes
-    Rails.cache.fetch("live_volumes_dashboard", expires_in: 5.minutes) do
-      OpenStackConnection.volume.list_volumes_detailed(all_tenants: true).body['volumes']
-    end.select{|s| model.projects.map(&:uuid).include?(s["os-vol-tenant-attr:tenant_id"])}
-  end
-
   def max_instances
     model.projects_limit * model.quota_limit['compute']['instances'].to_i
   end
@@ -153,4 +132,44 @@ class OrganizationGraphDecorator < ApplicationDecorator
     model.projects_limit * model.quota_limit['network']['network'].to_i
   end
 
+  def self.live_lb_pools(force=false)
+    Rails.cache.fetch("live_lb_poools_dashboard", expires_in: 5.minutes, force: force) do
+      OpenStackConnection.network.list_lb_pools.body['pools']
+    end
+  end
+
+  def live_lb_pools
+    return [] unless Rails.env.production? # Because LB support isn't on DevStack yet...
+    OrganizationGraphDecorator.live_lb_pools.select{|s| model.projects.map(&:uuid).include?(s['tenant_id'])}
+  end
+
+  def self.live_floating_ips(force=false)
+    Rails.cache.fetch("live_floating_ips_dashboard", expires_in: 5.minutes, force: force) do
+      OpenStackConnection.network.list_floating_ips.body['floatingips']
+    end
+  end
+
+  def live_floating_ips
+    OrganizationGraphDecorator.live_floating_ips.select{|s| model.projects.map(&:uuid).include?(s['tenant_id'])}
+  end
+
+  def self.live_servers(force=false)
+    Rails.cache.fetch("live_servers_dashboard", expires_in: 5.minutes, force: force) do
+      OpenStackConnection.compute.list_servers_detail(all_tenants: true).body['servers']
+    end
+  end
+
+  def live_servers
+    OrganizationGraphDecorator.live_servers.select{|s| model.projects.map(&:uuid).include?(s['tenant_id'])}
+  end
+
+  def self.live_volumes(force=false)
+    Rails.cache.write("live_volumes_dashboard", expires_in: 5.minutes, force: force) do
+      OpenStackConnection.volume.list_volumes_detailed(all_tenants: true).body['volumes']
+    end
+  end
+
+  def live_volumes
+    OrganizationGraphDecorator.live_volumes.select{|s| model.projects.map(&:uuid).include?(s["os-vol-tenant-attr:tenant_id"])}
+  end
 end

@@ -4,6 +4,10 @@ require File.expand_path('config/environment', File.dirname(__FILE__))
 include Clockwork
 
 if Rails.env.production? || Rails.env.staging?
+  every(2.minutes, 'graph_cache_warmer') do
+    GraphCacheWarmerJob.perform_later
+  end
+
   every(Billing::SYNC_INTERVAL_MINUTES.minutes, 'usage_sync') do
     UsageJob.perform_later
   end
