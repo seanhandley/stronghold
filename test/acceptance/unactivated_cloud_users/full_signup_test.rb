@@ -59,8 +59,7 @@ class FullSignupTests < CapybaraTestCase
     # save_screenshot('/Users/sean/Desktop/screen.png', :full => true)
 
     within('.page-body') do
-      assert has_content?('Welcome')
-      assert has_content?('Overview')
+      assert has_content?('Last week, you spent')
       assert has_content?('OpenStack Dashboard')
       assert has_content?('API Details')
     end
