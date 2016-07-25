@@ -164,7 +164,7 @@ class OrganizationGraphDecorator < ApplicationDecorator
   end
 
   def self.live_volumes(force=false)
-    Rails.cache.write("live_volumes_dashboard", expires_in: 5.minutes, force: force) do
+    Rails.cache.fetch("live_volumes_dashboard", expires_in: 5.minutes, force: force) do
       OpenStackConnection.volume.list_volumes_detailed(all_tenants: true).body['volumes']
     end
   end
