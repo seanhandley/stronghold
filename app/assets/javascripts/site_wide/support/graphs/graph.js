@@ -18,8 +18,8 @@ var StrongholdGraphs = {
 
     return {
       instancesSeries: [
-        [instancesUsed + ' instances active', instancesUsed],
-        [instancesAvailable + ' instances available', instancesAvailable],
+        [instancesUsed + ' active', instancesUsed],
+        [instancesAvailable + ' available', instancesAvailable],
       ],
       flavorsSeries: $.map(flavorsUsed, function(e) {
         return {
@@ -32,24 +32,24 @@ var StrongholdGraphs = {
         [coresAvailable + ' cores available', coresAvailable],
       ],
       memorySeries: [
-        [memoryUsed + ' MB RAM Used', memoryUsed],
-        [memoryAvailable + ' MB RAM Available', memoryAvailable],
+        [memoryUsed + ' MB Used', memoryUsed],
+        [memoryAvailable + ' MB Available', memoryAvailable],
       ],
       volumesSeries: [
         [volumesUsed + ' volumes active', volumesUsed],
         [volumesAvailable + ' volumes available', volumesAvailable],
       ],
       storageSeries: [
-        [storageUsed + ' GB block storage used', storageUsed],
-        [storageAvailable + ' GB block storage available', storageAvailable],
+        [storageUsed + ' GB storage used', storageUsed],
+        [storageAvailable + ' GB storage available', storageAvailable],
       ],
       floatingIpSeries: [
-        [floatingIpUsed + ' floating IPs active', floatingIpUsed],
-        [floatingIpAvailable + ' floating IPs available', floatingIpAvailable],
+        [floatingIpUsed + ' IPs active', floatingIpUsed],
+        [floatingIpAvailable + ' IPs available', floatingIpAvailable],
       ],
       poolsSeries: [
-        [poolsUsed + ' load balancer pools used',    poolsUsed],
-        [poolsAvailable + ' load balancer pools available', poolsAvailable],
+        [poolsUsed + ' pools used',    poolsUsed],
+        [poolsAvailable + ' pools available', poolsAvailable]
     ]}
   },
   createCharts: function(series) {
