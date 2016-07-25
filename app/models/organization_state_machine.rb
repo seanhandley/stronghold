@@ -80,7 +80,6 @@ class OrganizationStateMachine
           Honeybadger.notify(e)
         end
       end
-      organization.disable_users_and_projects!
       organization.users.each do |user|
         user.destroy rescue user.delete
       end
