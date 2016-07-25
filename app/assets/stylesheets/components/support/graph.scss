@@ -37,6 +37,12 @@ div#usage-capacity-summary h3.organization-name {
   margin: 0px;
   vertical-align: middle;
   padding: 5px;
+  font-size: 1.4em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 100%;
+  max-width: 100%;
 }
 
 div#usage-capacity-summary div.header-column {
