@@ -5,7 +5,7 @@ class InvalidLoginsTests < CapybaraTestCase
   def test_valid_login
     visit('/')
     within('.page-body') do
-      assert has_content?('Overview')
+      assert has_content?('Last week, you spent')
     end
   end
 
