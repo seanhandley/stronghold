@@ -3,43 +3,41 @@
 = render partial: 'support/tickets/incidents'
 
 - if current_organization.cloud?
+  .container#usage-capacity-summary
+    = render partial: 'support/dashboard/header'
 
-  %h1#dashboard-overview
-    Account Overview
+  .container
+    #dashboard_buttons.pull-right
+      - unless current_organization.frozen?
+        - if current_organization.compute? && can?(:read, :cloud)
+          %a{class: "btn btn-primary has-tooltip", href: openstack_path, target: '_blank', 'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => 'Log in using your username/password',}
+            OpenStack Dashboard
+        - if current_organization.known_to_payment_gateway? && (can?(:read, :cloud) || can?(:read, :storage))
+          %a{class: "btn btn-default", href: '', 'data-toggle' => "modal", 'data-target' => "#showOpenStackDetails"}
+            API Details
 
-  - if current_organization.frozen?
-    .alert.alert-warning
-      %i.fa.fa-info-circle
-      Your account is currently in review mode while we perform additional checks. Please check your email for further instructions.
+  .container-fluid#graph-tabs
+    .centered-tabs
+      %ul.nav.nav-tabs#compute-volume-network-tabs
+        %li{'class' => active_tab?('compute')}
+          %a{:href => '#compute', 'data-toggle' => 'tab', 'data-name' => 'compute'}
+            = t(:compute)
+        %li{'class' => active_tab?('volume')}
+          %a{:href => '#volume', 'data-toggle' => 'tab', 'data-name' => 'volume'}
+            = t(:volume)
+        %li{'class' => active_tab?('network')}
+          %a{:href => '#network', 'data-toggle' => 'tab', 'data-name' => 'network'}
+            = t(:network)
 
-  #dashboard_buttons.pull-right
-    - unless current_organization.frozen?
-      - if current_organization.compute? && can?(:read, :cloud)
-        %a{class: "btn btn-primary has-tooltip", href: openstack_path, target: '_blank', 'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => 'Log in using your username/password',}
-          OpenStack Dashboard
-      - if current_organization.known_to_payment_gateway? && (can?(:read, :cloud) || can?(:read, :storage))
-        %a{class: "btn btn-default", href: '', 'data-toggle' => "modal", 'data-target' => "#showOpenStackDetails"}
-          API Details
+    .tab-content
+      .tab-pane#compute{'class' => active_tab?('compute')}
+        = render partial: 'support/graphs/compute'
 
-  .container-fluid
-    %h3= current_organization.name
-    .row{style: "margin-top: 20px"}
-      - if current_organization.compute? && can?(:read, :cloud)
-        .col-md-6{style: 'text-align: center'}
-          .dashboard-element
-            %h2
-              %i.fa.fa-rocket
-              Compute
-            Instances active:
-            %span#instances_active= @instance_count
-      - if current_organization.storage? && can?(:read, :storage)
-        .col-md-6{style: 'text-align: center'}
-          .dashboard-element
-            %h2
-              %i.fa.fa-database
-              Storage
-            Object storage used:
-            %span#object-storage== #{@object_usage} GB
+      .tab-pane#volume{'class' => active_tab?('volume')}
+        = render partial: 'support/graphs/volume'
+
+      .tab-pane#network{'class' => active_tab?('network')}
+        = render partial: 'support/graphs/network'
 
 - else
   &nbsp;
