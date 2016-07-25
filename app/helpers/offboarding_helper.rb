@@ -89,6 +89,6 @@ module OffboardingHelper
         sleep wait
       end
     end
-    raise last_error
+    Honeybadger.notify(last_error) if last_error
   end
 end
