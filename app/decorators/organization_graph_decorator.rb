@@ -104,32 +104,36 @@ class OrganizationGraphDecorator < ApplicationDecorator
     live_lb_pools.count
   end
 
+  def set_quota_value(category, quota)
+    model.projects.map{|p| p.quota_set[category][quota].to_i}.sum
+  end
+
   def max_instances
-    model.projects_limit * model.quota_limit['compute']['instances'].to_i
+    set_quota_value('compute', 'instances')
   end
 
   def max_vcpus
-    model.projects_limit * model.quota_limit['compute']['cores'].to_i
+    set_quota_value('compute', 'cores')
   end
 
   def max_memory
-    model.projects_limit * model.quota_limit['compute']['ram'].to_i
+    set_quota_value('compute', 'ram')
   end
 
   def max_volumes
-    model.projects_limit * model.quota_limit['volume']['volumes'].to_i
+    set_quota_value('volume', 'volumes')
   end
 
   def max_storage
-    model.projects_limit * model.quota_limit['volume']['gigabytes'].to_i
+    set_quota_value('volume', 'gigabytes')
   end
 
   def max_floatingip
-    model.projects_limit * model.quota_limit['network']['floatingip'].to_i
+    set_quota_value('network', 'floatingip')
   end
 
   def max_lbpools
-    model.projects_limit * model.quota_limit['network']['network'].to_i
+    set_quota_value('network', 'pool')
   end
 
   def self.live_lb_pools(force=false)
