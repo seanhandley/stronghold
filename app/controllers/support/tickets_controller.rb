@@ -31,7 +31,7 @@ class Support::TicketsController < SupportBaseController
     @departments = TicketAdapter.departments
     @priorities  = TicketAdapter.priorities
     @priorities.delete('Emergency') unless current_organization.known_to_payment_gateway?
-    unless current_organization.colo? && current_user.has_permission?('access_requests.modify')
+    unless current_organization.colo? && ['access_requests.raise_for_self', 'access_requests.raise_for_others'].any?{|p| current_user.has_permission?(p)}
       @departments -= ['Access Requests']
     end
   rescue Sirportly::Error => e
