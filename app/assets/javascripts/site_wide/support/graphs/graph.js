@@ -49,7 +49,7 @@ var StrongholdGraphs = {
       ],
       poolsSeries: [
         [poolsUsed + ' load balancer pools used',    poolsUsed],
-        [poolsAvailable + ' load balancer pools available', poolsAvailable],
+        [poolsAvailable + ' load balancer pools available', poolsAvailable]
       ]}
   },
   createCharts: function(series) {
