@@ -24,7 +24,7 @@ class Ticket
     @email           = params[:email]
     @name            = params[:name]
     @status          = params[:status]
-    @visitor_names   = params[:visitor_names]
+    @visitor_names   = params[:visitor_names] || params[:name]
     @nature_of_visit = params[:nature_of_visit]
     @date_of_visit   = params[:date_of_visit]
     @time_of_visit   = params[:time_of_visit]

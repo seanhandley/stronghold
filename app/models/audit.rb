@@ -23,8 +23,13 @@ class Audit < ActiveRecord::Base
   end
 
   def try_to_set_organization
-    return if organization_id
-    update_column(:organization_id, user&.organization_id)
+    if auditable_type == 'Organization'
+      return if organization_id == auditable_id
+      update_column(:organization_id, auditable_id) if auditable_id
+    elsif auditable.respond_to?(:organization_id)
+      return if organization_id == auditable.organization_id
+      update_column(:organization_id, auditable.organization_id) if auditable.organization_id
+    end
   end
 
   private
