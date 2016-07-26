@@ -85,11 +85,12 @@
             = link_to 'More Info', '#', 'data-container' => "body", 'data-toggle' => "popover", 'data-placement' => "right", 'data-trigger' => "hover focus", 'data-content' => "<strong>Response Times</strong><br><br>Low: 1 working day<br>Normal: 4 working hours<br>High: 1 working hour<br>Emergency: 15 minutes, 24/7"
             \.
           #access-request-fields.hide
-            .input-group
-              %span.input-group-addon
-                %i.fa.fa-users
-              .ui-widget
-                = text_field_tag :visitor_names, nil, placeholder: 'Visitor name(s)', :class => "form-control autocomplete-field", 'data-autocomplete-options' => current_organization.users.collect(&:name).to_json
+            - if can? :raise_for_others, Ticket
+              .input-group
+                %span.input-group-addon
+                  %i.fa.fa-users
+                .ui-widget
+                  = text_field_tag :visitor_names, nil, placeholder: 'Visitor name(s)', :class => "form-control autocomplete-field", 'data-autocomplete-options' => current_organization.users.collect(&:name).to_json
             .input-group
               %span.input-group-addon
                 %i.fa.fa-edit

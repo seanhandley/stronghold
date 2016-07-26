@@ -83,10 +83,10 @@ class TicketAdapter
         'custom[organization_name]' => Authorization.current_user.organization.name
       }
       if ticket.department == "Access Requests"
-        properties.merge!({'custom[visitor_names]' => ticket.visitor_names,
-        'custom[nature_of_visit]' => ticket.nature_of_visit,
-        'custom[date_of_visit]'   => ticket.date_of_visit,
-        'custom[time_of_visit]'   => ticket.time_of_visit})
+        properties.merge!({'custom[visitor_names]'   => ticket.visitor_names,
+                           'custom[nature_of_visit]' => ticket.nature_of_visit,
+                           'custom[date_of_visit]'   => ticket.date_of_visit,
+                           'custom[time_of_visit]'   => ticket.time_of_visit})
       end
       new_ticket = SIRPORTLY.create_ticket(properties)
       update = new_ticket.post_update(:message => ticket.description, :author_name => Authorization.current_user.name, :author_email => Authorization.current_user.email)

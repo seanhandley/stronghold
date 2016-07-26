@@ -23,11 +23,19 @@ class Support::Api::TicketsController < SupportBaseController#
       :success => ticket.valid?,
       :message => nil
     }
-    if ticket.valid?
-      response["message"] = TicketAdapter.create(ticket)
-    else
-      response["message"] = get_model_errors(ticket)
+    begin
+      authorize!(:raise_for_self,   ticket) if access_request_self_params.any?   {|p| create_params[p]}
+      authorize!(:raise_for_others, ticket) if access_request_others_params.any? {|p| create_params[p]}
+      if ticket.valid?
+        response["message"] = TicketAdapter.create(ticket)
+      else
+        response["message"] = get_model_errors(ticket)
+      end
+    rescue CanCan::Error => e
+      response[:success] = false
+      response[:message] = [{"field" => "Error:", "message" => e.message}]
     end
+
     respond_to do |format|
       format.json {
         render :json => response
@@ -47,8 +55,24 @@ class Support::Api::TicketsController < SupportBaseController#
   private
 
   def create_params
-    params.require(:ticket).permit(:title, :description, :department, :priority,
-                                   :visitor_names, :nature_of_visit, :date_of_visit, :time_of_visit)
+    params.require(:ticket).permit(*ticket_params)
+  end
+
+  def ticket_params
+    ([:title, :description, :department, :priority] + access_request_params).uniq
+  end
+
+  def access_request_params
+    access_request_others_params + access_request_self_params
+  end
+
+  def access_request_self_params
+    [:nature_of_visit, :date_of_visit, :time_of_visit]
+  end
+
+
+  def access_request_others_params
+    [:visitor_names]
   end
 
   def update_params
