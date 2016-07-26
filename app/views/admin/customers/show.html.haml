@@ -3,6 +3,15 @@
 .admin-customer-section
   .row
     .col-md-8
+      .panel.panel-info
+        .panel-heading
+          %i.fa.fa-info
+          Information
+        .panel-body
+          .container.customer-information
+            = render partial: 'admin/customers/info'
+          = link_to 'Edit', edit_admin_customer_path(@organization), class: 'btn btn-primary information-edit-dashboard'
+
       .container-fluid#dashboard-tabs
         .centered-tabs
           %ul.nav.nav-tabs#users-projects-audits-tabs
@@ -18,14 +27,7 @@
 
         .tab-content
           .tab-pane#users{'class' => active_tab?('users')}
-            .panel.panel-info
-              .panel-heading
-                %i.fa.fa-info
-                Information
-              .panel-body
-                .container.customer-information
-                  = render partial: 'admin/customers/info'
-                = link_to 'Edit', edit_admin_customer_path(@organization), class: 'btn btn-primary information-edit-dashboard'
+
 
           .tab-pane#tickets{'class' => active_tab?('tickets')}
             .panel.panel-info
