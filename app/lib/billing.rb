@@ -26,6 +26,8 @@ module Billing
     Billing::LoadBalancers.sync!(from, to, sync)
     Billing.logger.info "Syncing VPN connections..."
     Billing::VpnConnections.sync!(from, to, sync)
+    Billing.logger.info "Syncing bandwidth usage..."
+    Billing::Bandwidths.sync!(from, to, sync)
     sync.update_attributes(completed_at: Time.now)
     clear_memoized_samples
     Billing.logger.info "Completed sync #{sync.id}. #{sync.summary}"

@@ -1,0 +1,28 @@
+default: &default
+  connection:
+    host: 'localhost'
+    port: 9200
+    username: 
+    password:
+    scheme: 'http'
+  ssl:
+    use_client_cert: false
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+acceptance:
+  <<: *default
+
+staging:
+  <<: *default
+
+production:
+  <<: *default
+  ssl:
+    use_client_cert: true
+    certificate_file: "/etc/ssl/certs/STAR_datacentred_io.pem"
+    key_file: "/etc/ssl/certs/STAR_datacentred_io.pem"

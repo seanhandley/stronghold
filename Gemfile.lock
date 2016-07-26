@@ -187,6 +187,14 @@ GEM
       json
     domain_name (0.5.20160615)
       unf (>= 0.0.5, < 1.0.0)
+    elasticsearch (1.0.15)
+      elasticsearch-api (= 1.0.15)
+      elasticsearch-transport (= 1.0.15)
+    elasticsearch-api (1.0.15)
+      multi_json
+    elasticsearch-transport (1.0.15)
+      faraday
+      multi_json
     equalizer (0.0.11)
     errbase (0.0.3)
     erubis (2.7.0)
@@ -489,6 +497,7 @@ GEM
       libv8 (~> 3.16.14.0)
       ref
     thor (0.19.4)
+    thread (0.2.2)
     thread_safe (0.3.6)
     tilt (2.0.5)
     timecop (0.8.1)
@@ -566,6 +575,7 @@ DEPENDENCIES
   database_cleaner (~> 1.5)
   deep_merge (~> 1.0)
   docker-api (~> 1.31)
+  elasticsearch
   faker
   faraday (~> 0.9)
   fog-openstack (~> 0.1)
@@ -646,6 +656,7 @@ DEPENDENCIES
   stripe-rails (~> 0.3)
   tel_to_helper
   therubyracer (~> 0.12.2)
+  thread
   timecop
   traceroute
   uglifier (>= 2.7)

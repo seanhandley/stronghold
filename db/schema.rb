@@ -57,6 +57,16 @@ ActiveRecord::Schema.define(version: 20170524145512) do
     t.index ["sync_id"], name: "image_syncs", using: :btree
   end
 
+  create_table "billing_bandwidths", force: :cascade do |t|
+    t.string   "project_id", limit: 255
+    t.float    "gigabytes",  limit: 24
+    t.integer  "sync_id",    limit: 4
+    t.datetime "from"
+    t.datetime "to"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "billing_images", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
     t.string "image_id"
     t.string "name"

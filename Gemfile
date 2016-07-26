@@ -56,6 +56,8 @@ gem 'docker-api', '~> 1.31'
 gem 'gibberish', '~> 2.1'
 gem 'paranoia', '~> 2.2'
 gem 'harbour', git: 'git@github.com:datacentred/harbour.git', branch: 'master'
+gem "elasticsearch"
+gem "thread"
 
 group :test, :acceptance do
   gem 'faker'

@@ -1,0 +1,25 @@
+%div.usage-back
+  %h3 Data Transfer
+  %p
+  .table-responsive
+    %table.table.table-hover.phone-bill
+      %thead
+        %tr
+          %th.icon
+            %i.fa.fa-exchange
+          %th
+            Data Transferred (Ingress/Egress)
+          - unless current_organization.test_account?
+            %th
+              %i.fa.fa-gbp
+              Total
+      %tbody
+        %tr.highlight.bottomline
+          %td
+            %em Total bandwidth usage:
+          %td
+            = bandwidth[:bytes].to_s(:human_size)
+          - unless current_organization.test_account?
+            %td
+              == £#{number_with_precision(bandwidth[:cost][:total], :delimiter => ',', :separator => '.', :precision => 2)}
+

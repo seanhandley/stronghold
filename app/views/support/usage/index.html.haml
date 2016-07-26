@@ -34,6 +34,8 @@
                                                                  external_gateways: results[:external_gateway_results]}
     = render partial: 'admin/usage/results/load_balancers',  locals: { project: project, load_balancers: results[:load_balancer_usage]}
     = render partial: 'admin/usage/results/vpn_connections', locals: { project: project, vpn_connections: results[:vpn_connection_usage]}
+    = render partial: 'admin/usage/results/bandwidth', locals: { bandwidth:   results[:bandwidth_usage],
+                                                             project:           project }
 - else
   %h3
     %em No usage data collected yet.
