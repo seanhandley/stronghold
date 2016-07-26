@@ -67,7 +67,7 @@ class OffboardingHelperTest < CleanTest
     @mock.verify
 
     @retries = 0
-    assert_raises(Fog::Errors::Error) do
+    Honeybadger.stub(:notify, true) do
       with_auto_retry(3,0) do
         @retries += 1
         raise Fog::Errors::Error, 'foo'
