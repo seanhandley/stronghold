@@ -42,7 +42,7 @@ class TicketAdapter
                      status: t['statuses.status_type'],
                      department: t['departments.name']}
           if(t['departments.name'] == 'Access Requests')
-            params.merge!(visitor_names: [t['contacts.name'], t["custom_field.visitor_names"]].select{|s| s.length > 0}.join(', '),
+            params.merge!(visitor_names: [t['contacts.name'], t["custom_field.visitor_names"]].compact.join(', '),
                           date_of_visit: t["custom_field.date_of_visit"],
                           time_of_visit: t["custom_field.time_of_visit"])
           end
