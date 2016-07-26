@@ -47,7 +47,9 @@ Rails.application.routes.draw do
     namespace :admin do
       mount Soulmate::Server, :at => "/sm"
       root :to => 'customers#index'
-      resources :customers, except: [:destroy]
+      resources :customers, except: [:destroy] do
+        resources :projects
+      end
       resources :usage, only: [:show, :update]
       resources :free_ips, only: [:index]
       resources :account_migrations, only: [:update]
@@ -66,7 +68,7 @@ Rails.application.routes.draw do
           post 'charge'
         end
       end
-      
+
 
       namespace :utilities do
         root :to => 'dashboard#index'

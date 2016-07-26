@@ -1,0 +1,9 @@
+%div{'style' => "overflow: auto; height: 280px"}
+  - ['compute', 'volume', 'network'].each do |key|
+    %h3= key.titleize
+    - project.quota_set[key].each do |k,v|
+      .form-group
+        %label= fix_abbreviation_case(k.humanize.titleize.pluralize)
+        = number_field_tag "quota[#{key}][#{k}]", v, :class => 'form-control',
+          max: @organization.quota_limit[key][k]
+        %p.help-block== Maximum: #{@organization.quota_limit[key][k]}

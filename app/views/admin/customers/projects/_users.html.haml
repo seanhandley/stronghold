@@ -1,0 +1,5 @@
+%div{'style' => "overflow: auto; height: 180px"}
+  - @organization.users.each_slice(2) do |users|
+    .row
+      - users.each do |user|
+        = render partial: 'admin/customers/projects/user_entry', locals: {user: user, project: project}

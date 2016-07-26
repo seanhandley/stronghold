@@ -12,21 +12,57 @@
             = render partial: 'admin/customers/info'
           = link_to 'Edit', edit_admin_customer_path(@organization), class: 'btn btn-primary information-edit-dashboard'
 
-      .panel.panel-info
-        .panel-heading
-          %i.fa.fa-tags
-          Open Tickets
-        .panel-body
-          = render partial: 'admin/customers/tickets'
+      .container-fluid#dashboard-tabs
+        .centered-tabs
+          %ul.nav.nav-tabs#tickets-projects-audits-users-tabs
+            %li{'class' => active_tab?('tickets')}
+              %a{:href => '#tickets', 'data-toggle' => 'tab', 'data-name' => 'tickets'}
+                = t(:tickets)
+            %li{'class' => active_tab?('projects')}
+              %a{:href => '#projects', 'data-toggle' => 'tab', 'data-name' => 'projects'}
+                = t(:projects)
+            %li{'class' => active_tab?('audits')}
+              %a{:href => '#audits', 'data-toggle' => 'tab', 'data-name' => 'audits'}
+                = t(:audits)
+            %li{'class' => active_tab?('users')}
+              %a{:href => '#users', 'data-toggle' => 'tab', 'data-name' => 'users'}
+                = t(:users)
 
-      .panel.panel-info
-        .panel-heading
-          %i.fa.fa-check-square-o
-          Audits Logs
-        .panel-body
-          = render partial: "support/audits/audits", locals: {audits: @audits}
-          - if @audits.any?
-            = link_to 'See more', admin_audit_path(@organization)
+      .tab-content
+        .tab-pane#tickets{'class' => active_tab?('tickets')}
+          .panel.panel-info
+            .panel-heading
+              %i.fa.fa-tags
+              Open Tickets
+            .panel-body
+              = render partial: 'admin/customers/tickets'
+
+
+        .tab-pane#projects{'class' => active_tab?('projects')}
+          .panel.panel-info
+            .panel-heading
+              %i.fa.fa-folder-o
+              Cloud Projects
+            .panel-body.panel-padding
+              = render partial: 'admin/customers/projects', locals: {organization: @organization}
+
+        .tab-pane#audits{'class' => active_tab?('audits')}
+          .panel.panel-info
+            .panel-heading
+              %i.fa.fa-check-square-o
+              Audits Logs
+            .panel-body
+              = render partial: "support/audits/audits", locals: {audits: @audits}
+              - if @audits.any?
+                = link_to 'See more', admin_audit_path(@organization)
+
+        .tab-pane#users{'class' => active_tab?('users')}
+          .panel.panel-info
+            .panel-heading
+              %i.fa.fa-user
+              Users
+            .panel-body.panel-padding
+              = render partial: 'support/users/user_info', locals: {users: @users}
 
     .col-md-4
       %div.panel.panel-info
@@ -55,13 +91,6 @@
           Usage
         .panel-body.panel-padding
           = render partial: 'admin/customers/usage'
-
-      .panel.panel-info#users-panel
-        .panel-heading
-          %i.fa.fa-user
-          Users
-        .panel-body.panel-padding
-          = render partial: 'admin/customers/users'
 
       .panel.panel-info
         .panel-heading

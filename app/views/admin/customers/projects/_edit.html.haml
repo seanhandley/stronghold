@@ -1,0 +1,34 @@
+.modal.fade{'tabindex' => "-1", 'role' => "dialog", 'aria-labelledby' => "editProject#{project.id}", 'aria-hidden' => "true", 'data-backdrop' => 'static', 'id' => "editProject#{project.id}"}
+  .modal-dialog
+    .modal-content
+      = form_for project, url: admin_customer_project_path(@organization, project), id: "editProject#{project.id}", remote: true do |f|
+        .modal-header
+          %button{'type' => "button", 'class' => "close", 'data-dismiss' => "modal", 'aria-hidden' => "true"}
+            &times;
+          %h4.modal-title
+            %i.fa.fa-folder-o
+            Edit Project
+        .modal-body
+          = javascript_error_messages_for(f.object)
+          #project-details
+            .form-group
+              %label Name
+              = f.text_field :name, :class => 'form-control', :readonly => project.staff_project?
+            %div{'role' => "tabpanel"}
+              %ul.nav.nav-tabs{role: "tablist"}
+                %li.active{role: "presentation"}
+                  %a{'href' => "#tab-members#{project.id}", 'aria-controls' => "tab-members#{project.id}", 'role' => "tab", 'data-toggle' => "tab"}
+                    Members
+                %li{role: "presentation"}
+                  %a{'href' => "#tab-quotas#{project.id}", 'aria-controls' => "tab-quotas#{project.id}", 'role' => "tab", 'data-toggle' => "tab"}
+                    Quotas
+              .tab-content
+                .tab-pane.active{role: "tabpanel", id: "tab-members#{project.id}"}
+                  = render partial: 'admin/customers/projects/users', locals: {organization: @organization, project: project}
+                .tab-pane{role: "tabpanel", id: "tab-quotas#{project.id}"}
+                  = render partial: 'admin/customers/projects/quotas', locals: {organization: @organization, project: project}
+
+        .modal-footer
+          %button.btn.btn-default{'data-toggle' => "modal", 'data-dismiss' => "modal"}
+            = t(:cancel)
+          = submit_tag 'Save', class: 'btn btn-primary', id: 'submit_button', data: { disable_with: "Saving..." }

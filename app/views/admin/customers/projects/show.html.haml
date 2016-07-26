@@ -1,0 +1,36 @@
+.table-responsive
+  %table.table.table-hover
+    %thead
+      %th Name
+      %th UUID
+      %th Members
+      %th.fixed-width-100 Limits
+      %th
+    %tbody
+      - if @projects.any?
+        - @projects.each do |project|
+          %tr
+            %td= project.name
+            %td
+              = project.uuid
+            %td.align-text-centre= project.users.count
+            %td.fixed-width-100
+              %a{:class => "btn btn-default", :role => "button", :'data-toggle' => "collapse", :href => "#collapse#{project.id}", :'aria-expanded'=>"false", :'aria-controls'=>"collapse#{project.id}"} Show
+              %div{id: "collapse#{project.id}", class: "accordion-body collapse"}
+                - ['compute', 'volume', 'network'].sort.each do |key|
+                  - project.quota_set[key].each do |k,v|
+                    %h6
+                      = number_with_precision(v, :delimiter => ',', :separator => '.', :precision => 0)
+                      = fix_abbreviation_case(k.humanize.titleize.pluralize(v))
+            %td
+              = link_to 'Edit', '', class: 'btn btn-default', 'data-toggle' => "modal", 'data-target' => "#editProject#{project.id}", 'remote' => true, 'data' => { 'method' => :put }
+              - unless project.staff_project? || project.primary_project?
+                = link_to '<i class="fa fa-trash-o"></i>'.html_safe, admin_customer_project_path(@organization, project.id), class: 'btn btn-danger trash-padding', :data => {:confirm => 'Are you sure? This action cannot be undone.', :method => :delete}
+          = render partial: "admin/customers/projects/edit", locals: {organization: @organization, project: project}
+      - else
+        %tr
+          %td
+            %em No Projects.
+
+= link_to 'New Project', '', class: 'btn btn-primary', 'data-toggle' => "modal", 'data-target' => "#addNewProject"
+= render partial: 'admin/customers/projects/new'

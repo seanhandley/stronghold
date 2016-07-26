@@ -1,0 +1,36 @@
+.modal.fade#addNewProject{'tabindex' => "-1", 'role' => "dialog", 'aria-labelledby' => "addNewProject", 'aria-hidden' => "true", 'data-backdrop' => 'static'}
+  .modal-dialog
+    .modal-content
+      = form_for Project.new, url: admin_customer_projects_path(@organization), id: 'add_new_project', remote: true do |f|
+        .modal-header
+          %button{'type' => "button", 'class' => "close", 'data-dismiss' => "modal", 'aria-hidden' => "true"}
+            &times;
+          %h4.modal-title#addNewProject
+            %i.fa.fa-folder-o
+            Add New Project
+          %p Please enter a name for your project
+        .modal-body
+          = javascript_error_messages_for(f.object)
+          #project-details
+            .form-group
+              %label Name
+              = f.text_field :name, :class => 'form-control'
+            %div{'role' => "tabpanel"}
+              %ul.nav.nav-tabs{role: "tablist"}
+                %li.active{role: "presentation"}
+                  %a{'href' => "#members-new", 'aria-controls' => "members-new", 'role' => "tab", 'data-toggle' => "tab"}
+                    Members
+                %li{role: "presentation"}
+                  %a{'href' => "#quotas-new", 'aria-controls' => "quotas-new", 'role' => "tab", 'data-toggle' => "tab"}
+                    Quotas
+
+            .tab-content
+              .tab-pane.active{role: "tabpanel", id: 'members-new'}
+                = render partial: 'admin/customers/projects/users', locals: {organization: @organization, project: f.object}
+              .tab-pane{role: "tabpanel", id: 'quotas-new'}
+                = render partial: 'admin/customers/projects/quotas', locals: {organization: @organization, project: f.object}
+
+        .modal-footer
+          %button.btn.btn-default{'data-toggle' => "modal", 'data-dismiss' => "modal"}
+            = t(:cancel)
+          = submit_tag 'Add', class: 'btn btn-primary', id: 'submit_button', data: { disable_with: "Saving..." }

@@ -1,0 +1,5 @@
+.col-md-6
+  .checkbox
+    %label
+      = check_box_tag "project[users][#{user.id}]", true, project.users.map(&:uuid).include?(user.uuid)
+      = user.name
