@@ -264,6 +264,7 @@ module Billing
                                         flavor_id: meta_data["instance_flavor_id"]
         end
       end
+      instance.complete!
     end
 
   end
