@@ -24,8 +24,10 @@ class Support::Api::TicketsController < SupportBaseController#
       :message => nil
     }
     begin
-      authorize!(:raise_for_self,   ticket) if access_request_self_params.any?   {|p| create_params[p]}
-      authorize!(:raise_for_others, ticket) if access_request_others_params.any? {|p| create_params[p]}
+      if current_organization.colo?
+        authorize!(:raise_for_self,   ticket) if access_request_self_params.any?   {|p| create_params[p]}
+        authorize!(:raise_for_others, ticket) if access_request_others_params.any? {|p| create_params[p]}
+      end
       if ticket.valid?
         response["message"] = TicketAdapter.create(ticket)
       else
