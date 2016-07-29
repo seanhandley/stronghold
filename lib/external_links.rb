@@ -14,4 +14,7 @@ module ExternalLinks
   def self.status_path
     'http://status.datacentred.io'
   end
+  def self.ticket_path(reference)
+    "https://helpdesk.datacentred.io/staff/tickets/#{reference}"
+  end
 end
