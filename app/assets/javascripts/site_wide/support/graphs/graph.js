@@ -32,15 +32,15 @@ var StrongholdGraphs = {
         [coresAvailable + ' cores available', coresAvailable],
       ],
       memorySeries: [
-        [memoryUsed + ' Mb RAM Used', memoryUsed],
-        [memoryAvailable + ' Mb RAM Available', memoryAvailable],
+        [memoryUsed + ' MB RAM Used', memoryUsed],
+        [memoryAvailable + ' MB RAM Available', memoryAvailable],
       ],
       volumesSeries: [
         [volumesUsed + ' volumes active', volumesUsed],
         [volumesAvailable + ' volumes available', volumesAvailable],
       ],
       storageSeries: [
-        [storageUsed + ' Gb block storage used', storageUsed],
+        [storageUsed + ' GB block storage used', storageUsed],
         [storageAvailable + ' GB block storage available', storageAvailable],
       ],
       floatingIpSeries: [
