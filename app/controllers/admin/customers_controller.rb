@@ -36,6 +36,7 @@ class Admin::CustomersController < AdminBaseController
 
   def update
     organization = Organization.find(params[:id])
+
     if organization.update_including_state(sanitised_update_params)
       respond_to do |format|
         format.js {
@@ -67,7 +68,7 @@ class Admin::CustomersController < AdminBaseController
   def update_params
     params.require(:organization).permit(:reporting_code, :reference, :stripe_customer_id, :salesforce_id,
                                          :billing_address1, :billing_city, :billing_postcode,
-                                         :billing_country, :phone, :state, :id, :started_paying_at)
+                                         :billing_country, :phone, :state, :id, :started_paying_at, :test_account)
   end
 
   def sanitised_update_params

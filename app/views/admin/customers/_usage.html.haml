@@ -18,3 +18,13 @@
       = long_date @organization.most_recent_usage_recorded_at
     - else
       %em No recent activity
+
+.test-toggle-and-usage-link
+  = link_to 'See Usage Data', admin_usage_path(@organization)
+
+  = form_for @organization, url: admin_customer_path(@organization), :method => :put, :remote => true, :html => {:role => 'form', :id => 'test_form'} do |f|
+    .form-group
+      Test account?
+      = f.check_box :test_account?, {:id=>"toggle-test", class:'toggle', data: {:test => @organization.test_account?},
+                    'data-toggle'=>"toggle", 'data-on'=>"Yes",
+                    'data-off'=>"No", 'data-size'=> "small", 'data-onstyle'=>"info", 'data-offstyle'=>"primary", 'data-style'=>"ios"}

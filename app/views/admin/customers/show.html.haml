@@ -37,14 +37,14 @@
                 .form-group
                   = f.check_box :started_paying_at?, {:id=>"toggle-paying", class:'toggle', data: {:paying => @organization.paying?},
                                 'data-toggle'=>"toggle", 'data-on'=>"Paying",
-                                'data-off'=>"Not paying", 'data-size'=> "small", 'data-onstyle'=>"info", 'data-offstyle'=>"danger"}
+                                'data-off'=>"Not paying", 'data-size'=> "small", 'data-onstyle'=>"info", 'data-offstyle'=>"danger", 'data-style'=>"ios"}
             %div
               - unless @organization.staff?
                 = form_for @organization, url: admin_account_migration_path(@organization), :remote => true, :html => {:role => 'form', :id => 'account_form'} do |f|
                   .form-group
                     = f.check_box :self_service?, {:id=>"toggle-account", class:'toggle', data: {:account => @organization.self_service},
                                   'data-toggle'=>"toggle", 'data-on'=>"Self-Service",
-                                  'data-off'=>"Invoiced/Trial", 'data-size'=> "small", 'data-onstyle'=>"info", 'data-offstyle'=>"primary"}
+                                  'data-off'=>"Invoiced/Trial", 'data-size'=> "small", 'data-onstyle'=>"info", 'data-offstyle'=>"primary", 'data-style'=>"ios"}
 
         .panel-body.panel-padding
           = render partial: 'admin/customers/states'
@@ -55,7 +55,6 @@
           Usage
         .panel-body.panel-padding
           = render partial: 'admin/customers/usage'
-          = link_to 'See Usage Data', admin_usage_path(@organization), class: 'link-usage-data'
 
       .panel.panel-info#users-panel
         .panel-heading
