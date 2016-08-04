@@ -64,6 +64,20 @@
             .panel-body.panel-padding
               = render partial: 'support/users/user_info', locals: {users: @users}
 
+      .panel.panel-info
+        .panel-heading
+          %i.fa.fa-envelope
+          User Invites
+        .panel-body
+          = render partial: "admin/customers/invites"
+
+      .panel.panel-info
+        .panel-heading
+          %i.fa.fa-envelope
+          User Invites
+        .panel-body
+          = render partial: "admin/customers/invites"
+
     .col-md-4
       %div.panel.panel-info
         .panel-heading

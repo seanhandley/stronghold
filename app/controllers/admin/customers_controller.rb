@@ -29,6 +29,8 @@ class Admin::CustomersController < AdminBaseController
     @users           = @organization.users
     @audits          = Audit.for_organization_and_user(@organization, current_user).order('created_at DESC').first(7)
     @projects        = Project.where(organization: params[:id]).includes(:users)
+    @invites         = Invite.where("organization_id = ?", params[:id])
+    @invite          = @invites.map {|invite| invite}
   end
 
   def edit

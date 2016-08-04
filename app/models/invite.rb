@@ -5,6 +5,7 @@ class Invite < ActiveRecord::Base
 
   after_create :generate_token
   after_commit :send_email, on: :create
+  after_commit :send_email, on: :update
 
   validates :email, length: {minimum: 5}, allow_blank: false
   validates :organization, :presence => true
@@ -33,6 +34,10 @@ class Invite < ActiveRecord::Base
 
   def expires_at
     persisted? ? created_at + 7.days : Time.now + 7.days
+  end
+
+  def expired!
+    expires_at = Time.now
   end
 
   def delivery_status
