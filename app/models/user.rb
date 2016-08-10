@@ -16,7 +16,7 @@ class User < ApplicationRecord
       Email: email,
       FirstName: first_name.present? ? first_name : nil,
       LastName: last_name.present? ? last_name : email,
-      AccountId: organization.salesforce_id,
+      AccountId: Authorization.current_organization.salesforce_id,
       Contact_Info__c: admin? ? 'Admin User' : 'Non-Admin User'
     }
   end
@@ -33,42 +33,53 @@ class User < ApplicationRecord
   syncs_with_keystone as: 'OpenStack::User', actions: [:create, :destroy]
 
   has_and_belongs_to_many :roles
-  belongs_to :organization
+  has_many :organization_users, dependent: :destroy
+  has_many :organizations, through: :organization_users
   has_many :user_project_roles, dependent: :destroy
   has_many :projects, :through => :user_project_roles
   has_many :unread_tickets
   has_many :api_credentials
 
   validates :email, :uniqueness => true
-  validates :email, :organization_id, :presence => true
+  validates :email, :presence => true
   validates :password, :presence => true, :on => :create
   validate :password_complexity
   validate :valid_email_address
 
-  scope :active, -> { joins(:organization).where("organizations.disabled = ?", false)}
+  scope :active,  -> { joins(:organizations).where("organizations.disabled = ?", false).distinct }
 
   def staff?
-    organization.staff?
+    organizations.any?(&:staff?)
   end
 
   def cloud?
-    organization.cloud?
+    Authorization.current_organization.cloud?
   end
 
   def compute?
-    organization.compute?
+    Authorization.current_organization.compute?
   end
 
   def storage?
-    organization.storage?
+    Authorization.current_organization.storage?
   end
 
   def colo?
-    organization.colo?
+    Authorization.current_organization.colo?
   end
 
   def admin?
     roles.any?(&:power_user?)
+  end
+
+  def belongs_to_multiple_organizations?
+    organizations.many?
+  end
+
+  def primary_organization
+    ous = OrganizationUser.where(user: self)
+    organization_user  = (ous.find_by(primary: true) || ous.first)
+    organization_user&.organization
   end
 
   def as_hash
@@ -77,7 +88,7 @@ class User < ApplicationRecord
 
   def keystone_params
     { email: email, name: email,
-      enabled: organization.has_payment_method? && has_permission?('cloud.read'),
+      enabled: Authorization.current_organization.has_payment_method? && has_permission?('cloud.read'),
       password: password
     }
   end
@@ -96,7 +107,7 @@ class User < ApplicationRecord
   end
 
   def unique_id
-    "#{organization.reporting_code} (User: #{id})"
+    "#{Authorization.current_organization.reporting_code} (User: #{id})"
   end
 
   def authenticate(unencrypted_password)
@@ -145,7 +156,7 @@ class User < ApplicationRecord
       OpenStackConnection.identity.delete_os_credential(credential['id'])
     end
     OpenStackConnection.identity.create_os_credential(user_id: uuid,
-      project_id: organization.primary_project.uuid,
+      project_id: Authorization.current_organization.primary_project.uuid,
       type: 'ec2',
       blob: {'access' => SecureRandom.hex, 'secret' => SecureRandom.hex}.to_json)
     Rails.cache.delete("ec2_credentials_#{id}")
@@ -180,7 +191,7 @@ class User < ApplicationRecord
       throw :abort
     end
     unless email.length >= 5
-      errors.add(:email, I18n.t(:is_not_a_valid_address)) 
+      errors.add(:email, I18n.t(:is_not_a_valid_address))
       throw :abort
     end
   end

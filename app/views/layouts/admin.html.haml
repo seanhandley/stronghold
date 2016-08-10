@@ -15,6 +15,9 @@
         = render partial: 'shared/top_menu'
         .context-nav
           = render partial: 'shared/support_nav'
+          - if current_user.belongs_to_multiple_organizations?
+            #admin-change-org.pull-right
+              = render partial: 'shared/org_dropdown'
 
     - if @organization
       = render partial: 'admin/customers/header', locals: { organization: @organization }

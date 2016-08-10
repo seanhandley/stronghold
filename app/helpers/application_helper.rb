@@ -45,7 +45,7 @@ module ApplicationHelper
     when "alert"
       "danger"
     when "notice"
-      "warning"
+      "info"
     end
   end
 

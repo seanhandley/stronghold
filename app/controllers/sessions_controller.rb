@@ -5,7 +5,7 @@ class SessionsController < ApplicationController
   before_action :clear_cookies, only: [:new]
 
   skip_before_action :verify_authenticity_token, :only => [:create], raise: false
-  
+
   def new
     reset_session
     respond_to do |wants|
@@ -16,7 +16,7 @@ class SessionsController < ApplicationController
   def index
     redirect_to root_path
   end
-  
+
   def create
     params_user = params[:user]
     password = params_user[:password]
@@ -24,12 +24,14 @@ class SessionsController < ApplicationController
     if @user and password.present?
       if token = @user.authenticate(password)
         GetProjectTokensJob.perform_later(@user, GIBBERISH_CIPHER.encrypt(password))
-        session[:user_id]        = @user.id
-        session[:created_at]     = Time.now.utc
-        session[:token]          = token if token.is_a? String
-        cookies.signed[:user_id] = @user.id
+        session[:user_id]         = @user.id
+        session[:created_at]      = Time.now.utc
+        session[:token]           = token if token.is_a? String
+        cookies.signed[:user_id]  = @user.id
+        cookies.signed[:current_organization_id] ||= @user.primary_organization.id
+        session[:organization_id] = cookies.signed[:current_organization_id]
 
-        if @user.organization.known_to_payment_gateway?
+        if current_organization.known_to_payment_gateway?
           if params[:next]
             redirect_to sanitize_path(params[:next])
           else
@@ -37,10 +39,10 @@ class SessionsController < ApplicationController
           end
         else
           Rails.cache.write("up_#{@user.uuid}", password, expires_in: 60.minutes)
-          redirect_to new_support_card_path 
+          redirect_to new_support_card_path
         end
         current_organization.transition_to!(:active) if current_organization.current_state == 'dormant'
-        
+
       else
         flash.now.alert = "Invalid credentials. Please try again."
         Rails.logger.error "Invalid login: #{params_user[:email]}. Token=#{token.inspect}"

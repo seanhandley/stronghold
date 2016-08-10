@@ -4,7 +4,7 @@ class CheckCephAccessJob < ApplicationJob
   def perform(user)
     if User::Ability.new(user).can?(:read, :storage)
       begin
-        Ceph::UserKey.create 'uid' => user.organization.primary_project.uuid,
+        Ceph::UserKey.create 'uid' => user.primary_organization.primary_project.uuid,
                              'access-key' => user.ec2_credentials['access'],
                              'secret-key' => user.ec2_credentials['secret'] if user.ec2_credentials
       rescue Net::HTTPError => e
@@ -14,7 +14,7 @@ class CheckCephAccessJob < ApplicationJob
         end
       end
     else
-      user.organization.projects.each do |project|
+      user.primary_organization.projects.each do |project|
         begin
           Ceph::UserKey.destroy 'access-key' => user.ec2_credentials['access'] if user.ec2_credentials
         rescue Net::HTTPError => e

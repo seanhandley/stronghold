@@ -25,7 +25,7 @@ if Rails.env.production? || Rails.env.staging?
   end
 
   every(1.hour, 'load_soulmate') do
-    SoulmateJob.perform_later
+    SearchTermJob.perform_later
   end
 
   every(1.week, 'usage_report', :at => 'Monday 03:00') do

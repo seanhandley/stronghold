@@ -16,7 +16,9 @@
         = render partial: 'shared/top_menu'
         .context-nav
           = render partial: 'shared/support_nav'
-
+          - if current_user.belongs_to_multiple_organizations?
+            #dashboard-org-menu.pull-left
+              = render partial: 'shared/org_dropdown'
     %div.page-body
       = render partial: 'shared/environment'
       .container

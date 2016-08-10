@@ -82,7 +82,7 @@ class TestOrganizationProperties < CleanTest
 
   def test_admin_users
     assert_equal 0, @organization.admin_users.count
-    user = User.make!(organization: @organization)
+    user = User.make!(organizations: [@organization])
     assert_equal 0, @organization.admin_users.count
     role = Role.make!(power_user: true)
     user.roles << role

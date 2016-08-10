@@ -1,9 +1,9 @@
-class SoulmateLoader
+class SearchTermLoader
   include Rails.application.routes.url_helpers
   def load_search_terms
     loader = Soulheart::Loader.new
 
-    data = []    
+    data = []
 
     Organization.all.each do |customer|
       data << {'text' => customer.name, 'category' => 'Organization', 'aliases' => [customer.reporting_code],
@@ -11,9 +11,9 @@ class SoulmateLoader
     end
 
     User.all.each do |user|
-      if user.organization
+      user.organizations.each do |organization|
         data << {'text' => user.email, 'category' => 'User', 'aliases' => [user.name, user.uuid],
-          'id' => user.id, 'data' => {'url' => admin_customer_path(user.organization), 'additional_info' => user.uuid} }
+          'id' => user.id, 'data' => {'url' => admin_customer_path(organization), 'additional_info' => "#{user.uuid} / #{organization.reporting_code}" }}
       end
     end
 
@@ -35,8 +35,8 @@ end
 if Rails.env.development?
   begin
     Rails.application.reload_routes!
-    SoulmateLoader.load_search_terms
+    SearchTermLoader.load_search_terms
   rescue StandardError => e
-    puts "Couldn't load Soulmate entries: #{e.to_s}"
+    puts "Couldn't load search terms: #{e.to_s}"
   end
 end

@@ -2,7 +2,7 @@
   .col-md-4.header-column
     %h3.organization-name
       %i.fa.fa-dashboard
-      = current_user.organization.name
+      = current_organization.name
 
   .col-md-4.header-column
     .progress#capacity-used
@@ -22,4 +22,4 @@
   .col-md-4.header-column
     %h4.weekly-spent
       Last week, you spent
-      %strong= number_to_currency(current_user.organization.weekly_spend, :unit => "£")
+      %strong= number_to_currency(current_organization.weekly_spend, :unit => "£")

@@ -2,7 +2,7 @@ module Support
   class RolesController < SupportBaseController
 
     load_and_authorize_resource param_method: :role_params
-    
+
     before_action :find_role, :find_organization
 
     def current_section
@@ -38,7 +38,7 @@ module Support
             end
           }
           format.html
-        end 
+        end
       end
     end
 

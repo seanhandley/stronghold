@@ -12,6 +12,7 @@ require File.expand_path("../../config/environment", __FILE__)
 
 require "rails/test_help"
 require "minitest/rails"
+require 'minitest/pride'
 require File.expand_path(File.dirname(__FILE__) + '/blueprints')
 require 'database_cleaner'
 require 'webmock/minitest'
@@ -57,9 +58,12 @@ class ActiveSupport::TestCase
 end
 
 def log_in(user)
-  session[:user_id]    = user.id
-  session[:created_at] = Time.now.utc
-  session[:token]      = SecureRandom.hex
+  session[:user_id]         = user.id
+  session[:created_at]      = Time.now.utc
+  session[:token]           = SecureRandom.hex
+  cookies.signed[:user_id]  = @user.id
+  cookies.signed[:current_organization_id] ||= @user.primary_organization.id
+  session[:organization_id] = @user.primary_organization.id
 end
 
 def assert_404(actions)
@@ -94,8 +98,18 @@ def load_instance_flavors
   Billing::InstanceFlavor.create(id: 16, flavor_id: 'af2a80fe-ccad-43df-8cae-6418da948467', name: 'dc1.8x16', ram: 16384, disk: 80, vcpus: 8)
 end
 
-class CleanTest < Minitest::Test
+module CleanupOurTests
   def teardown
     DatabaseCleaner.clean
+    Authorization.current_user = nil
+    Authorization.current_organization = nil
   end
+end
+
+class CleanTest < Minitest::Test
+  include CleanupOurTests
+end
+
+class CleanControllerTest < ActionController::TestCase
+  include CleanupOurTests
 end

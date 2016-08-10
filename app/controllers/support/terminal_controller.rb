@@ -39,7 +39,7 @@ module Support
     def fetch_response
       begin
         Terminal.new(credentials).run_command run_command_params[:command]
-      rescue OpenStackCommandError => e
+      rescue Terminal::OpenStackCommandError => e
         [false, e.message]
       rescue StandardError => e
         Honeybadger.notify(e)

@@ -1,4 +1,5 @@
 class SignupsController < ApplicationController
+  include ModelErrorsHelper
 
   layout "customer-sign-up"
 
@@ -31,17 +32,17 @@ class SignupsController < ApplicationController
     else
       respond_to do |format|
         format.html {
-          flash.now.alert = @customer_signup.errors.full_messages.join('<br>').html_safe
+          flash.now.alert = model_errors_as_html(@customer_signup)
           render :new, status: :unprocessable_entity
         }
-        format.json { render json: {errors: @customer_signup.errors.full_messages}, status: :unprocessable_entity }
+        format.json { render json: {errors: model_errors_as_html(@customer_signup)}, status: :unprocessable_entity }
       end
     end
   end
 
   def thanks
     if current_user
-      redirect_to support_root_path 
+      redirect_to support_root_path
     else
       render :confirm
     end
@@ -49,7 +50,7 @@ class SignupsController < ApplicationController
 
   def edit
     reset_session
-    @registration = RegistrationGenerator.new(nil,{})  
+    @registration = RegistrationGenerator.new(nil,{})
   end
 
   def update
@@ -58,11 +59,12 @@ class SignupsController < ApplicationController
       Rails.cache.write("up_#{@registration.user.uuid}", update_params[:password], expires_in: 60.minutes)
       session[:user_id] = @registration.user.id
       session[:created_at] = Time.zone.now
+      session[:organization_id] = @invite.organization.id
       session[:token] = @registration.user.authenticate(update_params[:password])
       redirect_to current_organization.known_to_payment_gateway? ? support_root_path : activate_path
     else
       flash.clear
-      flash.now.alert = @registration.errors.full_messages.join('<br>').html_safe
+      flash.now.alert = model_errors_as_html(@registration)
       render :edit, status: :unprocessable_entity
     end
   end
@@ -81,5 +83,5 @@ class SignupsController < ApplicationController
   def create_params
     params.permit(:email, :discount_code)
   end
-
+  
 end

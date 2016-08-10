@@ -46,12 +46,12 @@ class Organization < ApplicationRecord
   validates :reference,      :uniqueness => true, :if => Proc.new{|o| o.reference.present? }
   validates :reporting_code, :uniqueness => true, :if => Proc.new{|o| o.reporting_code.present? }
 
-  has_many :users, dependent: :destroy
   has_many :roles, dependent: :destroy
   has_many :invites, dependent: :destroy
   has_many :invoices, class_name: 'Billing::Invoice', dependent: :destroy
   has_many :projects, dependent: :destroy
   has_and_belongs_to_many :products, -> { distinct }
+  has_many :organization_users, dependent: :destroy; has_many :users, through: :organization_users
   has_many :organization_vouchers, {dependent: :destroy}, -> { distinct }
   has_many :vouchers, :through => :organization_vouchers
   has_many :usages
@@ -211,6 +211,6 @@ class Organization < ApplicationRecord
   end
 
   def update_search_tokens
-    SoulmateJob.perform_later
+    SearchTermJob.perform_later
   end
 end
