@@ -145,6 +145,21 @@ div#usage-capacity-summary div.header-column {
   padding: 10px 10px 20px 20px;
 }
 
+#dashboard-org-menu.pull-right {
+  margin: 0 15px 20px 0;
+}
+
+.form-group#org-dropdown select {
+  color: $primary-blue;
+  border-radius: 1px;
+  border: solid 1px $medium-gray;
+}
+
+.form-group#org-dropdown label {
+  color: #888;
+  font-weight: 400;
+}
+
 div#usage-capacity-summary div.progress-caption {
   text-align: center;
   font-size: 12px;

@@ -1,6 +1,11 @@
 - title "Dashboard"
 
 .admin-customer-section
+  - if current_user.belongs_to_multiple_organizations?
+    .row
+      .col-md-12
+        #admin-change-org.pull-right
+          = render partial: 'shared/org_dropdown'
   .row
     .col-lg-9.col-md-8.col-sm-9
       .panel.panel-info
@@ -10,7 +15,6 @@
         .panel-body
           .container.customer-information
             = render partial: 'admin/customers/info'
-          = link_to 'Edit', edit_admin_customer_path(@organization), class: 'btn btn-primary information-edit-dashboard'
 
       .container-fluid#dashboard-tabs
         .centered-tabs

@@ -47,3 +47,7 @@
               = link_to @organization.stripe_customer_id, ExternalLinks.stripe_path("customers", @organization.stripe_customer_id)
             - else
               None
+= link_to 'Edit', edit_admin_customer_path(@organization), class: 'btn btn-primary information-edit-dashboard'
+
+.pull-right
+  = render partial: 'admin/customers/assign_organization'

@@ -112,7 +112,7 @@ module OpenStackObject
         current_user = Authorization.current_user
         if current_user.present? && !current_user.admin? && !current_user.staff?
           username    = current_user.email
-          project     = current_user.organization.primary_project.reference
+          project     = current_organization.primary_project.reference
           token       = current_user.token
           args.merge!(:openstack_username         => username,
                       :openstack_auth_token       => token,
@@ -134,7 +134,7 @@ module OpenStackObject
     def audit(action)
         Audited::Adapters::ActiveRecord::Audit.create auditable: self, action: action, comment: self.name,
                      user: Authorization.current_user,
-                     organization_id: Authorization.current_user.organization_id,
+                     organization_id: Authorization.current_organization_id,
                      audited_changes: Hash[(@@attributes + ['id']).collect{|item| [item.to_s,self.send(item.to_sym)]}]
     end
 

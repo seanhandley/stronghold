@@ -1,4 +1,5 @@
 class WaitListEntriesController < ApplicationController
+  include ModelErrorsHelper
 
   layout "customer-sign-up"
 
@@ -7,7 +8,7 @@ class WaitListEntriesController < ApplicationController
     if @wait_list_entry.save
       render 'signups/confirm_wait'
     else
-      flash[:error] = @wait_list_entry.errors.full_messages.join('<br>').html_safe
+      flash[:error] = model_errors_as_html(@wait_list_entry)
       render 'signups/sorry'
     end
   end

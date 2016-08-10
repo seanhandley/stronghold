@@ -8,10 +8,6 @@ class TestModel
     @user ||= User.make(organization: Organization.make(created_at: signed_up))
   end
 
-  def current_organization
-    current_user.organization
-  end
-
   def signed_up
     Time.parse('2014-01-01')
   end

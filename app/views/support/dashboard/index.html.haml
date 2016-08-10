@@ -2,9 +2,12 @@
 
 .container-dashboard
   .row.dashboard-main-content
+    - if current_user.belongs_to_multiple_organizations?
+      #dashboard-org-menu.pull-right
+        = render partial: 'shared/org_dropdown'
     .col-md-12
       = render partial: 'support/tickets/incidents'
-
+      
       - if current_organization.cloud?
         .dashboard-header
           .container#usage-capacity-summary

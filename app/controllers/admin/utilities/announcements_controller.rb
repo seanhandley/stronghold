@@ -2,6 +2,7 @@ module Admin
   module Utilities
     class AnnouncementsController < UtilitiesBaseController
       include StarburstHelper
+      include ModelErrorsHelper
 
       def index
         @active    = Starburst::Announcement.active.non_individual.map{|a| AnnouncementDecorator.new(a)}
@@ -13,7 +14,7 @@ module Admin
         if @announcement.save
           redirect_to admin_utilities_announcements_path, notice: 'Announcement created successfully'
         else
-          flash[:error] = @announcement.errors.full_messages.join('<br>')
+          flash[:error] = model_errors_as_html(@announcement)
           respond_to do |format|
             format.html {
               render :index
@@ -28,7 +29,7 @@ module Admin
         if announcement.save
           redirect_to admin_utilities_announcements_path, notice: "Successfully deactivated."
         else
-          flash[:error] = @announcement.errors.full_messages.join('<br>')
+          flash[:error] = model_errors_as_html(@announcement)
           respond_to do |format|
             format.html {
               render :index

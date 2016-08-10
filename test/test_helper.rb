@@ -57,9 +57,11 @@ class ActiveSupport::TestCase
 end
 
 def log_in(user)
-  session[:user_id]    = user.id
-  session[:created_at] = Time.now.utc
-  session[:token]      = SecureRandom.hex
+  session[:user_id]         = user.id
+  session[:created_at]      = Time.now.utc
+  session[:token]           = SecureRandom.hex
+  cookies.signed[:user_id]  = @user.id
+  session[:organization_id] = @user.organizations.first.id
 end
 
 def assert_404(actions)
@@ -95,6 +97,12 @@ def load_instance_flavors
 end
 
 class CleanTest < Minitest::Test
+  def teardown
+    DatabaseCleaner.clean
+  end
+end
+
+class CleanControllerTest < ActionController::TestCase
   def teardown
     DatabaseCleaner.clean
   end

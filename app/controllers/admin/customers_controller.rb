@@ -1,6 +1,7 @@
 module Admin
   class CustomersController < AdminBaseController
     include TicketsHelper
+    include ModelErrorsHelper
 
     before_action :get_products
     before_action :get_organization
@@ -16,7 +17,7 @@ module Admin
       if @customer.generate!
         redirect_to admin_root_path, notice: 'Customer created successfully'
       else
-        flash[:error] = @customer.errors.full_messages.join('<br>')
+        flash[:error] = model_errors_as_html(@customer)
         render :new
       end
     end

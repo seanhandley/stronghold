@@ -1,7 +1,7 @@
 require 'machinist/active_record'
 
 User.blueprint do
-  organization { Organization.make! }
+  organizations { [Organization.make!] }
   email      { Faker::Internet.email }
   first_name { Faker::Name.first_name }
   last_name  { Faker::Name.last_name }

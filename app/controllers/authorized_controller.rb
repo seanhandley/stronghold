@@ -1,7 +1,8 @@
 class AuthorizedController < ApplicationController
-  before_action :current_user, :authenticate_user!, :timeout_session!
+  before_action :current_user, :current_organization, :authenticate_user!, :timeout_session!
   before_action { Authorization.current_user = current_user }
   before_action { Authorization.current_user.token = session[:token] }
+  before_action { Authorization.current_organization = current_organization }
   around_action :user_time_zone, :if => :current_user
   before_action :set_locale
 
@@ -79,7 +80,7 @@ class AuthorizedController < ApplicationController
     [activate_path, new_support_card_path, support_cards_path, support_root_path,
     support_profile_path, support_usage_path, support_edit_organization_path,
     support_manage_cards_path,
-    support_user_path(current_user), support_organization_path(current_organization)]
+    support_user_path(current_user), support_organization_path(current_organization), support_change_organizations_path]
   end
 
   def is_tickets_path?(path)

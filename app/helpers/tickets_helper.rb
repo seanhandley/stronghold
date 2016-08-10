@@ -1,6 +1,6 @@
 module TicketsHelper
 
-  def decorated_tickets(organization=Authorization.current_user.organization)
+  def decorated_tickets(organization=Authorization.current_organization)
     TicketAdapter.all(params[:page], organization).collect do |t|
       TicketDecorator.new(t).decorate
     end

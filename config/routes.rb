@@ -35,6 +35,7 @@ Rails.application.routes.draw do
     resources :role_users, only: [:create]
     resources :invites, only: [:create, :destroy]
     resources :audits, only: [:index]
+    put '/change_organizations', :controller => 'change_organizations', :action => 'change'
     get '/usage', :controller => 'usage', :action => 'index'
     get '/graph/data', :controller => 'graphs', :action => 'data', :defaults => { :format => 'json' }
 
@@ -62,6 +63,7 @@ Rails.application.routes.draw do
       resources :audits, only: [:show]
       resources :states, only: [:show]
 
+      resources :organization_assignments, only: [:create, :destroy]
       resources :quotas, except: [:create, :new, :destroy, :show] do
         member do
           post 'mail'
