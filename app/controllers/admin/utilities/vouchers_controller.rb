@@ -6,19 +6,19 @@ class Admin::Utilities::VouchersController < UtilitiesBaseController
 
   def create
     @voucher = Voucher.new(create_params)
-    ajax_response(@voucher, :save, utilities_vouchers_path)
+    ajax_response(@voucher, :save, admin_utilities_vouchers_path)
   end
 
   def update
     extend! and return if update_params[:extend]
     @voucher = Voucher.find(params[:id])
-    ajax_response(@voucher, :update, utilities_vouchers_path, update_params)
+    ajax_response(@voucher, :update, admin_utilities_vouchers_path, update_params)
   end
 
   def destroy
     @voucher = Voucher.find(params[:id])
     if @voucher.destroy
-      redirect_to utilities_vouchers_path
+      redirect_to admin_utilities_vouchers_path
     else
       flash[:error] = "You can't delete a voucher once it's been used by a customer."
       render :index
