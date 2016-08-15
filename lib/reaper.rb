@@ -21,16 +21,18 @@ class Reaper
 
   def stuck_in_a_project
     # Find floating IPs assigned to a project but not to an instance
-    ips.reject(&:port_id).map do |ip|
+    stuck = ips.reject(&:port_id).reject(&:fixed_ip_address).map do |ip|
       {
         ip_id:     ip.id,
         tenant_id: ip.tenant_id,
         public_ip: ip.floating_ip_address
       }
-    end.select do |ip|
+    end
+    stuck.select! do |ip|
       billing_ip = Billing::Ip.where(ip_id: ip[:ip_id]).order("recorded_at").last
       billing_ip && (billing_ip.recorded_at + stuck_in_a_project_max_time) < Time.now
-    end.reject do |ip|
+    end
+    stuck.reject! do |ip|
       organization_is_staff(ip[:tenant_id])
     end
   end
@@ -62,11 +64,12 @@ class Reaper
 
   def dormant_routers
     # Find routers that belong to customers who've been inactive for over 3 months
-    routers.select{|r| r.external_gateway_info}.reject do |router|
+    dormant = routers.select{|r| r.external_gateway_info}.reject do |router|
       (organization_is_paying(router.tenant_id) &&
       organization_is_active(router.tenant_id)) ||
       organization_is_staff(router.tenant_id)
-    end.map do |router|
+    end
+    dormant = dormant.map do |router|
       router.external_gateway_info['external_fixed_ips'].map do |ip|
         {
           tenant_id:    router.tenant_id,
