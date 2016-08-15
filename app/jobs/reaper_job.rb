@@ -2,6 +2,6 @@ class ReaperJob < ActiveJob::Base
   queue_as :default
 
   def perform
-    Reaper.new.reap(false)
+    Reaper.new.reap
   end
 end
