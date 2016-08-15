@@ -76,7 +76,7 @@ class Reaper
     end.flatten.compact.uniq{|ip| ip[:public_ip]}
   end
 
-  def reap(dry_run=true)
+  def reap(dry_run=false)
     stuck_in_a_project.each do |ip|
       OpenStackConnection.network.delete_floating_ip(ip[:ip_id]) unless dry_run
       logger.info "Removed unused IP #{ip[:public_ip]} from tenant #{ip[:tenant_id]}"
