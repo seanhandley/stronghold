@@ -37,6 +37,7 @@ class SessionsController < ApplicationController
           Rails.cache.write("up_#{@user.uuid}", password, expires_in: 60.minutes)
           redirect_to new_support_card_path 
         end
+        current_organization.transition_to!(:active) if current_organization.current_state == 'dormant'
         
       else
         flash.now.alert = "Invalid credentials. Please try again."
