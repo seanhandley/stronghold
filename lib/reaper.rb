@@ -35,6 +35,7 @@ class Reaper
     stuck.reject! do |ip|
       organization_is_staff(ip[:tenant_id])
     end
+    stuck
   end
 
   def stuck_in_an_instance
