@@ -12,21 +12,40 @@
             = render partial: 'admin/customers/info'
           = link_to 'Edit', edit_admin_customer_path(@organization), class: 'btn btn-primary information-edit-dashboard'
 
-      .panel.panel-info
-        .panel-heading
-          %i.fa.fa-tags
-          Open Tickets
-        .panel-body
-          = render partial: 'admin/customers/tickets'
+      .container-fluid#dashboard-tabs
+        .centered-tabs
+          %ul.nav.nav-tabs#users-projects-audits-tabs
+            %li{'class' => active_tab?('users')}
+              %a{:href => '#users', 'data-toggle' => 'tab', 'data-name' => 'users'}
+                = t(:users)
+            %li{'class' => active_tab?('tickets')}
+              %a{:href => '#tickets', 'data-toggle' => 'tab', 'data-name' => 'tickets'}
+                = t(:tickets)
+            %li{'class' => active_tab?('audits')}
+              %a{:href => '#audits', 'data-toggle' => 'tab', 'data-name' => 'audits'}
+                = t(:audits)
 
-      .panel.panel-info
-        .panel-heading
-          %i.fa.fa-check-square-o
-          Audits Logs
-        .panel-body
-          = render partial: "support/audits/audits", locals: {audits: @audits}
-          - if @audits.any?
-            = link_to 'See more', admin_audit_path(@organization)
+        .tab-content
+          .tab-pane#users{'class' => active_tab?('users')}
+
+
+          .tab-pane#tickets{'class' => active_tab?('tickets')}
+            .panel.panel-info
+              .panel-heading
+                %i.fa.fa-tags
+                Open Tickets
+              .panel-body
+                = render partial: 'admin/customers/tickets'
+
+          .tab-pane#audits{'class' => active_tab?('audits')}
+            .panel.panel-info
+              .panel-heading
+                %i.fa.fa-check-square-o
+                Audits Logs
+              .panel-body
+                = render partial: "support/audits/audits", locals: {audits: @audits}
+                - if @audits.any?
+                  = link_to 'See more', admin_audit_path(@organization)
 
     .col-md-4
       %div.panel.panel-info
