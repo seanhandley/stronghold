@@ -163,7 +163,7 @@ class Organization < ActiveRecord::Base
   end
 
   def set_quotas!(voucher=nil)
-    quota = (voucher && voucher[:restricted] ? 'restricted' : 'standard'
+    quota = (voucher && voucher[:restricted]) ? 'restricted' : 'standard'
     update_attributes(quota_limit: StartingQuota[quota])
     projects.each{|project| project.update_attributes(quota_set: StartingQuota[quota])}
     update_attributes(limited_storage: true) if voucher && voucher[:restricted]
