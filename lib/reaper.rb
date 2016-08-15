@@ -86,8 +86,12 @@ class Reaper
       project&.organization
     end.compact
     organizations.uniq.each do |organization|
-      organization.transition_to!(:dormant) unless dry_run
-      logger.info "Transitioning #{organization.name} (#{organization.reporting_code}) to dormant state"
+      begin
+        organization.transition_to!(:dormant) unless dry_run
+        logger.info "Transitioning #{organization.name} (#{organization.reporting_code}) to dormant state"
+      rescue Statesman::TransitionFailedError => ex
+        Honeybadger.notify(ex)
+      end
     end
     true
   end
