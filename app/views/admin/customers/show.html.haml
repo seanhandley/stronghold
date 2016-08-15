@@ -28,6 +28,13 @@
           - if @audits.any?
             = link_to 'See more', admin_audit_path(@organization)
 
+      .panel.panel-info#users-panel
+        .panel-heading
+          %i.fa.fa-user
+          Users
+        .panel-body.panel-padding
+          = render partial: 'support/users/user_info', locals: {users: @users}
+
     .col-md-4
       %div.panel.panel-info
         .panel-heading
@@ -56,13 +63,6 @@
         .panel-body.panel-padding
           = render partial: 'admin/customers/usage'
           = link_to 'See Usage Data', admin_usage_path(@organization), class: 'link-usage-data'
-
-      .panel.panel-info#users-panel
-        .panel-heading
-          %i.fa.fa-user
-          Users
-        .panel-body.panel-padding
-          = render partial: 'admin/customers/users'
 
       .panel.panel-info
         .panel-heading

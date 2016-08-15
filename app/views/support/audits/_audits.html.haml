@@ -12,7 +12,7 @@
         - audits.each do |audit|
           %tr
             %td
-              = gravatar_image_tag(audit.user ? audit.user.email : '')
+              = gravatar_image_tag(audit.user ? audit.user.email : '', :class => 'img-circle nav-profile')
             %td
               = short_date(audit.created_at)
             %td
