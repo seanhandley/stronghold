@@ -122,7 +122,7 @@ module Billing
       end
 
       # Catch renames
-      if(cached_images&.fetch(image_id)&.fetch(:name) != first_sample_metadata["name"])
+      if(cached_images[image_id] && cached_images[image_id][:name] != first_sample_metadata["name"])
         billing_image = Billing::Image.find(cached_images[image_id][:id])
         billing_image.update_attributes(name: first_sample_metadata["name"])
       end
