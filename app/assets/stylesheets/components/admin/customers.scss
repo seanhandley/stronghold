@@ -43,10 +43,6 @@ div.admin-customer-section a.btn-migrate {
   margin-top: 10px;
 }
 
-div.admin-customer-section a.link-usage-data {
-  float: right;
-}
-
 div.admin-customer-section .panel-body.panel-padding {
   padding-top: 20px;
   padding-bottom: 20px;
@@ -182,3 +178,12 @@ div#state_history_link {
 table th.fixed-width-100 {
   width: 100px;
 }
+
+div.test-toggle-and-usage-link {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 5px;
+}
+
+.toggle.ios, .toggle-on.ios, .toggle-off.ios { border-radius: 5px; }
+.toggle.ios .toggle-handle { border-radius: 5px; }

@@ -50,4 +50,12 @@ $(document).ready(function() {
       window.location.reload();
     }
   });
+
+  $('#toggle-test').on('change', function() {
+    if(confirm('Are you sure?')) {
+      $('#test_form').trigger('submit.rails');
+    } else {
+      window.location.reload();
+    }
+  });
 });
