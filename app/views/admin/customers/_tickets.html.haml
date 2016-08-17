@@ -1,19 +1,24 @@
 .table-responsive
-  %table.table.table-hover
+  %table.table.table-striped
     %thead
       %th Title
-      %th Description
+      %th
+        %i.fa.fa-user
+      %th.fixed-width-100 Date
+      %th.fixed-width-100 Code
       %th Priority
-      %th Link
+      %th Description
     %tbody
       - if @tickets.any?
         - @tickets.each do |ticket|
           - if ticket[:status_name] == 'Open'
-            %tr
-              %td= ticket[:title]
-              %td= ticket[:description]
+            %tr{class: "#{ticket[:priority]=='Emergency' ? 'danger' : ''}"}
+              %td= link_to ticket[:title], ExternalLinks.ticket_path(ticket[:reference])
+              %td= ticket[:name]
+              %td= ticket[:created_at]
+              %td= ticket[:reference]
               %td= ticket[:priority]
-              %td= link_to '→', "https://helpdesk.datacentred.io/staff/tickets/#{ticket[:reference]}"
+              %td= ticket[:description]
       - else
         %tr
           %td
