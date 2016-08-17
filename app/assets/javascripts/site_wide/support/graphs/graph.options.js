@@ -65,6 +65,7 @@ var StrongholdGraphOptions = {
         pie: {
           allowPointSelect: true,
           cursor: 'pointer',
+          size: 190,
           dataLabels: {
             enabled: true,
             format: '<b>{point.name}</b>: {point.y:.0f}',

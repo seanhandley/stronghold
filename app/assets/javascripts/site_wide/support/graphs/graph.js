@@ -18,8 +18,8 @@ var StrongholdGraphs = {
 
     return {
       instancesSeries: [
-        [instancesUsed + ' active', instancesUsed],
-        [instancesAvailable + ' available', instancesAvailable],
+        [instancesUsed + ' instances active', instancesUsed],
+        [instancesAvailable + ' instances available', instancesAvailable],
       ],
       flavorsSeries: $.map(flavorsUsed, function(e) {
         return {
@@ -32,41 +32,41 @@ var StrongholdGraphs = {
         [coresAvailable + ' cores available', coresAvailable],
       ],
       memorySeries: [
-        [memoryUsed + ' MB Used', memoryUsed],
-        [memoryAvailable + ' MB Available', memoryAvailable],
+        [memoryUsed + ' MB RAM Used', memoryUsed],
+        [memoryAvailable + ' MB RAM Available', memoryAvailable],
       ],
       volumesSeries: [
         [volumesUsed + ' volumes active', volumesUsed],
         [volumesAvailable + ' volumes available', volumesAvailable],
       ],
       storageSeries: [
-        [storageUsed + ' GB storage used', storageUsed],
-        [storageAvailable + ' GB storage available', storageAvailable],
+        [storageUsed + ' GB block storage used', storageUsed],
+        [storageAvailable + ' GB block storage available', storageAvailable],
       ],
       floatingIpSeries: [
-        [floatingIpUsed + ' IPs active', floatingIpUsed],
-        [floatingIpAvailable + ' IPs available', floatingIpAvailable],
+        [floatingIpUsed + ' floating IPs active', floatingIpUsed],
+        [floatingIpAvailable + ' floating IPs available', floatingIpAvailable],
       ],
       poolsSeries: [
-        [poolsUsed + ' pools used',    poolsUsed],
-        [poolsAvailable + ' pools available', poolsAvailable]
-    ]}
+        [poolsUsed + ' load balancer pools used',    poolsUsed],
+        [poolsAvailable + ' load balancer pools available', poolsAvailable]
+      ]}
   },
   createCharts: function(series) {
     Highcharts.setOptions(Highcharts.theme1);
     $('#container-instance').highcharts(StrongholdGraphOptions.semiPieChartOptions(series.instancesSeries));
-    $('#container-flavor').highcharts(StrongholdGraphOptions.semiPieChartOptions(series.flavorsSeries));
+    $('#container-flavor').highcharts(StrongholdGraphOptions.pieChartOptions("flavors", series.flavorsSeries));
 
-    Highcharts.setOptions(Highcharts.theme3);
+    Highcharts.setOptions(Highcharts.theme2);
     $('#container-cores').highcharts(StrongholdGraphOptions.semiPieChartOptions(series.coresSeries));
     $('#container-memory').highcharts(StrongholdGraphOptions.semiPieChartOptions(series.memorySeries));
 
-    Highcharts.setOptions(Highcharts.theme2);
+    Highcharts.setOptions(Highcharts.theme3);
     $('#container-volume').highcharts(StrongholdGraphOptions.semiPieChartOptions(series.volumesSeries));
     $('#container-storage').highcharts(StrongholdGraphOptions.semiPieChartOptions(series.storageSeries));
 
     Highcharts.setOptions(Highcharts.theme4);
-    $('#container-floating-ip').highcharts(StrongholdGraphOptions.semiPieChartOptions(series.floatingIpSeries));
+    $('#container-floating-ip').highcharts(StrongholdGraphOptions.pieChartOptions('Floating IPs', series.floatingIpSeries));
     $('#container-pools').highcharts(StrongholdGraphOptions.semiPieChartOptions(series.poolsSeries));
   }
 }
