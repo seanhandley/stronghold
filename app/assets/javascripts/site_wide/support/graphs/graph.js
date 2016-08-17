@@ -44,8 +44,8 @@ var StrongholdGraphs = {
         [storageAvailable + ' GB block storage available', storageAvailable],
       ],
       floatingIpSeries: [
-        [floatingIpUsed + ' floating IPs active', floatingIpUsed],
-        [floatingIpAvailable + ' floating IPs available', floatingIpAvailable],
+        ['Active IPs', floatingIpUsed],
+        ['Available IPs', floatingIpAvailable],
       ],
       poolsSeries: [
         [poolsUsed + ' load balancer pools used',    poolsUsed],
@@ -55,7 +55,7 @@ var StrongholdGraphs = {
   createCharts: function(series) {
     Highcharts.setOptions(Highcharts.theme1);
     $('#container-instance').highcharts(StrongholdGraphOptions.semiPieChartOptions(series.instancesSeries));
-    $('#container-flavor').highcharts(StrongholdGraphOptions.pieChartOptions("flavors", series.flavorsSeries));
+    $('#container-flavor').highcharts(StrongholdGraphOptions.pieChartOptions("active instances", series.flavorsSeries));
 
     Highcharts.setOptions(Highcharts.theme2);
     $('#container-cores').highcharts(StrongholdGraphOptions.semiPieChartOptions(series.coresSeries));
