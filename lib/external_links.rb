@@ -17,4 +17,7 @@ module ExternalLinks
   def self.ticket_path(reference)
     "https://helpdesk.datacentred.io/staff/tickets/#{reference}"
   end
+  def self.python_openstack_client_docs_path
+    'http://docs.openstack.org/developer/python-openstackclient/'
+  end
 end

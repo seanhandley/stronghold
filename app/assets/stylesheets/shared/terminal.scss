@@ -1,0 +1,57 @@
+.openstack-client-terminal {
+  border: 3px solid #aaa;
+  border-radius: 5px;
+  height: 100%;
+  width: 100%;
+  font-size: 14px;
+  min-width: 1400px;
+  color: white;
+}
+
+.openstack-client-terminal .terminal-output {
+  padding-top: 20px;
+}
+
+.openstack-client-terminal span  {
+  font-size: 14px;
+  color: white;
+}
+
+.terminal-help {
+  height: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.buttons-left {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.term-buttons {
+  opacity: 0.85;
+  font-size: 8px;
+  position: relative;
+  background: #000;
+  padding: 5px;
+  margin: -10px;
+}
+
+.term-buttons a {
+  margin-right: 2px;
+  font-size: 8px;
+}
+
+.terminal-responsive {
+  overflow-x: auto;
+  min-height: 0.01%;
+}
+
+@media only screen and (max-width: 480px), only screen and (max-device-width: 480px) {
+  .terminal-responsive {
+    overflow-x: auto;
+    min-height: 0.01%;
+    height: 400px;
+  }
+}

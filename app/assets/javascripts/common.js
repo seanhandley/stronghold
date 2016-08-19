@@ -13,3 +13,4 @@
 //= require jquery.soulmate
 //= require bootstrap-toggle
 //= require highcharts
+//= require jquery.terminal
