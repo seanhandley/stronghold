@@ -33,7 +33,7 @@
           %a{:href => support_manage_cards_path}
             %i.fa.fa-credit-card
             Payment Settings
-      - if current_user.staff?
+      - if can?(:read, :cloud)
         %li
           %a{:href => terminal_path}
             %i.fa.fa-terminal
