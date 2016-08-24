@@ -52,6 +52,8 @@ gem 'soulmatejs-rails'
 gem 'redis-namespace'
 gem 'statesman', '~> 2.0'
 gem 'parallel'
+gem 'docker-api', '~> 1.31'
+gem 'gibberish', '~> 2.1'
 
 group :test, :acceptance do
   gem 'faker'
@@ -98,6 +100,7 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-clipboard', '~> 1.5'
   gem 'rails-assets-bootstrap-toggle'
   gem 'rails-assets-highcharts'
+  gem 'rails-assets-jquery.terminal', '~> 0.10'
 end
 
 group :development do

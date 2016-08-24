@@ -1,0 +1,19 @@
+default: &default
+  auth_url: "http://devstack.datacentred.io:5000/"
+  openstack_client_image: '570500d1de7ecd4cf2315e85d78355a7fe2e284bb55328a8dd73328f4ace51d7'
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+acceptance:
+  <<: *default
+
+staging:
+  <<: *default
+
+production:
+  <<: *default
+  auth_url: "https://compute.datacentred.io:5000/"

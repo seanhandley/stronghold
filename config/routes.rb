@@ -114,6 +114,9 @@ Rails.application.routes.draw do
 
   get 'sign_in', :controller => 'sessions', :action => 'new'
 
+  get  'terminal', :controller => 'support/terminal', :action => 'index'
+  post 'terminal_command', :controller => 'support/terminal', :action => 'run_command', :defaults => { :format => 'js' }
+
   root :to => 'support/dashboard#index'
 
   if Rails.env.production?
