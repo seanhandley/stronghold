@@ -58,14 +58,15 @@ $(document).ready(function() {
  / /_/ / /_/ / /_/ /_/ / /___/  __/ / / / /_/ /  /  __/ /_/ /  \n \
 /_____/\\__,_/\\__/\\__,_/\\____/\\___/_/ /_/\\__/_/   \\___/\\__,_/   \n \
                                                                \n \
-Welcome to the OpenStack prompt! Type 'help' for usage info.\n \
+Welcome to the your command line. Type 'help' for usage info.\n \
   \n]",
       name: 'OpenStack Client',
-      height: 400,
+      height: '60vh',
       width: '100%',
       prompt: "[[gb;#00AA00;black](openstack)] "
     });
   }
+  $('.openstack-client-terminal').removeClass('hide');
   setInterval(function() {
     setPromptProperties();
   }, 1000);

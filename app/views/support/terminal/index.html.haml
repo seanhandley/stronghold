@@ -1,49 +1,49 @@
 .row
-  .col-md-3
-    .bg-success.terminal-help
+  .col-md-3{style: 'height: 75vh'}
+    .bg-success.terminal-help.osbg
       %h4
         %i.fa.fa-hand-peace-o
         Hello!
-      %p.thin-text Try out a few commands in the OpenStack prompt:
-      %p
-        %em
-          %code flavor list
-        %br
-        List all the available instance flavors
-      %p
-        %em
-          %code image list
-        %br
-        List all the available images
-      %p
-        %em
-          %code
-            server create --flavor
-            %strong [flavor_name]
-            \--image
-            %strong [image_name] [server_name]
-        %br
-        Create a new instance
-      %p
-        %em
-          %code server list
-        %br
-        List all the available servers
-
-      %p.tiny
+      %p.thin-text Try out a few commands in the terminal:
+      .command-example
+        %i.fa.fa-star
+        %code flavor list
+        .small
+          %em List all the available instance flavors
+      .command-example
+        %i.fa.fa-star
+        %code image list
+        .small
+          %em List all the available images
+      .command-example
+        %i.fa.fa-star
+        %code
+          server create --flavor
+          %strong [flavor_name]
+          \--image
+          %strong [image_name] [server_name]
+        .small
+          %em Create a new instance
+      .command-example
+        %i.fa.fa-star
+        %code server list
+        .small
+          %em List all the available servers
+      .push
+      %p.tiny.read-more
         %i.fa.fa-book
         Read the full
-        = link_to 'OpenStack Client documentation', ExternalLinks.python_openstack_client_docs_path
+        = link_to 'OpenStack Client documentation', ExternalLinks.python_openstack_client_docs_path, style: 'text-decoration: underline'
 
-  .col-md-9
-    %div
-      .buttons-left
+  .col-md-9{style: 'height: 75vh'}
+    %div.project-select
+      .buttons-right
         .form-inline
           .form-group
             = select_tag :projects, options_for_terminal_projects(@projects), class: 'form-control'
-    %hr
+
     .terminal-responsive
-      .openstack-client-terminal
+      .openstack-client-terminal.hide
         .buttons-left.term-buttons
           %a{href: '', id: 'saveTerminal', class: 'btn btn-default'}
             %i.fa.fa-save
