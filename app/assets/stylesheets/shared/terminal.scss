@@ -32,11 +32,6 @@
   padding: 10px;
 }
 
-.terminal-help .read-more {
-  position: absolute;
-  bottom: 0;
-}
-
 .buttons-right {
   display: flex;
   justify-content: flex-end;
@@ -59,6 +54,10 @@
 .terminal-responsive {
   overflow-x: auto;
   min-height: 0.01%;
+}
+
+.example-commands {
+  overflow: auto;
 }
 
 div.project-select {
