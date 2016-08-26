@@ -39,7 +39,7 @@ $(document).ready(function() {
           error: function (e, textStatus, xhr) {
             if(e.status == 302) {
               term.error('You are no longer authenticated. Please log in and try again.');
-              setTimeout(function(){ eval(e.responseText) }, 2000);
+              setTimeout(function(){ window.location.replace('/terminal') }, 2000);
             } else if(e.status == 0) {
               term.error("Failed to connect to server. Are you connected to the Internet?");
             } else {
