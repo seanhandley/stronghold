@@ -3,6 +3,8 @@ function exportTerminalBuffer() {
   output = output.split("[;white;black]").join("");
   output = output.split("[gb;#00AA00;black]").join("");
   output = output.split("[gb;#00aaff;black]").join("");
+  output = output.split("[;;;error]").join("");
+  output = output.split("[;;;error]").join("");
   output = output.split("&nbsp;").join(" ");
   output = output.split("openstack)]").join("openstack)");
   res = [];
@@ -12,8 +14,11 @@ function exportTerminalBuffer() {
       res.push(s);
     }
   });
-  console.log(JSON.stringify(res));
-  return res.join("\n");
+  
+  res = res.join("\n");
+  res = res.split("&#91;").join("[");
+  res = res.split("&#93;").join("]");
+  return res;
 }
 
 function saveTerminalOutput(filename, text) {
