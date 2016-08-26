@@ -29,7 +29,12 @@ $(document).ready(function() {
           success: function (data, textStatus, xhr) {
             term.resume();
             $('#command-processing').addClass('hide');
-            term.echo(new String(data.response));
+            msg = new String(data.message);
+            if(data.success) {
+              term.echo(msg);
+            } else {
+              term.error(msg);
+            }
           },
           error: function (e, textStatus, xhr) {
             if(e.status == 302) {
