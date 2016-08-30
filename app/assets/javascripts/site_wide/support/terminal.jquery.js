@@ -45,6 +45,8 @@ $(document).ready(function() {
             } else {
               term.error('An error prevented this command being executed. Server response: "' + e.status + ': ' + e.statusText + '"');
             }
+            term.resume();
+            $('#command-processing').addClass('hide');
           }
         });
       } else {
