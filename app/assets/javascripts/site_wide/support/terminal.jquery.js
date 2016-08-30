@@ -29,12 +29,17 @@ $(document).ready(function() {
           success: function (data, textStatus, xhr) {
             term.resume();
             $('#command-processing').addClass('hide');
-            term.echo(new String(data.response));
+            msg = new String(data.message);
+            if(data.success) {
+              term.echo(msg);
+            } else {
+              term.error(msg);
+            }
           },
           error: function (e, textStatus, xhr) {
             if(e.status == 302) {
               term.error('You are no longer authenticated. Please log in and try again.');
-              setTimeout(function(){ eval(e.responseText) }, 2000);
+              setTimeout(function(){ window.location.replace('/terminal') }, 2000);
             } else if(e.status == 0) {
               term.error("Failed to connect to server. Are you connected to the Internet?");
             } else {
@@ -46,21 +51,22 @@ $(document).ready(function() {
          term.echo('');
       }
     }, {
-      greetings: "[[gb;#00aaff;black]\
+      greetings: "[[gb;#609AE9;;black]\
      ____        __        _____            __                __\n \
    / __ \\____ _/ /_____ _/ ___/___  ____  / /_________  ____/ /\n \
   / / / / __ `/ __/ __ `/ /   / _ \\/ __ \\/ __/ ___/ _ \\/ __  / \n \
  / /_/ / /_/ / /_/ /_/ / /___/  __/ / / / /_/ /  /  __/ /_/ /  \n \
 /_____/\\__,_/\\__/\\__,_/\\____/\\___/_/ /_/\\__/_/   \\___/\\__,_/   \n \
                                                                \n \
-Welcome to the OpenStack prompt! Type 'help' for usage info.\n \
+Welcome to the your command line. Type 'help' for usage info.\n \
   \n]",
       name: 'OpenStack Client',
-      height: 400,
+      height: '60vh',
       width: '100%',
       prompt: "[[gb;#00AA00;black](openstack)] "
     });
   }
+  $('.openstack-client-terminal').removeClass('hide');
   setInterval(function() {
     setPromptProperties();
   }, 1000);

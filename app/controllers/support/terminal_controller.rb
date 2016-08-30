@@ -9,10 +9,12 @@ class Support::TerminalController < SupportBaseController
   end
 
   def run_command
+    success, message = fetch_response
     respond_to do |format|
       format.js {
         render json: {
-          response: fetch_response
+          success: success,
+          message: message
         }.to_json
       }
     end
@@ -28,7 +30,7 @@ class Support::TerminalController < SupportBaseController
     begin
       Terminal.new(credentials).run_command run_command_params[:command]
     rescue StandardError => e
-      e.message
+      [false, e.message]
     end
   end
 

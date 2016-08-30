@@ -13,7 +13,8 @@ class Terminal
     command.gsub! "\n", ""
 
     container = image.run(command)
-    output = container.tap(&:start).attach(logs: true).flatten.join
+    stdout, stderr = container.tap(&:start).attach(logs: true)
+    [stderr.empty?, [stdout,stderr].flatten.join]
   ensure
     container&.delete(:force => true)
   end
