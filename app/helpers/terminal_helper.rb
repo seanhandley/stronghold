@@ -14,7 +14,7 @@ module TerminalHelper
         description: "List all the available images"
       },
       {
-        command: "server create --flavor <strong>[flavor_name]</strong> --image <strong>[image_name] [server_name]</strong>".html_safe,
+        command: "server create --flavor <strong>[flavor]</strong> --image <strong>[image] [name]</strong>".html_safe,
         description: "Create a new instance"
       },
       {

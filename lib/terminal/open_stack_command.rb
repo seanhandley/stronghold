@@ -73,7 +73,10 @@ class Terminal
 
     categories.each do |category|
       define_singleton_method "#{category[:name]}_endpoint_base" do
-        class_variable_set "@@#{category[:name]}_endpoint_base".to_sym,
+        var_name = "@@#{category[:name]}_endpoint_base".to_sym
+        res = class_variable_get(var_name) rescue nil
+        return res if res
+        class_variable_set var_name,
                            OpenStackConnection.send(category[:name]).instance_variable_get("@openstack_management_uri").to_s.gsub(/\/\w+$/,'')                  
       end
     end

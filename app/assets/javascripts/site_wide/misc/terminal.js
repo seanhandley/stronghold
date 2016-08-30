@@ -3,6 +3,7 @@ function exportTerminalBuffer() {
   output = output.split("[;white;black]").join("");
   output = output.split("[gb;#00AA00;black]").join("");
   output = output.split("[gb;#00aaff;black]").join("");
+  output = output.split("[gb;#609AE9;;black]").join("");
   output = output.split("[;;;error]").join("");
   output = output.split("[;;;error]").join("");
   output = output.split("&nbsp;").join(" ");

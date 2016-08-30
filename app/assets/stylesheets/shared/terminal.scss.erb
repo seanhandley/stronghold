@@ -1,3 +1,4 @@
+@import "settings";
 .openstack-client-terminal {
   border: 3px solid #aaa;
   border-radius: 5px;
@@ -57,7 +58,53 @@
 }
 
 .example-commands {
-  overflow: auto;
+  overflow-y: auto;
+}
+
+.example-commands::-webkit-scrollbar {
+  -webkit-appearance: none;
+}
+
+.example-commands::-webkit-scrollbar:vertical {
+  width: 6px;
+}
+
+.example-commands::-webkit-scrollbar:horizontal {
+  height: 6px;
+}
+
+.example-commands::-webkit-scrollbar-thumb {
+  border-radius: 6px;
+  background-color: rgba(0, 0, 0, .3);
+}
+
+.example-commands .highlight {
+  font-weight: normal;
+}
+
+.read-more {
+  margin-top: 5px;
+  display: flex;
+  justify-content: space-between;
+  color: #B66B39;
+}
+
+.read-more a {
+  text-decoration: underline;
+  color: #B66B39;
+}
+
+.read-more i {
+  color: black;
+}
+
+img.vagrant-icon {
+  height: 12px;
+  width: auto;
+  -webkit-filter: grayscale(100%);
+  filter: grayscale(100%);
+  -webkit-filter: brightness(0.25);
+  filter: brightness(0.25);
 }
 
 div.project-select {
