@@ -13,7 +13,7 @@ class Terminal
       @user         = credentials[:user]
       @auth_url     = credentials[:auth_url]
 
-      raise(OpenStackCommandError, "Unknown command '#{sub_command}'. Type 'help' to see all commands.") unless is_allowed?
+      raise(OpenStackCommandError, "Command '#{sub_command}' is unknown or unavailable. Type 'help' to see available commands.") unless is_allowed?
 
       if sub_command.starts_with?('help')
         @command = "openstack #{sub_command}"
@@ -95,16 +95,10 @@ class Terminal
     def self.sub_commands
       { 
         "openstack.cli"             => ["help"],
-        "openstack.common"          => ["availability zone list", "configuration show",
-                                        "limits show", "quota show"],
-        "openstack.compute.v2"      => ["aggregate", "aggregate add host", "aggregate create", "aggregate delete", "aggregate list",
-                                        "aggregate remove host", "aggregate set", "aggregate show", "aggregate unset",
-                                        "compute", "compute agent", "compute agent create", "compute agent delete", "compute agent list",
-                                        "compute agent set", "compute service", "compute service delete", "compute service list",
-                                        "compute service set", "console", "console log", "console log show", "console url show", "flavor",
-                                        "flavor create", "flavor delete", "flavor list", "flavor set", "flavor show", "flavor unset",
-                                        "host", "host list", "host set", "host show", "hypervisor", "hypervisor list", "hypervisor show",
-                                        "hypervisor stats show", "ip fixed", "ip fixed add", "ip fixed remove", "ip floating add",
+        "openstack.common"          => ["availability zone list", "configuration show", "limits show", "quota show"],
+        "openstack.compute.v2"      => ["console", "console log", "console log show", "console url show", "flavor",
+                                        "flavor list", "flavor show",
+                                        "ip fixed", "ip fixed add", "ip fixed remove", "ip floating add",
                                         "ip floating pool", "ip floating pool list", "ip floating remove", "keypair", "keypair create", "keypair delete",
                                         "keypair list", "keypair show", "server", "server add security group", "server add volume",
                                         "server backup create", "server create", "server delete", "server dump create",
@@ -112,20 +106,15 @@ class Terminal
                                         "server image create", "server list", "server lock", "server migrate", "server pause",
                                         "server reboot", "server rebuild", "server remove security group", "server remove volume",
                                         "server rescue", "server resize", "server restore", "server resume", "server set",
-                                        "server shelve", "server show", "server ssh", "server start", "server stop", "server suspend",
+                                        "server shelve", "server show", "server start", "server stop", "server suspend",
                                         "server unlock", "server unpause", "server unrescue", "server unset", "server unshelve",
                                         "usage", "usage list", "usage show"],
         "openstack.identity.v2"     => ["catalog list", "catalog show", "ec2 credentials create", "ec2 credentials delete",
-                                        "ec2 credentials list", "ec2 credentials show", "endpoint create", "endpoint delete", "endpoint list",
-                                        "endpoint show", "project create", "project delete", "project list", "project set", "project show", "project unset",
-                                        "role add", "role create", "role delete", "role list", "role remove", "role show", "service create", "service delete",
-                                        "service list", "service show", "token issue", "token revoke", "user create", "user delete", "user list",
-                                        "user role list", "user set", "user show"],
+                                        "ec2 credentials list", "ec2 credentials show"],
         "openstack.image.v2"        => ["image add project", "image create", "image delete", "image list",
                                         "image remove project", "image save", "image set", "image show", "image unset"],
-        "openstack.network.v2"      => ["address scope create", "address scope delete", "address scope list", "address scope set", "address scope show",
-                                        "ip availability list", "ip availability show", "ip floating create", "ip floating delete", "ip floating list",
-                                        "ip floating show", "network create", "network delete", "network list", "network segment list", "network segment show",
+        "openstack.network.v2"      => ["ip floating create", "ip floating delete", "ip floating list",
+                                        "ip floating show", "network create", "network delete", "network list",
                                         "network set", "network show", "port create", "port delete", "port list", "port set", "port show", "router add port",
                                         "router add subnet", "router create", "router delete", "router list", "router remove port", "router remove subnet",
                                         "router set", "router show", "security group create", "security group delete", "security group list",
@@ -138,9 +127,9 @@ class Terminal
         "openstack.volume.v2"       => ["backup", "backup create", "backup delete", "backup list", "backup restore", "backup show", "snapshpt", "snapshot create", "snapshot delete",
                                         "snapshot list", "snapshot set", "snapshot show", "snapshot unset", "volume", "volume create", "volume delete", "volume list",
                                         "volume qos associate", "volume qos create", "volume qos delete", "volume qos disassociate", "volume qos list",
-                                        "volume qos set", "volume qos show", "volume qos unset", "volume service list", "volume set", "volume show",
-                                        "volume transfer request list", "volume type create", "volume type delete", "volume type list", "volume type set",
-                                        "volume type show", "volume type unset", "volume unset"]
+                                        "volume qos set", "volume qos show", "volume qos unset", "volume set", "volume show",
+                                        "volume transfer request list", "volume type list", 
+                                        "volume type show", "volume unset"]
       }
     end
 

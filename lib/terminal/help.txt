@@ -1,19 +1,6 @@
 
 Commands:
 
-address scope create  Create a new Address Scope
-address scope delete  Delete address scope(s)
-address scope list  List address scopes
-address scope set  Set address scope properties
-address scope show  Display address scope details
-aggregate add host  Add host to aggregate
-aggregate create  Create a new aggregate
-aggregate delete  Delete an existing aggregate
-aggregate list  List all aggregates
-aggregate remove host  Remove host from aggregate
-aggregate set  Set aggregate properties
-aggregate show  Display aggregate details
-aggregate unset  Unset aggregate properties
 availability zone list  List availability zones and their status
 backup create  Create new backup
 backup delete  Delete backup(s)
@@ -22,15 +9,6 @@ backup restore  Restore backup
 backup show    Display backup details
 catalog list   List services in the service catalog
 catalog show   Display service catalog details
-command list   List recognized commands by group
-complete       print bash completion command
-compute agent create  Create compute agent command
-compute agent delete  Delete compute agent(s)
-compute agent list  List compute agent command
-compute agent set  Set compute agent command
-compute service delete  Delete service command
-compute service list  List service command
-compute service set  Set service command
 configuration show  Display configuration details
 console log show  Show server's console output
 console url show  Show server's remote console URL
@@ -45,24 +23,9 @@ ec2 credentials create  Create EC2 credentials
 ec2 credentials delete  Delete EC2 credentials
 ec2 credentials list  List EC2 credentials
 ec2 credentials show  Display EC2 credentials details
-endpoint create  Create new endpoint
-endpoint delete  Delete endpoint
-endpoint list  List endpoints
-endpoint show  Display endpoint details
-extension list  List API extensions
-flavor create  Create new flavor
-flavor delete  Delete flavor
 flavor list    List flavors
-flavor set     Set flavor properties
 flavor show    Display flavor details
-flavor unset   Unset flavor properties
 help           print detailed help for another command
-host list      List host command
-host set       Set host properties
-host show      Show host command
-hypervisor list  List hypervisors
-hypervisor show  Display hypervisor details
-hypervisor stats show  Display hypervisor stats details
 image add project  Associate project with image
 image create   Create/upload an image
 image delete   Delete image(s)
@@ -72,8 +35,6 @@ image save     Save an image locally
 image set      Set image properties
 image show     Display image details
 image unset    Unset image tags and properties
-ip availability list  List IP availability for network
-ip availability show  Show network IP availability details
 ip fixed add   Add fixed IP address to server
 ip fixed remove  Remove fixed IP address from server
 ip floating add  Add floating IP address to server
@@ -88,12 +49,9 @@ keypair delete  Delete public key
 keypair list   List public key fingerprints
 keypair show   Display public key details
 limits show    Show compute and block storage limits
-module list    List module versions
 network create  Create new network
 network delete  Delete network(s)
 network list   List networks
-network segment list  List network segments
-network segment show  Display network segment details
 network set    Set network properties
 network show   Show network details
 object create  Upload object to container
@@ -111,12 +69,6 @@ port delete    Delete port(s)
 port list      List ports
 port set       Set port properties
 port show      Display port details
-project create  Create new project
-project delete  Delete project(s)
-project list   List projects
-project set    Set project properties
-project show   Display project details
-project unset  Unset project properties
 quota set      Set quotas for project or class
 quota show     Show quotas for project or class
 role add       Add role to project:user
@@ -169,7 +121,6 @@ server resume  Resume server(s)
 server set     Set server properties
 server shelve  Shelve server(s)
 server show    Show server details
-server ssh     SSH to server
 server start   Start server(s).
 server stop    Stop server(s).
 server suspend  Suspend server(s)
@@ -178,10 +129,6 @@ server unpause  Unpause server(s)
 server unrescue  Restore server from rescue mode
 server unset   Unset server properties
 server unshelve  Unshelve server(s)
-service create  Create new service
-service delete  Delete service
-service list   List services
-service show   Display service details
 snapshot create  Create new snapshot
 snapshot delete  Delete volume snapshot(s)
 snapshot list  List snapshots
@@ -198,16 +145,8 @@ subnet pool set  Set subnet pool properties
 subnet pool show  Display subnet pool details
 subnet set     Set subnet properties
 subnet show    Display subnet details
-token issue    Issue new token
-token revoke   Revoke existing token
 usage list     List resource usage per project
 usage show     Show resource usage for a single project
-user create    Create new user
-user delete    Delete user(s)
-user list      List users
-user role list  List user-role assignments
-user set       Set user properties
-user show      Display user details
 volume create  Create new volume
 volume delete  Delete volume(s)
 volume list    List volumes
@@ -219,14 +158,9 @@ volume qos list  List QoS specifications
 volume qos set  Set QoS specification properties
 volume qos show  Display QoS specification details
 volume qos unset  Unset QoS specification properties
-volume service list  List service command
 volume set     Set volume properties
 volume show    Display volume details
 volume transfer request list  Lists all volume transfer requests.
-volume type create  Create new volume type
-volume type delete  Delete volume type
 volume type list  List volume types
-volume type set  Set volume type properties
 volume type show  Display volume type details
-volume type unset  Unset volume type properties
 volume unset   Unset volume properties
