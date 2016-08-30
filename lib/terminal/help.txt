@@ -1,0 +1,232 @@
+
+Commands:
+
+address scope create  Create a new Address Scope
+address scope delete  Delete address scope(s)
+address scope list  List address scopes
+address scope set  Set address scope properties
+address scope show  Display address scope details
+aggregate add host  Add host to aggregate
+aggregate create  Create a new aggregate
+aggregate delete  Delete an existing aggregate
+aggregate list  List all aggregates
+aggregate remove host  Remove host from aggregate
+aggregate set  Set aggregate properties
+aggregate show  Display aggregate details
+aggregate unset  Unset aggregate properties
+availability zone list  List availability zones and their status
+backup create  Create new backup
+backup delete  Delete backup(s)
+backup list    List backups
+backup restore  Restore backup
+backup show    Display backup details
+catalog list   List services in the service catalog
+catalog show   Display service catalog details
+command list   List recognized commands by group
+complete       print bash completion command
+compute agent create  Create compute agent command
+compute agent delete  Delete compute agent(s)
+compute agent list  List compute agent command
+compute agent set  Set compute agent command
+compute service delete  Delete service command
+compute service list  List service command
+compute service set  Set service command
+configuration show  Display configuration details
+console log show  Show server's console output
+console url show  Show server's remote console URL
+container create  Create new container
+container delete  Delete container
+container list  List containers
+container save  Save container contents locally
+container set  Set container properties
+container show  Display container details
+container unset  Unset container properties
+ec2 credentials create  Create EC2 credentials
+ec2 credentials delete  Delete EC2 credentials
+ec2 credentials list  List EC2 credentials
+ec2 credentials show  Display EC2 credentials details
+endpoint create  Create new endpoint
+endpoint delete  Delete endpoint
+endpoint list  List endpoints
+endpoint show  Display endpoint details
+extension list  List API extensions
+flavor create  Create new flavor
+flavor delete  Delete flavor
+flavor list    List flavors
+flavor set     Set flavor properties
+flavor show    Display flavor details
+flavor unset   Unset flavor properties
+help           print detailed help for another command
+host list      List host command
+host set       Set host properties
+host show      Show host command
+hypervisor list  List hypervisors
+hypervisor show  Display hypervisor details
+hypervisor stats show  Display hypervisor stats details
+image add project  Associate project with image
+image create   Create/upload an image
+image delete   Delete image(s)
+image list     List available images
+image remove project  Disassociate project with image
+image save     Save an image locally
+image set      Set image properties
+image show     Display image details
+image unset    Unset image tags and properties
+ip availability list  List IP availability for network
+ip availability show  Show network IP availability details
+ip fixed add   Add fixed IP address to server
+ip fixed remove  Remove fixed IP address from server
+ip floating add  Add floating IP address to server
+ip floating create  Create floating IP
+ip floating delete  Delete floating IP
+ip floating list  List floating IP(s)
+ip floating pool list  List pools of floating IP addresses
+ip floating remove  Remove floating IP address from server
+ip floating show  Show floating IP details
+keypair create  Create new public key
+keypair delete  Delete public key
+keypair list   List public key fingerprints
+keypair show   Display public key details
+limits show    Show compute and block storage limits
+module list    List module versions
+network create  Create new network
+network delete  Delete network(s)
+network list   List networks
+network segment list  List network segments
+network segment show  Display network segment details
+network set    Set network properties
+network show   Show network details
+object create  Upload object to container
+object delete  Delete object from container
+object list    List objects
+object save    Save object locally
+object set     Set object properties
+object show    Display object details
+object store account set  Set account properties
+object store account show  Display account details
+object store account unset  Unset account properties
+object unset   Unset object properties
+port create    Create a new port
+port delete    Delete port(s)
+port list      List ports
+port set       Set port properties
+port show      Display port details
+project create  Create new project
+project delete  Delete project(s)
+project list   List projects
+project set    Set project properties
+project show   Display project details
+project unset  Unset project properties
+quota set      Set quotas for project or class
+quota show     Show quotas for project or class
+role add       Add role to project:user
+role create    Create new role
+role delete    Delete role(s)
+role list      List roles
+role remove    Remove role from project : user
+role show      Display role details
+router add port  Add a port to a router
+router add subnet  Add a subnet to a router
+router create  Create a new router
+router delete  Delete router(s)
+router list    List routers
+router remove port  Remove a port from a router
+router remove subnet  Remove a subnet from a router
+router set     Set router properties
+router show    Display router details
+security group create  Create a new security group
+security group delete  Delete a security group
+security group list  List security groups
+security group rule create  Create a new security group rule
+security group rule delete  Delete a security group rule
+security group rule list  List security group rules
+security group rule show  Display security group rule details
+security group set  Set security group properties
+security group show  Display security group details
+server add security group  Add security group to server
+server add volume  Add volume to server
+server backup create  Create a server backup image
+server create  Create a new server
+server delete  Delete server(s)
+server dump create  Create a dump file in server(s)
+server group create  Create a new server group.
+server group delete  Delete existing server group(s).
+server group list  List all server groups.
+server group show  Display server group details.
+server image create  Create a new disk image from a running server
+server list    List servers
+server lock    Lock server(s). A non-admin user will not be able to execute actions
+server migrate  Migrate server to different host
+server pause   Pause server(s)
+server reboot  Perform a hard or soft server reboot
+server rebuild  Rebuild server
+server remove security group  Remove security group from server
+server remove volume  Remove volume from server
+server rescue  Put server in rescue mode
+server resize  Scale server to a new flavor
+server restore  Restore server(s)
+server resume  Resume server(s)
+server set     Set server properties
+server shelve  Shelve server(s)
+server show    Show server details
+server ssh     SSH to server
+server start   Start server(s).
+server stop    Stop server(s).
+server suspend  Suspend server(s)
+server unlock  Unlock server(s)
+server unpause  Unpause server(s)
+server unrescue  Restore server from rescue mode
+server unset   Unset server properties
+server unshelve  Unshelve server(s)
+service create  Create new service
+service delete  Delete service
+service list   List services
+service show   Display service details
+snapshot create  Create new snapshot
+snapshot delete  Delete volume snapshot(s)
+snapshot list  List snapshots
+snapshot set   Set snapshot properties
+snapshot show  Display snapshot details
+snapshot unset  Unset snapshot properties
+subnet create  Create a subnet
+subnet delete  Delete subnet
+subnet list    List subnets
+subnet pool create  Create subnet pool
+subnet pool delete  Delete subnet pool
+subnet pool list  List subnet pools
+subnet pool set  Set subnet pool properties
+subnet pool show  Display subnet pool details
+subnet set     Set subnet properties
+subnet show    Display subnet details
+token issue    Issue new token
+token revoke   Revoke existing token
+usage list     List resource usage per project
+usage show     Show resource usage for a single project
+user create    Create new user
+user delete    Delete user(s)
+user list      List users
+user role list  List user-role assignments
+user set       Set user properties
+user show      Display user details
+volume create  Create new volume
+volume delete  Delete volume(s)
+volume list    List volumes
+volume qos associate  Associate a QoS specification to a volume type
+volume qos create  Create new QoS specification
+volume qos delete  Delete QoS specification
+volume qos disassociate  Disassociate a QoS specification from a volume type
+volume qos list  List QoS specifications
+volume qos set  Set QoS specification properties
+volume qos show  Display QoS specification details
+volume qos unset  Unset QoS specification properties
+volume service list  List service command
+volume set     Set volume properties
+volume show    Display volume details
+volume transfer request list  Lists all volume transfer requests.
+volume type create  Create new volume type
+volume type delete  Delete volume type
+volume type list  List volume types
+volume type set  Set volume type properties
+volume type show  Display volume type details
+volume type unset  Unset volume type properties
+volume unset   Unset volume properties
