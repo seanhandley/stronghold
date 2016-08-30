@@ -1,22 +1,54 @@
 class Terminal
   def initialize(credentials)
     @credentials = DOCKER_ARGS.merge(credentials)
+    command = ["bash", "-c", initialize_command]
+    @container = Docker::Container.create('Image' => @credentials[:openstack_client_image], 'Cmd' => command, 'Tty' => true, 'OpenStdin' => true)
+    start
   end
 
-  def run_command(command)
+  def initialize_command
     command = <<-EOS
-      openstack #{command} --os-auth-type token --os-auth-url #{@credentials[:auth_url]}
+      openstack --os-auth-type token --os-auth-url #{@credentials[:auth_url]}
       --os-token #{Terminal.get_project_tokens(@credentials[:user])[@credentials[:tenant_name]]}
       --os-tenant-name #{@credentials[:tenant_name]} --os-username #{@credentials[:user].email}
     EOS
     command.strip!
     command.gsub! "\n", ""
+    p command
+    command
+  end
 
-    container = image.run(command)
-    stdout, stderr = container.tap(&:start).attach(logs: true)
+  def start
+    Thread.new do
+      loop do
+        begin
+          @container.tap(&:start).attach(stream: true, tty: true) { |stream, _| print stream }
+        ensure
+          destroy
+        end
+      end
+    end
+  end
+
+  def run_command(command)
+    stdout, stderr = @container.attach(stdin: StringIO.new("#{command}\n"), tty: true, logs: true)
     [stderr.empty?, [stdout,stderr].flatten.join]
-  ensure
-    container&.delete(:force => true)
+    #[true, 'done']
+  end
+
+  # docker run -i -t ... sh -c "exec >/dev/tty 2>/dev/tty </dev/tty && /usr/bin/screen -s /bin/bash"
+
+  def destroy
+    @container&.delete(:force => true)
+  end
+
+  def self.fetch(credentials)
+    key = fetch_key(credentials)
+    Rails.application.config.terminals.fetch(key) { Rails.application.config.terminals[key] = Terminal.new(credentials) }
+  end
+
+  def self.fetch_key(credentials)
+    "saved_terminal_#{credentials[:user].id}_#{credentials[:tenant_name]}"
   end
 
   def self.get_project_tokens(user, password=nil)

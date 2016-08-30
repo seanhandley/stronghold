@@ -28,7 +28,7 @@ class Support::TerminalController < SupportBaseController
 
   def fetch_response
     begin
-      Terminal.new(credentials).run_command run_command_params[:command]
+      Terminal.fetch(credentials).run_command run_command_params[:command]
     rescue StandardError => e
       [false, e.message]
     end
