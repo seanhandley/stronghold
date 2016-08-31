@@ -60,8 +60,7 @@ $(document).ready(function() {
  / /_/ / /_/ / /_/ /_/ / /___/  __/ / / / /_/ /  /  __/ /_/ /  \n \
 /_____/\\__,_/\\__/\\__,_/\\____/\\___/_/ /_/\\__/_/   \\___/\\__,_/   \n \
                                                                \n \
-Welcome to the your terminal. Type 'help' for usage info.\n \
-  \n]",
+Welcome to the your terminal. Type 'help' for usage info.]\n\n",
       name: 'OpenStack Client',
       height: '60vh',
       width: '100%',

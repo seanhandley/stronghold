@@ -1,25 +1,14 @@
 function exportTerminalBuffer() {
   var output = $(".terminal").terminal().get_output();
-  output = output.split("[;white;black]").join("");
-  output = output.split("[gb;#00AA00;black]").join("");
-  output = output.split("[gb;#00aaff;black]").join("");
-  output = output.split("[gb;#609AE9;;black]").join("");
-  output = output.split("[;;;error]").join("");
-  output = output.split("[;;;error]").join("");
+  output = output.split("[[;;;error]Command").join("Command");
+  output = output.split("commands.]").join("commands.");
   output = output.split("&nbsp;").join(" ");
-  output = output.split("openstack)]").join("openstack)");
-  res = [];
-  $.map(output.split("\n"), function(e) {
-    s = e.replace(/^\[/,'').replace(/\]$/,'');
-    if(s != "") {
-      res.push(s);
-    }
-  });
-  
-  res = res.join("\n");
-  res = res.split("&#91;").join("[");
-  res = res.split("&#93;").join("]");
-  return res;
+  output = output.split("[[gb;#609AE9;;black]").join("");
+  output = output.split("[[gb;#00AA00;black](openstack)]").join("(openstack)");;
+  output = output.split("Type 'help' for usage info.]").join("Type 'help' for usage info.")
+  output = output.split("&#91;").join("[");
+  output = output.split("&#93;").join("]");
+  return output;
 }
 
 function saveTerminalOutput(filename, text) {
