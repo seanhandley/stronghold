@@ -129,6 +129,10 @@ module Billing
 
       samples.collect do |s|
         if s['resource_metadata']['event_type']
+          unless cached_images[image_id]
+            Honeybadger.notify(StandardError.new("Image not found: #{image_id}"))
+            next
+          end
           Billing::ImageState.create image_id: cached_images[image_id][:id], recorded_at: Time.zone.parse("#{s['recorded_at']} UTC"),
                                       size: bytes_to_terabytes(s['resource_metadata']['size'].to_i),
                                       event_name: s['resource_metadata']['event_type'], billing_sync: sync,
