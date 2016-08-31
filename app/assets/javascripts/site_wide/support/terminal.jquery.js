@@ -71,4 +71,5 @@ Welcome to the your terminal. Type 'help' for usage info.]\n\n",
   setInterval(function() {
     setPromptProperties();
   }, 1000);
+  $(".openstack-client-terminal").click();
 });
