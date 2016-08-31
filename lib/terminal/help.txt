@@ -19,8 +19,6 @@ container save  Save container contents locally
 container set  Set container properties
 container show  Display container details
 container unset  Unset container properties
-ec2 credentials create  Create EC2 credentials
-ec2 credentials delete  Delete EC2 credentials
 ec2 credentials list  List EC2 credentials
 ec2 credentials show  Display EC2 credentials details
 flavor list    List flavors
@@ -119,7 +117,6 @@ server resize  Scale server to a new flavor
 server restore  Restore server(s)
 server resume  Resume server(s)
 server set     Set server properties
-server shelve  Shelve server(s)
 server show    Show server details
 server start   Start server(s).
 server stop    Stop server(s).
@@ -128,7 +125,6 @@ server unlock  Unlock server(s)
 server unpause  Unpause server(s)
 server unrescue  Restore server from rescue mode
 server unset   Unset server properties
-server unshelve  Unshelve server(s)
 snapshot create  Create new snapshot
 snapshot delete  Delete volume snapshot(s)
 snapshot list  List snapshots
@@ -150,14 +146,6 @@ usage show     Show resource usage for a single project
 volume create  Create new volume
 volume delete  Delete volume(s)
 volume list    List volumes
-volume qos associate  Associate a QoS specification to a volume type
-volume qos create  Create new QoS specification
-volume qos delete  Delete QoS specification
-volume qos disassociate  Disassociate a QoS specification from a volume type
-volume qos list  List QoS specifications
-volume qos set  Set QoS specification properties
-volume qos show  Display QoS specification details
-volume qos unset  Unset QoS specification properties
 volume set     Set volume properties
 volume show    Display volume details
 volume transfer request list  Lists all volume transfer requests.

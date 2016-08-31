@@ -109,10 +109,10 @@ class Terminal
                                         "server image create", "server list", "server lock", "server migrate", "server pause",
                                         "server reboot", "server rebuild", "server remove security group", "server remove volume",
                                         "server rescue", "server resize", "server restore", "server resume", "server set",
-                                        "server shelve", "server show", "server start", "server stop", "server suspend",
-                                        "server unlock", "server unpause", "server unrescue", "server unset", "server unshelve",
+                                        "server show", "server start", "server stop", "server suspend",
+                                        "server unlock", "server unpause", "server unrescue", "server unset",
                                         "usage", "usage list", "usage show"],
-        "openstack.identity.v2"     => ["catalog list", "catalog show", "ec2 credentials create", "ec2 credentials delete",
+        "openstack.identity.v2"     => ["catalog list", "catalog show",
                                         "ec2 credentials list", "ec2 credentials show"],
         "openstack.image.v2"        => ["image add project", "image create", "image delete", "image list",
                                         "image remove project", "image save", "image set", "image show", "image unset"],
@@ -127,12 +127,9 @@ class Terminal
         "openstack.object_store.v1" => ["container create", "container delete", "container list", "container save", "container set", "container show",
                                         "container unset", "object create", "object delete", "object list", "object save", "object set", "object show",
                                         "object store account set", "object store account show", "object store account unset", "object unset"],
-        "openstack.volume.v2"       => ["backup", "backup create", "backup delete", "backup list", "backup restore", "backup show", "snapshpt", "snapshot create", "snapshot delete",
+        "openstack.volume.v2"       => ["backup", "backup create", "backup delete", "backup list", "backup restore", "backup show", "snapshot", "snapshot create", "snapshot delete",
                                         "snapshot list", "snapshot set", "snapshot show", "snapshot unset", "volume", "volume create", "volume delete", "volume list",
-                                        "volume qos associate", "volume qos create", "volume qos delete", "volume qos disassociate", "volume qos list",
-                                        "volume qos set", "volume qos show", "volume qos unset", "volume set", "volume show",
-                                        "volume transfer request list", "volume type list", 
-                                        "volume type show", "volume unset"]
+                                        "volume set", "volume show", "volume transfer request list", "volume type list", "volume type show", "volume unset"]
       }
     end
 
