@@ -41,7 +41,7 @@ class Support::TerminalController < SupportBaseController
     }
   end
 
-  def user_can_user_terminal?
+  def user_can_use_terminal?
     current_user.staff? || [49, 733].include?(current_user.organization_id)
   end
 end
