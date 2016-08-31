@@ -23,7 +23,7 @@ $(document).ready(function() {
         $.ajax({
           type: "POST",
           contentType: "application/json;",
-          url: '/terminal_command.js',
+          url: '/account/terminal_command.js',
           dataType: 'json',
           data: JSON.stringify({command: command, project: project}),
           success: function (data, textStatus, xhr) {

@@ -33,6 +33,9 @@ Rails.application.routes.draw do
     resources :audits, only: [:index]
     get '/usage', :controller => 'usage', :action => 'index'
     get '/graph/data', :controller => 'graphs', :action => 'data', :defaults => { :format => 'json' }
+
+    get  'terminal', :controller => 'terminal', :action => 'index'
+    post 'terminal_command', :controller => 'terminal', :action => 'run_command', :defaults => { :format => 'js' }
   end
 
   namespace :ext do
@@ -113,9 +116,6 @@ Rails.application.routes.draw do
   post 'salesforce', :controller => 'salesforce', :action => 'update'
 
   get 'sign_in', :controller => 'sessions', :action => 'new'
-
-  get  'terminal', :controller => 'support/terminal', :action => 'index'
-  post 'terminal_command', :controller => 'support/terminal', :action => 'run_command', :defaults => { :format => 'js' }
 
   root :to => 'support/dashboard#index'
 

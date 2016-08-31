@@ -1,9 +1,11 @@
 class Support::TerminalController < SupportBaseController
 
-  skip_authorization_check
-  before_action -> { slow_404 unless user_can_use_terminal? }
   before_action -> { authorize! :read, :cloud }
+  before_action -> { slow_404 unless current_user.can_use_terminal? }
 
+  def current_section
+    'terminal'
+  end
 
   def index
     @projects = current_organization.projects

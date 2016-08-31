@@ -33,11 +33,6 @@
           %a{:href => support_manage_cards_path}
             %i.fa.fa-credit-card
             Payment Settings
-      - if can?(:read, :cloud)
-        %li
-          %a{:href => terminal_path}
-            %i.fa.fa-terminal
-            OpenStack Terminal
       %li
         %a{:href => support_audits_path}
           %i.fa.fa-history

@@ -21,6 +21,11 @@
           .top-menu-option{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => 'Overview', 'class' => (current_section == 'cloud' ? 'selected' : '')}
             %i.top-menu-icon.fa.fa-cloud
 
+      - if current_user.can_use_terminal?
+        %a{href: support_terminal_path}
+          .top-menu-option{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => 'Terminal', 'class' => (current_section == 'terminal' ? 'selected' : '')}
+            %i.top-menu-icon.fa.fa-terminal
+
       - if can? :read, :usage
         %a{href: support_usage_path}
           .top-menu-option{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => t(:usage), 'class' => (current_section == 'usage' ? 'selected' : '')}
