@@ -65,6 +65,11 @@ class User < ActiveRecord::Base
     roles.any?(&:power_user?)
   end
 
+  # Here temporarily until the feature is released
+  def can_use_terminal?
+    staff? || [49, 733].include?(organization_id)
+  end
+
   def as_hash
     { email: email }
   end
