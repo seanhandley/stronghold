@@ -36,6 +36,7 @@ Rails.application.routes.draw do
 
     get  'terminal', :controller => 'terminal', :action => 'index'
     post 'terminal_command', :controller => 'terminal', :action => 'run_command', :defaults => { :format => 'js' }
+    get 'terminal_tab_complete', :controller => 'terminal', :action => 'terminal_tab_complete', :defaults => { :format => 'js' }
   end
 
   namespace :ext do

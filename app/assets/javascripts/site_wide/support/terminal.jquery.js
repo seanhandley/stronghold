@@ -64,7 +64,24 @@ Welcome to the your terminal. Type 'help' for usage info.]\n\n",
       name: 'OpenStack Client',
       height: '60vh',
       width: '100%',
-      prompt: "[[gb;#00AA00;black](openstack)] "
+      prompt: "[[gb;#00AA00;black](openstack)] ",
+      tabcompletion: true,
+      completion: function(terminal, string, callback) {
+        $.getJSON('/account/terminal_tab_complete.js', function(data) {
+          choices = $.map(data, function(e) {
+            if(e.indexOf($('.openstack-client-terminal').terminal().get_command()) != -1) {
+              return e;
+            }
+          });
+          if(choices.length == 1) {
+            $('.openstack-client-terminal').terminal().set_command(choices[0]);
+          } else {
+            callback(choices);
+          }
+        });
+      },
+      exit: false,
+      clear: false
     });
   }
   $('.openstack-client-terminal').removeClass('hide');
