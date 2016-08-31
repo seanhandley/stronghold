@@ -23,6 +23,14 @@ class Support::TerminalController < SupportBaseController
     end
   end
 
+  def terminal_tab_complete
+    respond_to do |format|
+      format.js {
+        render json: Terminal::OpenStackCommand.sub_commands.values.flatten.uniq.to_json
+      }
+    end
+  end
+
   private
 
   def run_command_params
