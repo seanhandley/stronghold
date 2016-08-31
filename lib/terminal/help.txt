@@ -24,11 +24,9 @@ flavor list    List flavors
 flavor show    Display flavor details
 help           print detailed help for another command
 image add project  Associate project with image
-image create   Create/upload an image
 image delete   Delete image(s)
 image list     List available images
 image remove project  Disassociate project with image
-image save     Save an image locally
 image set      Set image properties
 image show     Display image details
 image unset    Unset image tags and properties
