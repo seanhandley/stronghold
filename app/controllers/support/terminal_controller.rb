@@ -2,7 +2,7 @@ class Support::TerminalController < SupportBaseController
 
   skip_authorization_check
 
-  before_action -> { slow_404 unless current_user.staff? }
+  before_action -> { slow_404 unless user_can_use_terminal? }
 
   def index
     @projects = current_organization.projects
@@ -39,5 +39,9 @@ class Support::TerminalController < SupportBaseController
       tenant_name: run_command_params[:project],
       user: current_user
     }
+  end
+
+  def user_can_user_terminal?
+    current_user.staff? || [49, 733].include?(current_user.organization_id)
   end
 end
