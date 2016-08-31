@@ -87,7 +87,7 @@ class Terminal
     end
 
     def token_endpoint_params
-      endpoint = compute? || image? || network? || storage?
+      endpoint = compute? || image? || network?
       endpoint ? " --os-url #{endpoint} --os-auth-type token_endpoint" : " --os-auth-type token"
     end
 
