@@ -15,7 +15,6 @@ console url show  Show server's remote console URL
 container create  Create new container
 container delete  Delete container
 container list  List containers
-container save  Save container contents locally
 container set  Set container properties
 container show  Display container details
 container unset  Unset container properties
@@ -52,10 +51,8 @@ network delete  Delete network(s)
 network list   List networks
 network set    Set network properties
 network show   Show network details
-object create  Upload object to container
 object delete  Delete object from container
 object list    List objects
-object save    Save object locally
 object set     Set object properties
 object show    Display object details
 object store account set  Set account properties
