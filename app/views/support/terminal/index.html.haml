@@ -2,9 +2,14 @@
   .col-md-3{style: 'height: 75vh'}
     .bg-success.terminal-help.osbg.example-commands
       %h4
-        %i.fa.fa-hand-peace-o
+        %i.fa.fa-bullhorn
         Hello!
-      %p.thin-text Try out a few commands in the terminal:
+      %p.thin-text
+        This is your
+        %span.highlight OpenStack Terminal.
+        %br
+        A zero-hassle way into the world of OpenStack commands.
+      %p For example
       - example_commands.each do |example|
         .command-example
           %i.fa.fa-star
@@ -30,8 +35,15 @@
             %i.fa.fa-eraser
             Clear
           %i.fa.fa-cog.fa-spin.fa-3x.fa-fw.hide#command-processing
-.read-more.pull-right
-  %p.tiny
-    %i.fa.fa-book
-    Read the full
-    = link_to 'OpenStack Client documentation', ExternalLinks.python_openstack_client_docs_path, style: 'text-decoration: underline'
+    .read-more
+      %span.tiny
+        = image_tag asset_path('vagrant.png'), class: 'vagrant-icon'
+        %strong Want to try the real thing?
+        Grab our easy-to-install
+        = link_to 'Vagrant Package.', ExternalLinks.vagrant_openstack_client, target: "_blank"
+      %span.tiny
+        %i.fa.fa-book
+        %strong Know what you're doing?
+        Install the official 
+        = link_to 'OpenStack Client.', ExternalLinks.python_openstack_client_docs_path, target: "_blank"
+.push

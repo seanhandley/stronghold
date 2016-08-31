@@ -20,4 +20,7 @@ module ExternalLinks
   def self.python_openstack_client_docs_path
     'http://docs.openstack.org/developer/python-openstackclient/'
   end
+  def self.vagrant_openstack_client
+    'https://github.com/datacentred/openstack-cli-vagrant'
+  end
 end

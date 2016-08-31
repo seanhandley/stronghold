@@ -44,6 +44,10 @@ module OpenStackConnection
     Fog::Metering.new(OPENSTACK_ARGS)
   end
 
+  def self.storage
+    Fog::Storage.new(OPENSTACK_ARGS)
+  end
+
   def self.usage(from,to)
     Rails.cache.fetch("compute_usage_#{from.strftime("%Y%m%d")}_#{to.strftime("%Y%m%d")}", expires_in: 1.week) do
       compute.list_usages(from, to, true).body['tenant_usages']
