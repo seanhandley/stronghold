@@ -24,6 +24,10 @@
         .form-inline
           .form-group
             = select_tag :projects, options_for_terminal_projects(@projects), class: 'form-control'
+      .buttons-left.shortcuts-link
+        %a.tiny{'href' => '', 'data-target' => "#terminalShortcuts", 'data-toggle' => 'modal'}
+          %i.fa.fa-keyboard-o
+          Press escape to see shortcuts
 
     .terminal-responsive
       .openstack-client-terminal.hide
@@ -35,6 +39,7 @@
             %i.fa.fa-eraser
             Clear
           %i.fa.fa-cog.fa-spin.fa-3x.fa-fw.hide#command-processing
+    = render partial: 'shortcuts'
     .read-more
       %span.tiny
         = image_tag asset_path('vagrant.png'), class: 'vagrant-icon'
