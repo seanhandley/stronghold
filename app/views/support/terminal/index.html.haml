@@ -1,64 +1,65 @@
-.row
-  .col-md-3{style: 'height: 75vh'}
-    .bg-success.terminal-help.osbg.example-commands
-      %h4
-        %i.fa.fa-bullhorn
-        Hello!
-      %p.thin-text
-        This is your
-        %span.highlight OpenStack Terminal.
-        %br
-        A zero-hassle way into the world of OpenStack commands.
-      %p For example
-      - example_commands.each do |example|
-        .command-example
-          %i.fa.fa-star
-          %code= example[:command]
-          .small
-            %em= example[:description]
+.browser-terminal
+  .row
+    .col-md-3#left
+      .bg-success.terminal-help.osbg.example-commands
+        %h4
+          %i.fa.fa-bullhorn
+          Hello!
+        %p.thin-text
+          This is your
+          %span.highlight OpenStack Terminal.
+          %br
+          A zero-hassle way into the world of OpenStack commands.
+        %p For example
+        - example_commands.each do |example|
+          .command-example
+            %i.fa.fa-star
+            %code= example[:command]
+            .small
+              %em= example[:description]
 
 
-  .col-md-9{style: 'height: 75vh'}
-    %div.project-select
-      .buttons-right
-        .form-inline
-          .form-group
-            = select_tag :projects, options_for_terminal_projects(@projects), class: 'form-control'
-      .buttons-left.shortcuts-link
-        %a.tiny{'href' => '', 'data-target' => "#terminalShortcuts", 'data-toggle' => 'modal'}
-          %i.fa.fa-keyboard-o
-          Press escape to see shortcuts
+    .col-md-9#right
+      %div.project-select
+        .buttons-right
+          .form-inline
+            .form-group
+              = select_tag :projects, options_for_terminal_projects(@projects), class: 'form-control'
+        .buttons-left.shortcuts-link
+          %a.tiny{'href' => '', 'data-target' => "#terminalShortcuts", 'data-toggle' => 'modal'}
+            %i.fa.fa-keyboard-o
+            Press escape to see shortcuts
 
-    
-    .osx{style: 'opacity: 0'}
-      .window
-        .titlebar
-          .buttons
-            .osx-close
-            .minimize
-            .zoom
-          OpenStack Terminal
-        .terminal-responsive
-          .openstack-client-terminal
-            .buttons-left.term-buttons
-              %a{href: '', id: 'saveTerminal', class: 'btn btn-default'}
-                %i.fa.fa-save
-                Save
-              %a{href: '', id: 'clearTerminal', class: 'btn btn-default'}
-                %i.fa.fa-eraser
-                Clear
-              %i.fa.fa-cog.fa-spin.fa-3x.fa-fw.hide#command-processing
+      
+      .osx{style: 'opacity: 0'}
+        .window
+          .titlebar
+            .buttons
+              .osx-close
+              .minimize
+              .zoom
+            OpenStack Terminal
+          .terminal-responsive
+            .openstack-client-terminal
+              .buttons-left.term-buttons
+                %a{href: '', id: 'saveTerminal', class: 'btn btn-default'}
+                  %i.fa.fa-save
+                  Save
+                %a{href: '', id: 'clearTerminal', class: 'btn btn-default'}
+                  %i.fa.fa-eraser
+                  Clear
+                %i.fa.fa-cog.fa-spin.fa-3x.fa-fw.hide#command-processing
 
-    = render partial: 'shortcuts'
-    .read-more
-      %span.tiny
-        = image_tag asset_path('vagrant.png'), class: 'vagrant-icon'
-        %strong Want to try the real thing?
-        Grab our easy-to-install
-        = link_to 'Vagrant Package.', ExternalLinks.vagrant_openstack_client, target: "_blank"
-      %span.tiny
-        %i.fa.fa-book
-        %strong Know what you're doing?
-        Install the official 
-        = link_to 'OpenStack Client.', ExternalLinks.python_openstack_client_docs_path, target: "_blank"
-.push
+      = render partial: 'shortcuts'
+      .read-more
+        %span.tiny
+          = image_tag asset_path('vagrant.png'), class: 'vagrant-icon'
+          %strong Want to try the real thing?
+          Grab our easy-to-install
+          = link_to 'Vagrant Package.', ExternalLinks.vagrant_openstack_client, target: "_blank"
+        %span.tiny
+          %i.fa.fa-book
+          %strong Know what you're doing?
+          Install the official 
+          = link_to 'OpenStack Client.', ExternalLinks.python_openstack_client_docs_path, target: "_blank"
+  .push
