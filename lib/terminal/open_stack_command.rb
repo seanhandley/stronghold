@@ -34,8 +34,8 @@ class Terminal
     end
 
     def is_allowed?
-      return true if sub_command.strip == 'help'
-      OpenStackCommand.sub_commands.values.flatten.any?{|s| sub_command.gsub(/^help/,'').strip.starts_with?(s)}
+      return true if sub_command.downcase.strip == 'help'
+      OpenStackCommand.sub_commands.values.flatten.any?{|s| sub_command.gsub(/^help/,'').strip.downcase.starts_with?(s)}
     end
 
     def command_is?(type)
