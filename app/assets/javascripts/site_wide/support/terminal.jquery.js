@@ -17,38 +17,42 @@ $(document).ready(function() {
     });
     $('.openstack-client-terminal').terminal(function(command, term) {
       if (command !== '') {
-        term.pause();
-        $('#command-processing').removeClass('hide');
-        project = $('select#projects').val();
-        $.ajax({
-          type: "POST",
-          contentType: "application/json;",
-          url: '/account/terminal_command.js',
-          dataType: 'json',
-          data: JSON.stringify({command: command, project: project}),
-          success: function (data, textStatus, xhr) {
-            term.resume();
-            $('#command-processing').addClass('hide');
-            msg = new String(data.message);
-            if(data.success) {
-              term.echo(msg);
-            } else {
-              term.error(msg);
+        if(command == "nyan") {
+          nyanPlay(term);
+        } else {
+          term.pause();
+          $('#command-processing').removeClass('hide');
+          project = $('select#projects').val();
+          $.ajax({
+            type: "POST",
+            contentType: "application/json;",
+            url: '/account/terminal_command.js',
+            dataType: 'json',
+            data: JSON.stringify({command: command, project: project}),
+            success: function (data, textStatus, xhr) {
+              term.resume();
+              $('#command-processing').addClass('hide');
+              msg = new String(data.message);
+              if(data.success) {
+                term.echo(msg);
+              } else {
+                term.error(msg);
+              }
+            },
+            error: function (e, textStatus, xhr) {
+              if(e.status == 302) {
+                term.error('You are no longer authenticated. Please log in and try again.');
+                setTimeout(function(){ window.location.replace('/terminal') }, 2000);
+              } else if(e.status == 0) {
+                term.error("Failed to connect to server. Are you connected to the Internet?");
+              } else {
+                term.error('An error prevented this command being executed. Server response: "' + e.status + ': ' + e.statusText + '"');
+              }
+              term.resume();
+              $('#command-processing').addClass('hide');
             }
-          },
-          error: function (e, textStatus, xhr) {
-            if(e.status == 302) {
-              term.error('You are no longer authenticated. Please log in and try again.');
-              setTimeout(function(){ window.location.replace('/terminal') }, 2000);
-            } else if(e.status == 0) {
-              term.error("Failed to connect to server. Are you connected to the Internet?");
-            } else {
-              term.error('An error prevented this command being executed. Server response: "' + e.status + ': ' + e.statusText + '"');
-            }
-            term.resume();
-            $('#command-processing').addClass('hide');
-          }
-        });
+          });
+        }
       } else {
          term.echo('');
       }
@@ -81,7 +85,10 @@ Welcome to the your terminal. Type 'help' for usage info.]\n",
         });
       },
       exit: false,
-      clear: false
+      clear: false,
+      onBeforeCommand: function(command) {
+        nyanClear();
+      }
     });
   }
   $('.osx').hide().css('opacity', 1).fadeIn("slow");

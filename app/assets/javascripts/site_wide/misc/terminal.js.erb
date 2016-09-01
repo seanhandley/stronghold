@@ -32,3 +32,19 @@ function setPromptProperties() {
   $(".terminal textarea").attr("autocapitalize", "off");
   $(".terminal textarea").attr("spellcheck", "false");
 }
+
+function nyan() {
+  h = $('.osx .window').width() / 2;
+  return "<div><div style='width: 100%; background-color: #0f4d8f'><img style='width: " + h + "px;' src='<%= asset_path("nyan.gif") %>' class='nyan'></div></div>";
+}
+
+function nyanPlay(term) {
+  term.echo(nyan(), {'raw': true});
+  $("#nyan-sound")[0].play();
+}
+
+function nyanClear() {
+  $('img.nyan').parent().parent().remove();
+  $("#nyan-sound")[0].pause();
+  $("#nyan-sound")[0].currentTime = 0;
+}

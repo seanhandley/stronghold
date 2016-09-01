@@ -43,6 +43,7 @@
   background: #000;
   padding: 5px;
   margin: -10px;
+  z-index: 100;
 }
 
 .term-buttons a {
@@ -153,6 +154,22 @@ kbd kbd {
 
 .browser-terminal #right {
   height: 75vh;
+}
+
+@keyframes slide {
+  0% {
+    transform: translate(-300px, 0);
+  }
+  
+  100% {
+    transform: translate(2000px, 0);
+  }
+}
+
+.nyan {
+  height: auto;
+  margin: 30px;
+  animation: slide 5s linear infinite;
 }
 
 @media only screen and (max-width: 480px), only screen and (max-device-width: 480px) {
