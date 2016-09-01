@@ -84,7 +84,7 @@ Welcome to the your terminal. Type 'help' for usage info.]\n",
       clear: false
     });
   }
-  $('.openstack-client-terminal').removeClass('hide');
+  $('.osx').hide().css('opacity', 1).fadeIn("slow");
   setInterval(function() {
     setPromptProperties();
   }, 1000);

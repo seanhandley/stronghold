@@ -30,7 +30,7 @@
           Press escape to see shortcuts
 
     
-    .osx
+    .osx{style: 'opacity: 0'}
       .window
         .titlebar
           .buttons
@@ -39,7 +39,7 @@
             .zoom
           OpenStack Terminal
         .terminal-responsive
-          .openstack-client-terminal.hide
+          .openstack-client-terminal
             .buttons-left.term-buttons
               %a{href: '', id: 'saveTerminal', class: 'btn btn-default'}
                 %i.fa.fa-save
@@ -48,6 +48,7 @@
                 %i.fa.fa-eraser
                 Clear
               %i.fa.fa-cog.fa-spin.fa-3x.fa-fw.hide#command-processing
+
     = render partial: 'shortcuts'
     .read-more
       %span.tiny
