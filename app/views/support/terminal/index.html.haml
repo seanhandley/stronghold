@@ -29,16 +29,25 @@
           %i.fa.fa-keyboard-o
           Press escape to see shortcuts
 
-    .terminal-responsive
-      .openstack-client-terminal.hide
-        .buttons-left.term-buttons
-          %a{href: '', id: 'saveTerminal', class: 'btn btn-default'}
-            %i.fa.fa-save
-            Save
-          %a{href: '', id: 'clearTerminal', class: 'btn btn-default'}
-            %i.fa.fa-eraser
-            Clear
-          %i.fa.fa-cog.fa-spin.fa-3x.fa-fw.hide#command-processing
+    
+    .osx
+      .window
+        .titlebar
+          .buttons
+            .osx-close
+            .minimize
+            .zoom
+          OpenStack Terminal
+        .terminal-responsive
+          .openstack-client-terminal.hide
+            .buttons-left.term-buttons
+              %a{href: '', id: 'saveTerminal', class: 'btn btn-default'}
+                %i.fa.fa-save
+                Save
+              %a{href: '', id: 'clearTerminal', class: 'btn btn-default'}
+                %i.fa.fa-eraser
+                Clear
+              %i.fa.fa-cog.fa-spin.fa-3x.fa-fw.hide#command-processing
     = render partial: 'shortcuts'
     .read-more
       %span.tiny
