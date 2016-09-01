@@ -1,0 +1,57 @@
+.modal.fade#terminalShortcuts{'tabindex' => "-1", 'role' => "dialog", 'aria-labelledby' => "terminalShortcuts", 'aria-hidden' => "true", 'data-backdrop' => 'static'}
+  .modal-dialog
+    .modal-content
+      .modal-body
+        %h3
+          %i.fa.fa-keyboard-o
+          Keyboard Shortcuts
+        %br
+        .shortcuts
+          .row
+            .col-md-6
+              %p.shortcut
+                %kbd Tab
+                Tab completion
+              %p.shortcut
+                %kbd &uarr;
+                Previous command
+              %p.shortcut
+                %kbd &darr;
+                Next command
+              %p.shortcut
+                %kbd &larr;
+                Move cursor left
+              %p.shortcut
+                %kbd &rarr;
+                Move cursor right
+              %p.shortcut
+                %kbd Ctrl+L
+                Clear screen
+              %p.shortcut
+                %kbd Ctrl+A
+                Move cursor to start of line
+              %p.shortcut
+                %kbd Ctrl+E
+                Move cursor to end of line
+              %p.shortcut
+                %kbd Shift+Enter
+                Insert new line
+            .col-md-6
+              %p.shortcut
+                %kbd Ctrl+R
+                Reverse rearch through command history
+              %p.shortcut
+                %kbd Ctrl+G
+                Cancel reverse search
+              %p.shortcut
+                %kbd Ctrl+K
+                Remove text after cursor
+              %p.shortcut
+                %kbd Ctrl+U
+                Remove text before cursor
+              %p.shortcut
+                %kbd Ctrl+Y
+                Undo text removal
+              %p.shortcut
+                %kbd Esc
+                Hide/show this dialog

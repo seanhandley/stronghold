@@ -90,3 +90,13 @@ Welcome to the your terminal. Type 'help' for usage info.]\n\n",
   }, 1000);
   $(".openstack-client-terminal").click();
 });
+
+$(document).keyup(function(e) {
+  if (e.keyCode == 27) {
+    if($("#terminalShortcuts:visible").length == 0) {
+      $('#terminalShortcuts').modal('toggle');
+    } else {
+      $('.modal-backdrop').remove();
+    }
+  }
+});
