@@ -44,7 +44,7 @@ function nyanPlay(term) {
 }
 
 function nyanClear() {
-  $('img.nyan').parent().parent().remove();
+  $('img.nyan').parent().parent().empty().remove();
   $("#nyan-sound")[0].pause();
   $("#nyan-sound")[0].currentTime = 0;
 }
