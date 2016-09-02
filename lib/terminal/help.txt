@@ -1,5 +1,172 @@
+[[gb;#609AE9;;black]=> Getting Started]
 
-Commands:
+Welcome to the OpenStack Terminal. Here's a few really common commands to get
+you started.
+
+We'll create a new server (also called an "instance" or "virtual machine").
+
+To run a command, simply type it into the terminal and press the enter key.
+
+1) See what size servers are available.
+
+  A flavor describes how powerful your server needs to be.
+  => [[gb;#00AA00;;black]flavor list]
+
++--------------------------------------+------------+-------+------+-----------+-------+-----------+
+| ID                                   | Name       |   RAM | Disk | Ephemeral | VCPUs | Is Public |
++--------------------------------------+------------+-------+------+-----------+-------+-----------+
+| 05a9e6d1-d29f-4e98-9eab-51c9a6beed44 | dc1.1x2.20 |  2048 |   20 |         0 |     1 | True      |
+| 196235bc-7ca5-4085-ac81-7e0242bda3f9 | dc1.2x4.40 |  4096 |   40 |         0 |     2 | True      |
+| 5e68b95a-61fe-464f-913d-df044c7e433d | dc1.4x16   | 16384 |   80 |         0 |     4 | True      |
+| 718f2a6d-52c5-4f23-a774-49df51c6eedc | dc1.1x1.80 |  1024 |   80 |         0 |     1 | True      |
+| 78d43ae0-7c98-48d2-9adc-90e8f8f6fe99 | dc1.1x0    |   512 |   10 |         0 |     1 | True      |
+| 8e6069a3-d8c6-4741-8e0d-6373b2ca38cc | dc1.1x1.20 |  1024 |   20 |         0 |     1 | True      |
+| 8f4b7ae1-b8c2-431f-bb0c-362a5ece0381 | dc1.2x4    |  4096 |   80 |         0 |     2 | True      |
+| 9cf6e43b-e191-47ca-8665-f8592e2d6227 | dc1.4x8    |  8192 |   80 |         0 |     4 | True      |
+| af2a80fe-ccad-43df-8cae-6418da948467 | dc1.8x16   | 16384 |   80 |         0 |     8 | True      |
+| b122c607-2b5b-43fd-8879-cf6cb742e102 | dc1.1x2.80 |  2048 |   80 |         0 |     1 | True      |
+| b671216b-1c68-4765-b752-0e8e6b6d015f | dc1.1x2    |  2048 |   40 |         0 |     1 | True      |
+| b8e8ab6a-5480-478c-b1de-b09050683d7d | dc1.8x32   | 32000 |   80 |         0 |     8 | True      |
+| bf6dbcab-f0a5-49d7-b427-0ee09cc5f583 | dc1.2x2    |  2048 |   80 |         0 |     2 | True      |
+| c4b193d2-f331-4250-9b15-bbfde97c462a | dc1.2x2.40 |  2048 |   40 |         0 |     2 | True      |
+| c871d2fc-c6df-41ab-8a89-6ddc5d8137d0 | dc1.16x32  | 32000 |   80 |         0 |    16 | True      |
+| d87de0ca-9c0e-4759-a704-8621883c3415 | dc1.2x8.40 |  8192 |   40 |         0 |     2 | True      |
+| dcd2be06-0940-4410-9d1f-cbdc22a847e7 | dc1.2x8    |  8192 |   80 |         0 |     2 | True      |
+| f0577618-9125-4948-b450-474e225bbc4c | dc1.1x1    |  1024 |   40 |         0 |     1 | True      |
++--------------------------------------+------------+-------+------+-----------+-------+-----------+
+
+2) See what public images are available to use.
+
+  Images contain the operating system and config needed to boot your machine.
+  Think of them as DVDs in the cloud.
+  => [[gb;#00AA00;;black]image list --public]
+
++--------------------------------------+--------------------------------------+--------+
+| ID                                   | Name                                 | Status |
++--------------------------------------+--------------------------------------+--------+
+| ef24441d-01ad-4006-b63d-6da67b7f1348 | Ubuntu 16.04 LTS (Xenial)            | active |
+| ebab03e6-a674-4b6e-8f60-691c90fbcdc6 | CentOS 7.2                           | active |
+| af842404-3986-4c46-bbc4-0da21a3325c0 | Bitnami Wordpress 4.4.2-3            | active |
+| 07a93cc5-b3f1-499b-a7f2-ab420526ae1f | Windows Server 2012 R2 Standard      | active |
+| 41f48c21-4ca9-4477-83b9-82f37070002c | Fedora 22                            | active |
+| 8d4ec154-1f8f-4a0b-8f21-3df92bb72524 | Debian 'jessie' 8.1 x86_64           | active |
+| 1fe2dc6e-3c64-43c0-989b-95cd4e073795 | CoreOS                               | active |
+| 676965bc-e973-4b8b-a77d-eba6daa9225c | CirrOS 0.3.4                         | active |
+| 6de4cfa2-a278-44bf-a7b5-6a9522690051 | Debian 'wheezy' 7 dccloud            | active |
+| 621f75b6-8d28-47cf-9607-ae73943503b1 | CentOS 6.6 dccloud                   | active |
+| 9d5d75a4-9787-4eab-ba58-844ebc8ff4a5 | FreeBSD 10.1 bsd-cloudinit           | active |
+| 5f10d1a7-5393-4a77-bd6f-b326dd5a564b | openSuSE 13.2                        | active |
+| 7c0c6d85-072f-47d3-8036-44ef5a2f661f | Fedora 21                            | active |
+| bbc1065e-babd-4962-b380-625143f43729 | Windows Server 2012 R2 Standard Eval | active |
+| 74ff4015-aee1-4e02-aaa8-1c77b2650394 | CentOS 7.0                           | active |
+| 742e0414-c985-4994-b307-4aafade942b3 | Fedora 20                            | active |
+| 6c3047c6-17b1-4aaf-a657-9229bb481e50 | Ubuntu 14.04                         | active |
+| 1ca753e4-beee-4fbb-a341-ef36cf31c27c | CirrOS 0.3.3                         | active |
++--------------------------------------+--------------------------------------+--------+
+
+3. Launch a brand new server.
+
+  To launch a server, you need to pick a flavor, an image, and give it a name.
+  Run the previous two commands to see what choices you have.
+  => [[gb;#00AA00;;black]server create --flavor] [[gu;#00CC00;;black]FLAVOR_NAME] [[gb;#00AA00;;black]--image] [[gu;#00CC00;;black]IMAGE_ID] [[gu;#00CC00;;black]SERVER_NAME]
+
++--------------------------------------+-----------------------------------------------------+
+| Field                                | Value                                               |
++--------------------------------------+-----------------------------------------------------+
+| OS-DCF:diskConfig                    | MANUAL                                              |
+| OS-EXT-AZ:availability_zone          | nova                                                |
+| OS-EXT-STS:power_state               | NOSTATE                                             |
+| OS-EXT-STS:task_state                | scheduling                                          |
+| OS-EXT-STS:vm_state                  | building                                            |
+| OS-SRV-USG:launched_at               | None                                                |
+| OS-SRV-USG:terminated_at             | None                                                |
+| accessIPv4                           |                                                     |
+| accessIPv6                           |                                                     |
+| addresses                            |                                                     |
+| adminPass                            | 65YV5KeiQhEC                                        |
+| config_drive                         |                                                     |
+| created                              | 2016-09-02T12:25:05Z                                |
+| flavor                               | dc1.2x2 (bf6dbcab-f0a5-49d7-b427-0ee09cc5f583)      |
+| hostId                               |                                                     |
+| id                                   | 1f5e8606-e592-4998-acc1-56fa198e3faf                |
+| image                                | Ubuntu 14.04 (6c3047c6-17b1-4aaf-a657-9229bb481e50) |
+| key_name                             | None                                                |
+| name                                 | my_server                                           |
+| os-extended-volumes:volumes_attached | []                                                  |
+| progress                             | 0                                                   |
+| project_id                           | 37033518a4514f12adeb8346ac3f188c                    |
+| properties                           |                                                     |
+| security_groups                      | [{u'name': u'default'}]                             |
+| status                               | BUILD                                               |
+| updated                              | 2016-09-02T12:25:05Z                                |
+| user_id                              | 25cde40fdb9454954e4fbb4bd21ee2b5                    |
++--------------------------------------+-----------------------------------------------------+
+
+4. List all of the servers inside our project.
+
+  => [[gb;#00AA00;;black]server list]
+
++--------------------------------------+-----------------+---------+--------------------------------------+
+| ID                                   | Name            | Status  | Networks                             |
++--------------------------------------+-----------------+---------+--------------------------------------+
+| 1f5e8606-e592-4998-acc1-56fa198e3faf | my_server       | ACTIVE  | default=192.168.0.77                 |
++--------------------------------------+-----------------+---------+--------------------------------------+
+
+
+5. Put our server on a public IP address
+
+  A public IP means our server can be contacted via the Internet.
+
+  a) First we need to create a new public IP.
+  => [[gb;#00AA00;;black]ip floating create 6751cb30-0aef-4d7e-94c3-ee2a09e705eb]
+
++---------------------+--------------------------------------+
+| Field               | Value                                |
++---------------------+--------------------------------------+
+| fixed_ip_address    | None                                 |
+| floating_ip_address | 185.98.151.218                       |
+| floating_network_id | 6751cb30-0aef-4d7e-94c3-ee2a09e705eb |
+| headers             |                                      |
+| id                  | e79fffb1-3523-4289-bad0-e09ed72adfe2 |
+| port_id             | None                                 |
+| project_id          | 37033518a4514f12adeb8346ac3f188c     |
+| router_id           | None                                 |
+| status              | DOWN                                 |
++---------------------+--------------------------------------+
+
+  Don't worry about the strange-looking number; that's our external
+  network ID. The command will give you a floating IP address. Use
+  this in the next command along with the name or ID of the server
+  you created.
+
+  b) Assign the IP to your server.
+  => [[gb;#00AA00;;black]ip floating add] [[gu;#00CC00;;black]ADDRESS] [[gu;#00CC00;;black]SERVER_NAME]
+
+  Now when you view your server list, you'll see it has a world visible IP address.
+
++--------------------------------------+-----------------+---------+--------------------------------------+
+| ID                                   | Name            | Status  | Networks                             |
++--------------------------------------+-----------------+---------+--------------------------------------+
+| 1f5e8606-e592-4998-acc1-56fa198e3faf | my_server       | ACTIVE  | default=192.168.0.77, 185.98.151.218 |
++--------------------------------------+-----------------+---------+--------------------------------------+
+
+[[gb;#609AE9;;black]=> Summary]
+
+And there you go! There's a heck of a lot more things you can with the
+OpenStack client. Below are all the other commands we support.
+
+To get more detailed help on a command, you can specify it when you
+use the help command.
+
+  e.g.
+  => [[gb;#00AA00;;black]help server rescue]
+
+Have fun and talk to us in IRC for help and advice:
+
+  [[gb;#609AE9;;black]chat.freednode.net #datacentred]
+
+
+## All Commands
 
 Command                         Description
 ----------------------------------------------------------------

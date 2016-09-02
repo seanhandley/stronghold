@@ -34,7 +34,13 @@ $(document).ready(function() {
               $('#command-processing').addClass('hide');
               msg = new String(data.message);
               if(data.success) {
+                if(command == 'help') {
+                  term.clear();
+                }
                 term.echo(msg);
+                if(command == 'help') {
+                  term.scroll(-10000);
+                }
               } else {
                 if(data.message.indexOf("--os-token: expected one argument") !== -1) {
                   term.error(new String("You're not currently authenticated in this project. Please log in again and retry."));
