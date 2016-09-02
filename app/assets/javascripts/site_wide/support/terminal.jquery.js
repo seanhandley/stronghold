@@ -36,13 +36,18 @@ $(document).ready(function() {
               if(data.success) {
                 term.echo(msg);
               } else {
-                term.error(msg);
+                if(data.message.indexOf("--os-token: expected one argument") !== -1) {
+                  term.error(new String("You're not currently authenticated in this project. Please log in again and retry."));
+                  setTimeout(function(){ window.location.replace('/sign_out') }, 2000);
+                } else {
+                  term.error(msg);
+                }
               }
             },
             error: function (e, textStatus, xhr) {
               if(e.status == 302) {
                 term.error('You are no longer authenticated. Please log in and try again.');
-                setTimeout(function(){ window.location.replace('/terminal') }, 2000);
+                setTimeout(function(){ window.location.replace('/account/terminal') }, 2000);
               } else if(e.status == 0) {
                 term.error("Failed to connect to server. Are you connected to the Internet?");
               } else {

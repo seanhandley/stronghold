@@ -102,6 +102,7 @@ Rails.application.routes.draw do
   get 'signup', :controller => 'signups', :action => 'new', :as => 'new_signup'
   post 'signup', :controller => 'signups', :action => 'create', :as => 'create_signup'
   post 'sign_out', :controller => 'sessions', :action => 'destroy', :as => 'signout'
+  get 'sign_out', :controller => 'sessions', :action => 'destroy', :as => 'signout_get'
   post 'wait_list', :controller => 'wait_list_entries', :action => 'create', :as => 'wait_list'
   post 'precheck', :controller => 'ajax', :action => 'precheck'
   post 'cc_submit', :controller => 'ajax', :action => 'cc_submit'
