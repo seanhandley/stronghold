@@ -67,7 +67,7 @@ class User < ActiveRecord::Base
 
   # Here temporarily until the feature is released
   def can_use_terminal?
-    staff? || [49, 733, 1117].include?(organization_id)
+    staff? || [49, 733, 1117, 559].include?(organization_id)
   end
 
   def as_hash
