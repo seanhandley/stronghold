@@ -7,6 +7,7 @@ class Terminal
 
   def run_command(command)
     return [true, OpenStackCommand.help] if command.strip == 'help'
+    return [true, OpenStackCommand.commands] if command.strip == 'commands'
     command = OpenStackCommand.new(command, @credentials)
     Terminal.logger.info command.to_s
     container = image.run(command.to_s)

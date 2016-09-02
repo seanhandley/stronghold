@@ -34,11 +34,11 @@ $(document).ready(function() {
               $('#command-processing').addClass('hide');
               msg = new String(data.message);
               if(data.success) {
-                if(command == 'help') {
+                if(command == 'help' || command == 'commands') {
                   term.clear();
                 }
                 term.echo(msg);
-                if(command == 'help') {
+                if(command == 'help' || command == 'commands') {
                   term.scroll(-10000);
                 }
               } else {
@@ -75,7 +75,7 @@ $(document).ready(function() {
  / /_/ / /_/ / /_/ /_/ / /___/  __/ / / / /_/ /  /  __/ /_/ /  \n \
 /_____/\\__,_/\\__/\\__,_/\\____/\\___/_/ /_/\\__/_/   \\___/\\__,_/   \n \
                                                                \n \
-Welcome to the your terminal. Type 'help' for usage info.]\n",
+Type 'help' for a tutorial or 'commands' for a full reference.]\n",
       name: 'OpenStack Client',
       height: '60vh',
       width: '100%',

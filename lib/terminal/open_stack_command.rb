@@ -95,6 +95,10 @@ class Terminal
       File.read(File.expand_path('../help.txt', __FILE__))
     end
 
+    def self.commands
+      File.read(File.expand_path('../commands.txt', __FILE__))
+    end
+
     def self.sub_commands
       { 
         "openstack.cli"             => ["help"],
