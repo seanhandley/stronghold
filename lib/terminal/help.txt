@@ -94,7 +94,7 @@ To run a command, simply type it into the terminal and press the enter key.
 | name                                 | my_server                                           |
 | os-extended-volumes:volumes_attached | []                                                  |
 | progress                             | 0                                                   |
-| project_id                           | 37033518a4514f12adeb8346ac3f188c                    |
+| project_id                           | 518a4514f12adeb8346ac3f188c37033                    |
 | properties                           |                                                     |
 | security_groups                      | [{u'name': u'default'}]                             |
 | status                               | BUILD                                               |
@@ -129,7 +129,7 @@ To run a command, simply type it into the terminal and press the enter key.
 | headers             |                                      |
 | id                  | e79fffb1-3523-4289-bad0-e09ed72adfe2 |
 | port_id             | None                                 |
-| project_id          | 37033518a4514f12adeb8346ac3f188c     |
+| project_id          | 518a4514f12adeb8346ac3f188c37033     |
 | router_id           | None                                 |
 | status              | DOWN                                 |
 +---------------------+--------------------------------------+
