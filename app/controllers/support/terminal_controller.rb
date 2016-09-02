@@ -8,7 +8,6 @@ class Support::TerminalController < SupportBaseController
   end
 
   def index
-    @projects = current_user.projects
   end
 
   def run_command

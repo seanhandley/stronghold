@@ -1,6 +1,6 @@
 module TerminalHelper
-  def options_for_terminal_projects(projects)
-    options_for_select projects.collect{|p| ["Project: #{p.reference}", p.reference]}    
+  def options_for_terminal_projects
+    options_for_select current_user.projects.uniq.collect{|p| ["Project: #{p.reference}", p.reference]}    
   end
 
   def example_commands
