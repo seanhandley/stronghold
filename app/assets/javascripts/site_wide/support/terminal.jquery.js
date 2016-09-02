@@ -19,6 +19,7 @@ $(document).ready(function() {
       if (command !== '') {
         if(command == "nyan") {
           nyanPlay(term);
+          term.scroll(4000);
         } else {
           term.pause();
           $('#command-processing').removeClass('hide');
