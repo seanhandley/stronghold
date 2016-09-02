@@ -18,19 +18,21 @@
             %a{href: support_root_path}
               %i.fa.fa-cloud
               Overview
-          %li
-            %a{href: support_terminal_path}
-              %i.fa.fa-terminal
-              Terminal
+          - if current_user.can_use_terminal?
+            %li
+              %a{href: support_terminal_path}
+                %i.fa.fa-terminal
+                Terminal
       - else
         %li.disabled
           %a{href: ''}
             %i.fa.fa-cloud
             Cloud Services
-        %li.disabled
-          %a{href: ''}
-            %i.fa.fa-terminal
-            Terminal
+        - if current_user.can_use_terminal?
+          %li.disabled
+            %a{href: ''}
+              %i.fa.fa-terminal
+              Terminal
 
       - if can? :read, :usage
         %li
