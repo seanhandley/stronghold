@@ -103,11 +103,11 @@ class Terminal
       { 
         "openstack.cli"             => ["help"],
         "openstack.common"          => ["availability zone list", "configuration show", "limits show", "quota show"],
-        "openstack.compute.v2"      => ["console", "console log", "console log show", "console url show", "flavor",
+        "openstack.compute.v2"      => ["console", "console log", "console log show", "console url show",
                                         "flavor list", "flavor show",
-                                        "ip fixed", "ip fixed add", "ip fixed remove", "ip floating add",
-                                        "ip floating pool", "ip floating pool list", "ip floating remove", "keypair", "keypair create", "keypair delete",
-                                        "keypair list", "keypair show", "server", "server add security group", "server add volume",
+                                        "ip fixed add", "ip fixed remove", "ip floating add",
+                                        "ip floating pool", "ip floating pool list", "ip floating remove", "keypair create", "keypair delete",
+                                        "keypair list", "keypair show", "server add security group", "server add volume",
                                         "server backup create", "server create", "server delete", "server dump create",
                                         "server group create", "server group delete", "server group list", "server group show",
                                         "server image create", "server list", "server lock", "server migrate", "server pause",
@@ -115,7 +115,7 @@ class Terminal
                                         "server rescue", "server resize", "server restore", "server resume", "server set",
                                         "server show", "server start", "server stop", "server suspend",
                                         "server unlock", "server unpause", "server unrescue", "server unset",
-                                        "usage", "usage list", "usage show"],
+                                        "usage list", "usage show"],
         "openstack.identity.v2"     => ["catalog list", "catalog show",
                                         "ec2 credentials list", "ec2 credentials show"],
         "openstack.image.v2"        => ["image add project", "image delete", "image list",
@@ -131,8 +131,8 @@ class Terminal
         "openstack.object_store.v1" => ["container create", "container delete", "container list", "container set", "container show",
                                         "container unset", "object delete", "object list", "object set", "object show",
                                         "object store account set", "object store account show", "object store account unset", "object unset"],
-        "openstack.volume.v2"       => ["backup", "backup create", "backup delete", "backup list", "backup restore", "backup show", "snapshot", "snapshot create", "snapshot delete",
-                                        "snapshot list", "snapshot set", "snapshot show", "snapshot unset", "volume", "volume create", "volume delete", "volume list",
+        "openstack.volume.v2"       => ["backup create", "backup delete", "backup list", "backup restore", "backup show", "snapshot create", "snapshot delete",
+                                        "snapshot list", "snapshot set", "snapshot show", "snapshot unset", "volume create", "volume delete", "volume list",
                                         "volume set", "volume show", "volume transfer request list", "volume type list", "volume type show", "volume unset"]
       }
     end
