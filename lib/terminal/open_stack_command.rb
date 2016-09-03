@@ -15,16 +15,13 @@ class Terminal
 
       raise(OpenStackCommandError, "Command '#{sub_command}' is unknown or unavailable. Type 'commands' to see available commands.") unless is_allowed?
 
-      if sub_command.starts_with?('help')
-        @command = "openstack #{sub_command}"
-      else
-        @command = <<-EOS
-          openstack #{sub_command} --os-auth-url #{auth_url}
-          --os-token #{OpenStackCommand.get_project_tokens(user)[project_name]}
-          --os-project-name #{project_name} --os-username #{user.email}
-        EOS
-        @command << token_endpoint_params
-      end
+      @command = <<-EOS
+        openstack #{sub_command} --os-auth-url #{auth_url}
+        --os-token #{OpenStackCommand.get_project_tokens(user)[project_name]}
+        --os-project-name #{project_name} --os-username #{user.email}
+      EOS
+      @command << token_endpoint_params
+
       @command.strip!
       @command.gsub! /\s+/, " "
     end
