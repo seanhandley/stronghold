@@ -56,6 +56,6 @@ function showCog(term) {
 
 function hideCog() {
   setTimeout(function() {
-    $('i#command-processing').hide().remove();
+    $('i#command-processing').parent().parent().hide().remove();
   },50);
 }
