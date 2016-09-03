@@ -14,7 +14,6 @@ $(document).ready(function() {
           $(".terminal").terminal().reset();
         } else if(command == "nyan") {
           nyanPlay(term);
-          setTimeout(function(){term.scroll(4000);}, 500);
         } else if(command == "save") {
           saveTerminalOutput("openstack_client_" + new Date().toISOString() + ".txt", exportTerminalBuffer());
         } else {

@@ -40,6 +40,7 @@ function nyan() {
 
 function nyanPlay(term) {
   term.echo(nyan(), {'raw': true});
+  setTimeout(function(){term.scroll(4000);}, 100);
   $("#nyan-sound")[0].play();
 }
 
@@ -50,7 +51,7 @@ function nyanClear() {
 }
 
 function showCog(term) {
-  cog = '<i class="fa fa-cog fa-spin fa-fw" id="command-processing"></i>';
+  cog = '<i class="fa fa-cog fa-spin fa-fw"id="command-processing"></i>';
   term.echo(cog, {'raw': true});
 }
 
