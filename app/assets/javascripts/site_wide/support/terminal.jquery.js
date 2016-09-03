@@ -103,7 +103,7 @@ Type 'help' for a tutorial or 'commands' for a full reference.]\n",
       }
     });
   }
-  $('.osx').hide().css('opacity', 1).fadeIn("slow");
+  $('.osx').hide().css('opacity', 1).fadeIn(500).fadeOut(10).fadeIn(10);
   setInterval(function() {
     setPromptProperties();
   }, 1000);
