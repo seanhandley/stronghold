@@ -152,7 +152,7 @@ To run a command, simply type it into the terminal and press the enter key.
 
 [[gb;#609AE9;;black]=> Summary]
 
-And there you go! There's a heck of a lot more things you can with the
+And there you go! There's a heck of a lot more things you can do with the
 OpenStack client.
 
 To see all commands, type:

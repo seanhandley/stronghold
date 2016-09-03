@@ -13,7 +13,7 @@ class Terminal
       @user         = credentials[:user]
       @auth_url     = credentials[:auth_url]
 
-      raise(OpenStackCommandError, "Command '#{sub_command}' is unknown or unavailable. Type 'help' to see available commands.") unless is_allowed?
+      raise(OpenStackCommandError, "Command '#{sub_command}' is unknown or unavailable. Type 'commands' to see available commands.") unless is_allowed?
 
       if sub_command.starts_with?('help')
         @command = "openstack #{sub_command}"
