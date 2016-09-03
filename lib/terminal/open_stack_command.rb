@@ -101,7 +101,7 @@ class Terminal
 
     def self.sub_commands
       { 
-        "openstack.cli"             => ["help, commands, clear, nyan, save"],
+        "openstack.cli"             => ["help", "commands", "clear", "nyan", "save"],
         "openstack.common"          => ["availability zone list", "configuration show", "limits show", "quota show"],
         "openstack.compute.v2"      => ["console", "console log", "console log show", "console url show",
                                         "flavor list", "flavor show",
