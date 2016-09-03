@@ -1,13 +1,5 @@
 $(document).ready(function() {
   if($('.openstack-client-terminal').length) {
-    $('#saveTerminal').click(function(e) {
-      saveTerminalOutput("openstack_client_" + new Date().toISOString() + ".txt", exportTerminalBuffer());
-      e.preventDefault();
-    });
-    $('#clearTerminal').click(function(e) {
-      $('.openstack-client-terminal').terminal().clear();
-      e.preventDefault();
-    });
     $('select#projects').change(function() {
       console.log($(this).val());
       $('.openstack-client-terminal').terminal().echo(new String("*** Project changed to " + $(this).val() + ' ***'))
@@ -17,12 +9,17 @@ $(document).ready(function() {
     });
     $('.openstack-client-terminal').terminal(function(command, term) {
       if (command !== '') {
-        if(command == "nyan") {
+        if(command == "clear") {
+          $(".terminal").terminal().clear();
+          $(".terminal").terminal().reset();
+        } else if(command == "nyan") {
           nyanPlay(term);
-          term.scroll(4000);
+          setTimeout(function(){term.scroll(4000);}, 500);
+        } else if(command == "save") {
+          saveTerminalOutput("openstack_client_" + new Date().toISOString() + ".txt", exportTerminalBuffer());
         } else {
           term.pause();
-          $('#command-processing').removeClass('hide');
+          showCog(term);
           project = $('select#projects').val();
           $.ajax({
             type: "POST",
@@ -32,7 +29,6 @@ $(document).ready(function() {
             data: JSON.stringify({command: command, project: project}),
             success: function (data, textStatus, xhr) {
               term.resume();
-              $('#command-processing').addClass('hide');
               msg = new String(data.message);
               if(data.success) {
                 if(command == 'help' || command == 'commands') {
@@ -61,7 +57,6 @@ $(document).ready(function() {
                 term.error('An error prevented this command being executed. Server response: "' + e.status + ': ' + e.statusText + '"');
               }
               term.resume();
-              $('#command-processing').addClass('hide');
             }
           });
         }
@@ -99,6 +94,12 @@ Type 'help' for a tutorial or 'commands' for a full reference.]\n",
       exit: false,
       clear: false,
       onBeforeCommand: function(command) {
+        nyanClear();
+      },
+      onAfterCommand: function(command) {
+        hideCog();
+      },
+      onClear: function(term) {
         nyanClear();
       }
     });

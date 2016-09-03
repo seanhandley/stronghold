@@ -1,4 +1,14 @@
-[[gb;#609AE9;;black]=> All Commands]
+[[gb;#609AE9;;black]=> Terminal Commands]
+
+Command         Description
+----------------------------------------------------------------
+clear           Clear out all text from the terminal
+commands        View the full command reference
+help            Read a short intro tutorial
+save            Save the terminal contents to a file
+
+
+[[gb;#609AE9;;black]=> OpenStack Commands]
 
 To get more detailed help on a command, you can specify it when you
 use the help command.
