@@ -1,13 +1,7 @@
 function exportTerminalBuffer() {
-  var output = $(".terminal").terminal().get_output();
-  output = output.split("[[;;;error]Command").join("Command");
-  output = output.split("commands.]").join("commands.");
-  output = output.split("&nbsp;").join(" ");
-  output = output.split("[[gb;#609AE9;;black]").join("");
-  output = output.split("[[gb;#00AA00;black](openstack)]").join("(openstack)");;
-  output = output.split("Type 'help' for usage info.]").join("Type 'help' for usage info.")
-  output = output.split("&#91;").join("[");
-  output = output.split("&#93;").join("]");
+  output = $.terminal.strip($(".terminal").terminal().get_output());
+  output = output.split('<i class="fa fa-cog fa-spin fa-fw"id="command-processing"></i>').join('');
+  output = output.split('&nbsp;').join(' ');
   return output;
 }
 
@@ -57,6 +51,6 @@ function showCog(term) {
 
 function hideCog() {
   setTimeout(function() {
-    $('i#command-processing').parent().parent().hide().remove();
-  },50);
+    $('i#command-processing').parent().parent().empty().remove();
+  },200);
 }
