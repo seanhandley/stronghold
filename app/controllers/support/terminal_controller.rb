@@ -25,7 +25,7 @@ class Support::TerminalController < SupportBaseController
   def terminal_tab_complete
     respond_to do |format|
       format.js {
-        render json: Terminal::OpenStackCommand.sub_commands.values.flatten.uniq.to_json
+        render json: Terminal::OpenStackCommand.sub_commands.values.flatten.uniq.sort.to_json
       }
     end
   end
