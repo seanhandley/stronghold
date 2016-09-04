@@ -150,6 +150,18 @@ class Terminal
       end
     end
 
+    def self.revoke_project_tokens(user)
+      key = "os_tokens_user_#{user.id}"
+      Rails.cache.fetch(key)&.values.each do |token|
+        begin
+          OpenStackConnection.identity.token_revoke(token)
+        rescue Fog::Errors::Error => e
+          Honeybadger.notify(e)
+        end
+      end
+      Rails.cache.delete(key)
+    end
+
     def compute_endpoint
       "#{OpenStackCommand.compute_endpoint_base}/#{project_uuid}"
     end
