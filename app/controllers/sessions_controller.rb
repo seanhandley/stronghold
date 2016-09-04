@@ -52,6 +52,7 @@ class SessionsController < ApplicationController
   end
 
   def destroy
+    RevokeProjectTokensJob.perform_later(current_user)
     reset_session
     respond_to do |wants|
       wants.html { redirect_to sign_in_path, :notice => "You have been signed out." }
