@@ -152,7 +152,7 @@ class Terminal
 
     def self.revoke_project_tokens(user)
       key = "os_tokens_user_#{user.id}"
-      Rails.cache.fetch(key)&.values.each do |token|
+      Rails.cache.fetch(key)&.values&.each do |token|
         begin
           OpenStackConnection.identity.token_revoke(token)
         rescue Fog::Errors::Error => e
