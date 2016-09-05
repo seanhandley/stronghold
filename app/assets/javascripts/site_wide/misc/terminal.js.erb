@@ -54,3 +54,10 @@ function hideCog() {
     $('i#command-processing').parent().parent().empty().remove();
   },200);
 }
+
+function stranger(term) {
+  term.clear()
+  logo = '<img class="stranger" src="<%= asset_path("stranger.png") %>">';
+  term.echo(logo, {'raw': true});
+  term.echo(new String("\n[[gb;#CC0000;;black]Type 'help' for a tutorial or 'commands' for a full reference.]\n"));
+}
