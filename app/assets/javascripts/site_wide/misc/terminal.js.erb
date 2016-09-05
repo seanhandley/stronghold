@@ -40,8 +40,10 @@ function nyanPlay(term) {
 
 function nyanClear() {
   $('img.nyan').parent().parent().empty().remove();
-  $("#nyan-sound")[0].pause();
-  $("#nyan-sound")[0].currentTime = 0;
+}
+
+function stopSounds() {
+  $.each($(".bg-sound"), function() {$(this)[0].pause(); $(self)[0].currentTime = 0;});
 }
 
 function showCog(term) {
@@ -60,4 +62,5 @@ function stranger(term) {
   logo = '<img class="stranger" src="<%= asset_path("stranger.png") %>">';
   term.echo(logo, {'raw': true});
   term.echo(new String("\n[[gb;#CC0000;;black]Type 'help' for a tutorial or 'commands' for a full reference.]\n"));
+  $("#stranger-sound")[0].play();
 }

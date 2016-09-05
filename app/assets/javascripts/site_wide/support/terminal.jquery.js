@@ -96,6 +96,7 @@ Type 'help' for a tutorial or 'commands' for a full reference.]\n",
       clear: false,
       onBeforeCommand: function(command) {
         nyanClear();
+        stopSounds();
       },
       onAfterCommand: function(command) {
         hideCog();
