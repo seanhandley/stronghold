@@ -151,6 +151,7 @@ class Terminal
     end
 
     def self.revoke_project_tokens(user)
+      return unless Rails.env.production?
       key = "os_tokens_user_#{user.id}"
       Rails.cache.fetch(key)&.values&.each do |token|
         begin
