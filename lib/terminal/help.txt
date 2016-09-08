@@ -118,7 +118,7 @@ To run a command, simply type it into the terminal and press the enter key.
   A public IP means our server can be contacted via the Internet.
 
   a) First we need to create a new public IP.
-  => [[gb;#00AA00;;black]ip floating create 6751cb30-0aef-4d7e-94c3-ee2a09e705eb]
+  => [[gb;#00AA00;;black]ip floating create external]
 
 +---------------------+--------------------------------------+
 | Field               | Value                                |
@@ -134,8 +134,7 @@ To run a command, simply type it into the terminal and press the enter key.
 | status              | DOWN                                 |
 +---------------------+--------------------------------------+
 
-  Don't worry about the strange-looking number; that's our external
-  network ID. The command will give you a floating IP address. Use
+  The command will give you a floating IP address. Use
   this in the next command along with the name or ID of the server
   you created.
 

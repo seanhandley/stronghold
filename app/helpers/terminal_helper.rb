@@ -22,7 +22,7 @@ module TerminalHelper
         description: "List all the available servers"
       },
       {
-        command: "ip floating create 6751cb30-0aef-4d7e-94c3-ee2a09e705eb".html_safe,
+        command: "ip floating create external".html_safe,
         description: "Create a new floating IP in this project with a public address on the external network."
       },
       {
