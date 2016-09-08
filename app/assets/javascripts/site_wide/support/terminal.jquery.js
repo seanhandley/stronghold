@@ -12,6 +12,7 @@ $(document).ready(function() {
         if(command == "clear") {
           $(".terminal").terminal().clear();
           $(".terminal").terminal().reset();
+          stopSounds();
         } else if(command == "nyan") {
           nyanPlay(term);
         } else if(command == "stranger") {
@@ -96,7 +97,6 @@ Type 'help' for a tutorial or 'commands' for a full reference.]\n",
       clear: false,
       onBeforeCommand: function(command) {
         nyanClear();
-        stopSounds();
       },
       onAfterCommand: function(command) {
         hideCog();
@@ -104,6 +104,9 @@ Type 'help' for a tutorial or 'commands' for a full reference.]\n",
       },
       onClear: function(term) {
         nyanClear();
+      },
+      onResize: function(term) {
+        hideCog();
       }
     });
   }
