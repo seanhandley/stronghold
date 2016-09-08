@@ -100,6 +100,7 @@ Type 'help' for a tutorial or 'commands' for a full reference.]\n",
       },
       onAfterCommand: function(command) {
         hideCog();
+        setTimeout(function() { hideCog(); }, 1000);
       },
       onClear: function(term) {
         nyanClear();
