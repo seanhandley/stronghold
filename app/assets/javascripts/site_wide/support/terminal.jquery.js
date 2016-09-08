@@ -109,7 +109,8 @@ Type 'help' for a tutorial or 'commands' for a full reference.]\n",
   $('.osx').hide().css('opacity', 1).fadeIn(800);
   setInterval(function() {
     setPromptProperties();
-  }, 1000);
+    hideCog();
+  }, 200);
   $(".openstack-client-terminal").click();
 });
 
