@@ -10,7 +10,19 @@
           %span.highlight OpenStack Terminal.
           %br
           A zero-hassle way into the world of OpenStack commands.
-        %p For example
+        %br
+        %h4
+          %i.fa.fa-youtube-play
+          Tutorial
+        %div
+          %p
+            %a{href: 'javascript:onClick=window.open("http://dc-terminal.storage.datacentred.io/Terminal_Intro.mp4","OpenStack Terminal","width=900,height=490,0,status=0,directories=0,titlebar=0,toolbar=0,location=0,status=0,menubar=0")'}
+              = image_tag 'http://dc-terminal.storage.datacentred.io/terminal_preview.png', style: 'width: 100%; height: auto; margin: auto'
+
+        %hr
+        %h4
+          %i.fa.fa-quote-left
+          Some commands
         - example_commands.each do |example|
           .command-example
             %i.fa.fa-star
