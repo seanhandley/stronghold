@@ -1,37 +1,37 @@
 .browser-terminal
   .row
-    .col-md-3#left
-      .bg-success.terminal-help.osbg.example-commands
-        %h4
-          %i.fa.fa-bullhorn
-          Hello!
-        %p.thin-text
-          This is your
-          %span.highlight OpenStack Terminal.
-          %br
-          A zero-hassle way into the world of OpenStack commands.
-        %br
-        %h4
-          %i.fa.fa-youtube-play
-          Tutorial
-        %div
-          %p
-            %a{href: 'javascript:onClick=window.open("http://dc-terminal.storage.datacentred.io/Terminal_Intro.mp4","OpenStack Terminal","width=900,height=490,0,status=0,directories=0,titlebar=0,toolbar=0,location=0,status=0,menubar=0")'}
-              = image_tag 'http://dc-terminal.storage.datacentred.io/terminal_preview.png', style: 'width: 100%; height: auto; margin: auto'
+    -# .col-md-3#left
+    -#   .bg-success.terminal-help.osbg.example-commands
+    -#     %h4
+    -#       %i.fa.fa-bullhorn
+    -#       Hello!
+    -#     %p.thin-text
+    -#       This is your
+    -#       %span.highlight OpenStack Terminal.
+    -#       %br
+    -#       A zero-hassle way into the world of OpenStack commands.
+    -#     %br
+    -#     %h4
+    -#       %i.fa.fa-youtube-play
+    -#       Tutorial
+    -#     %div
+    -#       %p
+    -#         %a{href: 'javascript:onClick=window.open("http://dc-terminal.storage.datacentred.io/Terminal_Intro.mp4","OpenStack Terminal","width=900,height=490,0,status=0,directories=0,titlebar=0,toolbar=0,location=0,status=0,menubar=0")'}
+    -#           = image_tag 'http://dc-terminal.storage.datacentred.io/terminal_preview.png', style: 'width: 100%; height: auto; margin: auto'
 
-        %hr
-        %h4
-          %i.fa.fa-quote-left
-          Some commands
-        - example_commands.each do |example|
-          .command-example
-            %i.fa.fa-star
-            %code= example[:command]
-            .small
-              %em= example[:description]
+    -#     %hr
+    -#     %h4
+    -#       %i.fa.fa-quote-left
+    -#       Some commands
+    -#     - example_commands.each do |example|
+    -#       .command-example
+    -#         %i.fa.fa-star
+    -#         %code= example[:command]
+    -#         .small
+    -#           %em= example[:description]
 
 
-    .col-md-9#right
+    .col-md-12#right
       %div.project-select
         .buttons-right
           .form-inline
