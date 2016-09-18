@@ -37,8 +37,9 @@ class Support::CardsController < SupportBaseController
       FraudCheckJob.set(wait: 10.seconds).perform_later(@customer_signup)
       Notifications.notify(:new_signup, "#{current_organization.name} has activated their account! Discount code: #{create_params[:discount_code].present? ? create_params[:discount_code] : 'N/A'}")
 
-      reauthenticate(Rails.cache.fetch("up_#{current_user.uuid}"))
-      GetProjectTokensJob.set(wait: 1.minute).perform_later(current_user, GIBBERISH_CIPHER.encrypt(Rails.cache.fetch("up_#{current_user.uuid}")))
+      pw = Rails.cache.fetch("up_#{current_user.uuid}")
+      reauthenticate(pw)
+      GetProjectTokensJob.set(wait: 1.minute).perform_later(current_user, GIBBERISH_CIPHER.encrypt(pw))
 
       Rails.cache.delete("up_#{current_user.uuid}")
       Starburst::Announcement.create!(body: "<strong><i class='fa fa-bullhorn'></i> Welcome:</strong> Your account has been activated! Please check out our #{link_to 'Getting Started Guide', 'https://docs.datacentred.io/x/WQAJ', target: '_blank'}.".html_safe,

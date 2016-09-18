@@ -2,7 +2,7 @@ require 'test_helper'
 
 class Support::CardsControllerTest < ActionController::TestCase
   setup do
-    @user = User.make!(password: 'Password1')
+    @user = User.make!(password: 'Password1', uuid: '1234')
     @organization = @user.organization
     @customer_signup = CustomerSignup.make!
     @organization.update_attributes customer_signup: @customer_signup
@@ -45,9 +45,11 @@ class Support::CardsControllerTest < ActionController::TestCase
   test "create successful" do
     @customer_signup.stub(:ready?, true) do
       CustomerSignup.stub(:find_by_uuid, @customer_signup) do
-        post :create, @args
-        assert_equal 1, Starburst::Announcement.all.count
-        assert_redirected_to activated_path
+        Rails.cache.stub(:fetch, 'Password1') do
+          post :create, @args
+          assert_equal 1, Starburst::Announcement.all.count
+          assert_redirected_to activated_path
+        end
       end
     end
   end
@@ -55,8 +57,10 @@ class Support::CardsControllerTest < ActionController::TestCase
   test "create successful with voucher" do
     @customer_signup.stub(:ready?, true) do
       CustomerSignup.stub(:find_by_uuid, @customer_signup) do
-        post :create, @args.merge(discount_code: @voucher.code)
-        assert_equal 1, @organization.vouchers.count
+        Rails.cache.stub(:fetch, 'Password1') do
+          post :create, @args.merge(discount_code: @voucher.code)
+          assert_equal 1, @organization.vouchers.count
+        end
       end
     end
   end
