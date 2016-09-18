@@ -1,6 +1,8 @@
 - title "My Account"
 
-%h2 My Account
+%h2
+  Organization:
+  = current_organization.name
 
 %p
   %strong Account Number:
@@ -41,43 +43,12 @@
       .form-group
         %label Country
         = f.country_select :billing_country, {selected: @organization.billing_country || 'GB'}, {class: "form-control"}
-      - if current_organization.self_service? && !current_user.staff? && current_organization.known_to_payment_gateway? && !current_organization.frozen?
+      - if current_organization.self_service? && !current_user.staff? && current_organization.known_to_payment_gateway? && !current_organization.frozen? || true
         .form-group
           .pull-right
-            = link_to 'Close Account', '', 'data-toggle' => "modal", 'data-target' => "#closeAccount"
+            = link_to 'Remove Organization', '', 'data-toggle' => "modal", 'data-target' => "#closeAccount"
 
 
   = submit_tag t(:save), class: 'btn btn-primary', data: { disable_with: t(:saving) }
 
-- if current_organization.self_service?
-  .modal.fade#closeAccount{'tabindex' => "-1", 'role' => "dialog", 'aria-labelledby' => "closeAccount", 'aria-hidden' => "true", 'data-backdrop' => 'static'}
-    .modal-dialog
-      = form_tag close_account_path do
-        .modal-content
-          .modal-header
-            %button{'type' => "button", 'class' => "close", 'data-dismiss' => "modal", 'aria-hidden' => "true"}
-              &times;
-            %h2.modal-title.text-danger
-              %i.fa.fa-warning
-              Be Aware
-          .modal-body
-            %p Please be advised:
-            %ul
-              %li Closing your account is not a reversible process.
-              %li Once you confirm you wish to close, any running instances and other cloud resources will be forcibly terminated and removed.
-              %li You (and any other users on this account) will no longer be able to access DataCentred apps, the cloud dashboard, or the API.
-              %li Ensure any data you need has been backed up safely elsewhere.
-              %li Your remaining account balance will be collected in a final bill payable at the end of the calendar month.
-            %p
-              If you have any questions, or require assistance please
-              = link_to 'raise a support ticket', support_tickets_path
-              \.
-
-            .form-group
-              %label Confirm password to proceed
-              = password_field_tag :password, nil, class: 'form-control wink-password'
-
-          .modal-footer
-            %button.btn.btn-default{'data-toggle' => "modal", 'data-dismiss' => "modal"}
-              = t(:cancel)
-            = submit_tag 'Close Account?', class: 'btn btn-danger', id: 'submit'
+= render partial: 'close'
