@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160908190547) do
+ActiveRecord::Schema.define(version: 20160919141631) do
 
   create_table "audits", force: :cascade do |t|
     t.string   "auditable_id",    limit: 255
@@ -96,6 +96,7 @@ ActiveRecord::Schema.define(version: 20160908190547) do
     t.integer  "billable_seconds", limit: 4
     t.float    "cost",             limit: 24
     t.datetime "started_at"
+    t.text     "cached_history",   limit: 65535
   end
 
   add_index "billing_instances", ["flavor_id"], name: "instance_flavors", using: :btree
