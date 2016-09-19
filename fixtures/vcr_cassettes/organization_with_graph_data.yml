@@ -1,0 +1,890 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://devstack.datacentred.io:5000/v3/auth/tokens
+    body:
+      encoding: UTF-8
+      string: '{"auth":{"identity":{"methods":["password"],"password":{"user":{"password":"L7joid2rTaokFJ","domain":{"id":"default"},"name":"admin"}}},"scope":{"project":{"name":"admin","domain":{"id":"default"}}}}}'
+    headers:
+      User-Agent:
+      - fog-core/1.36.0
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 201
+      message: ''
+    headers:
+      Date:
+      - Mon, 19 Sep 2016 07:18:03 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      X-Subject-Token:
+      - b7beaf7e9b7d43c8a9a0a5ce1ae68a69
+      Vary:
+      - X-Auth-Token
+      X-Openstack-Request-Id:
+      - req-a285b200-857e-4eb1-a762-cef68346b8ef
+      Content-Length:
+      - '7750'
+      Content-Type:
+      - application/json
+    body:
+      encoding: UTF-8
+      string: '{"token": {"methods": ["password"], "roles": [{"id": "1cdbf6fab7f544898c2d5e9260645209",
+        "name": "admin"}], "expires_at": "2016-09-19T08:18:03.926607Z", "project":
+        {"domain": {"id": "default", "name": "Default"}, "id": "06a9a90c60074cdeae5f7fdd0048d9ac",
+        "name": "admin"}, "catalog": [{"endpoints": [{"region_id": "RegionOne", "url":
+        "http://185.43.218.210:8777/", "region": "RegionOne", "interface": "internal",
+        "id": "0740555784874fdd8d6d1f92c04541bf"}, {"region_id": "RegionOne", "url":
+        "http://185.43.218.210:8777/", "region": "RegionOne", "interface": "public",
+        "id": "9f71abc341544cc4941be8261e94a6fc"}, {"region_id": "RegionOne", "url":
+        "http://185.43.218.210:8777/", "region": "RegionOne", "interface": "admin",
+        "id": "ac15153252bf4a4f88896c7562aaaba1"}], "type": "metering", "id": "04053abbdf7f47a396f2a432ab0ba567",
+        "name": "ceilometer"}, {"endpoints": [{"region_id": "RegionOne", "url": "http://185.43.218.210:9696/",
+        "region": "RegionOne", "interface": "admin", "id": "5ec8ef9e98024c42a3a5fbdf44acc722"},
+        {"region_id": "RegionOne", "url": "http://185.43.218.210:9696/", "region":
+        "RegionOne", "interface": "public", "id": "6b2fb734a8864c80acca5e3ed470d8c5"},
+        {"region_id": "RegionOne", "url": "http://185.43.218.210:9696/", "region":
+        "RegionOne", "interface": "internal", "id": "7617e2f654f249c69fa916ee9ea6b7de"}],
+        "type": "network", "id": "1d162306531542bbb5f83c7effffa54b", "name": "neutron"},
+        {"endpoints": [{"region_id": "RegionOne", "url": "http://185.43.218.210:8004/v1/06a9a90c60074cdeae5f7fdd0048d9ac",
+        "region": "RegionOne", "interface": "public", "id": "23e641b39cb24aa0b5a83877aaa0bc9a"},
+        {"region_id": "RegionOne", "url": "http://185.43.218.210:8004/v1/06a9a90c60074cdeae5f7fdd0048d9ac",
+        "region": "RegionOne", "interface": "admin", "id": "92142643d1b24c69bb283b0d4b6b8122"},
+        {"region_id": "RegionOne", "url": "http://185.43.218.210:8004/v1/06a9a90c60074cdeae5f7fdd0048d9ac",
+        "region": "RegionOne", "interface": "internal", "id": "ae0e69f6b4774de2bbd5d6e832597e6a"}],
+        "type": "orchestration", "id": "5e852cb5054d469584d4261533c44843", "name":
+        "heat"}, {"endpoints": [{"region_id": "RegionOne", "url": "http://185.43.218.210:8773/",
+        "region": "RegionOne", "interface": "internal", "id": "2a43be9cae314363bce788fce7353486"},
+        {"region_id": "RegionOne", "url": "http://185.43.218.210:8773/", "region":
+        "RegionOne", "interface": "admin", "id": "80a83326212c49078384c84421662632"},
+        {"region_id": "RegionOne", "url": "http://185.43.218.210:8773/", "region":
+        "RegionOne", "interface": "public", "id": "afe18a687c0e4dc6ad54e36b86419872"}],
+        "type": "ec2", "id": "5ed5d5d136cc43b998539b75f50f2c93", "name": "ec2"}, {"endpoints":
+        [{"region_id": "RegionOne", "url": "http://185.43.218.210:5000/", "region":
+        "RegionOne", "interface": "public", "id": "1551d6417ce44f0b9638a40615fced6d"},
+        {"region_id": "RegionOne", "url": "http://185.43.218.210:5000/", "region":
+        "RegionOne", "interface": "internal", "id": "3fed2ded55be4df78e1fbe8d6495547e"},
+        {"region_id": "RegionOne", "url": "http://185.43.218.210:35357/", "region":
+        "RegionOne", "interface": "admin", "id": "c9e7c746c3c04aadbfa236b493e56bf6"}],
+        "type": "identity", "id": "6d1dcaf88063470fbe7736c3122df873", "name": "keystone"},
+        {"endpoints": [{"region_id": "RegionOne", "url": "http://185.43.218.210:3333",
+        "region": "RegionOne", "interface": "internal", "id": "8ac5418d62e4415f865c6edf76192120"},
+        {"region_id": "RegionOne", "url": "http://185.43.218.210:3333", "region":
+        "RegionOne", "interface": "admin", "id": "95a1eb19c34b4c8d965bb785e5f0dc12"},
+        {"region_id": "RegionOne", "url": "http://185.43.218.210:3333", "region":
+        "RegionOne", "interface": "public", "id": "9db8b3984bc14aeaa975c154028dc79e"}],
+        "type": "s3", "id": "8d38e0e990aa429a858265d9c124b186", "name": "s3"}, {"endpoints":
+        [{"region_id": "RegionOne", "url": "http://185.43.218.210:8000/v1", "region":
+        "RegionOne", "interface": "internal", "id": "24cc1987fa5541828daff00cc8f8fea9"},
+        {"region_id": "RegionOne", "url": "http://185.43.218.210:8000/v1", "region":
+        "RegionOne", "interface": "admin", "id": "72e3aeaf983944eab7cfa576d5a8f550"},
+        {"region_id": "RegionOne", "url": "http://185.43.218.210:8000/v1", "region":
+        "RegionOne", "interface": "public", "id": "d997374240414c9d93935f53dd4a5b25"}],
+        "type": "cloudformation", "id": "8f69a18b7f124a90884a6ffe83a6bfbf", "name":
+        "heat-cfn"}, {"endpoints": [{"region_id": "RegionOne", "url": "http://185.43.218.210:8776/v2/06a9a90c60074cdeae5f7fdd0048d9ac",
+        "region": "RegionOne", "interface": "admin", "id": "08c0cee724e14d24a71bcb3dc3386d6b"},
+        {"region_id": "RegionOne", "url": "http://185.43.218.210:8776/v2/06a9a90c60074cdeae5f7fdd0048d9ac",
+        "region": "RegionOne", "interface": "public", "id": "2f24ba9cedba4988b8591a5d9c648ec2"},
+        {"region_id": "RegionOne", "url": "http://185.43.218.210:8776/v2/06a9a90c60074cdeae5f7fdd0048d9ac",
+        "region": "RegionOne", "interface": "internal", "id": "760d6c16b91348f1acc78d240325f4a8"}],
+        "type": "volumev2", "id": "b66ee3a8d48f49759ea64fbd374e0557", "name": "cinderv2"},
+        {"endpoints": [{"region_id": "RegionOne", "url": "http://185.43.218.210:8774/v2/06a9a90c60074cdeae5f7fdd0048d9ac",
+        "region": "RegionOne", "interface": "public", "id": "19b08d694d8b4dd1a760a33b2d3f32eb"},
+        {"region_id": "RegionOne", "url": "http://185.43.218.210:8774/v2/06a9a90c60074cdeae5f7fdd0048d9ac",
+        "region": "RegionOne", "interface": "internal", "id": "59e1509b62aa4c4fbc17c3ade929f93f"},
+        {"region_id": "RegionOne", "url": "http://185.43.218.210:8774/v2/06a9a90c60074cdeae5f7fdd0048d9ac",
+        "region": "RegionOne", "interface": "admin", "id": "b19ddabe733b4e188e23f532d8934177"}],
+        "type": "compute", "id": "b9553cbac273482d86481c6bbc5ef52f", "name": "nova"},
+        {"endpoints": [{"region_id": "RegionOne", "url": "http://185.43.218.210:9292",
+        "region": "RegionOne", "interface": "public", "id": "7f2726d743a4404c9fcc72394555e334"},
+        {"region_id": "RegionOne", "url": "http://185.43.218.210:9292", "region":
+        "RegionOne", "interface": "internal", "id": "b55dbe4c2dab4abea91ce1ec15aad0ba"},
+        {"region_id": "RegionOne", "url": "http://185.43.218.210:9292", "region":
+        "RegionOne", "interface": "admin", "id": "e83810ff0edb4fbf9d6fdf2e2b863fca"}],
+        "type": "image", "id": "c4b8542ae5a94e21957830578399b7b8", "name": "glance"},
+        {"endpoints": [{"region_id": "RegionOne", "url": "http://185.43.218.210:8774/v2.1/06a9a90c60074cdeae5f7fdd0048d9ac",
+        "region": "RegionOne", "interface": "public", "id": "0e054ae877a247e0aae1f208b1b6b7e7"},
+        {"region_id": "RegionOne", "url": "http://185.43.218.210:8774/v2.1/06a9a90c60074cdeae5f7fdd0048d9ac",
+        "region": "RegionOne", "interface": "admin", "id": "365dac7720e2411785d6c8dafbe94e4e"},
+        {"region_id": "RegionOne", "url": "http://185.43.218.210:8774/v2.1/06a9a90c60074cdeae5f7fdd0048d9ac",
+        "region": "RegionOne", "interface": "internal", "id": "3c43888219cf4c69a3e44295ee1c64dd"}],
+        "type": "computev21", "id": "cb772618fc8b439a81110c2cca41a505", "name": "novav21"},
+        {"endpoints": [{"region_id": "RegionOne", "url": "http://185.43.218.210:8776/v1/06a9a90c60074cdeae5f7fdd0048d9ac",
+        "region": "RegionOne", "interface": "public", "id": "39e666c79e434d9e9d1cfc16430e6c35"},
+        {"region_id": "RegionOne", "url": "http://185.43.218.210:8776/v1/06a9a90c60074cdeae5f7fdd0048d9ac",
+        "region": "RegionOne", "interface": "admin", "id": "3c886264e5184727b6f0e0373cd983ea"},
+        {"region_id": "RegionOne", "url": "http://185.43.218.210:8776/v1/06a9a90c60074cdeae5f7fdd0048d9ac",
+        "region": "RegionOne", "interface": "internal", "id": "6b694d03d6b743f6a003fd0703d00e12"}],
+        "type": "volume", "id": "f25b427186f34fb0889ad752a7a2a750", "name": "cinder"}],
+        "extras": {}, "user": {"domain": {"id": "default", "name": "Default"}, "id":
+        "20746f49211e4037a91269df6a3fbf7b", "name": "admin"}, "audit_ids": ["9Qvpab2uTWe9nr1hFjvdUw"],
+        "issued_at": "2016-09-19T07:18:03.926678Z"}}'
+    http_version: 
+  recorded_at: Mon, 19 Sep 2016 07:18:04 GMT
+- request:
+    method: get
+    uri: http://185.43.218.210:8774/v2/06a9a90c60074cdeae5f7fdd0048d9ac/servers/detail.json?all_tenants=True
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog-core/1.36.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token:
+      - b7beaf7e9b7d43c8a9a0a5ce1ae68a69
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1508'
+      X-Compute-Request-Id:
+      - req-3d360bda-8916-42f4-b31b-ce12ab293828
+      Date:
+      - Mon, 19 Sep 2016 07:18:04 GMT
+    body:
+      encoding: UTF-8
+      string: '{"servers": [{"status": "SHUTOFF", "updated": "2016-08-30T16:44:23Z",
+        "hostId": "eaa3970d4ad6ce7025769295b443a95ab5a055f48241c04c9f1d0425", "OS-EXT-SRV-ATTR:host":
+        "devstack", "addresses": {}, "links": [{"href": "http://185.43.218.210:8774/v2/06a9a90c60074cdeae5f7fdd0048d9ac/servers/4bb7d38e-6fa3-4985-9926-70e5d14c2847",
+        "rel": "self"}, {"href": "http://185.43.218.210:8774/06a9a90c60074cdeae5f7fdd0048d9ac/servers/4bb7d38e-6fa3-4985-9926-70e5d14c2847",
+        "rel": "bookmark"}], "key_name": null, "image": {"id": "57a67f8a-7bae-4578-b684-b9b4dcd48d7f",
+        "links": [{"href": "http://185.43.218.210:8774/06a9a90c60074cdeae5f7fdd0048d9ac/images/57a67f8a-7bae-4578-b684-b9b4dcd48d7f",
+        "rel": "bookmark"}]}, "OS-EXT-STS:task_state": null, "OS-EXT-STS:vm_state":
+        "stopped", "OS-EXT-SRV-ATTR:instance_name": "instance-00000010", "OS-SRV-USG:launched_at":
+        "2016-08-23T11:34:19.000000", "OS-EXT-SRV-ATTR:hypervisor_hostname": "devstack",
+        "flavor": {"id": "1", "links": [{"href": "http://185.43.218.210:8774/06a9a90c60074cdeae5f7fdd0048d9ac/flavors/1",
+        "rel": "bookmark"}]}, "id": "4bb7d38e-6fa3-4985-9926-70e5d14c2847", "OS-SRV-USG:terminated_at":
+        null, "OS-EXT-AZ:availability_zone": "nova", "user_id": "fb675d3f17e145f1aa0429cd7f84c317",
+        "name": "test", "created": "2016-08-23T11:34:02Z", "tenant_id": "612bfb90f93c4b6e9ba515d51bb16022",
+        "OS-DCF:diskConfig": "MANUAL", "os-extended-volumes:volumes_attached": [],
+        "accessIPv4": "", "accessIPv6": "", "OS-EXT-STS:power_state": 4, "config_drive":
+        "True", "metadata": {}}]}'
+    http_version: 
+  recorded_at: Mon, 19 Sep 2016 07:18:04 GMT
+- request:
+    method: get
+    uri: http://185.43.218.210:8774/v2/06a9a90c60074cdeae5f7fdd0048d9ac/servers/detail.json?all_tenants=True
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog-core/1.36.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token:
+      - b7beaf7e9b7d43c8a9a0a5ce1ae68a69
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1508'
+      X-Compute-Request-Id:
+      - req-bc3a7916-a393-4195-8eda-91f60b0c8365
+      Date:
+      - Mon, 19 Sep 2016 07:18:04 GMT
+    body:
+      encoding: UTF-8
+      string: '{"servers": [{"status": "SHUTOFF", "updated": "2016-08-30T16:44:23Z",
+        "hostId": "eaa3970d4ad6ce7025769295b443a95ab5a055f48241c04c9f1d0425", "OS-EXT-SRV-ATTR:host":
+        "devstack", "addresses": {}, "links": [{"href": "http://185.43.218.210:8774/v2/06a9a90c60074cdeae5f7fdd0048d9ac/servers/4bb7d38e-6fa3-4985-9926-70e5d14c2847",
+        "rel": "self"}, {"href": "http://185.43.218.210:8774/06a9a90c60074cdeae5f7fdd0048d9ac/servers/4bb7d38e-6fa3-4985-9926-70e5d14c2847",
+        "rel": "bookmark"}], "key_name": null, "image": {"id": "57a67f8a-7bae-4578-b684-b9b4dcd48d7f",
+        "links": [{"href": "http://185.43.218.210:8774/06a9a90c60074cdeae5f7fdd0048d9ac/images/57a67f8a-7bae-4578-b684-b9b4dcd48d7f",
+        "rel": "bookmark"}]}, "OS-EXT-STS:task_state": null, "OS-EXT-STS:vm_state":
+        "stopped", "OS-EXT-SRV-ATTR:instance_name": "instance-00000010", "OS-SRV-USG:launched_at":
+        "2016-08-23T11:34:19.000000", "OS-EXT-SRV-ATTR:hypervisor_hostname": "devstack",
+        "flavor": {"id": "1", "links": [{"href": "http://185.43.218.210:8774/06a9a90c60074cdeae5f7fdd0048d9ac/flavors/1",
+        "rel": "bookmark"}]}, "id": "4bb7d38e-6fa3-4985-9926-70e5d14c2847", "OS-SRV-USG:terminated_at":
+        null, "OS-EXT-AZ:availability_zone": "nova", "user_id": "fb675d3f17e145f1aa0429cd7f84c317",
+        "name": "test", "created": "2016-08-23T11:34:02Z", "tenant_id": "612bfb90f93c4b6e9ba515d51bb16022",
+        "OS-DCF:diskConfig": "MANUAL", "os-extended-volumes:volumes_attached": [],
+        "accessIPv4": "", "accessIPv6": "", "OS-EXT-STS:power_state": 4, "config_drive":
+        "True", "metadata": {}}]}'
+    http_version: 
+  recorded_at: Mon, 19 Sep 2016 07:18:04 GMT
+- request:
+    method: get
+    uri: http://185.43.218.210:8776/v2/06a9a90c60074cdeae5f7fdd0048d9ac/volumes/detail?all_tenants=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog-core/1.36.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token:
+      - b7beaf7e9b7d43c8a9a0a5ce1ae68a69
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      X-Compute-Request-Id:
+      - req-51176e06-a80d-4676-b380-17055a3705fb
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '15'
+      X-Openstack-Request-Id:
+      - req-51176e06-a80d-4676-b380-17055a3705fb
+      Date:
+      - Mon, 19 Sep 2016 07:18:05 GMT
+    body:
+      encoding: UTF-8
+      string: '{"volumes": []}'
+    http_version: 
+  recorded_at: Mon, 19 Sep 2016 07:18:05 GMT
+- request:
+    method: get
+    uri: http://185.43.218.210:8774/v2/06a9a90c60074cdeae5f7fdd0048d9ac/servers/detail.json?all_tenants=True
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog-core/1.36.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token:
+      - b7beaf7e9b7d43c8a9a0a5ce1ae68a69
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1508'
+      X-Compute-Request-Id:
+      - req-e408bc90-d7e3-4864-9bc4-642976e6a651
+      Date:
+      - Mon, 19 Sep 2016 07:18:05 GMT
+    body:
+      encoding: UTF-8
+      string: '{"servers": [{"status": "SHUTOFF", "updated": "2016-08-30T16:44:23Z",
+        "hostId": "eaa3970d4ad6ce7025769295b443a95ab5a055f48241c04c9f1d0425", "OS-EXT-SRV-ATTR:host":
+        "devstack", "addresses": {}, "links": [{"href": "http://185.43.218.210:8774/v2/06a9a90c60074cdeae5f7fdd0048d9ac/servers/4bb7d38e-6fa3-4985-9926-70e5d14c2847",
+        "rel": "self"}, {"href": "http://185.43.218.210:8774/06a9a90c60074cdeae5f7fdd0048d9ac/servers/4bb7d38e-6fa3-4985-9926-70e5d14c2847",
+        "rel": "bookmark"}], "key_name": null, "image": {"id": "57a67f8a-7bae-4578-b684-b9b4dcd48d7f",
+        "links": [{"href": "http://185.43.218.210:8774/06a9a90c60074cdeae5f7fdd0048d9ac/images/57a67f8a-7bae-4578-b684-b9b4dcd48d7f",
+        "rel": "bookmark"}]}, "OS-EXT-STS:task_state": null, "OS-EXT-STS:vm_state":
+        "stopped", "OS-EXT-SRV-ATTR:instance_name": "instance-00000010", "OS-SRV-USG:launched_at":
+        "2016-08-23T11:34:19.000000", "OS-EXT-SRV-ATTR:hypervisor_hostname": "devstack",
+        "flavor": {"id": "1", "links": [{"href": "http://185.43.218.210:8774/06a9a90c60074cdeae5f7fdd0048d9ac/flavors/1",
+        "rel": "bookmark"}]}, "id": "4bb7d38e-6fa3-4985-9926-70e5d14c2847", "OS-SRV-USG:terminated_at":
+        null, "OS-EXT-AZ:availability_zone": "nova", "user_id": "fb675d3f17e145f1aa0429cd7f84c317",
+        "name": "test", "created": "2016-08-23T11:34:02Z", "tenant_id": "612bfb90f93c4b6e9ba515d51bb16022",
+        "OS-DCF:diskConfig": "MANUAL", "os-extended-volumes:volumes_attached": [],
+        "accessIPv4": "", "accessIPv6": "", "OS-EXT-STS:power_state": 4, "config_drive":
+        "True", "metadata": {}}]}'
+    http_version: 
+  recorded_at: Mon, 19 Sep 2016 07:18:05 GMT
+- request:
+    method: get
+    uri: http://185.43.218.210:8774/v2/06a9a90c60074cdeae5f7fdd0048d9ac/servers/detail.json?all_tenants=True
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog-core/1.36.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token:
+      - b7beaf7e9b7d43c8a9a0a5ce1ae68a69
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1508'
+      X-Compute-Request-Id:
+      - req-c157df73-ca92-4a2d-b6b4-3ea801abf59c
+      Date:
+      - Mon, 19 Sep 2016 07:18:05 GMT
+    body:
+      encoding: UTF-8
+      string: '{"servers": [{"status": "SHUTOFF", "updated": "2016-08-30T16:44:23Z",
+        "hostId": "eaa3970d4ad6ce7025769295b443a95ab5a055f48241c04c9f1d0425", "OS-EXT-SRV-ATTR:host":
+        "devstack", "addresses": {}, "links": [{"href": "http://185.43.218.210:8774/v2/06a9a90c60074cdeae5f7fdd0048d9ac/servers/4bb7d38e-6fa3-4985-9926-70e5d14c2847",
+        "rel": "self"}, {"href": "http://185.43.218.210:8774/06a9a90c60074cdeae5f7fdd0048d9ac/servers/4bb7d38e-6fa3-4985-9926-70e5d14c2847",
+        "rel": "bookmark"}], "key_name": null, "image": {"id": "57a67f8a-7bae-4578-b684-b9b4dcd48d7f",
+        "links": [{"href": "http://185.43.218.210:8774/06a9a90c60074cdeae5f7fdd0048d9ac/images/57a67f8a-7bae-4578-b684-b9b4dcd48d7f",
+        "rel": "bookmark"}]}, "OS-EXT-STS:task_state": null, "OS-EXT-STS:vm_state":
+        "stopped", "OS-EXT-SRV-ATTR:instance_name": "instance-00000010", "OS-SRV-USG:launched_at":
+        "2016-08-23T11:34:19.000000", "OS-EXT-SRV-ATTR:hypervisor_hostname": "devstack",
+        "flavor": {"id": "1", "links": [{"href": "http://185.43.218.210:8774/06a9a90c60074cdeae5f7fdd0048d9ac/flavors/1",
+        "rel": "bookmark"}]}, "id": "4bb7d38e-6fa3-4985-9926-70e5d14c2847", "OS-SRV-USG:terminated_at":
+        null, "OS-EXT-AZ:availability_zone": "nova", "user_id": "fb675d3f17e145f1aa0429cd7f84c317",
+        "name": "test", "created": "2016-08-23T11:34:02Z", "tenant_id": "612bfb90f93c4b6e9ba515d51bb16022",
+        "OS-DCF:diskConfig": "MANUAL", "os-extended-volumes:volumes_attached": [],
+        "accessIPv4": "", "accessIPv6": "", "OS-EXT-STS:power_state": 4, "config_drive":
+        "True", "metadata": {}}]}'
+    http_version: 
+  recorded_at: Mon, 19 Sep 2016 07:18:05 GMT
+- request:
+    method: get
+    uri: http://185.43.218.210:8774/v2/06a9a90c60074cdeae5f7fdd0048d9ac/servers/detail.json?all_tenants=True
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog-core/1.36.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token:
+      - b7beaf7e9b7d43c8a9a0a5ce1ae68a69
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1508'
+      X-Compute-Request-Id:
+      - req-e474372b-416e-4333-a5c6-4db0981527b0
+      Date:
+      - Mon, 19 Sep 2016 07:18:06 GMT
+    body:
+      encoding: UTF-8
+      string: '{"servers": [{"status": "SHUTOFF", "updated": "2016-08-30T16:44:23Z",
+        "hostId": "eaa3970d4ad6ce7025769295b443a95ab5a055f48241c04c9f1d0425", "OS-EXT-SRV-ATTR:host":
+        "devstack", "addresses": {}, "links": [{"href": "http://185.43.218.210:8774/v2/06a9a90c60074cdeae5f7fdd0048d9ac/servers/4bb7d38e-6fa3-4985-9926-70e5d14c2847",
+        "rel": "self"}, {"href": "http://185.43.218.210:8774/06a9a90c60074cdeae5f7fdd0048d9ac/servers/4bb7d38e-6fa3-4985-9926-70e5d14c2847",
+        "rel": "bookmark"}], "key_name": null, "image": {"id": "57a67f8a-7bae-4578-b684-b9b4dcd48d7f",
+        "links": [{"href": "http://185.43.218.210:8774/06a9a90c60074cdeae5f7fdd0048d9ac/images/57a67f8a-7bae-4578-b684-b9b4dcd48d7f",
+        "rel": "bookmark"}]}, "OS-EXT-STS:task_state": null, "OS-EXT-STS:vm_state":
+        "stopped", "OS-EXT-SRV-ATTR:instance_name": "instance-00000010", "OS-SRV-USG:launched_at":
+        "2016-08-23T11:34:19.000000", "OS-EXT-SRV-ATTR:hypervisor_hostname": "devstack",
+        "flavor": {"id": "1", "links": [{"href": "http://185.43.218.210:8774/06a9a90c60074cdeae5f7fdd0048d9ac/flavors/1",
+        "rel": "bookmark"}]}, "id": "4bb7d38e-6fa3-4985-9926-70e5d14c2847", "OS-SRV-USG:terminated_at":
+        null, "OS-EXT-AZ:availability_zone": "nova", "user_id": "fb675d3f17e145f1aa0429cd7f84c317",
+        "name": "test", "created": "2016-08-23T11:34:02Z", "tenant_id": "612bfb90f93c4b6e9ba515d51bb16022",
+        "OS-DCF:diskConfig": "MANUAL", "os-extended-volumes:volumes_attached": [],
+        "accessIPv4": "", "accessIPv6": "", "OS-EXT-STS:power_state": 4, "config_drive":
+        "True", "metadata": {}}]}'
+    http_version: 
+  recorded_at: Mon, 19 Sep 2016 07:18:06 GMT
+- request:
+    method: get
+    uri: http://185.43.218.210:8774/v2/06a9a90c60074cdeae5f7fdd0048d9ac/servers/detail.json?all_tenants=True
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog-core/1.36.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token:
+      - b7beaf7e9b7d43c8a9a0a5ce1ae68a69
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1508'
+      X-Compute-Request-Id:
+      - req-dca34a7d-665c-4422-9bc4-1655ffd16412
+      Date:
+      - Mon, 19 Sep 2016 07:18:06 GMT
+    body:
+      encoding: UTF-8
+      string: '{"servers": [{"status": "SHUTOFF", "updated": "2016-08-30T16:44:23Z",
+        "hostId": "eaa3970d4ad6ce7025769295b443a95ab5a055f48241c04c9f1d0425", "OS-EXT-SRV-ATTR:host":
+        "devstack", "addresses": {}, "links": [{"href": "http://185.43.218.210:8774/v2/06a9a90c60074cdeae5f7fdd0048d9ac/servers/4bb7d38e-6fa3-4985-9926-70e5d14c2847",
+        "rel": "self"}, {"href": "http://185.43.218.210:8774/06a9a90c60074cdeae5f7fdd0048d9ac/servers/4bb7d38e-6fa3-4985-9926-70e5d14c2847",
+        "rel": "bookmark"}], "key_name": null, "image": {"id": "57a67f8a-7bae-4578-b684-b9b4dcd48d7f",
+        "links": [{"href": "http://185.43.218.210:8774/06a9a90c60074cdeae5f7fdd0048d9ac/images/57a67f8a-7bae-4578-b684-b9b4dcd48d7f",
+        "rel": "bookmark"}]}, "OS-EXT-STS:task_state": null, "OS-EXT-STS:vm_state":
+        "stopped", "OS-EXT-SRV-ATTR:instance_name": "instance-00000010", "OS-SRV-USG:launched_at":
+        "2016-08-23T11:34:19.000000", "OS-EXT-SRV-ATTR:hypervisor_hostname": "devstack",
+        "flavor": {"id": "1", "links": [{"href": "http://185.43.218.210:8774/06a9a90c60074cdeae5f7fdd0048d9ac/flavors/1",
+        "rel": "bookmark"}]}, "id": "4bb7d38e-6fa3-4985-9926-70e5d14c2847", "OS-SRV-USG:terminated_at":
+        null, "OS-EXT-AZ:availability_zone": "nova", "user_id": "fb675d3f17e145f1aa0429cd7f84c317",
+        "name": "test", "created": "2016-08-23T11:34:02Z", "tenant_id": "612bfb90f93c4b6e9ba515d51bb16022",
+        "OS-DCF:diskConfig": "MANUAL", "os-extended-volumes:volumes_attached": [],
+        "accessIPv4": "", "accessIPv6": "", "OS-EXT-STS:power_state": 4, "config_drive":
+        "True", "metadata": {}}]}'
+    http_version: 
+  recorded_at: Mon, 19 Sep 2016 07:18:06 GMT
+- request:
+    method: get
+    uri: http://185.43.218.210:8774/v2/06a9a90c60074cdeae5f7fdd0048d9ac/servers/detail.json?all_tenants=True
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog-core/1.36.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token:
+      - b7beaf7e9b7d43c8a9a0a5ce1ae68a69
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1508'
+      X-Compute-Request-Id:
+      - req-c19a0644-5e7a-449e-817a-27c14b1e371e
+      Date:
+      - Mon, 19 Sep 2016 07:18:06 GMT
+    body:
+      encoding: UTF-8
+      string: '{"servers": [{"status": "SHUTOFF", "updated": "2016-08-30T16:44:23Z",
+        "hostId": "eaa3970d4ad6ce7025769295b443a95ab5a055f48241c04c9f1d0425", "OS-EXT-SRV-ATTR:host":
+        "devstack", "addresses": {}, "links": [{"href": "http://185.43.218.210:8774/v2/06a9a90c60074cdeae5f7fdd0048d9ac/servers/4bb7d38e-6fa3-4985-9926-70e5d14c2847",
+        "rel": "self"}, {"href": "http://185.43.218.210:8774/06a9a90c60074cdeae5f7fdd0048d9ac/servers/4bb7d38e-6fa3-4985-9926-70e5d14c2847",
+        "rel": "bookmark"}], "key_name": null, "image": {"id": "57a67f8a-7bae-4578-b684-b9b4dcd48d7f",
+        "links": [{"href": "http://185.43.218.210:8774/06a9a90c60074cdeae5f7fdd0048d9ac/images/57a67f8a-7bae-4578-b684-b9b4dcd48d7f",
+        "rel": "bookmark"}]}, "OS-EXT-STS:task_state": null, "OS-EXT-STS:vm_state":
+        "stopped", "OS-EXT-SRV-ATTR:instance_name": "instance-00000010", "OS-SRV-USG:launched_at":
+        "2016-08-23T11:34:19.000000", "OS-EXT-SRV-ATTR:hypervisor_hostname": "devstack",
+        "flavor": {"id": "1", "links": [{"href": "http://185.43.218.210:8774/06a9a90c60074cdeae5f7fdd0048d9ac/flavors/1",
+        "rel": "bookmark"}]}, "id": "4bb7d38e-6fa3-4985-9926-70e5d14c2847", "OS-SRV-USG:terminated_at":
+        null, "OS-EXT-AZ:availability_zone": "nova", "user_id": "fb675d3f17e145f1aa0429cd7f84c317",
+        "name": "test", "created": "2016-08-23T11:34:02Z", "tenant_id": "612bfb90f93c4b6e9ba515d51bb16022",
+        "OS-DCF:diskConfig": "MANUAL", "os-extended-volumes:volumes_attached": [],
+        "accessIPv4": "", "accessIPv6": "", "OS-EXT-STS:power_state": 4, "config_drive":
+        "True", "metadata": {}}]}'
+    http_version: 
+  recorded_at: Mon, 19 Sep 2016 07:18:06 GMT
+- request:
+    method: get
+    uri: http://185.43.218.210:8774/v2/06a9a90c60074cdeae5f7fdd0048d9ac/servers/detail.json?all_tenants=True
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog-core/1.36.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token:
+      - b7beaf7e9b7d43c8a9a0a5ce1ae68a69
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1508'
+      X-Compute-Request-Id:
+      - req-298d5a29-a1dd-4463-bdc5-663e9e5b2ecd
+      Date:
+      - Mon, 19 Sep 2016 07:18:06 GMT
+    body:
+      encoding: UTF-8
+      string: '{"servers": [{"status": "SHUTOFF", "updated": "2016-08-30T16:44:23Z",
+        "hostId": "eaa3970d4ad6ce7025769295b443a95ab5a055f48241c04c9f1d0425", "OS-EXT-SRV-ATTR:host":
+        "devstack", "addresses": {}, "links": [{"href": "http://185.43.218.210:8774/v2/06a9a90c60074cdeae5f7fdd0048d9ac/servers/4bb7d38e-6fa3-4985-9926-70e5d14c2847",
+        "rel": "self"}, {"href": "http://185.43.218.210:8774/06a9a90c60074cdeae5f7fdd0048d9ac/servers/4bb7d38e-6fa3-4985-9926-70e5d14c2847",
+        "rel": "bookmark"}], "key_name": null, "image": {"id": "57a67f8a-7bae-4578-b684-b9b4dcd48d7f",
+        "links": [{"href": "http://185.43.218.210:8774/06a9a90c60074cdeae5f7fdd0048d9ac/images/57a67f8a-7bae-4578-b684-b9b4dcd48d7f",
+        "rel": "bookmark"}]}, "OS-EXT-STS:task_state": null, "OS-EXT-STS:vm_state":
+        "stopped", "OS-EXT-SRV-ATTR:instance_name": "instance-00000010", "OS-SRV-USG:launched_at":
+        "2016-08-23T11:34:19.000000", "OS-EXT-SRV-ATTR:hypervisor_hostname": "devstack",
+        "flavor": {"id": "1", "links": [{"href": "http://185.43.218.210:8774/06a9a90c60074cdeae5f7fdd0048d9ac/flavors/1",
+        "rel": "bookmark"}]}, "id": "4bb7d38e-6fa3-4985-9926-70e5d14c2847", "OS-SRV-USG:terminated_at":
+        null, "OS-EXT-AZ:availability_zone": "nova", "user_id": "fb675d3f17e145f1aa0429cd7f84c317",
+        "name": "test", "created": "2016-08-23T11:34:02Z", "tenant_id": "612bfb90f93c4b6e9ba515d51bb16022",
+        "OS-DCF:diskConfig": "MANUAL", "os-extended-volumes:volumes_attached": [],
+        "accessIPv4": "", "accessIPv6": "", "OS-EXT-STS:power_state": 4, "config_drive":
+        "True", "metadata": {}}]}'
+    http_version: 
+  recorded_at: Mon, 19 Sep 2016 07:18:06 GMT
+- request:
+    method: get
+    uri: http://185.43.218.210:8774/v2/06a9a90c60074cdeae5f7fdd0048d9ac/servers/detail.json?all_tenants=True
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog-core/1.36.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token:
+      - b7beaf7e9b7d43c8a9a0a5ce1ae68a69
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1508'
+      X-Compute-Request-Id:
+      - req-68e894a5-8bb4-40bb-b4fa-d6f6505b9b65
+      Date:
+      - Mon, 19 Sep 2016 07:18:07 GMT
+    body:
+      encoding: UTF-8
+      string: '{"servers": [{"status": "SHUTOFF", "updated": "2016-08-30T16:44:23Z",
+        "hostId": "eaa3970d4ad6ce7025769295b443a95ab5a055f48241c04c9f1d0425", "OS-EXT-SRV-ATTR:host":
+        "devstack", "addresses": {}, "links": [{"href": "http://185.43.218.210:8774/v2/06a9a90c60074cdeae5f7fdd0048d9ac/servers/4bb7d38e-6fa3-4985-9926-70e5d14c2847",
+        "rel": "self"}, {"href": "http://185.43.218.210:8774/06a9a90c60074cdeae5f7fdd0048d9ac/servers/4bb7d38e-6fa3-4985-9926-70e5d14c2847",
+        "rel": "bookmark"}], "key_name": null, "image": {"id": "57a67f8a-7bae-4578-b684-b9b4dcd48d7f",
+        "links": [{"href": "http://185.43.218.210:8774/06a9a90c60074cdeae5f7fdd0048d9ac/images/57a67f8a-7bae-4578-b684-b9b4dcd48d7f",
+        "rel": "bookmark"}]}, "OS-EXT-STS:task_state": null, "OS-EXT-STS:vm_state":
+        "stopped", "OS-EXT-SRV-ATTR:instance_name": "instance-00000010", "OS-SRV-USG:launched_at":
+        "2016-08-23T11:34:19.000000", "OS-EXT-SRV-ATTR:hypervisor_hostname": "devstack",
+        "flavor": {"id": "1", "links": [{"href": "http://185.43.218.210:8774/06a9a90c60074cdeae5f7fdd0048d9ac/flavors/1",
+        "rel": "bookmark"}]}, "id": "4bb7d38e-6fa3-4985-9926-70e5d14c2847", "OS-SRV-USG:terminated_at":
+        null, "OS-EXT-AZ:availability_zone": "nova", "user_id": "fb675d3f17e145f1aa0429cd7f84c317",
+        "name": "test", "created": "2016-08-23T11:34:02Z", "tenant_id": "612bfb90f93c4b6e9ba515d51bb16022",
+        "OS-DCF:diskConfig": "MANUAL", "os-extended-volumes:volumes_attached": [],
+        "accessIPv4": "", "accessIPv6": "", "OS-EXT-STS:power_state": 4, "config_drive":
+        "True", "metadata": {}}]}'
+    http_version: 
+  recorded_at: Mon, 19 Sep 2016 07:18:07 GMT
+- request:
+    method: get
+    uri: http://185.43.218.210:8776/v2/06a9a90c60074cdeae5f7fdd0048d9ac/volumes/detail?all_tenants=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog-core/1.36.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token:
+      - b7beaf7e9b7d43c8a9a0a5ce1ae68a69
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      X-Compute-Request-Id:
+      - req-f6b5f71c-391a-4cda-be38-2c4500e9581f
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '15'
+      X-Openstack-Request-Id:
+      - req-f6b5f71c-391a-4cda-be38-2c4500e9581f
+      Date:
+      - Mon, 19 Sep 2016 07:18:07 GMT
+    body:
+      encoding: UTF-8
+      string: '{"volumes": []}'
+    http_version: 
+  recorded_at: Mon, 19 Sep 2016 07:18:07 GMT
+- request:
+    method: get
+    uri: http://185.43.218.210:8776/v2/06a9a90c60074cdeae5f7fdd0048d9ac/volumes/detail?all_tenants=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog-core/1.36.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token:
+      - b7beaf7e9b7d43c8a9a0a5ce1ae68a69
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      X-Compute-Request-Id:
+      - req-4d4877dc-927b-4d81-bdbc-bda325121cf2
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '15'
+      X-Openstack-Request-Id:
+      - req-4d4877dc-927b-4d81-bdbc-bda325121cf2
+      Date:
+      - Mon, 19 Sep 2016 07:18:07 GMT
+    body:
+      encoding: UTF-8
+      string: '{"volumes": []}'
+    http_version: 
+  recorded_at: Mon, 19 Sep 2016 07:18:07 GMT
+- request:
+    method: get
+    uri: http://185.43.218.210:8776/v2/06a9a90c60074cdeae5f7fdd0048d9ac/volumes/detail?all_tenants=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog-core/1.36.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token:
+      - b7beaf7e9b7d43c8a9a0a5ce1ae68a69
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      X-Compute-Request-Id:
+      - req-8ce722e8-d061-49bd-84af-3e9d9b9432c0
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '15'
+      X-Openstack-Request-Id:
+      - req-8ce722e8-d061-49bd-84af-3e9d9b9432c0
+      Date:
+      - Mon, 19 Sep 2016 07:18:07 GMT
+    body:
+      encoding: UTF-8
+      string: '{"volumes": []}'
+    http_version: 
+  recorded_at: Mon, 19 Sep 2016 07:18:07 GMT
+- request:
+    method: get
+    uri: http://185.43.218.210:8776/v2/06a9a90c60074cdeae5f7fdd0048d9ac/volumes/detail?all_tenants=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog-core/1.36.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token:
+      - b7beaf7e9b7d43c8a9a0a5ce1ae68a69
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      X-Compute-Request-Id:
+      - req-bd927c3b-13c7-4112-b9e5-fe1fbdb49f7c
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '15'
+      X-Openstack-Request-Id:
+      - req-bd927c3b-13c7-4112-b9e5-fe1fbdb49f7c
+      Date:
+      - Mon, 19 Sep 2016 07:18:07 GMT
+    body:
+      encoding: UTF-8
+      string: '{"volumes": []}'
+    http_version: 
+  recorded_at: Mon, 19 Sep 2016 07:18:07 GMT
+- request:
+    method: get
+    uri: http://185.43.218.210:9696/
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog-core/1.36.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token:
+      - b7beaf7e9b7d43c8a9a0a5ce1ae68a69
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '122'
+      Date:
+      - Mon, 19 Sep 2016 07:18:07 GMT
+    body:
+      encoding: UTF-8
+      string: '{"versions": [{"status": "CURRENT", "id": "v2.0", "links": [{"href":
+        "http://185.43.218.210:9696/v2.0", "rel": "self"}]}]}'
+    http_version: 
+  recorded_at: Mon, 19 Sep 2016 07:18:07 GMT
+- request:
+    method: get
+    uri: http://185.43.218.210:9696/v2.0/floatingips
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog-core/1.36.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token:
+      - b7beaf7e9b7d43c8a9a0a5ce1ae68a69
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '1132'
+      X-Openstack-Request-Id:
+      - req-6550ed9a-2397-4c63-8cff-738b15cff50d
+      Date:
+      - Mon, 19 Sep 2016 07:18:07 GMT
+    body:
+      encoding: UTF-8
+      string: '{"floatingips": [{"floating_network_id": "6c26271f-cb22-4f0a-9274-8a7c29263ab2",
+        "router_id": null, "fixed_ip_address": null, "floating_ip_address": "172.24.4.216",
+        "tenant_id": "0604abc562db4a3a8d4518025fca5822", "status": "DOWN", "port_id":
+        null, "id": "06ff91df-3c1c-46ae-b52a-f40d900b270c"}, {"floating_network_id":
+        "6c26271f-cb22-4f0a-9274-8a7c29263ab2", "router_id": null, "fixed_ip_address":
+        null, "floating_ip_address": "172.24.4.217", "tenant_id": "0604abc562db4a3a8d4518025fca5822",
+        "status": "DOWN", "port_id": null, "id": "64dfb938-f3e6-4714-9a4c-8667c2de3e35"},
+        {"floating_network_id": "6c26271f-cb22-4f0a-9274-8a7c29263ab2", "router_id":
+        null, "fixed_ip_address": null, "floating_ip_address": "172.24.4.213", "tenant_id":
+        "06a9a90c60074cdeae5f7fdd0048d9ac", "status": "DOWN", "port_id": null, "id":
+        "726b0342-89a9-41c6-a979-5005d00ce1b4"}, {"floating_network_id": "6c26271f-cb22-4f0a-9274-8a7c29263ab2",
+        "router_id": null, "fixed_ip_address": null, "floating_ip_address": "172.24.4.66",
+        "tenant_id": "612bfb90f93c4b6e9ba515d51bb16022", "status": "DOWN", "port_id":
+        null, "id": "8136a145-17cc-4197-91d9-e81898f7bfe3"}]}'
+    http_version: 
+  recorded_at: Mon, 19 Sep 2016 07:18:07 GMT
+- request:
+    method: get
+    uri: http://185.43.218.210:9696/
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog-core/1.36.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token:
+      - b7beaf7e9b7d43c8a9a0a5ce1ae68a69
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '122'
+      Date:
+      - Mon, 19 Sep 2016 07:18:07 GMT
+    body:
+      encoding: UTF-8
+      string: '{"versions": [{"status": "CURRENT", "id": "v2.0", "links": [{"href":
+        "http://185.43.218.210:9696/v2.0", "rel": "self"}]}]}'
+    http_version: 
+  recorded_at: Mon, 19 Sep 2016 07:18:07 GMT
+- request:
+    method: get
+    uri: http://185.43.218.210:9696/v2.0/floatingips
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog-core/1.36.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token:
+      - b7beaf7e9b7d43c8a9a0a5ce1ae68a69
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '1132'
+      X-Openstack-Request-Id:
+      - req-97fb35f4-2a94-48b4-8dce-34f02872d59b
+      Date:
+      - Mon, 19 Sep 2016 07:18:07 GMT
+    body:
+      encoding: UTF-8
+      string: '{"floatingips": [{"floating_network_id": "6c26271f-cb22-4f0a-9274-8a7c29263ab2",
+        "router_id": null, "fixed_ip_address": null, "floating_ip_address": "172.24.4.216",
+        "tenant_id": "0604abc562db4a3a8d4518025fca5822", "status": "DOWN", "port_id":
+        null, "id": "06ff91df-3c1c-46ae-b52a-f40d900b270c"}, {"floating_network_id":
+        "6c26271f-cb22-4f0a-9274-8a7c29263ab2", "router_id": null, "fixed_ip_address":
+        null, "floating_ip_address": "172.24.4.217", "tenant_id": "0604abc562db4a3a8d4518025fca5822",
+        "status": "DOWN", "port_id": null, "id": "64dfb938-f3e6-4714-9a4c-8667c2de3e35"},
+        {"floating_network_id": "6c26271f-cb22-4f0a-9274-8a7c29263ab2", "router_id":
+        null, "fixed_ip_address": null, "floating_ip_address": "172.24.4.213", "tenant_id":
+        "06a9a90c60074cdeae5f7fdd0048d9ac", "status": "DOWN", "port_id": null, "id":
+        "726b0342-89a9-41c6-a979-5005d00ce1b4"}, {"floating_network_id": "6c26271f-cb22-4f0a-9274-8a7c29263ab2",
+        "router_id": null, "fixed_ip_address": null, "floating_ip_address": "172.24.4.66",
+        "tenant_id": "612bfb90f93c4b6e9ba515d51bb16022", "status": "DOWN", "port_id":
+        null, "id": "8136a145-17cc-4197-91d9-e81898f7bfe3"}]}'
+    http_version: 
+  recorded_at: Mon, 19 Sep 2016 07:18:07 GMT
+recorded_with: VCR 2.9.3

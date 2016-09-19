@@ -27,7 +27,9 @@ class Support::OrganizationsControllerTest < ActionController::TestCase
   end
 
   test "user can edit their own org" do
-    get :index
+    VCR.use_cassette('organization_with_graph_data') do
+      get :index
+    end
     assert assigns(:organization)
     assert_template "support/organizations/organization"
     patch :update, {format: 'js', id: @organization.id, organization: {name: 'foo'}}
