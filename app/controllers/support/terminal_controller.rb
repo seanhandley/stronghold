@@ -1,7 +1,6 @@
 class Support::TerminalController < SupportBaseController
 
   before_action -> { authorize! :read, :cloud }
-  before_action -> { slow_404 unless current_user.can_use_terminal? }
 
   def current_section
     'terminal'
@@ -49,9 +48,5 @@ class Support::TerminalController < SupportBaseController
       tenant_name: run_command_params[:project],
       user: current_user
     }
-  end
-
-  def user_can_use_terminal?
-    current_user.staff? || [49, 733].include?(current_user.organization_id)
   end
 end
