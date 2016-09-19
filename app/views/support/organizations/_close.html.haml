@@ -1,4 +1,4 @@
-- if current_organization.self_service? || true
+- if current_organization.self_service?
   .modal.fade#closeAccount{'tabindex' => "-1", 'role' => "dialog", 'aria-labelledby' => "closeAccount", 'aria-hidden' => "true", 'data-backdrop' => 'static'}
     .modal-dialog
       = form_tag close_account_path do

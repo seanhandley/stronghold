@@ -43,7 +43,7 @@
       .form-group
         %label Country
         = f.country_select :billing_country, {selected: @organization.billing_country || 'GB'}, {class: "form-control"}
-      - if current_organization.self_service? && !current_user.staff? && current_organization.known_to_payment_gateway? && !current_organization.frozen? || true
+      - if current_organization.self_service? && !current_user.staff? && current_organization.known_to_payment_gateway? && !current_organization.frozen?
         .form-group
           .pull-right
             = link_to 'Remove Organization', '', 'data-toggle' => "modal", 'data-target' => "#closeAccount"
