@@ -7,12 +7,9 @@
             &times;
           %h4.modal-title
             Finalize Invoice
-          %p Please enter the invoice number from Salesforce and make corrections
+          %p Please make corrections and confirm. If the customer is in Stripe they will be automatically billed.
         .modal-body
           = javascript_error_messages_for(f.object)
-          .form-group
-            %label Salesforce Invoice Number
-            = f.text_field :salesforce_invoice_id, :class => 'form-control', placeholder: 'i.e. SIN001234'
           .form-group
             %label Grand Total (Includes Tax And Discounts)
             = f.number_field :grand_total, :class => 'form-control', min: 0, step: 0.01

@@ -1,0 +1,138 @@
+salesforce_products:
+  instances:
+    "Instances (tiny) - (Hours)":
+      salesforce_id: "01tb0000002ha3bAAA"
+      openstack_flavor: "1"
+    "Instances (small) - (Hours)":
+      salesforce_id: "01tb0000002ha3lAAA"
+      openstack_flavor: "2"
+    "Instances (medium) - (Hours)":
+      salesforce_id: "01tb0000002ha3vAAA"
+      openstack_flavor: "3"
+    "Instances (large) - (Hours)":
+      salesforce_id: "01tb0000002hyiiAAA"
+      openstack_flavor: "4"
+    "Instances (xlarge) - (Hours)":
+      salesforce_id: "01tb0000002hyiJAAQ"
+      openstack_flavor: "5" 
+    "Instances (1x0) - (Hours)":
+      salesforce_id: "01tb0000002ha3bAAA"
+      openstack_flavor: "78d43ae0-7c98-48d2-9adc-90e8f8f6fe99"
+    "Instances (1x1) - (Hours)":
+      salesforce_id: "01tb0000002ha3gAAA"
+      openstack_flavor: "f0577618-9125-4948-b450-474e225bbc4c"
+    "Instances (1x1.20) - (Hours)":
+      salesforce_id: "01tb0000004BlV3AAK"
+      openstack_flavor: "8e6069a3-d8c6-4741-8e0d-6373b2ca38cc"
+    "Instances (1x1.80) - (Hours)":
+      salesforce_id: "01tb0000004BlVDAA0"
+      openstack_flavor: "718f2a6d-52c5-4f23-a774-49df51c6eedc"
+    "Instances (1x2) - (Hours)":
+      salesforce_id: "01tb0000002ha3lAAA"
+      openstack_flavor: "b671216b-1c68-4765-b752-0e8e6b6d015f"
+    "Instances (1x2.20) - (Hours)":
+      salesforce_id: "01tb0000004BlVIAA0"
+      openstack_flavor: "05a9e6d1-d29f-4e98-9eab-51c9a6beed44"
+    "Instances (1x2.80) - (Hours)":
+      salesforce_id: "01tb0000004BlVNAA0"
+      openstack_flavor: "b122c607-2b5b-43fd-8879-cf6cb742e102"
+    "Instances (2x2) - (Hours)":
+      salesforce_id: "01tb0000002ha3qAAA"
+      openstack_flavor: "bf6dbcab-f0a5-49d7-b427-0ee09cc5f583"
+    "Instances (2x2.40) - (Hours)":
+      salesforce_id: "01tb0000004BlVXAA0"
+      openstack_flavor: "c4b193d2-f331-4250-9b15-bbfde97c462a"
+    "Instances (2x4) - (Hours)":
+      salesforce_id: "01tb0000002ha3vAAA"
+      openstack_flavor: "8f4b7ae1-b8c2-431f-bb0c-362a5ece0381"
+    "Instances (2x4.40) - (Hours)":
+      salesforce_id: "01tb0000004BlVhAAK"
+      openstack_flavor: "196235bc-7ca5-4085-ac81-7e0242bda3f9"
+    "Instances (2x8) - (Hours)":
+      salesforce_id: "01tb0000002hyidAAA"
+      openstack_flavor: "dcd2be06-0940-4410-9d1f-cbdc22a847e7"
+    "Instances (2x8.40) - (Hours)":
+      salesforce_id: "01tb0000004BlVwAAK"
+      openstack_flavor: "d87de0ca-9c0e-4759-a704-8621883c3415"
+    "Instances (4x8) - (Hours)":
+      salesforce_id: "01tb0000002hyiiAAA"
+      openstack_flavor: "9cf6e43b-e191-47ca-8665-f8592e2d6227"
+    "Instances (4x16) - (Hours)":
+      salesforce_id: "01tb0000003QcnyAAC"
+      openstack_flavor: "5e68b95a-61fe-464f-913d-df044c7e433d"
+    "Instances (8x16) - (Hours)":
+      salesforce_id: "01tb0000002hyiJAAQ"
+      openstack_flavor: "af2a80fe-ccad-43df-8cae-6418da948467"
+    "Instances (8x32) - (Hours)":
+      salesforce_id: "01tb0000003QYoWAAW"
+      openstack_flavor: "b8e8ab6a-5480-478c-b1de-b09050683d7d"
+    "Instances (16x32) - (Hours)":
+      salesforce_id: "01tb0000004BlW1AAK"
+      openstack_flavor: "c871d2fc-c6df-41ab-8a89-6ddc5d8137d0"
+  windows_instances:
+    "Windows Instances (1x0) - (Hours)":
+      salesforce_id: "01tb0000005z0UhAAI"
+      openstack_flavor: "78d43ae0-7c98-48d2-9adc-90e8f8f6fe99"
+    "Windows Instances (1x1) - (Hours)":
+      salesforce_id: "01tb0000005z0UmAAI"
+      openstack_flavor: "f0577618-9125-4948-b450-474e225bbc4c"
+    "Windows Instances (1x1.20) - (Hours)":
+      salesforce_id: "01tb0000005z0WOAAY"
+      openstack_flavor: "8e6069a3-d8c6-4741-8e0d-6373b2ca38cc"
+    "Windows Instances (1x1.80) - (Hours)":
+      salesforce_id: "01tb0000005z0WTAAY"
+      openstack_flavor: "718f2a6d-52c5-4f23-a774-49df51c6eedc"
+    "Windows Instances (1x2) - (Hours)":
+      salesforce_id: "01tb0000005z0UrAAI"
+      openstack_flavor: "b671216b-1c68-4765-b752-0e8e6b6d015f"
+    "Windows Instances (1x2.20) - (Hours)":
+      salesforce_id: "01tb0000005z0WYAAY"
+      openstack_flavor: "05a9e6d1-d29f-4e98-9eab-51c9a6beed44"
+    "Windows Instances (1x2.80) - (Hours)":
+      salesforce_id: "01tb0000005z0WdAAI"
+      openstack_flavor: "b122c607-2b5b-43fd-8879-cf6cb742e102"
+    "Windows Instances (2x2) - (Hours)":
+      salesforce_id: "01tb0000005z0UwAAI"
+      openstack_flavor: "bf6dbcab-f0a5-49d7-b427-0ee09cc5f583"
+    "Windows Instances (2x2.40) - (Hours)":
+      salesforce_id: "01tb0000005z0WiAAI"
+      openstack_flavor: "c4b193d2-f331-4250-9b15-bbfde97c462a"
+    "Windows Instances (2x4) - (Hours)":
+      salesforce_id: "01tb0000003zYvWAAU"
+      openstack_flavor: "8f4b7ae1-b8c2-431f-bb0c-362a5ece0381"
+    "Windows Instances (2x4.40) - (Hours)":
+      salesforce_id: "01tb0000005z0WnAAI"
+      openstack_flavor: "196235bc-7ca5-4085-ac81-7e0242bda3f9"
+    "Windows Instances (2x8) - (Hours)":
+      salesforce_id: "01tb0000005z0V1AAI"
+      openstack_flavor: "dcd2be06-0940-4410-9d1f-cbdc22a847e7"
+    "Windows Instances (2x8.40) - (Hours)":
+      salesforce_id: "01tb0000005z0WsAAI"
+      openstack_flavor: "d87de0ca-9c0e-4759-a704-8621883c3415"
+    "Windows Instances (4x8) - (Hours)":
+      salesforce_id: "01tb0000005z0V6AAI"
+      openstack_flavor: "9cf6e43b-e191-47ca-8665-f8592e2d6227"
+    "Windows Instances (4x16) - (Hours)":
+      salesforce_id: "01tb0000005z0VBAAY"
+      openstack_flavor: "5e68b95a-61fe-464f-913d-df044c7e433d"
+    "Windows Instances (8x16) - (Hours)":
+      salesforce_id: "01tb0000005z0VGAAY"
+      openstack_flavor: "af2a80fe-ccad-43df-8cae-6418da948467"
+    "Windows Instances (8x32) - (Hours)":
+      salesforce_id: "01tb0000005z0VLAAY"
+      openstack_flavor: "b8e8ab6a-5480-478c-b1de-b09050683d7d"
+    "Windows Instances (16x32) - (Hours)":
+      salesforce_id: "01tb0000005z0VQAAY"
+      openstack_flavor: "c871d2fc-c6df-41ab-8a89-6ddc5d8137d0"
+  block_storage:
+    salesforce_id: "01tb00000006lGMAAY"
+  ssd_block_storage:
+    salesforce_id: "01tb000000567ufAAA"
+  object_storage:
+    salesforce_id: "01tb0000002hbU2AAI"
+  ip_addresses:
+    salesforce_id: "01tb0000003zDwcAAE"
+  vpn_connection:
+    salesforce_id: "01tb0000005p10lAAA"
+  load_balancer:
+    salesforce_id: "01tb0000005p10qAAA"

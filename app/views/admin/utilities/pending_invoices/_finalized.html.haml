@@ -23,7 +23,7 @@
             %td= invoice.organization ? invoice.organization.reporting_code : 'NA'
             %td= invoice.organization ? invoice.organization.name : 'NA'
             %td== #{Date::MONTHNAMES[invoice.month]} #{invoice.year}
-            %td= link_to invoice.salesforce_invoice_id, invoice.salesforce_invoice_link, target: '_blank'
+            %td= link_to invoice.salesforce_id, invoice.salesforce_invoice_link, target: '_blank'
             %td= link_to invoice.stripe_invoice_id, invoice.stripe_invoice_link, target: '_blank'
 - else
   .push

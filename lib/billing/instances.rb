@@ -19,13 +19,11 @@ module Billing
       else
         instances = Billing::Instance.where("(terminated_at is null or terminated_at >= ?) AND started_at < ?", from, to)
       end
+
       instances = instances.collect do |instance|
-        billable_seconds = instance.billable_seconds ? instance.billable_seconds : seconds(instance, from, to)
-        instance.update_attributes(billable_seconds: billable_seconds) if instance.terminated_at
-        billable_hours = (billable_seconds / Billing::SECONDS_TO_HOURS).ceil
         instance_flavor = instance.instance_flavor
-        cost = instance.cost ? instance.cost : cost(instance, from, to).nearest_penny
-        instance.update_attributes(cost: cost) if instance.terminated_at
+        cost = instance.cost(from, to).nearest_penny
+        # instance.update_column(:cost, cost) if instance.terminated_at
         {
           uuid: instance.instance_id,
           name: instance.name,
@@ -33,11 +31,11 @@ module Billing
           first_booted_at: instance.first_booted_at,
           latest_state: instance.latest_state(from,to),
           terminated_at: instance.terminated_at,
-          billable_hours: billable_hours,
-          resizes: instance.resizes(from, to),
+          billable_hours: instance.billable_hours(from, to),
+          total_hours: instance.billable_hours(from, to).values.sum,
+          history: instance.history(from, to),
           cost: cost,
           windows: Windows.billable?(instance),
-          arch: instance.arch,
           flavor: {
             flavor_id: instance_flavor.flavor_id,
             name: instance_flavor.name,
@@ -51,162 +49,7 @@ module Billing
           }
         }
       end
-      instances.select{|instance| instance[:billable_hours] > 0}
-    end
-
-    def self.cost(instance, from, to)
-      flavors = instance.fetch_states(from, to).collect(&:flavor_id)
-      if flavors.uniq.count > 1
-        return split_cost(instance, from, to).nearest_penny
-      else
-        billable_seconds = seconds(instance, from, to)
-        billable_hours   = (billable_seconds / Billing::SECONDS_TO_HOURS).ceil
-        base = (billable_hours * instance.rate.to_f)
-        if Windows.billable?(instance)
-          base += (billable_hours * Windows.rate_for(instance.flavor_id))
-        end
-        return base.nearest_penny
-      end
-    end
-
-    def self.split_cost(instance, from, to)
-      states = instance.fetch_states(from, to)
-      previous_state = instance.instance_states.where('recorded_at < ?', from).order('recorded_at DESC').limit(1).first
-      first_state = states.first
-      last_state = states.last
-      arch = instance.arch
-
-      if states.any?
-        if states.count > 1
-          start = 0
-
-          if previous_state
-            if billable?(previous_state.state)
-              start = (first_state.recorded_at - from)
-              start = start / Billing::SECONDS_TO_HOURS
-              base = start * previous_state.rate(arch)
-              if Windows.billable?(instance)
-                base += (start * Windows.rate_for(instance.flavor_id))
-              end
-              start = base
-            end
-          end
-
-          previous = states.first
-          middle = states.collect do |state|
-            difference = 0
-            if billable?(previous.state)
-              difference = state.recorded_at - previous.recorded_at
-            end
-            begin
-              difference = difference / Billing::SECONDS_TO_HOURS
-              base = difference * previous.rate(arch)
-              if Windows.billable?(instance)
-                base += (difference * Windows.rate_for(instance.flavor_id))
-              end
-              base
-            ensure
-              previous = state
-            end
-          end.sum
-
-          ending = 0
-
-          if(billable?(last_state.state))
-            ending = (to - last_state.recorded_at)
-            ending = ending / Billing::SECONDS_TO_HOURS
-            base = ending * last_state.rate(arch)
-            if Windows.billable?(instance)
-              base += (ending * Windows.rate_for(instance.flavor_id))
-            end
-            ending = base
-          end
-
-          return (start + middle + ending)
-        else
-          # Only one sample for this period
-          if billable?(first_state.state)
-            time = (to - first_state.recorded_at)
-            time = time / Billing::SECONDS_TO_HOURS
-            base = time * first_state.rate(arch)
-            if Windows.billable?(instance)
-              base += (time * Windows.rate_for(instance.flavor_id))
-            end
-            return base
-          else
-            return 0
-          end
-        end
-      else
-        if previous_state && billable?(previous_state.state)
-          time = (to - from)
-          time = time / Billing::SECONDS_TO_HOURS
-          base = time * previous_state.rate(arch)
-          if Windows.billable?(instance)
-            base += (time * Windows.rate_for(instance.flavor_id))
-          end
-          return base
-        else
-          return 0
-        end
-      end
-    end
-
-    def self.seconds(instance, from, to)
-      states = instance.fetch_states(from, to)
-      previous_state = instance.instance_states.where('recorded_at < ?', from).order('recorded_at DESC').limit(1).first
-      first_state = states.first
-      last_state = states.last
-
-      if states.any?
-        if states.count > 1
-          start = 0
-
-          if previous_state
-            if billable?(previous_state.state)
-              start = (first_state.recorded_at - from)
-            end
-          end
-
-          previous = first_state
-          middle = states.collect do |state|
-            difference = 0
-            if billable?(previous.state)
-              difference = state.recorded_at - previous.recorded_at
-            end
-            previous = state
-            difference
-          end.sum
-
-          ending = 0
-
-          if(billable?(last_state.state))
-            ending = (to - last_state.recorded_at)
-          end
-
-          return (start + middle + ending).round
-        else
-          time = 0
-          # Only one sample for this period
-          if billable?(first_state.state)
-            time += (to - first_state.recorded_at).round
-          end
-          if previous_state && billable?(previous_state.state)
-            time += (first_state.recorded_at - from).round
-          end
-          return time
-        end
-      else
-        if previous_state && billable?(previous_state.state)
-          return (to - from).round
-        else
-          return 0
-        end
-      end
-    end
-
-    def self.billable?(state)
-      !["error","building", "stopped", "suspended", "shutoff", "deleted", "resized"].include?(state.downcase)
+      instances.select{|instance| instance[:total_hours] != 0}
     end
 
     def self.cached_flavor_ids
@@ -232,7 +75,8 @@ module Billing
           if(os_instance = OpenStackConnection.compute.servers.get(instance_id))
             instance.instance_states.create recorded_at: Time.now, state: os_instance.state.downcase,
                                             event_name: 'ping', billing_sync: sync,
-                                            message_id: SecureRandom.uuid
+                                            message_id: SecureRandom.uuid,
+                                            flavor_id: os_instance.flavor['id']
           end
         end
       end
@@ -256,7 +100,7 @@ module Billing
 
       samples.collect do |sample|
         meta_data = sample['resource_metadata']
-        if meta_data['event_type']
+        if meta_data['event_type'] && meta_data['event_type'] != "compute.instance.exists"
           Billing::InstanceState.create instance_id: billing_instance.id, recorded_at: Time.zone.parse("#{sample['recorded_at']} UTC"),
                                         state: meta_data['state'] ? meta_data['state'].downcase : 'active',
                                         event_name: meta_data['event_type'], billing_sync: sync,

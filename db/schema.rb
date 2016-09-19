@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160708074158) do
+ActiveRecord::Schema.define(version: 20160908190547) do
 
   create_table "audits", force: :cascade do |t|
     t.string   "auditable_id",    limit: 255
@@ -104,15 +104,18 @@ ActiveRecord::Schema.define(version: 20160708074158) do
   add_index "billing_instances", ["terminated_at"], name: "index_billing_instances_on_terminated_at", using: :btree
 
   create_table "billing_invoices", force: :cascade do |t|
-    t.integer "organization_id",       limit: 4,                 null: false
-    t.integer "year",                  limit: 4,                 null: false
-    t.integer "month",                 limit: 4,                 null: false
-    t.float   "sub_total",             limit: 24,  default: 0.0, null: false
-    t.float   "grand_total",           limit: 24,  default: 0.0, null: false
-    t.integer "discount_percent",      limit: 4,   default: 0,   null: false
-    t.integer "tax_percent",           limit: 4,   default: 20,  null: false
-    t.string  "stripe_invoice_id",     limit: 255
-    t.string  "salesforce_invoice_id", limit: 255
+    t.integer  "organization_id",   limit: 4,                 null: false
+    t.integer  "year",              limit: 4,                 null: false
+    t.integer  "month",             limit: 4,                 null: false
+    t.float    "sub_total",         limit: 24,  default: 0.0, null: false
+    t.float    "grand_total",       limit: 24,  default: 0.0, null: false
+    t.integer  "discount_percent",  limit: 4,   default: 0,   null: false
+    t.integer  "tax_percent",       limit: 4,   default: 20,  null: false
+    t.string   "stripe_invoice_id", limit: 255
+    t.string   "salesforce_id",     limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "finalized",                     default: false, null: false
   end
 
   create_table "billing_ip_quotas", force: :cascade do |t|
@@ -150,11 +153,14 @@ ActiveRecord::Schema.define(version: 20160708074158) do
     t.datetime "updated_at"
   end
 
-  create_table "billing_rates", force: :cascade do |t|
-    t.integer "flavor_id", limit: 4
-    t.string  "arch",      limit: 255
-    t.float   "rate",      limit: 24
-    t.boolean "show",                  default: true, null: false
+  create_table "billing_line_items", force: :cascade do |t|
+    t.string   "product_id",    limit: 255
+    t.integer  "invoice_id",    limit: 4
+    t.float    "quantity",      limit: 24
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "salesforce_id", limit: 255
+    t.string   "description",   limit: 255
   end
 
   create_table "billing_storage_objects", force: :cascade do |t|

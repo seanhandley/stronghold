@@ -90,6 +90,15 @@ Billing::InstanceFlavor.blueprint do
   rate      { 1.0         }
 end
 
+Billing::InstanceFlavor.blueprint(:large) do
+  flavor_id { 'large_flavor_id' }
+  name      { 'large'           }
+  ram       { 8192              }
+  disk      { 16                }
+  vcpus     { 4                 }
+  rate      { 4.0               }
+end
+
 Billing::Instance.blueprint do
   name        { 'test' }
   instance_id { SecureRandom.hex }

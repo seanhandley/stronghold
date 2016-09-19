@@ -87,6 +87,7 @@ class OrganizationStateMachine
         project.destroy rescue project.delete
       end
       organization.update_column(:disabled, true)
+      BillingRunOrgJob.perform_later(organization, Date.today.year, Date.today.month)
     end
   end
 

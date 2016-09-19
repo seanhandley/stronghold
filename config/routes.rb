@@ -73,7 +73,6 @@ Rails.application.routes.draw do
         resources :resellers, only: [:index]
         resources :announcements, only: [:index, :create, :destroy]
         resources :vouchers, except: [:new, :edit, :show]
-        resources :billing_rates, only: [:index, :update]
         resources :sanity, only: [:index]
         resources :online_users, only: [:index]
         resources :stuck_ips, only: [:index, :destroy]

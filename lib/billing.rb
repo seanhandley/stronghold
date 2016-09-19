@@ -130,15 +130,8 @@ module Billing
       raise ArgumentError, "Please supply a valid year and month"
     end
 
-    Organization.self_service.active.each do |organization|
-      # Skip if there's already an invoice for this year/month/org
-      next if Billing::Invoice.where(organization: organization, year: year, month: month).any?
-      
-      invoice = Billing::Invoice.new(organization: organization, year: year, month: month)
-      ud = UsageDecorator.new(organization)
-      ud.usage_data(from_date: invoice.period_start, to_date: invoice.period_end)
-      invoice.update_attributes(sub_total: ud.sub_total, grand_total: ud.grand_total_plus_tax,
-                                discount_percent:  ud.discount_percent, tax_percent: ud.tax_percent)
+    Organization.active.each do |organization|
+      BillingRunOrgJob.perform_later(organization, year, month)
     end
   end
 end
