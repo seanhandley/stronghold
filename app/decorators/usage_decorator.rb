@@ -139,7 +139,7 @@ class UsageDecorator < ApplicationDecorator
   end
 
   def sub_total
-    model.projects.collect{|t| total(t.id)}.sum
+    model.projects.with_deleted.collect{|t| total(t.id)}.sum
   end
 
   def discounts?
