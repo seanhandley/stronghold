@@ -19,7 +19,7 @@ class UsageDecorator < ApplicationDecorator
     end
     raise(ArgumentError, 'Please supply :from_date and :to_date') unless from_date && to_date
     @usage_data ||= Rails.cache.fetch("org#{model.id}_#{from_date.strftime(timestamp_format)}_#{to_date.strftime(timestamp_format)}", expires_in: 30.days) do
-      model.projects.where("created_at < ?", to_date).select{|t| t.deleted_at.nil? || t.deleted_at > from_date}.inject({}) do |acc, project|
+      model.projects.with_deleted.where("created_at < ?", to_date).select{|t| t.deleted_at.nil? || t.deleted_at > from_date}.inject({}) do |acc, project|
         ip_quota_usage = Billing::IpQuotas.usage(project.uuid, from_date, to_date)
         acc[project] = {
           instance_usage: Billing::Instances.usage(project.uuid, from_date, to_date),
