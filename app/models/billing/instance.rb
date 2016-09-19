@@ -9,6 +9,8 @@ module Billing
                :primary_key => 'image_id', :foreign_key => 'image_id'
     belongs_to :project
 
+    serialize :cached_history
+
     scope :active, -> { where(terminated_at: nil) }
 
     def metadata
@@ -71,7 +73,26 @@ module Billing
       states
     end
 
-    def history(from, to)
+    def cached_history
+      read_attribute(:cached_history) || {}
+    end
+
+    def history(from, to, flush=false)
+      update_column(:cached_history, {}) if flush
+      key = history_key(from, to)
+      ch = cached_history.dup
+      unless ch[key]
+        ch[key] = fetch_history(from, to)
+        update_column(:cached_history, ch)
+      end
+      ch[key]
+    end
+
+    def history_key(from, to)
+      "#{from.to_s}_#{to.to_s}"
+    end
+
+    def fetch_history(from, to)
       history = fetch_states(from, to).to_a
       history.unshift(history.first.previous_state) if history&.first&.previous_state
       history = history.map do |state|
