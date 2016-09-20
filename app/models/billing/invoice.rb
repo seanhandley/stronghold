@@ -152,7 +152,7 @@ module Billing
 
     def grand_total
       gt = read_attribute :grand_total
-      if gt.nil?
+      if gt.nil? || gt == 0
         gt = net_total
         update_column(:grand_total, net_total)
       end
