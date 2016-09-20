@@ -130,7 +130,7 @@ module Billing
       raise ArgumentError, "Please supply a valid year and month"
     end
 
-    Organization.active.each do |organization|
+    Organization.active.cloud.each do |organization|
       BillingRunOrgJob.perform_later(organization, year, month)
     end
   end
