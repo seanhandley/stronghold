@@ -1,7 +1,7 @@
 - title "Cloud Projects"
 
 .pull-right
-  = link_to 'New Project', '', class: 'btn btn-success', 'data-toggle' => "modal", 'data-target' => "#addNewProject"
+  = link_to 'New Project', '', class: 'btn btn-success', 'data-toggle' => "modal", 'data-target' => "#addNewProject", id: "new-project-button"
 
 %h2
   %i.fa.fa-folder-o
@@ -22,10 +22,10 @@
           %td= project.users.uniq.count
           %td
             .pull-right
-              = link_to 'Edit', '', class: 'btn btn-default', 'data-toggle' => "modal", 'data-target' => "#editProject#{project.id}", 'remote' => true, 'data' => { 'method' => :put }
+              = link_to 'Edit', support_projects_path, class: 'btn btn-default', 'data-toggle' => "modal", 'data-target' => "#editProject#{project.id}", 'remote' => true, 'data' => { 'method' => :get }, id: "editProjectBtn#{project.id}"
 
               - unless project.staff_project? || project.primary_project?
-                = link_to 'Remove', support_project_path(project.id), class: 'btn btn-danger', :data => {:confirm => 'Are you sure? This action cannot be undone.', :method => :delete}
+                = link_to 'Remove', support_project_path(project.id), class: 'btn btn-danger', :data => {:confirm => 'Are you sure? This action cannot be undone.', :method => :delete}, id: "removeProjectBtn#{project.id}"
         = render partial: 'edit', locals: {project: project}
 
 = render partial: 'new'

@@ -58,4 +58,6 @@ $(document).ready(function() {
       window.location.reload();
     }
   });
+
+  $('#tickets-projects-audits-users-tabs a:first').tab('show');
 });

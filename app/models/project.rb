@@ -104,7 +104,7 @@ class Project < ActiveRecord::Base
   private
 
   def check_projects_limit
-    errors.add(:base, "Your account limits only permit #{pluralize organization.projects_limit, 'project'}. #{link_to 'Raise a ticket to request more?', Rails.application.routes.url_helpers.support_tickets_path}".html_safe) unless organization.new_projects_remaining > 0
+    errors.add(:base, "This account's limits only permit #{pluralize organization.projects_limit, 'project'}. #{link_to 'Raise a ticket to request more?', Rails.application.routes.url_helpers.support_tickets_path}".html_safe) unless organization.new_projects_remaining > 0
   end
 
   def check_quota_set

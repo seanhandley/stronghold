@@ -40,40 +40,6 @@
 %h3
   = t(:users)
   = "(#{@users.count})"
-.table-responsive
-  %table.table
-    %thead
-      %th
-        %i.fa.fa-user
-      %th
-        = t(:name)
-      %th
-        = t(:email)
-      %th
-        = t(:roles)
-      - if current_organization.cloud?
-        %th Cloud Projects
-      %th
-    %tbody
-      - users.each do |user|
-        %tr
-          %td= image_tag asset_path("assets/default_user.png"), "class" => "gravatar img-circle", "alt" => "Gravatar", "data-gravatar_hash" => user.gravatar_hash
-          %td= link_to user.name, "#user_#{user.id}", 'data-toggle' => 'collapse', 'data-parent' => '#accordionUsers'
-          %td= link_to user.email, "mailto:#{user.email}"
-          %td
-            %i.fa.fa-key
-            = list_of_roles(user)
-          - if current_organization.cloud?
-            %td
-              %i.fa.fa-folder-o
-              - if list_of_projects(user).present?
-                = list_of_projects(user)
-              - else
-                %em None
-          %td
-            - if can?(:modify, User) && user.id != current_user.id
-              %a{href: support_user_path(user), data: { remote: true, method: :delete, confirm: "Are you sure?"}}
-                %i.fa.fa-trash-o
-
-
+  
+= render partial: 'support/users/user_info', locals: {users: @users}
 = render partial: 'support/users/invite_user'
