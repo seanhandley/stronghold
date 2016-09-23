@@ -1,5 +1,13 @@
 @import "settings";
 
+$main-color: #213550;
+$primary-blue: #415F77;
+$bright-blue: rgb(101,157,229);
+$light-gray: #eeeeee;
+$very-light-gray: rgb(249,249,249);
+$medium-gray: #ccc;
+$dark-gray: #585858;
+
 i.dashboard-icon {
   font-size: 6em;
 }
@@ -13,6 +21,27 @@ button#user-menu {
 
 button#user-menu:active, button#user-menu:hover,
   button#user-menu#focus {
+  webkit-box-shadow: none;
+  box-shadow: none;
+  opacity: 1.0;
+}
+
+button#support-menu {
+  background-color: $brand-primary;
+  border: none;
+  color: #fff;
+  font-size: 22px;
+  font-weight: 400;
+  webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+button#support-menu:hover {
+  color: $bright-blue;
+}
+
+button#support-menu:active, button#support-menu:hover,
+  button#support-menu#focus {
   webkit-box-shadow: none;
   box-shadow: none;
   opacity: 1.0;
@@ -84,13 +113,155 @@ div.dashboard-element {
   margin-right: auto;
   border-radius: 10px;
   margin-bottom: 20px;
-  -webkit-transition: all 1000ms cubic-bezier(0.600, 0.040, 0.980, 0.335); 
-     -moz-transition: all 1000ms cubic-bezier(0.600, 0.040, 0.980, 0.335); 
-       -o-transition: all 1000ms cubic-bezier(0.600, 0.040, 0.980, 0.335); 
+  -webkit-transition: all 1000ms cubic-bezier(0.600, 0.040, 0.980, 0.335);
+     -moz-transition: all 1000ms cubic-bezier(0.600, 0.040, 0.980, 0.335);
+       -o-transition: all 1000ms cubic-bezier(0.600, 0.040, 0.980, 0.335);
           transition: all 1000ms cubic-bezier(0.600, 0.040, 0.980, 0.335); /* easeInCirc */
 
-  -webkit-transition-timing-function: cubic-bezier(0.600, 0.040, 0.980, 0.335); 
-     -moz-transition-timing-function: cubic-bezier(0.600, 0.040, 0.980, 0.335); 
-       -o-transition-timing-function: cubic-bezier(0.600, 0.040, 0.980, 0.335); 
+  -webkit-transition-timing-function: cubic-bezier(0.600, 0.040, 0.980, 0.335);
+     -moz-transition-timing-function: cubic-bezier(0.600, 0.040, 0.980, 0.335);
+       -o-transition-timing-function: cubic-bezier(0.600, 0.040, 0.980, 0.335);
           transition-timing-function: cubic-bezier(0.600, 0.040, 0.980, 0.335); /* easeInCirc */
+}
+//////////////////////////////////////////////////
+
+div.full-page {
+  padding-left: 30px;
+  padding-right: 30px;
+  width: 100%;
+}
+
+.container-dashboard {
+  display: inline-flex;
+  justify-content: center;
+  width: 100%;
+}
+
+row.dashboard-main-content {
+  width: 90%;
+}
+//
+
+// Header
+div#usage-capacity-summary {
+  border-radius: 3px;
+  border: 1px solid $medium-gray;
+  background-color: $very-light-gray;
+  width: 100%;
+}
+
+div#usage-capacity-summary h4.header-title {
+  text-align: right;
+  font-size: 16px;
+  color: $primary-blue;
+}
+
+div#usage-capacity-summary h3.organization-name {
+  margin: 0px;
+  vertical-align: middle;
+  padding: 5px;
+  font-size: 1.4em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 100%;
+  max-width: 100%;
+}
+
+div#usage-capacity-summary div.header-column {
+  padding: 10px 10px 20px 20px;
+}
+
+div#usage-capacity-summary div.progress-caption {
+  text-align: center;
+  font-size: 12px;
+}
+
+div#usage-capacity-summary div.progress#capacity-used {
+  height: 10px;
+}
+
+div#usage-capacity-summary div.progress {
+  margin-bottom: 8px;
+}
+div#usage-capacity-summary span.progress-bar-text {
+  float: right;
+  color: #AAAAAA;
+}
+
+// Tabs
+
+div.dashboard-content {
+  padding-top: 50px;
+}
+
+ul#overview-projects-tabs li {
+  width: 20%;
+  float: none;
+  display: inline-block;
+}
+
+ul#overview-projects-tabs li a {
+  border: none;
+  padding-bottom: 20px;
+  font-size: 1em;
+  font-weight: 400;
+  color: #888;
+  text-align: center;
+}
+
+ul#overview-projects-tabs li a:hover {
+  color: #888;
+  cursor: pointer;
+  border-bottom: 1px solid #888;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+}
+
+ul#overview-projects-tabs li.active a {
+  border: none;
+  border-bottom: 2px solid $primary-blue;
+  color: $primary-blue;
+  font-size: 1em;
+  font-weight: 500;
+  -webkit-transition: all 0.1s ease-in-out;
+  -moz-transition: all 0.1s ease-in-out;
+  -o-transition: all 0.1s ease-in-out;
+  transition: all 0.1s ease-in-out;
+}
+
+div.tab-content#graphs-projects {
+  margin-top: 30px;
+}
+
+@media screen and (max-width: 767px) {
+  div.dashboard_buttons {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+  }
+
+  #sidebar-toggle {
+    display: none;
+  }
+}
+
+// Projects //
+
+div.container-projects {
+  padding-top: 50px;
+}
+
+div#projects-count {
+  text-align: right;
+  padding-right: 20px;
+  font-weight: 500;
+  font-size: 16px;
+}
+.project-list {
+  margin-top: 50px;
+}
+.project-list a {
+  text-decoration: none;
 }

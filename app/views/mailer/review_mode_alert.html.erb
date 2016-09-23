@@ -3,21 +3,21 @@
 <div class="container" id="email">
   <%= render partial: 'header' %>
 
-  <h1>Account Review</h1>
+  <h1>Don't panic! We're reviewing your account...</h1>
 
-  <p>There are some issues with the details on your account. While your account's under review, all access to cloud and storage facilities are temporarily suspended.</p>
-  <p>Please contact us to discuss this further.</p>
-  
-  <div style: "padding: 30px">
-    <a class="confirm" target='_blank' href="<%= support_tickets_url %>">Contact via Helpdesk</a>
-  </div>
-
-  <h2>Can we discuss this over the phone?</h2>
-  <p>If you'd prefer to speak on the phone, please call <%= tel_to '+44 161 870 3981' %> between 9am and 5pm GMT.</p>
+  <p>Our automatic fraud prevention software has flagged up some of your details for further inspection.</p>
+  <p>To keep everything safe while we look into this we've temporarily locked down your account.</p>
 
   <h2>What happens next?</h2>
 
-  <p>Please contact us at your earliest convenience to discuss the issues with your details. Be advised that if we do not hear from you within 14 days, we reserve the right to terminate your account.</p>
+  <p>So we can get everything back up and running smoothly please get in touch with us as soon as you can.</p>
+
+  <div style: "padding: 30px">
+    <a class="confirm" target='_blank' href="<%= support_tickets_url %>">Talk to us online</a>
+  </div>
+
+  <h2>Can we discuss this over the phone?</h2>
+  <p>Sure thing. If you'd prefer to speak on the phone, please call <%= tel_to '+44 161 870 3981' %> between 9am and 5pm GMT.</p>
 
   <p>Kind regards,<br/>
   The DataCentred Team</p>

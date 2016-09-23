@@ -1,0 +1,15 @@
+%div.btn-group.pull-right
+  %button.btn.btn-default.dropdown-toggle#user-menu{:type => "button", :'data-toggle' => "dropdown", :'dropdown-toggle' => "", class: ['admin', 'utilities'].include?(current_section) ? 'admin-menu' : ''}
+    %span
+      = gravatar_image_tag(current_user.email, :class => 'img-circle nav-profile')
+    %span.caret
+  %ul.dropdown-menu{:role => "menu"}
+    %li
+      %a{:href => support_profile_path}
+        %i.fa.fa-user
+        My Profile
+    %li.divider
+    %li
+      %a{:href => signout_path, data: { confirm: "#{t(:sign_out)}?", :method => :post }}
+        %i.fa.fa-sign-out
+        = t(:sign_out)
