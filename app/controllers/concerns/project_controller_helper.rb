@@ -48,7 +48,7 @@ module ProjectControllerHelper
       project.update!(user_project_roles_attributes)
       project.update_attributes!(quota_set: quota_params.to_h)
       project.enable!
-      javascript_redirect_to support_projects_path
+      javascript_redirect_to redirect_path
     rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotSaved
       respond_to do |format|
         format.js { render :template => "shared/dialog_errors", :locals => {:object => project }, status: :unprocessable_entity }
