@@ -5,6 +5,7 @@ class CloudProjectTests < CapybaraTestCase
   def setup
     login("capybara@test.com", '12345678')
     @organization = Organization.find_by_name 'capybara'
+    @organization.projects.reject(&:primary_project?).each &:destroy
   end
 
   def set_project_quota(projects)
