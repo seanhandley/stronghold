@@ -34,19 +34,19 @@ module Reports
           Billing::VpnConnections.usage(project.uuid, from, to)
         end.flatten
 
-        vcpu_hours   = instances.collect {|i| i[:billable_hours] * i[:flavor][:vcpus_count]}.sum
-        ram_tb_hours = instances.collect {|i| ((i[:flavor][:ram_mb] / 1024.0) / 1024.0) * i[:billable_hours]}.sum
+        vcpu_hours   = instances.sum {|i| i[:billable_hours].sum {|flavor_id, hours| hours * instance_flavors[flavor_id][:vcpus_count]}}
+        ram_tb_hours = instances.sum {|i| i[:billable_hours].sum {|flavor_id, hours| hours * ((instance_flavors[flavor_id][:ram_mb] / 1024.0) / 1024.0)}}
 
         volumes_tb_hours = volumes.collect{|i| i[:terabyte_hours]}.sum
-        images_tb_hours = images.collect{|i| i[:terabyte_hours]}.sum
-        instances_disk_tb_hours = instances.collect {|i| i[:billable_hours] * (i[:flavor][:root_disk_gb] / 1024.0)}.sum
+        images_tb_hours  = images.collect {|i| i[:terabyte_hours]}.sum
+        instances_disk_tb_hours = instances.sum {|i| i[:billable_hours].sum {|flavor_id, hours| hours * (instance_flavors[flavor_id][:root_disk_gb] / 1024.0)}}
         openstack_tb_hours = volumes_tb_hours + images_tb_hours + instances_disk_tb_hours
 
         ceph_tb_hours  = objects.sum
         ceph_cost = [{cost: ceph_tb_hours * RateCard.object_storage}]
 
-        load_balancer_hours  = load_balancers.collect  {|i| i[:hours]}.sum
-        vpn_connection_hours = vpn_connections.collect {|i| i[:hours]}.sum
+        load_balancer_hours  = load_balancers.sum  {|i| i[:hours]}
+        vpn_connection_hours = vpn_connections.sum {|i| i[:hours]}
 
         result = {
           :name => organization.name,
@@ -78,6 +78,13 @@ module Reports
         billing_images: :image_states,
       }]
     )
+    end
+
+    def instance_flavors
+      @instance_flavors ||= Billing::InstanceFlavor.all.inject({}) do |acc, e|
+        acc[e.flavor_id] = { vcpus_count: e.vcpus, root_disk_gb: e.disk, ram_mb: e.ram}
+        acc
+      end
     end
   end
 end
