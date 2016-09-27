@@ -1,7 +1,8 @@
 class CustomerGenerator
   include ActiveModel::Validations
 
-  attr_reader :organization_name, :email, :products, :extra_projects, :salesforce_id
+  attr_reader :organization_name, :email,        :products, :extra_projects,
+              :salesforce_id,     :organization, :invite
 
   def initialize(params={})
     @organization_name = params[:organization_name]
@@ -52,6 +53,7 @@ class CustomerGenerator
     end
     @organization.save!
     @organization.transition_to!(:active)
+    @organization.set_quotas!
     @extra_projects.split(',').map(&:strip).map(&:downcase).uniq.each do |project|
       @organization.projects.create(name: project)
     end
@@ -60,7 +62,7 @@ class CustomerGenerator
         project.update_attributes(quota_set: StartingQuota['zero'])
       end
     end
-    Invite.create! email: @email, power_invite: true, organization: @organization, project_ids: [@organization.primary_project.id]
+    @invite = Invite.create! email: @email, power_invite: true, organization: @organization, project_ids: [@organization.primary_project.id]
     Notifications.notify(:internal_signup, "New customer account created: #{@email} invited to organization #{@organization_name}")
   end
 end
