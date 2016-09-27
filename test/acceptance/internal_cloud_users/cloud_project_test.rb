@@ -66,7 +66,7 @@ class CloudProjectTests < CapybaraTestCase
 
   def test_user_can_remove_project
     set_project_quota(4)
-    ["foo", "bar"].each do |n|
+    [SecureRandom.hex, SecureRandom.hex].each do |n|
       @organization.projects.create! name: n
     end
     @project = Project.last

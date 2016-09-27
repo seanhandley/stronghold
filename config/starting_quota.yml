@@ -39,6 +39,26 @@ default: &default
       pool: 10
       vip: 10
 
+  training:
+    compute:
+      instances: 6
+      cores: 6
+      ram: 6000
+    volume:
+      volumes: 6
+      snapshots: 6
+      gigabytes: 100
+    network:
+      floatingip: 2
+      router: 1
+      security_group_rule: 100
+      security_group: 10
+      network: 10
+      port: 10
+      subnet: 10
+      pool: 10
+      vip: 10
+
   zero:
     compute:
       instances: 0
@@ -100,6 +120,26 @@ nolb: &nolb
       network: 10
       port: 10
       subnet: 10
+
+  training:
+    compute:
+      instances: 6
+      cores: 6
+      ram: 6000
+    volume:
+      volumes: 6
+      snapshots: 6
+      gigabytes: 100
+    network:
+      floatingip: 2
+      router: 1
+      security_group_rule: 100
+      security_group: 10
+      network: 10
+      port: 10
+      subnet: 10
+      pool: 10
+      vip: 10
 
   zero:
     compute:
