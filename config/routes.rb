@@ -74,7 +74,7 @@ Rails.application.routes.draw do
       end
       resources :invites, only: [:destroy] do
         member do
-          post 'resend'
+          post 'resend', :controller => 'invites', :action => 'resend'
         end
       end
 
