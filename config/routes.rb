@@ -29,11 +29,7 @@ Rails.application.routes.draw do
     end
     delete 'role/:role_id/user/:user_id', :controller => 'role_users', :action => 'destroy', :as => 'remove_role_user'
     resources :role_users, only: [:create]
-    resources :invites, only: [:create, :destroy] do
-      member do
-        post 'resend'
-      end
-    end
+    resources :invites, only: [:create, :destroy]
     resources :audits, only: [:index]
     get '/usage', :controller => 'usage', :action => 'index'
     get '/graph/data', :controller => 'graphs', :action => 'data', :defaults => { :format => 'json' }
@@ -72,13 +68,11 @@ Rails.application.routes.draw do
           post 'charge'
         end
       end
-      resources :invites, only: [:destroy] do
+      resources :invites, only: [:destroy, :update] do
         member do
-          post 'resend', :controller => 'invites', :action => 'resend'
+          post 'resend' , :controller => 'invites', :action => 'resend'
         end
       end
-
-
 
       namespace :utilities do
         root :to => 'dashboard#index'

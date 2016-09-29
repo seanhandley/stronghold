@@ -36,10 +36,6 @@ class Invite < ActiveRecord::Base
     persisted? ? created_at + 7.days : Time.now + 7.days
   end
 
-  def expired!
-    expires_at = Time.now
-  end
-
   def delivery_status
     return "pending" unless remote_message
     remote_message.status
