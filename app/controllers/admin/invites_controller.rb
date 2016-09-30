@@ -1,14 +1,11 @@
 class Admin::InvitesController < AdminBaseController
 
-  load_and_authorize_resource param_method: :create_params
-  before_filter :fetch_invite, only: [:resend, :destroy]
+  before_filter :fetch_invite
   before_filter :get_organization
 
   def update
-    @invite.complete!
-
-    @new_invite = Invite.create! email: @invite.email, power_invite: true, organization: @organization, project_ids: []
-    ajax_response(@new_invite, :save, admin_customer_path(@organization))
+    @invite.update(update_params)
+    ajax_response(@invite, :save, admin_customer_path(@organization))
   end
 
   def destroy
@@ -30,12 +27,8 @@ class Admin::InvitesController < AdminBaseController
     @invite = Invite.find(params[:id])
   end
 
-  def create_params
-    params.require(:invite).permit(:email, :role_ids => [], :project_ids => [])
-  end
-
   def update_params
-    params.require(:invite).permit(:email, :role_ids => [], :project_ids => [])
+    params.permit(:id, :email, :created_at)
   end
 
 end
