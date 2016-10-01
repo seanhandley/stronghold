@@ -23,7 +23,7 @@
           = render partial: 'edit', locals: {invoice: invoice }
           %tr
             %td= invoice.organization.reporting_code
-            %td= invoice.organization.name
+            %td= link_to invoice.organization.name, admin_customer_path(invoice.organization)
             %td== #{Date::MONTHNAMES[invoice.month]} #{invoice.year}
             %td== £#{number_with_precision(invoice.grand_total, :delimiter => ',', :separator => '.', :precision => 2)}
             %td== #{invoice.discount_percent}%
