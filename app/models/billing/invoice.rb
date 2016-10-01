@@ -100,8 +100,6 @@ module Billing
           Honeybadger.notify(ArgumentError.new("No Windows Salesforce product found for Flavor #{flavor_id}"))
         end
       end
-      # Force reload
-      update_column :grand_total, nil
       true
     end
 
@@ -151,13 +149,8 @@ module Billing
       salesforce_object&.c2g__NetTotal__c || 0
     end
 
-    def grand_total
-      gt = read_attribute :grand_total
-      if gt.nil? || gt == 0
-        gt = net_total
-        update_column(:grand_total, net_total)
-      end
-      gt
+    def refresh_grand_total
+      update_column(:grand_total, net_total)
     end
 
     def grand_total_plus_tax

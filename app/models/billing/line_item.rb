@@ -5,6 +5,8 @@ module Billing
 
     syncs_with_salesforce as: 'c2g__codaInvoiceLineItem__c'
 
+    after_commit :refresh_invoice
+
     def salesforce_args
       {
         c2g__Invoice__c: invoice.salesforce_id,
@@ -16,5 +18,11 @@ module Billing
 
     belongs_to :invoice, :class_name => "Billing::Invoice",
        :foreign_key => 'invoice_id'
+
+    private
+
+    def refresh_invoice
+      invoice.refresh_grand_total
+    end
   end
 end

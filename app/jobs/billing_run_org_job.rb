@@ -10,6 +10,5 @@ class BillingRunOrgJob < ActiveJob::Base
     usage_data = ud.usage_data(from_date: invoice.period_start, to_date: invoice.period_end)
     invoice.build_line_items(usage_data)
     invoice.update_attributes(discount_percent:  ud.discount_percent, tax_percent: ud.tax_percent)
-    invoice.grand_total
   end
 end
