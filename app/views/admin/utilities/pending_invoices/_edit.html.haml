@@ -6,8 +6,8 @@
           %button{'type' => "button", 'class' => "close", 'data-dismiss' => "modal", 'aria-hidden' => "true"}
             &times;
           %h4.modal-title
-            Finalize Invoice
-          %p Please make corrections and confirm. If the customer is in Stripe they will be automatically billed.
+            Create Stripe Invoice
+          %p Please make corrections and confirm. Once finalized, the customer will be automatically billed by Stripe within 1 hour.
         .modal-body
           = javascript_error_messages_for(f.object)
           .form-group

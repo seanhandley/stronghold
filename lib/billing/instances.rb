@@ -22,8 +22,7 @@ module Billing
 
       instances = instances.collect do |instance|
         instance_flavor = instance.instance_flavor
-        cost = instance.cost(from, to).nearest_penny
-        # instance.update_column(:cost, cost) if instance.terminated_at
+        
         {
           uuid: instance.instance_id,
           name: instance.name,
@@ -34,7 +33,8 @@ module Billing
           billable_hours: instance.billable_hours(from, to),
           total_hours: instance.billable_hours(from, to).values.sum,
           history: instance.history(from, to),
-          cost: cost,
+          cost: instance.cost(from, to).nearest_penny,
+          cost_by_flavor: instance.cost_by_flavor(from, to),
           windows: Windows.billable?(instance),
           flavor: {
             flavor_id: instance_flavor.flavor_id,
