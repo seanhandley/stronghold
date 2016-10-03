@@ -73,7 +73,7 @@ module Billing
           # This is a new instance and we don't know its current state.
           # Attempt to find out
           if(os_instance = OpenStackConnection.compute.servers.get(instance_id))
-            instance.instance_states.create recorded_at: Time.now, state: os_instance.state.downcase,
+            billing_instance.instance_states.create recorded_at: Time.now, state: os_instance.state.downcase,
                                             event_name: 'ping', billing_sync: sync,
                                             message_id: SecureRandom.uuid,
                                             flavor_id: os_instance.flavor['id']
