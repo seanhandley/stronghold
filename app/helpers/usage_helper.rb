@@ -72,13 +72,20 @@ module UsageHelper
     usage_data_with_total(data, total).to_xml(root: 'usage')
   end
 
+  def flavors
+    @flavors ||= Hash[Billing::InstanceFlavor.all.map{|f| [f.flavor_id, f.name]}]
+  end
+
   def usage_data_as_csv(data)
     CSV.generate do |csv|
       csv << ["Project", "Type", "Sub-Type", "ID", "Name", "Amount", "Unit", "Cost (£)"]
       data.each do |project, usage|
         usage[:instance_usage].each do |instance|
-          csv << [project.name, "#{architecture_human_name(instance[:arch])} Instance", "#{instance[:flavor][:name]}", instance[:uuid], instance[:name], instance[:billable_hours], 'hours', instance[:cost]]
+          instance[:billable_hours].each do |flavor_id, hours|
+            csv << [project.name, "Instance", flavors[flavor_id], instance[:uuid], instance[:name], hours, 'hours', instance[:cost_by_flavor][flavor_id].nearest_penny]
+          end
         end
+
         usage[:volume_usage].each do |volume|
           csv << [project.name, "Volume", volume[:volume_type_name], volume[:id], volume[:name], volume[:terabyte_hours], 'TB/h', volume[:cost]]
         end

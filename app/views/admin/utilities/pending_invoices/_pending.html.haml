@@ -1,7 +1,7 @@
 - title "Pending Invoices"
 
 .pull-right
-  = link_to 'Finalized Invoices', admin_utilities_pending_invoices_path(finalized: true), class: 'btn btn-info'
+  = link_to 'Stripe Invoices', admin_utilities_pending_invoices_path(finalized: true), class: 'btn btn-info'
 
 %h1
   %i.fa.fa-calculator
@@ -30,7 +30,7 @@
             %td= link_to invoice.salesforce_id, invoice.salesforce_invoice_link, target: '_blank'
             %td
               - if invoice.organization.self_service?
-                = link_to 'Finalize?', '', class: 'btn btn-success', 'data-toggle' => "modal", 'data-target' => "#editInvoice#{invoice.id}"
+                = link_to 'Create Stripe Invoice?', '', class: 'btn btn-success', 'data-toggle' => "modal", 'data-target' => "#editInvoice#{invoice.id}"
             %td
               = link_to 'Dismiss', admin_utilities_pending_invoice_path(invoice), 'class' => 'btn btn-danger', 'data-method' => "delete", 'data-confirm' => "This can't be undone. Are you sure?"
 - else
