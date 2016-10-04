@@ -117,6 +117,7 @@ module Billing
           invoice = Stripe::Invoice.create(customer: organization.stripe_customer_id)
           update_attributes(stripe_invoice_id: invoice.id)
         rescue StandardError => e
+          notify_honeybadger(e)
           if invoice_item
             begin
               invoice_item.delete
