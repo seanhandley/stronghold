@@ -166,7 +166,7 @@ module Billing
 
     def invoice_description
       discount_message = (discount_percent > 0) ? " (includes discount of #{discount_percent}%)" : ''
-      "Cloud Usage #{Date::MONTHNAMES[month]} #{year}#{discount_message}. Invoice: #{salesforce_invoice_id})"
+      "Cloud Usage #{Date::MONTHNAMES[month]} #{year}#{discount_message}. Invoice: #{salesforce_id})"
     end
 
     def currency
