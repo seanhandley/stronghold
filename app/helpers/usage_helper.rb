@@ -82,7 +82,7 @@ module UsageHelper
       data.each do |project, usage|
         usage[:instance_usage].each do |instance|
           instance[:billable_hours].each do |flavor_id, hours|
-            csv << [project.name, "Instance", flavors[flavor_id], instance[:uuid], instance[:name], hours, 'hours', instance[:cost_by_flavor][flavor_id].nearest_penny]
+            csv << [project.name, "Instance", flavors[flavor_id] + (instance[:windows] ? " (Windows)" : ""), instance[:uuid], instance[:name], hours, 'hours', instance[:cost_by_flavor][flavor_id].nearest_penny]
           end
         end
 

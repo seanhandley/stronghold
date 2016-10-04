@@ -109,7 +109,7 @@ module Billing
     def cost_by_flavor(from, to)
       Hash[billable_hours(from, to).map {|flavor, hours|
         begin
-          product_id = Salesforce.find_instance_product(flavor)['salesforce_id']
+          product_id = Salesforce.find_instance_product(flavor, windows: Windows.billable?(self))['salesforce_id']
           price = Salesforce::Product.all[product_id][:price]
           [flavor, price * hours]
         rescue StandardError => e
