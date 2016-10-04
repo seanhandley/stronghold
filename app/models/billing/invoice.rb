@@ -107,10 +107,6 @@ module Billing
       return if finalized?
       if organization.self_service?
         return false if stripe_invoice_id
-        if salesforce_invoice_id.blank?
-          errors.add(:salesforce_invoice_id, 'must not be blank')
-          return false
-        end
 
         begin
           invoice_item = Stripe::InvoiceItem.create(customer: organization.stripe_customer_id,
