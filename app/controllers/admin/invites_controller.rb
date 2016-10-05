@@ -4,8 +4,13 @@ class Admin::InvitesController < AdminBaseController
   before_filter :get_organization
 
   def update
-    @invite.update(update_params)
-    ajax_response(@invite, :save, admin_customer_path(@organization))
+    if @invite.resend!
+      flash[:notice] = "Invite was resent"
+      javascript_redirect_to admin_customer_path(@organization)
+    else
+      flash[:error] = "Invite couldn't be sent"
+      javascript_redirect_to admin_customer_path(@organization)
+    end
   end
 
   def destroy
@@ -25,10 +30,6 @@ class Admin::InvitesController < AdminBaseController
 
   def fetch_invite
     @invite = Invite.find(params[:id])
-  end
-
-  def update_params
-    params.permit(:id, :email, :created_at)
   end
 
 end

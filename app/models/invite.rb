@@ -5,7 +5,6 @@ class Invite < ActiveRecord::Base
 
   after_create :generate_token
   after_commit :send_email, on: :create
-  after_commit :send_email, on: :update
 
   validates :email, length: {minimum: 5}, allow_blank: false
   validates :organization, :presence => true
@@ -30,6 +29,11 @@ class Invite < ActiveRecord::Base
 
   def complete!
     update_attributes(completed_at: Time.now)
+  end
+
+  def resend!
+    update_attributes(created_at: Time.now)
+    send_email
   end
 
   def expires_at

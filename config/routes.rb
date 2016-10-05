@@ -68,11 +68,7 @@ Rails.application.routes.draw do
           post 'charge'
         end
       end
-      resources :invites, only: [:destroy, :update] do
-        member do
-          post 'resend' , :controller => 'invites', :action => 'resend'
-        end
-      end
+      resources :invites, only: [:destroy, :update]
 
       namespace :utilities do
         root :to => 'dashboard#index'
