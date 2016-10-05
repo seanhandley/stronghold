@@ -73,7 +73,7 @@ class Admin::UsageController < AdminBaseController
   end
 
   def reset_dates
-    now = Time.zone.now
+    now = Time.now
     @from_date = now.last_month.beginning_of_month
     @from_date = Billing::Sync.first.completed_at if @from_date < Billing::Sync.first.completed_at
     @to_date = now.beginning_of_month
