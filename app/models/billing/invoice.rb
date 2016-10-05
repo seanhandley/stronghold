@@ -139,7 +139,7 @@ module Billing
     end
 
     def period_end
-      period_start.end_of_month
+      (Time.parse("#{year}-#{month}-1").end_of_month + 1.day).beginning_of_month
     end
 
     def net_total
