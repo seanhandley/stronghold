@@ -2,20 +2,34 @@
 
 = render partial: 'support/tickets/incidents'
 
-- if current_organization.cloud?
-  .container#usage-capacity-summary
-    = render partial: 'support/dashboard/header'
 
-  .container
-    #dashboard_buttons.pull-right
-      - unless current_organization.frozen?
-        - if current_organization.compute? && can?(:read, :cloud)
-          %a{class: "btn btn-primary has-tooltip", href: openstack_path, target: '_blank', 'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => 'Log in using your username/password',}
-            OpenStack Dashboard
-        - if current_organization.known_to_payment_gateway? && (can?(:read, :cloud) || can?(:read, :storage))
-          %a{class: "btn btn-default", href: '', 'data-toggle' => "modal", 'data-target' => "#showOpenStackDetails"}
-            API Details
 
+.header-and-buttons-container
+
+  - if current_organization.cloud?
+    .container#usage-capacity-summary
+      = render partial: 'support/dashboard/header'
+
+    .container
+      #dashboard_buttons.pull-right
+        - unless current_organization.frozen?
+          - if current_organization.compute? && can?(:read, :cloud)
+            %a{class: "btn btn-primary has-tooltip", href: openstack_path, target: '_blank', 'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => 'Log in using your username/password',}
+              OpenStack Dashboard
+          - if current_organization.known_to_payment_gateway? && (can?(:read, :cloud) || can?(:read, :storage))
+            %a{class: "btn btn-default", href: '', 'data-toggle' => "modal", 'data-target' => "#showOpenStackDetails"}
+              API Details
+  - else
+    &nbsp;
+    .jumbotron.bg-info
+      %h3
+        = image_tag 'logo_small.png'
+        Welcome
+      %p== This is the DataCentred online control panel.
+
+      %em== If you have any questions or issues, please report them via the #{link_to 'Support Tickets', support_tickets_path} section.
+
+.graphs-content-container
   .container-fluid#graph-tabs
     .centered-tabs
       %ul.nav.nav-tabs#compute-volume-network-tabs
@@ -38,13 +52,3 @@
 
       .tab-pane#network{'class' => active_tab?('network')}
         = render partial: 'support/graphs/network'
-
-- else
-  &nbsp;
-  .jumbotron.bg-info
-    %h3
-      = image_tag 'logo_small.png'
-      Welcome
-    %p== This is the DataCentred online control panel.
-
-    %em== If you have any questions or issues, please report them via the #{link_to 'Support Tickets', support_tickets_path} section.
