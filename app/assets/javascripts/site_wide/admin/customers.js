@@ -35,28 +35,14 @@ $(document).ready(function() {
 
   $('#q').focus();
 
-  $('#toggle-paying').on('change', function() {
-    if(confirm('Are you sure?')) {
-      $('#paying_form').trigger('submit.rails');
-    } else {
-      window.location.reload();
-    }
-  });
-
-  $('#toggle-account').on('change', function() {
-    if(confirm('Are you sure?')) {
-      $('#account_form').trigger('submit.rails');
-    } else {
-      window.location.reload();
-    }
-  });
-
-  $('#toggle-test').on('change', function() {
-    if(confirm('Are you sure?')) {
-      $('#test_form').trigger('submit.rails');
-    } else {
-      window.location.reload();
-    }
+  $.each(["#toggle-bill-automatically", "#toggle-paying", "#toggle-account", "#toggle-test"], function (i, e) {
+    $(e).on('change', function() {
+      if(confirm('Are you sure?')) {
+        $(e).closest('form').trigger('submit.rails');
+      } else {
+        window.location.reload();
+      }
+    });
   });
 
   $('#tickets-projects-audits-users-tabs a:first').tab('show');

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160930100108) do
+ActiveRecord::Schema.define(version: 20161010130348) do
 
   create_table "audits", force: :cascade do |t|
     t.string   "auditable_id",    limit: 255
@@ -312,6 +312,7 @@ ActiveRecord::Schema.define(version: 20160930100108) do
     t.float    "weekly_spend",       limit: 24,    default: 0.0,      null: false
     t.text     "quota_limit",        limit: 65535
     t.string   "billing_contact",    limit: 255
+    t.boolean  "bill_automatically",               default: true,     null: false
   end
 
   add_index "organizations", ["reporting_code"], name: "index_organizations_on_reporting_code", unique: true, using: :btree
