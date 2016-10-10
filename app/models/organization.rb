@@ -60,7 +60,7 @@ class Organization < ActiveRecord::Base
   belongs_to :customer_signup
 
   scope :paying,                -> { where('started_paying_at is not null') }
-  scope :billable,              -> { where(test_account: false) }
+  scope :billable,              -> { where(test_account: false, bill_automatically: true) }
   scope :cloud,                 -> { all.select(&:cloud?) }
   scope :active,                -> { where(state: 'active')}
   scope :self_service,          -> { where('self_service = true') }
