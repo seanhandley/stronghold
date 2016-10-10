@@ -10,7 +10,7 @@ class Organization < ActiveRecord::Base
 
   has_associated_audits
 
-  syncs_with_salesforce as: 'Account'
+  syncs_with_salesforce as: 'Account', actions: [:create, :update]
 
   def salesforce_args
     {
