@@ -70,7 +70,8 @@ class Admin::CustomersController < AdminBaseController
   def update_params
     params.require(:organization).permit(:reporting_code, :reference, :stripe_customer_id, :salesforce_id,
                                          :billing_address1, :billing_city, :billing_postcode,
-                                         :billing_country, :phone, :state, :id, :started_paying_at, :test_account)
+                                         :billing_country, :phone, :state, :id, :started_paying_at,
+                                         :test_account, :bill_automatically)
   end
 
   def sanitised_update_params
