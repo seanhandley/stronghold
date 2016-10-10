@@ -3,7 +3,7 @@ module Billing
 
     self.table_name = "billing_line_items"
 
-    syncs_with_salesforce as: 'c2g__codaInvoiceLineItem__c'
+    syncs_with_salesforce as: 'c2g__codaInvoiceLineItem__c', actions: [:create]
 
     after_commit :refresh_invoice
 

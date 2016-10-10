@@ -25,8 +25,8 @@ module ActiveRecord
 
       self.class_eval do
         unless Rails.env.test? || Rails.env.acceptance?
-          after_commit(:create_salesforce_object, on: :create)
-          after_commit(:update_salesforce_object, on: :update)
+          after_commit(:create_salesforce_object, on: :create) if params[:actions].include? :create
+          after_commit(:update_salesforce_object, on: :update) if params[:actions].include? :update
         end
       end
     end

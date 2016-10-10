@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
 
   attr_accessor :password, :password_confirmation, :token
 
-  syncs_with_salesforce as: 'Contact'
+  syncs_with_salesforce as: 'Contact', actions: [:create, :update]
 
   def salesforce_args
     {

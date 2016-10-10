@@ -3,7 +3,7 @@ module Billing
 
     self.table_name = "billing_invoices"
 
-    syncs_with_salesforce as: 'c2g__codaInvoice__c'
+    syncs_with_salesforce as: 'c2g__codaInvoice__c', actions: [:create]
 
     def salesforce_args
       {
