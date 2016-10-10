@@ -31,6 +31,11 @@ class Invite < ActiveRecord::Base
     update_attributes(completed_at: Time.now)
   end
 
+  def resend!
+    update_attributes(created_at: Time.now)
+    send_email
+  end
+
   def expires_at
     persisted? ? created_at + 7.days : Time.now + 7.days
   end

@@ -21,5 +21,4 @@ class Support::InvitesController < SupportBaseController
   def create_params
     params.require(:invite).permit(:email, :role_ids => [], :project_ids => [])
   end
-
 end

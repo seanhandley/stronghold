@@ -1,0 +1,25 @@
+.table-responsive
+  %table.table.table-hover
+    %thead
+      %th Email
+      %th Created at
+      %th Completed at
+      %th
+    %tbody
+      - if @invites.present?
+        - @invites.each do |invite|
+          %tr
+            %td= invite[:email]
+            %td= invite[:created_at]
+            %td= invite[:completed_at]
+            %td
+              - if can?(:modify, Invite)
+                %a{href: admin_invite_path(invite), data: { remote: true, method: :delete, confirm: "Are you sure?"}, class: "btn btn-danger"}
+                  %i.fa.fa-trash-o
+              -if can?(:modify, Invite)
+                =link_to 'Resend', admin_invite_path(invite), :class => "btn btn-primary", :remote => true, method: :patch
+            %td
+      - else
+        %tr
+          %td
+            %em No invites.

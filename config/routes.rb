@@ -68,7 +68,7 @@ Rails.application.routes.draw do
           post 'charge'
         end
       end
-
+      resources :invites, only: [:destroy, :update]
 
       namespace :utilities do
         root :to => 'dashboard#index'

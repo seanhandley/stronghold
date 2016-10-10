@@ -27,6 +27,9 @@
             %li{'class' => active_tab?('users')}
               %a{:href => '#users', 'data-toggle' => 'tab', 'data-name' => 'users'}
                 = t(:users)
+            %li{'class' => active_tab?('invites')}
+              %a{:href => '#invites', 'data-toggle' => 'tab', 'data-name' => 'invites'}
+                = t(:invites)
 
       .tab-content
         .tab-pane#tickets{'class' => active_tab?('tickets')}
@@ -63,6 +66,14 @@
               Users
             .panel-body.panel-padding
               = render partial: 'support/users/user_info', locals: {users: @users}
+
+        .tab-pane#invites{'class' => active_tab?('invites')}
+          .panel.panel-info
+            .panel-heading
+              %i.fa.fa-envelope
+              User Invites
+            .panel-body.panel-padding
+              = render partial: "admin/customers/invites", locals: {invites: @invites, organization: @organization}
 
     .col-md-4
       %div.panel.panel-info

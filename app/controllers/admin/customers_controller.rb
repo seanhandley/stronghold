@@ -28,7 +28,8 @@ class Admin::CustomersController < AdminBaseController
     @tickets         = decorated_tickets(@organization)
     @users           = @organization.users
     @audits          = Audit.for_organization_and_user(@organization, current_user).order('created_at DESC').first(7)
-    @projects        = Project.where(organization: params[:id]).includes(:users)
+    @projects        = @organization.projects.includes(:users)
+    @invites         = @organization.invites
   end
 
   def edit
