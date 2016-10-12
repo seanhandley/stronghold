@@ -8,8 +8,8 @@ module Billing
     def salesforce_args
       {
         c2g__Account__c: organization.salesforce_id,
-        c2g__InvoiceDate__c: created_at.to_date,
-        c2g__DueDate__c: (created_at + 1.month).to_date,
+        c2g__InvoiceDate__c: period_start.to_date,
+        c2g__DueDate__c: (period_start + 1.month).to_date,
         c2g__InvoiceDescription__c: "Cloud services #{Date::MONTHNAMES[month]} #{year}",
         c2g__CustomerReference__c: organization.reporting_code,
         c2g__InvoiceCurrency__c: SALESFORCE_CURRENCY_GBP,
