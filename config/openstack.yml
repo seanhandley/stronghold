@@ -1,6 +1,5 @@
 default: &default
   auth_url: "http://devstack.datacentred.io:5000/v3/auth/tokens"
-  identity_prefix: "v3"
 
 development:
   <<: *default
