@@ -15,7 +15,7 @@ $(document).ready(function() {
     });
   };
 
-  $('#state-dropdown').on('change', function() {
+  $('#state-dropdown').on('change', function(e) {
     new_state = $(this).val();
     id = $(this).data('organization');
     name = $(this).data('organization-name');
@@ -30,6 +30,7 @@ $(document).ready(function() {
       } else {
         $(this).val('')
       }
+      e.preventDefault();
     }
   });
 
