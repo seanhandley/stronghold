@@ -108,6 +108,7 @@ module Billing
                                         flavor_id: meta_data["instance_flavor_id"]
         end
       end
+      billing_instance.reindex_states
     end
 
   end

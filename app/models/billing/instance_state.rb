@@ -55,7 +55,6 @@ module Billing
     private
 
     def touch_instance
-      billing_instance.reindex_states
       billing_instance.update_attributes(terminated_at: recorded_at) if state == 'deleted'
       if billing_instance.started_at.nil?
         billing_instance.update_attributes(started_at: recorded_at)
