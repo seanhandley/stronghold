@@ -8,6 +8,7 @@ class TestInstanceStatesChaining < CleanTest
     @instance.instance_states.create(@defaults)
     @instance.instance_states.create(@defaults.merge(recorded_at: Time.now - 4.minutes))
     @instance.instance_states.create(@defaults.merge(recorded_at: Time.now - 2.minutes))
+    @instance.reindex_states
     @state_1, @state_2, @state_3 = @instance.instance_states
   end
 
@@ -39,6 +40,7 @@ class TestInstanceStatesChaining < CleanTest
       refute s.previous_state
     end
     @state_4 = @instance.instance_states.create(@defaults.merge(recorded_at: Time.now - 1.minutes))
+    @instance.reindex_states
 
     [@state_1, @state_2, @state_3, @state_4].each(&:reload)
 

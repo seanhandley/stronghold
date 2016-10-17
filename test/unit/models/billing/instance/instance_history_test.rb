@@ -14,6 +14,7 @@ class TestInstanceHistory < CleanTest
     @instance.instance_states.create(@defaults.merge(recorded_at: @start_time - 2.days, state: 'active', instance_flavor: @large_flavor))
     @instance.instance_states.create(@defaults.merge(recorded_at: @start_time - 24.hours, state: 'stopped', instance_flavor: @large_flavor))
     @instance.instance_states.create(@defaults.merge(recorded_at: @start_time - 22.hours, state: 'active', instance_flavor: @large_flavor))
+    @instance.reindex_states
   end
 
   def test_instance_seconds
