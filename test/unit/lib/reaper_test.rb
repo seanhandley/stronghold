@@ -51,8 +51,8 @@ class TestReaper < CleanTest
   def test_reap_dry_run
     VCR.use_cassette("reaper_reap_dry_run") do
       mock = Minitest::Mock.new
-      messages = ["Removed unused IP 172.24.4.214 from tenant 06a9a90c60074cdeae5f7fdd0048d9ac",
-                  "Transitioning #{@organization.name} (#{@organization.reporting_code}) to dormant state"]
+      messages = ["Transitioning #{@organization.name} (#{@organization.reporting_code}) to dormant state",
+                  "Removed unused IP 172.24.4.214 from tenant 06a9a90c60074cdeae5f7fdd0048d9ac"]
       messages.each {|m| mock.expect(:info, nil, [m])}
       @reaper.stub(:logger, mock) do
         Project.stub(:find_by_uuid, OpenStruct.new(organization: @organization)) do
