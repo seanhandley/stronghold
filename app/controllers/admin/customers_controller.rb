@@ -30,6 +30,7 @@ class Admin::CustomersController < AdminBaseController
     @audits          = Audit.for_organization_and_user(@organization, current_user).order('created_at DESC').first(7)
     @projects        = @organization.projects.includes(:users)
     @invites         = @organization.invites
+    @instances       = 4
   end
 
   def edit

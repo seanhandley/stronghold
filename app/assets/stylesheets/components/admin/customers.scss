@@ -146,6 +146,47 @@ div.header-search {
   }
 }
 
+.row#organization-stats {
+  padding: 30px 10px 25px 10px;
+  border-radius: 5px;
+}
+
+.col-md-4.stats-column {
+  border: 1px solid rgb(221,221,221);
+  padding: 10px 10px 10px 10px;
+  height: 70px;
+  background-color: rgb(249, 249, 249);
+}
+
+div.stats-content{
+  text-align: center;
+  font-size: 1.1em;
+  font-weight: 200;
+}
+
+div.stats-title{
+  font-weight: 220;
+  font-size: 1.1em;
+}
+
+.row#organization-billing-info {
+  padding: 25px 15px 25px 15px;
+  margin-top: 25px;
+}
+
+ul#billing_address-list {
+  padding: 0;
+}
+
+ul#billing_address-list li {
+  padding: 8px 8px 0px 0;
+}
+
+td.first-column {
+  font-weight: bold;
+  width: 250px;
+}
+
 input#organization_projects_limit {
   margin-bottom: 10px;
 }
