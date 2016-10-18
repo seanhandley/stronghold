@@ -122,8 +122,8 @@ class Reaper
 
   def organization_is_active(tenant_id)
     project = Project.find_by_uuid(tenant_id)
-    return nil unless project
-    (project.organization.most_recent_usage_recorded_at + 3.months) > Time.now
+    return nil unless project && last_used = project.organization.most_recent_usage_recorded_at
+    (last_used + 3.months) > Time.now
   end
 
   def organization_is_staff(tenant_id)
