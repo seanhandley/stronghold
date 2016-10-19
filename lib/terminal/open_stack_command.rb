@@ -19,7 +19,7 @@ class Terminal
         openstack #{sub_command} --os-auth-url #{auth_url}
         --os-token #{OpenStackCommand.get_project_tokens(user)[project_name]}
         --os-project-name #{project_name} --os-username #{user.email}
-        --os-user-domain-name default --os-identity-api-version 3
+        --os-default-domain default --os-identity-api-version 3
       EOS
       @command << token_endpoint_params
 
