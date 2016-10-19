@@ -1,6 +1,6 @@
 default: &default
   auth_url: "http://devstack.datacentred.io:5000/"
-  openstack_client_image: 'datacentred/docker-openstack-client:alpine3'
+  openstack_client_image: 'datacentred/docker-openstack-client:alpine4'
 
 development:
   <<: *default
