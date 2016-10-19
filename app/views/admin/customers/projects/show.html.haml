@@ -23,7 +23,7 @@
                       = number_with_precision(v, :delimiter => ',', :separator => '.', :precision => 0)
                       = fix_abbreviation_case(k.humanize.titleize.pluralize(v))
             %td
-              = link_to 'Edit', '', class: 'btn btn-default', 'data-toggle' => "modal", 'data-target' => "#editProject#{project.id}", 'remote' => true, 'data' => { 'method' => :put }
+              = link_to 'Edit', '', class: 'btn btn-default', 'data-toggle' => "modal", 'data-target' => "#editProject#{project.id}", 'remote' => true
               - unless project.staff_project? || project.primary_project?
                 = link_to '<i class="fa fa-trash-o"></i>'.html_safe, admin_customer_project_path(@organization, project.id), class: 'btn btn-danger trash-padding', :data => {:confirm => 'Are you sure? This action cannot be undone.', :method => :delete}
           = render partial: "admin/customers/projects/edit", locals: {organization: @organization, project: project}
