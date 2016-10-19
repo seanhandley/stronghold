@@ -147,20 +147,36 @@ div.header-search {
 }
 
 .row#organization-stats {
-  padding: 30px 10px 25px 10px;
-  border-radius: 5px;
+  margin-top: 30px;
+  padding: 0 20px 0 20px;
 }
 
 .col-md-4.stats-column {
-  border: 1px solid rgb(221,221,221);
   padding: 10px 10px 10px 10px;
   height: 70px;
   background-color: rgb(249, 249, 249);
 }
 
+.col-md-4.stats-column.left {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border: 1px solid rgb(221,221,221);
+}
+
+.col-md-4.stats-column.right {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border: 1px solid rgb(221,221,221);
+}
+
+.col-md-4.stats-column.middle {
+  border-top: 1px solid rgb(221,221,221);
+  border-bottom: 1px solid rgb(221,221,221);
+}
+
 div.stats-content{
   text-align: center;
-  font-size: 1.1em;
+  font-size: 1em;
   font-weight: 200;
 }
 
@@ -191,11 +207,18 @@ input#organization_projects_limit {
   margin-bottom: 10px;
 }
 
+.container-fluid#dashboard-tabs {
+  margin-top: 25px;
+}
+
 div.container.customer-margin {
   padding-left: 0px;
   padding-right: 0px;
   margin-right: 5px;
   margin-left: 5px;
+}
+
+.col-lg-3.col-md-4.col-sm-3.admin-sidebar {
 }
 
 div.container.usage_data_container {

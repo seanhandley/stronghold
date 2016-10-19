@@ -1,13 +1,13 @@
 .row#organization-stats
-  .col-md-4.stats-column
-    %div.stats-title Created
+  .col-md-4.stats-column.left
+    %div.stats-title Created at
     %div.stats-content
       =long_date(@organization.created_at)
-  .col-md-4.stats-column
-    %div.stats-title Instances
+  .col-md-4.stats-column.middle
+    %div.stats-title Active Instances
     %div.stats-content
       =@instances
-  .col-md-4.stats-column
+  .col-md-4.stats-column.right
     %div.stats-title Projects
     %div.stats-content
       =@projects.count
