@@ -31,17 +31,33 @@ div.header-search {
   width: 100%;
 }
 
+div.toggle-grid {
+  border: 1px solid rgb(221,221,221);
+  border-radius: 5px;
+  background-color: rgb(249, 249, 249);
+}
+
+ul.toggle-list {
+  padding-left: 0;
+}
+
+div.toggle-div {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid rgb(221,221,221);
+  padding: 15px 10px 0px 10px;
+  font-size: 1.1em;
+  font-weight: 220;
+}
+
+div.toggle-div.last {
+  border-bottom: none;
+}
+
 div.admin-customer-section div.btn-unfreeze {
   margin-top: 10px;
 }
 
-div.admin-customer-section a.btn-activate-manually {
-  margin-top: 10px;
-}
-
-div.admin-customer-section a.btn-migrate {
-  margin-top: 10px;
-}
 
 div.admin-customer-section .panel-body.panel-padding {
   padding-top: 20px;
@@ -50,7 +66,6 @@ div.admin-customer-section .panel-body.panel-padding {
 
 div.admin-customer-section .panel-body ul li {
   list-style-type: none;
-  padding: 10px 10px 10px 10px;
 }
 
 div.admin-customer-section .panel#users-panel {
@@ -223,10 +238,6 @@ div.container.customer-margin {
 
 div.container.usage_data_container {
   padding-left: 0px;
-}
-
-div#paying_and_account_type {
-  height: 30px;
 }
 
 div#state-container {
