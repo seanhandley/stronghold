@@ -1,5 +1,5 @@
 default: &default
-  auth_url: "http://devstack.datacentred.io:5000/"
+  auth_url: "http://devstack.datacentred.io:5000/v3"
   openstack_client_image: 'datacentred/docker-openstack-client:alpine3'
 
 development:
@@ -16,4 +16,4 @@ staging:
 
 production:
   <<: *default
-  auth_url: "https://compute.datacentred.io:5000/"
+  auth_url: "https://compute.datacentred.io:5000/v3"
