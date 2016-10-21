@@ -30,5 +30,5 @@
                 %em None
           %td
             - if can?(:modify, User) && user.id != current_user.id
-              %a{href: admin_user_path(user), data: { remote: true, method: :delete, confirm: "Are you sure?"}, class: "btn btn-danger"}
+              %a{href: admin_customer_user_path(organization, user), data: { remote: true, method: :delete, confirm: "Are you sure?"}, class: "btn btn-danger"}
                 %i.fa.fa-trash-o

@@ -49,13 +49,14 @@ Rails.application.routes.draw do
       root :to => 'customers#index'
       resources :customers, except: [:destroy] do
         resources :projects
+        resources :users, only: [:index, :destroy]
       end
       resources :usage, only: [:show, :update]
       resources :free_ips, only: [:index]
       resources :account_migrations, only: [:update]
       resources :audits, only: [:show]
       resources :states, only: [:show]
-      resources :users, only: [:index, :destroy]
+
       resources :quotas, except: [:create, :new, :destroy, :show] do
         member do
           post 'mail'

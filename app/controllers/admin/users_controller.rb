@@ -1,6 +1,6 @@
 class Admin::UsersController < AdminBaseController
 
-  before_action :get_user
+  before_action :get_user, only: [:destroy]
   before_action :get_organization
 
 
@@ -19,6 +19,6 @@ class Admin::UsersController < AdminBaseController
   end
 
   def get_organization
-    @organization = @user.organization
+    @organization = Organization.find params[:customer_id]
   end
 end
