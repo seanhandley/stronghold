@@ -4,7 +4,7 @@ class Admin::UsersController < AdminBaseController
   before_action :get_organization
 
 
-  def show
+  def index
     @users = @organization.users
   end
 

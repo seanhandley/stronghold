@@ -55,7 +55,7 @@ Rails.application.routes.draw do
       resources :account_migrations, only: [:update]
       resources :audits, only: [:show]
       resources :states, only: [:show]
-      resources :users, only: [:show, :destroy]
+      resources :users, only: [:index, :destroy]
       resources :quotas, except: [:create, :new, :destroy, :show] do
         member do
           post 'mail'
