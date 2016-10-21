@@ -17,7 +17,7 @@ class Project < ActiveRecord::Base
   syncs_with_ceph     as: 'Ceph::User',        actions: [:create, :destroy]
 
   has_many :user_project_roles, dependent: :destroy
-  has_many :users, :through => :user_project_roles
+  has_many :users, -> { distinct }, :through => :user_project_roles
 
   has_many :billing_instances, primary_key: :uuid, class_name: 'Billing::Instance'
   has_many :billing_volumes, primary_key: :uuid, class_name: 'Billing::Volume'
@@ -54,7 +54,7 @@ class Project < ActiveRecord::Base
 
   def keystone_params
     { name: reference.to_ascii,
-      description: "Customer: #{organization.name}, Project: #{name}".to_ascii 
+      description: "Customer: #{organization.name}, Project: #{name}".to_ascii
     }
   end
 

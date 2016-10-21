@@ -13,7 +13,7 @@
             %td= project.name
             %td
               = project.uuid
-            %td.align-text-centre= get_members(project.users)
+            %td.align-text-centre= project.users.count
             %td.fixed-width-100
               %a{:class => "btn btn-default", :role => "button", :'data-toggle' => "collapse", :href => "#collapse#{project.id}", :'aria-expanded'=>"false", :'aria-controls'=>"collapse#{project.id}"} Show
               %div{id: "collapse#{project.id}", class: "accordion-body collapse"}
