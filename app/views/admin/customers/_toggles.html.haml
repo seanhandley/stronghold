@@ -1,8 +1,8 @@
 %ul.toggle-list
-  %li
-    %div.toggle-div
-      Account type
-      - unless @organization.staff?
+  - unless @organization.staff?
+    %li
+      %div.toggle-div
+        Account type
         = form_for @organization, url: admin_account_migration_path(@organization), :remote => true, :html => {:role => 'form'} do |f|
           .form-group
             = f.check_box :self_service, {:id=>"toggle-account", class: 'toggle', data: default_toggle_params.merge(on: "Self-Service", off: "Invoiced/Trial", offstyle: 'primary')}

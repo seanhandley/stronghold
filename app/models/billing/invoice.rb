@@ -159,7 +159,7 @@ module Billing
     end
 
     def stripe_invoice_link
-      stripe_invoice_id.present? ? ExternalLinks.stripe_path(invoices, stripe_invoice_id) : ''
+      stripe_invoice_id.present? ? ExternalLinks.stripe_path("invoices", stripe_invoice_id) : ''
     end
 
     private

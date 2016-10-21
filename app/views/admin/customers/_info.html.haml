@@ -4,13 +4,13 @@
     %div.stats-content
       = long_date(@organization.created_at)
   .col-md-4.stats-column.middle
-    %div.stats-title Active Instances
-    %div.stats-content
-      = @instances
-  .col-md-4.stats-column.right
     %div.stats-title Projects
     %div.stats-content
-      =@projects.count
+      = @projects.count
+  .col-md-4.stats-column.right
+    %div.stats-title Spent this week
+    %div.stats-content
+      = number_to_currency(@organization.weekly_spend, :unit => "£")
 
 .row#organization-billing-info
   .table-responsive
@@ -52,6 +52,6 @@
             Stripe Customer ID
           %td
             - if @organization.stripe_customer_id?
-              = link_to @organization.stripe_customer_id, ExternalLinks.stripe_path(customers, @organization.stripe_customer_id)
+              = link_to @organization.stripe_customer_id, ExternalLinks.stripe_path("customers", @organization.stripe_customer_id)
             - else
               None
