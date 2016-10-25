@@ -29,6 +29,7 @@ class Support::TicketsController < SupportBaseController
 
   def get_departments_and_priorities
     @departments = TicketAdapter.departments
+    @teams       = TicketAdapter.teams
     @priorities  = TicketAdapter.priorities
     @priorities.delete('Emergency') unless current_organization.known_to_payment_gateway?
     unless current_organization.colo? && ['access_requests.raise_for_self', 'access_requests.raise_for_others'].any?{|p| current_user.has_permission?(p)}

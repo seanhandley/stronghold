@@ -13,7 +13,8 @@ class TicketAdapter
       limit = [offset, limit].compact
       columns = %w{reference subject submitted_at updated_at
                    contact_methods.data priorities.name
-                   contacts.name statuses.status_type departments.name
+                   contacts.name statuses.status_type
+                   departments.name teams.name
                    custom_field.visitor_names
                    custom_field.date_of_visit
                    custom_field.time_of_visit
@@ -40,7 +41,8 @@ class TicketAdapter
                      priority: t['priorities.name'],
                      name: t['contacts.name'],
                      status: t['statuses.status_type'],
-                     department: t['departments.name']}
+                     department: t['departments.name'],
+                     team: t['teams.name']}
           if(t['departments.name'] == 'Access Requests')
             params.merge!(visitor_names: [t['contacts.name'], t["custom_field.visitor_names"]].reject(&:blank?).join(', '),
                           date_of_visit: t["custom_field.date_of_visit"],
@@ -61,6 +63,12 @@ class TicketAdapter
           b.name.downcase == SIRPORTLY_ARGS['brand'].downcase
         end
         dc.present? ? dc.first.departments.reject(&:private).collect(&:name).sort : []
+      end
+    end
+
+    def teams
+      Rails.cache.fetch("stronghold_teams", expires_in: 1.day) do
+        SIRPORTLY.teams.collect(&:name)
       end
     end
 
