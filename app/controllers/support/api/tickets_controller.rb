@@ -61,7 +61,7 @@ class Support::Api::TicketsController < SupportBaseController#
   end
 
   def ticket_params
-    ([:title, :description, :department, :priority] + access_request_params).uniq
+    ([:title, :description, :department, :priority] + access_request_params + support_params).uniq
   end
 
   def access_request_params
@@ -75,6 +75,10 @@ class Support::Api::TicketsController < SupportBaseController#
 
   def access_request_others_params
     [:visitor_names]
+  end
+
+  def support_params
+    [:project_id, :instance_id]
   end
 
   def update_params

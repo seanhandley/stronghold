@@ -103,6 +103,15 @@
               %span.input-group-addon
                 %i.fa.fa-clock-o
               = time_select :ticket, :date, {ignore_date: true, time_separator: '', minute_step: 15}, class: "form-control form-control-halves"
+          #support-fields.hide
+            .input-group
+              %span.input-group-addon
+                %i.fa.fa-edit
+              = text_field_tag :project_id, nil, placeholder: 'Please include the project ID', class: "form-control"
+            .input-group
+              %span.input-group-addon
+                %i.fa.fa-edit
+              = text_field_tag :instance_id, nil, placeholder: 'Please include the instance ID', class: "form-control"
           #other-issues-fields.hide
             .input-group
               %span.input-group-addon
