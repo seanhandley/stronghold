@@ -28,6 +28,7 @@ class Support::TicketsController < SupportBaseController
   private
 
   def get_departments_and_priorities
+    @projects    = current_organization.projects.collect{|r| [r.name + " (" + r.uuid + ")", r.uuid]}
     @departments = TicketAdapter.departments
     @priorities  = TicketAdapter.priorities
     @priorities.delete('Emergency') unless current_organization.known_to_payment_gateway?

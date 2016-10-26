@@ -3,8 +3,8 @@ class Ticket
 
   attr_accessor :reference, :title,  :description, :created_at, :updated_at,
                 :comments,  :status, :name, :email, :department, :priority,
-                :visitor_names, :nature_of_visit, :date_of_visit, :time_of_visit,
-                :as_hash
+                :project_id, :instance_id, :visitor_names, :nature_of_visit,
+                :date_of_visit, :time_of_visit, :as_hash
 
   validates :title,       length: {minimum: 1, maximum: 200}, allow_blank: false, unless: :access_request?
   validates :description, length: {minimum: 1}, allow_blank: false, unless: :access_request?

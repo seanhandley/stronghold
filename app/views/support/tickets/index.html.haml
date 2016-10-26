@@ -106,12 +106,12 @@
           #support-fields.hide
             .input-group
               %span.input-group-addon
-                %i.fa.fa-edit
-              = text_field_tag :project_id, nil, placeholder: 'Please include the project ID', class: "form-control"
+                %i.fa.fa-folder
+              = select_tag :project_id, options_for_select(@projects), class: "form-control", autofocus: true, prompt: "Choose a project"
             .input-group
               %span.input-group-addon
                 %i.fa.fa-edit
-              = text_field_tag :instance_id, nil, placeholder: 'Please include the instance ID', class: "form-control"
+              = text_field_tag :instance_id, nil, placeholder: 'Please include the instance ID if relevant', class: "form-control"
           #other-issues-fields.hide
             .input-group
               %span.input-group-addon
