@@ -23,4 +23,7 @@ module ExternalLinks
   def self.vagrant_openstack_client
     'https://github.com/datacentred/openstack-cli-vagrant'
   end
+  def self.github_mastering_markdown
+    'https://guides.github.com/features/mastering-markdown/'
+  end
 end
