@@ -78,10 +78,6 @@
             = select_tag :new_ticket_department, options_for_select(@departments), class: "form-control", autofocus: true, prompt: "Choose a department"
           .input-group
             %span.input-group-addon
-              %i.fa.fa-folder
-            = select_tag :new_ticket_team, options_for_select(@teams), class: "form-control", autofocus: true, prompt: "Choose a team"
-          .input-group
-            %span.input-group-addon
               %i.fa.fa-exclamation
             = select_tag :new_ticket_priority, options_for_select(@priorities), class: "form-control", prompt: "Choose a priority"
           %p.help-block

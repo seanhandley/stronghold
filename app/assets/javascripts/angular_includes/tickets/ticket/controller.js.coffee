@@ -120,7 +120,6 @@ angularJS.controller "TicketsController", [
       ticketTitleInput = $("#new_ticket_title")
       ticketDescriptionTextArea = $("#new_ticket_description")
       ticketDepartmentSelect = $("#new_ticket_department")
-      ticketTeamSelect = $("#new_ticket_team")
       ticketVisitorNames = $("#visitor_names")
       ticketPrioritySelect = $("#new_ticket_priority")
       ticketReasonForVisit = $("#reason_for_visit")
@@ -133,7 +132,6 @@ angularJS.controller "TicketsController", [
       ticketDescriptionTextArea.val("")
       ticketTitleInput.val("")
       ticketDepartmentSelect.val("")
-      ticketTeamSelect.val("")
       ticketVisitorNames.val("")
       ticketReasonForVisit.val("")
       ticketDateMinutes.val("00")
@@ -156,7 +154,6 @@ angularJS.controller "TicketsController", [
       ticketTitleInput = $("#new_ticket_title")
       ticketDescriptionTextArea = $("#new_ticket_description")
       ticketDepartmentSelect = $("#new_ticket_department")
-      ticketTeamSelect = $("#new_ticket_team")
       ticketPrioritySelect = $("#new_ticket_priority")
       ticketMoreInfo = $("#more_info")
       ticketVisitorNames = $("#visitor_names")
@@ -196,7 +193,6 @@ angularJS.controller "TicketsController", [
           "title": ticketTitleInput.val(),
           "description": ticketDescriptionTextArea.val(),
           "department": ticketDepartmentSelect.val(),
-          "team": ticketTeamSelect.val(),
           "priority": ticketPrioritySelect.val(),
           "more_info": ticketMoreInfo.val(),
           "visitor_names": ticketVisitorNames.val(),

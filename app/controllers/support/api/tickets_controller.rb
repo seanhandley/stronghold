@@ -78,7 +78,11 @@ class Support::Api::TicketsController < SupportBaseController#
   end
 
   def support_params
+<<<<<<< 163827a3cfead96a2b3d1f33eaab263d8664884b
     [:more_info]
+=======
+    [:escalation_path]
+>>>>>>> Edit escalation paths, not teams
   end
 
   def update_params
