@@ -76,6 +76,10 @@ if Rails.env.production? || Rails.env.staging?
     FillAuditBlanksJob.perform_later
   end
 
+  every(1.day, 'organization_usage_near_threshold_alert', :at => '15:00') do
+    UsageAlertJob.perform_later
+  end
+
 end
 
 module Clockwork

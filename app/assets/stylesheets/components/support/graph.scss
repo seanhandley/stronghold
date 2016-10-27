@@ -66,6 +66,12 @@ div#usage-capacity-summary span.progress-bar-text {
   float: right;
   color: #AAAAAA;
 }
+
+div.quota-limits-alert {
+  height: 10px;
+  text-align: center;
+  font-size: 11px;
+}
 //
 
 // Openstack Button

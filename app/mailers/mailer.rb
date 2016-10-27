@@ -1,10 +1,12 @@
 class Mailer < ActionMailer::Base
   add_template_helper(DateTimeHelper)
   add_template_helper(AbbreviationHelper)
+  add_template_helper(UsageAlertHelper)
   include CsvHelper
+  include UsageAlertHelper
 
   default :from => "DataCentred <noreply@datacentred.io>"
-  
+
   def signup(invite_id)
     @invite = Invite.find(invite_id)
     mail(:to => @invite.email, :subject => "Confirm your account")
@@ -40,27 +42,27 @@ class Mailer < ActionMailer::Base
 
   def card_reverification_failure(organization)
     @organization = organization
-    mail(:to => organization.admin_users.collect(&:email).join(', '), :bcc => "fraud@datacentred.co.uk", :subject => "There's a problem with your card")   
+    mail(:to => organization.admin_users.collect(&:email).join(', '), :bcc => "fraud@datacentred.co.uk", :subject => "There's a problem with your card")
   end
 
   def notify_wait_list_entry(email)
     @email = email
-    mail(:to => email, :subject => "We're back!")   
+    mail(:to => email, :subject => "We're back!")
   end
 
   def goodbye(admins)
     email = admins.collect(&:email).join(', ')
-    mail(:to => email, :subject => "Account closed")   
+    mail(:to => email, :subject => "Account closed")
   end
 
   def activation_reminder(email)
-    mail(:to => email, :subject => "Activate your DataCented account")   
+    mail(:to => email, :subject => "Activate your DataCented account")
   end
 
   def notify_staff_of_signup(organization)
     @organization = organization
     @salesforce_link = "https://eu2.salesforce.com/#{@organization.salesforce_id}"
-    mail(:to => 'signups@datacentred.co.uk', :subject => "New Signup: #{@organization.name}")   
+    mail(:to => 'signups@datacentred.co.uk', :subject => "New Signup: #{@organization.name}")
   end
 
   def review_mode_alert(organization)
@@ -76,5 +78,11 @@ class Mailer < ActionMailer::Base
   def quota_changed(organization)
     mail(:to => organization.admin_users.collect(&:email).join(', '),
          :subject => "Your account limits have changed")
+  end
+
+  def quota_limits_alert(organization_id)
+    organization = Organization.find(organization_id)
+    mail(:to => organization.admin_users.collect(&:email).join(', '),
+         :subject => "You are reaching your quota limit")
   end
 end
