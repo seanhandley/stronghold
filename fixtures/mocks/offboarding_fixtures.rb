@@ -8,7 +8,13 @@ module OffboardingFixtures
                               {'tenant_id' => '54321', 'id' => '2'}]}
     servers_response.expect(:body, servers)
 
+    server_volumes_response = MiniTest::Mock.new
+    server_volumes = {'volumeAttachments' => [{'id' => '1'}]}
+
     compute_mock.expect(:list_servers_detail, servers_response, [Hash])
+    server_volumes_response.expect(:body, server_volumes)
+    compute_mock.expect(:get_server_volumes, server_volumes_response, ['1'])
+    compute_mock.expect(:detach_volume, true, ['1', '1'])
     compute_mock.expect(:delete_server, true, ['1'])
 
     compute_mock

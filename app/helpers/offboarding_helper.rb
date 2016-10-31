@@ -12,6 +12,10 @@ module OffboardingHelper
     instances = fog.list_servers_detail(all_tenants: true).body['servers'].select{|s| s['tenant_id'] == project.uuid}.map{|s| s['id']}
     instances.each do |instance|
       Rails.logger.info "Deleting instance #{instance}"
+      volumes = fog.get_server_volumes(instance).body["volumeAttachments"].map{|i| i['id']}
+      volumes.each do |volume|
+        with_auto_retry(3) { fog.detach_volume(instance, volume) }
+      end
       with_auto_retry(3) { fog.delete_server(instance)}
     end
 
@@ -89,6 +93,9 @@ module OffboardingHelper
         sleep wait
       end
     end
-    Honeybadger.notify(last_error) if last_error
+    if last_error
+      Honeybadger.notify(last_error)
+      raise last_error
+    end
   end
 end
