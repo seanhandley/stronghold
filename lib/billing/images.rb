@@ -137,6 +137,15 @@ module Billing
                                       size: bytes_to_terabytes(s['resource_metadata']['size'].to_i),
                                       event_name: s['resource_metadata']['event_type'], billing_sync: sync,
                                       message_id: s['message_id']
+        elsif s['resource_metadata']['deleted_at']
+          unless cached_images[image_id]
+            Honeybadger.notify(StandardError.new("Image not found: #{image_id}"))
+            next
+          end
+          Billing::ImageState.create image_id: cached_images[image_id][:id], recorded_at: Time.zone.parse("#{s['resource_metadata']['deleted_at']} UTC"),
+                                      size: bytes_to_terabytes(s['resource_metadata']['size'].to_i),
+                                      event_name: 'image.delete', billing_sync: sync,
+                                      message_id: s['message_id']
         end
       end
     end
