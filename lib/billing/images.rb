@@ -137,7 +137,7 @@ module Billing
                                       size: bytes_to_terabytes(s['resource_metadata']['size'].to_i),
                                       event_name: s['resource_metadata']['event_type'], billing_sync: sync,
                                       message_id: s['message_id']
-        elsif s['resource_metadata']['deleted_at']
+        elsif s['resource_metadata']['deleted_at'] != 'None'
           unless cached_images[image_id]
             Honeybadger.notify(StandardError.new("Image not found: #{image_id}"))
             next
