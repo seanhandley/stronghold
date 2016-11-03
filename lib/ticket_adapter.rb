@@ -14,7 +14,7 @@ class TicketAdapter
       columns = %w{reference subject submitted_at updated_at
                    contact_methods.data priorities.name
                    contacts.name statuses.status_type
-                   departments.name
+                   departments.name custom_field.escalation_path
                    custom_field.visitor_names
                    custom_field.date_of_visit
                    custom_field.time_of_visit
@@ -95,7 +95,7 @@ class TicketAdapter
       when "Support"
         properties.merge!({'custom[more_info]' => ticket.more_info})
       end
-      if ticket.department == "Support" && current_organization.colo?
+      if ticket.department == "Staging" # && Authorization.current_user.organization.colo?
         properties.merge!({'custom[escalation_path]' => ticket.escalation_path})
       end
       new_ticket = SIRPORTLY.create_ticket(properties)
