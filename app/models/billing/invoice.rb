@@ -155,11 +155,11 @@ module Billing
     end
 
     def salesforce_invoice_link
-      salesforce_id.present? ? "https://eu2.salesforce.com/#{salesforce_id}" : ''
+      salesforce_id.present? ? ExternalLinks.salesforce_invoice_path(salesforce_id) : ''
     end
 
     def stripe_invoice_link
-      stripe_invoice_id.present? ? "https://dashboard.stripe.com/invoices/#{stripe_invoice_id}" : ''
+      stripe_invoice_id.present? ? ExternalLinks.stripe_path(invoices, stripe_invoice_id) : ''
     end
 
     private

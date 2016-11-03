@@ -26,4 +26,10 @@ module ExternalLinks
   def self.github_mastering_markdown
     'https://guides.github.com/features/mastering-markdown/'
   end
+  def self.salesforce_invoice_path(salesforce_id)
+    "https://eu2.salesforce.com/#{salesforce_id}"
+  end
+  def self.stripe_path(section, id)
+    "https://dashboard.stripe.com/#{section}/#{id}"
+  end
 end

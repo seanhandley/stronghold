@@ -2,11 +2,11 @@
   .col-md-4.stats-column.left
     %div.stats-title Created at
     %div.stats-content
-      =long_date(@organization.created_at)
+      = long_date(@organization.created_at)
   .col-md-4.stats-column.middle
     %div.stats-title Active Instances
     %div.stats-content
-      =@instances
+      = @instances
   .col-md-4.stats-column.right
     %div.stats-title Projects
     %div.stats-content
@@ -44,7 +44,7 @@
             Salesforce Customer ID
           %td
             - if @organization.salesforce_id?
-              = link_to @organization.salesforce_id, "https://eu2.salesforce.com/#{@organization.salesforce_id}"
+              = link_to @organization.salesforce_id, ExternalLinks.salesforce_invoice_path(@organization.salesforce_id)
             - else
               None
         %tr
@@ -52,6 +52,6 @@
             Stripe Customer ID
           %td
             - if @organization.stripe_customer_id?
-              = link_to @organization.stripe_customer_id, "https://dashboard.stripe.com/customers/#{@organization.stripe_customer_id}"
+              = link_to @organization.stripe_customer_id, ExternalLinks.stripe_path(customers, @organization.stripe_customer_id)
             - else
               None
