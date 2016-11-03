@@ -54,6 +54,7 @@ gem 'statesman', '~> 2.0'
 gem 'parallel'
 gem 'docker-api', '~> 1.31'
 gem 'gibberish', '~> 2.1'
+gem 'sidekiq-unique-jobs', '~> 4.0'
 
 group :test, :acceptance do
   gem 'faker'

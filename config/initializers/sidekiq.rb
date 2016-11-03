@@ -7,6 +7,11 @@ Sidekiq.configure_client do |config|
  config.redis = { :namespace => 'stronghold' }
 end
 
+Sidekiq.default_worker_options = {
+  unique: :until_executed,
+  unique_args: ->(args) { [ args.first.except('job_id') ] }
+}
+
 if ENV["SIDEKIQ_PROFILE"]
   require "objspace"
   ObjectSpace.trace_object_allocations_start
