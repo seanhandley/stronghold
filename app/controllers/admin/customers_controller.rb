@@ -30,6 +30,10 @@ class Admin::CustomersController < AdminBaseController
     @audits          = Audit.for_organization_and_user(@organization, current_user).order('created_at DESC').first(7)
     @projects        = @organization.projects.includes(:users)
     @invites         = @organization.invites
+<<<<<<< HEAD
+=======
+    @instances       = OpenStackConnection.compute.servers.count
+>>>>>>> parent of 70ae6f0... fix conflicts
   end
 
   def edit
