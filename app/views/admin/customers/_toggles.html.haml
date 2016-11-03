@@ -1,0 +1,20 @@
+%ul.toggle-list
+  - unless @organization.staff?
+    %li
+      %div.toggle-div
+        Account type
+        = form_for @organization, url: admin_account_migration_path(@organization), :remote => true, :html => {:role => 'form'} do |f|
+          .form-group
+            = f.check_box :self_service, {:id=>"toggle-account", class: 'toggle', data: default_toggle_params.merge(on: "Self-Service", off: "Invoiced/Trial", offstyle: 'primary')}
+  %li
+    %div.toggle-div
+      Payment
+      = form_for @organization, url: admin_customer_path(@organization), :remote => true, :html => {:role => 'form'} do |f|
+        .form-group
+          = f.check_box :started_paying_at, {:id=>"toggle-paying", class: 'toggle', checked: @organization.paying?, data: default_toggle_params.merge(on: "Paying", off: "Not Paying")}
+  %li
+    %div.toggle-div.last
+      Billing
+      = form_for @organization, url: admin_customer_path(@organization), :remote => true, :html => {:role => 'form'} do |f|
+        .form-group
+          = f.check_box :bill_automatically, {:id=>"toggle-bill-automatically", class: 'toggle', data: default_toggle_params.merge(on: "Automated Bill", off: "Manual Bill", onstyle: 'success', offstyle: 'primary')}

@@ -2,7 +2,7 @@
 
 .admin-customer-section
   .row
-    .col-md-8
+    .col-lg-9.col-md-8.col-sm-9
       .panel.panel-info
         .panel-heading
           %i.fa.fa-info
@@ -75,24 +75,16 @@
             .panel-body.panel-padding
               = render partial: "admin/customers/invites", locals: {invites: @invites, organization: @organization}
 
-    .col-md-4
+    .col-lg-3.col-md-4.col-sm-3.admin-sidebar
+      %div.panel.panel-info
+        .panel-body.panel-padding
+          %div.toggle-grid
+            = render partial: 'admin/customers/toggles'
+            
       %div.panel.panel-info
         .panel-heading
-          %div#paying_and_account_type{style: "display: flex; justify-content: space-between;"}
-            %div
-              = form_for @organization, url: admin_customer_path(@organization), :remote => true, :html => {:role => 'form'} do |f|
-                .form-group
-                  = f.check_box :started_paying_at, {:id=>"toggle-paying", class: 'toggle', checked: @organization.paying?, data: default_toggle_params.merge(on: "Paying", off: "Not Paying")}
-            %div
-              = form_for @organization, url: admin_customer_path(@organization), :remote => true, :html => {:role => 'form'} do |f|
-                .form-group
-                  = f.check_box :bill_automatically, {:id=>"toggle-bill-automatically", class: 'toggle', data: default_toggle_params.merge(on: "Automated Bill", off: "Manual Bill", onstyle: 'success', offstyle: 'primary')}
-            %div
-              - unless @organization.staff?
-                = form_for @organization, url: admin_account_migration_path(@organization), :remote => true, :html => {:role => 'form'} do |f|
-                  .form-group
-                    = f.check_box :self_service, {:id=>"toggle-account", class: 'toggle', data: default_toggle_params.merge(on: "Self-Service", off: "Invoiced/Trial", offstyle: 'primary')}
-
+          %i.fa.fa-cog
+          Account State
         .panel-body.panel-padding
           = render partial: 'admin/customers/states'
 
