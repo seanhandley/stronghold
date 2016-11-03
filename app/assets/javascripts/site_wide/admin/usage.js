@@ -13,4 +13,13 @@ $(document).ready(function() {
   $('a.toggle_line_entry').click();
 
   $('.select-organizations').select2();
+
+  function checkDate() {
+    var selectedText = document.getElementById('datepicker').value;
+    var selectedDate = new Date(selectedText);
+    var now = new Date();
+    if (selectedDate > now) {
+     alert("Date must be in the past");
+    }
+  }
 });

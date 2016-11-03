@@ -6,10 +6,10 @@
 = form_tag(admin_usage_path(@organization), 'role' => 'form', 'method' => 'put') do
   .form-group
     %label From Date
-    = datetime_select :from, nil, default: @from_date, class: 'form-control', minute_step: 15
+    = datetime_select :from, nil, default: @from_date, class: 'form-control', minute_step: 15, min: Date.today
   .form-group
     %label To Date
-    = datetime_select :to, nil, default: @to_date, class: 'form-control', minute_step: 15
+    = datetime_select :to, nil, default: @to_date, class: 'form-control', minute_step: 15, max: DateTime.now
 
   .form-group
     %label Format
@@ -21,4 +21,4 @@
       Clear Cached Results?
     %p.help-block Slower, but will regenerate data from scratch
 
-  = submit_tag 'Generate →', class: 'btn btn-primary'
+  = submit_tag 'Generate →', class: 'btn btn-primary', onchange: "checkDate();"
