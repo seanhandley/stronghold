@@ -78,7 +78,7 @@ class Support::Api::TicketsController < SupportBaseController#
   end
 
   def support_params
-    [:project_id, :instance_id]
+    [:more_info]
   end
 
   def update_params

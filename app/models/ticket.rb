@@ -3,7 +3,7 @@ class Ticket
 
   attr_accessor :reference, :title,  :description, :created_at, :updated_at,
                 :comments,  :status, :name, :email, :department, :priority,
-                :project_id, :instance_id, :visitor_names, :nature_of_visit,
+                :more_info, :visitor_names, :nature_of_visit,
                 :date_of_visit, :time_of_visit, :as_hash
 
   validates :title,       length: {minimum: 1, maximum: 200}, allow_blank: false, unless: :access_request?
@@ -18,8 +18,7 @@ class Ticket
     @title           = access_request? ? 'Access Request' : params[:title]
     @description     = access_request? ? params[:nature_of_visit] : params[:description]
     @priority        = params[:priority]
-    @project_id      = params[:project_id]
-    @instance_id     = params[:instance_id]
+    @more_info     = params[:more_info]
     @created_at      = params[:created_at]
     @updated_at      = params[:updated_at]
     @comments        = params[:comments] || []
