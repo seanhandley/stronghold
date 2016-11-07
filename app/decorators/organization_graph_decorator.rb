@@ -68,6 +68,10 @@ class OrganizationGraphDecorator < ApplicationDecorator
     ].map do |e|
       ((e[0].to_f / e[1].to_f) * 100)
     end.sum / 3.0).round
+    # Dividing by zero reproduce the error
+    # .map do |e|
+    #   ((e[0].to_f / e[1].to_f) * 100)
+    # end.sum / 0.0).round
   end
 
   def instance_count
