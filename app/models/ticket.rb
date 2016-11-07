@@ -18,7 +18,7 @@ class Ticket
     @title           = access_request? ? 'Access Request' : params[:title]
     @description     = access_request? ? params[:nature_of_visit] : params[:description]
     @priority        = params[:priority]
-    @more_info     = params[:more_info]
+    @more_info       = params[:more_info]
     @created_at      = params[:created_at]
     @updated_at      = params[:updated_at]
     @comments        = params[:comments] || []

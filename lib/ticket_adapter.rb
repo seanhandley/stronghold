@@ -85,13 +85,13 @@ class TicketAdapter
         :email => ticket.email,
         'custom[organization_name]' => Authorization.current_user.organization.name
       }
-      if ticket.department == "Access Requests"
+      case ticket.department
+      when "Access Requests"
         properties.merge!({'custom[visitor_names]'   => ticket.visitor_names,
                            'custom[nature_of_visit]' => ticket.nature_of_visit,
                            'custom[date_of_visit]'   => ticket.date_of_visit,
                            'custom[time_of_visit]'   => ticket.time_of_visit})
-      end
-      if ticket.department == "Support"
+      when "Support"
         properties.merge!({'custom[more_info]' => ticket.more_info})
       end
       new_ticket = SIRPORTLY.create_ticket(properties)
