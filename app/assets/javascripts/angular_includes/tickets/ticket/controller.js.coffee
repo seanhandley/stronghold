@@ -201,6 +201,7 @@ angularJS.controller "TicketsController", [
           "nature_of_visit": ticketReasonForVisit.val(),
           "time_of_visit": ticketDateHours.val() + ":" + ticketDateMinutes.val(),
           "date_of_visit": ticketDateDay.val() + '/' + ticketDateMonth.val() + '/' + ticketDateYear.val(),
+          "escalation_path": ticketEscalationPath.val(),
         }
       })
       request.then successHandler, errorHandler
