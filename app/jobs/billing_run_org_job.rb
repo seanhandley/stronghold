@@ -13,5 +13,6 @@ class BillingRunOrgJob < ActiveJob::Base
       invoice.build_line_items(usage_data)
       invoice.update_attributes(discount_percent:  ud.discount_percent, tax_percent: ud.tax_percent)
     end
+    UpdateInvoiceTotalsJob.set(wait: 20.minutes).perform_later(organization, year, month)
   end
 end
