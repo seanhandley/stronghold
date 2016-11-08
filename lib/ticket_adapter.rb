@@ -14,10 +14,8 @@ class TicketAdapter
       columns = %w{reference subject submitted_at updated_at
                    contact_methods.data priorities.name
                    contacts.name statuses.status_type
-                   departments.name custom_field.escalation_path
-                   custom_field.visitor_names
-                   custom_field.date_of_visit
-                   custom_field.time_of_visit
+                   departments.name custom_field.visitor_names
+                   custom_field.date_of_visit custom_field.time_of_visit
                   }
       spql = "SELECT #{columns.join(',')} FROM tickets WHERE contacts.company = \"#{organization.reference}\" GROUP BY submitted_at ORDER BY submitted_at DESC LIMIT #{limit.join(',')}"
       SIRPORTLY.request("tickets/spql", spql: spql)["results"].map{|t| Hash[columns.zip(t)]}.map do |t|
@@ -42,13 +40,16 @@ class TicketAdapter
                      name: t['contacts.name'],
                      status: t['statuses.status_type'],
                      department: t['departments.name']}
-          if(t['departments.name'] == 'Access Requests')
+          case t['departments.name']
+          when 'Access Requests'
             params.merge!(visitor_names: [t['contacts.name'], t["custom_field.visitor_names"]].reject(&:blank?).join(', '),
                           date_of_visit: t["custom_field.date_of_visit"],
                           time_of_visit: t["custom_field.time_of_visit"])
-          end
-          if (t['departments.name'] == 'Support')
+          when 'Support'
             params.merge!(more_info: t["custom_field.more_info"])
+            if organization.colo?
+              params.merge!(department: "Colo Support")
+            end
           end
           tickets.push(Ticket.new(params))
         end
@@ -94,9 +95,9 @@ class TicketAdapter
                            'custom[time_of_visit]'   => ticket.time_of_visit})
       when "Support"
         properties.merge!({'custom[more_info]' => ticket.more_info})
-      end
-      if ticket.department == "Staging" # && Authorization.current_user.organization.colo?
-        properties.merge!({'custom[escalation_path]' => ticket.escalation_path})
+        if organization.colo?
+          properties.merge!({:department => "Colo Support"})
+        end
       end
       new_ticket = SIRPORTLY.create_ticket(properties)
       update = new_ticket.post_update(:message => ticket.description, :author_name => Authorization.current_user.name, :author_email => Authorization.current_user.email)

@@ -120,7 +120,6 @@ angularJS.controller "TicketsController", [
       ticketTitleInput = $("#new_ticket_title")
       ticketDescriptionTextArea = $("#new_ticket_description")
       ticketDepartmentSelect = $("#new_ticket_department")
-      ticketEscalationPath = $("#new_ticket_escalation_path")
       ticketVisitorNames = $("#visitor_names")
       ticketPrioritySelect = $("#new_ticket_priority")
       ticketReasonForVisit = $("#reason_for_visit")
@@ -155,7 +154,6 @@ angularJS.controller "TicketsController", [
       ticketTitleInput = $("#new_ticket_title")
       ticketDescriptionTextArea = $("#new_ticket_description")
       ticketDepartmentSelect = $("#new_ticket_department")
-      ticketEscalationPath = $("#new_ticket_escalation_path")
       ticketPrioritySelect = $("#new_ticket_priority")
       ticketMoreInfo = $("#more_info")
       ticketVisitorNames = $("#visitor_names")
@@ -201,7 +199,6 @@ angularJS.controller "TicketsController", [
           "nature_of_visit": ticketReasonForVisit.val(),
           "time_of_visit": ticketDateHours.val() + ":" + ticketDateMinutes.val(),
           "date_of_visit": ticketDateDay.val() + '/' + ticketDateMonth.val() + '/' + ticketDateYear.val(),
-          "escalation_path": ticketEscalationPath.val(),
         }
       })
       request.then successHandler, errorHandler

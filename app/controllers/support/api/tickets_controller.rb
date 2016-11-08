@@ -76,6 +76,7 @@ class Support::Api::TicketsController < SupportBaseController#
     [:visitor_names]
   end
 
+<<<<<<< c29e957fab1e3edfac197ad63bb5e41f83c09156
   def support_params
 <<<<<<< 163827a3cfead96a2b3d1f33eaab263d8664884b
     [:more_info]
@@ -84,6 +85,8 @@ class Support::Api::TicketsController < SupportBaseController#
 >>>>>>> Edit escalation paths, not teams
   end
 
+=======
+>>>>>>> use a new department for colour support.
   def update_params
     params.permit(:id, :status, :priority)
   end
