@@ -155,6 +155,7 @@ angularJS.controller "TicketsController", [
       ticketDescriptionTextArea = $("#new_ticket_description")
       ticketDepartmentSelect = $("#new_ticket_department")
       ticketPrioritySelect = $("#new_ticket_priority")
+      ticketMoreInfo = $("#more_info")
       ticketVisitorNames = $("#visitor_names")
       ticketReasonForVisit = $("#reason_for_visit")
       ticketDateMinutes = $('#ticket_date_5i')
@@ -193,6 +194,7 @@ angularJS.controller "TicketsController", [
           "description": ticketDescriptionTextArea.val(),
           "department": ticketDepartmentSelect.val(),
           "priority": ticketPrioritySelect.val(),
+          "more_info": ticketMoreInfo.val(),
           "visitor_names": ticketVisitorNames.val(),
           "nature_of_visit": ticketReasonForVisit.val(),
           "time_of_visit": ticketDateHours.val() + ":" + ticketDateMinutes.val(),
@@ -289,7 +291,7 @@ angularJS.controller "TicketsController", [
       emergency_message = "Emergency tickets will be answered ASAP by on-call staff and should not be used unless absolutely necessary. Do you wish to proceed?"
       if priority_name == 'Emergency' and !confirm(emergency_message)
         return
-        
+
       priorityDropdownSpan = $("#priorityDropdown > span").not(".caret")
       priorityDropdownSpan.html("Changing...")
       url = "/account/api/tickets/" + $scope.selectedTicket.reference + "/"

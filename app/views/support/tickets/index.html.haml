@@ -112,11 +112,17 @@
               %span.input-group-addon
                 %i.fa.fa-edit
               = text_area_tag :new_ticket_description, nil, placeholder: 'Now, tell us all the details...', class: "form-control", rows: 12
+
             %strong.tiny
               %i.fa.fa-sticky-note
               You may use
               = link_to 'Markdown', ExternalLinks.github_mastering_markdown, class: 'text-info'
               in your ticket details if you need to add formatting.
+          #support-fields.hide
+            .input-group
+              %span.input-group-addon
+                %i.fa.fa-info
+              = text_field_tag :more_info, nil, placeholder: 'Additional information (Project ID, Request ID, etc)', class: "form-control"
         .modal-footer
           %button.btn.btn-default{:'ng-click' => 'ticketDialogCancel()'}
             = t(:cancel)

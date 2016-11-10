@@ -1,10 +1,10 @@
 class Ticket
   include ActiveModel::Validations
-  
+
   attr_accessor :reference, :title,  :description, :created_at, :updated_at,
                 :comments,  :status, :name, :email, :department, :priority,
-                :visitor_names, :nature_of_visit, :date_of_visit, :time_of_visit,
-                :as_hash
+                :more_info, :visitor_names, :nature_of_visit,
+                :date_of_visit, :time_of_visit, :as_hash
 
   validates :title,       length: {minimum: 1, maximum: 200}, allow_blank: false, unless: :access_request?
   validates :description, length: {minimum: 1}, allow_blank: false, unless: :access_request?
@@ -13,11 +13,12 @@ class Ticket
   validate :date_time_of_visit, if: :access_request?
 
   def initialize(params)
-    @reference       = params[:reference]  
+    @reference       = params[:reference]
     @department      = params[:department]
     @title           = access_request? ? 'Access Request' : params[:title]
     @description     = access_request? ? params[:nature_of_visit] : params[:description]
     @priority        = params[:priority]
+    @more_info       = params[:more_info]
     @created_at      = params[:created_at]
     @updated_at      = params[:updated_at]
     @comments        = params[:comments] || []

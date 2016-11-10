@@ -70,7 +70,13 @@
           %td{style: 'width: 100px'}
             %strong Access code:
           %td {{selectedTicket.reference}}
-
+  %div{'ng-show' => "selectedTicket.department == 'Support'"}
+    .table-responsive
+      %table
+        %tr
+          %td{style: 'width: 100px'}
+            %strong Additional information:
+          %td {{selectedTicket.more_info}}
   - if can? :modify, Ticket
     %hr
     %div.btn-group#comment-button
