@@ -8,8 +8,7 @@ class Support::DashboardController < SupportBaseController
   end
 
   def index
-    @test_two = projects_limits
-    @test_one = projects_usage
+    @percent = percent_used
   end
 
   def regenerate_ceph_credentials

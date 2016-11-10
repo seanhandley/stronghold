@@ -17,6 +17,5 @@
       Last week, you spent
       %strong= number_to_currency(current_user.organization.weekly_spend, :unit => "£")
 .row
-  = @test_two
-  %br
-  = @test_one
+  percent:
+  = @percent
