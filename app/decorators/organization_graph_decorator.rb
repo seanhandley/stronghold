@@ -58,6 +58,10 @@ class OrganizationGraphDecorator < ApplicationDecorator
     live_servers(true); live_volumes(true); live_floating_ips(true); live_lb_pools(true)
   end
 
+  def self.projects
+    live_servers
+  end
+
   private
 
   def used_percent
