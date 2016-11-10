@@ -47,24 +47,15 @@ module ProjectsUsageHelper
   end
 
   def percent_used
-    (memory_percent + vcpu_percent + storage_percent)/3.0
+    (object_percent("memory") + object_percent("vcpu") + object_percent("storage")).to_f / 3.0
   end
 
-  def memory_percent
+  def object_percent(object)
     a = projects_limits
     b = total_usage
-    a.select{|x|  b.map{|p| x['memory'].to_f == 0 ? x['memory'].to_f : (p['memory'].to_f * 100)/ x['memory'].to_f}}.sum
-  end
-
-  def vcpu_percent
-    a = projects_limits
-    b = total_usage
-    a.select{|x|  b.map{|p| x['vcpu'].to_f == 0 ? x['vcpu'].to_f : (p['vcpu'].to_f * 100)/ x['vcpu'].to_f}}.sum
-  end
-
-  def storage_percent
-    a = projects_limits
-    b = total_usage
-    a.select{|x|  b.map{|p| x['storage'].to_f == 0 ? x['storage'].to_f : (p['storage'].to_f * 100)/ x['storage'].to_f}}.sum
+    arr2 = b.map{|x| x[object].to_f}
+    arr1 = a.map{|y| y[object].to_f}
+    percent_per_project = [arr1, arr2].transpose.map {|x| x.inject { |lim, usg| usg * 100 / lim }}
+    percent_per_project.reduce(:+).to_f / 3.0
   end
 end
