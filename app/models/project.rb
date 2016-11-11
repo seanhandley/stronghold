@@ -2,6 +2,7 @@ class Project < ActiveRecord::Base
   include OffboardingHelper
   include ActionView::Helpers::TextHelper
   include ActionView::Helpers::UrlHelper
+  include QuotaUsage
 
   audited only: [:name, :uuid], :associated_with => :organization
   has_associated_audits
