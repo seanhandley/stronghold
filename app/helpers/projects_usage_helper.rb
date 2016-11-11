@@ -55,7 +55,7 @@ module ProjectsUsageHelper
     b = total_usage
     arr2 = b.map{|x| x[object].to_f}
     arr1 = a.map{|y| y[object].to_f}
-    percent_per_project = [arr1, arr2].transpose.map {|x| x.inject { |lim, usg| usg * 100 / lim }}
+    percent_per_project = [arr1, arr2].transpose.map {|x| x.inject { |lim, usg| lim == 0 ? lim : usg * 100 / lim }}
     percent_per_project.reduce(:+).to_f / 3.0
   end
 end
