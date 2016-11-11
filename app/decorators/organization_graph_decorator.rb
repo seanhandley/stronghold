@@ -1,4 +1,5 @@
 class OrganizationGraphDecorator < ApplicationDecorator
+  include QuotaUsage
 
   def to_json
     graph_data.to_json
@@ -61,13 +62,7 @@ class OrganizationGraphDecorator < ApplicationDecorator
   private
 
   def used_percent
-    ([
-      [vcpus_count,    max_vcpus],
-      [memory_count,   max_memory],
-      [storage_gb,     max_storage]
-    ].map do |e|
-      ((e[0].to_f / e[1].to_f) * 100)
-    end.sum / 3.0).round
+    total_used_as_percent
   end
 
   def instance_count

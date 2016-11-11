@@ -1,27 +1,35 @@
 module QuotaUsage
 
+  def get_data
+    ogd = OrganizationGraphDecorator.new(@organization)
+    ogd.graph_data
+  end
+
   def used_vcpus
-    
+    get_data[:compute][:cores][:used]
   end
 
   def available_vcpus
-    100
+    get_data[:compute][:cores][:available]
+    # 100
   end
 
   def used_ram
-    
+    get_data[:compute][:memory][:used]
   end
 
   def available_ram
-    512_000
+    get_data[:compute][:memory][:available]
+    # 512_000
   end
 
   def used_storage
-    
+    get_data[:volume][:storage][:used]
   end
 
   def available_storage
-    10240
+    get_data[:volume][:storage][:available]
+    # 10240
   end
 
   def total_used_as_percent
