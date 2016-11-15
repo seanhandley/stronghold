@@ -1,5 +1,6 @@
 class OrganizationGraphDecorator < ApplicationDecorator
   include QuotaUsage
+  include LiveCloudResources
 
   def to_json
     graph_data.to_json
@@ -55,10 +56,6 @@ class OrganizationGraphDecorator < ApplicationDecorator
     }
   end
 
-  def self.refresh_caches
-    live_servers(true); live_volumes(true); live_floating_ips(true); live_lb_pools(true)
-  end
-
   private
 
   def used_percent
@@ -99,76 +96,54 @@ class OrganizationGraphDecorator < ApplicationDecorator
     live_lb_pools.count
   end
 
-  def set_quota_value(category, quota)
-    model.projects.map{|p| p.quota_set[category][quota].to_i}.sum
+  def quota_set_value(category, quota)
+    model.projects.map{|p| p.quota_set[category][quota].to_i}
   end
 
   def max_instances
-    set_quota_value('compute', 'instances')
+    quota_set_value('compute', 'instances').sum
   end
 
   def max_vcpus
-    set_quota_value('compute', 'cores')
+    quota_set_value('compute', 'cores').sum
   end
 
   def max_memory
-    set_quota_value('compute', 'ram')
+    quota_set_value('compute', 'ram').sum
   end
 
   def max_volumes
-    set_quota_value('volume', 'volumes')
+    quota_set_value('volume', 'volumes').sum
   end
 
   def max_storage
-    set_quota_value('volume', 'gigabytes')
+    quota_set_value('volume', 'gigabytes').sum
   end
 
   def max_floatingip
-    set_quota_value('network', 'floatingip')
+    quota_set_value('network', 'floatingip').sum
   end
 
   def max_lbpools
-    set_quota_value('network', 'pool')
+    quota_set_value('network', 'pool').sum
   end
 
-  def self.live_lb_pools(force=false)
-    Rails.cache.fetch("live_lb_poools_dashboard", expires_in: 5.minutes, force: force) do
-      OpenStackConnection.network.list_lb_pools.body['pools']
-    end
-  end
 
   def live_lb_pools
     return [] unless Rails.env.production? # Because LB support isn't on DevStack yet...
-    OrganizationGraphDecorator.live_lb_pools.select{|s| model.projects.map(&:uuid).include?(s['tenant_id'])}
-  end
+    lb_pools.select{|s| model.projects.map(&:uuid).include?(s['tenant_id'])}
 
-  def self.live_floating_ips(force=false)
-    Rails.cache.fetch("live_floating_ips_dashboard", expires_in: 5.minutes, force: force) do
-      OpenStackConnection.network.list_floating_ips.body['floatingips']
-    end
   end
 
   def live_floating_ips
-    OrganizationGraphDecorator.live_floating_ips.select{|s| model.projects.map(&:uuid).include?(s['tenant_id'])}
-  end
-
-  def self.live_servers(force=false)
-    Rails.cache.fetch("live_servers_dashboard", expires_in: 5.minutes, force: force) do
-      OpenStackConnection.compute.list_servers_detail(all_tenants: true).body['servers']
-    end
+    floating_ips.select{|s| model.projects.map(&:uuid).include?(s['tenant_id'])}
   end
 
   def live_servers
-    OrganizationGraphDecorator.live_servers.select{|s| model.projects.map(&:uuid).include?(s['tenant_id'])}
-  end
-
-  def self.live_volumes(force=false)
-    Rails.cache.fetch("live_volumes_dashboard", expires_in: 5.minutes, force: force) do
-      OpenStackConnection.volume.list_volumes_detailed(all_tenants: true).body['volumes']
-    end
+    servers.select{|s| model.projects.map(&:uuid).include?(s['tenant_id'])}
   end
 
   def live_volumes
-    OrganizationGraphDecorator.live_volumes.select{|s| model.projects.map(&:uuid).include?(s["os-vol-tenant-attr:tenant_id"])}
+    volumes.select{|s| model.projects.map(&:uuid).include?(s["os-vol-tenant-attr:tenant_id"])}
   end
 end

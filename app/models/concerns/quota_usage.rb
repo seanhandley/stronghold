@@ -1,35 +1,30 @@
 module QuotaUsage
 
-  def get_data
-    ogd = OrganizationGraphDecorator.new(@organization)
-    ogd.graph_data
-  end
-
   def used_vcpus
-    get_data[:compute][:cores][:used]
+    flavors.map(&:vcpus).sum
   end
 
   def available_vcpus
-    get_data[:compute][:cores][:available]
-    # 100
+    limit = quota_set['compute']['cores']
+    limit - used_vcpus
   end
 
   def used_ram
-    get_data[:compute][:memory][:used]
+    flavors.map(&:ram).sum
   end
 
   def available_ram
-    get_data[:compute][:memory][:available]
-    # 512_000
+    limit = quota_set['compute']['memory']
+    limit - used_ram
   end
 
   def used_storage
-    get_data[:volume][:storage][:used]
+    LiveCloudResourcess.volumes.map{|s| s["size"] }.sum
   end
 
   def available_storage
-    get_data[:volume][:storage][:available]
-    # 10240
+    limit = quota_set['volume']['storage']
+    limit - used_storage
   end
 
   def total_used_as_percent
@@ -39,5 +34,15 @@ module QuotaUsage
     usage << (used_storage.to_f / available_storage.to_f) if available_storage > 0
     return 0 if usage.count == 0
     ((usage.sum / usage.count.to_f) * 100).round
+  end
+
+  private
+
+  def servers
+    LiveCloudResourcess.servers.select{|server| server.project_id == uuid}
+  end
+
+  def flavors
+    servers.map{|s| Billing::InstanceFlavor.find_by_flavor_id(s['flavor']['id']) rescue nil}.compact
   end
 end
