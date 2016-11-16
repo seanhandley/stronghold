@@ -8,7 +8,7 @@ class TestConcernQuotaUsage < CleanTest
         "cores"     => "100",
         "ram"       => "512000"
       },
-      "volume" => { 
+      "volume" => {
         "volumes"   => "10",
         "snapshots" => "10",
         "gigabytes" => "10240"

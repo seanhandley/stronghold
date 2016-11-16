@@ -1,6 +1,5 @@
 class OrganizationGraphDecorator < ApplicationDecorator
   include QuotaUsage
-  include LiveCloudResources
 
   def to_json
     graph_data.to_json

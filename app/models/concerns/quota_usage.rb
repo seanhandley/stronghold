@@ -5,7 +5,7 @@ module QuotaUsage
   end
 
   def available_vcpus
-    limit = quota_set['compute']['cores']
+    limit = quota_set['compute']['cores'].to_i
     limit - used_vcpus
   end
 
@@ -14,7 +14,7 @@ module QuotaUsage
   end
 
   def available_ram
-    limit = quota_set['compute']['memory']
+    limit = quota_set['compute']['memory'].to_i
     limit - used_ram
   end
 
@@ -23,7 +23,7 @@ module QuotaUsage
   end
 
   def available_storage
-    limit = quota_set['volume']['storage']
+    limit = quota_set['volume']['storage'].to_i
     limit - used_storage
   end
 
@@ -39,7 +39,7 @@ module QuotaUsage
   private
 
   def servers
-    LiveCloudResourcess.servers.select{|server| server.project_id == uuid}
+    servers.select{|server| server.project_id == uuid}
   end
 
   def flavors
