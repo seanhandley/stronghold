@@ -58,20 +58,23 @@ class OffboardingHelperTest < CleanTest
   end
 
   def test_with_auto_retry
-    @retries = 0
-    @mock = Minitest::Mock.new
-    @mock.expect :ping, true
-    assert(with_auto_retry(3) do
-      @mock.ping
-    end)
-    @mock.verify
+    begin
+      @retries = 0
+      @mock = Minitest::Mock.new
+      @mock.expect :ping, true
+      assert(with_auto_retry(3) do
+        @mock.ping
+      end)
+      @mock.verify
 
-    @retries = 0
-    Honeybadger.stub(:notify, true) do
-      with_auto_retry(3,0) do
-        @retries += 1
-        raise Fog::Errors::Error, 'foo'
+      @retries = 0
+      Honeybadger.stub(:notify, true) do
+        with_auto_retry(3,0) do
+          @retries += 1
+          raise Fog::Errors::Error, 'foo'
+        end
       end
+    rescue Fog::Errors::Error
     end
     assert_equal 3, @retries
   end
