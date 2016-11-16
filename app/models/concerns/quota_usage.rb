@@ -5,8 +5,7 @@ module QuotaUsage
   end
 
   def available_vcpus
-    limit = quota_set['compute']['cores'].to_i
-    limit - used_vcpus
+    quota_set['compute']['cores'].to_i
   end
 
   def used_ram
@@ -14,8 +13,7 @@ module QuotaUsage
   end
 
   def available_ram
-    limit = quota_set['compute']['memory'].to_i
-    limit - used_ram
+    quota_set['compute']['ram'].to_i
   end
 
   def used_storage
@@ -23,8 +21,7 @@ module QuotaUsage
   end
 
   def available_storage
-    limit = quota_set['volume']['storage'].to_i
-    limit - used_storage
+    quota_set['volume']['gigabytes'].to_i
   end
 
   def total_used_as_percent
