@@ -39,7 +39,7 @@ module QuotaUsage
   private
 
   def servers
-    servers.select{|server| server.project_id == uuid}
+    LiveCloudResources.servers.select{|server| server.project_id == uuid}
   end
 
   def flavors
