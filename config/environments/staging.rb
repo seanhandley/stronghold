@@ -97,9 +97,9 @@ Rails.application.configure do
 
   # Prevent Angular conflicts
   config.assets.js_compressor = Uglifier.new(mangle: false)
-
-  #   config.action_mailer.preview_path ||= defined?(Rails.root) ? "#{Rails.root}/test/mailers/previews" : nil
-  # config.autoload_paths += [config.action_mailer.preview_path]
+  
+  config.action_mailer.show_previews = true
+  config.consider_all_requests_local = true
 
   routes.append do
     get '/rails/mailers'         => "rails/mailers#index"
