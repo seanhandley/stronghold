@@ -19,7 +19,7 @@ module QuotaUsage
   end
 
   def used_storage
-    LiveCloudResourcess.volumes.map{|s| s["size"] }.sum
+    LiveCloudResources.volumes.map{|s| s["size"] }.sum
   end
 
   def available_storage
