@@ -1,27 +1,27 @@
 module LiveCloudResources
   def self.refresh_caches
-    servers(true); volumes(true); floating_ips(true); lb_pools(true)
+    servers(refresh_cache: true); volumes(refresh_cache: true); floating_ips(refresh_cache: true); lb_pools(refresh_cache: true)
   end
 
-  def self.servers(force=false)
+  def self.servers(refresh_cache: false)
     Rails.cache.fetch("live_servers_dashboard", expires_in: 5.minutes, force: force) do
       OpenStackConnection.compute.servers.all(all_tenants: true)
     end
   end
 
-  def self.volumes(force=false)
+  def self.volumes(refresh_cache: false)
     Rails.cache.fetch("live_volumes_dashboard", expires_in: 5.minutes, force: force) do
       OpenStackConnection.volume.volumes.all(all_tenants: true)
     end
   end
 
-  def self.floating_ips(force=false)
+  def self.floating_ips(refresh_cache: false)
     Rails.cache.fetch("live_floating_ips_dashboard", expires_in: 5.minutes, force: force) do
       OpenStackConnection.network.floating_ips.all
     end
   end
 
-  def self.lb_pools(force=false)
+  def self.lb_pools(refresh_cache: false)
     Rails.cache.fetch("live_lb_poools_dashboard", expires_in: 5.minutes, force: force) do
       OpenStackConnection.network.lb_pools.all
     end

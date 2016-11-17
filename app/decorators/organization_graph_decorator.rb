@@ -96,35 +96,35 @@ class OrganizationGraphDecorator < ApplicationDecorator
   end
 
   def quota_set_value(category, quota)
-    model.projects.map{|p| p.quota_set[category][quota].to_i}
+    model.projects.map{|p| p.quota_set[category][quota].to_i}.sum
   end
 
   def max_instances
-    quota_set_value('compute', 'instances').sum
+    quota_set_value('compute', 'instances')
   end
 
   def max_vcpus
-    quota_set_value('compute', 'cores').sum
+    quota_set_value('compute', 'cores')
   end
 
   def max_memory
-    quota_set_value('compute', 'ram').sum
+    quota_set_value('compute', 'ram')
   end
 
   def max_volumes
-    quota_set_value('volume', 'volumes').sum
+    quota_set_value('volume', 'volumes')
   end
 
   def max_storage
-    quota_set_value('volume', 'gigabytes').sum
+    quota_set_value('volume', 'gigabytes')
   end
 
   def max_floatingip
-    quota_set_value('network', 'floatingip').sum
+    quota_set_value('network', 'floatingip')
   end
 
   def max_lbpools
-    quota_set_value('network', 'pool').sum
+    quota_set_value('network', 'pool')
   end
 
 
