@@ -42,10 +42,6 @@ class Ticket
     @department == "Access Requests"
   end
 
-  def colo_support?
-    @department == 'Support' && Authorization.current_user.organization.colo?
-  end
-
   def status_name
     return 'Open' unless @status
     @status == 1 ? 'Closed' : 'Open'
