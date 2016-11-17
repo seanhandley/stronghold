@@ -13,9 +13,10 @@ class TicketAdapter
       limit = [offset, limit].compact
       columns = %w{reference subject submitted_at updated_at
                    contact_methods.data priorities.name
-                   contacts.name statuses.status_type
-                   departments.name custom_field.visitor_names
-                   custom_field.date_of_visit custom_field.time_of_visit
+                   contacts.name statuses.status_type departments.name
+                   custom_field.visitor_names
+                   custom_field.date_of_visit
+                   custom_field.time_of_visit
                   }
       spql = "SELECT #{columns.join(',')} FROM tickets WHERE contacts.company = \"#{organization.reference}\" GROUP BY submitted_at ORDER BY submitted_at DESC LIMIT #{limit.join(',')}"
       SIRPORTLY.request("tickets/spql", spql: spql)["results"].map{|t| Hash[columns.zip(t)]}.map do |t|

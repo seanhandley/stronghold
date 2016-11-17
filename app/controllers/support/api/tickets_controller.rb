@@ -8,6 +8,7 @@ class Support::Api::TicketsController < SupportBaseController#
 
   def index
     @tickets = decorated_tickets
+    
     respond_to do |format|
       format.json {
         render :json => @tickets
