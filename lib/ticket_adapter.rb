@@ -95,14 +95,9 @@ class TicketAdapter
                            'custom[date_of_visit]'   => ticket.date_of_visit,
                            'custom[time_of_visit]'   => ticket.time_of_visit})
       when "Support"
-<<<<<<< 0de9e3d8c0ba828dca230421bf19ba0d723a6614
         properties.merge!({'custom[more_info]' => ticket.more_info})
-        if organization.colo?
-          properties.merge!({:department => "Colo Support"})
-=======
         if Authorization.current_user.organization.colo?
           params.merge!(:department => "Colo Support")
->>>>>>> Merge to the properties hash.
         end
       end
       new_ticket = SIRPORTLY.create_ticket(properties)

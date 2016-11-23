@@ -5,7 +5,6 @@ class Ticket
                 :comments,  :status, :name, :email, :department, :priority,
                 :more_info, :visitor_names, :nature_of_visit,
                 :date_of_visit, :time_of_visit, :as_hash
->>>>>>> use a new department for colour support.
 
   validates :title,       length: {minimum: 1, maximum: 200}, allow_blank: false, unless: :access_request?
   validates :description, length: {minimum: 1}, allow_blank: false, unless: :access_request?
