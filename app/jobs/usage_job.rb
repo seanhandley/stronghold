@@ -1,7 +1,7 @@
 class UsageJob < ActiveJob::Base
   queue_as :default
 
-  def perform
+  def perform(args=nil)
     while(mins_since_sync > Billing::SYNC_INTERVAL_MINUTES) do
       Billing.sync!(Billing::SYNC_INTERVAL_MINUTES)
     end
