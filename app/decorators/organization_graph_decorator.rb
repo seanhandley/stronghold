@@ -126,19 +126,18 @@ class OrganizationGraphDecorator < ApplicationDecorator
 
   def live_lb_pools
     return [] unless Rails.env.production? # Because LB support isn't on DevStack yet...
-    lb_pools.select{|s| model.projects.map(&:uuid).include?(s['tenant_id'])}
-
+    LiveCloudResources.lb_pools.select{|s| model.projects.map(&:uuid).include?(s['tenant_id'])}
   end
 
   def live_floating_ips
-    floating_ips.select{|s| model.projects.map(&:uuid).include?(s['tenant_id'])}
+    LiveCloudResources.floating_ips.select{|s| model.projects.map(&:uuid).include?(s['tenant_id'])}
   end
 
   def live_servers
-    servers.select{|s| model.projects.map(&:uuid).include?(s['tenant_id'])}
+    LiveCloudResources.servers.select{|s| model.projects.map(&:uuid).include?(s['tenant_id'])}
   end
 
   def live_volumes
-    volumes.select{|s| model.projects.map(&:uuid).include?(s["os-vol-tenant-attr:tenant_id"])}
+    LiveCloudResources.volumes.select{|s| model.projects.map(&:uuid).include?(s["os-vol-tenant-attr:tenant_id"])}
   end
 end
