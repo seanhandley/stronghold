@@ -9,7 +9,7 @@ class OrganizationGraphDecorator < ApplicationDecorator
     {
       "overall": {
         "capacity": {
-          "used_percent": used_percent
+          "used_percent": total_used_as_percent
         }
       },
       "compute": {
@@ -56,10 +56,6 @@ class OrganizationGraphDecorator < ApplicationDecorator
   end
 
   private
-
-  def used_percent
-    total_used_as_percent
-  end
 
   def instance_count
     live_servers.count
