@@ -36,10 +36,10 @@ module QuotaUsage
   private
 
   def servers
-    LiveCloudResources.servers.select{|server| server.project_id == uuid}
+    LiveCloudResources.servers.select{|server| server[:tenant_id] == uuid}
   end
 
   def flavors
-    LiveCloudResources.servers.map{|s| Billing::InstanceFlavor.find_by_flavor_id(s['flavor']['id']) rescue nil}.compact
+    servers.map{|s| Billing::InstanceFlavor.find_by_flavor_id(s['flavor']['id']) rescue nil}.compact
   end
 end

@@ -1,5 +1,4 @@
 class OrganizationGraphDecorator < ApplicationDecorator
-  # include QuotaUsage
 
   def to_json
     graph_data.to_json
@@ -9,7 +8,7 @@ class OrganizationGraphDecorator < ApplicationDecorator
     {
       "overall": {
         "capacity": {
-          "used_percent": 3 #total_used_as_percent
+          "used_percent": quota_used
         }
       },
       "compute": {
@@ -53,6 +52,10 @@ class OrganizationGraphDecorator < ApplicationDecorator
         }
       }
     }
+  end
+
+  def quota_used
+    model.projects.collect(&:total_used_as_percent).reduce(&:+) / model.projects.size
   end
 
   private
@@ -122,7 +125,6 @@ class OrganizationGraphDecorator < ApplicationDecorator
   def max_lbpools
     quota_set_value('network', 'pool')
   end
-
 
   def live_lb_pools
     return [] unless Rails.env.production? # Because LB support isn't on DevStack yet...
