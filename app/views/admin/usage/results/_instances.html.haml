@@ -10,7 +10,6 @@
                 %i.fa.fa-rocket
               %td== Flavor: #{instances.first[:flavor][:name]}
               %td Unique Identifier
-              %td Architecture
               %td First Booted
               %td Status
               %td Terminated
@@ -20,7 +19,6 @@
                 %td
                   Total
             %tr
-              %td.line_entry
               %td.line_entry
               %td.line_entry
               %td.line_entry
@@ -38,7 +36,6 @@
                   &nbsp;
                 %td.line_entry= instance[:name]
                 %td.line_entry= instance[:uuid]
-                %td.line_entry= architecture_human_name(instance[:arch])
                 %td.line_entry= instance[:first_booted_at]
                 %td.line_entry= state_with_icon(instance[:latest_state])
                 %td.line_entry= (instance[:terminated_at] && instance[:terminated_at] <= @to_date) ? instance[:terminated_at] : '-'
@@ -53,13 +50,11 @@
               %td &nbsp;
               %td &nbsp;
               %td &nbsp;
-              %td &nbsp;
               %td== Total #{instances.first[:flavor][:name]}:
               %td== #{number_with_delimiter(instances.map{|i| i[:total_hours]}.sum, :delimiter => ',')} hours
               - if current_organization.show_costs?
                 %td== £#{number_with_precision(@usage_decorator.instance_total(project.id, flavor_id), :delimiter => ',', :separator => '.', :precision => 2)}
             %tr
-              %td &nbsp;
               %td &nbsp;
               %td &nbsp;
               %td &nbsp;

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161010130348) do
+ActiveRecord::Schema.define(version: 20161130144232) do
 
   create_table "audits", force: :cascade do |t|
     t.string   "auditable_id",    limit: 255
@@ -179,6 +179,15 @@ ActiveRecord::Schema.define(version: 20161010130348) do
     t.datetime "started_at",   precision: 3
     t.datetime "period_from",  precision: 3
     t.datetime "period_to",    precision: 3
+  end
+
+  create_table "billing_usages", force: :cascade do |t|
+    t.integer  "year",            limit: 4
+    t.integer  "month",           limit: 4
+    t.integer  "organization_id", limit: 4
+    t.string   "object_uuid",     limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "billing_volume_states", force: :cascade do |t|

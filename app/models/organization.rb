@@ -55,6 +55,7 @@ class Organization < ActiveRecord::Base
   has_and_belongs_to_many :products, -> { uniq }
   has_many :organization_vouchers, {dependent: :destroy}, -> { uniq }
   has_many :vouchers, :through => :organization_vouchers
+  has_many :usages
 
   belongs_to :primary_project, class_name: 'Project'
   belongs_to :customer_signup
