@@ -1,5 +1,4 @@
 class OrganizationGraphDecorator < ApplicationDecorator
-  include QuotaUsage
 
   def to_json
     graph_data.to_json
@@ -9,7 +8,7 @@ class OrganizationGraphDecorator < ApplicationDecorator
     {
       "overall": {
         "capacity": {
-          "used_percent": total_used_as_percent
+          "used_percent": QuotaUsage.total_used_as_percent
         }
       },
       "compute": {
