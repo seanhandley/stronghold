@@ -5,7 +5,7 @@ module Billing
   require_relative 'billing/volumes'
 
   SECONDS_TO_HOURS = 3600.0
-  SYNC_INTERVAL_MINUTES = 90
+  SYNC_INTERVAL_MINUTES = 30
 
   def self.sync!(to=nil)
     clear_memoized_samples

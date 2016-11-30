@@ -8,7 +8,7 @@ if Rails.env.production? || Rails.env.staging?
     GraphCacheWarmerJob.perform_later
   end
 
-  every(Billing::SYNC_INTERVAL_MINUTES.minutes, 'usage_sync') do
+  every(90.minutes, 'usage_sync') do
     UsageJob.perform_later(nil)
   end
 
