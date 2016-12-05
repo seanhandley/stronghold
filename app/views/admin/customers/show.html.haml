@@ -80,7 +80,14 @@
         .panel-body.panel-padding
           %div.toggle-grid
             = render partial: 'admin/customers/toggles'
-            
+
+      %div.panel.panel-info
+        .panel-heading
+          %i.fa.fa-user
+          Contacts
+        .panel-body.panel-padding
+          = render partial: 'admin/customers/contacts'
+
       %div.panel.panel-info
         .panel-heading
           %i.fa.fa-cog

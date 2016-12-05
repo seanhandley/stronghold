@@ -6,7 +6,7 @@ class Organization < ActiveRecord::Base
   include OrganizationTransitionable
 
   audited only: [:name, :time_zone, :locale, :billing_address1, :billing_address2,
-                 :billing_city, :billing_postcode, :billing_country, :phone, :billing_contact]
+                 :billing_city, :billing_postcode, :billing_country, :phone, :billing_contact, :technical_contact]
 
   has_associated_audits
 
