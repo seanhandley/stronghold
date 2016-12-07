@@ -1,9 +1,14 @@
+$usage_job_mutex = Mutex.new
+
 class UsageJob < ActiveJob::Base
   queue_as :default
 
-  def perform(args=nil)
-    while(mins_since_sync > Billing::SYNC_INTERVAL_MINUTES) do
-      Billing.sync!(Billing::SYNC_INTERVAL_MINUTES)
+  def perform
+    return if $usage_job_mutex.locked?
+    $usage_job_mutex.synchronize do
+      while(mins_since_sync > Billing::SYNC_INTERVAL_MINUTES) do
+        Billing.sync!(Billing::SYNC_INTERVAL_MINUTES)
+      end
     end
   end
 

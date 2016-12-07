@@ -423,9 +423,6 @@ GEM
       connection_pool (~> 2.2, >= 2.2.0)
       rack-protection (>= 1.5.0)
       redis (~> 3.2, >= 3.2.1)
-    sidekiq-unique-jobs (4.0.18)
-      sidekiq (>= 2.6)
-      thor
     simplecov (0.9.1)
       docile (~> 1.1.0)
       multi_json (~> 1.0)
@@ -617,7 +614,6 @@ DEPENDENCIES
   sdoc (~> 0.4.0)
   select2-rails (~> 3.5.9.1)
   sidekiq (~> 4.0)
-  sidekiq-unique-jobs (~> 4.0)
   simplecov
   sinatra (~> 1.4)
   sirportly (~> 1.3)
