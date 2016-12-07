@@ -9,7 +9,7 @@ if Rails.env.production? || Rails.env.staging?
   end
 
   every(90.minutes, 'usage_sync') do
-    UsageJob.perform_later(nil)
+    UsageJob.perform_later
   end
 
   every(20.minutes, 'activation_reminder') do
