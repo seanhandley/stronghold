@@ -105,3 +105,9 @@ Billing::Instance.blueprint do
   project_id  { SecureRandom.hex }
   flavor_id   { 'flavor_id' }
 end
+
+Billing::Usage.blueprint do
+  organization { Organization.make! }
+  year  { 2016 }
+  month { 8    }
+end

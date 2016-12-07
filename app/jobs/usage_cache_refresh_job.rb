@@ -1,10 +1,9 @@
 class UsageCacheRefreshJob < ActiveJob::Base
   queue_as :usage_cache
 
-  def perform(organization=nil,from=Time.now.beginning_of_month,to=Time.now)
-    from, to = Time.parse(from.to_s), Time.parse(to.to_s)
+  def perform(organization=nil)
     if organization
-      warm_cache(organization, from, to) unless already_running?(organization)
+      warm_cache(organization)
       return
     end
     
@@ -18,25 +17,10 @@ class UsageCacheRefreshJob < ActiveJob::Base
 
   private
 
-  def warm_cache(organization, from, to)
+  def warm_cache(organization)
     sleep rand(500..5000) / 1000.0
-    ud = UsageDecorator.new(organization)
-    ud.usage_data(from_date: from, to_date: to)
-  end
-
-  def already_running?(organization)
-    return false unless organization
-
-    usage_cache_refresh_job_count = Sidekiq::Workers.new.select do |process_id, thread_id, work|
-      work['payload']['wrapped'] == 'UsageCacheRefreshJob' &&
-      work['payload']['args'].first['arguments'].count > 0 &&
-      org_id_from_global(work['payload']['args'].first['arguments'].first) == organization.id
-    end.count
-    usage_cache_refresh_job_count > 1
-  end
-
-  def org_id_from_global(global)
-    global.values.first.split('/').last.to_i
+    ud = UsageDecorator.new(organization, Time.now.year, Time.now.month)
+    ud.usage_data
   end
 
   def organizations

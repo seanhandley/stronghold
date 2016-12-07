@@ -2,21 +2,26 @@ class Support::UsageController < SupportBaseController
   include UsageHelper
 
   before_filter -> { authorize! :read, :usage }
-  before_filter :get_time_period_from_params
 
   def current_section
     'usage'
   end
 
   def index
-    @usage_decorator = UsageDecorator.new(current_organization)
-    if params[:year] && params[:month] && !((params[:year].to_i == Time.now.year) && (params[:month].to_i == Time.now.month))
-      @usage = @usage_decorator.usage_data(from_date: @from_date, to_date: @to_date)
-    else
-      @usage = @usage_decorator.latest_usage_data
-    end
+    year  = (params[:year]  || Time.now.year).to_i
+    month = (params[:month] || Time.now.month).to_i
+
+    @usage_decorator = UsageDecorator.new(current_organization, year, month)
+    @usage = @usage_decorator.usage_data
+
+    @from_date = Time.parse("#{year}-#{month}-01").beginning_of_month
+    @to_date   = @from_date.end_of_month
+
     @active_vouchers = current_organization.active_vouchers(@from_date, @to_date)
+
     @usage_nav = usages_for_select(current_organization)
+    @total_hours = (([@to_date, Time.now].min - @from_date) / 1.hour).ceil
+
     respond_to do |format|
       format.json {
         render json: usage_data_as_json(@usage, @usage_decorator.grand_total)
@@ -29,13 +34,6 @@ class Support::UsageController < SupportBaseController
       }
       format.html
     end
-  end
-
-  private
-
-  def get_time_period_from_params
-    @from_date, @to_date = get_time_period(params[:year], params[:month])
-    @total_hours = ((@to_date - @from_date) / 1.hour).ceil
   end
 
 end

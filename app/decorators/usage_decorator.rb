@@ -1,24 +1,21 @@
 class UsageDecorator < ApplicationDecorator
-  attr_reader :from_date, :to_date
+  attr_reader :year, :month
 
-  def latest_usage_data(from=Time.now.beginning_of_month, to=Time.now, count=0)
-    @from_date, @to_date = from, to
-    return usage_data(from_date: from, to_date: to) if count > 20
-    key = "org#{model.id}_#{from.strftime(timestamp_format)}_#{to.strftime(timestamp_format)}"
-    Rails.cache.exist?(key) ? Rails.cache.fetch(key) : latest_usage_data(from, to - 1.hour, count + 1)
+  def initialize(organization, year=Time.now.year, month=Time.now.year)
+    @year, @month = year, month
+    super(organization)
   end
 
-  def remove_cached_data(from_date, to_date)
-    Rails.cache.delete("org#{model.id}_#{from_date.strftime(timestamp_format)}_#{to_date.strftime(timestamp_format)}")
+  def from_date
+    Time.parse("#{year}-#{month}-01").beginning_of_month
   end
 
-  def usage_data(args=nil)
-    if args && args[:from_date] && args[:to_date]
-      @usage_data = nil
-      @from_date, @to_date = args[:from_date], args[:to_date]
-    end
-    raise(ArgumentError, 'Please supply :from_date and :to_date') unless from_date && to_date
-    @usage_data ||= Rails.cache.fetch("org#{model.id}_#{from_date.strftime(timestamp_format)}_#{to_date.strftime(timestamp_format)}", expires_in: 30.days) do
+  def to_date
+    [Time.now, from_date.end_of_month].min
+  end
+  
+  def usage_data
+    @usage_data ||= UsageStorage.fetch(year: year, month: month, organization_id: model.id) do
       model.projects.with_deleted.where("created_at < ?", to_date).select{|t| t.deleted_at.nil? || t.deleted_at > from_date}.inject({}) do |acc, project|
         ip_quota_usage = Billing::IpQuotas.usage(project.uuid, from_date, to_date)
         acc[project] = {

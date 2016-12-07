@@ -4,11 +4,8 @@
       %i.fa.fa-area-chart
       = @organization.name
   %p
-    %strong From:
-    = @from_date
-  %p
-    %strong To:
-    = @to_date
+    %strong Month:
+    = named_month_and_year(@month, @year)
   %p
     %strong Total:
     == £#{number_with_precision(@grand_total, :delimiter => ',', :separator => '.', :precision => 2)}
