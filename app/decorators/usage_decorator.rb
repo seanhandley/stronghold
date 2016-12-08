@@ -14,8 +14,8 @@ class UsageDecorator < ApplicationDecorator
     [Time.now, from_date.end_of_month].min
   end
   
-  def usage_data
-    @usage_data ||= UsageStorage.fetch(year: year, month: month, organization_id: model.id) do
+  def usage_data(force: false)
+    @usage_data ||= UsageStorage.fetch(year: year, month: month, organization_id: model.id, force: force) do
       model.projects.with_deleted.where("created_at < ?", to_date).select{|t| t.deleted_at.nil? || t.deleted_at > from_date}.inject({}) do |acc, project|
         ip_quota_usage = Billing::IpQuotas.usage(project.uuid, from_date, to_date)
         acc[project] = {

@@ -20,7 +20,7 @@ class UsageCacheRefreshJob < ActiveJob::Base
   def warm_cache(organization)
     sleep rand(500..5000) / 1000.0
     ud = UsageDecorator.new(organization, Time.now.year, Time.now.month)
-    ud.usage_data
+    ud.usage_data(force: true)
   end
 
   def organizations
