@@ -2,7 +2,7 @@ module UsageStorage
   def self.fetch(*args, &blk)
     args = args.first
     allowed_keys = [:year, :month, :organization_id]
-    clause = args.slice(allowed_keys)
+    clause = args.slice(*allowed_keys)
     usage = Billing::Usage.where(clause).first
     usage = Billing::Usage.create(clause) unless usage
     
