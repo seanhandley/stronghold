@@ -6,6 +6,11 @@
 
 = select_tag :month_year, @usage_nav, class: 'hide'
 
+- if @year == Time.now.year && @month == Time.now.month
+  %p.tiny
+    Last Updated:
+    = @last_updated
+
 .pull-right
   - if current_organization.test_account?
     %p.tiny
