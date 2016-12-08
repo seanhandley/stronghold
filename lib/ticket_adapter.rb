@@ -41,13 +41,16 @@ class TicketAdapter
                      name: t['contacts.name'],
                      status: t['statuses.status_type'],
                      department: t['departments.name']}
-          if(t['departments.name'] == 'Access Requests')
+          case t['departments.name']
+          when 'Access Requests'
             params.merge!(visitor_names: [t['contacts.name'], t["custom_field.visitor_names"]].reject(&:blank?).join(', '),
                           date_of_visit: t["custom_field.date_of_visit"],
                           time_of_visit: t["custom_field.time_of_visit"])
-          end
-          if (t['departments.name'] == 'Support')
+          when 'Support'
             params.merge!(more_info: t["custom_field.more_info"])
+            if Authorization.current_user.organization.colo?
+              params.merge!(:department => "Colo Support")
+            end
           end
           tickets.push(Ticket.new(params))
         end
@@ -93,6 +96,9 @@ class TicketAdapter
                            'custom[time_of_visit]'   => ticket.time_of_visit})
       when "Support"
         properties.merge!({'custom[more_info]' => ticket.more_info})
+        if Authorization.current_user.organization.colo?
+          params.merge!(:department => "Colo Support")
+        end
       end
       new_ticket = SIRPORTLY.create_ticket(properties)
       update = new_ticket.post_update(:message => ticket.description, :author_name => Authorization.current_user.name, :author_email => Authorization.current_user.email)
