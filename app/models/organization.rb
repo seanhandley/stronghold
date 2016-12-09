@@ -187,7 +187,7 @@ class Organization < ActiveRecord::Base
       update_column(:reference, new_ref)
       begin
         t = projects.create! name: "#{reference}_primary"
-      rescue ActiveRecord::RecordNotSave
+      rescue ActiveRecord::RecordNotSaved
         t = projects.create! name: "#{SecureRandom.hex.slice(0,16)}_primary"
       end
       update_column(:primary_project_id, t.id)
