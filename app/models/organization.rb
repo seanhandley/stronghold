@@ -185,7 +185,11 @@ class Organization < ActiveRecord::Base
       generate_reference_step(ref, (count+1))
     else
       update_column(:reference, new_ref)
-      t = projects.create! name: "#{reference}_primary"
+      begin
+        t = projects.create! name: "#{reference}_primary"
+      rescue ActiveRecord::RecordNotSave
+        t = projects.create! name: "#{SecureRandom.hex.slice(0,16)}_primary"
+      end
       update_column(:primary_project_id, t.id)
     end
   end
