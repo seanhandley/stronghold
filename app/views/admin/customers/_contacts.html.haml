@@ -6,7 +6,7 @@
           %i.fa.fa-wrench
           Technical Contact
         %td
-          - unless @organization.technical_contact.nil?
+          - if @organization.technical_contact
             = mail_to @organization.technical_contact
           - else
             None
@@ -15,7 +15,7 @@
           %i.fa.fa-credit-card
           Billing Contact
         %td
-          - unless @organization.billing_contact.nil?
+          - if @organization.billing_contact
             = mail_to @organization.billing_contact
           - else
             None

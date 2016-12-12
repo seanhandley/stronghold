@@ -10,7 +10,6 @@ class Support::OrganizationsController < SupportBaseController
 
   def index
     @organization = current_organization
-    @users_emails = @organization.users.map{|u| u.email}
     render template: 'support/organizations/organization'
   end
 
