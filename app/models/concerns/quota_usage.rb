@@ -1,7 +1,7 @@
 module QuotaUsage
 
   def used_vcpus
-    flavors.map(&:vcpus).sum
+    flavors.sum(&:vcpus)
   end
 
   def available_vcpus
@@ -9,7 +9,7 @@ module QuotaUsage
   end
 
   def used_ram
-    flavors.map(&:ram).sum
+    flavors.sum(&:ram)
   end
 
   def available_ram
@@ -17,7 +17,7 @@ module QuotaUsage
   end
 
   def used_storage
-    LiveCloudResources.volumes.map{|s| s["size"] }.sum
+    LiveCloudResources.volumes.sum{|s| s["size"] }
   end
 
   def available_storage
@@ -40,6 +40,12 @@ module QuotaUsage
   end
 
   def flavors
-    servers.map{|s| Billing::InstanceFlavor.find_by_flavor_id(s['flavor']['id']) rescue nil}.compact
+    servers.map { |s|
+      begin
+        Billing::InstanceFlavor.find_by_flavor_id(s['flavor']['id'])
+      rescue StandardError
+        nil
+      end
+    }.compact
   end
 end
