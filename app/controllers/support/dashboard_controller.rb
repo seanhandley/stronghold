@@ -1,5 +1,6 @@
 class Support::DashboardController < SupportBaseController
 
+  include ProjectsUsageHelper
   skip_authorization_check
 
   def current_section
@@ -7,6 +8,7 @@ class Support::DashboardController < SupportBaseController
   end
 
   def index
+    @percent = percent_used
   end
 
   def regenerate_ceph_credentials

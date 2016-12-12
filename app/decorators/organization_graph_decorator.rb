@@ -58,6 +58,10 @@ class OrganizationGraphDecorator < ApplicationDecorator
     live_servers(true); live_volumes(true); live_floating_ips(true); live_lb_pools(true)
   end
 
+  def self.projects
+    live_servers
+  end
+
   private
 
   def used_percent
@@ -67,7 +71,7 @@ class OrganizationGraphDecorator < ApplicationDecorator
       [storage_gb,     max_storage]
     ].map do |e|
       ((e[0].to_f / e[1].to_f) * 100)
-    end.sum / 3.0).round
+    end.tap{|a| return 0 if a.any?(&:nan?)}.sum / 3.0).round
   end
 
   def instance_count
