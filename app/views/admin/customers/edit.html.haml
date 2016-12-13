@@ -10,7 +10,10 @@
     = f.text_field :name, class: 'form-control'
   .form-group
     %label Billing Contact
-    = f.text_field :billing_contact, class: 'form-control'
+    = f.text_field :billing_contact, class: "form-control autocomplete-field", 'data-autocomplete-options' => current_organization.users.collect(&:email).to_json
+  .form-group
+    %label Technical Contact
+    = f.text_field :technical_contact, class: "form-control autocomplete-field", 'data-autocomplete-options' => current_organization.users.collect(&:email).to_json
   .form-group
     %label Stripe Customer ID
     = f.text_field :stripe_customer_id, class: 'form-control'
