@@ -25,10 +25,16 @@
         = f.time_zone_select :time_zone, nil, {include_blank: false}, {class: "form-control"}
       .form-group
         %label Billing Contact
-        = f.text_field :billing_contact, class: "form-control autocomplete-field", 'data-autocomplete-options' => current_organization.users.collect(&:email).to_json
+        = f.text_field :billing_contact, list: "billing-emails", class: 'form-control'
+        %datalist{id: "billing-emails"}
+          - @organization.users.each do |user|
+            %option{:value => user.email}
       .form-group
         %label Technical Contact
-        = f.text_field :technical_contact, class: "form-control autocomplete-field", 'data-autocomplete-options' => current_organization.users.collect(&:email).to_json
+        = f.text_field :technical_contact, list: "technical-emails", class: 'form-control'
+        %datalist{id: "technical-emails"}
+          - @organization.users.each do |user|
+            %option{:value => user.email}
     .col-md-6
       %h3 Billing Address
       .form-group
