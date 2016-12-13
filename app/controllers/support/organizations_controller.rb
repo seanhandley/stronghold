@@ -52,7 +52,7 @@ class Support::OrganizationsController < SupportBaseController
   def update_params
     params.require(:organization).permit(:name, :time_zone, :billing_address1, :billing_address2,
                                          :billing_postcode, :billing_city, :billing_country,
-                                         :phone, :billing_contact)
+                                         :phone, :billing_contact, :technical_contact)
   end
 
   def reauthorise_params

@@ -214,8 +214,9 @@ ul#billing_address-list li {
 }
 
 td.first-column {
-  font-weight: bold;
-  width: 250px;
+  font-weight: 500;
+  width: 280px;
+  background-color: rgb(249, 249, 249);
 }
 
 input#organization_projects_limit {
@@ -238,6 +239,12 @@ div.container.customer-margin {
 
 div.container.usage_data_container {
   padding-left: 0px;
+}
+
+td.contact-type {
+  font-weight: 500;
+  width: 150px;
+  background-color: rgb(249, 249, 249);
 }
 
 div#state-container {

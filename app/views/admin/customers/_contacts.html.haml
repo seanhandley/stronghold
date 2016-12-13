@@ -1,0 +1,21 @@
+.table-responsive.contact-table
+  %table.table.table-bordered
+    %tbody
+      %tr
+        %td.contact-type
+          %i.fa.fa-wrench
+          Technical Contact
+        %td
+          - if @organization.technical_contact
+            = mail_to @organization.technical_contact
+          - else
+            None
+      %tr
+        %td.contact-type
+          %i.fa.fa-credit-card
+          Billing Contact
+        %td
+          - if @organization.billing_contact
+            = mail_to @organization.billing_contact
+          - else
+            None

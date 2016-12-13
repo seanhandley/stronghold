@@ -14,17 +14,9 @@
 
 .row#organization-billing-info
   .table-responsive
-    %table.table.table-striped.table-bordered
+    %table.table.table-bordered
       %thead
       %tbody
-        %tr
-          %td.first-column
-            Billing Contact
-          %td
-            - if @organization.billing_contact?
-              = mail_to @organization.billing_contact
-            - else
-              None
         %tr
           %td.first-column
             Billing Address

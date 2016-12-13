@@ -6,4 +6,8 @@ module OrganizationHelper
     volumes   = gd[:volume][:volumes][:used]
     "#{pluralize instances, 'instances'} and #{pluralize volumes, 'volumes'}"
   end
+
+  def options_for_organization_contacts(selected=nil)
+    options_for_select(current_organization.users.map(&:email), selected)
+  end
 end
