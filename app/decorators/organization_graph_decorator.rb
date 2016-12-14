@@ -8,7 +8,7 @@ class OrganizationGraphDecorator < ApplicationDecorator
     {
       "overall": {
         "capacity": {
-          "used_percent": used_percent
+          "used_percent": quota_used
         }
       },
       "compute": {
@@ -54,21 +54,14 @@ class OrganizationGraphDecorator < ApplicationDecorator
     }
   end
 
-  def self.refresh_caches
-    live_servers(true); live_volumes(true); live_floating_ips(true); live_lb_pools(true)
+  def quota_used
+    all_projects = model.projects.sum(0) {|p| p.total_used_as_percent}
+    if model.projects.size > 1
+      all_projects / model.projects.count
+    end
   end
 
   private
-
-  def used_percent
-    ([
-      [vcpus_count,    max_vcpus],
-      [memory_count,   max_memory],
-      [storage_gb,     max_storage]
-    ].map do |e|
-      ((e[0].to_f / e[1].to_f) * 100)
-    end.sum / 3.0).round
-  end
 
   def instance_count
     live_servers.count
@@ -104,76 +97,52 @@ class OrganizationGraphDecorator < ApplicationDecorator
     live_lb_pools.count
   end
 
-  def set_quota_value(category, quota)
+  def quota_set_value(category, quota)
     model.projects.map{|p| p.quota_set[category][quota].to_i}.sum
   end
 
   def max_instances
-    set_quota_value('compute', 'instances')
+    quota_set_value('compute', 'instances')
   end
 
   def max_vcpus
-    set_quota_value('compute', 'cores')
+    quota_set_value('compute', 'cores')
   end
 
   def max_memory
-    set_quota_value('compute', 'ram')
+    quota_set_value('compute', 'ram')
   end
 
   def max_volumes
-    set_quota_value('volume', 'volumes')
+    quota_set_value('volume', 'volumes')
   end
 
   def max_storage
-    set_quota_value('volume', 'gigabytes')
+    quota_set_value('volume', 'gigabytes')
   end
 
   def max_floatingip
-    set_quota_value('network', 'floatingip')
+    quota_set_value('network', 'floatingip')
   end
 
   def max_lbpools
-    set_quota_value('network', 'pool')
-  end
-
-  def self.live_lb_pools(force=false)
-    Rails.cache.fetch("live_lb_poools_dashboard", expires_in: 5.minutes, force: force) do
-      OpenStackConnection.network.list_lb_pools.body['pools']
-    end
+    quota_set_value('network', 'pool')
   end
 
   def live_lb_pools
     return [] unless Rails.env.production? # Because LB support isn't on DevStack yet...
-    OrganizationGraphDecorator.live_lb_pools.select{|s| model.projects.map(&:uuid).include?(s['tenant_id'])}
-  end
-
-  def self.live_floating_ips(force=false)
-    Rails.cache.fetch("live_floating_ips_dashboard", expires_in: 5.minutes, force: force) do
-      OpenStackConnection.network.list_floating_ips.body['floatingips']
-    end
+    LiveCloudResources.lb_pools.select{|s| model.projects.map(&:uuid).include?(s['tenant_id'])}
   end
 
   def live_floating_ips
-    OrganizationGraphDecorator.live_floating_ips.select{|s| model.projects.map(&:uuid).include?(s['tenant_id'])}
-  end
-
-  def self.live_servers(force=false)
-    Rails.cache.fetch("live_servers_dashboard", expires_in: 5.minutes, force: force) do
-      OpenStackConnection.compute.list_servers_detail(all_tenants: true).body['servers']
-    end
+    LiveCloudResources.floating_ips.select{|s| model.projects.map(&:uuid).include?(s['tenant_id'])}
   end
 
   def live_servers
-    OrganizationGraphDecorator.live_servers.select{|s| model.projects.map(&:uuid).include?(s['tenant_id'])}
-  end
-
-  def self.live_volumes(force=false)
-    Rails.cache.fetch("live_volumes_dashboard", expires_in: 5.minutes, force: force) do
-      OpenStackConnection.volume.list_volumes_detailed(all_tenants: true).body['volumes']
-    end
+    LiveCloudResources.servers.select{|s| model.projects.map(&:uuid).include?(s['tenant_id'])}
   end
 
   def live_volumes
-    OrganizationGraphDecorator.live_volumes.select{|s| model.projects.map(&:uuid).include?(s["os-vol-tenant-attr:tenant_id"])}
+    LiveCloudResources.volumes.select{|s| model.projects.map(&:uuid).include?(s["os-vol-tenant-attr:tenant_id"])}
   end
 end

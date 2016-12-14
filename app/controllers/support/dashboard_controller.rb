@@ -1,5 +1,4 @@
 class Support::DashboardController < SupportBaseController
-
   skip_authorization_check
 
   def current_section
