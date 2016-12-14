@@ -10,7 +10,16 @@
     = f.text_field :name, class: 'form-control'
   .form-group
     %label Billing Contact
-    = f.text_field :billing_contact, class: 'form-control'
+    = f.text_field :billing_contact, list: "billing-emails2", class: 'form-control'
+    %datalist{id: "billing-emails2"}
+      - @organization.users.each do |user|
+        %option{:value => user.email}
+  .form-group
+    %label Technical Contact
+    = f.text_field :technical_contact, list: "technical-emails2", class: 'form-control'
+    %datalist{id: "technical-emails2"}
+      - @organization.users.each do |user|
+        %option{:value => user.email}
   .form-group
     %label Stripe Customer ID
     = f.text_field :stripe_customer_id, class: 'form-control'
