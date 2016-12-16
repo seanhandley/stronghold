@@ -156,7 +156,7 @@ GEM
     css_parser (1.4.0)
       addressable
     currencies (0.4.2)
-    dalli (2.7.4)
+    dalli (2.7.6)
     database_cleaner (0.8.0)
     debug_inspector (0.0.2)
     deep_merge (1.0.1)
