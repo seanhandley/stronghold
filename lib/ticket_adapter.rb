@@ -97,7 +97,7 @@ class TicketAdapter
       when "Support"
         properties.merge!({'custom[more_info]' => ticket.more_info})
         if Authorization.current_user.organization.colo?
-          params.merge!(:department => "Colo Support")
+          properties.merge!(:department => "Colo Support")
         end
       end
       new_ticket = SIRPORTLY.create_ticket(properties)
