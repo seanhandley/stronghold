@@ -30,6 +30,7 @@ class User < ActiveRecord::Base
   syncs_with_keystone as: 'OpenStack::User', actions: [:create, :destroy]
 
   has_and_belongs_to_many :roles
+  has_and_belongs_to_many :contacts
   belongs_to :organization
   has_many :user_project_roles, dependent: :destroy
   has_many :projects, :through => :user_project_roles
