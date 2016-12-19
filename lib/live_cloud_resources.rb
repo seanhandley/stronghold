@@ -1,5 +1,6 @@
 module LiveCloudResources
   DEFAULT_CACHE_LIFETIME = 5.minutes
+  MAX_LIMIT = 1000 # This is set on the Nova/Cinder APIs
 
   def self.refresh_caches
     servers(refresh_cache: true);
@@ -10,13 +11,13 @@ module LiveCloudResources
 
   def self.servers(refresh_cache: false)
     Rails.cache.fetch("live_servers_dashboard", expires_in: DEFAULT_CACHE_LIFETIME, force: refresh_cache) do
-      OpenStackConnection.compute.list_servers_detail(all_tenants: true).body['servers']
+      all_pages(:compute, :list_servers_detail, 'servers')
     end
   end
 
   def self.volumes(refresh_cache: false)
     Rails.cache.fetch("live_volumes_dashboard", expires_in: DEFAULT_CACHE_LIFETIME, force: refresh_cache) do
-      OpenStackConnection.volume.list_volumes_detailed(all_tenants: true).body['volumes']
+      all_pages(:volume, :list_volumes_detailed, 'volumes')
     end
   end
 
@@ -30,5 +31,20 @@ module LiveCloudResources
     Rails.cache.fetch("live_lb_poools_dashboard", expires_in: DEFAULT_CACHE_LIFETIME, force: refresh_cache) do
       OpenStackConnection.network.list_lb_pools.body['pools']
     end
+  end
+
+  private
+
+  def self.all_pages(collection, endpoint, key)
+    last_seen = nil
+    results = []
+    while true do
+      params = {all_tenants: true}.merge(last_seen ? {marker: last_seen} : {})
+      batch  = OpenStackConnection.send(collection).send(endpoint, params).body[key]
+      results << batch
+      break if batch.count < MAX_LIMIT
+      last_seen = batch.last['id']
+    end
+    results.flatten
   end
 end
