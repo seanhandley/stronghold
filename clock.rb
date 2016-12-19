@@ -1,4 +1,5 @@
 require 'clockwork'
+require 'sidekiq/api'
 require File.expand_path('config/boot', File.dirname(__FILE__))
 require File.expand_path('config/environment', File.dirname(__FILE__))
 include Clockwork
@@ -53,7 +54,12 @@ if Rails.env.production? || Rails.env.staging?
   end
 
   every(243.minutes, 'restart_sidekiq', :thread => true) do
-    sleep 12 * 60
+    sleep 120 * 60
+    while (true)
+      until (Sidekiq::ProcessSet.new.size == 0) do ; sleep 0.1 ; end
+      sleep 5
+      break if Sidekiq::ProcessSet.new.size == 0 # Get a clear 5 seconds of zero activity
+    end
     `restart sidekiq_stronghold`
   end
 
