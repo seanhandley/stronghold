@@ -11,19 +11,19 @@ module LiveCloudResources
 
   def self.servers(refresh_cache: false)
     Rails.cache.fetch("live_servers", expires_in: DEFAULT_CACHE_LIFETIME, force: refresh_cache) do
-      all_pages(:compute, :list_servers_detail, 'servers')
+      all_pages(:compute, :list_servers_detail, 'servers', 1000, all_tenants: true)
     end
   end
 
   def self.volumes(refresh_cache: false)
     Rails.cache.fetch("live_volumes", expires_in: DEFAULT_CACHE_LIFETIME, force: refresh_cache) do
-      all_pages(:volume, :list_volumes_detailed, 'volumes')
+      all_pages(:volume, :list_volumes_detailed, 'volumes', 1000, all_tenants: true)
     end
   end
 
   def self.images(refresh_cache: false)
     Rails.cache.fetch("live_images", expires_in: DEFAULT_CACHE_LIFETIME, force: refresh_cache) do
-      all_pages(:compute, :list_images_detail, 'images')
+      all_pages(:image, :list_images, 'images', 25)
     end
   end
 
@@ -41,14 +41,14 @@ module LiveCloudResources
 
   private
 
-  def self.all_pages(collection, endpoint, key)
+  def self.all_pages(collection, endpoint, key, max, params={})
     last_seen = nil
     results = []
     while true do
-      params = {all_tenants: true}.merge(last_seen ? {marker: last_seen} : {})
+      params.merge!(last_seen ? {marker: last_seen} : {})
       batch  = OpenStackConnection.send(collection).send(endpoint, params).body[key]
       results << batch
-      break if batch.count < MAX_LIMIT
+      break if batch.count < max
       last_seen = batch.last['id']
     end
     results.flatten
