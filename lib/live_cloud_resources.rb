@@ -1,5 +1,5 @@
 module LiveCloudResources
-  DEFAULT_CACHE_LIFETIME = 5.minutes
+  DEFAULT_CACHE_LIFETIME = 10.minutes
   MAX_LIMIT = 1000 # This is set on the Nova/Cinder APIs
 
   def self.refresh_caches
@@ -10,25 +10,31 @@ module LiveCloudResources
   end
 
   def self.servers(refresh_cache: false)
-    Rails.cache.fetch("live_servers_dashboard", expires_in: DEFAULT_CACHE_LIFETIME, force: refresh_cache) do
+    Rails.cache.fetch("live_servers", expires_in: DEFAULT_CACHE_LIFETIME, force: refresh_cache) do
       all_pages(:compute, :list_servers_detail, 'servers')
     end
   end
 
   def self.volumes(refresh_cache: false)
-    Rails.cache.fetch("live_volumes_dashboard", expires_in: DEFAULT_CACHE_LIFETIME, force: refresh_cache) do
+    Rails.cache.fetch("live_volumes", expires_in: DEFAULT_CACHE_LIFETIME, force: refresh_cache) do
       all_pages(:volume, :list_volumes_detailed, 'volumes')
     end
   end
 
+  def self.images(refresh_cache: false)
+    Rails.cache.fetch("live_images", expires_in: DEFAULT_CACHE_LIFETIME, force: refresh_cache) do
+      all_pages(:compute, :list_images_detail, 'images')
+    end
+  end
+
   def self.floating_ips(refresh_cache: false)
-    Rails.cache.fetch("live_floating_ips_dashboard", expires_in: DEFAULT_CACHE_LIFETIME, force: refresh_cache) do
+    Rails.cache.fetch("live_floating_ips", expires_in: DEFAULT_CACHE_LIFETIME, force: refresh_cache) do
       OpenStackConnection.network.list_floating_ips.body['floatingips']
     end
   end
 
   def self.lb_pools(refresh_cache: false)
-    Rails.cache.fetch("live_lb_poools_dashboard", expires_in: DEFAULT_CACHE_LIFETIME, force: refresh_cache) do
+    Rails.cache.fetch("live_lb_poools", expires_in: DEFAULT_CACHE_LIFETIME, force: refresh_cache) do
       OpenStackConnection.network.list_lb_pools.body['pools']
     end
   end
