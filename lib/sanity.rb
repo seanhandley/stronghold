@@ -44,18 +44,14 @@ module Sanity
   end
 
   def self.new_instances
-    live_instances.reject do |instance,_|
-      Billing::Instance.find_by_instance_id(instance) || instance_in_error_state(instance)
+    live_instances.reject do |instance,props|
+      Billing::Instance.find_by_instance_id(instance) || props['status'] == 'error'
     end
   end
 
   def self.missing_volumes
     Billing::Volume.active.reject do |volume|
-      begin
-        OpenStackConnection.volume.get_volume_details(volume.volume_id)
-      rescue Fog::Volume::OpenStack::NotFound
-        false
-      end
+      live_volumes.include?(volume.volume_id)
     end
   end
 
@@ -83,15 +79,15 @@ module Sanity
   end
 
   def self.live_instances
-    Rails.cache.fetch('sanity_live_instances', expires_in: 10.minutes) do
-      Hash[OpenStackConnection.compute.list_servers_detail(:all_tenants => true).body['servers'].collect{|server| [server['id'], {'status' => server['status'].downcase, 'name' => server['name'], 'tenant_id' => server['tenant_id']}]}]
-    end
+    Hash[LiveCloudResources.servers.collect{|server| [server['id'], {'status' => server['status'].downcase, 'name' => server['name'], 'tenant_id' => server['tenant_id']}]}]
+  end
+
+  def self.live_volumes
+    LiveCloudResources.volumes.collect{|volume| volume['id']}
   end
 
   def self.live_images
-    Rails.cache.fetch('sanity_live_images', expires_in: 10.minutes) do
-      OpenStackConnection.compute.list_images.body['images'].collect{|image| image['id']}
-    end
+    LiveCloudResources.images.collect{|image| image['id']}
   end
 
   def self.check_instance_state(live, recorded)
@@ -102,11 +98,5 @@ module Sanity
     else
       live == recorded
     end
-  end
-
-  def self.instance_in_error_state(instance)
-    OpenStackConnection.compute.get_server_details(instance).body['server']['status'].downcase == 'error'
-  rescue Fog::Compute::OpenStack::NotFound
-    false
   end
 end
