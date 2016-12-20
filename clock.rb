@@ -21,7 +21,7 @@ if Rails.env.production? || Rails.env.staging?
     ReaperJob.perform_later
   end
 
-  every(120.minutes, 'usage_cache_refresh') do
+  every(240.minutes, 'usage_cache_refresh') do
     UsageCacheRefreshJob.perform_later
   end
 
