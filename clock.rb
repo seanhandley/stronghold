@@ -56,15 +56,16 @@ if Rails.env.production? || Rails.env.staging?
   $restart_sidekiq_mutex = Mutex.new
 
   every(243.minutes, 'restart_sidekiq', :thread => true) do
-    return if $restart_sidekiq_mutex.locked?
-    $restart_sidekiq_mutex.synchronize do
-      sleep 120 * 60
-      while (true)
-        until (Sidekiq::ProcessSet.new.size == 0) do ; sleep 0.1 ; end
-        sleep 5
-        break if Sidekiq::ProcessSet.new.size == 0 # Get a clear 5 seconds of zero activity
+    unless $restart_sidekiq_mutex.locked?
+      $restart_sidekiq_mutex.synchronize do
+        sleep 120 * 60
+        while (true)
+          until (Sidekiq::ProcessSet.new.size == 0) do ; sleep 0.1 ; end
+          sleep 5
+          break if Sidekiq::ProcessSet.new.size == 0 # Get a clear 5 seconds of zero activity
+        end
+        `restart sidekiq_stronghold`
       end
-      `restart sidekiq_stronghold`
     end
   end
 
