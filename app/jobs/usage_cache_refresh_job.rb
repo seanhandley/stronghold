@@ -7,7 +7,7 @@ class UsageCacheRefreshJob < ActiveJob::Base
       return
     end
     
-    dispersal_time = 600
+    dispersal_time = 2 * 360
     spacing = dispersal_time / Organization.active.count
     organizations.each_with_index do |organization, i|
       x = (spacing * i * 1.1) + 5
