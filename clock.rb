@@ -5,8 +5,8 @@ require File.expand_path('config/environment', File.dirname(__FILE__))
 include Clockwork
 
 if Rails.env.production? || Rails.env.staging?
-  every(2.minutes, 'graph_cache_warmer') do
-    GraphCacheWarmerJob.perform_later
+  every(2.minutes, 'live_cloud_resources') do
+    LiveCloudResourcesJob.perform_later
   end
 
   every(90.minutes, 'usage_sync') do
@@ -21,7 +21,7 @@ if Rails.env.production? || Rails.env.staging?
     ReaperJob.perform_later
   end
 
-  every(120.minutes, 'usage_cache_refresh') do
+  every(4.hours, 'usage_cache_refresh') do
     UsageCacheRefreshJob.perform_later
   end
 
@@ -53,14 +53,19 @@ if Rails.env.production? || Rails.env.staging?
     ClearStaleSignupsJob.perform_later
   end
 
+  $restart_sidekiq_mutex = Mutex.new
+
   every(243.minutes, 'restart_sidekiq', :thread => true) do
-    sleep 120 * 60
-    while (true)
-      until (Sidekiq::ProcessSet.new.size == 0) do ; sleep 0.1 ; end
-      sleep 5
-      break if Sidekiq::ProcessSet.new.size == 0 # Get a clear 5 seconds of zero activity
+    return if $restart_sidekiq_mutex.locked?
+    $restart_sidekiq_mutex.synchronize do
+      sleep 120 * 60
+      while (true)
+        until (Sidekiq::ProcessSet.new.size == 0) do ; sleep 0.1 ; end
+        sleep 5
+        break if Sidekiq::ProcessSet.new.size == 0 # Get a clear 5 seconds of zero activity
+      end
+      `restart sidekiq_stronghold`
     end
-    `restart sidekiq_stronghold`
   end
 
   every(1.day, 'billing_run', :at => '06:30') do
