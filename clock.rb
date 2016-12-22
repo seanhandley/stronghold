@@ -60,6 +60,8 @@ if Rails.env.production? || Rails.env.staging?
           sleep 5
           break if Sidekiq::ProcessSet.new.sum{|p| p['busy']} == 0 # Get a clear 5 seconds of zero activity
         end
+        Sidekiq::ProcessSet.new.each(&:quiet!)
+        sleep 10
         `restart sidekiq_stronghold`
       end
     end
