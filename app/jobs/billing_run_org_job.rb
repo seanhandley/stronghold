@@ -6,8 +6,8 @@ class BillingRunOrgJob < ActiveJob::Base
     return if Billing::Invoice.where(organization: organization, year: year, month: month).any?
 
     invoice = Billing::Invoice.new(organization: organization, year: year, month: month)
-    ud = UsageDecorator.new(organization)
-    usage_data = ud.usage_data(from_date: invoice.period_start, to_date: invoice.period_end)
+    ud = UsageDecorator.new(organization, year, month)
+    usage_data = ud.usage_data
     if ud.sub_total > 0
       invoice.save!
       invoice.build_line_items(usage_data)
