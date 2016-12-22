@@ -59,7 +59,6 @@ if Rails.env.production? || Rails.env.staging?
     sleep 3600 * 2
     unless $restart_sidekiq_mutex.locked?
       $restart_sidekiq_mutex.synchronize do
-        Sidekiq::ProcessSet.new.each(&:quiet!)
         while (true)
           until (Sidekiq::ProcessSet.new.sum{|p| p['busy']} == 0) do ; sleep 0.1 ; end
           sleep 5
