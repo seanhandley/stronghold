@@ -56,7 +56,7 @@ if Rails.env.production? || Rails.env.staging?
   $restart_sidekiq_mutex = Mutex.new
 
   every(4.hours, 'restart_sidekiq', :thread => true) do
-    sleep 360 * 2
+    sleep 3600 * 2
     unless $restart_sidekiq_mutex.locked?
       $restart_sidekiq_mutex.synchronize do
         Sidekiq::ProcessSet.new.each(&:quiet!)
