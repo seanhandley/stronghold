@@ -157,6 +157,8 @@ class Terminal
       Rails.cache.fetch(key)&.values&.each do |token|
         begin
           OpenStackConnection.identity.token_revoke(token)
+        rescue Fog::Identity::OpenStack::NotFound
+          # do nothing
         rescue Fog::Errors::Error => e
           Honeybadger.notify(e)
         end
