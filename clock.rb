@@ -9,7 +9,7 @@ if Rails.env.production? || Rails.env.staging?
     LiveCloudResourcesJob.perform_later
   end
 
-  every(40.minutes, 'usage_sync') do
+  every(3.hours, 'usage_sync') do
     UsageJob.perform_later
   end
 
@@ -19,10 +19,6 @@ if Rails.env.production? || Rails.env.staging?
 
   every(1.day, 'reaper', :at => '03:00') do
     ReaperJob.perform_later
-  end
-
-  every(4.hours, 'usage_cache_refresh') do
-    UsageCacheRefreshJob.perform_later
   end
 
   every(5.minutes, 'status_io_cache_warm') do
