@@ -19,32 +19,22 @@ class OrganizationUsageDecorator < ApplicationDecorator
     ].compact
   end
 
-  def used_resource(resource)
-    case resource
+  def resource(name, state)
+    case name
     when 'VCPUs'
-      model.projects.map{|p| p.used_vcpus}.sum
+      model.projects.map{|p| p.send "#{state}_vcpus".to_sym }.sum
     when 'Memory'
-      model.projects.map{|p| p.used_ram}.sum
+      model.projects.map{|p| p.send "#{state}_ram".to_sym }.sum
     when 'Storage'
-      model.projects.map{|p| p.used_storage}.sum
+      model.projects.map{|p| p.send "#{state}_storage".to_sym }.sum
     end
   end
 
-  def resource_limit(resource)
-    case resource
-    when 'VCPUs'
-      model.projects.map{|p| p.available_vcpus}.sum
-    when 'Memory'
-      model.projects.map{|p| p.available_ram}.sum
-    when 'Storage'
-      model.projects.map{|p| p.available_storage}.sum
-    end
-  end
-
-  def resources_alert(resource)
-    used_percent = resource_limit(resource) > 0 ? used_resource(resource) / resource_limit(resource) : 0
-    if used_percent > RESOURCE_THRESHOLD_PERCENTAGE
-      resource
+  def resources_alert(name)
+    used_percent = resource(name, 'available') > 0 ? resource(name, 'used') / resource(name, 'available').to_f : 0
+    used_percent *= 100.0
+    if used_percent.round > RESOURCE_THRESHOLD_PERCENTAGE
+      name
     end
   end
 end
