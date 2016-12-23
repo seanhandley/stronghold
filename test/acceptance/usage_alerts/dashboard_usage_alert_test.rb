@@ -8,7 +8,7 @@ class DashboardUsageAlert < CapybaraTestCase
     within('div#quota-limits') do
       @alerts_message = ""
       refute page.has_content?('You are reaching your')
-      save_screenshot('/Users/eugenia/Desktop/screen1.png', :full => true)
+      # save_screenshot('/Users/eugenia/Desktop/screen1.png', :full => true)
     end
   end
 
@@ -18,7 +18,7 @@ class DashboardUsageAlert < CapybaraTestCase
     within('div#quota-limits') do
       @alerts_message = "You are reaching your Vcpus, Memory, and Storage quota limit"
       assert page.has_content?("You are reaching your Vcpus, Memory, and Storage quota limit")
-      save_screenshot('/Users/eugenia/Desktop/screen2.png', :full => true)
+      # save_screenshot('/Users/eugenia/Desktop/screen2.png', :full => true)
     end
 
   end
