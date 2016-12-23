@@ -55,7 +55,7 @@ class OrganizationGraphDecorator < ApplicationDecorator
   end
 
   def quota_used
-    all_projects = model.projects.sum(0) {|p| p.total_used_as_percent}
+    all_projects = model.projects.map{|p| p.total_used_as_percent}.sum
     if model.projects.size > 1
       all_projects / model.projects.count
     end
