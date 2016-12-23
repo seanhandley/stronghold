@@ -1,46 +1,75 @@
 require_relative '../acceptance_test_helper'
 
+module QuotaUsage
+  def self.reset_value name, &block
+    define_method name, &block
+  end
+end
+
 class DashboardUsageAlert < CapybaraTestCase
 
-  def setup
-    login("capybara@test.com", '12345678')
-    
+  def test_no_message_when_under_threshold
+    QuotaUsage.reset_value(:used_vcpus) { 50 }
+    QuotaUsage.reset_value(:available_vcpus) { 1000 }
+
+    QuotaUsage.reset_value(:used_ram) { 50 }
+    QuotaUsage.reset_value(:available_ram) { 1000 }
+
+    QuotaUsage.reset_value(:used_storage) { 50 }
+    QuotaUsage.reset_value(:available_storage) { 1000 }
+
+    visit('/')
     within('div#quota-limits') do
-      @alerts_message = ""
-    end
+     refute page.has_content?('You are reaching your')
+   end
   end
 
-  def test_no_message_when_under_threshold
+  def test_message_when_vcpus_and_memory_over_threshold
+    QuotaUsage.reset_value(:used_vcpus) { 950 }
+    QuotaUsage.reset_value(:available_vcpus) { 1000 }
+
+    QuotaUsage.reset_value(:used_ram  ) { 950 }
+    QuotaUsage.reset_value(:available_ram) { 1000 }
+
+    QuotaUsage.reset_value(:used_storage) { 50 }
+    QuotaUsage.reset_value(:available_storage) { 1000 }
+
     visit('/')
-    sleep 1
     within('div#quota-limits') do
-      @alerts_message = ""
-      refute page.has_content?('You are reaching your')
-      save_screenshot('/Users/eugenia/Desktop/screen1.png', :full => true)
+      assert page.has_content?("You are reaching your VCPUs and Memory quota limit")
     end
   end
 
   def test_message_when_all_over_threshold
-    visit('/')
-    sleep 1
-    within('div#quota-limits') do
-      @alerts_message = "You are reaching your Vcpus, Memory, and Storage quota limit"
-      assert page.has_content?("You are reaching your Vcpus, Memory, and Storage quota limit")
-      save_screenshot('/Users/eugenia/Desktop/screen2.png', :full => true)
-    end
+    QuotaUsage.reset_value(:used_vcpus) { 950 }
+    QuotaUsage.reset_value(:available_vcpus) { 1000 }
 
+    QuotaUsage.reset_value(:used_ram  ) { 950 }
+    QuotaUsage.reset_value(:available_ram) { 1000 }
+
+    QuotaUsage.reset_value(:used_storage) { 950 }
+    QuotaUsage.reset_value(:available_storage) { 1000 }
+
+    visit('/')
+    within('div#quota-limits') do
+      assert has_content?("You are reaching your VCPUs, Memory, and Storage quota limit")
+    end
   end
+
 
   def test_alert_links_to_support_tickets
+    QuotaUsage.reset_value(:used_vcpus) { 950 }
+    QuotaUsage.reset_value(:available_vcpus) { 1000 }
+
+    QuotaUsage.reset_value(:used_ram  ) { 950 }
+    QuotaUsage.reset_value(:available_ram) { 1000 }
+
+    QuotaUsage.reset_value(:used_storage) { 950 }
+    QuotaUsage.reset_value(:available_storage) { 1000 }
+
     visit('/')
-    sleep 1
     within('div#quota-limits') do
-      @alerts_message = "You are reaching your Vcpus, Memory, and Storage quota limit"
       assert has_link?('alert-link')
     end
-  end
-
-  def teardown
-    Capybara.reset_sessions!
   end
 end
