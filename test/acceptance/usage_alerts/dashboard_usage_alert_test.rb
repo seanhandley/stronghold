@@ -4,7 +4,6 @@ class DashboardUsageAlert < CapybaraTestCase
 
   def test_no_message_when_under_threshold
     visit('/')
-    sleep 1
     within('div#quota-limits') do
       @alerts_message = ""
       refute page.has_content?('You are reaching your')
@@ -14,7 +13,6 @@ class DashboardUsageAlert < CapybaraTestCase
 
   def test_message_when_all_over_threshold
     visit('/')
-    sleep 1
     within('div#quota-limits') do
       @alerts_message = "You are reaching your Vcpus, Memory, and Storage quota limit"
       assert page.has_content?("You are reaching your Vcpus, Memory, and Storage quota limit")
@@ -25,7 +23,6 @@ class DashboardUsageAlert < CapybaraTestCase
 
   def test_alert_links_to_support_tickets
     visit('/')
-    sleep 1
     within('div#quota-limits') do
       @alerts_message = "You are reaching your Vcpus, Memory, and Storage quota limit"
       assert has_link?('alert-link')
