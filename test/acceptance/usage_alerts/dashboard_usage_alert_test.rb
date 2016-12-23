@@ -2,14 +2,6 @@ require_relative '../acceptance_test_helper'
 
 class DashboardUsageAlert < CapybaraTestCase
 
-  def setup
-    login("capybara@test.com", '12345678')
-    
-    within('div#quota-limits') do
-      @alerts_message = ""
-    end
-  end
-
   def test_no_message_when_under_threshold
     visit('/')
     sleep 1
@@ -40,7 +32,4 @@ class DashboardUsageAlert < CapybaraTestCase
     end
   end
 
-  def teardown
-    Capybara.reset_sessions!
-  end
 end
