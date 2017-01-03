@@ -11,6 +11,13 @@
       %em
         %span#percent 0%
         capacity used
+    #quota-limits
+      - if @alerts_message
+        #quota-limits-alert
+          %em
+            %i.fa.fa-exclamation-circle
+            %a{:class => "has-tooltip", :id => 'alert-link', :href => support_tickets_path, :target => '_blank', 'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => 'Request more raising a support ticket.'}
+              = @alerts_message
 
   .col-md-4.header-column
     %h4.header-title

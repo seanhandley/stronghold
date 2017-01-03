@@ -1,4 +1,5 @@
 class Support::DashboardController < SupportBaseController
+  include UsageAlertHelper
   skip_authorization_check
 
   def current_section
@@ -6,6 +7,7 @@ class Support::DashboardController < SupportBaseController
   end
 
   def index
+    @alerts_message = alerts_message
   end
 
   def regenerate_ceph_credentials

@@ -60,7 +60,7 @@ class OrganizationGraphDecorator < ApplicationDecorator
       all_projects / model.projects.count
     end
   end
-
+  
   private
 
   def instance_count
