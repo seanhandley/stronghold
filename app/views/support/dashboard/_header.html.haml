@@ -5,13 +5,12 @@
       = current_user.organization.name
 
   .col-md-4.header-column
-    .hide
-      .progress#capacity-used
-        .progress-bar.progress-bar-success{'role'=>"progressbar", 'aria-valuenow'=>"45", 'aria-valuemin' => "0", 'aria-valuemax' => "100", 'style' => "width: 0%"}
-      .progress-caption#capacity-used
-        %em
-          %span#percent 0%
-          capacity used
+    .progress#capacity-used
+      .progress-bar.progress-bar-success{'role'=>"progressbar", 'aria-valuenow'=>"45", 'aria-valuemin' => "0", 'aria-valuemax' => "100", 'style' => "width: 0%"}
+    .progress-caption#capacity-used
+      %em
+        %span#percent 0%
+        capacity used
 
   .col-md-4.header-column
     %h4.header-title
