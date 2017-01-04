@@ -16,10 +16,10 @@ GIT
 
 GIT
   remote: https://github.com/datacentred/rack-contrib
-  revision: f1c77ce2ba20e707afcedf3be1277ddef4003d0b
+  revision: b35ecf8e05216809a47724efca3db1e409bfaafe
   branch: master
   specs:
-    rack-contrib (1.4.0.2.gf1c77ce)
+    rack-contrib (1.4.0.3.gb35ecf8)
       git-version-bump (~> 0.15)
       rack (~> 2.0)
 
@@ -645,4 +645,4 @@ DEPENDENCIES
   world-flags (~> 0.6)
 
 BUNDLED WITH
-   1.12.5
+   1.13.7
