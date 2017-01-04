@@ -5,20 +5,19 @@
       = current_user.organization.name
 
   .col-md-4.header-column
-    %div{class: current_user.staff? ? '' : 'hide'}
-      .progress#capacity-used
-        .progress-bar.progress-bar-success{'role'=>"progressbar", 'aria-valuenow'=>"45", 'aria-valuemin' => "0", 'aria-valuemax' => "100", 'style' => "width: 0%"}
-      .progress-caption#capacity-used
-        %em
-          %span#percent 0%
-          capacity used
-      #quota-limits
-        - if @alerts_message
-          #quota-limits-alert
-            %em
-              %i.fa.fa-exclamation-circle
-              %a{:class => "has-tooltip", :id => 'alert-link', :href => support_tickets_path, :target => '_blank', 'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => 'Request more raising a support ticket.'}
-                = @alerts_message
+    .progress#capacity-used
+      .progress-bar.progress-bar-success{'role'=>"progressbar", 'aria-valuenow'=>"45", 'aria-valuemin' => "0", 'aria-valuemax' => "100", 'style' => "width: 0%"}
+    .progress-caption#capacity-used
+      %em
+        %span#percent 0%
+        capacity used
+    #quota-limits
+      - if @alerts_message
+        #quota-limits-alert
+          %em
+            %i.fa.fa-exclamation-circle
+            %a{:class => "has-tooltip", :id => 'alert-link', :href => support_tickets_path, :target => '_blank', 'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => 'Request more raising a support ticket.'}
+              = @alerts_message
 
   .col-md-4.header-column
     %h4.header-title

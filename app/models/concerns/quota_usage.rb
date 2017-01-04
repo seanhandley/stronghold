@@ -17,7 +17,7 @@ module QuotaUsage
   end
 
   def used_storage
-    volumes.sum(&:size)
+    volumes.sum{|v| v["size"]}
   end
 
   def available_storage
@@ -36,11 +36,11 @@ module QuotaUsage
   private
 
   def servers
-    LiveCloudResources.servers.select{|server| server[:tenant_id] == uuid}
+    LiveCloudResources.servers.select{|server| server["tenant_id"] == uuid}
   end
 
   def volumes
-    LiveCloudResources.volumes.select{|volume| volume[:tenant_id] == uuid}
+    LiveCloudResources.volumes.select{|volume| volume["os-vol-tenant-attr:tenant_id"] == uuid}
   end
 
   def flavors
