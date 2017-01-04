@@ -58,7 +58,7 @@ class OrganizationGraphDecorator < ApplicationDecorator
 
   def quota_used
     return 0 if model.projects.none?
-    model.projects.map{|proj| proj.total_used_as_percent}.sum / model.projects.size
+    model.projects.map(&:total_used_as_percent).sum / model.projects.count
   end
 
   def instance_count
