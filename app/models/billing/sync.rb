@@ -1,5 +1,5 @@
 module Billing
-  class Sync < ActiveRecord::Base
+  class Sync < ApplicationRecord
     self.table_name = "billing_syncs"
 
     scope :completed, -> { where('completed_at IS NOT NULL') }

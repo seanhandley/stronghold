@@ -1,4 +1,4 @@
-class UsageCacheRefreshJob < ActiveJob::Base
+class UsageCacheRefreshJob < ApplicationJob
   queue_as :usage_cache
 
   def perform(organization=nil)

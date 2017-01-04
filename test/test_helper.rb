@@ -9,6 +9,7 @@ ENV["RAILS_ENV"] = "test"
 $VERBOSE = nil
 
 require File.expand_path("../../config/environment", __FILE__)
+
 require "rails/test_help"
 require "minitest/rails"
 require File.expand_path(File.dirname(__FILE__) + '/blueprints')
@@ -30,14 +31,14 @@ OPENSTACK_ARGS[:openstack_username] = 'bar' unless OPENSTACK_ARGS[:openstack_use
 DatabaseCleaner.strategy = :truncation
 
 class UserNoCallbacks < User
-  skip_callback :create, :after, :create_object
-  skip_callback :update, :after, :update_object
-  skip_callback :destroy, :after, :delete_object
-  skip_callback :save, :after, :update_password
+  def create_object   ; end
+  def update_object   ; end
+  def delete_object   ; end
+  def update_password ; end
 end
 
 module Billing
-  class Instance < ActiveRecord::Base
+  class Instance < ApplicationRecord
     def metadata
       {}
     end
@@ -53,14 +54,6 @@ end
 
 class ActiveSupport::TestCase
   ActiveRecord::Migration.check_pending!
-
-    # Setup all fixtures in test/fixtures/*.(yml|csv) for all tests in alphabetical order.
-  #
-  # Note: You'll currently still have to declare fixtures explicitly in integration tests
-  # -- they do not yet inherit this setting
-  fixtures :all
-
-  # Add more helper methods to be used by all tests here...
 end
 
 def log_in(user)

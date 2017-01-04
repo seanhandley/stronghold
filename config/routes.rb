@@ -1,13 +1,11 @@
 Rails.application.routes.draw do
 
   require 'sidekiq/web'
-  require_relative "../lib/constraints/staff_constraint"
 
-  mount Sidekiq::Web => '/admin/sidekiq', :constraints => StaffConstraint.new
-  mount ClockworkWeb::Engine => '/admin/clockwork', :constraints => StaffConstraint.new
+  mount Sidekiq::Web => '/admin/sidekiq', :constraints => Constraints::StaffConstraint.new
+  mount ClockworkWeb::Engine => '/admin/clockwork', :constraints => Constraints::StaffConstraint.new
 
   mount Starburst::Engine => "/starburst"
-
 
   namespace :support, path: 'account' do
     root :to => 'dashboard#index'
@@ -43,7 +41,7 @@ Rails.application.routes.draw do
     post '/contacts/find', :controller => 'contacts', :action => 'find'
   end
 
-  constraints StaffConstraint.new do
+  constraints Constraints::StaffConstraint.new do
     namespace :admin do
       mount Soulmate::Server, :at => "/sm"
       root :to => 'customers#index'

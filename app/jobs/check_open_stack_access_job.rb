@@ -1,4 +1,4 @@
-class CheckOpenStackAccessJob < ActiveJob::Base
+class CheckOpenStackAccessJob < ApplicationJob
   queue_as :default
 
   def perform(user)

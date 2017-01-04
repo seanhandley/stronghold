@@ -1,4 +1,4 @@
-class Reset < ActiveRecord::Base
+class Reset < ApplicationRecord
 
   audited only: [:email, :completed_at, :created_at]
 
@@ -45,7 +45,10 @@ class Reset < ActiveRecord::Base
   end
 
   def email_looks_valid?
-    errors.add(:email, I18n.t(:is_not_a_valid_address)) unless email =~ /.+@.+\..+/
+    unless email =~ /.+@.+\..+/
+      errors.add(:email, I18n.t(:is_not_a_valid_address)) 
+      throw :abort
+    end
   end
 
 end

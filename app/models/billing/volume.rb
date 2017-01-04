@@ -1,5 +1,5 @@
 module Billing
-  class Volume < ActiveRecord::Base
+  class Volume < ApplicationRecord
     self.table_name = "billing_volumes"
 
     validates :volume_id, uniqueness: true

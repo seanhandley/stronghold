@@ -1,4 +1,4 @@
-class Role < ActiveRecord::Base
+class Role < ApplicationRecord
   audited :associated_with => :organization, except: [:organization_id, :power_user]
   has_associated_audits
 
@@ -25,14 +25,14 @@ class Role < ActiveRecord::Base
   def check_users
     if users.present?
       errors.add(:base, I18n.t(:role_has_users_assigned))
-      false
+      throw :abort
     end
   end
 
   def check_power
     if power_user? && users.any?
       errors.add(:base, I18n.t(:cannot_remove_power_user_group))
-      false
+      throw :abort
     end  
   end
 
@@ -47,7 +47,10 @@ class Role < ActiveRecord::Base
   def permissions_are_valid
     return true unless permissions.any?
     permissions.each do |permission|
-      return errors.add(:permissions, 'contain unrecognised values') unless Permissions.user.keys.include?(permission)
+      unless Permissions.user.keys.include?(permission)
+        errors.add(:permissions, 'contain unrecognised values') 
+        throw :abort
+      end
     end
   end
 end

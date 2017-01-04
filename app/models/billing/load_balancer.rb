@@ -1,5 +1,5 @@
 module Billing
-  class LoadBalancer < ActiveRecord::Base
+  class LoadBalancer < ApplicationRecord
     self.table_name = "billing_load_balancers"
 
     validates :lb_id, uniqueness: true

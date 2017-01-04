@@ -1,4 +1,4 @@
-class Audit < ActiveRecord::Base
+class Audit < ApplicationRecord
   belongs_to :user, polymorphic: true
   belongs_to :auditable, polymorphic: true
   belongs_to :organization

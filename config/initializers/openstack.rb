@@ -14,9 +14,6 @@ Excon.defaults[:connect_timeout] = 10
 Excon.defaults[:write_timeout] = 180
 Excon.defaults[:read_timeout] = 180
 
-require_relative '../../lib/active_record/openstack'
-require_relative '../../lib/authorization'
-
 module OpenStackConnection
   def self.identity
     Fog::Identity.new(OPENSTACK_ARGS)

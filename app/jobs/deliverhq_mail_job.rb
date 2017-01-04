@@ -1,4 +1,4 @@
-class DeliverhqMailJob < ActiveJob::Base
+class DeliverhqMailJob < ApplicationJob
   queue_as :default
 
   def perform(invite)

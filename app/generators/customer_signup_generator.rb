@@ -8,7 +8,7 @@ class CustomerSignupGenerator
 
   def generate!
     error = nil
-    ActiveRecord::Base.transaction do
+    ApplicationRecord.transaction do
       begin
         create_customer
       rescue StandardError => e

@@ -1,4 +1,4 @@
-class StatusIOCacheWarmJob < ActiveJob::Base
+class StatusIOCacheWarmJob < ApplicationJob
   queue_as :default
 
   def perform

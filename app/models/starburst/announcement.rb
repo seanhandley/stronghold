@@ -1,5 +1,5 @@
 module Starburst
-  class Announcement < ActiveRecord::Base
+  class Announcement < ApplicationRecord
     validate :body_present
     validates :body, presence: true
 
@@ -61,7 +61,10 @@ module Starburst
     private
 
     def body_present
-      errors.add(:body, "must be present")  unless body.length > 0
+      unless body.length > 0
+        errors.add(:body, "must be present")  
+        throw :abort
+      end
     end
   end
 end

@@ -1,4 +1,4 @@
-class CustomerSignupJob < ActiveJob::Base
+class CustomerSignupJob < ApplicationJob
   queue_as :default
 
   def perform(id)

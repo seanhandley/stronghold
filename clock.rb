@@ -1,6 +1,5 @@
 require 'clockwork'
 require 'sidekiq/api'
-require File.expand_path('config/boot', File.dirname(__FILE__))
 require File.expand_path('config/environment', File.dirname(__FILE__))
 include Clockwork
 

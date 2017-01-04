@@ -1,5 +1,3 @@
-require_relative '../../lib/soulmate_loader'
-
 $soulmate_job_mutex = Mutex.new
 
 class SoulmateJob < ActiveJob::Base

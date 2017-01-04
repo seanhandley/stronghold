@@ -1,4 +1,4 @@
-class SetCephQuotaJob < ActiveJob::Base
+class SetCephQuotaJob < ApplicationJob
   queue_as :default
 
   def perform(organization)

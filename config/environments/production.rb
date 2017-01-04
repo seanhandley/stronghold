@@ -22,7 +22,7 @@ Rails.application.configure do
 
   # Disable serving static files from the `/public` folder by default since
   # Apache or NGINX already handles this.
-  config.serve_static_files = true
+  config.public_file_server.enabled = true
 
   # Compress JavaScripts and CSS.
   config.assets.css_compressor = :sass
@@ -48,6 +48,7 @@ Rails.application.configure do
   # Set to :debug to see everything in the log.
   config.log_level = :info
   config.logger = ::Logger.new("/var/log/rails/stronghold/production.log")
+  config.log_tags = [ :request_id ]
 
   # Prepend all log lines with the following tags.
   # config.log_tags = [ :subdomain, :uuid ]
@@ -68,6 +69,14 @@ Rails.application.configure do
   # Precompile additional assets.
   # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
   # config.assets.precompile += %w( search.js )
+
+  # Action Cable endpoint configuration
+  # config.action_cable.url = 'wss://example.com/cable'
+  # config.action_cable.allowed_request_origins = [ 'http://example.com', /http:\/\/example.*/ ]
+
+  # Use a real queuing backend for Active Job (and separate queues per environment)
+  # config.active_job.queue_adapter     = :resque
+  # config.active_job.queue_name_prefix = "stronghold_#{Rails.env}"
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
@@ -109,5 +118,8 @@ Rails.application.configure do
 
   # Rack Attack
   config.middleware.use Rack::Attack
+
+  # Do not dump schema after migrations.
+  config.active_record.dump_schema_after_migration = false
 
 end

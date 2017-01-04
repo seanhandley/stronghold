@@ -1,4 +1,4 @@
-class FillAuditBlanksJob < ActiveJob::Base
+class FillAuditBlanksJob < ApplicationJob
   queue_as :default
 
   def perform

@@ -2,9 +2,9 @@ module ProjectControllerHelper
   extend ActiveSupport::Concern
 
   included do
-    before_filter :fetch_project,  only: [:update, :destroy]
-    before_filter :fetch_projects, only: [:index]
-    before_filter :get_organization
+    before_action :fetch_project,  only: [:update, :destroy]
+    before_action :fetch_projects, only: [:index]
+    before_action :get_organization
   end
 
   def create
@@ -25,7 +25,7 @@ module ProjectControllerHelper
   end
 
   def project_params
-    params.require(:project).permit(:name, :users => Hash[current_organization.users.map{|u| [u.id.to_s, true]}])
+    params.require(:project).permit(:name, :users => current_organization.users.map{|u| u.id.to_s })
   end
 
   def quota_params

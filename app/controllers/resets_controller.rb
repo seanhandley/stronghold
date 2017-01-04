@@ -2,7 +2,7 @@ class ResetsController < ApplicationController
 
   layout 'customer-sign-up'
 
-  before_filter :check_for_user
+  before_action :check_for_user
 
   def new ; end
 

@@ -5,6 +5,3 @@ CEPH_ARGS = {
   :ceph_token => Rails.application.secrets.ceph_token,
   :ceph_key   => Rails.application.secrets.ceph_key
 }
-
-require_relative '../../lib/active_record/ceph'
-require_relative '../../lib/authorization'

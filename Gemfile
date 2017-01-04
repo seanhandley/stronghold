@@ -1,24 +1,24 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 4.2.5'
+gem 'rails', '5.0.0.1'
 gem 'mysql2', '~> 0.3'
 gem 'sdoc', '~> 0.4.0',  group: :doc
 gem 'bcrypt', '~> 3.1'
-gem 'unicorn', '~> 4.8'
-gem 'sinatra', '~> 1.4'
-gem 'responders', '~> 2.0'
+gem 'unicorn', '~> 5.0'
 gem 'haml', '~> 4.0'
-gem 'cancancan', '~> 1.9'
+gem 'cancancan', '~> 1.15'
 gem 'fog-openstack', '~> 0.1'
 gem 'gravatar_image_tag', '~> 1.2.0'
-gem 'js-routes', '~> 0.9.9'
+gem 'js-routes', '~> 1.2'
 gem 'sidekiq', '~> 4.0'
-gem 'audited-activerecord', git: 'https://github.com/collectiveidea/audited.git', tag: 'v4.0.0.rc1'
+gem 'database_cleaner', '~> 1.5'
+gem "audited", "~> 4.3"
+gem "rails-observers", git: 'https://github.com/rails/rails-observers'
 gem 'verbs', '~> 2.1.4'
 gem 'faraday', '~> 0.9'
 gem 'redcarpet', '~> 3.3'
-gem 'async-rails', '~> 0.9'
-gem 'honeybadger', '~> 1.7'
+gem 'async-rails', '~> 1.5'
+gem 'honeybadger', '~> 2.3'
 gem 'sirportly', '~> 1.3'
 gem 'kaminari', '~> 0.16'
 gem 'bootstrap-kaminari-views', '~> 0.0.5'
@@ -26,10 +26,12 @@ gem 'dalli', '~> 2.7'
 gem 'clockwork', '~> 1.2'
 gem 'clockwork_web', '~> 0.0.5'
 gem 'aws-s3', git: 'https://github.com/datacentred/aws-s3.git'
+gem 'sinatra', git: 'https://github.com/sinatra/sinatra'
+gem 'responders', '~> 2.0'
 gem 'restforce', '~> 2.1'
 gem 'starburst', '~> 1.0'
 gem 'country_select', '~> 2.2'
-gem 'countries', '~> 0.11'
+gem 'countries'
 gem "recaptcha", :require => "recaptcha/rails"
 gem 'tel_to_helper'
 gem 'rest-client', '~> 1.8'
@@ -43,10 +45,9 @@ gem "deep_merge", '~> 1.0'
 gem 'stripe-rails', '~> 0.3'
 gem 'deliverhq', '~> 0.0.1'
 gem 'holidays', '~> 2.2'
-gem "paranoia", "~> 2.0"
 gem 'minitest-ci', :git => 'git@github.com:circleci/minitest-ci.git'
 gem "useragent"
-gem 'rack-contrib'
+gem 'rack-contrib', :git => 'https://github.com/datacentred/rack-contrib', branch: 'master'
 gem 'soulmate', :require => 'soulmate/server'
 gem 'soulmatejs-rails'
 gem 'redis-namespace'
@@ -54,6 +55,7 @@ gem 'statesman', '~> 2.0'
 gem 'parallel'
 gem 'docker-api', '~> 1.31'
 gem 'gibberish', '~> 2.1'
+gem 'paranoia', '~> 2.2'
 
 group :test, :acceptance do
   gem 'faker'
@@ -61,26 +63,27 @@ group :test, :acceptance do
   gem "minitest-rails"
   gem "minitest-rails-capybara"
   gem 'poltergeist'
+  gem 'rails-controller-testing'
   gem 'simplecov'
   gem 'timecop'
   gem 'launchy'
-  gem 'database_cleaner', '~> 0.8.0'
 end
 
 group :test do
   gem 'webmock'
-  gem 'vcr'
+  gem 'vcr', '2.9.3'
 end
 
 # Assets gems
 gem "select2-rails", '~> 3.5.9.1'
-gem 'bootstrap-sass', '~> 3.3.5'
-gem 'jquery-rails', '~> 4.0.3'
+gem 'bootstrap-sass', '~> 3.3.7'
+gem 'jquery-rails'
 gem 'jquery-ui-rails'
+gem 'sprockets', '~> 3.7'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 2.7'
-gem 'coffee-rails', '~> 4.0.0'
-gem 'therubyracer', '~> 0.5', platforms: :ruby
+gem 'coffee-rails', '~> 4.1'
+gem 'therubyracer', '~> 0.12.2', platforms: :ruby
 gem 'momentjs-rails', '~> 2.8.3'
 gem 'font-awesome-sass', '~> 4.5'
 
@@ -111,7 +114,7 @@ group :development do
   gem 'capistrano-bundler', '~> 1.1.2'
   gem 'net-ssh', '~> 2.8.0'
   gem 'spring', '~> 1.1.3'
-  gem 'web-console', '~> 2.1'
+  gem 'web-console', '~> 3.0'
 end
 
 group :development, :test do
@@ -124,11 +127,8 @@ group :development, :test do
   gem 'rspec_junit_formatter', '0.2.2'
 end
 
-group :production do
-  gem 'unicorn-worker-killer', '~> 0.4.2'
-  gem 'rack-attack'
-end
-
 group :production, :staging do
   gem 'newrelic_rpm', '~> 3.9'
+  gem 'unicorn-worker-killer', '~> 0.4.4'
+  gem 'rack-attack'
 end

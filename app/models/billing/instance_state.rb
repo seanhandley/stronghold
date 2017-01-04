@@ -1,5 +1,5 @@
 module Billing
-  class InstanceState < ActiveRecord::Base
+  class InstanceState < ApplicationRecord
     self.table_name = "billing_instance_states"
    
     after_save :touch_instance, on: :create

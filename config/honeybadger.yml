@@ -1,0 +1,9 @@
+---
+api_key: '5a3dcd9f'
+exceptions:
+  ignore:
+    - 'Sinatra::NotFound'
+    - 'CanCan::AccessDenied'
+
+acceptance:
+  report_data: false

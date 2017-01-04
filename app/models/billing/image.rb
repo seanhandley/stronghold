@@ -1,5 +1,5 @@
 module Billing
-  class Image < ActiveRecord::Base
+  class Image < ApplicationRecord
     self.table_name = "billing_images"
 
     validates :image_id, uniqueness: true

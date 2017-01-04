@@ -17,7 +17,5 @@ Restforce.configure do |config|
   config.api_version = "32.0"
 end
 
-require_relative '../../lib/active_record/salesforce'
-
 SALESFORCE_CURRENCY_GBP = 'a0Jb000000ll9AHEAY'
 SALESFORCE_OWNER_COMPANY = 'a0eb00000003NgzAAE'

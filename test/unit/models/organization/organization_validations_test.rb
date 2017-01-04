@@ -23,7 +23,7 @@ class TestOrganizationValidations < CleanTest
       assert_equal "#{@organization.reference}#{i+1}", o
     end
 
-    assert Organization.all.collect(&:reference).uniq
+    assert Organization.distinct.collect(&:reference)
   end
 
   def test_organization_reference_doesnt_change
@@ -44,7 +44,7 @@ class TestOrganizationValidations < CleanTest
     @organization.save!
     organizations.each(&:save!)
 
-    assert Organization.all.collect(&:reporting_code).uniq
+    assert Organization.distinct.collect(&:reporting_code)
   end
 
 end

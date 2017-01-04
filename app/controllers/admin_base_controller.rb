@@ -1,6 +1,6 @@
 class AdminBaseController < AuthorizedController
   skip_authorization_check
-  before_filter :check_user_is_staff
+  before_action :check_user_is_staff
 
   layout 'admin'
 

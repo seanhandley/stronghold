@@ -1,5 +1,5 @@
 module Billing
-  class InstanceFlavor < ActiveRecord::Base
+  class InstanceFlavor < ApplicationRecord
     self.table_name = "billing_instance_flavors"
 
     has_many :billing_instances

@@ -1,4 +1,4 @@
-class BillingRunJob < ActiveJob::Base
+class BillingRunJob < ApplicationJob
   queue_as :default
 
   def perform

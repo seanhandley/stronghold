@@ -1,5 +1,5 @@
 module Billing
-  class VpnConnection < ActiveRecord::Base
+  class VpnConnection < ApplicationRecord
     self.table_name = "billing_vpn_connections"
 
     validates :vpn_connection_id, uniqueness: true

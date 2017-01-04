@@ -49,7 +49,7 @@ class Ticket
   private
 
   def date_time_of_visit
-    time_valid, date_valid = true, true
+    time_valid = date_valid = true
     begin
       Date.parse(@date_of_visit)
       date_valid = false unless @date_of_visit.split('/').all?{|e| e.to_i > 0 }
@@ -71,6 +71,7 @@ class Ticket
          errors.add("Date/Time", "is not in the future")
        end
     end
+    throw :abort if errors.any?
   end
 
 end

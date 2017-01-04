@@ -1,4 +1,4 @@
-class RoleUser < ActiveRecord::Base
+class RoleUser < ApplicationRecord
   audited :associated_with => :role
 
   self.table_name = 'roles_users'
@@ -17,7 +17,7 @@ class RoleUser < ActiveRecord::Base
   def check_presence
     if RoleUser.where(role_id: role.id, user_id: user.id).present?
       errors.add(:base, I18n.t(:user_already_has_role_assigned))
-      return false
+      throw :abort
     else
       return true   
     end
@@ -26,20 +26,18 @@ class RoleUser < ActiveRecord::Base
   def check_addable
     if role.power_user? && user.id == Authorization.current_user.id
       errors.add(:base, I18n.t(:cant_add_self_to_role))
-      return false
+      throw :abort
     end
-    return true
   end
 
   def check_destroyable
     if role.power_user? && user.id == Authorization.current_user.id
       errors.add(:base, I18n.t(:cant_remove_self_from_role))
-      return false
+      throw :abort
     elsif user.roles.count == 1
       errors.add(:base, I18n.t(:user_needs_at_least_one_role))
-      return false
+      throw :abort
     end
-    return true
   end
 
   def check_openstack_access

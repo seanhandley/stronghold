@@ -1,5 +1,5 @@
 module Billing
-  class ImageState < ActiveRecord::Base
+  class ImageState < ApplicationRecord
     self.table_name = "billing_image_states"
 
     belongs_to :billing_image, :class_name => "Billing::Image", :foreign_key => 'image_id'

@@ -1,5 +1,5 @@
 module Billing
-  class LineItem < ActiveRecord::Base
+  class LineItem < ApplicationRecord
 
     self.table_name = "billing_line_items"
 

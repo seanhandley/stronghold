@@ -1,4 +1,4 @@
-class UserProjectRole < ActiveRecord::Base
+class UserProjectRole < ApplicationRecord
 
   audited only: [:user_id, :project_id, :role_uuid]
 

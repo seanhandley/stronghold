@@ -1,6 +1,6 @@
 $usage_job_mutex = Mutex.new
 
-class UsageJob < ActiveJob::Base
+class UsageJob < ApplicationJob
   queue_as :default
 
   def perform

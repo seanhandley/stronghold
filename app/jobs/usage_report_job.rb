@@ -1,4 +1,4 @@
-class UsageReportJob < ActiveJob::Base
+class UsageReportJob < ApplicationJob
   queue_as :default
 
   def perform

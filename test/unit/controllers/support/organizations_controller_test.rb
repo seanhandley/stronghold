@@ -2,8 +2,8 @@ require 'test_helper'
 
 class Support::OrganizationsControllerTest < ActionController::TestCase
   setup do
-    @user = User.make!
-    @organization = @user.organization
+    @organization = Organization.make!
+    @user = User.make! organization: @organization
     @organization.update_attributes self_service: false
     @organization2 = Organization.make!
     @role = Role.make!(organization: @organization, power_user: true)
@@ -15,15 +15,15 @@ class Support::OrganizationsControllerTest < ActionController::TestCase
   test "only power users get to do anything org related" do
     @user.update_attributes(roles: [])
     assert_404([
-      [:get, :index, nil],[:patch, :update, {id: @organization.id}],
-      [:post, :reauthorise, {id: @organization.id}],[:post, :close, {id: @organization.id}]
+      [:get, :index, nil],[:patch, :update, {params: { id: @organization.id}}],
+      [:post, :reauthorise, {params: { id: @organization.id}}],[:post, :close, {params: { id: @organization.id}}]
     ])
   end
 
   test "users can't change different orgs" do
-    patch :update, {format: 'js', id: @organization2.id, organization: {name: 'foo'}}
-    assert_response :unprocessable_entity
-    refute assigns(:organization)
+    assert_404([
+      [:patch ,:update, params: {format: 'js', id: @organization2.id, organization: {name: 'foo'}}]
+    ])
   end
 
   test "user can edit their own org" do
@@ -32,27 +32,27 @@ class Support::OrganizationsControllerTest < ActionController::TestCase
     end
     assert assigns(:organization)
     assert_template "support/organizations/organization"
-    patch :update, {format: 'js', id: @organization.id, organization: {name: 'foo'}}
+    patch :update, params: {format: 'js', id: @organization.id, organization: {name: 'foo'}}
     assert response.body.include?('Saved')
   end
 
   test "User can reauthorise with right password" do
     @controller.stub(:reauthenticate, true, "UpperLower123") do
-      post :reauthorise, password: "UpperLower123", format: 'json'
+      post :reauthorise, params: { password: "UpperLower123"}, format: 'json'
       assert json_response['success']
     end
   end
 
   test "User can't reauthorise with wrong password" do
     @controller.stub(:reauthenticate, false, "wrgon") do
-      post :reauthorise, password: "wrgon", format: 'json'
+      post :reauthorise, params: { password: "wrgon"}, format: 'json'
       refute json_response['success']
     end
   end
 
   test "User can't close account with wrong password" do
     @controller.stub(:reauthenticate, false, "wrgon") do
-      post :close, password: "wrgon"
+      post :close, params: { password: "wrgon"}
       assert_redirected_to support_edit_organization_path
     end
   end
@@ -60,7 +60,7 @@ class Support::OrganizationsControllerTest < ActionController::TestCase
   test "User can close account with right password" do
     @controller.stub(:reauthenticate, true, "UpperLower123") do
       @controller.current_organization.stub(:transition_to!, true) do
-        post :close, password: "UpperLower123"
+        post :close, params: { password: "UpperLower123"}
         refute session[:user_id]
         refute session[:token]
         assert_template :goodbye
@@ -71,7 +71,7 @@ class Support::OrganizationsControllerTest < ActionController::TestCase
   test "dc staff can't close account" do
     @organization.update_attributes(reference: 'datacentred')
     @controller.stub(:reauthenticate, true, "UpperLower123") do
-      post :close, password: "UpperLower123"
+      post :close, params: { password: "UpperLower123"}
       assert_redirected_to support_edit_organization_path
     end
   end

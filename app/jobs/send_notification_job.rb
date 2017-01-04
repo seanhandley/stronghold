@@ -1,4 +1,4 @@
-class SendNotificationJob < ActiveJob::Base
+class SendNotificationJob < ApplicationJob
   queue_as :default
 
   def perform(key, message)
