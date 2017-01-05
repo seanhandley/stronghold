@@ -18,7 +18,7 @@ class CheckCephAccessJob < ApplicationJob
         begin
           Ceph::UserKey.destroy 'access-key' => user.ec2_credentials['access'] if user.ec2_credentials
         rescue Net::HTTPError => e
-          unless e.message.include? 'AccessDenied'
+          unless ['AccessDenied', 'InvalidAccessKeyId'].include? e.message
             Honeybadger.notify(e) 
             raise
           end
