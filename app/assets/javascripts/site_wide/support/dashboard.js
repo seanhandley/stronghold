@@ -34,4 +34,18 @@ $(document).ready(function() {
   });
 
   $('#dashboard-tabs a:first').tab('show');
+
+  if(typeof(ion) !== 'undefined') {
+    ion.sound({
+      sounds: [
+        {
+          name: "water_droplet"
+        }
+      ],
+      volume: 0.2,
+      path: "/sounds/",
+      preload: true
+    });
+  }
+
 });

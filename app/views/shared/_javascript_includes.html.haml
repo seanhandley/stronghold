@@ -7,3 +7,7 @@
 - else
   = javascript_include_tag 'application', default_args.merge(Rails.env.acceptance? ? {} : {'async' => true, 'cache' => true})
 = stripe_javascript_tag
+
+- unless Rails.env.acceptance?
+  = javascript_include_tag('cable', default_args)
+  = javascript_include_tag('sounds', default_args)

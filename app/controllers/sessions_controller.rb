@@ -24,9 +24,10 @@ class SessionsController < ApplicationController
     if @user and password.present?
       if token = @user.authenticate(password)
         GetProjectTokensJob.perform_later(@user, GIBBERISH_CIPHER.encrypt(password))
-        session[:user_id]    = @user.id
-        session[:created_at] = Time.now.utc
-        session[:token]      = token if token.is_a? String
+        session[:user_id]        = @user.id
+        session[:created_at]     = Time.now.utc
+        session[:token]          = token if token.is_a? String
+        cookies.signed[:user_id] = @user.id
 
         if @user.organization.known_to_payment_gateway?
           if params[:next]

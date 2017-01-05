@@ -1,13 +1,17 @@
 module Ext
   class UnreadController < ActionController::Base
     def create
-      Rails.logger.info '*' * 10
       ticket       = JSON.parse create_params[:ticket]
       update       = JSON.parse create_params[:update]
       organization = Organization.find_by reporting_code: ticket['contact']['reference'].split[0]
       from_user    = User.find_by email: update['from_address']
-      Rails.logger.info "#{organization.name}: #{from_user.name}"
-      Rails.logger.info '*' * 10
+      users        = organization.users.reject{|u| u.id == from_user.id}
+      users.each do |user|
+        UnreadTicket.create ticket_id: ticket['reference'],
+                            update_id: update['id'],
+                            user_id:   user.id
+      end
+      head :no_content
     end
 
     private

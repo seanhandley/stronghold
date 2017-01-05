@@ -33,7 +33,7 @@ module Support
 
     def update_params
       params.require(:user).permit(:first_name, :last_name,
-                                   :password)
+                                   :password, :preferences => User.default_preferences.keys)
     end
 
   end

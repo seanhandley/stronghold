@@ -43,7 +43,7 @@ Rails.application.configure do
   # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for nginx
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  # config.force_ssl = true # This is handled in NginX
+  config.force_ssl = true # This is handled in NginX
 
   # Set to :debug to see everything in the log.
   config.log_level = :info
@@ -121,5 +121,7 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  config.action_cable.allowed_request_origins = ["http://my.datacentred.io", "https://my.datacentred.io", "http://assets-cdn.datacentred.io", "https://assets-cdn.datacentred.io"]
 
 end

@@ -45,6 +45,5 @@ $(document).ready(function() {
       }
     });
   });
-
   $('#tickets-projects-audits-users-tabs a:first').tab('show');
 });

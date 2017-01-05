@@ -107,6 +107,7 @@ source 'https://rails-assets.org' do
 end
 
 group :development do
+  gem 'puma'
   gem 'i18n_yaml_sorter', '~> 0.2.0'
   gem 'capistrano',  '~> 3.1'
   gem 'capistrano-rails', '~> 1.1'

@@ -109,11 +109,21 @@ angularJS.controller "TicketsController", [
       if ticketReference != null
         $scope.selectedTicket = $scope.getTicketByReference(ticketReference)
         $scope.selectedTicketReference = ticketReference
+        $scope.markTicketRead(ticketReference)
       else
         $scope.selectedTicket = null
       history.replaceState({reference: ticketReference}, '', ticketReference)
       $scope.$apply() if !$scope.$$phase
       return
+
+    $scope.markTicketRead = (ticketReference) ->
+      $http({
+        method: "post",
+        url: "/account/api/tickets/read",
+        data: {
+          "ticket_id": ticketReference
+        }
+      })
 
     $scope.ticketDialogShow = ->
       $scope.clearErrors()

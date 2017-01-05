@@ -1,12 +1,12 @@
 .table-responsive
   %table.table
     %thead
-      %th.status-head
+      %th.unread-status
       %th
     %tbody{:'ng-repeat' => "ticket in getTicketsByStatus(status)"}
-      %tr{:'class' => 'ticket', :'ng-class' => '{selected: ticket == selectedTicket}'}
+      %tr{:'class' => 'ticket {{ticket.unread ? "unread-ticket" : ""}}', :'ng-class' => '{selected: ticket == selectedTicket, }'}
         %td.status
-          %i.fa.fa-tag.big-icon{:'ng-class' => "status.name"}
+          %i{:'class' => 'fa big-icon {{ticket.unread ? "fa-envelope" : "fa-envelope-open-o"}}', :'ng-class' => "status.name"}
         %td
           =link_to "({{ticket.reference}}) {{ticket.title}}", "#ticket-top", {:'ng-click' => "showTicket(ticket.reference)"}
     %tbody{:'ng-hide' => "getTicketsByStatus(status).length > 0"}

@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   include Trackable
   include Gravatar
+  include UserPreferences
 
   audited only: [:first_name, :last_name, :email]
   has_associated_audits
@@ -33,6 +34,7 @@ class User < ApplicationRecord
   belongs_to :organization
   has_many :user_project_roles, dependent: :destroy
   has_many :projects, :through => :user_project_roles
+  has_many :unread_tickets
 
   validates :email, :uniqueness => true
   validates :email, :organization_id, :presence => true

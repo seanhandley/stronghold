@@ -99,11 +99,12 @@ Rails.application.configure do
   config.assets.js_compressor = Uglifier.new(mangle: false)
   
   config.action_mailer.show_previews = true
-  config.consider_all_requests_local = true
 
   routes.append do
     get '/rails/mailers'         => "rails/mailers#index"
     get '/rails/mailers/*path'   => "rails/mailers#preview"
   end
+
+  config.action_cable.allowed_request_origins = ["http://staging-my.datacentred.io", "https://staging-my.datacentred.io"]
 
 end
