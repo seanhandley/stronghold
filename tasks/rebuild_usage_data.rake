@@ -6,7 +6,7 @@ namespace :stronghold do
       puts 'Usage: rake stronghold:rebuild_usage_data IDS="1,2,3"'
       exit
     end
-    ids = ENV['IDS'].split(',').map{|id| id.trim.to_i }
+    ids = ENV['IDS'].split(',').map{|id| id.strip.to_i }
 
     orgs = ids.map{|id| Organization.find(id)}
     orgs.each do |org|
