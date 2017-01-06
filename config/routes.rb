@@ -39,6 +39,7 @@ Rails.application.routes.draw do
 
   namespace :ext do
     post '/contacts/find', :controller => 'contacts', :action => 'find'
+    post '/unread', :controller => 'unread', :action => 'create'
   end
 
   constraints Constraints::StaffConstraint.new do
