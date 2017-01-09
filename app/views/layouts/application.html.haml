@@ -14,11 +14,14 @@
         %a{href: support_root_path, class: 'back-to-dash' }
           %h1.logo
         = render partial: 'shared/top_menu'
+        = render partial: 'shared/user_nav'
         .context-nav
           = render partial: 'shared/support_nav'
 
     %div.page-body
       = render partial: 'shared/environment'
+      - if [support_root_url, root_url].include?(request.url.split('?')[0])
+        = render partial: 'support/dashboard/sidebar'
       .container
         - if [support_root_url, activated_url, root_url].include?(request.url.split('?')[0])
           = render partial: 'shared/cloud_services'

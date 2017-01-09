@@ -9,6 +9,9 @@ module Support
 
     def index
       @alerts_message = alerts_message
+      @user = current_user
+      @organization = @user.organization
+      @projects = @user.projects
     end
 
     def regenerate_ceph_credentials

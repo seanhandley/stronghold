@@ -1,13 +1,8 @@
 %div.btn-group.pull-right
-  %button.btn.btn-default.dropdown-toggle#user-menu{:type => "button", :'data-toggle' => "dropdown", :'dropdown-toggle' => "", class: ['admin', 'utilities'].include?(current_section) ? 'admin-menu' : ''}
+  %button.dropdown-toggle#support-menu{:type => "button", :'data-toggle' => "dropdown", :'dropdown-toggle' => "", class: ['admin', 'utilities'].include?(current_section) ? 'admin-menu' : ''}
     %span
-      = gravatar_image_tag(current_user.email, :class => 'img-circle nav-profile')
-    %span.caret
+      %i.fa.fa-bars
   %ul.dropdown-menu{:role => "menu"}
-    %li
-      %a{:href => support_profile_path}
-        %i.fa.fa-user
-        My Profile
     - if current_user.staff?
       %li
         %a{:href => admin_root_path}
@@ -37,8 +32,11 @@
         %a{:href => support_audits_path}
           %i.fa.fa-history
           = t(:audit_log)
-    %li.divider
-    %li
-      %a{:href => signout_path, data: { confirm: "#{t(:sign_out)}?", :method => :post }}
-        %i.fa.fa-sign-out
-        = t(:sign_out)
+      %li.divider
+      %li
+        - unless current_organization.frozen?
+          - if current_organization.compute? && can?(:read, :cloud)
+            %a{href: openstack_path}
+              %i.fa.fa-external-link
+              %span.hide-when-inactive
+                OpenStack Dashboard

@@ -1,0 +1,58 @@
+#wrapper.active
+  #sidebar-wrapper
+    %ul#sidebar_menu.sidebar-nav
+      %li
+        #sidebar-toggle.btn.fa.fa-angle-double-left.fa-2x
+
+    %ul#sidebar.sidebar-nav
+      - if current_user.power_user?
+        %li
+          %a{:href => support_edit_organization_path}
+            %i.fa.fa-briefcase
+            %span.hide-when-inactive
+              Edit Organization
+      %li
+        %br
+      - if current_user.staff?
+        %li
+          %a{:href => admin_root_path}
+            %i.fa.fa-shield
+            %span.hide-when-inactive
+              = 'Admin'
+              Dashboard
+        - if current_organization.cloud?
+          %li
+            %a{:href => support_quotas_path}
+              %i.fa.fa-sliders
+              %span.hide-when-inactive
+                Limits
+        %li
+          %a{:href => support_audits_path}
+            %i.fa.fa-history
+            %span.hide-when-inactive
+              = t(:audit_log)
+
+        - if current_organization.self_service?
+          %li
+            %a{:href => support_manage_cards_path}
+              %i.fa.fa-credit-card
+              %span.hide-when-inactive
+                Payment Settings
+      %li
+        %br
+      %li
+        - unless current_organization.frozen?
+          - if current_organization.compute? && can?(:read, :cloud)
+            %a{class: "has-tooltip", id: 'openstack_button', href: openstack_path, target: '_blank', 'data-toggle' => "tooltip", 'data-placement' => "right", 'title' => 'Log in using your DataCentred username/password'}
+              %i.fa.fa-external-link
+              %span.hide-when-inactive
+                Horizon
+      %li
+        - unless current_organization.frozen?
+          - if current_organization.known_to_payment_gateway? && (can?(:read, :cloud) || can?(:read, :storage))
+            %a{href: '', 'data-toggle' => "modal", 'data-target' => "#showOpenStackDetails"}
+              %i.fa.fa-cloud
+              %span.hide-when-inactive
+                API Details
+      %li
+        %br

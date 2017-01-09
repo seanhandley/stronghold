@@ -1,88 +1,22 @@
 $main-color: #213550;
 $primary-blue: #415F77;
-$light-gray: #e9e9e9;
-$medium-gray: rgb(222, 222, 222);
+$light-gray: #f0f0f0;
+$very-light-gray: rgb(249,249,249);
+$medium-gray: #ccc;
 $dark-gray: #585858;
-
-// Entire page
-div.full-page {
-  background-color: $light-gray;
-  padding-left: 30px;
-  padding-right: 30px;
-  width: 100%;
-}
-
-#compute-volume-network-tabs .content-section {
-  width: 100%;
-  border-radius: 3px;
-  background-color: #fff;
-}
-//
-
-// Header
-div#usage-capacity-summary {
-  border-radius: 5px;
-  background-color: $light-gray;
-  border: 2px solid $medium-gray;
-  width: 100%;
-}
-
-div#usage-capacity-summary h4.header-title {
-  text-align: right;
-  font-size: 16px;
-  color: $primary-blue;
-}
-
-div#usage-capacity-summary h3.organization-name {
-  margin: 0px;
-  vertical-align: middle;
-  padding: 5px;
-  font-size: 1.4em;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-  width: 100%;
-  max-width: 100%;
-}
-
-div#usage-capacity-summary div.header-column {
-  height: 60px;
-  padding: 10px 10px 20px 30px;
-}
-
-div#usage-capacity-summary div.progress-caption {
-  text-align: center;
-  font-size: 12px;
-}
-
-div#usage-capacity-summary div.progress#capacity-used {
-  height: 10px;
-}
-
-div#usage-capacity-summary div.progress {
-  margin-bottom: 8px;
-}
-div#usage-capacity-summary span.progress-bar-text {
-  float: right;
-  color: #AAAAAA;
-}
-
-div#quota-limits-alert {
-  height: 10px;
-  text-align: center;
-  font-size: 11px;
-}
-//
-
-// Openstack Button
-div#dashboard_buttons.pull-right {
-  padding: 20px 20px 20px 20px;
-}
-//
 
 // Tabs
 div.centered-tabs {
   text-align:center;
+  margin-bottom: 30px;
+}
+
+div#container-instace.individual-graph {
+  width: 400px;
+}
+
+ul.nav.nav-tabs#compute-volume-network-tabs {
+  border-bottom: 1px solid #fff;
 }
 
 ul.nav.nav-tabs#compute-volume-network-tabs li {
@@ -92,43 +26,50 @@ ul.nav.nav-tabs#compute-volume-network-tabs li {
 }
 
 ul.nav.nav-tabs#compute-volume-network-tabs li a {
+  color: #888;
+  font-size: 1em;
   margin: 50px 0 0 0;
-  border-top: 2px solid $medium-gray;
-  border-left: 2px solid $medium-gray;
-  border-right: 2px solid $medium-gray;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
+  border-bottom: 1px solid $light-gray;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+}
+
+ul.nav.nav-tabs#compute-volume-network-tabs li a:hover {
+  color: #888;
+  cursor: pointer;
+  border-bottom: 1px solid $medium-gray;
 }
 
 ul.nav.nav-tabs#compute-volume-network-tabs li.active a {
   color: $primary-blue;
-  font-weight: bold;
-  background-color: $light-gray;
+  font-weight: 500;
+  border-bottom: 2px solid $primary-blue;
+  -webkit-transition: all 0.1s ease-in-out;
+  -moz-transition: all 0.1s ease-in-out;
+  -o-transition: all 0.1s ease-in-out;
+  transition: all 0.1s ease-in-out;
 }
 //
 
 // Tabs Content
-div#graph-tabs div.tab-content {
-  background-color: $light-gray;
+
+.row.graphs-container {
+  display: flex;
+  align-content: center;
 }
 
-div#graph-tabs h4.section-title{
+.row.graphs-container .col-md-6 {
+  border-radius: 2px;
+  border: 1px solid $medium-gray;
+  background-color: $very-light-gray;
+  margin: 5px;
+  padding: 20px 10px 10px 15px;
+}
+
+.row.graphs-container .col-md-6 span.section-title{
+  float: none;
   color: $primary-blue;
-  font-weight: bold;
-  text-align: center;
-  margin: 40px 20px -50px 30px;
-
+  font-weight: 400;
+  font-size: 1.3em;
 }
-
-div#graph-tabs div.row.graphs-container {
-  border: 2px solid $medium-gray;
-  border-radius: 5px;
-  margin: 10px 10px 10px 10px;
-}
-
-div#graph-tabs .individual-graph {
-  height: 400px;
-  max-width: 400px;
-  margin: 0 auto;
-}
-//

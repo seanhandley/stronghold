@@ -32,4 +32,14 @@ $(document).ready(function() {
     "size": "30",
     "force_https": true
   });
+
+  $('a.limits-collapse').click(function() {
+    if ( $(this).next('.accordion-body').hasClass('in') ) {
+        $(this).text('Show');
+    } else {
+        $(this).text('Hide');
+    }
+  });
+
+  $('#overview-projects-tabs a:first').tab('show');
 });
