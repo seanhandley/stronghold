@@ -16,8 +16,7 @@ var StrongholdGraphOptions = {
         spacingBottom: 0,
         spacingTop: 0,
         spacingLeft: 0,
-        spacingRight: 0,
-        height: 350
+        spacingRight: 0
       },
       title: {
         text: ''
@@ -60,8 +59,7 @@ var StrongholdGraphOptions = {
         plotBackgroundColor: null,
         plotBorderWidth: null,
         plotShadow: false,
-        type: 'pie',
-        height: 350
+        type: 'pie'
       },
       title: {
         text: ''
