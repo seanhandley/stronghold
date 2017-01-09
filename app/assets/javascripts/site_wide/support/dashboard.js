@@ -33,13 +33,5 @@ $(document).ready(function() {
     "force_https": true
   });
 
-  $('a.limits-collapse').click(function() {
-    if ( $(this).next('.accordion-body').hasClass('in') ) {
-        $(this).text('Show');
-    } else {
-        $(this).text('Hide');
-    }
-  });
-
   $('#dashboard-tabs a:first').tab('show');
 });
