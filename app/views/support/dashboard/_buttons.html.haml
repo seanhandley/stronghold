@@ -1,0 +1,8 @@
+#dashboard_buttons.pull-right
+  - unless current_organization.frozen?
+    - if current_organization.compute? && can?(:read, :cloud)
+      %a{class: "btn btn-primary", href: openstack_path}
+        OpenStack Dashboard
+    - if current_organization.known_to_payment_gateway? && (can?(:read, :cloud) || can?(:read, :storage))
+      %a{class: "btn btn-default", href: '', 'data-toggle' => "modal", 'data-target' => "#showOpenStackDetails"}
+        API Details

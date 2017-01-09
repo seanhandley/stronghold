@@ -6,21 +6,22 @@ Highcharts.theme1 = {
 };
 
 Highcharts.theme2 = {
-   colors: ["#90c6c2", "#585858"],
+   colors: ["#9d5a6e", "#585858"],
+
    chart: {
       backgroundColor: null,
    }
 };
 
 Highcharts.theme3 = {
-   colors: ["#f47169", "#585858"],
+   colors: ["#488ea8", "#585858"],
    chart: {
       backgroundColor: null,
    }
 };
 
 Highcharts.theme4 = {
-   colors: ["#2E94B9", "#585858"],
+      colors: ["#917491", "#585858"],
    chart: {
       backgroundColor: null,
    }

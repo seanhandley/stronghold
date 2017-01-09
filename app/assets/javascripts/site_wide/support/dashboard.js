@@ -32,4 +32,6 @@ $(document).ready(function() {
     "size": "30",
     "force_https": true
   });
+
+  $('#dashboard-tabs a:first').tab('show');
 });
