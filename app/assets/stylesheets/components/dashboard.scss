@@ -116,7 +116,7 @@ div.full-page {
   width: 100%;
 }
 
-row.dashboard-main-content {
+.row.dashboard-main-content {
   width: 90%;
 }
 //
@@ -127,12 +127,6 @@ div#usage-capacity-summary {
   border: 1px solid $medium-gray;
   background-color: $very-light-gray;
   width: 100%;
-}
-
-div#usage-capacity-summary h4.header-title {
-  text-align: right;
-  font-size: 16px;
-  color: $primary-blue;
 }
 
 div#usage-capacity-summary h3.organization-name {
@@ -158,6 +152,7 @@ div#usage-capacity-summary div.progress-caption {
 
 div#usage-capacity-summary div.progress#capacity-used {
   height: 10px;
+  background-color: rgba(#d4d4d4, 0.61);
 }
 
 div#usage-capacity-summary div.progress {
@@ -167,6 +162,19 @@ div#usage-capacity-summary span.progress-bar-text {
   float: right;
   color: #AAAAAA;
 }
+
+h4.weekly-spent {
+  font-size: 14px;
+  text-align: right;
+  color: $main-color;
+  padding-right: 5px;
+}
+
+div#quota-limits-alert {
+  height: 10px;
+  text-align: center;
+  font-size: 11px;
+ }
 
 // Openstack Button
 
@@ -221,9 +229,43 @@ div.tab-content#dashboard-tabs-content {
 }
 
 @media screen and (max-width: 767px) {
-  div.dashboard_buttons {
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: flex-end;
+  .hide-on-small-screens {
+    display: none;
+  }
+
+  ul#dashboard-tabs li {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .row.dashboard-main-content {
+    width: 100%;
+  }
+
+  div.dashboard-content {
+    padding-top: 40px;
+  }
+
+  div#usage-capacity-summary h3.organization-name {
+    font-size: 18rpx;
+  }
+
+  div#usage-capacity-summary div.header-column {
+    padding: 10px 10px 10px 10px;
+  }
+
+  h4.weekly-spent {
+    font-size: 13px;
+    text-align: right;
+  }
+
+  div#dashboard_buttons.pull-right {
+    padding: 10px 0px 0px 0px;
+  }
+
+  div#dashboard_buttons.pull-right a {
+    font-size: 12px;
+    padding: 5px;
   }
 }
