@@ -9,7 +9,7 @@ $dark-gray: #585858;
 div.centered-tabs {
   text-align:center;
   margin-bottom: 30px;
-} 
+}
 
 ul.nav.nav-tabs#compute-volume-network-tabs {
   border-bottom: 1px solid #fff;
@@ -50,20 +50,19 @@ ul.nav.nav-tabs#compute-volume-network-tabs li.active a {
 
 // Tabs Content
 
-.row.graphs-container {
+row.graphs-container {
   display: flex;
   align-content: center;
 }
 
-.row.graphs-container .col-md-6 {
+row.graphs-container .col-md-6 {
   border-radius: 2px;
   border: 1px solid $medium-gray;
   background-color: $very-light-gray;
   margin: 5px;
-  padding: 20px 10px 10px 15px;
 }
 
-.row.graphs-container .col-md-6 span.section-title{
+row.graphs-container .col-md-6 span.section-title{
   float: none;
   color: $primary-blue;
   font-weight: 400;
