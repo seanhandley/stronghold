@@ -12,7 +12,12 @@ var StrongholdGraphOptions = {
       chart: {
         plotBackgroundColor: null,
         plotBorderWidth: 0,
-        plotShadow: false
+        plotShadow: false,
+        spacingBottom: 0,
+        spacingTop: 0,
+        spacingLeft: 0,
+        spacingRight: 0,
+        height: 350
       },
       title: {
         text: ''
@@ -23,26 +28,28 @@ var StrongholdGraphOptions = {
       plotOptions: {
         pie: {
           dataLabels: {
-            enabled: true,
-            distance: -50,
-            style: {
-              color: 'white',
-              textShadow: '0px 1px 2px black',
-              fontFamily: "'Signika', arial, sans-serif",
-              fontSize: '11px',
-              width: '60px',
-            }
+            enabled: false
           },
           startAngle: -90,
           endAngle: 90,
-          center: ['50%', '75%']
+          center: ['50%', '75%'],
+          size: '70%'
         }
       },
+      legend: {
+        align: 'center',
+        verticalAlign: 'bottom',
+        floating: true,
+        layout: 'vertical',
+        // x: 0,
+        y: -15,
+        backgroundColor: null
+      },
       series: [{
-        showInLegend: false,
+        showInLegend: true,
         type: 'pie',
         name: '',
-        innerSize: '50%',
+        innerSize: '59%',
         data: seriesData
       }]
     }, StrongholdGraphOptions.defaultOptions);
@@ -53,7 +60,8 @@ var StrongholdGraphOptions = {
         plotBackgroundColor: null,
         plotBorderWidth: null,
         plotShadow: false,
-        type: 'pie'
+        type: 'pie',
+        height: 350
       },
       title: {
         text: ''
@@ -69,6 +77,8 @@ var StrongholdGraphOptions = {
           dataLabels: {
             enabled: true,
             format: '<b>{point.name}</b>: {point.y:.0f}',
+            distance: 10,
+            reserveSpace: false,
             style: {
                 color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
             }
