@@ -26,27 +26,6 @@ button#user-menu:active, button#user-menu:hover,
   opacity: 1.0;
 }
 
-button#support-menu {
-  background-color: $brand-primary;
-  border: none;
-  color: #fff;
-  font-size: 22px;
-  font-weight: 400;
-  webkit-box-shadow: none;
-  box-shadow: none;
-}
-
-button#support-menu:hover {
-  color: $bright-blue;
-}
-
-button#support-menu:active, button#support-menu:hover,
-  button#support-menu#focus {
-  webkit-box-shadow: none;
-  box-shadow: none;
-  opacity: 1.0;
-}
-
 div.dashboard-option {
   opacity: 0.9;
   width: 140px;
@@ -245,23 +224,4 @@ div.tab-content#dashboard-tabs-content {
   #sidebar-toggle {
     display: none;
   }
-}
-
-// Projects //
-
-div.container-projects {
-  padding-top: 50px;
-}
-
-div#projects-count {
-  text-align: right;
-  padding-right: 20px;
-  font-weight: 500;
-  font-size: 16px;
-}
-.project-list {
-  margin-top: 50px;
-}
-.project-list a {
-  text-decoration: none;
 }
