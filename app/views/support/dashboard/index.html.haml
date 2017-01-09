@@ -11,22 +11,15 @@
             = render partial: 'support/dashboard/header'
         .dashboard-content
           .centered-tabs
-            %ul.nav.nav-tabs#overview-projects-tabs
+            %ul.nav.nav-tabs#dashboard-tabs
               %li{'class' => active_tab?('overview')}
                 %a{:href => '#overview', 'data-toggle' => 'tab', 'data-name' => 'overview'}
                   %i.fa.fa-cloud
                   = t(:overview)
-              %li{'class' => active_tab?('projects')}
-                %a{:href => '#projects', 'data-toggle' => 'tab', 'data-name' => 'projects'}
-                  %i.fa.fa-folder
-                  = t(:cloud_projects)
 
-          .tab-content#graphs-projects
+          .tab-content#dashboard-tabs-content
             .tab-pane#overview{'class' => active_tab?('overview')}
               = render partial: 'support/dashboard/graphs'
-
-            .tab-pane#projects{'class' => active_tab?('projects')}
-              = render partial: 'support/dashboard/projects'
 
       - else
         &nbsp;

@@ -195,13 +195,13 @@ div.dashboard-content {
   padding-top: 50px;
 }
 
-ul#overview-projects-tabs li {
+ul#dashboard-tabs li {
   width: 20%;
   float: none;
   display: inline-block;
 }
 
-ul#overview-projects-tabs li a {
+ul#dashboard-tabs li a {
   border: none;
   padding-bottom: 20px;
   font-size: 1em;
@@ -210,7 +210,7 @@ ul#overview-projects-tabs li a {
   text-align: center;
 }
 
-ul#overview-projects-tabs li a:hover {
+ul#dashboard-tabs li a:hover {
   color: #888;
   cursor: pointer;
   border-bottom: 1px solid #888;
@@ -219,7 +219,7 @@ ul#overview-projects-tabs li a:hover {
   border-right: none;
 }
 
-ul#overview-projects-tabs li.active a {
+ul#dashboard-tabs li.active a {
   border: none;
   border-bottom: 2px solid $primary-blue;
   color: $primary-blue;
@@ -231,7 +231,7 @@ ul#overview-projects-tabs li.active a {
   transition: all 0.1s ease-in-out;
 }
 
-div.tab-content#graphs-projects {
+div.tab-content#dashboard-tabs-content {
   margin-top: 30px;
 }
 

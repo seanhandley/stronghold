@@ -41,5 +41,5 @@ $(document).ready(function() {
     }
   });
 
-  $('#overview-projects-tabs a:first').tab('show');
+  $('#dashboard-tabs a:first').tab('show');
 });
