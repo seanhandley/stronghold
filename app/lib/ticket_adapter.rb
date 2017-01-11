@@ -43,7 +43,7 @@ class TicketAdapter
                      name: t['contacts.name'],
                      status: t['statuses.status_type'],
                      department: t['departments.name'],
-                     unread_tickets: unread_tickets}}
+                     unread_tickets: unread_tickets}
           case t['departments.name']
           when 'Access Requests'
             params.merge!(visitor_names: [t['contacts.name'], t["custom_field.visitor_names"]].reject(&:blank?).join(', '),
