@@ -19,6 +19,8 @@ class TicketAdapter
                    custom_field.time_of_visit
                   }
       spql = "SELECT #{columns.join(',')} FROM tickets WHERE contacts.company = \"#{organization.reference}\" GROUP BY submitted_at ORDER BY submitted_at DESC LIMIT #{limit.join(',')}"
+      user = Authorization.current_user
+      colo_user = user.organization.colo?
       SIRPORTLY.request("tickets/spql", spql: spql)["results"].map{|t| Hash[columns.zip(t)]}.map do |t|
         Thread.new do
           head, *tail = SIRPORTLY.request("ticket_updates/all", ticket: t['reference']).sort_by{|t| t['posted_at']}
@@ -40,7 +42,8 @@ class TicketAdapter
                      priority: t['priorities.name'],
                      name: t['contacts.name'],
                      status: t['statuses.status_type'],
-                     department: t['departments.name']}
+                     department: t['departments.name'],
+                     unread_tickets: unread_tickets}}
           case t['departments.name']
           when 'Access Requests'
             params.merge!(visitor_names: [t['contacts.name'], t["custom_field.visitor_names"]].reject(&:blank?).join(', '),
@@ -48,9 +51,7 @@ class TicketAdapter
                           time_of_visit: t["custom_field.time_of_visit"])
           when 'Support'
             params.merge!(more_info: t["custom_field.more_info"])
-            if Authorization.current_user.organization.colo?
-              params.merge!(:department => "Colo Support")
-            end
+            params.merge!(:department => "Colo Support") if colo_user
           end
           tickets.push(Ticket.new(params))
         end
