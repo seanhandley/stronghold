@@ -1,7 +1,7 @@
 - title "Overview"
 
 .container-dashboard
-  %row.dashboard-main-content
+  .row.dashboard-main-content
     .col-md-12
       = render partial: 'support/tickets/incidents'
 
@@ -10,7 +10,7 @@
           .container#usage-capacity-summary
             = render partial: 'support/dashboard/header'
 
-        .dashboard-buttons  
+        .dashboard-buttons
           = render partial: 'support/dashboard/buttons'
 
         .dashboard-content
@@ -18,7 +18,7 @@
             %ul.nav.nav-tabs#dashboard-tabs
               %li{'class' => active_tab?('overview')}
                 %a{:href => '#overview', 'data-toggle' => 'tab', 'data-name' => 'overview'}
-                  %i.fa.fa-cloud
+                  %i.fa.fa-cloud.hide-on-small-screens
                   = t(:overview)
 
           .tab-content#dashboard-tabs-content

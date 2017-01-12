@@ -46,25 +46,39 @@ ul.nav.nav-tabs#compute-volume-network-tabs li.active a {
   -o-transition: all 0.1s ease-in-out;
   transition: all 0.1s ease-in-out;
 }
+
+// .individual-graph {
+//   height: 100%;
+// }
 //
 
 // Tabs Content
 
-row.graphs-container {
-  display: flex;
-  align-content: center;
-}
-
-row.graphs-container .col-md-6 {
+div.container-with-border {
   border-radius: 2px;
   border: 1px solid $medium-gray;
   background-color: $very-light-gray;
   margin: 5px;
 }
+.row-fluid.graphs-container .col-md-6 {
+  padding: 0;
+}
 
-row.graphs-container .col-md-6 span.section-title{
-  float: none;
+div.section-title{
   color: $primary-blue;
   font-weight: 400;
   font-size: 1.3em;
+  padding-left: 20px;
+  margin-top: 20px;
+}
+
+@media screen and (max-width: 480px) {
+  ul.nav.nav-tabs#compute-volume-network-tabs li a {
+    font-size: 13px;
+    padding: 0px;
+  }
+
+  .individual-graph {
+    height: 260px;
+  }
 }
