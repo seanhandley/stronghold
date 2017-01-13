@@ -4,7 +4,7 @@ class Ticket
   attr_accessor :reference, :title,  :description, :created_at, :updated_at,
                 :comments,  :status, :name, :email, :department, :priority,
                 :more_info, :visitor_names, :nature_of_visit,
-                :date_of_visit, :time_of_visit, :as_hash
+                :date_of_visit, :time_of_visit, :unread, :as_hash
 
   validates :title,       length: {minimum: 1, maximum: 200}, allow_blank: false, unless: :access_request?
   validates :description, length: {minimum: 1}, allow_blank: false, unless: :access_request?
@@ -29,8 +29,9 @@ class Ticket
     @nature_of_visit = params[:nature_of_visit]
     @date_of_visit   = params[:date_of_visit]
     @time_of_visit   = params[:time_of_visit]
+    @unread          = (params[:unread_tickets] || []).include?(params[:reference])
     @as_hash         = params.dup.merge(comments: @comments.map{|c| c.as_hash },
-                                    status_name: status_name)
+                                    status_name: status_name, unread: unread)
   end
 
   def self.find(params)

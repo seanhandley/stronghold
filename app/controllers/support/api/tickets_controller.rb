@@ -19,7 +19,8 @@ module Support
       end
 
       def create
-        ticket = Ticket.new(create_params.merge(name: Authorization.current_user.name, email: Authorization.current_user.email))
+        ticket = Ticket.new(create_params.merge(name: Authorization.current_user.name, email: Authorization.current_user.email,
+                                                unread_tickets: Authorization.current_user.unread_tickets.map(&:ticket_id)))
         response = {
           :success => ticket.valid?,
           :message => nil
@@ -55,7 +56,16 @@ module Support
         end
       end
 
+      def read
+        current_user.unread_tickets.where(ticket_id: read_params[:ticket_id]).destroy_all
+        head :no_content
+      end
+
       private
+
+      def read_params
+        params.permit(:ticket_id)
+      end
 
       def create_params
         params.require(:ticket).permit(*ticket_params)

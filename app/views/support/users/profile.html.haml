@@ -25,7 +25,13 @@
         = f.password_field :password, class: "form-control wink-password", placeholder: 'Leave blank to keep password the same'
       .form-group
         #password-progress-bar-container
-
+      .form-group
+        %h4 Preferences
+        - User.default_preferences.each do |pref, _|
+          %label.checkbox-inline
+            = f.check_box "preferences[#{pref}]", checked: @user.preferences[pref] == "1"
+            = "#{pref.to_s.humanize.titleize}?"
       = submit_tag t(:save), class: 'btn btn-primary', data: { disable_with: t(:saving) }
 
 = javascript_include_tag asset_path('assets/password-score.js')
+

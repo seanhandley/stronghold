@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161215102724) do
+ActiveRecord::Schema.define(version: 20170113115348) do
 
   create_table "audits", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
     t.string   "auditable_id"
@@ -384,6 +384,15 @@ ActiveRecord::Schema.define(version: 20161215102724) do
     t.text     "category",            limit: 65535
   end
 
+  create_table "unread_tickets", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+    t.string   "update_id"
+    t.string   "ticket_id"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_unread_tickets_on_user_id", using: :btree
+  end
+
   create_table "user_project_roles", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
     t.integer "user_id"
     t.integer "project_id"
@@ -402,6 +411,7 @@ ActiveRecord::Schema.define(version: 20161215102724) do
     t.string   "password_digest"
     t.string   "salesforce_id"
     t.datetime "last_seen_online"
+    t.text     "preferences",      limit: 65535
   end
 
   create_table "vouchers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|

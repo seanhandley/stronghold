@@ -22,12 +22,6 @@ Recaptcha.configuration.skip_verify_env << 'acceptance'
 Capybara.server_port = 63346
 Capybara.default_max_wait_time = 5
 
-## Uncomment this to help debug JS errors
-
-# Capybara.register_driver :poltergeist do |app|
-#   Capybara::Poltergeist::Driver.new(app, js_errors: false)
-# end
-
 require File.expand_path(File.dirname(__FILE__) + '/../blueprints')
 require 'database_cleaner'
 
@@ -60,7 +54,10 @@ STAFF_REFERENCE = Organization.first.reference
 
 Capybara.register_driver :poltergeist do |app|
   Capybara::Poltergeist::Driver.new(app, :inspector => true, :timeout => 60,
-    phantomjs_options: ['--ignore-ssl-errors=yes', '--ssl-protocol=any'])
+    :phantomjs_options => ['--ignore-ssl-errors=yes', '--ssl-protocol=any'],
+    :debug => false,
+    :js_errors => true
+  )
 end
 
 Capybara.javascript_driver = :poltergeist

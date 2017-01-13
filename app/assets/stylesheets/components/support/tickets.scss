@@ -153,6 +153,10 @@ a.ticket-top-anchor{
   font-size: 12px;
 }
 
+tr.unread-ticket {
+  font-weight: bold;
+}
+
 @media only screen and (max-width: 992px), only screen and (max-device-width: 992px) {
   a.ticket-top-anchor{
     position: relative;

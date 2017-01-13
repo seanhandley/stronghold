@@ -21,6 +21,7 @@ class TicketAdapter
       spql = "SELECT #{columns.join(',')} FROM tickets WHERE contacts.company = \"#{organization.reference}\" GROUP BY submitted_at ORDER BY submitted_at DESC LIMIT #{limit.join(',')}"
       user = Authorization.current_user
       colo_user = user.organization.colo?
+      unread_tickets = user.unread_tickets.map(&:ticket_id)
       SIRPORTLY.request("tickets/spql", spql: spql)["results"].map{|t| Hash[columns.zip(t)]}.map do |t|
         Thread.new do
           head, *tail = SIRPORTLY.request("ticket_updates/all", ticket: t['reference']).sort_by{|t| t['posted_at']}
@@ -42,7 +43,8 @@ class TicketAdapter
                      priority: t['priorities.name'],
                      name: t['contacts.name'],
                      status: t['statuses.status_type'],
-                     department: t['departments.name']}
+                     department: t['departments.name'],
+                     unread_tickets: unread_tickets}
           case t['departments.name']
           when 'Access Requests'
             params.merge!(visitor_names: [t['contacts.name'], t["custom_field.visitor_names"]].reject(&:blank?).join(', '),
@@ -74,7 +76,9 @@ class TicketAdapter
     end
 
     def create(ticket)
-      if !Authorization.current_user.organization.known_to_payment_gateway? &&
+      user = Authorization.current_user
+      colo_user = user.organization.colo?
+      if !user.organization.known_to_payment_gateway? &&
         ticket.priority.downcase == 'emergency'
         return
       end
@@ -86,7 +90,7 @@ class TicketAdapter
         :subject => ticket.title,
         :name => ticket.name,
         :email => ticket.email,
-        'custom[organization_name]' => Authorization.current_user.organization.name
+        'custom[organization_name]' => user.organization.name
       }
       case ticket.department
       when "Access Requests"
@@ -96,12 +100,10 @@ class TicketAdapter
                            'custom[time_of_visit]'   => ticket.time_of_visit})
       when "Support"
         properties.merge!({'custom[more_info]' => ticket.more_info})
-        if Authorization.current_user.organization.colo?
-          properties.merge!(:department => "Colo Support")
-        end
+        properties.merge!(:department => "Colo Support") if colo_user
       end
       new_ticket = SIRPORTLY.create_ticket(properties)
-      update = new_ticket.post_update(:message => ticket.description, :author_name => Authorization.current_user.name, :author_email => Authorization.current_user.email)
+      update = new_ticket.post_update(:message => ticket.description, :author_name => user.name, :author_email => user.email)
       new_ticket.reference
     end
 
