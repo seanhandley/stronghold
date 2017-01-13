@@ -4,6 +4,8 @@ module Ext
       ticket       = JSON.parse create_params[:ticket]
       update       = JSON.parse create_params[:update]
       organization = Organization.find_by reporting_code: ticket['contact']['reference'].split[0]
+      Rails.logger.info '*' * 10
+      Rails.logger.info ticket["additional_recipients"]
       from_user    = User.find_by email: update['from_address']
       users        = organization.users.reject{|u| u.id == from_user.id}
       users.each do |user|
