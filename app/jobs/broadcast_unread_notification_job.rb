@@ -4,7 +4,7 @@ class BroadcastUnreadNotificationJob < ApplicationJob
     organization = Organization.find_by reporting_code: ticket['contact']['reference'].split[0]
     updates      = SIRPORTLY.request("ticket_updates/all", ticket: ticket['reference'])
     users        = updates.map{|u| p u; u['from_address']}.uniq.map{|email| User.find_by_email(email)}.compact
-    users.reject!{|u| u.id == from_user.id}
+    users.reject!{|u| u.id == from_user.id} if from_user
     users.reject!{|u| u.staff? } unless organization.staff?
     users.each do |user|
       UnreadTicket.create ticket_id: ticket['reference'],
