@@ -24,5 +24,8 @@ staging:
 
 production:
   <<: *default
-  database: stronghold_production
+  host:     db0.datacentred.io
+  port:     3306
+  username: stronghold
   password: <%= ENV["DB_PASSWORD"] %>
+  database: stronghold_production
