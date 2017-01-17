@@ -107,21 +107,21 @@
             .input-group
               %span.input-group-addon
                 %i.fa.fa-tag
-              = text_field_tag :new_ticket_title, nil, placeholder: 'Give a quick summary', class: "form-control"
+              = text_field_tag :new_ticket_title, nil, placeholder: "Describe the issue in a sentence", class: "form-control"
             .input-group
               %span.input-group-addon
                 %i.fa.fa-edit
-              = text_area_tag :new_ticket_description, nil, placeholder: 'Now, tell us all the details...', class: "form-control", rows: 12
+              = text_area_tag :new_ticket_description, nil, placeholder: 'Now, explain the issue in detail - the more information the better!', class: "form-control", rows: 8
+            #support-fields.hide
+              .input-group
+                %span.input-group-addon
+                  %i.fa.fa-info
+                = text_area_tag :more_info, nil, placeholder: "Some technical information would be really helpful too.\n\nPerhaps tell us:\n- The instance ID in question?\n- The ID/name of the project affected?\n- The OpenStack Request ID corresponding to an error?", class: "form-control", rows: 8
             %strong.tiny
               %i.fa.fa-sticky-note
               You may use
               = link_to 'Markdown', ExternalLinks.github_mastering_markdown, class: 'text-info'
               in your ticket details if you need to add formatting.
-          #support-fields.hide
-            .input-group
-              %span.input-group-addon
-                %i.fa.fa-info
-              = text_field_tag :more_info, nil, placeholder: 'Additional information (Instance ID, Project ID, Request ID, etc)', class: "form-control"
         .modal-footer
           %button.btn.btn-default{:'ng-click' => 'ticketDialogCancel()'}
             = t(:cancel)
