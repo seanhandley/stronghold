@@ -1,5 +1,5 @@
 class UsageReportJob < ApplicationJob
-  queue_as :default
+  queue_as :slow
 
   def perform
     from = (Time.zone.now - 1.day).beginning_of_week
