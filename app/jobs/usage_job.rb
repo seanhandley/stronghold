@@ -1,7 +1,7 @@
 $usage_job_mutex = Mutex.new
 
 class UsageJob < ApplicationJob
-  queue_as :default
+  queue_as :slow
 
   def perform
     return if $usage_job_mutex.locked?
