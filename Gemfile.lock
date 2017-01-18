@@ -40,6 +40,14 @@ GIT
       rack-protection (= 2.0.0.beta2)
       tilt (~> 2.0)
 
+PATH
+  remote: /Users/sean/src/datacentred/harbour
+  specs:
+    harbour (0.1.0)
+      apipie-rails (~> 0.3)
+      maruku (~> 0.3)
+      rails (~> 5.0.0, >= 5.0.0.1)
+
 GEM
   remote: https://rubygems.org/
   remote: https://rails-assets.org/
@@ -85,6 +93,8 @@ GEM
       public_suffix (~> 2.0, >= 2.0.2)
     airbrussh (1.0.2)
       sshkit (>= 1.6.1, != 1.7.0)
+    apipie-rails (0.3.7)
+      json
     arel (7.1.4)
     ast (2.3.0)
     async-rails (1.5.2)
@@ -261,6 +271,7 @@ GEM
     machinist (2.0)
     mail (2.6.4)
       mime-types (>= 1.16, < 4)
+    maruku (0.7.3)
     maxmind (0.4.7)
     method_source (0.8.2)
     mime-types (2.99.3)
@@ -534,6 +545,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  apipie-rails (~> 0.3)
   async-rails (~> 1.5)
   audited (~> 4.3)
   aws-s3!
@@ -566,6 +578,7 @@ DEPENDENCIES
   gibberish (~> 2.1)
   gravatar_image_tag (~> 1.2.0)
   haml (~> 4.0)
+  harbour!
   holidays (~> 2.2)
   honeybadger (~> 2.3)
   i18n_yaml_sorter (~> 0.2.0)
@@ -575,6 +588,7 @@ DEPENDENCIES
   kaminari (~> 0.16)
   launchy
   machinist
+  maruku
   maxmind (~> 0.4)
   minitest-ci!
   minitest-rails

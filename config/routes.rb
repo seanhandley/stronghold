@@ -7,6 +7,8 @@ Rails.application.routes.draw do
 
   mount Starburst::Engine => "/starburst"
 
+  mount Harbour::Engine => "/api"
+
   namespace :support, path: 'account' do
     root :to => 'dashboard#index'
     resources :instances
