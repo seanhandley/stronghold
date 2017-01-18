@@ -54,14 +54,34 @@ if Rails.env.production? || Rails.env.staging?
     sleep 3600 * 2
     unless $restart_sidekiq_mutex.locked?
       $restart_sidekiq_mutex.synchronize do
+        default_queue_processors = Sidekiq::ProcessSet.new.select{|p| p['queues'].include?('default') }
         while (true)
-          until (Sidekiq::ProcessSet.new.sum{|p| p['busy']} == 0) do ; sleep 0.1 ; end
+          until (default_queue_processors.sum{|p| p['busy']} == 0) do ; sleep 0.1 ; end
           sleep 5
-          break if Sidekiq::ProcessSet.new.sum{|p| p['busy']} == 0 # Get a clear 5 seconds of zero activity
+          break if default_queue_processors.sum{|p| p['busy']} == 0 # Get a clear 5 seconds of zero activity
         end
-        Sidekiq::ProcessSet.new.each(&:quiet!)
+        default_queue_processors.each(&:quiet!)
         sleep 10
-        `restart sidekiq_stronghold ; restart sidekiq_stronghold_slow`
+        `restart sidekiq_stronghold`
+      end
+    end
+  end
+
+  $restart_sidekiq_slow_mutex = Mutex.new
+
+  every(4.hours, 'restart_sidekiq_slow', :thread => true) do
+    sleep 3600 * 2
+    unless $restart_sidekiq_slow_mutex.locked?
+      $restart_sidekiq_slow_mutex.synchronize do
+        slow_queue_processors = Sidekiq::ProcessSet.new.select{|p| p['queues'].include?('slow') }
+        while (true)
+          until (slow_queue_processors.sum{|p| p['busy']} == 0) do ; sleep 0.1 ; end
+          sleep 5
+          break if slow_queue_processors.sum{|p| p['busy']} == 0 # Get a clear 5 seconds of zero activity
+        end
+        slow_queue_processors.each(&:quiet!)
+        sleep 10
+        `restart sidekiq_stronghold_slow`
       end
     end
   end
