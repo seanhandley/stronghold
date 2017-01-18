@@ -1,6 +1,6 @@
 ---
-:concurrency: 10
+:concurrency: 9
 :queues:
   - default
   - mailers
-  - usage_cache
+  - slow
