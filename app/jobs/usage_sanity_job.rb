@@ -1,5 +1,5 @@
 class UsageSanityJob < ApplicationJob
-  queue_as :default
+  queue_as :slow
 
   def perform
     check = Sanity.check
