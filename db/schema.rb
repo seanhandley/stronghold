@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170113115348) do
+ActiveRecord::Schema.define(version: 20170118115646) do
 
   create_table "audits", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
     t.string   "auditable_id"
@@ -312,6 +312,7 @@ ActiveRecord::Schema.define(version: 20170113115348) do
     t.string   "billing_contact"
     t.boolean  "bill_automatically",               default: true,     null: false
     t.string   "technical_contact"
+    t.boolean  "slow_jobs",                        default: false,    null: false
     t.index ["reporting_code"], name: "index_organizations_on_reporting_code", unique: true, using: :btree
     t.index ["state"], name: "index_organizations_on_state", using: :btree
   end

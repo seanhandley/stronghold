@@ -1,5 +1,7 @@
 class UsageCacheRefreshJob < ApplicationJob
+  SLOW_JOB_THRESHOLD = 30
   queue_as :usage_cache
+  queue_as { (self.arguments.first.slow_jobs? ? :slow : :default) if self.arguments.any? }
 
   def perform(organization=nil)
     if organization
@@ -19,8 +21,10 @@ class UsageCacheRefreshJob < ApplicationJob
 
   def warm_cache(organization)
     sleep rand(500..5000) / 1000.0
+    start = Time.now
     ud = UsageDecorator.new(organization, Time.now.year, Time.now.month)
     ud.usage_data(force: true)
+    organization.update_attributes(slow_jobs: (Time.now - start) > SLOW_JOB_THRESHOLD)
   end
 
   def organizations
