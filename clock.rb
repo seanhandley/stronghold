@@ -61,7 +61,7 @@ if Rails.env.production? || Rails.env.staging?
         end
         Sidekiq::ProcessSet.new.each(&:quiet!)
         sleep 10
-        `restart sidekiq_stronghold`
+        `restart sidekiq_stronghold ; restart sidekiq_stronghold_slow`
       end
     end
   end
