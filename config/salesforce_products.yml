@@ -60,6 +60,9 @@ salesforce_products:
     "Instances (4x8) - (Hours)":
       salesforce_id: "01tb0000002hyiiAAA"
       openstack_flavor: "9cf6e43b-e191-47ca-8665-f8592e2d6227"
+    "Instances (4x8) Broadwell - (Hours)":
+      salesforce_id: "01tb00000070NKQAA2"
+      openstack_flavor: "d7f11ee3-044b-46dc-988e-0ddc06349202"
     "Instances (4x16) - (Hours)":
       salesforce_id: "01tb0000003QcnyAAC"
       openstack_flavor: "5e68b95a-61fe-464f-913d-df044c7e433d"
@@ -130,6 +133,9 @@ salesforce_products:
     "Windows Instances (4x8) - (Hours)":
       salesforce_id: "01tb0000005z0V6AAI"
       openstack_flavor: "9cf6e43b-e191-47ca-8665-f8592e2d6227"
+    "Windows Instances (4x8) Broadwell - (Hours)":
+      salesforce_id: "01tb00000070NKaAAM"
+      openstack_flavor: "d7f11ee3-044b-46dc-988e-0ddc06349202"
     "Windows Instances (4x16) - (Hours)":
       salesforce_id: "01tb0000005z0VBAAY"
       openstack_flavor: "5e68b95a-61fe-464f-913d-df044c7e433d"
