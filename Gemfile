@@ -58,7 +58,7 @@ gem 'gibberish', '~> 2.1'
 gem 'paranoia', '~> 2.2'
 gem "apipie-rails", "~> 0.3"
 gem "maruku"
-gem 'harbour', git: 'https://github.com/datacentred/harbour', branch: 'rails_engine_gem'
+gem 'harbour', git: 'git@github.com:datacentred/harbour.git'
 
 group :test, :acceptance do
   gem 'faker'
