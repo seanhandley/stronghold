@@ -8,7 +8,7 @@ if Rails.env.production? || Rails.env.staging?
     LiveCloudResourcesJob.perform_later
   end
 
-  every(3.hours, 'usage_sync') do
+  every(4.hours, 'usage_sync') do
     UsageJob.perform_later
   end
 
