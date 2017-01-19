@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= t('apipie.api_documentation') %></title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <%= Apipie.include_stylesheets %>
+  <link type='text/css' rel='stylesheet' href='<%= Apipie.full_url("stylesheets/application.css")%>'/>
+  <%= stylesheet_link_tag 'harbour_overrides.css' %>
+</head>
+<body>
+  <header class="header" id="header">
+    <a href='/'>
+      <%= image_tag 'dc.png', class: "logo" %>
+    </a>
+  </header>
+  <div class="container-fluid">
+    <h1 id="main-title">API Reference</h1>
+    <div class="row-fluid">
+      <div id='container'>
+        <%= yield %>
+        <%= render 'disqus' if Apipie.configuration.use_disqus? %>
+      </div>
+    </div>
+    <hr>
+    <footer><%= yield :apipie_footer %></footer>
+  </div>
+  <%= Apipie.include_javascripts %>
+</body>
+</html>

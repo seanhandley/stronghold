@@ -1,0 +1,33 @@
+body {
+  padding-top: 0px;
+  padding-left: 0px;
+  padding-right: 0px
+}
+header {
+  padding-left: 10px;
+  padding-right: 10px;
+  background: #213550;
+  position: relative;
+  z-index: 20;
+  height:98px;
+  margin-bottom: 30px
+}
+
+img.logo {
+  margin-top: 18px;
+  margin-left: 10px;
+  float: left;
+}
+
+h1#main-title {
+  margin-bottom: 20px;
+  font-size: 40px
+}
+a {
+  color: #50719C;
+  text-decoration: none;
+}
+
+span.label.label-inverse {
+  background-color: #9C7221;
+}
