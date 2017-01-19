@@ -7,7 +7,7 @@ GIT
 
 GIT
   remote: git@github.com:datacentred/harbour.git
-  revision: cf4bf11b37cf7813697581275dcc6a7581919fdf
+  revision: 95f23b0bae02d44045eb8d53365619dfca99dbc7
   specs:
     harbour (0.1.0)
       apipie-rails (~> 0.3)
