@@ -58,7 +58,12 @@ gem 'gibberish', '~> 2.1'
 gem 'paranoia', '~> 2.2'
 gem "apipie-rails", "~> 0.3"
 gem "maruku"
-gem 'harbour', git: 'git@github.com:datacentred/harbour.git'
+
+if ENV['RAILS_ENV'] == "development"
+  gem 'harbour', path: "../harbour"
+else
+  gem 'harbour', git: 'git@github.com:datacentred/harbour.git', branch: 'master'
+end
 
 group :test, :acceptance do
   gem 'faker'
