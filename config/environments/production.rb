@@ -48,7 +48,7 @@ Rails.application.configure do
   # Set to :debug to see everything in the log.
   config.log_level = :info
   config.logger = ::Logger.new("/var/log/rails/stronghold/production.log")
-  config.log_tags = [ :request_id ]
+  config.log_tags = [ :uuid ]
 
   # Prepend all log lines with the following tags.
   # config.log_tags = [ :subdomain, :uuid ]
