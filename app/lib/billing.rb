@@ -10,40 +10,22 @@ module Billing
     sync = Billing::Sync.create(period_from: from, period_to: to, started_at: Time.now)
     Billing.logger.info "Starting sync #{sync.id}. From #{from} to #{to}..."
     sleep 10 # Because it can take a few seconds for events to get off the queue and into Mongo
-    threads = []
-    threads << Thread.new do
-      Billing.logger.info "Syncing instances usage..."
-      Billing::Instances.sync!(from, to, sync)
-    end
-    threads << Thread.new do
-      Billing.logger.info "Syncing volumes usage..."
-      Billing::Volumes.sync!(from, to, sync)
-    end
-    threads << Thread.new do
-      Billing.logger.info "Syncing IP quotas usage..."
-      Billing::IpQuotas.sync!(sync)
-    end
-    threads << Thread.new do
-      Billing.logger.info "Syncing images usage..."
-      Billing::Images.sync!(from, to, sync)
-    end
-    threads << Thread.new do
-      Billing.logger.info "Syncing object storage usage..."
-      Billing::StorageObjects.sync!(sync)
-    end
-    threads << Thread.new do
-      Billing.logger.info "Syncing IP allocations..."
-      Billing::Ips.sync!(from, to, sync)
-    end
-    threads << Thread.new do
-      Billing.logger.info "Syncing load balancers..."
-      Billing::LoadBalancers.sync!(from, to, sync)
-    end
-    threads << Thread.new do
-      Billing.logger.info "Syncing VPN connections..."
-      Billing::VpnConnections.sync!(from, to, sync)
-    end
-    threads.each(&:join)
+    Billing.logger.info "Syncing instances usage..."
+    Billing::Instances.sync!(from, to, sync)
+    Billing.logger.info "Syncing volumes usage..."
+    Billing::Volumes.sync!(from, to, sync)
+    Billing.logger.info "Syncing IP quotas usage..."
+    Billing::IpQuotas.sync!(sync)
+    Billing.logger.info "Syncing images usage..."
+    Billing::Images.sync!(from, to, sync)
+    Billing.logger.info "Syncing object storage usage..."
+    Billing::StorageObjects.sync!(sync)
+    Billing.logger.info "Syncing IP allocations..."
+    Billing::Ips.sync!(from, to, sync)
+    Billing.logger.info "Syncing load balancers..."
+    Billing::LoadBalancers.sync!(from, to, sync)
+    Billing.logger.info "Syncing VPN connections..."
+    Billing::VpnConnections.sync!(from, to, sync)
     sync.update_attributes(completed_at: Time.now)
     clear_memoized_samples
     Billing.logger.info "Completed sync #{sync.id}. #{sync.summary}"
