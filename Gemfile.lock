@@ -6,6 +6,16 @@ GIT
       minitest (~> 5.0, >= 5.0.6)
 
 GIT
+  remote: git@github.com:datacentred/harbour.git
+  revision: 70233efba14d5504cd81060a8b7f39dc7359a15e
+  branch: master
+  specs:
+    harbour (0.1.0)
+      apipie-rails (~> 0.3)
+      maruku (~> 0.3)
+      rails (= 5.0.1)
+
+GIT
   remote: https://github.com/datacentred/aws-s3.git
   revision: 6d8525e5f69d4d46ff51a30ca8976c7584b68f36
   specs:
@@ -39,14 +49,6 @@ GIT
       rack (~> 2.0)
       rack-protection (= 2.0.0.beta2)
       tilt (~> 2.0)
-
-PATH
-  remote: ../harbour
-  specs:
-    harbour (0.1.0)
-      apipie-rails (~> 0.3)
-      maruku (~> 0.3)
-      rails (= 5.0.1)
 
 GEM
   remote: https://rubygems.org/
