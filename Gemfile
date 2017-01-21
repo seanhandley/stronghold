@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '5.0.0.1'
+gem 'rails', '5.0.1'
 gem 'mysql2', '~> 0.3'
 gem 'sdoc', '~> 0.4.0',  group: :doc
 gem 'bcrypt', '~> 3.1'
