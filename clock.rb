@@ -67,23 +67,8 @@ if Rails.env.production? || Rails.env.staging?
     end
   end
 
-  $restart_sidekiq_slow_mutex = Mutex.new
-
-  every(4.hours, 'restart_sidekiq_slow', :thread => true) do
-    sleep 3600 * 2
-    unless $restart_sidekiq_slow_mutex.locked?
-      $restart_sidekiq_slow_mutex.synchronize do
-        slow_queue_processors = Sidekiq::ProcessSet.new.select{|p| p['queues'].include?('slow') }
-        while (true)
-          until (slow_queue_processors.sum{|p| p['busy']} == 0) do ; sleep 0.1 ; end
-          sleep 5
-          break if slow_queue_processors.sum{|p| p['busy']} == 0 # Get a clear 5 seconds of zero activity
-        end
-        slow_queue_processors.each(&:quiet!)
-        sleep 10
-        `restart sidekiq_stronghold_slow`
-      end
-    end
+  every(4.hours, 'restart_sidekiq_slow') do
+    RestartSlowQueueJob.perform_later
   end
 
   every(1.day, 'billing_run', :at => '06:30') do
