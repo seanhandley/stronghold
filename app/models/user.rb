@@ -7,6 +7,7 @@ class User < ApplicationRecord
   has_associated_audits
 
   attr_accessor :password, :password_confirmation, :token
+  attr_readonly :email
 
   syncs_with_salesforce as: 'Contact', actions: [:create, :update]
 
@@ -22,6 +23,7 @@ class User < ApplicationRecord
 
   authenticates_with_keystone
 
+  before_save :valid_email
   after_save :update_password
   after_commit :generate_ec2_credentials, on: :create
   after_commit :check_openstack_access, :check_ceph_access, on: :create
@@ -41,6 +43,7 @@ class User < ApplicationRecord
   validates :email, :organization_id, :presence => true
   validates :password, :presence => true, :on => :create
   validate :password_complexity
+  validate :valid_email_address
 
   scope :active, -> { joins(:organization).where("organizations.disabled = ?", false)}
 
@@ -153,11 +156,22 @@ class User < ApplicationRecord
   private
 
   def password_complexity
-    if password.present?
+    if password
       if password.length < 8
         errors.add(:base, I18n.t(:password_too_short))
         throw :abort
       end
+    end
+  end
+
+  def valid_email_address
+    unless email =~ /.+@.+\..+/
+      errors.add(:email, I18n.t(:is_not_a_valid_address))
+      throw :abort
+    end
+    unless email.length >= 5
+      errors.add(:email, I18n.t(:is_not_a_valid_address)) 
+      throw :abort
     end
   end
 
