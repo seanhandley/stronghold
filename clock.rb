@@ -16,7 +16,7 @@ if Rails.env.production? || Rails.env.staging?
     ActivationReminderJob.perform_later
   end
 
-  every(1.day, 'reaper', :at => '03:00') do
+  every(1.day, 'reaper', :at => '02:00') do
     ReaperJob.perform_later
   end
 
@@ -28,7 +28,7 @@ if Rails.env.production? || Rails.env.staging?
     SoulmateJob.perform_later
   end
 
-  every(1.week, 'usage_report', :at => 'Monday 07:00') do
+  every(1.week, 'usage_report', :at => 'Monday 03:00') do
     UsageReportJob.perform_later
   end
 
