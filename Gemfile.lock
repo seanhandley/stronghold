@@ -7,7 +7,7 @@ GIT
 
 GIT
   remote: git@github.com:datacentred/harbour.git
-  revision: 70233efba14d5504cd81060a8b7f39dc7359a15e
+  revision: 1ff606f837d366590461bcd22344350d4c9d586c
   branch: master
   specs:
     harbour (0.1.0)
@@ -260,7 +260,7 @@ GEM
     js-routes (1.2.6)
       railties (>= 3.2)
       sprockets-rails
-    json (1.8.3)
+    json (1.8.6)
     kaminari (0.17.0)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
@@ -533,7 +533,7 @@ GEM
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff
-    websocket-driver (0.6.4)
+    websocket-driver (0.6.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
     world-flags (0.6.5)
