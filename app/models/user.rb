@@ -35,6 +35,7 @@ class User < ApplicationRecord
   has_many :user_project_roles, dependent: :destroy
   has_many :projects, :through => :user_project_roles
   has_many :unread_tickets
+  has_many :api_credentials
 
   validates :email, :uniqueness => true
   validates :email, :organization_id, :presence => true
