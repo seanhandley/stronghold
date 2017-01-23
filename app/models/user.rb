@@ -23,7 +23,7 @@ class User < ApplicationRecord
 
   authenticates_with_keystone
 
-  before_save :valid_email
+  before_save :valid_email_address
   after_save :update_password
   after_commit :generate_ec2_credentials, on: :create
   after_commit :check_openstack_access, :check_ceph_access, on: :create
