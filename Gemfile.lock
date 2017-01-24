@@ -7,13 +7,14 @@ GIT
 
 GIT
   remote: git@github.com:datacentred/harbour.git
-  revision: 1ff606f837d366590461bcd22344350d4c9d586c
+  revision: b6759b9786a1f985393e2cec551018b9c400ead9
   branch: master
   specs:
     harbour (0.1.0)
       apipie-rails (~> 0.3)
       maruku (~> 0.3)
       rails (= 5.0.1)
+      responders (~> 2.2)
 
 GIT
   remote: https://github.com/datacentred/aws-s3.git

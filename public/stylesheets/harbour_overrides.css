@@ -1,8 +1,16 @@
 body {
   padding-top: 0px;
   padding-left: 0px;
-  padding-right: 0px
+  padding-right: 0px;
 }
+
+body, p {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 120;
+  line-height: 20px;
+}
+
 header {
   padding-left: 10px;
   padding-right: 10px;
@@ -30,4 +38,27 @@ a {
 
 span.label.label-inverse {
   background-color: #9C7221;
+}
+
+h1, h2, h3 {
+  margin-bottom: 10px;
+}
+
+li {
+  line-height: 25px;
+}
+
+pre {
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.bg-info{
+  background-color:#d9edf7;
+  padding: 15px;
+  padding-left: 5px;
+  margin: 10px;
+  margin-left: 0px;
+  display:inline-block;
+  border: solid 1px #aaa;
 }
