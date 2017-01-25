@@ -50,7 +50,7 @@ class TicketAdapter
             params.merge!(visitor_names: [t['contacts.name'], t["custom_field.visitor_names"]].reject(&:blank?).join(', '),
                           date_of_visit: t["custom_field.date_of_visit"],
                           time_of_visit: t["custom_field.time_of_visit"])
-          when 'Support'
+          when 'Technical Support'
             params.merge!(more_info: t["custom_field.more_info"])
             params.merge!(:department => "Colo Support") if colo_user
           end
@@ -98,7 +98,7 @@ class TicketAdapter
                            'custom[nature_of_visit]' => ticket.nature_of_visit,
                            'custom[date_of_visit]'   => ticket.date_of_visit,
                            'custom[time_of_visit]'   => ticket.time_of_visit})
-      when "Support"
+      when "Technical Support"
         properties.merge!({'custom[more_info]' => ticket.more_info})
         properties.merge!(:department => "Colo Support") if colo_user
       end
