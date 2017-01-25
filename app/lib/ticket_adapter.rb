@@ -101,8 +101,6 @@ class TicketAdapter
       when "Technical Support"
         properties.merge!({'custom[more_info]' => ticket.more_info})
         properties.merge!(:department => "Colo Support") if colo_user
-      when "Staging"
-        properties.merge!({'custom[more_info]' => ticket.more_info})
       end
       new_ticket = SIRPORTLY.create_ticket(properties)
       update = new_ticket.post_update(:message => ticket.description, :author_name => user.name, :author_email => user.email)
