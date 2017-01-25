@@ -7,6 +7,6 @@ Change state to...
 = select_tag :state, options_for_states(@organization), include_blank: true, class: 'form-control', id: 'state-dropdown', 'data-organization': @organization.id, 'data-organization-name': @organization.name
 #state_history_link= link_to 'See states history', admin_state_path(@organization)
 - if @organization.frozen?
-  .btn-unfreeze
+  .fraud-btn
     = link_to 'Run Fraud Report?', mail_admin_frozen_customer_path(@organization), class: 'btn btn-primary', 'data-method' => "post", 'data-confirm' => "The report will be emailed to you. Proceed?"
     = link_to '£1 Test Charge', charge_admin_frozen_customer_path(@organization), class: 'btn btn-primary', 'data-method' => "post", 'data-confirm' => "This will charge and refund £1 to the customer card. Did they give you permission to do this?"
