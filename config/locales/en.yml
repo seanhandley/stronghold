@@ -24,6 +24,8 @@ en:
   add: "Add"
   add_new_role: "Add New Role"
   add_user_to_role: "Add User to role"
+  apipie:
+    errors: "Expected Codes"
   assign_at_least_one_role: "Assign at least one role"
   audit_log: "Audit Log"
   billing: "Billing"
