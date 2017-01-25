@@ -52,7 +52,6 @@
         %h4.media-heading
           {{selectedTicket.name}}
         .user-callout{'ng-bind-html' => "selectedTicket.description"}
-          
         %p.timestamp
           %em
             {{selectedTicket.created_at | momentDateTime}}
