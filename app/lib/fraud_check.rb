@@ -35,7 +35,7 @@ class FraudCheck
       number: "*** *** *** #{card.last4}",
       kind: card.brand,
       fund: card.funding,
-      country: Country.find_country_by_alpha2(card.country).to_s,
+      country: ISO3166::Country.find_country_by_alpha2(card.country).to_s,
       expiry: "#{card.exp_month}/#{card.exp_year}",
       stripe_link: "https://dashboard.stripe.com/customers/#{card.customer}",
       cvc_check: card.cvc_check,
