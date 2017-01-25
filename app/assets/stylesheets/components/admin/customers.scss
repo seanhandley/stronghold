@@ -54,10 +54,13 @@ div.toggle-div.last {
   border-bottom: none;
 }
 
-div.admin-customer-section div.btn-unfreeze {
+div.fraud-btn {
   margin-top: 10px;
 }
 
+div.fraud-btn a.btn.btn-primary {
+  margin-bottom: 5px;
+}
 
 div.admin-customer-section .panel-body.panel-padding {
   padding-top: 20px;
