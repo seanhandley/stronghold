@@ -52,6 +52,7 @@
         %h4.media-heading
           {{selectedTicket.name}}
         .user-callout{'ng-bind-html' => "selectedTicket.description"}
+          %p{'ng-bind-html' => "selectedTicket.more_info"}
         %p.timestamp
           %em
             {{selectedTicket.created_at | momentDateTime}}
@@ -70,7 +71,7 @@
           %td{style: 'width: 100px'}
             %strong Access code:
           %td {{selectedTicket.reference}}
-  %div{'ng-show' => "selectedTicket.department == 'Support'"}
+  %div{'ng-show' => "selectedTicket.department == 'Technical Support'"}
     .table-responsive
       %table
         %tr
