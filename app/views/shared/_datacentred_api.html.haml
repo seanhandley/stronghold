@@ -1,0 +1,28 @@
+.center{style: 'width: 150px; margin-left: auto; margin-right: auto; margin-bottom: 10px; margin-top: 10px'}= image_tag 'DC_Mono_B.png', width: '150px', height: 'auto'
+.alert.alert-info To access the DataCentred API, you may use the credentials and details below.
+#show-js-errors
+.table-responsive
+  %table.table.table-condensed
+    %tbody
+      %tr
+        %td
+          %strong API Documentation:
+        %td= link_to harbour_url, harbour_url
+      %tr
+        %td
+          %strong Access Key:
+        %td#datacentred-access-key
+          = current_user.api_credential.access_key
+          .pull-right
+            %button{class: 'btn btn-copy btn-default', 'data-trigger' => 'manual', 'data-clipboard-text' => current_user.api_credential.access_key, 'data-placement' => "bottom"}
+              = image_tag asset_path('clippy.svg'), title: 'Click to copy', class: 'copy-btn-img'
+      %tr
+        %td
+          %strong Secret Key
+        %td
+          %em{id: 'datacentred-secret-key'} If you don't have a secret key, generate a new one below.
+          .pull-right.hide#copy-datacentred-secret-key
+            %button{class: 'btn btn-copy btn-default', 'data-trigger' => 'manual', 'data-placement' => "bottom"}
+              = image_tag asset_path('clippy.svg'), title: 'Click to copy', class: 'copy-btn-img'
+
+= link_to "#{content_tag(:i, '', class: 'fa fa-refresh')} Generate a new secret key".html_safe, '#', id: 'regenerate-datacentred-credentials'

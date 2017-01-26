@@ -36,6 +36,7 @@ en:
   billing_postcode: "Billing Postcode"
   billing_country: "Billing Country"
   can_access_requests_modify: "Can raise and modify access requests"
+  can_api_access: "Can use the DataCentred API"
   can_instances_modify: "Can modify instances"
   can_instances_read: "Can read instances"
   can_roles_modify: "Can modify roles and invite users"

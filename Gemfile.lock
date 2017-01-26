@@ -7,11 +7,12 @@ GIT
 
 GIT
   remote: git@github.com:datacentred/harbour.git
-  revision: 04fa8dbe613df4f41ade564e3f23bb0861cd8b3a
+  revision: 423161b227806db950f7718b4dd4f7ca0f81f8f3
   branch: master
   specs:
     harbour (0.1.0)
       apipie-rails (~> 0.3)
+      json-schema (~> 2.7)
       maruku (~> 0.3)
       rails (= 5.0.1)
       responders (~> 2.2)
@@ -247,7 +248,7 @@ GEM
     htmlentities (4.3.4)
     http-cookie (1.0.2)
       domain_name (~> 0.5)
-    i18n (0.7.0)
+    i18n (0.8.0)
     i18n_data (0.7.0)
     i18n_yaml_sorter (0.2.0)
     ice_nine (0.11.2)
@@ -262,6 +263,8 @@ GEM
       railties (>= 3.2)
       sprockets-rails
     json (1.8.6)
+    json-schema (2.7.0)
+      addressable (>= 2.4)
     kaminari (0.17.0)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
@@ -324,7 +327,7 @@ GEM
     premailer-rails (1.9.3)
       actionmailer (>= 3, < 6)
       premailer (~> 1.7, >= 1.7.9)
-    public_suffix (2.0.4)
+    public_suffix (2.0.5)
     puma (3.5.2)
     rack (2.0.1)
     rack-attack (4.4.1)
@@ -403,7 +406,7 @@ GEM
       parser (~> 2.3.1, >= 2.3.1.2)
       rainbow (~> 2.0)
     ref (2.0.0)
-    responders (2.2.0)
+    responders (2.3.0)
       railties (>= 4.2.0, < 5.1)
     rest-client (1.8.0)
       http-cookie (>= 1.0.2, < 2.0)
@@ -548,7 +551,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  apipie-rails (~> 0.3)
   async-rails (~> 1.5)
   audited (~> 4.3)
   aws-s3!
@@ -591,7 +593,6 @@ DEPENDENCIES
   kaminari (~> 0.16)
   launchy
   machinist
-  maruku
   maxmind (~> 0.4)
   minitest-ci!
   minitest-rails

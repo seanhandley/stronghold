@@ -1,4 +1,22 @@
 $(document).ready(function() {
+  $('#regenerate-datacentred-credentials').click(function(e) {
+    e.preventDefault();
+    if (confirm("This can't be undone and any applications/users that use these credentials will be locked out until provided with the new credentials. Are you sure?")) {
+      $('#loading-overlay').removeClass('hide');
+      $('#show-js-errors').empty();
+      $.post('/regenerate_datacentred_api_credentials', {'authenticity_token': AUTH_TOKEN}, function(data) {
+        if(data.success) {
+          $('#loading-overlay').addClass('hide');
+          $('#datacentred-secret-key').empty();
+          $('#datacentred-secret-key').append(data.secret_key);
+          $('#copy-datacentred-secret-key button').attr('data-clipboard-text', data.secret_key);
+          $('#copy-datacentred-secret-key').removeClass('hide');
+        } else {
+          $('#show-js-errors').append('<div class="alert alert-danger">Failed to generate secret key. Support team has been notified.</div>')
+        }
+      });
+    }
+  });
   $('#regenerate-ceph-credentials').click(function(e) {
     e.preventDefault();
     if (confirm("This can't be undone and any applications/users that use these credentials will be locked out until provided with the new credentials. Are you sure?")) {

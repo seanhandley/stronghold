@@ -2,11 +2,15 @@ class ApiCredential < ApplicationRecord
   has_secure_password
   belongs_to :user
 
-  after_save :generate_access_key, on: :create
+  after_create :generate_access_key
+
+  def authenticate_and_authorize(password)
+    authenticate(password) && User::Ability.new(user).can?(:read, :api)
+  end
 
   private
 
   def generate_access_key
-    update_column :access_key, SecureRandom.base64
+    update_column :access_key, SecureRandom.hex unless read_attribute(:access_key)
   end
 end
