@@ -1,0 +1,27 @@
+.panel.panel-success
+  .panel-body.panel-padding
+    .table-responsive
+      %table.table.table-striped.table-hover
+        %thead
+          %th Reporting Code
+          %th Organization
+          %th Month
+          %th Total
+          %th Discount
+          %th Salesforce Invoice
+          %th
+        %tbody
+          - for invoice in @pending_manual_invoices
+            = render partial: 'edit', locals: {invoice: invoice }
+            %tr
+              %td= invoice.organization.reporting_code
+              %td= link_to invoice.organization.name, admin_customer_path(invoice.organization)
+              %td== #{Date::MONTHNAMES[invoice.month]} #{invoice.year}
+              %td== £#{number_with_precision(invoice.grand_total, :delimiter => ',', :separator => '.', :precision => 2)}
+              %td== #{invoice.discount_percent}%
+              %td= link_to invoice.salesforce_id, invoice.salesforce_invoice_link, target: '_blank'
+              %td
+                = form_for invoice, url: admin_utilities_pending_invoice_path(invoice), remote: true do |f|
+                  = f.hidden_field :billing_invoice, :value => invoice
+                  = submit_tag 'Finalize', class: 'btn btn-success', id: 'submit_button'
+              %td= link_to 'Dismiss', admin_utilities_pending_invoice_path(invoice), 'class' => 'btn btn-danger', 'data-method' => "delete", 'data-confirm' => "This can't be undone. Are you sure?"

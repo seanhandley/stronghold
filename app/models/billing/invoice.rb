@@ -23,8 +23,10 @@ module Billing
 
     validates :organization, :year, :month, presence: true
 
-    scope :unfinalized, -> { where(finalized: false) }
-    scope :finalized, -> {   where(finalized: true) }
+    scope :unfinalized,    -> { where(finalized: false) }
+    scope :finalized,      -> {   where(finalized: true) }
+    scope :self_service,   -> { joins(:organization).where('organizations.self_service = ?', true) }
+    scope :manual_invoice, -> { joins(:organization).where('organizations.self_service = ?', false) }
 
     has_many :billing_line_items, :class_name => "Billing::LineItem",
              :foreign_key => 'invoice_id'

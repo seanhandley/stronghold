@@ -1,39 +1,67 @@
 - title "Pending Invoices"
 
-.pull-right
-  = link_to 'Stripe Invoices', admin_utilities_pending_invoices_path(finalized: true), class: 'btn btn-info'
+.invoices-dropdown
+  .btn-group
+    %button.btn.btn-info.dropdown-toggle{"data-toggle" => "dropdown", :type => "button"}
+      Show:
+      %span.selection Pending Invoices
+      %span.caret
+    %ul.dropdown-menu#invoices{:role => "menu"}
+      %li
+        %a{:href => admin_utilities_pending_invoices_path(finalized: true)} Finalized Invoices
 
-%h1
-  %i.fa.fa-calculator
-  Pending Invoices
+
+.container.pending-invoices
+  %h2
+    %i.fa.fa-square-o
+    Pending Invoices
+  %hr
+  .container#invoices-columns
+    .row
+      .col-md-4
+        .container-for-icon
+          .icon-container
+            %i.fa.fa-file-text-o.fa-2x
+        .data-container
+          %span.invoice-count
+            = @pending_invoices.count
+          %br
+          Total pending invoices
+      .col-md-4
+        .container-for-icon
+          .icon-container
+            %i.fa.fa-calculator.fa-2x
+        .data-container
+          %span.invoice-count
+            = @pending_self_service_invoices.count
+          %br
+          Self Service customers
+      .col-md-4
+        .container-for-icon
+          .icon-container
+            %i.fa.fa-pencil-square-o.fa-2x
+        .data-container
+          %span.invoice-count
+            = @pending_manual_invoices.count
+          %br
+          Manual Invoiced customers
 
 - if @pending_invoices.any?
-  .table-responsive
-    %table.table.table-striped.table-hover
-      %thead
-        %th Reporting Code
-        %th Organization
-        %th Month
-        %th Total
-        %th Discount
-        %th Salesforce Invoice
-        %th
-      %tbody
-        - for invoice in @pending_invoices
-          = render partial: 'edit', locals: {invoice: invoice }
-          %tr
-            %td= invoice.organization.reporting_code
-            %td= link_to invoice.organization.name, admin_customer_path(invoice.organization)
-            %td== #{Date::MONTHNAMES[invoice.month]} #{invoice.year}
-            %td== £#{number_with_precision(invoice.grand_total, :delimiter => ',', :separator => '.', :precision => 2)}
-            %td== #{invoice.discount_percent}%
-            %td= link_to invoice.salesforce_id, invoice.salesforce_invoice_link, target: '_blank'
-            %td
-              - if invoice.organization.self_service?
-                = link_to 'Create Stripe Invoice?', '', class: 'btn btn-success', 'data-toggle' => "modal", 'data-target' => "#editInvoice#{invoice.id}"
-            %td
-              = link_to 'Dismiss', admin_utilities_pending_invoice_path(invoice), 'class' => 'btn btn-danger', 'data-method' => "delete", 'data-confirm' => "This can't be undone. Are you sure?"
+  .container-fluid.pending_invoices_lists
+    .centered-tabs
+      %ul.nav.nav-tabs#pending-invoices-tabs
+        %li{'class' => active_tab?('self_service')}
+          %a{:href => '#self_service', 'data-toggle' => 'tab', 'data-name' => 'self_service'}
+            = t(:self_service)
+        %li{'class' => active_tab?('invoiced')}
+          %a{:href => '#invoiced', 'data-toggle' => 'tab', 'data-name' => 'invoiced'}
+            = t(:manual_invoiced)
+
+    .tab-content
+      .tab-pane#self_service{'class' => active_tab?('self_service')}
+        = render partial: 'admin/utilities/pending_invoices/pending_self_service'
+      .tab-pane#invoiced{'class' => active_tab?('invoiced')}
+        = render partial: 'admin/utilities/pending_invoices/pending_manual'
 - else
   .push
   .alert.alert-warning No pending invoices found.
-
