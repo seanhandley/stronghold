@@ -54,7 +54,9 @@ class TicketAdapter
                           time_of_visit: t["custom_field.time_of_visit"])
           when 'Technical Support'
             params.merge!(more_info: t["custom_field.more_info"])
-            params.merge!(:department => "Colo Support") if colo_user
+            if colo_user && SIRPORTLY_BRAND == "Datacentred"
+              properties.merge!(:department => "Colo Support")
+            end
           end
           tickets.push(Ticket.new(params))
         end
@@ -102,7 +104,9 @@ class TicketAdapter
                            'custom[time_of_visit]'   => ticket.time_of_visit})
       when "Technical Support"
         properties.merge!({'custom[more_info]' => ticket.more_info})
-        properties.merge!(:department => "Colo Support") if colo_user
+        if colo_user && SIRPORTLY_BRAND == "Datacentred"
+          properties.merge!(:department => "Colo Support")
+        end
       end
       new_ticket = SIRPORTLY.create_ticket(properties)
       update = new_ticket.post_update(:message => ticket.description, :author_name => user.name, :author_email => user.email)
