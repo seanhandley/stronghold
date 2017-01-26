@@ -364,7 +364,7 @@ GEM
       rails-assets-jquery (>= 1.8)
     rails-assets-bootstrap-toggle (2.2.2)
     rails-assets-chained (1.0.0)
-    rails-assets-clipboard (1.5.12)
+    rails-assets-clipboard (1.5.16)
     rails-assets-hideShowPassword (2.0.11)
       rails-assets-jquery (>= 1.11)
     rails-assets-highcharts (4.2.5)
