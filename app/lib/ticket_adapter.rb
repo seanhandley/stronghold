@@ -18,6 +18,7 @@ class TicketAdapter
                    custom_field.visitor_names
                    custom_field.date_of_visit
                    custom_field.time_of_visit
+                   custom_field.more_info
                   }
       spql = "SELECT #{columns.join(',')} FROM tickets WHERE contacts.company = \"#{organization.reference}\" AND brands.name = \"#{SIRPORTLY_BRAND}\" GROUP BY submitted_at ORDER BY submitted_at DESC LIMIT #{limit.join(',')}"
       user = Authorization.current_user
