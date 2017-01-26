@@ -1,4 +1,5 @@
 $(document).ready(function() {
+  $.fn.modal.Constructor.prototype.enforceFocus = function() {};
   var clipboard = new Clipboard('.btn-copy');
 
   clipboard.on('success', function(e) {
