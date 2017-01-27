@@ -104,9 +104,7 @@ class TicketAdapter
                            'custom[time_of_visit]'   => ticket.time_of_visit})
       when "Technical Support"
         properties.merge!({'custom[more_info]' => ticket.more_info})
-        if colo_user && SIRPORTLY_BRAND == "Datacentred"
-          properties.merge!(:department => "Colo Support")
-        end
+        properties.merge!(:department => "Colo Support") if colo_user
       end
       new_ticket = SIRPORTLY.create_ticket(properties)
       update = new_ticket.post_update(:message => ticket.description, :author_name => user.name, :author_email => user.email)
