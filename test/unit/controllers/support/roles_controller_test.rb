@@ -3,7 +3,8 @@ require 'test_helper'
 class Support::RolesControllerTest < ActionController::TestCase
   setup do
     @user = User.make!
-    @organization = @user.primary_organization
+    # OrganizationUser.make!(user: @user, organization: @user.organizations.first, primary: true)
+    @organization = @user.organizations.first
     @organization.update_attributes self_service: false
     @role = Role.make!(organization: @organization, power_user: true)
     @role2 = Role.make!(organization: @organization)

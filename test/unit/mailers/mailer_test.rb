@@ -123,8 +123,8 @@ class MailerTest < ActionMailer::TestCase
   def test_review_mode_alert
     @cs = CustomerSignup.make!
     @user = User.make!
-    @user.primary_organization.stub(:admin_users, [@user]) do
-      @cs.stub(:organization, @user.primary_organization) do
+    @user.organizations.first.stub(:admin_users, [@user]) do
+      @cs.stub(:organization, @user.organizations.first) do
         @email = Mailer.review_mode_alert(@cs.organization).deliver_now
       end
     end
@@ -138,8 +138,8 @@ class MailerTest < ActionMailer::TestCase
 
   def test_review_mode_successful
     @user = User.make!
-    @user.primary_organization.stub(:admin_users, [@user]) do
-      @email = Mailer.review_mode_successful(@user.primary_organization).deliver_now
+    @user.organizations.first.stub(:admin_users, [@user]) do
+      @email = Mailer.review_mode_successful(@user.organizations.first).deliver_now
     end
 
     assert_not ActionMailer::Base.deliveries.empty?
@@ -151,8 +151,8 @@ class MailerTest < ActionMailer::TestCase
 
   def test_quota_changed
     @user = User.make!
-    @user.primary_organization.stub(:admin_users, [@user]) do
-      @email = Mailer.quota_changed(@user.primary_organization).deliver_now
+    @user.organizations.first.stub(:admin_users, [@user]) do
+      @email = Mailer.quota_changed(@user.organizations.first).deliver_now
     end
 
     assert_not ActionMailer::Base.deliveries.empty?

@@ -3,7 +3,7 @@ require 'test_helper'
 class SessionsControllerTest < ActionController::TestCase
   setup do
     @user = User.make!(password: 'Password1')
-    @organization        = @user.primary_organization
+    @organization        = @user.organizations.first
   end
 
   test "can go to sign in path" do

@@ -3,7 +3,7 @@ require 'test_helper'
 class SignupsControllerTest < ActionController::TestCase
   setup do
     @user = User.make!
-    @organization = @user.primary_organization
+    @organization = @user.organizations.first
     @role = @organization.roles.create name: 'foo'
     @invite = Invite.create! organization: @organization,
                          email: 'foo@bar.com',

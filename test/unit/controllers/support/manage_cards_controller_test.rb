@@ -3,7 +3,7 @@ require 'test_helper'
 class Support::ManageCardsControllerTest < ActionController::TestCase
   setup do
     @user = User.make!
-    @organization = @user.primary_organization
+    @organization = @user.organizations.first 
     @stripe_id = "cus_7QbAaReJ8NlEZS"
     @card_1 = {card: {
       number: "4242424242424242",
