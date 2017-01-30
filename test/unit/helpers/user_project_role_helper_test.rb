@@ -25,8 +25,8 @@ module UserProjectRoleHelperTests
   class UserProjectRoleHelperTest < CleanTest
     def setup
       @organization = Organization.make!
-      @user1 = User.make!(organization: @organization)
-      @user2 = User.make!(organization: @organization)
+      @user1 = User.make!(organizations: [@organization])
+      @user2 = User.make!(organizations: [@organization])
     end
 
     def test_user_project_roles_attributes_both_users_chosen

@@ -19,9 +19,9 @@ class SoulmateLoader
     end
 
     User.all.each do |user|
-      if user.organization
+      if user.primary_organization
         loader.add("term" => user.email, "aliases" => [user.name, user.uuid], "id" => user.id,
-                   "data" => {"url" => admin_customer_path(user.organization), "additional_info" => user.uuid})
+                   "data" => {"url" => admin_customer_path(user.primary_organization), "additional_info" => user.uuid})
       end
     end
 

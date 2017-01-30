@@ -11,7 +11,7 @@ class RolesHelperTest < CleanTest
   def setup
     @model = TestModel.new
     @user = User.make!
-    @user2 = User.make!(organization: @user.primary_organization)
+    @user2 = User.make!(organizations: [@user.primary_organization])
     @role = Role.make!(name: 'Special Powers', organization: @user.primary_organization)
     @user.roles << @role
     @user.save

@@ -4,7 +4,7 @@ class Support::ProjectsControllerTest < ActionController::TestCase
   setup do
     @user = User.make!
     @organization = @user.organization
-    @user2 = User.make!(organization: @organization)
+    @user2 = User.make!(organizations: [@organization])
     @organization.update_attributes self_service: false
     @organization.products << Product.make!(:compute)
     @organization.save!

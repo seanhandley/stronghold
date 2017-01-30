@@ -4,7 +4,7 @@ class TestOrganizationMutativeMethods < CleanTest
   def setup
     @organization = Organization.make!
     @organization.transition_to(:active)
-    @user = User.make!(organization: @organization)
+    @user = User.make!(organizations: [@organization])
   end
 
   def enable_or_disable(enable)
