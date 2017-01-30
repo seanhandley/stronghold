@@ -42,6 +42,8 @@ class Project < ApplicationRecord
 
   serialize :quota_set
 
+  scope :for_usage_tracking, -> { with_deleted.joins(:organization).where("organizations.track_usage = ?", true) }
+
   def quota_set
     read_attribute(:quota_set) || StartingQuota['standard']
   end

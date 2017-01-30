@@ -63,7 +63,8 @@ class Organization < ApplicationRecord
   scope :billable,              -> { where(test_account: false, bill_automatically: true) }
   scope :cloud,                 -> { all.select(&:cloud?) }
   scope :active,                -> { where(state: 'active')}
-  scope :self_service,          -> { where('self_service = true') }
+  scope :for_usage_tracking,    -> { where(track_usage:  true) }
+  scope :self_service,          -> { where(self_service: true) }
   scope :pending,               -> { where(state: 'fresh')}
   scope :frozen,                -> { where(state: 'frozen')}
   scope :pending_without_users, -> { all.select{|o| o.fresh? && o.users.count == 0}}

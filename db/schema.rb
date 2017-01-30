@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170119201153) do
+ActiveRecord::Schema.define(version: 20170130142912) do
 
   create_table "api_credentials", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "user_id"
@@ -320,8 +320,10 @@ ActiveRecord::Schema.define(version: 20170119201153) do
     t.boolean  "bill_automatically",               default: true,     null: false
     t.string   "technical_contact"
     t.boolean  "slow_jobs",                        default: false,    null: false
+    t.boolean  "track_usage",                      default: true,     null: false
     t.index ["reporting_code"], name: "index_organizations_on_reporting_code", unique: true, using: :btree
     t.index ["state"], name: "index_organizations_on_state", using: :btree
+    t.index ["track_usage"], name: "index_organizations_on_track_usage", using: :btree
   end
 
   create_table "organizations_products", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
