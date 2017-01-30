@@ -21,8 +21,8 @@
               = gravatar_image_tag(user.email, :class => 'img-circle nav-profile')
               = user.name
             %td{style: 'width: 78px'}
-              = user.organization.name
-              .tiny= user.organization.reference
+              = user.primary_organization.name
+              .tiny= user.primary_organization.reference
             %td{style: 'width: 78px'}
               = flag_list 16 do
                 = flag(user.last_known_connection[:country], title: user.last_known_connection[:country_name])

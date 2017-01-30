@@ -11,8 +11,8 @@ class RolesHelperTest < CleanTest
   def setup
     @model = TestModel.new
     @user = User.make!
-    @user2 = User.make!(organization: @user.organization)
-    @role = Role.make!(name: 'Special Powers', organization: @user.organization)
+    @user2 = User.make!(organization: @user.primary_organization)
+    @role = Role.make!(name: 'Special Powers', organization: @user.primary_organization)
     @user.roles << @role
     @user.save
   end
@@ -22,7 +22,7 @@ class RolesHelperTest < CleanTest
   end
 
   def test_roles_for_select
-    assert_equal "<option value=\"#{@role.id}\">Special Powers</option>", @model.roles_for_select(@user.organization)
+    assert_equal "<option value=\"#{@role.id}\">Special Powers</option>", @model.roles_for_select(@user.primary_organization)
   end
 
   def test_users_for_select
@@ -30,8 +30,8 @@ class RolesHelperTest < CleanTest
   end
 
   def test_projects_for_select
-    project = @user.organization.primary_project
-    assert_equal "<option value=\"#{project.id}\">#{project.name}</option>", @model.projects_for_select(@user.organization)
+    project = @user.primary_organization.primary_project
+    assert_equal "<option value=\"#{project.id}\">#{project.name}</option>", @model.projects_for_select(@user.primary_organization)
   end
 
   def test_active_tab

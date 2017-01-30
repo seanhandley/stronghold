@@ -75,6 +75,10 @@ class User < ApplicationRecord
     !organizations.one?
   end
 
+  def primary_organization
+    OrganizationUser.find_by(user: self, primary: true).organization
+  end
+
   def as_hash
     { email: email }
   end

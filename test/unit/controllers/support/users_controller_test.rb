@@ -4,7 +4,7 @@ class Support::UsersControllerTest < ActionController::TestCase
   setup do
     @user = User.make!
     @user2 = User.make!
-    @organization = @user.organization
+    @organization = @user.primary_organization
     @organization.update_attributes(self_service: false)
     @admin_role = @organization.roles.make!(power_user: true)
     log_in(@user)

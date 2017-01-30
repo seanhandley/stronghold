@@ -166,7 +166,7 @@ class Terminal
 
     def self.get_project_tokens(user, password=nil)
       Rails.cache.fetch("os_tokens_user_#{user.id}", expires_in: 4.hours, force: !!password) do
-        Hash[user.organization.projects.map {|project|
+        Hash[user.primary_organization.projects.map {|project|
           begin
             args = OPENSTACK_ARGS.dup
             args.merge!(:openstack_username      => user.email,

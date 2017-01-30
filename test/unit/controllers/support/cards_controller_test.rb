@@ -3,7 +3,7 @@ require 'test_helper'
 class Support::CardsControllerTest < ActionController::TestCase
   setup do
     @user = User.make!(password: 'Password1', uuid: '1234')
-    @organization = @user.organization
+    @organization = @user.primary_organization
     @customer_signup = CustomerSignup.make!
     @organization.update_attributes customer_signup: @customer_signup
     @args = {

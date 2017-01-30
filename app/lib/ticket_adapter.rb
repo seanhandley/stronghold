@@ -79,7 +79,7 @@ class TicketAdapter
 
     def create(ticket)
       user = Authorization.current_user
-      colo_user = user.organization.colo?
+      colo_user = user.primary_organization.colo?
       if !Authorization.current_organization.known_to_payment_gateway? &&
         ticket.priority.downcase == 'emergency'
         return
