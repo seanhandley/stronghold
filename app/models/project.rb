@@ -33,7 +33,7 @@ class Project < ApplicationRecord
   before_destroy {|t| readonly! if t.persisted? && Project.find(id).staff_project? }
   before_destroy {|t| offboard(t, {})}
   validate :check_projects_limit, on: :create
-  validate :check_quota_set, on: [:create, :update]
+  validate :check_quota_set_is_valid, :check_quota_set_within_limits, on: [:create, :update]
 
   after_commit :sync_quota_set, on: [:create, :update]
   after_commit -> { CreateProjectDefaultNetworkJob.perform_later(uuid) if organization.cloud? }, on: :create
@@ -108,16 +108,43 @@ class Project < ApplicationRecord
   private
 
   def check_projects_limit
-    errors.add(:base, "This account's limits only permit #{pluralize organization.projects_limit, 'project'}. #{link_to 'Raise a ticket to request more?', Rails.application.routes.url_helpers.support_tickets_path}".html_safe) unless organization.new_projects_remaining > 0
+    errors.add(:base, "This account's limits only permit #{pluralize organization.projects_limit, 'project'}") unless organization.new_projects_remaining > 0
     throw :abort
   end
 
-  def check_quota_set
-    return unless quota_set.keys.count >= 3
+  def check_quota_set_is_valid
+    quotas = quota_set.stringify_keys!
+    unless quotas.is_a? Hash
+      errors.add(:quota_set, "must be a hash")
+      throw :abort
+    end
+    unless quotas.keys.all?{|k| StartingQuota['standard'].keys.include? k}
+      errors.add(:quota_set, "top level keys are invalid. Valid keys are #{StartingQuota['standard'].keys}")
+      throw :abort
+    end
+    StartingQuota['standard'].each do |top_level_key, sub_quotas|
+      next unless quotas[top_level_key]
+      unless quotas[top_level_key].is_a? Hash
+        errors.add(:quota_set, "must be a hash")
+        throw :abort
+      end
+      quotas[top_level_key].stringify_keys!
+      unless quotas[top_level_key].keys.all?{|k| sub_quotas.keys.include? k}
+        errors.add(:quota_set, "#{top_level_key} keys are invalid. Valid keys are #{StartingQuota['standard'][top_level_key].keys}.")
+        throw :abort
+      end
+      errors.add(:quota_set, "values must all be numeric")    unless quotas[top_level_key].values.all? {|v| Integer(v.to_s) rescue false }
+      errors.add(:quota_set, "values must all be above zero") unless quotas[top_level_key].values.all? {|v| Integer(v.to_s) > 0 }
+    end
+    throw :abort if errors.any?
+  end
+
+  def check_quota_set_within_limits
     ['compute', 'volume', 'network'].each do |key|
+      next unless quota_set[key]
       quota_set[key].each do |k,v|
         if organization.quota_limit[key][k].to_i < v.to_i
-          errors.add(:base, "Your requested quota for #{k.humanize} exceeds the maximum limit allowed for your account. #{link_to 'Raise a ticket to request more?', Rails.application.routes.url_helpers.support_tickets_path}".html_safe)
+          errors.add(:quota_set, "requested quota for #{k.humanize} exceeds the maximum limit allowed for your account")
           throw :abort
         end
       end
