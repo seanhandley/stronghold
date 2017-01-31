@@ -2,8 +2,8 @@ require 'test_helper'
 
 class SessionsControllerTest < ActionController::TestCase
   setup do
-    @user = User.make!(password: 'Password1')
-    @organization        = @user.organizations.first
+    @user         = User.make!(password: 'Password1')
+    @organization = @user.organizations.first
   end
 
   test "can go to sign in path" do
@@ -45,6 +45,7 @@ class SessionsControllerTest < ActionController::TestCase
       assert_equal 'token', session[:token]
       assert_equal @user.id, session[:user_id]
       assert_in_delta Time.now.utc, session[:created_at], 1
+      assert_equal @organization.id, session[:organization_id]
       assert_redirected_to support_root_path
     end
   end
@@ -126,10 +127,8 @@ class SessionsControllerTest < ActionController::TestCase
       @organization.stub(:has_payment_method?, has_payment) do
         User.stub(:find_by_email, @user) do
           @user.stub(:authenticate_openstack, os_auth) do
-            @user.stub(:organization, @organization) do
-              @user.stub(:admin?, admin) do
-                yield
-              end
+            @user.stub(:admin?, admin) do
+              yield
             end
           end
         end
