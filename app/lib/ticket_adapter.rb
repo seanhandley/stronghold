@@ -54,9 +54,7 @@ class TicketAdapter
                           time_of_visit: t["custom_field.time_of_visit"])
           when 'Technical Support'
             params.merge!(more_info: t["custom_field.more_info"])
-            if colo_user && SIRPORTLY_BRAND == "Datacentred"
-              properties.merge!(:department => "Colo Support")
-            end
+            params.merge!(:department => "Colo Support") if colo_user
           end
           tickets.push(Ticket.new(params))
         end
