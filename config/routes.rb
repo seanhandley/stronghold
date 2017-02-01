@@ -122,6 +122,7 @@ Rails.application.routes.draw do
   get 'thanks', :controller => 'signups', :action => 'thanks'
   post 'stripe_webhook', :controller => 'stripe', :action => 'webhook'
   post 'regenerate_ceph_credentials', :controller => 'support/dashboard', :action => 'regenerate_ceph_credentials'
+  post 'regenerate_datacentred_api_credentials', :controller => 'support/dashboard', :action => 'regenerate_datacentred_api_credentials'
 
   post 'salesforce', :controller => 'salesforce', :action => 'update'
 

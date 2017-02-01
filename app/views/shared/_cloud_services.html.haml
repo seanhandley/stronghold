@@ -16,11 +16,15 @@
                 - @openstack_active = true
                 %li{'role' => "presentation", 'class' => "active"}
                   %a{'href' => "#openstack", 'aria-controls' => "openstack", 'role' => "tab", 'data-toggle' => "tab"}
-                    Compute
+                    OpenStack API
               - if current_organization.storage? && can?(:read, :storage)
                 %li{'role' => "presentation", 'class' => @openstack_active ? '' : 'active'}
                   %a{'href' => "#ceph", 'aria-controls' => "ceph", 'role' => "tab", 'data-toggle' => "tab"}
-                    Storage
+                    Ceph API
+              - if can?(:read, :api) && current_user.staff?
+                %li{'role' => "presentation", 'class' => @openstack_active ? '' : 'active'}
+                  %a{'href' => "#datacentred-api", 'aria-controls' => "datacentred-api", 'role' => "tab", 'data-toggle' => "tab"}
+                    DataCentred API
 
           .tab-content
             - if current_organization.compute? && can?(:read, :cloud)
@@ -30,7 +34,9 @@
             - if current_organization.storage? && can?(:read, :storage)
               %div.tab-pane{'role' => "tabpanel", 'class' => @openstack_active ? '' : 'active', 'id' => "ceph"}
                 = render partial: 'shared/ceph_details'
-
+            - if can?(:read, :api) && current_user.staff?
+              %div.tab-pane{'role' => "tabpanel", 'class' => @openstack_active ? '' : 'active', 'id' => "datacentred-api"}
+                = render partial: 'shared/datacentred_api'
           
         .modal-footer
           %button.btn.btn-primary{'data-toggle' => "modal", 'data-dismiss' => "modal"}

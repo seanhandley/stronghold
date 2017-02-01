@@ -5,6 +5,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <%= Apipie.include_stylesheets %>
+  <%= favicon_link_tag 'favicon.png' %>
   <link type='text/css' rel='stylesheet' href='<%= Apipie.full_url("stylesheets/application.css")%>'/>
   <style>
     body {
@@ -70,6 +71,34 @@
       margin-left: 0px;
       display:inline-block;
       border: solid 1px #aaa;
+    }
+
+    .prettyprint {
+      background-color: #222;
+      padding: 10px;
+      padding-left: 20px;
+      font-size: 14px;
+    }
+    .prettyprint .com {
+      color: #aaa;
+    }
+    .prettyprint .pln {
+      color: #ca4;
+    }
+    .prettyprint .pun {
+      color: #070;
+    }
+    .prettyprint .str {
+      color: #aca;
+    }
+    .prettyprint .typ {
+      color: #3a87ad;
+    }
+    .prettyprint .lit {
+      color: #c64;
+    }
+    .prettyprint .kwd {
+      color: #aca;
     }
   </style>
 </head>

@@ -153,6 +153,16 @@ class User < ApplicationRecord
     check_ceph_access
   end
 
+  def api_credential
+    api_credentials&.first || api_credentials.create!(password: SecureRandom.hex)
+  end
+
+  def refresh_datacentred_api_credentials!
+    new_password = SecureRandom.hex
+    api_credential.update_attributes(password: new_password)
+    new_password
+  end
+
   private
 
   def password_complexity
