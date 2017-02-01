@@ -32,7 +32,7 @@ class UsageCacheRefreshJob < ApplicationJob
   end
 
   def organizations
-    Organization.active.shuffle
+    Organization.active.for_usage_tracking.shuffle
   end
 
 end
