@@ -5,7 +5,11 @@ class TestModel
   include Rails.application.routes.url_helpers
 
   def current_user
-    @user ||= User.make(organization: Organization.make(created_at: signed_up))
+    @user ||= User.make(organizations: [Organization.make(created_at: signed_up)])
+  end
+
+  def current_organization
+    @organization ||= current_user.organizations.first
   end
 
   def signed_up
