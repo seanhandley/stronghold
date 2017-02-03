@@ -33,7 +33,7 @@ class User < ApplicationRecord
   syncs_with_keystone as: 'OpenStack::User', actions: [:create, :destroy]
 
   has_and_belongs_to_many :roles
-  has_and_belongs_to_many :organizations
+  has_many :organization_users, dependent: :destroy; has_many :organizations, through: :organization_users
   has_many :user_project_roles, dependent: :destroy
   has_many :projects, :through => :user_project_roles
   has_many :unread_tickets
@@ -188,7 +188,7 @@ class User < ApplicationRecord
       throw :abort
     end
     unless email.length >= 5
-      errors.add(:email, I18n.t(:is_not_a_valid_address)) 
+      errors.add(:email, I18n.t(:is_not_a_valid_address))
       throw :abort
     end
   end
