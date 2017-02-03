@@ -13,7 +13,7 @@ module Billing
         c2g__InvoiceDescription__c: "Cloud services #{Date::MONTHNAMES[month]} #{year}",
         c2g__CustomerReference__c: organization.reporting_code,
         c2g__InvoiceCurrency__c: SALESFORCE_CURRENCY_GBP,
-        c2g__DerivePeriod__c: false,
+        c2g__DerivePeriod__c: true,
         c2g__DeriveCurrency__c: true,
         c2g__OwnerCompany__c: SALESFORCE_OWNER_COMPANY
       }
