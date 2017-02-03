@@ -55,6 +55,8 @@ class TicketAdapter
           when 'Technical Support'
             params.merge!(more_info: t["custom_field.more_info"])
             params.merge!(:department => "Colo Support") if colo_user
+          when 'Colo Support'
+            params.merge!(more_info: t["custom_field.more_info"])
           end
           tickets.push(Ticket.new(params))
         end
