@@ -70,7 +70,7 @@
           %td{style: 'width: 100px'}
             %strong Access code:
           %td {{selectedTicket.reference}}
-  %div{'ng-show' => "selectedTicket.department == 'Support'"}
+  %div{'ng-show' => "selectedTicket.department == 'Technical Support' || selectedTicket.department == 'Colo Support'"}
     .table-responsive
       %table
         %tr

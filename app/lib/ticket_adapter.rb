@@ -14,11 +14,13 @@ class TicketAdapter
       columns = %w{reference subject submitted_at updated_at
                    contact_methods.data priorities.name
                    contacts.name statuses.status_type departments.name
+                   brands.name
                    custom_field.visitor_names
                    custom_field.date_of_visit
                    custom_field.time_of_visit
+                   custom_field.more_info
                   }
-      spql = "SELECT #{columns.join(',')} FROM tickets WHERE contacts.company = \"#{organization.reference}\" GROUP BY submitted_at ORDER BY submitted_at DESC LIMIT #{limit.join(',')}"
+      spql = "SELECT #{columns.join(',')} FROM tickets WHERE contacts.company = \"#{organization.reference}\" AND brands.name = \"#{SIRPORTLY_BRAND}\" GROUP BY submitted_at ORDER BY submitted_at DESC LIMIT #{limit.join(',')}"
       user = Authorization.current_user
       colo_user = user.organization.colo?
       unread_tickets = user.unread_tickets.map(&:ticket_id)
