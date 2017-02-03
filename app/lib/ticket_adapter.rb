@@ -52,7 +52,7 @@ class TicketAdapter
             params.merge!(visitor_names: [t['contacts.name'], t["custom_field.visitor_names"]].reject(&:blank?).join(', '),
                           date_of_visit: t["custom_field.date_of_visit"],
                           time_of_visit: t["custom_field.time_of_visit"])
-          when 'Technical Support'
+          when 'Technical Support', 'Colo Support'
             params.merge!(more_info: t["custom_field.more_info"])
             params.merge!(:department => "Colo Support") if colo_user
           end
