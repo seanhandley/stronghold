@@ -46,4 +46,11 @@ $(document).ready(function() {
     });
   });
   $('#tickets-projects-audits-users-tabs a:first').tab('show');
+  $('#pending-invoices-tabs a:first').tab('show');
+  $('#finalized-invoices-tabs a:first').tab('show');
+
+  $(".dropdown-menu#invoices li a").click(function(){
+    $(this).parents(".btn-group").find('.selection').text($(this).text());
+    $(this).parents(".btn-group").find('.selection').val($(this).text());
+  });
 });

@@ -1,0 +1,19 @@
+.panel.panel-danger
+  .panel-body.panel-padding
+    .table-responsive
+      %table.table.table-striped.table-hover
+        %thead
+          %th Reporting Code
+          %th Organization
+          %th Month
+          %th Total
+          %th SalesForce Invoice
+        %tbody
+          - for invoice in @finalized_manual_invoices
+            = render partial: 'edit', locals: {invoice: invoice }
+            %tr
+              %td= invoice.organization ? invoice.organization.reporting_code : 'NA'
+              %td= invoice.organization ? invoice.organization.name : 'NA'
+              %td== #{Date::MONTHNAMES[invoice.month]} #{invoice.year}
+              %td== £#{number_with_precision(invoice.grand_total, :delimiter => ',', :separator => '.', :precision => 2)}
+              %td= link_to invoice.salesforce_id, invoice.salesforce_invoice_link, target: '_blank'

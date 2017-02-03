@@ -8,7 +8,12 @@ module Admin
         else
           @pending_invoices = Billing::Invoice.unfinalized
         end
-        
+
+        @pending_self_service_invoices = Billing::Invoice.unfinalized.self_service
+        @pending_manual_invoices       = Billing::Invoice.unfinalized.manual_invoice
+
+        @finalized_self_service_invoices = Billing::Invoice.finalized.self_service
+        @finalized_manual_invoices       = Billing::Invoice.finalized.manual_invoice
       end
 
       def update

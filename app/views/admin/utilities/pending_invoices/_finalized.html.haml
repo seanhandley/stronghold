@@ -1,30 +1,66 @@
 - title "Finalized Invoices"
 
-.pull-right
-  = link_to 'Pending Invoices', admin_utilities_pending_invoices_path, class: 'btn btn-info'
+.invoices-dropdown
+  .btn-group
+    %button.btn.btn-info.dropdown-toggle{"data-toggle" => "dropdown", :type => "button"}
+      Show:
+      %span.selection Finalized Invoices
+      %span.caret
+    %ul.dropdown-menu#invoices{:role => "menu"}
+      %li
+        %a{:href => admin_utilities_pending_invoices_path} Pending Invoices
 
-%h1
-  %i.fa.fa-calculator
-  Finalized Invoices
+.container.finalized-invoices
+  %h2
+    %i.fa.fa-check-square-o
+    Finalized Invoices
+  %hr
+  .container#invoices-columns
+    .row
+      .col-md-4
+        .container-for-icon
+          .icon-container
+            %i.fa.fa-file-text-o.fa-2x
+        .data-container
+          %span.invoice-count
+            = @finalized_invoices.count
+          %br
+          Total finalized invoices
+      .col-md-4
+        .container-for-icon
+          .icon-container
+            %i.fa.fa-calculator.fa-2x
+        .data-container
+          %span.invoice-count
+            = @finalized_self_service_invoices.count
+          %br
+          Self Service Customers
+      .col-md-4
+        .container-for-icon
+          .icon-container
+            %i.fa.fa-pencil-square-o.fa-2x
+        .data-container
+          %span.invoice-count
+            = @finalized_manual_invoices.count
+          %br
+          Manual Invoiced Customers
 
 - if @finalized_invoices.any?
-  .table-responsive
-    %table.table.table-striped.table-hover
-      %thead
-        %th Reporting Code
-        %th Organization
-        %th Month
-        %th SalesForce Invoice
-        %th Stripe Invoice
-      %tbody
-        - for invoice in @finalized_invoices
-          = render partial: 'edit', locals: {invoice: invoice }
-          %tr
-            %td= invoice.organization ? invoice.organization.reporting_code : 'NA'
-            %td= invoice.organization ? invoice.organization.name : 'NA'
-            %td== #{Date::MONTHNAMES[invoice.month]} #{invoice.year}
-            %td= link_to invoice.salesforce_id, invoice.salesforce_invoice_link, target: '_blank'
-            %td= link_to invoice.stripe_invoice_id, invoice.stripe_invoice_link, target: '_blank'
+  .container-fluid.finalized_invoices_lists
+    .centered-tabs
+      %ul.nav.nav-tabs#finalized-invoices-tabs
+        %li{'class' => active_tab?('self_service')}
+          %a{:href => '#self_service', 'data-toggle' => 'tab', 'data-name' => 'self_service'}
+            = t(:self_service)
+        %li{'class' => active_tab?('invoiced')}
+          %a{:href => '#invoiced', 'data-toggle' => 'tab', 'data-name' => 'invoiced'}
+            = t(:manual_invoiced)
+
+    .tab-content
+      .tab-pane#self_service{'class' => active_tab?('self_service')}
+        = render partial: 'admin/utilities/pending_invoices/finalized_self_service'
+      .tab-pane#invoiced{'class' => active_tab?('invoiced')}
+        = render partial: 'admin/utilities/pending_invoices/finalized_manual'
 - else
   .push
   .alert.alert-warning No finalized invoices found.

@@ -1,0 +1,118 @@
+$medium-gray: #ccc;
+
+// Invoices dropdown
+div.invoices-dropdown {
+  margin: 10px 10px 10px 10px;
+  float: right;
+}
+
+// Invoices header
+div.pending-invoices h2 {
+  margin-bottom: 20px;
+}
+
+div.finalized-invoices h2 {
+  margin-bottom: 20px;
+}
+
+div.container#invoices-columns {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  padding: 0;
+  width: 80%;
+}
+
+// Pending invoices
+div.pending-invoices .col-md-4 {
+  margin: 3px;
+  background: #fff;
+  border: 1px solid #6d9a3f;
+  border-radius: 4px;
+  height: 65px;
+  width: 32%;
+  max-width: 350px;
+  padding-left: 0;
+}
+
+div.pending-invoices div.container-for-icon {
+  background: #8eb369;
+  float: left;
+  width: 30%;
+  height: 100%;
+  padding: 0;
+}
+
+div.pending-invoices div.icon-container {
+  float: left;
+  margin: 15px 20px 15px 25px;
+  text-align: left;
+  color: white;
+}
+
+div.pending-invoices div.data-container {
+  float: right;
+  text-align: right;
+  font-size: 1em;
+  margin-bottom: 10px;
+}
+
+div.pending-invoices span.invoice-count {
+  color: #6d9a3f;
+  font-size: 1.7em;
+}
+
+// Finalized invoices
+div.finalized-invoices .col-md-4 {
+  margin: 3px;
+  background: #fff;
+  border: 1px solid #8b483e;
+  border-radius: 4px;
+  height: 65px;
+  width: 32%;
+  max-width: 350px;
+  padding-left: 0;
+}
+
+div.finalized-invoices div.container-for-icon {
+  background: #af685d;
+  float: left;
+  width: 30%;
+  height: 100%;
+  padding: 0;
+}
+
+div.finalized-invoices div.icon-container {
+  float: left;
+  margin: 15px 20px 15px 25px;
+  text-align: left;
+  color: white;
+}
+
+div.finalized-invoices div.data-container {
+  float: right;
+  text-align: right;
+  font-size: 1em;
+  margin-bottom: 10px;
+}
+
+div.finalized-invoices span.invoice-count {
+  color: #8b483e;
+  font-size: 1.7em;
+}
+
+// Tabs
+div.container-fluid.pending_invoices_lists {
+  padding-top: 20px;
+}
+
+div.container-fluid.finalized_invoices_lists {
+  padding-top: 20px;
+}
+
+ul.nav.nav-tabs#finalized-invoices-tabs li.active a {
+  border-top: solid 2px #AC5A4D;
+}
+
+ul.nav.nav-tabs#pending-invoices-tabs li.active a {
+  border-top: solid 2px #84b058;
+}
