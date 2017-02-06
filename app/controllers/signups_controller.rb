@@ -60,6 +60,7 @@ class SignupsController < ApplicationController
       Rails.cache.write("up_#{@registration.user.uuid}", update_params[:password], expires_in: 60.minutes)
       session[:user_id] = @registration.user.id
       session[:created_at] = Time.zone.now
+      session[:organization_id] = @registration.user.primary_organization.id
       session[:token] = @registration.user.authenticate(update_params[:password])
       redirect_to current_organization.known_to_payment_gateway? ? support_root_path : activate_path
     else

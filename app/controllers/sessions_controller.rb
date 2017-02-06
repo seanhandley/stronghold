@@ -28,7 +28,7 @@ class SessionsController < ApplicationController
         session[:created_at]      = Time.now.utc
         session[:token]           = token if token.is_a? String
         cookies.signed[:user_id]  = @user.id
-        session[:organization_id] = @user.organizations.first.id
+        session[:organization_id] = @user.primary_organization.id
 
         if current_organization.known_to_payment_gateway?
           if params[:next]
