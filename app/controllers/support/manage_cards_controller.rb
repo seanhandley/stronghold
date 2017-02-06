@@ -25,7 +25,7 @@ module Support
         card = @stripe_customer.sources.create(:source => create_params[:stripe_token])
         fingerprints = @stripe_customer.sources.collect(&:fingerprint)
         old_exp_year = @stripe_customer.sources.collect(&:exp_year)
-        if fingerprints.include?(card.fingerprint) && old_exp_year == card.exp_year
+        if fingerprints.include?(card.fingerprint) && old_exp_year.include?(card.exp_year)
           card.delete
           redirect_to support_manage_cards_path, alert: "You've already added that card"
         else
