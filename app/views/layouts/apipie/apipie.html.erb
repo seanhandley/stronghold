@@ -5,6 +5,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <%= Apipie.include_stylesheets %>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.16/clipboard.min.js"></script>
   <%= favicon_link_tag 'favicon.png' %>
   <link type='text/css' rel='stylesheet' href='<%= Apipie.full_url("stylesheets/application.css")%>'/>
   <style>
@@ -72,6 +73,16 @@
       display:inline-block;
       border: solid 1px #aaa;
     }
+    button.btn-copy {
+      opacity: 0.6;
+    }
+    button.btn-copy:hover {
+      opacity: 1;
+    }
+    .copy-btn-img {
+      height: auto;
+      width: 12px;
+    }
 
     .prettyprint {
       background-color: #222;
@@ -100,6 +111,10 @@
     .prettyprint .kwd {
       color: #aca;
     }
+
+    button.btn {
+      background-image: none;
+    }
   </style>
 </head>
 <body>
@@ -120,5 +135,30 @@
     <footer><%= yield :apipie_footer %></footer>
   </div>
   <%= Apipie.include_javascripts %>
+  <script>
+    $(document).ready(function() {
+      $('pre.prettyprint').each(function() {
+        copy_btn = $("<button class=\"btn btn-copy\" style=\"float: right; background-color: #fff\"><img alt='Click to copy' title='Click to copy' class='copy-btn-img' src=\"<%= asset_path('clippy.svg') %>\"></button>");
+        copy_btn.attr('data-clipboard-text', $(this).text());
+        $(this).prepend(copy_btn)
+      });
+      
+      var clipboard = new Clipboard('.btn-copy');
+
+      clipboard.on('success', function(e) {
+        var copied_notice = $("<span class='notice'> Copied!</span>")
+        $(e.trigger).append(copied_notice);
+        setTimeout(function() {
+          $('span.notice').fadeOut();
+          $('span.notice').remove();
+        }, 1600);
+        e.clearSelection();
+      });
+
+      clipboard.on('error', function(e) {
+        $(e.trigger).append(" Press Ctrl+C to copy");
+      });
+    });
+  </script>
 </body>
 </html>
