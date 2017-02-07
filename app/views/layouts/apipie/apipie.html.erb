@@ -80,8 +80,9 @@
       opacity: 1;
     }
     .copy-btn-img {
-      height: auto;
-      width: 12px;
+      height: 18px;
+      width: 18px;
+      margin: 0px;
     }
 
     .prettyprint {
@@ -114,6 +115,9 @@
 
     button.btn {
       background-image: none;
+      font-weight: bold;
+      padding: 2px;
+      z-index: 1000;
     }
   </style>
 </head>
@@ -146,7 +150,7 @@
       var clipboard = new Clipboard('.btn-copy');
 
       clipboard.on('success', function(e) {
-        var copied_notice = $("<span class='notice'> Copied!</span>")
+        var copied_notice = $("<span class='notice'> Copied! </span>")
         $(e.trigger).append(copied_notice);
         setTimeout(function() {
           $('span.notice').fadeOut();
