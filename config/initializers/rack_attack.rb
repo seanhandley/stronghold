@@ -20,6 +20,12 @@ if Rails.env.production?
     req.ip
   end
 
+  Rack::Attack.throttle('api req/ip', :limit => 1000, :period => 1.minute) do |req|
+    if req.path.start_with? '/api'
+      req.env['Authorization'].scan(/Token token="(.*):(.*)"/)&.first&.first
+    end
+  end
+
   Rack::Attack.throttle('logins/email', :limit => 6, :period => 60.seconds) do |req|
     req.params.try(:[], 'user').try(:[],'email') if req.path == '/sessions' && req.post?
   end
@@ -31,9 +37,16 @@ if Rails.env.production?
   end
 
   Rack::Attack.throttled_response = lambda do |env|
-    # Using 503 because it may make attacker think that they have successfully
-    # DOSed the site. Rack::Attack returns 429 for throttling by default
-    [ 503, {}, [error_text]]
+    now = Time.now
+    match_data = env['rack.attack.match_data']
+
+    headers = {
+      'X-RateLimit-Limit' => match_data[:limit].to_s,
+      'X-RateLimit-Remaining' => '0',
+      'X-RateLimit-Reset' => (now + (match_data[:period] - now.to_i % match_data[:period])).to_s
+    }
+
+    [ 429, headers, ["Throttled\n"]]
   end
 
   ActiveSupport::Notifications.subscribe("rack.attack") do |name, start, finish, request_id, req|
