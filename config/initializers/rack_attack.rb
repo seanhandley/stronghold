@@ -20,7 +20,7 @@ if Rails.env.production?
     req.ip
   end
 
-  Rack::Attack.throttle('api req/ip', :limit => 10, :period => 1.minute) do |req|
+  Rack::Attack.throttle('api req/ip', :limit => 1000, :period => 1.minute) do |req|
     if req.path.start_with? '/api'
       req.env['HTTP_AUTHORIZATION']&.scan(/Token token="(.*):(.*)"/)&.first&.first
     end
