@@ -35,6 +35,7 @@ class RegistrationGenerator
 
   def create_registration
     @organization = invite.organization
+    Authorization.current_organization = @organization
     if invite.power_invite?
       @owners = @organization.roles.create name: I18n.t(:owners), power_user: true
     end
