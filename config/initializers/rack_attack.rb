@@ -20,7 +20,7 @@ if Rails.env.production?
     req.ip
   end
 
-  Rack::Attack.throttle('api req/ip', :limit => 1000, :period => 1.minute) do |req|
+  Rack::Attack.throttle('api req/ip', :limit => 10, :period => 1.minute) do |req|
     if req.path.start_with? '/api'
       req.env['HTTP_AUTHORIZATION']&.scan(/Token token="(.*):(.*)"/)&.first&.first
     end
@@ -37,16 +37,20 @@ if Rails.env.production?
   end
 
   Rack::Attack.throttled_response = lambda do |env|
-    now = Time.now
-    match_data = env['rack.attack.match_data']
+    if env['REQUEST_URI'].start_with? '/api'
+      now = Time.now
+      match_data = env['rack.attack.match_data']
 
-    headers = {
-      'X-RateLimit-Limit' => match_data[:limit].to_s,
-      'X-RateLimit-Remaining' => '0',
-      'X-RateLimit-Reset' => (now + (match_data[:period] - now.to_i % match_data[:period])).to_s
-    }
+      headers = {
+        'X-RateLimit-Limit' => match_data[:limit].to_s,
+        'X-RateLimit-Remaining' => '0',
+        'X-RateLimit-Reset' => (now + (match_data[:period] - now.to_i % match_data[:period])).to_s
+      }
 
-    [ 429, headers, ["Throttled\n"]]
+      [ 429, headers, ["Throttled\n"]]
+    else
+      [ 503, {}, [error_text]]
+    end
   end
 
   ActiveSupport::Notifications.subscribe("rack.attack") do |name, start, finish, request_id, req|
