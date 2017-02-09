@@ -57,14 +57,15 @@ module Support
       end
 
       def read
-        current_user.unread_tickets.where(ticket_id: read_params[:ticket_id]).destroy_all
+        current_user.unread_tickets.find_by(ticket_id: read_params[:ticket_id],
+          update_id: read_params[:update_id])&.destroy
         head :no_content
       end
 
       private
 
       def read_params
-        params.permit(:ticket_id)
+        params.permit(:ticket_id, :update_id)
       end
 
       def create_params

@@ -1,5 +1,5 @@
 if (typeof(angular) != "undefined")
-  window.angularJS = angular.module('angularJS', ['ui.bootstrap', 'filters', 'ngSanitize', 'ngAnimate', 'ui.gravatar'])
+  window.angularJS = angular.module('angularJS', ['ui.bootstrap', 'filters', 'ngSanitize', 'ngAnimate', 'ui.gravatar', 'angular-inview'])
 
 
   window.angularJS.config ["$httpProvider", ($httpProvider) ->

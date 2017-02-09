@@ -31,7 +31,9 @@ class Ticket
     @time_of_visit   = params[:time_of_visit]
     @unread          = (params[:unread_tickets] || []).include?(params[:reference])
     @as_hash         = params.dup.merge(comments: @comments.map{|c| c.as_hash },
-                                    status_name: status_name, unread: unread)
+                                    status_name: status_name,
+                                    department_name: department_name,
+                                    unread: unread)
   end
 
   def self.find(params)
@@ -45,6 +47,15 @@ class Ticket
   def status_name
     return 'Open' unless @status
     @status == 1 ? 'Closed' : 'Open'
+  end
+
+  def department_name
+    case @department
+    when 'Colo Support'
+      "Technical Support"
+    else
+      @department
+    end
   end
 
   private

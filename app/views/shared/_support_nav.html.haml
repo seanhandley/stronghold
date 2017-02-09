@@ -1,5 +1,5 @@
 %div.btn-group.pull-right
-  %button.btn.btn-default.dropdown-toggle#user-menu{:type => "button", :'data-toggle' => "dropdown", :'dropdown-toggle' => "", class: ['admin', 'utilities'].include?(current_section) ? 'admin-menu' : ''}
+  %button.btn.btn-default.dropdown-toggle#user-menu{:type => "button", :'data-toggle' => "dropdown", :'uib-dropdown-toggle' => "", class: ['admin', 'utilities'].include?(current_section) ? 'admin-menu' : ''}
     %span
       = gravatar_image_tag(current_user.email, :class => 'img-circle nav-profile')
     %span.caret

@@ -6,7 +6,7 @@
         %i.fa.fa-edit
         New Ticket
     %div.btn-group.pull-right
-      %button.btn.btn-default.dropdown-toggle{:type => "button", :'id' => "statusDropdown", :'data-toggle' => "dropdown", :'dropdown-toggle' => ""}
+      %button.btn.btn-default.dropdown-toggle{:type => "button", :'id' => "statusDropdown", :'data-toggle' => "dropdown", :'uib-dropdown-toggle' => ""}
         %i.fa.fa-tag{:'ng-class' => "selectedTicket.status_name"}
         %span
           Status: {{selectedTicket.status_name}}
@@ -17,7 +17,7 @@
             {{status.name}}
 
     %div.btn-group.pull-right
-      %button.btn.btn-default.dropdown-toggle{:type => "button", :'id' => "priorityDropdown", :'data-toggle' => "dropdown", :'dropdown-toggle' => ""}
+      %button.btn.btn-default.dropdown-toggle{:type => "button", :'id' => "priorityDropdown", :'data-toggle' => "dropdown", :'uib-dropdown-toggle' => ""}
         %i.fa.fa-exclamation{:'ng-class' => "'icon-' + selectedTicket.priority"}
         %span#selectedPriority
           Priority: {{selectedTicket.priority}}
@@ -37,7 +37,7 @@
   %h4.department-ref
     %span.label.label-success
       %i.fa.fa-users
-      {{selectedTicket.department}}
+      {{selectedTicket.department_name}}
     &nbsp;
     %span.label.label-primary
       %i.fa.fa-tag
@@ -88,19 +88,20 @@
     %div{:'ng-show' => "hasComments(selectedTicket)"}
       %ul.media-list
         %li.media{:'ng-repeat' => ("comment in selectedTicket.comments")}
-          %a.pull-left.gravatar
-            %img.img-circle{'gravatar-src' => "comment.email"}
-          %div.media-body
-            %h4.media-heading
-              {{comment.name}}
-            %p
-              %span.badge{:'ng-show' => "comment.staff"}
-                %i.fa.fa-shield
-                Staff
-            .user-callout{'ng-bind-html' => "comment.text", 'ng-class' => "comment.staff ? 'staff' : ''"}
-            %p.timestamp
-              %em
-                {{comment.time | momentDateTime}}
+          .comment{:'ng-class' => "comment.unread", :'in-view' => "markTicketRead(selectedTicket.reference, comment.id)"}
+            %a.pull-left.gravatar
+              %img.img-circle{'gravatar-src' => "comment.email"}
+            %div.media-body
+              %h4.media-heading
+                {{comment.name}}
+              %p
+                %span.badge{:'ng-show' => "comment.staff"}
+                  %i.fa.fa-shield
+                  Staff
+              .user-callout{'ng-bind-html' => "comment.text", 'ng-class' => "comment.staff ? 'staff' : ''"}
+              %p.timestamp
+                %em
+                  {{comment.time | momentDateTime}}
         %hr
         - if can? :modify, Ticket
           %div.btn-group#comment-button

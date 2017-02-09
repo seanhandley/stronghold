@@ -109,21 +109,25 @@ angularJS.controller "TicketsController", [
       if ticketReference != null
         $scope.selectedTicket = $scope.getTicketByReference(ticketReference)
         $scope.selectedTicketReference = ticketReference
-        $scope.markTicketRead(ticketReference)
       else
         $scope.selectedTicket = null
       history.replaceState({reference: ticketReference}, '', ticketReference)
       $scope.$apply() if !$scope.$$phase
       return
 
-    $scope.markTicketRead = (ticketReference) ->
-      $http({
-        method: "post",
-        url: "/account/api/tickets/read",
-        data: {
-          "ticket_id": ticketReference
-        }
-      })
+    $scope.markTicketRead = (ticketReference, updateId) ->
+      run = () ->
+        $(".unread-comment").fadeOut()
+        $(".unread-comment").fadeIn()
+        $http({
+          method: "post",
+          url: "/account/api/tickets/read",
+          data: {
+            "ticket_id": ticketReference,
+            "update_id": updateId
+          }
+        })
+      setTimeout run, 3000
 
     $scope.ticketDialogShow = ->
       $scope.clearErrors()
