@@ -42,8 +42,8 @@
 
     .col-md-3
       %div{:'ng-show' => "hasTickets()"}
-        %tabset
-          %tab{:'ng-repeat' => "status in statuses | orderBy:'-name'", :heading => '{{status.name}}', :active => 'status.active'}
+        %uib-tabset{:active => 'status.active'}
+          %uib-tab{:'ng-repeat' => "status in statuses | orderBy:'-name'", :heading => '{{status.name}}'}
             = render partial: 'tickets_list'
         %a{name: 'ticket-top', class: 'ticket-top-anchor'}
     .col-md-9

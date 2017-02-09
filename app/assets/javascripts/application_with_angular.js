@@ -10,6 +10,7 @@
 //= require angular-md5
 //= require angular-gravatar
 //= require angular-animate
+//= require angular-inview
 //
 //= require common
 //

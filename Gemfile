@@ -90,14 +90,14 @@ gem 'font-awesome-sass', '~> 4.5'
 
 
 source 'https://rails-assets.org' do
-  gem 'rails-assets-angular', '~> 1.2.24'
-  gem 'rails-assets-angular-resource', '~> 1.2.24'
-  gem 'rails-assets-angular-bootstrap', '~> 0.11.0'
-  gem 'rails-assets-angular-sanitize', '~> 1.2.24'
-  gem 'rails-assets-angular-gravatar', '~> 0.2.1'
-  gem 'rails-assets-angular-animate', '~> 1.2.24'
-  gem 'rails-assets-angular-md5', '~> 0.1.7'
-  gem 'rails-assets-chained', '~> 1.0.0'
+  gem 'rails-assets-angular', '~> 1.4'
+  gem 'rails-assets-angular-resource', '~> 1.2'
+  gem 'rails-assets-angular-bootstrap', '~> 0.11'
+  gem 'rails-assets-angular-sanitize', '~> 1.2'
+  gem 'rails-assets-angular-gravatar', '~> 0.2'
+  gem 'rails-assets-angular-animate', '~> 1.2'
+  gem 'rails-assets-angular-md5', '~> 0.1'
+  gem 'rails-assets-chained', '~> 1.0'
   gem 'rails-assets-bootstrap-select', '~> 1.7'
   gem 'rails-assets-hideShowPassword', '~> 2.0'
   gem 'rails-assets-normalize-css', '~> 3.0'
@@ -105,6 +105,7 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-bootstrap-toggle'
   gem 'rails-assets-highcharts'
   gem 'rails-assets-jquery.terminal', '~> 0.10'
+  gem 'rails-assets-angular-inview', '~> 2.2'
 end
 
 group :development do
