@@ -1,4 +1,4 @@
-.alert.alert-danger.errorExplanation{:'ng-show' => "errors"}
+.alert.alert-danger.errorExplanation{:'ng-show' => "errors.length > 0"}
   %ul
     %li{:'ng-repeat' => "error in errors"} {{error.field.split('_').join(' ') | capitalize:true}} {{error.message}}
 .alert.alert-danger.errorExplanation{:'ng-show' => "staticError"}
