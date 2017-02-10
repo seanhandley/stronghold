@@ -6,6 +6,27 @@ module TicketsHelper
     end
   end
 
+  def department_with_description(department)
+    case department
+    when 'Access Requests'
+      "Access Requests (Book a visit to a datacentre)"
+    when 'Accounts & Billing'
+      "Accounts & Billing (Payments, invoices etc)"
+    when 'Technical Support'
+      if current_organization.colo?
+        "Technical Support (Issues with DataCentred infrastructure)"
+      else
+        "Technical Support (Quota changes, OpenStack/API issues etc)"
+      end
+    else
+      department
+    end
+  end
+
+  def options_for_ticket_departments(departments)
+    options_for_select(departments.map{|d| [department_with_description(d), d]})
+  end
+
   def markdown(text)
     begin
       render_options = {

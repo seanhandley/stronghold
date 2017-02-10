@@ -75,7 +75,7 @@
           .input-group
             %span.input-group-addon
               %i.fa.fa-folder
-            = select_tag :new_ticket_department, options_for_select(@departments), class: "form-control", autofocus: true, prompt: "Choose a department"
+            = select_tag :new_ticket_department, options_for_ticket_departments(@departments), class: "form-control", autofocus: true, prompt: "Choose a department"
           .input-group
             %span.input-group-addon
               %i.fa.fa-exclamation
