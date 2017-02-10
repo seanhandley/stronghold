@@ -1,5 +1,6 @@
 module Support
   class TicketsController < SupportBaseController
+    include TicketsHelper
 
     load_and_authorize_resource :class_name => 'Ticket'
     before_action :get_departments_and_priorities
