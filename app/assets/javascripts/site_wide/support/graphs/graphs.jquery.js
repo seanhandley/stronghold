@@ -26,7 +26,9 @@ $(document).ready(function () {
         $('.progress-caption#capacity-used em span#percent').text(capacityUsed + "%")
       },
       error: function (result) {
-        console.log('There was an error:' + JSON.stringify(result));
+        <%= unless Rails.env.acceptance? %>
+          console.log('There was an error:' + JSON.stringify(result));
+        <%= end %>
       }
     });
   };
