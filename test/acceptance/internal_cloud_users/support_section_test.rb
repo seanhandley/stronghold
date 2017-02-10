@@ -16,7 +16,7 @@ class SupportSectionTests < CapybaraTestCase
     find(:xpath, "//a[@ng-click='ticketDialogShow()']").click
     sleep(1)
 
-    select('Staging', :from => 'new_ticket_department')
+    select('Technical Support', :from => 'new_ticket_department')
     sleep(1)
     fill_in('new_ticket_title', :with => 'Test Ticket')
     fill_in('new_ticket_description', :with => 'Test Ticket')
@@ -34,7 +34,7 @@ class SupportSectionTests < CapybaraTestCase
     find(:xpath, "//a[@ng-click='ticketDialogShow()']").click
     sleep(1)
 
-    select('Staging', :from => 'new_ticket_department')
+    select('Technical Support', :from => 'new_ticket_department')
     sleep(1)
     fill_in('new_ticket_title', :with => 'Test Ticket')
     fill_in('new_ticket_description', :with => 'Test Ticket')
