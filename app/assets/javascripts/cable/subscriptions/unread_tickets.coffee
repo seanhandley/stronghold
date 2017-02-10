@@ -3,7 +3,7 @@ App.cable.subscriptions.create { channel: "UnreadTicketsChannel" },
     if data['unread_count'] == 0
       $('#unread-support-tickets').text('')
     else
-      if data['play_sounds']
+      if data['play_sounds'] && data['increased']
         ion.sound.stop()
         ion.sound.play("water_droplet")
       $('#unread-support-tickets').text(data['unread_count'])

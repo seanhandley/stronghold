@@ -88,12 +88,12 @@
     %div{:'ng-show' => "hasComments(selectedTicket)"}
       %ul.media-list
         %li.media{:'ng-repeat' => ("comment in selectedTicket.comments")}
-          .comment{:'ng-class' => "comment.unread", :'in-view' => "markTicketRead(selectedTicket.reference, comment.id)"}
+          .comment{:'ng-class' => "comment.unread"}
             %a.pull-left.gravatar
               %img.img-circle{'gravatar-src' => "comment.email"}
             %div.media-body
               %h4.media-heading
-                {{comment.name}}
+                {{comment.name}} {{comment.id}}
               %p
                 %span.badge{:'ng-show' => "comment.staff"}
                   %i.fa.fa-shield
@@ -102,6 +102,7 @@
               %p.timestamp
                 %em
                   {{comment.time | momentDateTime}}
+          %span{:'in-view' => "comment.unread.length > 0 && markTicketRead(selectedTicket.reference, comment.id)"}
         %hr
         - if can? :modify, Ticket
           %div.btn-group#comment-button

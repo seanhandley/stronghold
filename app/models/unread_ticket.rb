@@ -7,6 +7,6 @@ class UnreadTicket < ApplicationRecord
   private
 
   def update_unread_count
-    UpdateUnreadTicketCountJob.perform_now(user)
+    UpdateUnreadTicketCountJob.perform_now(user, self.destroyed?)
   end
 end
