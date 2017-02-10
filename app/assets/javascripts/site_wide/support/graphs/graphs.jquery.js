@@ -29,8 +29,7 @@ $(document).ready(function () {
         console.log('There was an error:' + JSON.stringify(result));
       }
     });
-
-    $('#compute-volume-network-tabs a:first').tab('show');
   }
+  $('#compute-volume-network-tabs a:first').tab('show');
 });
 
