@@ -33,6 +33,8 @@ module Support
           else
             redirect_to support_manage_cards_path, notice: "New card added successfully"
           end
+        else
+          redirect_to support_manage_cards_path, notice: "New card added successfully"
         end
       end
     end
