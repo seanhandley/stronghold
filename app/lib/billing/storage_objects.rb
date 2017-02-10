@@ -25,7 +25,7 @@ module Billing
         last = measurement
         gb * seconds
       end.sum
-      gbs / 3_600_000.0
+      (gbs / 3_600_000.0).ceil
     end
 
   end

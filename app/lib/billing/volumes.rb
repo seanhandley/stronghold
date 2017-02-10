@@ -60,18 +60,18 @@ module Billing
             ending *= gigabytes_to_terabytes(states.last.size)
           end
 
-          return (start + middle + ending).round(2)
+          return (start + middle + ending).ceil
         else
           # Only one sample for this period
           if billable?(states.first.event_name)
-            return (seconds_to_whole_hours(to - from) * gigabytes_to_terabytes(states.first.size)).round(2)
+            return (seconds_to_whole_hours(to - from) * gigabytes_to_terabytes(states.first.size)).ceil
           else
             return 0
           end
         end
       else
         if previous_state && billable?(previous_state.event_name)
-          return (seconds_to_whole_hours(to - from) * gigabytes_to_terabytes(previous_state.size)).round(2)
+          return (seconds_to_whole_hours(to - from) * gigabytes_to_terabytes(previous_state.size)).ceil
         else
           return 0
         end
@@ -164,7 +164,7 @@ module Billing
     end
 
     def self.gigabytes_to_terabytes(gigabytes)
-      (gigabytes / 1024.0).round(2)
+      (gigabytes / 1024.0).ceil
     end
 
     def self.volume_name
