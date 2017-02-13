@@ -27,7 +27,7 @@ module Admin
     def charge
       status, message = AntiFraud.test_charge_succeeds?(@organization)
       if status
-        redirect_to aadmin_customer_path(@organization), notice: 'Success. The amount of £1 was charged and refunded to the customer.'
+        redirect_to admin_customer_path(@organization), notice: 'Success. The amount of £1 was charged and refunded to the customer.'
       else
         redirect_to admin_customer_path(@organization), alert: "Failed. Payment provider says: #{message}"
       end
