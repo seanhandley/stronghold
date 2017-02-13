@@ -4,10 +4,9 @@
   %p
     %strong Current Quota:
     == #{project.quota_set['network']['floatingip']} addresses
-  - if current_organization.show_costs?
-    %p
-      %strong Cost:
-      == £#{number_with_precision(ip_quota_total, :delimiter => ',', :separator => '.', :precision => 2)}
+  %p
+    %strong Cost:
+    == £#{number_with_precision(ip_quota_total, :delimiter => ',', :separator => '.', :precision => 2)}
   - if ip_quotas && ip_quotas.any?
     .table-responsive
       %table.table.table-hover.phone-bill

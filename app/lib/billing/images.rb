@@ -59,18 +59,18 @@ module Billing
             ending *= states.last.size
           end
 
-          return (start + middle + ending).ceil
+          return (start + middle + ending).round(2)
         else
           # Only one sample for this period
           if billable?(states.first.event_name)
-            return (seconds_to_whole_hours(to - from) * states.first.size).ceil
+            return (seconds_to_whole_hours(to - from) * states.first.size).round(2)
           else
             return 0
           end
         end
       else
         if previous_state && billable?(previous_state.event_name)
-          return (seconds_to_whole_hours(to - from) * previous_state.size).ceil
+          return (seconds_to_whole_hours(to - from) * previous_state.size).round(2)
         else
           return 0
         end
