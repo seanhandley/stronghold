@@ -22,7 +22,7 @@
             .inline-form-groups
               .form-group#name
                 %label Name On Card
-                = text_field_tag :name, nil, :class => 'form-control', 'data-stripe' => 'name'
+                = text_field_tag :name, nil, :class => 'form-control', 'data-stripe' => 'name', :required => true
               .form-group#expiry
                 %label Expiry Date
                 = text_field_tag :expiry, nil, :class => 'form-control', placeholder: 'MM/YYYY'
