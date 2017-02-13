@@ -51,7 +51,7 @@ class UsageDecorator < ApplicationDecorator
   def volume_total(project_id)
     usage_data.each do |project, results|
       if(project_id == project.id)
-        return results[:volume_usage].collect{|i| i[:cost]}.sum
+        return results[:volume_usage].sum{|i| i[:cost]}.ceil
       end
     end
     return 0
@@ -60,7 +60,7 @@ class UsageDecorator < ApplicationDecorator
   def image_total(project_id)
     usage_data.each do |project, results|
       if(project_id == project.id)
-        return results[:image_usage].collect{|i| i[:cost]}.sum
+        return results[:image_usage].sum{|i| i[:cost]}.ceil
       end
     end
     return 0
