@@ -19,6 +19,13 @@ class Support::ManageCardsControllerTest < ActionController::TestCase
       cvc: '345'
       }
     }
+    @card_3 = {card: {
+      number: "4242424242424242",
+      exp_month: 3,
+      exp_year: Date.today.year+2,
+      cvc: '345'
+      }
+    }
     @organization.update_attributes(stripe_customer_id: @stripe_id)
     @role = Role.make!(organization: @organization, power_user: true)
     @user.update_attributes(roles: [@role])
@@ -65,6 +72,18 @@ class Support::ManageCardsControllerTest < ActionController::TestCase
       @controller.instance_variable_set(:@stripe_customer, nil)
       post :create, params: {stripe_token: stripe_token(@card_2)}
       assert flash[:alert].include?('already')
+      assert_redirected_to support_manage_cards_path
+    end
+  end
+
+  test "Can add new card with same number and different exp year" do
+    VCR.use_cassette('stripe_readd_card') do
+      post :create, params: {stripe_token: stripe_token(@card_1)}
+      assert flash[:notice].include?('success')
+      assert_redirected_to support_manage_cards_path
+      @controller.instance_variable_set(:@stripe_customer, nil)
+      post :create, params: {stripe_token: stripe_token(@card_3)}
+      assert flash[:notice].include?('success')
       assert_redirected_to support_manage_cards_path
     end
   end
