@@ -29,6 +29,20 @@ class SignupsControllerTest < ActionController::TestCase
     assert assigns(:email)
   end
 
+  test "signup not enabled html" do
+    Stronghold::SIGNUPS_ENABLED = false
+    get :new
+    assert_template :sorry
+    assert_template layout: "layouts/customer-sign-up"
+  end
+
+  test "signup not enabled json" do
+    Stronghold::SIGNUPS_ENABLED = false
+    get :new, format: :json
+    assert_equal ["Sorry, not currently accepting signups."], json_response['errors']
+    assert_response :unprocessable_entity
+  end
+
   test "create path successful html" do
     post :create, params: { email: 'foo@bar.com'}
     assert assigns(:customer_signup)

@@ -1,5 +1,5 @@
 !!!
-%html{'ng-app' => "angularJS", 'data-searchable-models' => ['soulheart']}
+%html{'ng-app' => "angularJS", 'data-searchable-models' => SOULMATE_SEARCHABLE_MODELS.join(' ')}
   %head
     %title= content_for?(:title) ? "DataCentred Admin - #{content_for(:title)}" : "DataCentred Admin"
     = render partial: 'shared/head'
