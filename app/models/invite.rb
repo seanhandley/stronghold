@@ -18,6 +18,8 @@ class Invite < ApplicationRecord
   has_and_belongs_to_many :roles
   has_and_belongs_to_many :projects, validate: false
 
+  scope :incomplete, -> { where(completed_at: nil)}
+
   def can_register?
     if active? && !complete?
       true

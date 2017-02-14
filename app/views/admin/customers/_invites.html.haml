@@ -3,21 +3,13 @@
     %thead
       %th Email
       %th Created at
-      %th Status
       %th
     %tbody
-      - if @incomplete_invites.present?
-        - @incomplete_invites.each do |invite|
+      - if @invites.present?
+        - @invites.each do |invite|
           %tr
             %td= invite[:email]
             %td= invite[:created_at]
-            %td
-              - if invite.expires_at < Time.now
-                %span.label.label-warning
-                  Expired
-              -else
-                %span.label.label-success
-                  Active
             %td
               -if can?(:modify, Invite)
                 =link_to 'Resend', admin_invite_path(invite), :class => "btn btn-primary", :remote => true, method: :patch
