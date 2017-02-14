@@ -5,7 +5,6 @@ $(document).ready(function () {
       contentType: "application/json;",
       url: '/account/graph/data.json',
       dataType: 'json',
-      jsonp: false,
       success: function (data) {
         StrongholdGraphs.createCharts(StrongholdGraphs.buildSeries(data));
         $(document).on( 'shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
@@ -27,7 +26,9 @@ $(document).ready(function () {
         $('.progress-caption#capacity-used em span#percent').text(capacityUsed + "%");
       },
       error: function (result) {
-        console.log('There was an error:' + JSON.stringify(result));
+        if ($('body').attr('data-environment') == 'acceptance') {
+          console.log('There was an error:' + JSON.stringify(result));
+        }
       }
     });
   };
