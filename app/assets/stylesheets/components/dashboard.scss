@@ -182,59 +182,13 @@ div#dashboard_buttons.pull-right {
   padding: 20px 40px 20px 20px;
 }
 
-// Tabs
-
 div.dashboard-content {
   padding-top: 80px;
-}
-
-ul#dashboard-tabs li {
-  width: 20%;
-  float: none;
-  display: inline-block;
-}
-
-ul#dashboard-tabs li a {
-  border: none;
-  padding-bottom: 20px;
-  font-size: 1em;
-  font-weight: 400;
-  color: #888;
-  text-align: center;
-}
-
-ul#dashboard-tabs li a:hover {
-  color: #888;
-  cursor: pointer;
-  border-bottom: 1px solid #888;
-  border-top: none;
-  border-left: none;
-  border-right: none;
-}
-
-ul#dashboard-tabs li.active a {
-  border: none;
-  border-bottom: 2px solid $primary-blue;
-  color: $primary-blue;
-  font-size: 1em;
-  font-weight: 500;
-  -webkit-transition: all 0.1s ease-in-out;
-  -moz-transition: all 0.1s ease-in-out;
-  -o-transition: all 0.1s ease-in-out;
-  transition: all 0.1s ease-in-out;
-}
-
-div.tab-content#dashboard-tabs-content {
-  margin-top: 30px;
 }
 
 @media screen and (max-width: 767px) {
   .hide-on-small-screens {
     display: none;
-  }
-
-  ul#dashboard-tabs li {
-    width: 100%;
   }
 }
 

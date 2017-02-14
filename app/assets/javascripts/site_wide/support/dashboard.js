@@ -51,7 +51,6 @@ $(document).ready(function() {
     "force_https": true
   });
 
-  $('#dashboard-tabs a:first').tab('show');
   $('#compute-volume-network-tabs a:first').tab('show');
 
   if(typeof(ion) !== 'undefined') {
