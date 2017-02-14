@@ -1,17 +1,51 @@
 $(document).ready(function() {
   if(typeof($('html').data('searchable-models')) != 'undefined') {
-    $('.customer-search').soulmate({
-      url: '/admin/sm/search',
-      types: $('html').data('searchable-models').split(" "),
-      renderCallback: function(term, data, type) {
-        return term + ' (' + data.additional_info + ')';
+    // $('.customer-search').soulmate({
+    //   url: '/admin/sm/search',
+    //   types: $('html').data('searchable-models').split(" "),
+    //   renderCallback: function(term, data, type) {
+    //     return term + ' (' + data.additional_info + ')';
+    //   },
+    //   selectCallback: function(term, data, type) {
+    //     $('#loading-overlay').removeClass('hide');
+    //     document.location.href = data['url'];
+    //   },
+    //   minQueryLength: 2,
+    //   maxResults: 5
+    // });
+    $('.customer-search').select2({
+      allowClear: true,
+      placeholder: "What are you looking for?",
+      ajax: {
+        url: "/admin/searcher",
+        dataType: "json",
+        quietMillis: 250,
+        data: function(term, page) {
+          return {
+            q: term
+          };
+        },
+        results: function(data, page) {
+          return {
+            results: data.matches.map(function(item) {
+              return {
+                id: item.id,
+                text: item.text + ' (' + item.additional_info + ')',
+                category: item.category,
+                url: item.url
+              };
+            })
+          };
+        },
+        cache: true
       },
-      selectCallback: function(term, data, type) {
-        $('#loading-overlay').removeClass('hide');
-        document.location.href = data['url'];
-      },
-      minQueryLength: 2,
-      maxResults: 5
+      formatResult: function(object, container, query) {
+        return object.text + " <span style='float: right'><strong>" + object.category + "</strong></span>";
+      }
+    });
+    $('.customer-search').on('change', function(item) {
+      $('#loading-overlay').removeClass('hide');
+      document.location.href = item.added.url;
     });
   };
 

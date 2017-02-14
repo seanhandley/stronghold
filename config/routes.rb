@@ -1,3 +1,5 @@
+require 'soulheart/server'
+
 Rails.application.routes.draw do
   apipie unless ['test', 'acceptance'].include?(Rails.env)
 
@@ -50,7 +52,7 @@ Rails.application.routes.draw do
 
   constraints Constraints::StaffConstraint.new do
     namespace :admin do
-      mount Soulmate::Server, :at => "/sm"
+      mount Soulheart::Server, :at => "/searcher"
       root :to => 'customers#index'
       resources :customers, except: [:destroy] do
         resources :projects

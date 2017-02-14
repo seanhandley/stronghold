@@ -10,7 +10,6 @@
 //= require starburst/starburst
 //= require hideShowPassword
 //= require clipboard
-//= require jquery.soulmate
 //= require bootstrap-toggle
 //= require highcharts
 //= require jquery.terminal
