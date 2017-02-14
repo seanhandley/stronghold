@@ -5,6 +5,7 @@ $(document).ready(function () {
       contentType: "application/json;",
       url: '/account/graph/data.json',
       dataType: 'json',
+      jsonp: false,
       success: function (data) {
         StrongholdGraphs.createCharts(StrongholdGraphs.buildSeries(data));
         $(document).on( 'shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
