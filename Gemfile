@@ -47,9 +47,9 @@ gem 'deliverhq', '~> 0.0.1'
 gem 'holidays', '~> 2.2'
 gem 'minitest-ci', :git => 'git@github.com:circleci/minitest-ci.git'
 gem "useragent"
-gem 'rack-contrib', :git => 'https://github.com/datacentred/rack-contrib', ref: '8d23be046955b7f7a8448ca54443bbf645e66596'
-gem 'soulmate', :require => 'soulmate/server'
-gem 'soulmatejs-rails'
+gem 'soulheart'
+gem 'hiredis', '~> 0.6.0' # Skip using JRuby
+gem 'redis', '>= 3.2.0', require: ['redis', 'redis/connection/hiredis']
 gem 'redis-namespace'
 gem 'statesman', '~> 2.0'
 gem 'parallel'
