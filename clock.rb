@@ -62,7 +62,7 @@ if Rails.env.production? || Rails.env.staging?
         end
         default_queue_processors.each(&:quiet!)
         sleep 10
-        `sudo systemctl restart sidekiq_stronghold`
+        `sudo restart sidekiq_stronghold`
       end
     end
   end
