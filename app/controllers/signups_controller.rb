@@ -2,7 +2,6 @@ class SignupsController < ApplicationController
 
   layout "customer-sign-up"
 
-  before_action :check_enabled, only: [:new, :create]
   before_action :find_invite, except: [:new, :create, :thanks]
   skip_before_action :verify_authenticity_token, :only => [:create], raise: false
 
@@ -81,21 +80,6 @@ class SignupsController < ApplicationController
 
   def create_params
     params.permit(:email, :discount_code)
-  end
-
-  def check_enabled
-    unless Stronghold::SIGNUPS_ENABLED
-      @wait_list_entry = WaitListEntry.new
-      respond_to do |format|
-        format.html {
-          render :sorry
-        }
-        format.json {
-          render json: {errors: ["Sorry, not currently accepting signups."]}, status: :unprocessable_entity
-        }
-      end
-      return
-    end
   end
 
 end

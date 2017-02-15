@@ -1,18 +1,5 @@
 $(document).ready(function() {
   if(typeof($('html').data('searchable-models')) != 'undefined') {
-    // $('.customer-search').soulmate({
-    //   url: '/admin/sm/search',
-    //   types: $('html').data('searchable-models').split(" "),
-    //   renderCallback: function(term, data, type) {
-    //     return term + ' (' + data.additional_info + ')';
-    //   },
-    //   selectCallback: function(term, data, type) {
-    //     $('#loading-overlay').removeClass('hide');
-    //     document.location.href = data['url'];
-    //   },
-    //   minQueryLength: 2,
-    //   maxResults: 5
-    // });
     $('.customer-search').select2({
       allowClear: true,
       placeholder: "What are you looking for?",
