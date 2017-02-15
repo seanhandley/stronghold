@@ -105,6 +105,6 @@ class Invite < ApplicationRecord
   end
 
   def send_email
-    DeliverhqMailJob.perform_later(self)
+    DeliverhqMailJob.perform_now(self)
   end
 end
