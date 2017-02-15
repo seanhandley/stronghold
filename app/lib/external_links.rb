@@ -17,6 +17,9 @@ module ExternalLinks
   def self.ticket_path(reference)
     "https://helpdesk.datacentred.io/staff/tickets/#{reference}"
   end
+  def self.ticket_attachment_path(reference, attachment_id, filename)
+    "https://helpdesk.datacentred.io/staff/tickets/#{reference}/attachment/#{attachment_id}/#{filename}"
+  end
   def self.python_openstack_client_docs_path
     'http://docs.openstack.org/user-guide/common/cli-install-openstack-command-line-clients.html'
   end

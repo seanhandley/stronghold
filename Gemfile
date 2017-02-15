@@ -105,6 +105,7 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-highcharts'
   gem 'rails-assets-jquery.terminal', '~> 0.10'
   gem 'rails-assets-angular-inview', '~> 2.2'
+  gem 'rails-assets-angular-file-upload'
 end
 
 group :development do

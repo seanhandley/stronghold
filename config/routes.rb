@@ -26,6 +26,7 @@ Rails.application.routes.draw do
     resources :manage_cards, except: [:new, :edit, :show]
     resources :tickets, only: [:index, :show]
     namespace :api, defaults: {format: :json} do
+      post 'attachments/:ticket_id', :controller => 'attachments', :action => 'create', :as => 'create_attachment'
       resources :tickets, only: [:index, :create, :update] do
         resources :comments, :controller => "ticket_comments", only: [:create]
         collection do

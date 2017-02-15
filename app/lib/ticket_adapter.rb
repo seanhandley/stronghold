@@ -1,6 +1,7 @@
 require 'sirportly'
 
 class TicketAdapter
+  extend ActionView::Helpers::NumberHelper
   extend TicketsHelper
   extend ActionView::Helpers::TextHelper
 
@@ -54,6 +55,7 @@ class TicketAdapter
                           date_of_visit: t["custom_field.date_of_visit"],
                           time_of_visit: t["custom_field.time_of_visit"])
           when 'Technical Support', 'Colo Support'
+            params.merge!(attachments: attachments(t['reference']))
             params.merge!(more_info: t["custom_field.more_info"])
             params.merge!(:department => "Colo Support") if colo_user
           end
@@ -123,6 +125,15 @@ class TicketAdapter
       params[:status] = (params[:status].downcase == 'open' ? 'New' : 'Resolved') if params[:status]
 
       ticket.update(params)
+    end
+
+    def attachments(reference)
+      ticket = SIRPORTLY.ticket(reference)
+      updates = ticket.updates.collect{|u| u}
+      attachments = updates.collect{|u| u.attachments}.flatten.collect{|a| [a['id'], a['name'], a['file_size']]}
+      @attachments = attachments.map do |id, name, size|
+        {id: id, name: name, url: ExternalLinks.ticket_attachment_path(reference, id, name), size: number_to_human_size(size) }
+      end
     end
   end
 end

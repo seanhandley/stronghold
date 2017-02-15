@@ -3,9 +3,10 @@ angularJS.controller "TicketsController", [
   "$scope",
   "$interval",
   "TicketFactory",
+  "FileUploader",
   "TicketStatusFactory",
   "TicketPriorityFactory",
-  ($http, $scope, $interval, TicketFactory, TicketStatusFactory, TicketPriorityFactory) ->
+  ($http, $scope, $interval, TicketFactory, FileUploader, TicketStatusFactory, TicketPriorityFactory) ->
 
 
     $scope.clearErrors = () ->
@@ -67,10 +68,7 @@ angularJS.controller "TicketsController", [
           $scope.$apply() if !$scope.$$phase
         return
       , true, true)
-      doPopulateTicketsPromise = $interval(
-        () ->
-          $scope.doPopulateTickets(null, false)
-        , 10 * 1000, false)
+      $scope.doPopulateTickets(null, false)
       return
 
     $scope.getStatusByName = (name) ->
@@ -199,6 +197,7 @@ angularJS.controller "TicketsController", [
         $scope.staticError = "I couldn't submit your ticket. Sorry. (HTTP 500)"
         window.location.replace('/account/tickets') if response.status == 401
         allHandler()
+        uploader.uploadAll()
         return
       request = $http({
         method: "post",
@@ -219,6 +218,59 @@ angularJS.controller "TicketsController", [
 
     $scope.ticketDialogCancel = ->
       $scope.ticketDialogHide()
+      false
+
+    uploader = $scope.uploader = new FileUploader(url: '/account/api/attachments/ticket_id')
+
+    $scope.attachmentDialogShow = ->
+      $scope.clearErrors()
+      $("#newAttachment").modal('show')
+      false
+
+    $scope.uploader.onBeforeUploadItem = (item) ->
+      item.url = '/account/api/attachments/' + $scope.selectedTicket.reference + '?safe_upload_token=' + $('#safe_upload_token').val()
+      return
+
+    uploader.onAfterAddingFile = ->
+      uploadedFilesTable = $(".uploaded-files-table")
+      attachmentsInputGroup = $(".form-control#attachments")
+      attachmentsInputGroup.addClass("bigger-box")
+      uploadedFilesTable.removeClass("hidden")
+      if this.queue.length > 0
+        $("#attachment-field").prop('disabled', true)
+
+    $scope.attachmentDialogUpload = ->
+      attachmentUploadButton = $($("#newAttachment button.btn-success")[0])
+      attachmentUploadButton.html("Uploading...")
+      attachmentUploadButton.addClass("disabled")
+      uploader.uploadAll()
+
+      uploader.onCompleteItem = ->
+        $scope.doPopulateTickets(null, false)
+        uploader.clearQueue()
+        $scope.clearFileField()
+        attachmentUploadButton.html('<span><i class="fa fa-upload"></i> Upload</span>')
+        attachmentUploadButton.removeClass("disabled")
+        $scope.attachmentDialogHide()
+        window.location.replace '/account/tickets/' + $scope.selectedTicket.reference
+        return
+
+
+    $scope.clearFileField = ->
+      $("#attachment-field").val('')
+      $("#attachment-field").prop('disabled', false)
+      return
+
+    $scope.attachmentDialogCancel = ->
+      uploader.cancelAll()
+      uploader.clearQueue()
+      $scope.clearFileField()
+      $scope.doPopulateTickets(null, false)
+      $scope.attachmentDialogHide()
+      return
+
+    $scope.attachmentDialogHide = ->
+      $('#newAttachment').modal('hide')
       false
 
     $scope.commentDialogShow = ->
@@ -250,6 +302,7 @@ angularJS.controller "TicketsController", [
         else
           $scope.doPopulateTickets(null, false)
           $scope.commentDialogHide()
+          $scope.$apply() if !$scope.$$phase
         allHandler()
         return
       errorHandler = (response) ->
