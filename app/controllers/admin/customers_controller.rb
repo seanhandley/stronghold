@@ -31,7 +31,7 @@ module Admin
       @users           = @organization.users
       @audits          = Audit.for_organization_and_user(@organization, current_user).order('created_at DESC').first(7)
       @projects        = @organization.projects.includes(:users)
-      @invites         = @organization.invites
+      @invites         = @organization.invites.incomplete
     end
 
     def edit
