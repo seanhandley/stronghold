@@ -1,7 +1,7 @@
 class UsageDecorator < ApplicationDecorator
   attr_reader :year, :month
 
-  def initialize(organization, year=Time.now.year, month=Time.now.year)
+  def initialize(organization, year=Time.now.year, month=Time.now.month)
     @year, @month = year, month
     super(organization)
   end
