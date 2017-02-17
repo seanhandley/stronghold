@@ -26,9 +26,7 @@ $(document).ready(function () {
         $('.progress-caption#capacity-used em span#percent').text(capacityUsed + "%");
       },
       error: function (result) {
-        if ($('body').attr('data-environment') == 'acceptance') {
-          console.log('There was an error:' + JSON.stringify(result));
-        }
+        console.log('There was an error:' + JSON.stringify(result));
       }
     });
   };

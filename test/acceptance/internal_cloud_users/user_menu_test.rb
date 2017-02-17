@@ -4,7 +4,7 @@ class UserMenuTests < CapybaraTestCase
   
   def test_user_menu_contents
     visit('/')
-    sleep(5)
+    
     find('button#user-menu').click
 
     sleep(2)
@@ -16,7 +16,7 @@ class UserMenuTests < CapybaraTestCase
 
   def test_user_can_logout
     visit('/')
-    sleep(5)
+
     find('button#user-menu').click
 
     AlertConfirmer.accept_confirm_from do

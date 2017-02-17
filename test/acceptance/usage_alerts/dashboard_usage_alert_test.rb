@@ -16,7 +16,6 @@ class DashboardUsageAlert < CapybaraTestCase
     reset_quota_usages used_vcpus: 50, available_vcpus: 1000, used_ram: 50, available_ram: 1000, used_storage: 50, available_storage: 1000
 
     visit('/')
-    sleep(5)
 
     within('div#quota-limits') do
      refute page.has_content?('You are reaching your')
@@ -27,7 +26,6 @@ class DashboardUsageAlert < CapybaraTestCase
     reset_quota_usages used_vcpus: 950, available_vcpus: 1000, used_ram: 950, available_ram: 1000, used_storage: 50, available_storage: 1000
 
     visit('/')
-    sleep(5)
 
     within('div#quota-limits') do
       assert page.has_content?("You are reaching your VCPUs and Memory quota limit")
@@ -38,7 +36,7 @@ class DashboardUsageAlert < CapybaraTestCase
     reset_quota_usages used_vcpus: 950, available_vcpus: 1000, used_ram: 950, available_ram: 1000, used_storage: 950, available_storage: 1000
 
     visit('/')
-    sleep(5)
+
     within('div#quota-limits') do
       assert has_content?("You are reaching your VCPUs, Memory, and Storage quota limit")
     end
@@ -49,7 +47,7 @@ class DashboardUsageAlert < CapybaraTestCase
     reset_quota_usages used_vcpus: 950, available_vcpus: 1000, used_ram: 950, available_ram: 1000, used_storage: 950, available_storage: 1000
 
     visit('/')
-    sleep(5)
+    
     within('div#quota-limits') do
       assert has_link?('alert-link')
     end
