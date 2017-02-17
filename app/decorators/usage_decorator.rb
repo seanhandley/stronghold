@@ -172,19 +172,19 @@ class UsageDecorator < ApplicationDecorator
 
     ud = UsageDecorator.new(model)
 
-    ud.usage_data(from_date: from, to_date: to)
+    ud.usage_data
     discounted_total = ud.sub_total  * (1 - (discount_percent / 100.0))
     totals << discounted_total
 
     # Calculate the remainder at the start
     if from > from_date
-      ud.usage_data(from_date: from_date, to_date: from)
+      ud.usage_data
       totals << ud.sub_total
     end
 
     # Calculate remainder at the end
     if to < to_date
-      ud.usage_data(from_date: to, to_date: to_date)
+      ud.usage_data
       totals << ud.sub_total
     end
 
