@@ -16,5 +16,5 @@ acceptance:
 
 production:
   <<: *default
-  # url: redis://queue.datacentred.io:6379/1
-  # network_timeout: 5
+  url: redis://queue.datacentred.io:6379/1
+  network_timeout: 5
