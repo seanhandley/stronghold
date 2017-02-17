@@ -38,7 +38,7 @@ class CreateSalesforceObjectJob < ApplicationJob
   def perform(o)
     id = Restforce.new.create!(o.salesforce_class, o.salesforce_args)
     o.update_column(:salesforce_id, id)
-    Mailer.notify_staff_of_signup(o).deliver_later if o.salesforce_class == 'Account'
+    Mailer.notify_staff_of_signup(o).deliver_later_by_api if o.salesforce_class == 'Account'
   end
 end
 

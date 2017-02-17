@@ -11,7 +11,7 @@ module Admin
 
     def update
       if @organization.unfreeze!
-        Mailer.review_mode_successful(@organization).deliver_later
+        Mailer.review_mode_successful(@organization).deliver_later_by_api
         redirect_to admin_customer_path(@organization), notice: "Customer has been unfrozen."
       else
         redirect_to admin_customer_path(@organization), alert: "Couldn't unfreeze!"
