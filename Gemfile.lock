@@ -7,11 +7,11 @@ GIT
 
 GIT
   remote: git@github.com:datacentred/harbour.git
-  revision: c29fe3a9b724366c07dca9a3758bff031359d57b
+  revision: 86253e8cd383ad24bf049ca6746b976e063d6c40
   branch: master
   specs:
     harbour (0.1.0)
-      apipie-rails (~> 0.3)
+      apipie-rails (~> 0.4)
       json-schema (~> 2.7)
       maruku (~> 0.3)
       rails (= 5.0.1)
@@ -88,8 +88,9 @@ GEM
       public_suffix (~> 2.0, >= 2.0.2)
     airbrussh (1.0.2)
       sshkit (>= 1.6.1, != 1.7.0)
-    apipie-rails (0.3.7)
+    apipie-rails (0.4.0)
       json
+      rails (>= 4.0)
     arel (7.1.4)
     ast (2.3.0)
     async-rails (1.5.2)
