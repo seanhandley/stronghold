@@ -38,7 +38,11 @@ gem 'rest-client', '~> 1.8'
 gem 'geo_ip', '~> 0.6'
 gem 'world-flags', '~> 0.6'
 gem 'nokogiri', '~> 1.6'
+<<<<<<< HEAD
 gem 'premailer-rails'
+=======
+gem 'premailer-rails', '~> 1.9'
+>>>>>>> parent of d9f67c8... Because premailer-rails fails on the queue node.
 gem "slack-notifier", '~> 1.2'
 gem "maxmind", '~> 0.4'
 gem "deep_merge", '~> 1.0'

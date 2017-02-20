@@ -1,5 +1,3 @@
-require_relative '../lib/deliver_via_api'
-
 class Mailer < ActionMailer::Base
   add_template_helper(DateTimeHelper)
   add_template_helper(AbbreviationHelper)

@@ -11,24 +11,16 @@ Product.find_or_create_by name: 'Storage'
 Product.find_or_create_by name: 'Colocation'
 
 if ['test','development'].include?(Rails.env)
-  Organization.class_eval do
-    define_method :create_salesforce_object do ; end
-    define_method :update_salesforce_object do ; end
-  end
+  Organization.skip_callback(:create, :after, :create_salesforce_object)
+  Organization.skip_callback(:update, :after, :update_salesforce_object)
+  Project.skip_callback(:create, :after, :create_openstack_object)
+  Project.skip_callback(:create, :after, :create_ceph_object)
+  Project.skip_callback(:destroy, :after, :delete_ceph_object)
+  User.skip_callback(:create, :after, :create_openstack_object)
+  User.skip_callback(:save, :after, :update_password)
+  User.skip_callback(:create, :after, :generate_ec2_credentials)
+  User.skip_callback(:create, :after, :subscribe_to_status_io)
 
-  Project.class_eval do
-    define_method :create_openstack_object do ; end
-    define_method :create_ceph_object do ; end
-    define_method :delete_ceph_object do ; end
-  end
-
-  User.class_eval do
-    define_method :create_openstack_object do ; end
-    define_method :update_password do ; end
-    define_method :generate_ec2_credentials do ; end
-    define_method :subscribe_to_status_io do ; end
-  end
-  
   organization = Organization.create(name: 'DataCentred', reference: STAFF_REFERENCE, self_service: false)
   project = Project.create(name: 'datacentred', uuid: '612bfb90f93c4b6e9ba515d51bb16022', organization: organization)
   organization.primary_project_id = project.id

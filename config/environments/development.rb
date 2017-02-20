@@ -71,8 +71,6 @@ Rails.application.configure do
     config.action_controller.asset_host = 'localhost:3000'
   end
 
-  config.action_mailer.asset_host = config.action_controller.asset_host
-
   config.stripe.secret_key = ENV["STRIPE_SECRET_KEY"] || ""
 
   # Use an evented file watcher to asynchronously detect changes in source code,
