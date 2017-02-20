@@ -1,4 +1,6 @@
 <%= stylesheet_link_tag 'email' %>
+<style><%= File.read(Rails.root.join('app/assets/stylesheets/email.css')) %></style>
+
 <div class="container" id="email">
   <%= render partial: 'header' %>
   <h1>Sorry to see you go...</h1>
