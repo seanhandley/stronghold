@@ -30,13 +30,13 @@ class OrganizationStateMachine
   [:fresh, :active, :disabled, :no_payment_methods].each do |before_state|
     before_transition(from: before_state, to: :frozen) do |organization, transition|
       organization.hard_freeze!
-      Mailer.review_mode_alert(organization).deliver_now
+      Mailer.review_mode_alert(organization).deliver_later
     end
   end
 
   before_transition(from: :frozen, to: :active) do |organization, transition|
     organization.unfreeze!
-    Mailer.review_mode_successful(organization).deliver_now
+    Mailer.review_mode_successful(organization).deliver_later
   end
 
   before_transition(from: :dormant, to: :active) do |organization, transition|
