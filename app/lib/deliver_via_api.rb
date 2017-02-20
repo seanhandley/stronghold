@@ -14,7 +14,7 @@ module ActionMailer
 
     def send_with_style
       options = { with_html_string: true, base_url: 'my.datacentred.io' }
-      html = html_part ? html_part.body.decoded : raw_source
+      html = html_part ? html_part.body.decoded : body.raw_source
       premailer = Premailer.new(html, options)
       plain_text = premailer.to_plain_text
       options.merge! css_string: mail_style.html_safe
