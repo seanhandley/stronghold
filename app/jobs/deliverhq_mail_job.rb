@@ -3,9 +3,12 @@ class DeliverhqMailJob < ApplicationJob
 
   def perform(invite)
     mail = Mailer.signup(invite.id)
+    # premailer = Premailer::Rails::CustomizedPremailer.new(mail.body.raw_source)
+    # message = Deliverhq::send from: [mail.from].flatten.join(","), to: mail.to.join(","), subject: mail.subject,
+    #                           html_body: premailer.to_inline_css, plain_body: premailer.to_plain_text
     premailer = Premailer::Rails::CustomizedPremailer.new(mail.body.raw_source)
     message = Deliverhq::send from: [mail.from].flatten.join(","), to: mail.to.join(","), subject: mail.subject,
-                              html_body: premailer.to_inline_css, plain_body: premailer.to_plain_text
+                              html_body: mail.html_part.body.decoded #, plain_body: premailer.to_plain_text
     invite.update_column :remote_message_id, message.id
   end
 end
