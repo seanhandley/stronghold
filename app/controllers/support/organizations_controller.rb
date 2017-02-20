@@ -40,7 +40,7 @@ module Support
       if reauthenticate(reauthorise_params[:password]) && !current_user.staff?
         users = current_organization.admin_users
         current_organization.transition_to!(:closed, user_email: current_user.email, auth_token: session['token'])
-        Mailer.goodbye(users).deliver_later_by_api
+        Mailer.goodbye(users).deliver_later
         reset_session
         render :goodbye
       else

@@ -7,7 +7,7 @@ class FraudCheckJob < ApplicationJob
       return unless customer_signup.real_ip
       if fc.suspicious?
         customer_signup.organization.transition_to! :frozen
-        Mailer.fraud_check_alert(customer_signup, fc).deliver_now_by_api
+        Mailer.fraud_check_alert(customer_signup, fc).deliver_now
       end
     end
   end
