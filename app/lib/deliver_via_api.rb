@@ -19,8 +19,10 @@ module ActionMailer
       premailer = Premailer.new(html, options)
       html_body = premailer.to_inline_css
 
-      mail.html_part = html_body
+      mail.instance_variable_set '@text_part'.to_sym, nil
+
       mail.text_part = plain_text
+      mail.html_part = html_body
       mail
     end
 
