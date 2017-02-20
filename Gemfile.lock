@@ -598,11 +598,7 @@ DEPENDENCIES
   parallel
   paranoia (~> 2.2)
   poltergeist
-<<<<<<< HEAD
-  premailer-rails
-=======
   premailer-rails (~> 1.9)
->>>>>>> parent of d9f67c8... Because premailer-rails fails on the queue node.
   puma
   rack-attack
   rack-mini-profiler
