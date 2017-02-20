@@ -1,16 +1,16 @@
 module ActionMailer
   class MessageDelivery < Delegator
     def deliver_now_by_api
-      send_with_style(self).deliver_now
+      send_with_style(self, true)
     end
 
     def deliver_later_by_api
-      send_with_style(self).deliver_later
+      send_with_style(self, false)
     end
 
     private
 
-    def send_with_style(mail)
+    def send_with_style(mail, now=true)
       options = { with_html_string: true, base_url: 'my.datacentred.io' }
       html = mail.html_part ? mail.html_part.body.decoded : mail.body.raw_source
       premailer = Premailer.new(html, options)
@@ -24,7 +24,7 @@ module ActionMailer
 
       mail.text_part = plain_text
       mail.html_part = html_body
-      mail
+      now ? mail.deliver_now : mail.deliver_later
     end
 
     def mail_style
