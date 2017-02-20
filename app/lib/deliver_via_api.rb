@@ -14,10 +14,11 @@ module ActionMailer
 
     def send_with_style
       options = { with_html_string: true, base_url: 'my.datacentred.io' }
-      premailer = Premailer.new(html_part.body.decoded, options)
+      html = html_part ? html_part.body.decoded : raw_source
+      premailer = Premailer.new(html, options)
       plain_text = premailer.to_plain_text
       options.merge! css_string: mail_style.html_safe
-      premailer = Premailer.new(html_part.body.decoded, options)
+      premailer = Premailer.new(html, options)
       html_body = premailer.to_inline_css
 
       html_part = html_body
