@@ -21,6 +21,7 @@ module ActionMailer
 
       mail.html_part = html_body
       mail.text_part = plain_text
+      mail
     end
 
     def mail_style
