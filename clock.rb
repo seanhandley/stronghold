@@ -48,23 +48,8 @@ if Rails.env.production? || Rails.env.staging?
     ClearStaleSignupsJob.perform_later
   end
 
-  $restart_sidekiq_mutex = Mutex.new
-
-  every(4.hours, 'restart_sidekiq', :thread => true) do
-    sleep 3600 * 2
-    unless $restart_sidekiq_mutex.locked?
-      $restart_sidekiq_mutex.synchronize do
-        default_queue_processors = Sidekiq::ProcessSet.new.select{|p| p['queues'].include?('default') }
-        while (true)
-          until (default_queue_processors.sum{|p| p['busy']} == 0) do ; sleep 0.1 ; end
-          sleep 5
-          break if default_queue_processors.sum{|p| p['busy']} == 0 # Get a clear 5 seconds of zero activity
-        end
-        default_queue_processors.each(&:quiet!)
-        sleep 10
-        `sudo systemctl restart sidekiq_stronghold`
-      end
-    end
+  every(5.hours, 'restart_sidekiq') do
+    RestartQueueJob.perform_later
   end
 
   every(4.hours, 'restart_sidekiq_slow') do
