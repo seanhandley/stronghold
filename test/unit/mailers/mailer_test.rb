@@ -45,7 +45,7 @@ class MailerTest < ActionMailer::TestCase
     email = Mailer.usage_sanity_failures(data)
     # This email isn't sent via SMTP, but as HTML via a Slack notification
     text = "* test - 1234 - #{Project.first.organization.name}"
-    assert email.body.to_s.include?(text), 'message body contains details'
+    assert email.body.parts[0].to_s.include?(text), 'message body contains details'
   end
 
   def test_fraud_check_alert
