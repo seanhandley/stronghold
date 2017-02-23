@@ -2,6 +2,7 @@ class DeliverhqMailJob < ApplicationJob
   queue_as :default
 
   def perform(invite)
+    return unless Rails.env.production?
     mail = Mailer.signup(invite.id)
     # premailer = Premailer::Rails::CustomizedPremailer.new(mail.body.raw_source)
     # message = Deliverhq::send from: [mail.from].flatten.join(","), to: mail.to.join(","), subject: mail.subject,
