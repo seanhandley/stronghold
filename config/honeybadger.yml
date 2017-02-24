@@ -7,3 +7,6 @@ exceptions:
 
 acceptance:
   report_data: false
+
+vagrant:
+  report_data: false
