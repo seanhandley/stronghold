@@ -176,6 +176,9 @@ staging:
 acceptance:
   <<: *nolb
 
+vagrant:
+  <<: *nolb
+
 production:
   <<: *default
 

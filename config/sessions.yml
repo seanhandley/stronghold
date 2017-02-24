@@ -10,5 +10,8 @@ acceptance:
 staging:
   timeout: 240
 
+vagrant:
+  timeout: 240
+
 production:
   timeout: 240

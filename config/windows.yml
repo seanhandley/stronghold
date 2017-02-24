@@ -87,5 +87,8 @@ acceptance:
 staging:
   <<: *default
 
+vagrant:
+  <<: *default
+
 production:
   <<: *default

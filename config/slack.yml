@@ -64,6 +64,9 @@ staging:
   <<: *default
   enabled: true
 
+vagrant:
+  <<: *default
+
 production:
   <<: *default
   enabled: true

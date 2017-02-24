@@ -10,5 +10,8 @@ staging:
 acceptance:
   requires_dark_launch: false
 
+vagrant:
+  requires_dark_launch: false
+
 production:
   requires_dark_launch: true
