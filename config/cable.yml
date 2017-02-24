@@ -15,3 +15,8 @@ production:
   <<: *default
   url: redis://:<%= ENV['REDIS_PASSWORD'] %>@queue.datacentred.io:6379/1
   network_timeout: 5
+
+vagrant:
+  <<: *default
+  url: redis://:<%= ENV['REDIS_PASSWORD'] %>@stronghold-queue-node.vagrant.test:6379/1
+  network_timeout: 5
