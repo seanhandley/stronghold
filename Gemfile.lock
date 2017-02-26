@@ -162,7 +162,7 @@ GEM
       execjs
     coffee-script-source (1.10.0)
     colorize (0.8.1)
-    concurrent-ruby (1.0.4)
+    concurrent-ruby (1.0.5)
     connection_pool (2.2.1)
     countries (1.2.5)
       currencies (~> 0.4.2)
@@ -240,7 +240,7 @@ GEM
     htmlentities (4.3.4)
     http-cookie (1.0.2)
       domain_name (~> 0.5)
-    i18n (0.8.0)
+    i18n (0.8.1)
     i18n_data (0.7.0)
     i18n_yaml_sorter (0.2.0)
     ice_nine (0.11.2)
@@ -489,7 +489,7 @@ GEM
       libv8 (~> 3.16.14.0)
       ref
     thor (0.19.4)
-    thread_safe (0.3.5)
+    thread_safe (0.3.6)
     tilt (2.0.5)
     timecop (0.8.1)
     traceroute (0.5.0)
