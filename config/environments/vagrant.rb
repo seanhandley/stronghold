@@ -110,6 +110,6 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  config.action_cable.allowed_request_origins = ["http://my.datacentred.io", "https://my.datacentred.io", "http://assets-cdn.datacentred.io", "https://assets-cdn.datacentred.io"]
+  config.action_cable.allowed_request_origins = ["http://stronghold-web-node.vagrant.test", "https://stronghold-web-node.vagrant.test", "http://stronghold-assets-node.vagrant.test", "https://stronghold-assets-node.vagrant.test"]
 
 end
