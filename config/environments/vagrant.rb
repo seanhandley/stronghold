@@ -100,7 +100,7 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :test
 
   APP_DOMAIN = "stronghold-web-node.vagrant.test"
-  config.action_controller.asset_host = "//stronghold-assets-node.vagant.test"
+  config.action_controller.asset_host = "//stronghold-assets-node.vagrant.test"
   config.action_mailer.asset_host = config.action_controller.asset_host
   config.action_mailer.default_url_options = { :host => APP_DOMAIN }
 
