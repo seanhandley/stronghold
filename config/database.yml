@@ -32,7 +32,7 @@ production:
 
 vagrant:
   <<: *default
-  host:     stronghold-db-node.vagrant.test
+  host:     db0.vagrant.test
   port:     3306
   username: stronghold
   password: <%= ENV["DB_PASSWORD"] %>
