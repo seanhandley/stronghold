@@ -99,8 +99,8 @@ Rails.application.configure do
   # ActionMailer::Base.deliveries array.
   config.action_mailer.delivery_method = :test
 
-  APP_DOMAIN = "stronghold-web-node.vagrant.test"
-  config.action_controller.asset_host = "//stronghold-assets-node.vagrant.test"
+  APP_DOMAIN = "my.vagrant.test"
+  config.action_controller.asset_host = "//assets-cdn.vagrant.test"
   config.action_mailer.asset_host = config.action_controller.asset_host
   config.action_mailer.default_url_options = { :host => APP_DOMAIN }
 
@@ -110,6 +110,6 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  config.action_cable.allowed_request_origins = ["http://stronghold-web-node.vagrant.test", "https://stronghold-web-node.vagrant.test", "http://stronghold-assets-node.vagrant.test", "https://stronghold-assets-node.vagrant.test"]
+  config.action_cable.allowed_request_origins = ["http://my.vagrant.test", "https://my.vagrant.test", "http://assets-cdn.vagrant.test", "https://assets-cdn.vagrant.test"]
 
 end
