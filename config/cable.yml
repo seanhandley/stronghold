@@ -18,5 +18,5 @@ production:
 
 vagrant:
   <<: *default
-  url: redis://:<%= ENV['REDIS_PASSWORD'] %>@queue.vagrant.test:6379/1
+  url: redis://:<%= ENV['REDIS_PASSWORD'] %>@new-queue.vagrant.test:6379/1
   network_timeout: 5
