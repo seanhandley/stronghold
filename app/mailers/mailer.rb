@@ -56,7 +56,7 @@ class Mailer < ActionMailer::Base
   end
 
   def activation_reminder(email)
-    mail(:to => email, :subject => "Activate your DataCented account", :skip_premailer => true)
+    mail(:to => email, :subject => "Activate your DataCented account")
   end
 
   def notify_staff_of_signup(organization)
