@@ -10,17 +10,18 @@ Product.find_or_create_by name: 'Compute'
 Product.find_or_create_by name: 'Storage'
 Product.find_or_create_by name: 'Colocation'
 
-if ['test','development'].include?(Rails.env)
-  Organization.skip_callback(:create, :after, :create_salesforce_object)
-  Organization.skip_callback(:update, :after, :update_salesforce_object)
-  Project.skip_callback(:create, :after, :create_openstack_object)
-  Project.skip_callback(:create, :after, :create_ceph_object)
-  Project.skip_callback(:destroy, :after, :delete_ceph_object)
-  User.skip_callback(:create, :after, :create_openstack_object)
-  User.skip_callback(:save, :after, :update_password)
-  User.skip_callback(:create, :after, :generate_ec2_credentials)
-  User.skip_callback(:create, :after, :subscribe_to_status_io)
+# Noops
+Organization.redefine_method :create_salesforce_object do ; end
+Organization.redefine_method :update_salesforce_object do ; end
+Project.redefine_method      :create_openstack_object  do ; end
+Project.redefine_method      :create_ceph_object       do ; end
+Project.redefine_method      :delete_ceph_object       do ; end
+User.redefine_method         :create_openstack_object  do ; end
+User.redefine_method         :update_password          do ; end
+User.redefine_method         :generate_ec2_credentials do ; end
+User.redefine_method         :subscribe_to_status_io   do ; end
 
+if ['test','development'].include?(Rails.env)
   organization = Organization.create(name: 'DataCentred', reference: STAFF_REFERENCE, self_service: false)
   project = Project.create(name: 'datacentred', uuid: '612bfb90f93c4b6e9ba515d51bb16022', organization: organization)
   organization.primary_project_id = project.id
@@ -37,7 +38,7 @@ if ['test','development'].include?(Rails.env)
   role = Role.create(organization: organization, name: 'Administrator', permissions: Permissions.user.keys, power_user: true)
 
   users.each do |u|
-    user = organization.users.create(u.merge(password: '12345678'))
+    user = organization.users.create(u.merge(password: 'm8PuKbdwgP2VzQ'))
     user.roles << role
     user.save!
   end
