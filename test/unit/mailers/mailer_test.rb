@@ -11,7 +11,7 @@ class MailerTest < ActionMailer::TestCase
     assert email.from.include?("noreply@datacentred.io")
     assert_equal [@invite.email], email.to
     assert_equal 'Confirm your account', email.subject
-    assert email.body.to_s.include?(@invite.token), 'mail body contains invite token'
+    assert email.html_part.to_s.include?(@invite.token), 'mail body contains invite token'
   end
 
   def test_reset
@@ -23,7 +23,7 @@ class MailerTest < ActionMailer::TestCase
     assert email.from.include?("noreply@datacentred.io")
     assert_equal [@reset.email], email.to
     assert_equal 'Password reset', email.subject
-    assert email.body.to_s.include?(@reset.token), 'mail body contains reset token'
+    assert email.html_part.to_s.include?(@reset.token), 'mail body contains reset token'
   end
 
   def test_usage_report
@@ -65,7 +65,7 @@ class MailerTest < ActionMailer::TestCase
     assert_equal ['fraud@datacentred.co.uk'], @email.to
     assert_equal "Potential Fraud: #{@cs.organization_name}", @email.subject
 
-    assert @email.body.to_s.include?('MaxMind Risk Score:</strong> 89.29 (out of 100)')
+    assert @email.html_part.to_s.include?('MaxMind Risk Score:</strong> 89.29 (out of 100)')
   end
 
   def test_card_reverification_failure
