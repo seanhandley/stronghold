@@ -12,6 +12,10 @@
 # more will usually help for _short_ waits on databases/caches.
 worker_processes 4
 
+# Set which user to spawn unicorn worker processes as per:
+# http://bogomips.org/unicorn/Unicorn/Configurator.html#method-i-user
+user 'rails'
+
 # listen on both a Unix domain socket and a TCP port,
 # we use a shorter backlog for quicker failover when busy
 listen "/var/run/rails/stronghold/unicorn.sock", :backlog => 64
