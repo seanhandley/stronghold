@@ -29,7 +29,7 @@ function setPromptProperties() {
 
 function nyan() {
   h = $('.osx .window').width() / 2;
-  return "<div><div style='width: 100%; background-color: #0f4d8f'><img style='width: " + h + "px;' src='<%= asset_path("nyan.gif") %>' class='nyan'></div></div>";
+  return "<div><div style='width: 100%; background-color: #0f4d8f'><img style='width: " + h + "px;' src='https://assets-cdn.datacentred.io/assets/nyan-d7d69cf4f2da315c91dec35b90f6aa7e5ef990fcbae867fdabe4ac54206428ba.gif' class='nyan'></div></div>";
 }
 
 function nyanPlay(term) {
@@ -61,7 +61,7 @@ function hideCog() {
 
 function stranger(term) {
   term.clear()
-  logo = '<img class="stranger" src="<%= asset_path("stranger.png") %>">';
+  logo = '<img class="stranger" src="https://assets-cdn.datacentred.io/assets/stranger-d5d6bf6f88af3f9d13fd839c46a7cb311c71610b2cb9bc8ebde3a070d20483f8.png">';
   term.echo(logo, {'raw': true});
   term.echo(new String("\n[[gb;#CC0000;;black]Type 'help' for a tutorial or 'commands' for a full reference.]\n"));
   $("#stranger-sound")[0].play();
