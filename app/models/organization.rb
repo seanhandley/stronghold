@@ -39,7 +39,7 @@ class Organization < ApplicationRecord
     }
   end
 
-  after_save :generate_reference, :generate_reporting_code, :on => :create
+  after_save :generate_reference, :generate_reporting_code, :update_search_tokens, :on => :create
   before_save :check_limited_storage, :if => Proc.new{|o| o.limited_storage_changed? }
 
   validates :name, length: {minimum: 1}, allow_blank: false
@@ -208,5 +208,9 @@ class Organization < ApplicationRecord
 
   def check_limited_storage
     SetCephQuotaJob.perform_later(self)
+  end
+
+  def update_search_tokens
+    SoulmateJob.perform_later
   end
 end
