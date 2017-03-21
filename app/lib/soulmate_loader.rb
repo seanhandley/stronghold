@@ -24,8 +24,6 @@ class SoulmateLoader
       end
     end
 
-    p data
-
     loader.load data
   end
 
