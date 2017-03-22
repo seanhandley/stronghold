@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails', '5.0.2'
 gem 'mysql2', '~> 0.3'
+gem 'sdoc', '~> 0.4.0',  group: :doc
 gem 'bcrypt', '~> 3.1'
 gem 'unicorn', '~> 5.0'
 gem 'haml', '~> 4.0'
@@ -27,7 +28,7 @@ gem 'clockwork_web', '~> 0.0.5'
 gem 'aws-s3', git: 'https://github.com/datacentred/aws-s3.git'
 gem 'sinatra', git: 'https://github.com/sinatra/sinatra'
 gem 'responders', '~> 2.0'
-gem 'restforce', '~> 2.5'
+gem 'restforce', '~> 2.1'
 gem 'starburst', '~> 1.0'
 gem 'country_select', '~> 2.2'
 gem 'countries'
@@ -83,7 +84,7 @@ gem 'sprockets', '~> 3.7'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 2.7'
 gem 'coffee-rails', '~> 4.1'
-gem 'therubyracer', '~> 0.12.3', platforms: :ruby
+gem 'therubyracer', '~> 0.12.2', platforms: :ruby
 gem 'momentjs-rails', '~> 2.8.3'
 gem 'font-awesome-sass', '~> 4.5'
 
