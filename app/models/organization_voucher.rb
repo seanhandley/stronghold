@@ -11,7 +11,7 @@ class OrganizationVoucher < ApplicationRecord
   end
 
   def expires_at
-    updated_at + voucher.duration.months
+    updated_at + voucher.duration.days
   end
 
   def extend!
