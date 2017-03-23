@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170130142912) do
+ActiveRecord::Schema.define(version: 20170323134655) do
 
   create_table "api_credentials", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "user_id"
@@ -428,7 +428,7 @@ ActiveRecord::Schema.define(version: 20170130142912) do
     t.string   "name",                                                     null: false
     t.string   "description",                                              null: false
     t.string   "code",                                                     null: false
-    t.integer  "duration",         limit: 1,               default: 1,     null: false
+    t.integer  "duration",         limit: 1,               default: 30,    null: false
     t.decimal  "discount_percent",           precision: 3, default: 10,    null: false
     t.datetime "expires_at"
     t.datetime "created_at"

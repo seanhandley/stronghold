@@ -16,7 +16,7 @@
           %tr
             %td= voucher.name
             %td= voucher.code
-            %td= pluralize(voucher.duration, 'month')
+            %td= pluralize(voucher.duration, 'day')
             %td= "#{voucher.discount_percent}%"
             %td= voucher.remaining_uses
             %td= voucher.expires_at || "Never"
