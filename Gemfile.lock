@@ -301,7 +301,7 @@ GEM
     netrc (0.11.0)
     newrelic_rpm (3.17.2.327)
     nio4r (2.0.0)
-    nokogiri (1.7.0.1)
+    nokogiri (1.7.1)
       mini_portile2 (~> 2.1.0)
     parallel (1.9.0)
     paranoia (2.2.0)
@@ -594,7 +594,7 @@ DEPENDENCIES
   mysql2 (~> 0.3)
   net-ssh (~> 2.8.0)
   newrelic_rpm (~> 3.9)
-  nokogiri (~> 1.6)
+  nokogiri (~> 1.7.1)
   parallel
   paranoia (~> 2.2)
   poltergeist
@@ -659,4 +659,4 @@ DEPENDENCIES
   world-flags (~> 0.6)
 
 BUNDLED WITH
-   1.13.7
+   1.14.6
