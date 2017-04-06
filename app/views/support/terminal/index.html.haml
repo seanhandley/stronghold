@@ -32,42 +32,50 @@
 
 
     .col-md-9#right
-      %div.project-select
-        .buttons-right
-          .form-inline
-            .form-group
-              = select_tag :projects, options_for_terminal_projects, class: 'form-control'
-        .buttons-left.shortcuts-link
-          %a.tiny{'href' => '', 'data-target' => "#terminalShortcuts", 'data-toggle' => 'modal'}
-            %i.fa.fa-keyboard-o
-            Press escape to see shortcuts
+      - if current_user.projects.where(organization: current_organization).none?
+        %h1
+          %i.fa.fa-exclamation-triangle
+          Oops! You're not assigned to any OpenStack projects.
+        %p
+          Please
+          = link_to 'assign yourself to one or more projects', support_projects_path
+          before using the browser terminal.
+      - else
+        %div.project-select
+          .buttons-right
+            .form-inline
+              .form-group
+                = select_tag :projects, options_for_terminal_projects, class: 'form-control'
+          .buttons-left.shortcuts-link
+            %a.tiny{'href' => '', 'data-target' => "#terminalShortcuts", 'data-toggle' => 'modal'}
+              %i.fa.fa-keyboard-o
+              Press escape to see shortcuts
 
-      
-      .osx{style: 'opacity: 0'}
-        .window
-          .titlebar
-            .buttons
-              .osx-close
-              .minimize
-              .zoom
-            = image_tag(asset_path('openstack.png'), class: 'openstack-logo-osx')
-            OpenStack Terminal
-          .terminal-responsive
-            .openstack-client-terminal
+        .osx{style: 'opacity: 0'}
+          .window
+            .titlebar
+              .buttons
+                .osx-close
+                .minimize
+                .zoom
+              = image_tag(asset_path('openstack.png'), class: 'openstack-logo-osx')
+              OpenStack Terminal
+            .terminal-responsive
+              .openstack-client-terminal
 
-      = render partial: 'shortcuts'
-      .read-more
-        %span.tiny
-          = image_tag asset_path('vagrant.png'), class: 'vagrant-icon'
-          %strong Want to try the real thing?
-          Grab our easy-to-install
-          = link_to 'Vagrant Package.', ExternalLinks.vagrant_openstack_client, target: "_blank"
-        %span.tiny
-          %i.fa.fa-book
-          %strong Know what you're doing?
-          Install the official 
-          = link_to 'OpenStack Client.', ExternalLinks.python_openstack_client_docs_path, target: "_blank"
-  .push
+        = render partial: 'shortcuts'
+        .read-more
+          %span.tiny
+            = image_tag asset_path('vagrant.png'), class: 'vagrant-icon'
+            %strong Want to try the real thing?
+            Grab our easy-to-install
+            = link_to 'Vagrant Package.', ExternalLinks.vagrant_openstack_client, target: "_blank"
+          %span.tiny
+            %i.fa.fa-book
+            %strong Know what you're doing?
+            Install the official 
+            = link_to 'OpenStack Client.', ExternalLinks.python_openstack_client_docs_path, target: "_blank"
+    .push
 
 %audio{id: "nyan-sound", class: 'bg-sound', autoplay: false, preload: false, loop: false}
   %source{src: audio_path("nyan.mp3"), type: "audio/mpeg"}

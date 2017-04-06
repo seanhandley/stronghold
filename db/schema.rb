@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170323134655) do
+ActiveRecord::Schema.define(version: 20170404131359) do
 
   create_table "api_credentials", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "user_id"
@@ -333,6 +333,16 @@ ActiveRecord::Schema.define(version: 20170323134655) do
     t.datetime "updated_at"
   end
 
+  create_table "organizations_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+    t.integer  "organization_id"
+    t.integer  "user_id"
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+    t.boolean  "primary",         default: false, null: false
+    t.index ["organization_id"], name: "index_organizations_users_on_organization_id", using: :btree
+    t.index ["user_id"], name: "index_organizations_users_on_user_id", using: :btree
+  end
+
   create_table "products", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
     t.string   "name"
     t.datetime "created_at"
@@ -416,11 +426,11 @@ ActiveRecord::Schema.define(version: 20170323134655) do
     t.string   "last_name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "organization_id"
     t.string   "uuid"
     t.string   "password_digest"
     t.string   "salesforce_id"
     t.datetime "last_seen_online"
+    t.integer  "organization_id"
     t.text     "preferences",      limit: 65535
   end
 

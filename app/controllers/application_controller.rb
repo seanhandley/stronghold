@@ -61,7 +61,9 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
 
   def current_organization
-    current_user ? current_user.organization : nil
+     @current_organization ||= current_user&.organizations&.find_by_id(session[:organization_id]) if session[:organization_id]
+     reset_session unless @current_organization
+     @current_organization
   end
   helper_method :current_organization
 

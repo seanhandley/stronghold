@@ -2,6 +2,7 @@ require 'test_helper'
 require_relative '../../mailers/previews/mailer_preview'
 
 class MailerTest < ActionMailer::TestCase
+
   def test_signup
     @invite = Invite.make!
 
@@ -70,7 +71,7 @@ class MailerTest < ActionMailer::TestCase
 
   def test_card_reverification_failure
     @organization = Organization.make!
-    @user = User.make!(organization: @organization)
+    @user = User.make!(organizations: [@organization])
     @organization.stub(:admin_users, [@user]) do
       @email = Mailer.card_reverification_failure(@organization).deliver_now
     end
@@ -121,12 +122,14 @@ class MailerTest < ActionMailer::TestCase
   end
 
   def test_review_mode_alert
+    @organization = Organization.make!
+    @role = Role.make! organization: @organization, power_user: true
+    @user = User.make! organizations: [@organization]
+    @role.users << @user
     @cs = CustomerSignup.make!
-    @user = User.make!
-    @user.organization.stub(:admin_users, [@user]) do
-      @cs.stub(:organization, @user.organization) do
-        @email = Mailer.review_mode_alert(@cs.organization).deliver_now
-      end
+
+    @cs.stub(:organization, @organization) do
+      @email = Mailer.review_mode_alert(@cs.organization).deliver_now
     end
 
     assert_not ActionMailer::Base.deliveries.empty?
@@ -137,10 +140,11 @@ class MailerTest < ActionMailer::TestCase
   end
 
   def test_review_mode_successful
-    @user = User.make!
-    @user.organization.stub(:admin_users, [@user]) do
-      @email = Mailer.review_mode_successful(@user.organization).deliver_now
-    end
+    @organization = Organization.make!
+    @role = Role.make! organization: @organization, power_user: true
+    @user = User.make! organizations: [@organization]
+    @role.users << @user
+    @email = Mailer.review_mode_successful(@user.primary_organization).deliver_now
 
     assert_not ActionMailer::Base.deliveries.empty?
 
@@ -150,11 +154,11 @@ class MailerTest < ActionMailer::TestCase
   end
 
   def test_quota_changed
-    @user = User.make!
-    @user.organization.stub(:admin_users, [@user]) do
-      @email = Mailer.quota_changed(@user.organization).deliver_now
-    end
-
+    @organization = Organization.make!
+    @role = Role.make! organization: @organization, power_user: true
+    @user = User.make! organizations: [@organization]
+    @role.users << @user
+    @email = Mailer.quota_changed(@user.primary_organization).deliver_now
     assert_not ActionMailer::Base.deliveries.empty?
 
     assert @email.from.include?("noreply@datacentred.io")
@@ -165,7 +169,7 @@ class MailerTest < ActionMailer::TestCase
   def test_quota_limits_alert
     @organization = Organization.make!
     @role = Role.make! organization: @organization, power_user: true
-    @user = User.make! organization: @organization
+    @user = User.make! organizations: [@organization]
     @role.users << @user
     @email = Mailer.quota_limits_alert(@organization.id).deliver_now
 

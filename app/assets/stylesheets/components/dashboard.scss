@@ -145,6 +145,28 @@ div#usage-capacity-summary div.header-column {
   padding: 10px 10px 20px 20px;
 }
 
+#dashboard-org-menu.pull-right #admin-change-org{
+  margin: 0 15px 20px 0;
+}
+
+#dashboard-org-menu .form-group#org-dropdown select {
+  background: $main-color;
+  color: white;
+  font-size: 0.9em;
+  border: 1px solid white;
+}
+
+#admin-change-org .form-group#org-dropdown select {
+  background: $brand-danger;
+  color: white;
+  font-size: 0.9em;
+  border: 1px solid white;
+}
+
+select#select-organization {
+  margin: 5px 0px 5px 0px;
+}
+
 div#usage-capacity-summary div.progress-caption {
   text-align: center;
   font-size: 12px;

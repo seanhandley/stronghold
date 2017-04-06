@@ -4,7 +4,7 @@
   .row.dashboard-main-content
     .col-md-12
       = render partial: 'support/tickets/incidents'
-
+      
       - if current_organization.cloud?
         .dashboard-header
           .container#usage-capacity-summary

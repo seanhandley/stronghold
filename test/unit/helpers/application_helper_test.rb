@@ -51,7 +51,7 @@ module ApplicationHelperTests
       [
         {k: 'error', v: 'danger'},
         {k: 'alert', v: 'danger'},
-        {k: 'notice', v: 'warning'}
+        {k: 'notice', v: 'info'}
       ].each do |h|
         assert_equal h[:v], @model.flash_key_to_bootstrap_class(h[:k])
       end

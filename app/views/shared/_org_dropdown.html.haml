@@ -1,0 +1,3 @@
+= form_tag(support_change_organizations_path, :html => {:role => 'form'}, 'method' => 'put', class: 'form-inline') do
+  .form-group#org-dropdown
+    = select_tag :organization_id, organizations_for_select, {id: 'select-organization', class: 'form-control'}

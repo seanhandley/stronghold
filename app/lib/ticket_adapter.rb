@@ -5,7 +5,7 @@ class TicketAdapter
   extend ActionView::Helpers::TextHelper
 
   class << self
-    def all(page=1, organization=Authorization.current_user.organization)
+    def all(page=1, organization=Authorization.current_organization)
       tickets = []
       limit = 15
       page = page.to_i
@@ -19,10 +19,11 @@ class TicketAdapter
                    custom_field.date_of_visit
                    custom_field.time_of_visit
                    custom_field.more_info
+                   custom_field.company_reference
                   }
-      spql = "SELECT #{columns.join(',')} FROM tickets WHERE contacts.company = \"#{organization.reference}\" AND brands.name = \"#{SIRPORTLY_BRAND}\" GROUP BY submitted_at ORDER BY submitted_at DESC LIMIT #{limit.join(',')}"
+      spql = "SELECT #{columns.join(',')} FROM tickets WHERE custom_field.company_reference = \"#{organization.reporting_code}\" AND brands.name = \"#{SIRPORTLY_BRAND}\" GROUP BY submitted_at ORDER BY submitted_at DESC LIMIT #{limit.join(',')}"
       user = Authorization.current_user
-      colo_user = user.organization.colo? && !user.organization.cloud?
+      colo_user = Authorization.current_organization.colo? && !Authorization.current_organization.cloud?
       unread_tickets = user.unread_tickets.map(&:ticket_id)
       SIRPORTLY.request("tickets/spql", spql: spql)["results"].map{|t| Hash[columns.zip(t)]}.map do |t|
         Thread.new do
@@ -79,8 +80,8 @@ class TicketAdapter
 
     def create(ticket)
       user = Authorization.current_user
-      colo_user = user.organization.colo? && !user.organization.cloud?
-      if !user.organization.known_to_payment_gateway? &&
+      colo_user = Authorization.current_organization.colo? && !Authorization.current_organization.cloud?
+      if !Authorization.current_organization.known_to_payment_gateway? &&
         ticket.priority.downcase == 'emergency'
         return
       end
@@ -92,7 +93,8 @@ class TicketAdapter
         :subject => ticket.title,
         :name => ticket.name,
         :email => ticket.email,
-        'custom[organization_name]' => user.organization.name
+        'custom[organization_name]' => Authorization.current_organization.name,
+        'custom[company_reference]' => Authorization.current_organization.reporting_code
       }
       case ticket.department
       when "Access Requests"

@@ -2,7 +2,7 @@ require 'test_helper'
 
 class TestUserPermissions < CleanTest
   def setup
-    @user = User.make
+    @user = User.make(organizations: [Organization.make!])
     @role = Role.make
   end
 

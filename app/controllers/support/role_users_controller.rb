@@ -1,5 +1,6 @@
 module Support
   class RoleUsersController < SupportBaseController
+    include ModelErrorsHelper
 
     load_and_authorize_resource class_name: 'RoleUser'
 
@@ -8,7 +9,7 @@ module Support
       if @role_user.destroy
         redirect_to support_roles_path(tab: 'roles')
       else
-        redirect_to support_roles_path(tab: 'roles'), notice: @role_user.errors.full_messages.join
+        redirect_to support_roles_path(tab: 'roles'), notice: model_errors_as_html(@role_user)
       end
     end
 

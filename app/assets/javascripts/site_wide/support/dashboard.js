@@ -66,4 +66,8 @@ $(document).ready(function() {
     });
   }
 
+  $('#select-organization').change(function() {
+    $('#loading-overlay').removeClass('hide');
+    $(this).closest('form').submit();
+  });
 });

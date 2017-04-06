@@ -1,0 +1,11 @@
+- if current_user.staff?
+  - if current_user.organization_ids.include?(@organization.id)
+    = form_for :organization, url: admin_organization_assignment_path(@organization.id), :method => 'delete', :id => 'assign_org_form', :class => "form-inline" do |f|
+      .form-group
+        = f.hidden_field :id
+        = f.submit 'Remove yourself from this account', class: 'btn btn-danger'
+  - else
+    = form_for :organization, url: admin_organization_assignments_path, :method => 'post', :id => 'assign_org_form', :class => "form-inline" do |f|
+      .form-group
+        = f.hidden_field :id
+        = f.submit 'Assign yourself to this account', class: 'btn btn-primary'
