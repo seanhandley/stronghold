@@ -62,6 +62,7 @@ class ApplicationController < ActionController::Base
 
   def current_organization
      @current_organization ||= current_user&.organizations&.find_by_id(session[:organization_id]) if session[:organization_id]
+     @current_organization ||= current_user.primary_organization
      reset_session unless @current_organization
      @current_organization
   end
