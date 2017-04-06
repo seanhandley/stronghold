@@ -31,10 +31,10 @@ class SessionsController < ApplicationController
         cookies.signed[:current_organization_id] ||= @user.primary_organization.id
         session[:organization_id] = cookies.signed[:current_organization_id]
 
-        p '*' * 10
-        p session[:user_id]
-        p current_organization
-        p '*' * 10
+        Rails.logger.info '*' * 10
+        Rails.logger.info session[:user_id]
+        Rails.logger.info current_organization
+        Rails.logger.info '*' * 10
 
         if current_organization.known_to_payment_gateway?
           if params[:next]
