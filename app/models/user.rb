@@ -16,7 +16,7 @@ class User < ApplicationRecord
       Email: email,
       FirstName: first_name.present? ? first_name : nil,
       LastName: last_name.present? ? last_name : email,
-      AccountId: Authorization.current_organization.salesforce_id,
+      AccountId: current_organization.salesforce_id,
       Contact_Info__c: admin? ? 'Admin User' : 'Non-Admin User'
     }
   end
@@ -53,19 +53,19 @@ class User < ApplicationRecord
   end
 
   def cloud?
-    Authorization.current_organization.cloud?
+    current_organization.cloud?
   end
 
   def compute?
-    Authorization.current_organization.compute?
+    current_organization.compute?
   end
 
   def storage?
-    Authorization.current_organization.storage?
+    current_organization.storage?
   end
 
   def colo?
-    Authorization.current_organization.colo?
+    current_organization.colo?
   end
 
   def admin?
@@ -82,13 +82,17 @@ class User < ApplicationRecord
     organization_user&.organization
   end
 
+  def current_organization
+    Authorization.current_organization || primary_organization
+  end
+
   def as_hash
     { email: email }
   end
 
   def keystone_params
     { email: email, name: email,
-      enabled: Authorization.current_organization.has_payment_method? && has_permission?('cloud.read'),
+      enabled: current_organization.has_payment_method? && has_permission?('cloud.read'),
       password: password
     }
   end
