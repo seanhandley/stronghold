@@ -33,6 +33,8 @@ class SessionsController < ApplicationController
 
         Rails.logger.info '*' * 10
         Rails.logger.info session[:user_id]
+        Rails.logger.info session[:organization_id]
+        Rails.logger.info current_user
         Rails.logger.info current_organization
         Rails.logger.info '*' * 10
 
