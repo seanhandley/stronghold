@@ -113,7 +113,7 @@ class TicketAdapter
 
     def create_comment(comment)
       ticket  = SIRPORTLY.ticket(comment.ticket_reference)
-      comment = ticket.post_update(:message => comment.text, :customer => Authorization.current_user.unique_id)
+      comment = ticket.post_update(:message => comment.text, :customer => Authorization.current_user.id)
       ""
     end
 

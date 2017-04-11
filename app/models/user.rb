@@ -110,10 +110,6 @@ class User < ApplicationRecord
     name.blank? ? email : name
   end
 
-  def unique_id
-    "#{Authorization.current_organization.reporting_code} (User: #{id})"
-  end
-
   def authenticate(unencrypted_password)
     setup_password_from_openstack(unencrypted_password) unless password_digest.present?
     begin
