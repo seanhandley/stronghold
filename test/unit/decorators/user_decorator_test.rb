@@ -8,7 +8,7 @@ class UserDecoratorTest < CleanTest
 
   def test_as_sirportly_data
     expected = {
-      :reference => @user.unique_id,
+      :reference => @user.id,
       :contact_methods => {
         :email => [@user.email]
       },
