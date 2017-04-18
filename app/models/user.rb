@@ -165,7 +165,7 @@ class User < ApplicationRecord
   end
 
   def api_credential
-    api_credentials&.first || api_credentials.create!(password: SecureRandom.hex)
+    api_credentials&.first || api_credentials.create!(password: SecureRandom.hex, organization: current_organization)
   end
 
   def refresh_datacentred_api_credentials!
