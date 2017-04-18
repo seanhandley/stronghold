@@ -7,13 +7,14 @@ GIT
 
 GIT
   remote: git@github.com:datacentred/harbour.git
-  revision: 197bcd0cec36d69d5ba7ea361c0c6ebef5349b1f
+  revision: e09a29dbd1c752d5e833d263acd7654a78947f53
   branch: master
   specs:
     harbour (0.1.0)
       apipie-rails (~> 0.4)
       json-schema (~> 2.7)
       maruku (~> 0.3)
+      nokogiri (~> 1.7.1)
       rails (= 5.0.2)
       responders (~> 2.2)
 
