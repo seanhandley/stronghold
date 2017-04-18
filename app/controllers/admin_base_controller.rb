@@ -12,6 +12,6 @@ class AdminBaseController < AuthorizedController
 
   def check_user_is_staff
     return true if Rails.env.development?
-    slow_404 unless current_user.staff?
+    slow_404 unless current_user.staff? && current_user.admin?
   end
 end
