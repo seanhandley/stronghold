@@ -10,14 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170404131359) do
+ActiveRecord::Schema.define(version: 20170418085518) do
 
-  create_table "api_credentials", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "api_credentials", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
     t.integer  "user_id"
     t.string   "access_key"
     t.string   "password_digest"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+    t.integer  "organization_id"
   end
 
   create_table "audits", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
@@ -170,6 +171,7 @@ ActiveRecord::Schema.define(version: 20170404131359) do
     t.bigint   "size"
     t.datetime "recorded_at", precision: 3
     t.integer  "sync_id"
+    t.index ["project_id"], name: "index_billing_storage_objects_on_project_id", using: :btree
     t.index ["project_id"], name: "tenant_storage_objects", using: :btree
     t.index ["recorded_at"], name: "index_billing_storage_objects_on_recorded_at", using: :btree
   end
@@ -404,7 +406,7 @@ ActiveRecord::Schema.define(version: 20170404131359) do
     t.text     "category",            limit: 65535
   end
 
-  create_table "unread_tickets", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "unread_tickets", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
     t.string   "update_id"
     t.string   "ticket_id"
     t.integer  "user_id"
@@ -426,11 +428,11 @@ ActiveRecord::Schema.define(version: 20170404131359) do
     t.string   "last_name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "organization_id"
     t.string   "uuid"
     t.string   "password_digest"
     t.string   "salesforce_id"
     t.datetime "last_seen_online"
-    t.integer  "organization_id"
     t.text     "preferences",      limit: 65535
   end
 
