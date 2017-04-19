@@ -1,5 +1,6 @@
 - if current_user.organization_ids.include?(@organization.id)
   - if current_user.primary_organization != @organization
+    %p= current_organization.reference
     %strong
       %i.fa.fa-info-circle
       You are a member of this organization.

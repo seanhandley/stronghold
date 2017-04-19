@@ -1,7 +1,7 @@
 class OrganizationUser < ActiveRecord::Base
   self.table_name = 'organizations_users'
   after_save :set_primary, on: :create
-  before_destroy :check_if_primary_and_current_user #:check_if_should_destroy_user
+  before_destroy :check_if_should_destroy_user, :check_if_primary_and_current_user
 
   belongs_to :organization
   belongs_to :user
