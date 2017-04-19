@@ -1,18 +1,17 @@
-- if current_user.staff?
-  - if current_user.organization_ids.include?(@organization.id)
-    - if current_user.primary_organization != @organization
-      %strong
-        %i.fa.fa-info-circle
-        You are a member of this organization.
-        = form_for :organization, url: admin_organization_assignment_path(@organization.id), :method => 'delete', :id => 'assign_org_form', :class => "form-inline" do |f|
-          .form-group
-            = f.hidden_field :id
-            = f.submit 'Delete membership', class: 'btn btn-danger', id: 'delete-org-membership'
-  - else
+- if current_user.organization_ids.include?(@organization.id)
+  - if current_user.primary_organization != @organization
     %strong
       %i.fa.fa-info-circle
-      You can assign yourself as a temporary member of this organization.
-    = form_for :organization, url: admin_organization_assignments_path, :method => 'post', :id => 'assign_org_form', :class => "form-inline" do |f|
-      .form-group
-        = f.hidden_field :id
-        = f.submit 'Create membership', class: 'btn btn-primary', id: 'create-org-membership'
+      You are a member of this organization.
+      = form_for :organization, url: admin_organization_assignment_path(@organization.id), :method => 'delete', :id => 'assign_org_form', :class => "form-inline" do |f|
+        .form-group
+          = f.hidden_field :id
+          = f.submit 'Delete membership', class: 'btn btn-danger', id: 'delete-org-membership'
+- else
+  %strong
+    %i.fa.fa-info-circle
+    You can assign yourself as a temporary member of this organization.
+  = form_for :organization, url: admin_organization_assignments_path, :method => 'post', :id => 'assign_org_form', :class => "form-inline" do |f|
+    .form-group
+      = f.hidden_field :id
+      = f.submit 'Create membership', class: 'btn btn-primary', id: 'create-org-membership'
