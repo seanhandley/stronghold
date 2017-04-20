@@ -1,10 +1,10 @@
 module RolesHelper
   def list_of_roles(user)
-    user.roles.map(&:name).join(', ')
+    user.roles.where(organization: current_organization).map(&:name).join(', ')
   end
 
   def list_of_projects(user)
-    user.projects.map(&:name).uniq.join(', ')
+    user.projects.where(organization: current_organization).map(&:name).uniq.join(', ')
   end
 
   def roles_for_select(organization)
