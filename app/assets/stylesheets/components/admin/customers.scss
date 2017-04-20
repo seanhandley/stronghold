@@ -161,7 +161,7 @@ div.stats-title{
 }
 
 .row#organization-billing-info {
-  padding: 25px 15px 25px 15px;
+  padding: 25px 15px 5px 15px;
   margin-top: 25px;
 }
 
@@ -171,6 +171,18 @@ ul#billing_address-list {
 
 ul#billing_address-list li {
   padding: 8px 8px 0px 0;
+}
+
+div#temporary-memberships.col-md-12 {
+  margin-top: 50px;
+}
+
+input#create-org-membership {
+  margin-top: 15px;
+}
+
+input#delete-org-membership {
+  margin-top: 15px;
 }
 
 td.first-column {
