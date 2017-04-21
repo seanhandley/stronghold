@@ -4,7 +4,6 @@
       %table.table.table-striped.table-hover
         %thead
           = render partial: "column_headings"
-          %th Salesforce Invoice
           %th
           %th
         %tbody
@@ -12,6 +11,5 @@
             = render partial: 'edit', locals: {invoice: invoice }
             %tr
               = render partial: "row", locals: {invoice: invoice}
-              %td= link_to invoice.salesforce_id, invoice.salesforce_invoice_link, target: '_blank'
               %td= link_to 'Create Stripe Invoice?', '', class: 'btn btn-success', 'data-toggle' => "modal", 'data-target' => "#editInvoice#{invoice.id}"
               %td= link_to 'Dismiss', admin_utilities_pending_invoice_path(invoice), 'class' => 'btn btn-danger', 'data-method' => "delete", 'data-confirm' => "This can't be undone. Are you sure?"

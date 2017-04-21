@@ -5,3 +5,4 @@
 %td== £#{number_with_precision(invoice.grand_total_plus_tax, :delimiter => ',', :separator => '.', :precision => 2)}
 %td== #{invoice.tax_percent}%
 %td== #{invoice.discount_percent}%
+%td= link_to invoice.salesforce_id, invoice.salesforce_invoice_link, target: '_blank'

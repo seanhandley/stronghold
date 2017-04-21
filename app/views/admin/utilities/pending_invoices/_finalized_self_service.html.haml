@@ -4,9 +4,9 @@
       %table.table.table-striped.table-hover
         %thead
           = render partial: "column_headings"
-          %th Salesforce Invoice
+          %th Stripe Invoice
         %tbody
           - for invoice in @finalized_self_service_invoices
             %tr
               = render partial: "row", locals: {invoice: invoice}
-              %td= link_to invoice.salesforce_id, invoice.salesforce_invoice_link, target: '_blank'
+              %td= link_to invoice.stripe_invoice_id, invoice.stripe_invoice_link, target: '_blank'
