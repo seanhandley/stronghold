@@ -3,19 +3,10 @@
     .table-responsive
       %table.table.table-striped.table-hover
         %thead
-          %th Reporting Code
-          %th Organization
-          %th Month
-          %th Total
-          %th SalesForce Invoice
-          %th Stripe Invoice
+          = render partial: "column_headings"
+          %th Salesforce Invoice
         %tbody
           - for invoice in @finalized_self_service_invoices
-            = render partial: 'edit', locals: {invoice: invoice }
             %tr
-              %td= invoice.organization ? invoice.organization.reporting_code : 'NA'
-              %td= invoice.organization ? invoice.organization.name : 'NA'
-              %td== #{Date::MONTHNAMES[invoice.month]} #{invoice.year}
-              %td== £#{number_with_precision(invoice.grand_total, :delimiter => ',', :separator => '.', :precision => 2)}
+              = render partial: "row", locals: {invoice: invoice}
               %td= link_to invoice.salesforce_id, invoice.salesforce_invoice_link, target: '_blank'
-              %td= link_to invoice.stripe_invoice_id, invoice.stripe_invoice_link, target: '_blank'
