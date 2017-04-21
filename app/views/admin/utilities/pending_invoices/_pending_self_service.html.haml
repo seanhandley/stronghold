@@ -6,7 +6,9 @@
           %th Reporting Code
           %th Organization
           %th Month
-          %th Total
+          %th Net Total
+          %th Total (inc tax)
+          %th Tax %
           %th Discount
           %th Salesforce Invoice
           %th
@@ -18,6 +20,8 @@
               %td= link_to invoice.organization.name, admin_customer_path(invoice.organization)
               %td== #{Date::MONTHNAMES[invoice.month]} #{invoice.year}
               %td== £#{number_with_precision(invoice.grand_total, :delimiter => ',', :separator => '.', :precision => 2)}
+              %td== £#{number_with_precision(invoice.grand_total_plus_tax, :delimiter => ',', :separator => '.', :precision => 2)}
+              %td== #{invoice.tax_percent}
               %td== #{invoice.discount_percent}%
               %td= link_to invoice.salesforce_id, invoice.salesforce_invoice_link, target: '_blank'
               %td= link_to 'Create Stripe Invoice?', '', class: 'btn btn-success', 'data-toggle' => "modal", 'data-target' => "#editInvoice#{invoice.id}"

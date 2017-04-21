@@ -7,12 +7,13 @@
             &times;
           %h4.modal-title
             Create Stripe Invoice
-          %p Please make corrections and confirm. Once finalized, the customer will be automatically billed by Stripe within 1 hour.
+          %p Please make corrections and confirm. The customer will be automatically billed by Stripe between 1-2 hours after the invoice is finalized.
         .modal-body
           = javascript_error_messages_for(f.object)
           .form-group
-            %label Grand Total (Includes Tax And Discounts)
+            %label Net Total (including any discounts on our side)
             = f.number_field :grand_total, :class => 'form-control', min: 0, step: 0.01
+            %p.help-block== Stripe will apply #{invoice.tax_percent}% tax plus any additional discounts from Stripe Coupons
                
         .modal-footer
           %button.btn.btn-default{'data-toggle' => "modal", 'data-dismiss' => "modal"}
