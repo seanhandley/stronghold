@@ -1,0 +1,7 @@
+%td= invoice.organization.reporting_code
+%td= link_to invoice.organization.name, admin_customer_path(invoice.organization)
+%td== #{Date::MONTHNAMES[invoice.month]} #{invoice.year}
+%td== £#{number_with_precision(invoice.grand_total, :delimiter => ',', :separator => '.', :precision => 2)}
+%td== £#{number_with_precision(invoice.grand_total_plus_tax, :delimiter => ',', :separator => '.', :precision => 2)}
+%td== #{invoice.tax_percent}%
+%td== #{invoice.discount_percent}%

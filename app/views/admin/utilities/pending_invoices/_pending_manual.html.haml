@@ -3,27 +3,14 @@
     .table-responsive
       %table.table.table-striped.table-hover
         %thead
-          %th Reporting Code
-          %th Organization
-          %th Month
-          %th Net Total
-          %th Total (inc tax)
-          %th Tax %
-          %th Discount
-          %th Salesforce Invoice
+          = render partial: "column_headings"
+          %th
           %th
         %tbody
           - for invoice in @pending_manual_invoices
             = render partial: 'edit', locals: {invoice: invoice }
             %tr
-              %td= invoice.organization.reporting_code
-              %td= link_to invoice.organization.name, admin_customer_path(invoice.organization)
-              %td== #{Date::MONTHNAMES[invoice.month]} #{invoice.year}
-              %td== £#{number_with_precision(invoice.grand_total, :delimiter => ',', :separator => '.', :precision => 2)}
-              %td== £#{number_with_precision(invoice.grand_total_plus_tax, :delimiter => ',', :separator => '.', :precision => 2)}
-              %td== #{invoice.tax_percent}
-              %td== #{invoice.discount_percent}%
-              %td= link_to invoice.salesforce_id, invoice.salesforce_invoice_link, target: '_blank'
+              = render partial: "row", locals: {invoice: invoice}
               %td
                 = form_for invoice, url: admin_utilities_pending_invoice_path(invoice), remote: true do |f|
                   = f.hidden_field :billing_invoice, :value => invoice
