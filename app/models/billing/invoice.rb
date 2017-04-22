@@ -23,8 +23,9 @@ module Billing
 
     validates :organization, :year, :month, presence: true
 
-    scope :unfinalized,    -> { where(finalized: false) }
-    scope :finalized,      -> {   where(finalized: true) }
+    scope :reverse_order,  -> { order('created_at DESC') }
+    scope :unfinalized,    -> { reverse_order.where(finalized: false) }
+    scope :finalized,      -> { reverse_order.where(finalized: true)  }
     scope :self_service,   -> { joins(:organization).where('organizations.self_service = ?', true) }
     scope :manual_invoice, -> { joins(:organization).where('organizations.self_service = ?', false) }
 
