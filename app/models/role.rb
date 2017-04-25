@@ -6,6 +6,7 @@ class Role < ApplicationRecord
   belongs_to :organization
   before_destroy :check_power, :check_users
   after_commit :check_openstack_access, :check_ceph_access
+  after_save :generate_uuid, :on => :create
 
   serialize :permissions
 
@@ -52,5 +53,9 @@ class Role < ApplicationRecord
         throw :abort
       end
     end
+  end
+
+  def generate_uuid
+    update_column(:uuid, SecureRandom.uuid)
   end
 end
