@@ -10,9 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170418085518) do
+ActiveRecord::Schema.define(version: 20170425075140) do
 
-  create_table "api_credentials", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "api_credentials", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "user_id"
     t.string   "access_key"
     t.string   "password_digest"
@@ -171,7 +171,6 @@ ActiveRecord::Schema.define(version: 20170418085518) do
     t.bigint   "size"
     t.datetime "recorded_at", precision: 3
     t.integer  "sync_id"
-    t.index ["project_id"], name: "index_billing_storage_objects_on_project_id", using: :btree
     t.index ["project_id"], name: "tenant_storage_objects", using: :btree
     t.index ["recorded_at"], name: "index_billing_storage_objects_on_recorded_at", using: :btree
   end
@@ -335,7 +334,7 @@ ActiveRecord::Schema.define(version: 20170418085518) do
     t.datetime "updated_at"
   end
 
-  create_table "organizations_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "organizations_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "organization_id"
     t.integer  "user_id"
     t.datetime "created_at",                      null: false
@@ -378,6 +377,7 @@ ActiveRecord::Schema.define(version: 20170418085518) do
     t.datetime "updated_at"
     t.boolean  "power_user",                    default: false
     t.integer  "organization_id"
+    t.string   "uuid"
   end
 
   create_table "roles_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
@@ -406,7 +406,7 @@ ActiveRecord::Schema.define(version: 20170418085518) do
     t.text     "category",            limit: 65535
   end
 
-  create_table "unread_tickets", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "unread_tickets", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "update_id"
     t.string   "ticket_id"
     t.integer  "user_id"
