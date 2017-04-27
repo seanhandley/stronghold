@@ -29,7 +29,7 @@
       background: #213550;
       position: relative;
       z-index: 20;
-      height:98px;
+      height:78px;
       margin-bottom: 30px
     }
 
@@ -99,7 +99,7 @@
       color: #247B71;
     }
     .prettyprint .pun {
-      color: #070;
+      color: #46aa47;
     }
     .prettyprint .str {
       color: #aca;
@@ -120,12 +120,37 @@
       padding: 2px;
       z-index: 1000;
     }
+
+    code {
+      color: #AE2422;
+    }
+
+    span.label.label-inverse {
+      background-color: #fa0;
+    }
+
+    span.label {
+      background-color: #46aa47;
+    }
+
+    span.label-sucess {
+      background-color: #46aa47;
+    }
+
+    span.label-important {
+      background-color: #b94a48;
+    }
+
+    header img.logo {
+      height: auto;
+      width: 200px;
+    }
   </style>
 </head>
 <body>
   <header class="header" id="header">
     <a href='/api'>
-      <%= image_tag 'dc.png', class: "logo" %>
+      <%= image_tag 'dc.webp', class: "logo" %>
     </a>
   </header>
   <div class="container-fluid">
