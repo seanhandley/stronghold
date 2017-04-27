@@ -2,7 +2,7 @@ class Role < ApplicationRecord
   audited :associated_with => :organization, except: [:organization_id, :power_user]
   has_associated_audits
 
-  has_and_belongs_to_many :users
+  has_and_belongs_to_many :users, -> { distinct }
   belongs_to :organization
   before_destroy :check_power, :check_users
   after_commit :check_openstack_access, :check_ceph_access
@@ -49,7 +49,7 @@ class Role < ApplicationRecord
     return true unless permissions.any?
     permissions.each do |permission|
       unless Permissions.user.keys.include?(permission)
-        errors.add(:permissions, 'contain unrecognised values') 
+        errors.add(:permissions, "must be one of: #{Permissions.user.keys.sort.map{|k| '\'' + k +'\'' }.join(', ')}. '#{permission}' is not allowed") 
         throw :abort
       end
     end
