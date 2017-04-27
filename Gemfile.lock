@@ -7,7 +7,7 @@ GIT
 
 GIT
   remote: git@github.com:datacentred/harbour.git
-  revision: a800dc2be00e1c55aa21635d6ae8d988df3d2b74
+  revision: dd2a9f88cadb8df4fd8c97f35d2672c17d174663
   branch: master
   specs:
     harbour (0.1.0)
