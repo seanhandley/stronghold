@@ -1,0 +1,14 @@
+- title "Thank you!"
+
+%div
+  %div.thank-you
+    %h3
+      Thank you for joining
+      = @organization.name.capitalize
+      team.
+  %p Once you sign in, you will be able to switch between accounts, using the dropdown menu in the top right corner.
+  %div.pull-right
+    %h4
+      %a{href: support_root_path}
+        Continue
+        %i.fa.fa-arrow-circle-right

@@ -12,6 +12,7 @@
 
 ActiveRecord::Schema.define(version: 20170605091157) do
 
+
   create_table "api_credentials", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "user_id"
     t.string   "access_key"

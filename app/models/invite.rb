@@ -9,7 +9,7 @@ class Invite < ApplicationRecord
   validates :organization, :presence => true
   validate :has_roles?
   validate :email_looks_valid?
-  validate :no_user_has_that_email?
+  # validate :no_user_has_that_email?
   validate :role_ids_belong?
   validate :project_ids_belong?
 
@@ -39,6 +39,10 @@ class Invite < ApplicationRecord
 
   def expires_at
     persisted? ? created_at + 7.days : Time.now + 7.days
+  end
+
+  def membership?
+    User.exists?(email: email)
   end
 
   private
@@ -72,7 +76,7 @@ class Invite < ApplicationRecord
 
   def no_user_has_that_email?
     if email.present? && User.find_by_email(email.downcase) && !persisted?
-      errors.add(:email, 'already has an account. Please choose another email.') 
+      errors.add(:email, 'already has an account. Please choose another email.')
       throw :abort
     end
   end
@@ -96,6 +100,10 @@ class Invite < ApplicationRecord
   end
 
   def send_email
-    Mailer.signup(id).deliver_later
+    if membership?
+      Mailer.membership(id).deliver_later
+    else
+      Mailer.signup(id).deliver_later
+    end
   end
 end

@@ -83,5 +83,4 @@ class SignupsController < ApplicationController
   def create_params
     params.permit(:email, :discount_code)
   end
-  
 end
