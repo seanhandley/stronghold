@@ -18,8 +18,8 @@ module Billing
     Billing::IpQuotas.sync!(sync)
     Billing.logger.info "Syncing images usage..."
     Billing::Images.sync!(from, to, sync)
-    Billing.logger.info "Syncing object storage usage..."
-    Billing::StorageObjects.sync!(sync)
+    # Billing.logger.info "Syncing object storage usage..."
+    # Billing::StorageObjects.sync!(sync)
     Billing.logger.info "Syncing IP allocations..."
     Billing::Ips.sync!(from, to, sync)
     Billing.logger.info "Syncing load balancers..."
