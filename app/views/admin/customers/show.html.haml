@@ -75,7 +75,18 @@
               = render partial: "admin/customers/invites", locals: {invites: @invites, organization: @organization}
 
     .col-lg-3.col-md-4.col-sm-3.admin-sidebar
+      .panel.panel-info
+        .panel-heading
+          %i.fa.fa-users
+          Account Memberships
+        .panel-body.panel-padding
+          = render partial: 'admin/customers/assign_organization'
+
       %div.panel.panel-info
+        .panel.panel-info
+          .panel-heading
+            %i.fa.fa-credit-card
+            Payment Type
         .panel-body.panel-padding
           %div.toggle-grid
             = render partial: 'admin/customers/toggles'

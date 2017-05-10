@@ -12,6 +12,12 @@ class ApplicationController < ActionController::Base
     slow_404
   end
 
+  rescue_from Stronghold::Error::TemporaryMembershipExpiredError do |error|
+    cookies.signed[:current_organization_id] = current_user.primary_organization.id
+    session[:organization_id] = current_user.primary_organization.id
+    safe_redirect_to current_path, alert: error.message
+  end
+
   before_action :device_cookie
   before_action :seen_online
 
@@ -61,7 +67,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
 
   def current_organization
-    @current_organization ||= current_user&.organizations&.find_by_id(session[:organization_id]) if session[:organization_id]
+    @current_organization ||= OrganizationUser.find_by(user: current_user, organization_id: session[:organization_id])&.organization if session[:organization_id]
     @current_organization ||= current_user&.primary_organization
     reset_session unless @current_organization
     @current_organization

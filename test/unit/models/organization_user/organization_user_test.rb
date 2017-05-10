@@ -43,5 +43,12 @@ class TestOrganizationUser < CleanTest
     end
   end
 
+  def test_memberships_is_deleted_if_its_expired
+    relation = OrganizationUser.create(user: @user, organization: @organization, duration: 4)
+    relation.update_attributes(updated_at: Time.now.utc - 5.hours)
+    assert_raises Stronghold::Error::TemporaryMembershipExpiredError do
+      relation.reload
+    end
+  end
 
 end

@@ -1,17 +1,33 @@
 - if current_user.organization_ids.include?(@organization.id)
-  - if current_user.primary_organization != @organization
-    %strong
-      %i.fa.fa-info-circle
-      You are a member of this organization.
-      = form_for :organization, url: admin_organization_assignment_path(@organization.id), :method => 'delete', :id => 'assign_org_form', :class => "form-inline" do |f|
-        .form-group
-          = f.hidden_field :id
-          = f.submit 'Delete membership', class: 'btn btn-danger', id: 'delete-org-membership'
+  - if @staff_membership.temporary?
+    %div.membership-options
+      .row
+        %i.fa.fa-info-circle
+        You are a temporary member of this organization.
+        = form_for :organization, url: admin_organization_assignment_path(@organization), :method => 'delete', :id => 'assign_org_form', :class => "form-inline" do |f|
+          .form-group
+            = f.hidden_field :id
+            = f.submit 'Remove', class: 'btn btn-danger btn-sm', id: 'delete-org-membership'
+      .row
+        %i.fa.fa-clock-o
+        Remaining time:
+        = distance_of_time_in_words(@staff_membership.expires_at, Time.now.utc)
+        %p
+          = form_for :organization, url: admin_organization_assignment_path(@organization), :method => 'patch', :class => "form-inline" do |f|
+            .form-group
+              = f.hidden_field :id
+              = f.submit 'Restart', class: 'btn btn-info btn-sm'
+  - else
+    %div.membership-options
+      .row
+        %i.fa.fa-info-circle
+        You are a member of this organization.
 - else
-  %strong
-    %i.fa.fa-info-circle
-    You can assign yourself as a temporary member of this organization.
-  = form_for :organization, url: admin_organization_assignments_path, :method => 'post', :id => 'assign_org_form', :class => "form-inline" do |f|
-    .form-group
-      = f.hidden_field :id
-      = f.submit 'Create membership', class: 'btn btn-primary', id: 'create-org-membership'
+  %div.membership-options
+    .row
+      %i.fa.fa-info-circle
+      You can assign yourself as a temporary member of this organization.
+    .row
+      = form_for :organization, url: admin_organization_assignments_path(id: @organization), :method => 'post', :id => 'assign_org_form', :class => "form-inline" do |f|
+        .form-group
+          = f.submit 'Create membership', class: 'btn btn-info btn-sm', id: 'create-org-membership'

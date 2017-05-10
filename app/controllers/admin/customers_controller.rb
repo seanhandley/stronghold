@@ -26,13 +26,14 @@ module Admin
     end
 
     def show
-      @organization    = Organization.find(params[:id]) if params[:id]
-      @usage_decorator = UsageDecorator.new(@organization)
-      @tickets         = decorated_tickets(@organization)
-      @users           = @organization.users
-      @audits          = Audit.for_organization_and_user(@organization, current_user).order('created_at DESC').first(7)
-      @projects        = @organization.projects.includes(:users)
-      @invites         = @organization.invites.incomplete
+      @organization      = Organization.find(params[:id]) if params[:id]
+      @usage_decorator   = UsageDecorator.new(@organization)
+      @tickets           = decorated_tickets(@organization)
+      @users             = @organization.users
+      @audits            = Audit.for_organization_and_user(@organization, current_user).order('created_at DESC').first(7)
+      @projects          = @organization.projects.includes(:users)
+      @invites           = @organization.invites.incomplete
+      @staff_membership  = OrganizationUser.find_by(organization: @organization, user: current_user)
     end
 
     def edit
