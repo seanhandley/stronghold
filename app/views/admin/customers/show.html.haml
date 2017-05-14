@@ -1,109 +1,97 @@
 - title "Dashboard"
 
 .admin-customer-section
+  %div#account-toggles
+    = render partial: 'admin/customers/toggles'
+  %hr#admin-panel-divisor
   .row
-    .col-lg-9.col-md-8.col-sm-9
+    .col-md-6
       .panel.panel-info
         .panel-heading
-          %i.fa.fa-info
-          Information
-        .panel-body
-          .container.customer-information
-            = render partial: 'admin/customers/info'
-
-      .container-fluid#dashboard-tabs
-        .centered-tabs
-          %ul.nav.nav-tabs#tickets-projects-audits-users-tabs
-            %li{'class' => active_tab?('tickets')}
-              %a{:href => '#tickets', 'data-toggle' => 'tab', 'data-name' => 'tickets'}
-                = t(:tickets)
-            %li{'class' => active_tab?('projects')}
-              %a{:href => '#projects', 'data-toggle' => 'tab', 'data-name' => 'projects'}
-                = t(:projects)
-            %li{'class' => active_tab?('audits')}
-              %a{:href => '#audits', 'data-toggle' => 'tab', 'data-name' => 'audits'}
-                = t(:audits)
-            %li{'class' => active_tab?('users')}
-              %a{:href => '#users', 'data-toggle' => 'tab', 'data-name' => 'users'}
-                = t(:users)
-            %li{'class' => active_tab?('invites')}
-              %a{:href => '#invites', 'data-toggle' => 'tab', 'data-name' => 'invites'}
-                = t(:invites)
-
-      .tab-content
-        .tab-pane#tickets{'class' => active_tab?('tickets')}
-          .panel.panel-info
-            .panel-heading
-              %i.fa.fa-tags
-              Open Tickets
-            .panel-body
-              = render partial: 'admin/customers/tickets'
-
-
-        .tab-pane#projects{'class' => active_tab?('projects')}
-          .panel.panel-info
-            .panel-heading
-              %i.fa.fa-folder-o
-              Cloud Projects
-            .panel-body.panel-padding
-              = render partial: 'admin/customers/projects', locals: {organization: @organization}
-
-        .tab-pane#audits{'class' => active_tab?('audits')}
-          .panel.panel-info
-            .panel-heading
-              %i.fa.fa-check-square-o
-              Audits Logs
-            .panel-body
-              = render partial: "support/audits/audits", locals: {audits: @audits}
-              - if @audits.any?
-                = link_to 'See more', admin_audit_path(@organization)
-
-        .tab-pane#users{'class' => active_tab?('users')}
-          .panel.panel-info
-            .panel-heading
-              %i.fa.fa-user
-              Users
-            .panel-body.panel-padding
-              = render partial: 'admin/customers/users'
-
-        .tab-pane#invites{'class' => active_tab?('invites')}
-          .panel.panel-info
-            .panel-heading
-              %i.fa.fa-envelope
-              User Invites
-            .panel-body.panel-padding
-              = render partial: "admin/customers/invites", locals: {invites: @invites, organization: @organization}
-
-    .col-lg-3.col-md-4.col-sm-3.admin-sidebar
-      %div.panel.panel-info
-        .panel-body.panel-padding
-          %div.toggle-grid
-            = render partial: 'admin/customers/toggles'
-
-      %div.panel.panel-info
-        .panel-heading
-          %i.fa.fa-user
-          Contacts
-        .panel-body.panel-padding
-          = render partial: 'admin/customers/contacts'
-
-      %div.panel.panel-info
-        .panel-heading
           %i.fa.fa-cog
-          Account State
+          Account
         .panel-body.panel-padding
-          = render partial: 'admin/customers/states'
-
+          = render partial: 'admin/customers/account'
+    .col-md-6
       .panel.panel-info
         .panel-heading
           %i.fa.fa-area-chart
-          Usage
+          Usage and Quotas
         .panel-body.panel-padding
           = render partial: 'admin/customers/usage'
-
+  .row
+    .col-md-6
       .panel.panel-info
-        .panel-heading
-          %i.fa.fa-pie-chart
-          Manage Customer Quotas
         .panel-body.panel-padding
-          = link_to 'Edit Quotas', edit_admin_quota_path(@organization), class: 'btn btn-primary'
+          = render partial: 'admin/customers/membership'
+    .col-md-6
+  .row
+    .panel.panel-info
+      .panel-heading
+        %i.fa.fa-info
+        Information
+      .panel-body
+        .container.customer-information
+          = render partial: 'admin/customers/info'
+    .container-fluid#dashboard-tabs
+      .centered-tabs
+        %ul.nav.nav-tabs#tickets-projects-audits-users-tabs
+          %li{'class' => active_tab?('tickets')}
+            %a{:href => '#tickets', 'data-toggle' => 'tab', 'data-name' => 'tickets'}
+              = t(:tickets)
+          %li{'class' => active_tab?('projects')}
+            %a{:href => '#projects', 'data-toggle' => 'tab', 'data-name' => 'projects'}
+              = t(:projects)
+          %li{'class' => active_tab?('audits')}
+            %a{:href => '#audits', 'data-toggle' => 'tab', 'data-name' => 'audits'}
+              = t(:audits)
+          %li{'class' => active_tab?('users')}
+            %a{:href => '#users', 'data-toggle' => 'tab', 'data-name' => 'users'}
+              = t(:users)
+          %li{'class' => active_tab?('invites')}
+            %a{:href => '#invites', 'data-toggle' => 'tab', 'data-name' => 'invites'}
+              = t(:invites)
+
+    .tab-content
+      .tab-pane#tickets{'class' => active_tab?('tickets')}
+        .panel.panel-info
+          .panel-heading
+            %i.fa.fa-tags
+            Open Tickets
+          .panel-body
+            = render partial: 'admin/customers/tickets'
+
+
+      .tab-pane#projects{'class' => active_tab?('projects')}
+        .panel.panel-info
+          .panel-heading
+            %i.fa.fa-folder-o
+            Cloud Projects
+          .panel-body.panel-padding
+            = render partial: 'admin/customers/projects', locals: {organization: @organization}
+
+      .tab-pane#audits{'class' => active_tab?('audits')}
+        .panel.panel-info
+          .panel-heading
+            %i.fa.fa-check-square-o
+            Audits Logs
+          .panel-body
+            = render partial: "support/audits/audits", locals: {audits: @audits}
+            - if @audits.any?
+              = link_to 'See more', admin_audit_path(@organization)
+
+      .tab-pane#users{'class' => active_tab?('users')}
+        .panel.panel-info
+          .panel-heading
+            %i.fa.fa-user
+            Users
+          .panel-body.panel-padding
+            = render partial: 'admin/customers/users'
+
+      .tab-pane#invites{'class' => active_tab?('invites')}
+        .panel.panel-info
+          .panel-heading
+            %i.fa.fa-envelope
+            User Invites
+          .panel-body.panel-padding
+            = render partial: "admin/customers/invites", locals: {invites: @invites, organization: @organization}

@@ -35,27 +35,43 @@ div.header-search {
   width: 100%;
 }
 
-div.toggle-grid {
-  border: 1px solid rgb(221,221,221);
-  border-radius: 5px;
-  background-color: rgb(249, 249, 249);
-}
-
-ul.toggle-list {
-  padding-left: 0;
-}
-
-div.toggle-div {
+div#account-state {
   display: flex;
-  justify-content: space-between;
-  border-bottom: 1px solid rgb(221,221,221);
-  padding: 15px 10px 0px 10px;
-  font-size: 1.1em;
-  font-weight: 220;
+  flex-direction: row;
+  justify-content: flex-start;
+  height: 30px;
 }
 
-div.toggle-div.last {
-  border-bottom: none;
+div#change-state {
+  margin-right: 10px;
+  margin-top: 10px;
+}
+
+select#state-dropdown {
+  width: 25%;
+}
+
+div#state_history_link {
+  margin-left: 5px;
+}
+
+div#state_history_link a {
+  padding-top: 5px;
+}
+
+div#account-toggles {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  height: 30px;
+}
+div.payment-toggle {
+  margin-right: 10px;
+  height: 30px;
+}
+
+hr#admin-panel-divisor {
+  margin-top: 10px;
 }
 
 div.admin-customer-section #admin-change-org {
@@ -162,7 +178,10 @@ div.stats-title{
 
 .row#organization-billing-info {
   padding: 25px 15px 5px 15px;
-  margin-top: 25px;
+}
+
+.row#organization-contacts-info {
+  padding: 15px 15px 5px 15px;
 }
 
 ul#billing_address-list {
@@ -187,7 +206,7 @@ input#delete-org-membership {
 
 td.first-column {
   font-weight: 500;
-  width: 280px;
+  width: 220px;
   background-color: rgb(249, 249, 249);
 }
 
@@ -215,7 +234,7 @@ div.container.usage_data_container {
 
 td.contact-type {
   font-weight: 500;
-  width: 150px;
+  width: 220px;
   background-color: rgb(249, 249, 249);
 }
 

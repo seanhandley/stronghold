@@ -19,6 +19,7 @@
       %tbody
         %tr
           %td.first-column
+            %i.fa.fa-home
             Billing Address
           %td
             - if @organization.billing_address1?
@@ -33,6 +34,7 @@
               None
         %tr
           %td.first-column
+            %i.fa.fa-credit-card
             Salesforce Customer ID
           %td
             - if @organization.salesforce_id?
@@ -41,17 +43,38 @@
               None
         %tr
           %td.first-column
+            %i.fa.fa-cc-stripe
             Stripe Customer ID
           %td
             - if @organization.stripe_customer_id?
               = link_to @organization.stripe_customer_id, ExternalLinks.stripe_path("customers", @organization.stripe_customer_id)
             - else
               None
+
+.row#organization-contacts-info
+  .table-responsive
+    %table.table.table-bordered
+      %thead
+      %tbody
+        %tr.first-column
+          %td.contact-type
+            %i.fa.fa-wrench
+            Technical Contact
+          %td
+            - if @organization.technical_contact
+              = mail_to @organization.technical_contact
+            - else
+              None
+        %tr.first-column
+          %td.contact-type
+            %i.fa.fa-gbp
+            Billing Contact
+          %td
+            - if @organization.billing_contact
+              = mail_to @organization.billing_contact
+            - else
+              None
 .row
   .col-md-12
     .pull-right
       = link_to 'Edit', edit_admin_customer_path(@organization), class: 'btn btn-primary information-edit-dashboard'
-
-.row
-  .col-md-12#temporary-memberships
-    = render partial: 'admin/customers/assign_organization'

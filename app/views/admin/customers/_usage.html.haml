@@ -1,25 +1,21 @@
-%h4
-  Type of Usage:
-  %strong
-    - if @organization.usage_types.present?
-      = @organization.usage_types
-    - else
-      %em No usage data recorded
+.row
+  .col-md-6
+    %ul
+      %li
+        Type of Usage:
+        - if @organization.usage_types.present?
+          = @organization.usage_types
+        - else
+          %em No usage data recorded
+      %li
+        Last recorded usage:
+        - if @organization.most_recent_usage_recorded_at.present?
+          = long_date @organization.most_recent_usage_recorded_at
+        - else
+          %em No recent activity
+      %li
+        = link_to ' See Usage Data', admin_usage_path(@organization), class: "btn btn-default"
 
-%h4
-  Last recorded usage:
-  %strong
-    - if @organization.most_recent_usage_recorded_at.present?
-      = long_date @organization.most_recent_usage_recorded_at
-    - else
-      %em No recent activity
-
-.test-toggle-and-usage-link
-  = link_to 'See Usage Data', admin_usage_path(@organization)
-
-  = form_for @organization, url: admin_customer_path(@organization), :method => :put, :remote => true, :html => {:role => 'form', :id => 'test_form'} do |f|
-    .form-group
-      Test account?
-      = f.check_box :test_account?, {:id=>"toggle-test", class:'toggle', data: {:test => @organization.test_account?},
-                    'data-toggle'=>"toggle", 'data-on'=>"Yes",
-                    'data-off'=>"No", 'data-size'=> "small", 'data-onstyle'=>"info", 'data-offstyle'=>"primary", 'data-style'=>"ios"}
+  .col-md-6
+    .test-toggle-and-usage-link
+      = link_to 'Edit Quotas', edit_admin_quota_path(@organization), class: 'btn btn-default'

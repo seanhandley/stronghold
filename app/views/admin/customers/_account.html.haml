@@ -1,0 +1,15 @@
+%div#account-state
+  = render partial: 'admin/customers/states'
+
+%div.payment-toggle
+  = form_for @organization, url: admin_customer_path(@organization), :method => :put, :remote => true, :html => {:role => 'form', :id => 'test_form'} do |f|
+    .form-group
+      Test account?
+      = f.check_box :test_account?, {:id=>"toggle-test", class:'toggle', data: {:test => @organization.test_account?},
+                    'data-toggle'=>"toggle", 'data-on'=>"Yes",
+                    'data-off'=>"No", 'data-size'=> "small", 'data-onstyle'=>"info", 'data-offstyle'=>"default", 'data-style'=>"ios"}
+%div#frozen-account
+  -# - if @organization.frozen?
+  .fraud-btn
+    = link_to 'Run Fraud Report?', mail_admin_frozen_customer_path(@organization), class: 'btn btn-default', 'data-method' => "post", 'data-confirm' => "The report will be emailed to you. Proceed?"
+    = link_to '£1 Test Charge', charge_admin_frozen_customer_path(@organization), class: 'btn btn-default', 'data-method' => "post", 'data-confirm' => "This will charge and refund £1 to the customer card. Did they give you permission to do this?"
