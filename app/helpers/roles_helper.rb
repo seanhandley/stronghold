@@ -26,19 +26,4 @@ module RolesHelper
       name == 'users' ? 'active' : ''
     end
   end
-
-  def invite_status_label(status)
-    status = "pending" unless status.present?
-    original_status = status.dup
-    envelope = content_tag(:i, '', class: 'fa fa-envelope')
-    status = "#{envelope} #{original_status.upcase}".html_safe
-    case original_status.downcase
-    when 'delivered'
-      content_tag(:span, status, class: "label label-success")
-    when 'pending'
-      content_tag(:span, status, class: "label label-default")
-    else
-      "#{content_tag(:span, envelope + ' UNDELIVERED', class: "label label-danger")} <p class='text-danger'><em>(Mail server responded: #{original_status.downcase})</em></p>".html_safe
-    end
-  end
 end

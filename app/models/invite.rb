@@ -41,18 +41,7 @@ class Invite < ApplicationRecord
     persisted? ? created_at + 7.days : Time.now + 7.days
   end
 
-  def delivery_status
-    return "pending" unless remote_message
-    remote_message.status
-  end
-
   private
-
-  def remote_message
-    @remote_message ||= Timeout::timeout(2) { Deliverhq::Message.find(remote_message_id) }
-  rescue Deliverhq::RequestError, Timeout::Error
-    nil
-  end
 
   def complete?
     !!completed_at
