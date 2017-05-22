@@ -107,6 +107,6 @@ class Invite < ApplicationRecord
   end
 
   def send_email
-    DeliverhqMailJob.perform_now(self)
+    Mailer.signup(id).deliver_later
   end
 end

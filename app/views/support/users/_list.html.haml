@@ -23,7 +23,6 @@
           = t(:email)
         %th
           = t(:roles)
-        %th Status
         %th
       %tbody
         - open_invites.each do |invite|
@@ -31,7 +30,6 @@
             %td= image_tag asset_path("assets/default_user.png"), "class" => "gravatar img-circle", "alt" => "Gravatar", "data-gravatar_hash" => invite.gravatar_hash
             %td= invite.email
             %td= invite.roles.collect(&:name).join ", "
-            %td= invite_status_label(invite.delivery_status)
             %td
               - if can?(:modify, Invite)
                 %a{href: support_invite_path(invite), data: { remote: true, method: :delete, confirm: "Are you sure?"}}
