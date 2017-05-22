@@ -98,11 +98,12 @@ Rails.application.configure do
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-      :address => ENV["MAIL_SERVER_ADDRESS"],
-      :domain => 'datacentred.co.uk',
-      :port => 587,
-      :user_name => ENV["MAIL_SERVER_USERNAME"],
-      :password => ENV["MAIL_SERVER_PASSWORD"]
+      :address        => ENV["MAIL_SERVER_ADDRESS"],
+      :domain         => ENV["MAIL_SERVER_DOMAIN"],
+      :port           => ENV["MAIL_SERVER_PORT"],
+      :authentication => ENV["MAIL_SERVER_AUTH_TYPE"].downcase.to_sym,
+      :user_name      => ENV["MAIL_SERVER_USERNAME"],
+      :password       => ENV["MAIL_SERVER_PASSWORD"]
   }
 
   APP_DOMAIN = "https://my.datacentred.io"
