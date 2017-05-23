@@ -59,7 +59,7 @@ Rails.application.configure do
       :address        => ENV["MAIL_SERVER_ADDRESS"],
       :domain         => ENV["MAIL_SERVER_DOMAIN"],
       :port           => ENV["MAIL_SERVER_PORT"],
-      :authentication => ENV["MAIL_SERVER_AUTH_TYPE"].downcase.to_sym,
+      :authentication => ENV["MAIL_SERVER_AUTH_TYPE"]&.downcase&.to_sym,
       :user_name      => ENV["MAIL_SERVER_USERNAME"],
       :password       => ENV["MAIL_SERVER_PASSWORD"]
   }
