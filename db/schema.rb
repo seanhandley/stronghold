@@ -321,6 +321,7 @@ ActiveRecord::Schema.define(version: 20170522141111) do
     t.string   "technical_contact"
     t.boolean  "slow_jobs",                        default: false,    null: false
     t.boolean  "track_usage",                      default: true,     null: false
+    t.datetime "last_alerted_for_low_quotas_at"
     t.index ["reporting_code"], name: "index_organizations_on_reporting_code", unique: true, using: :btree
     t.index ["state"], name: "index_organizations_on_state", using: :btree
     t.index ["track_usage"], name: "index_organizations_on_track_usage", using: :btree
