@@ -9,7 +9,7 @@ Rails.application.configure do
   # and those relying on copy on write to perform better.
   # Rake tasks automatically ignore this option for performance.
   config.eager_load = true
-  
+
   # Full error reports are disabled and caching is turned on.
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
@@ -82,11 +82,12 @@ Rails.application.configure do
   config.action_mailer.raise_delivery_errors = false
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-      :address => 'smtp.deliverhq.com',
-      :domain => 'datacentred.co.uk',
-      :authentication => :cram_md5,
-      :user_name => 'yvnkigkbn5',
-      :password => '7y7qh820t4'
+      :address        => ENV["MAIL_SERVER_ADDRESS"],
+      :domain         => ENV["MAIL_SERVER_DOMAIN"],
+      :port           => ENV["MAIL_SERVER_PORT"],
+      :authentication => ENV["MAIL_SERVER_AUTH_TYPE"].downcase.to_sym,
+      :user_name      => ENV["MAIL_SERVER_USERNAME"],
+      :password       => ENV["MAIL_SERVER_PASSWORD"]
   }
   APP_DOMAIN = "staging-my.datacentred.io"
   config.action_controller.asset_host = "//#{APP_DOMAIN}"
@@ -97,7 +98,7 @@ Rails.application.configure do
 
   # Prevent Angular conflicts
   config.assets.js_compressor = Uglifier.new(mangle: false)
-  
+
   config.action_mailer.show_previews = true
 
   routes.append do

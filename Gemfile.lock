@@ -179,8 +179,6 @@ GEM
     database_cleaner (1.5.3)
     debug_inspector (0.0.2)
     deep_merge (1.0.1)
-    deliverhq (0.0.1)
-      faraday (~> 0.9)
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)
     docile (1.1.5)
@@ -565,7 +563,6 @@ DEPENDENCIES
   dalli (~> 2.7)
   database_cleaner (~> 1.5)
   deep_merge (~> 1.0)
-  deliverhq (~> 0.0.1)
   docker-api (~> 1.31)
   faker
   faraday (~> 0.9)

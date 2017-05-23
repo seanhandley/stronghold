@@ -46,13 +46,4 @@ class RolesHelperTest < CleanTest
     end
   end
 
-  def test_invite_status_label
-    assert_equal "<span class=\"label label-default\"><i class=\"fa fa-envelope\"></i> PENDING</span>", @model.invite_status_label('pending')
-    assert_equal "<span class=\"label label-success\"><i class=\"fa fa-envelope\"></i> DELIVERED</span>", @model.invite_status_label('delivered')
-    assert_equal "<span class=\"label label-danger\"><i class=\"fa fa-envelope\"></i> UNDELIVERED</span> <p class='text-danger'><em>(Mail server responded: failed :-()</em></p>", @model.invite_status_label('failed :-(')
-  end
-
 end
-
-
-
