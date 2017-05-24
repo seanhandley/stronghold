@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170522141111) do
+ActiveRecord::Schema.define(version: 20170524145512) do
 
   create_table "api_credentials", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "user_id"
@@ -322,6 +322,7 @@ ActiveRecord::Schema.define(version: 20170522141111) do
     t.boolean  "slow_jobs",                        default: false,    null: false
     t.boolean  "track_usage",                      default: true,     null: false
     t.datetime "last_alerted_for_low_quotas_at"
+    t.datetime "last_alerted_for_low_quotas_at",               default: '1970-01-01 01:00:00'
     t.index ["reporting_code"], name: "index_organizations_on_reporting_code", unique: true, using: :btree
     t.index ["state"], name: "index_organizations_on_state", using: :btree
     t.index ["track_usage"], name: "index_organizations_on_track_usage", using: :btree
