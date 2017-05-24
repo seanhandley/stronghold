@@ -3,7 +3,7 @@ require 'test_helper'
 class Support::UsersControllerTest < ActionController::TestCase
   setup do
     @user = User.make!
-    @user2 = User.make!
+    @user2 = User.make!(organizations: [@user.primary_organization])
     @organization = @user.primary_organization
     @organization.update_attributes(self_service: false)
     @admin_role = @organization.roles.make!(power_user: true)
@@ -54,7 +54,7 @@ class Support::UsersControllerTest < ActionController::TestCase
     @user.update_attributes(roles: [@admin_role])
     delete :destroy, params: {id: @user.id}, format: 'js'
     assert_response :unprocessable_entity
-    assert @response.body.include? "delete yourself"
+    assert @response.body.include? "remove yourself"
   end
 
 end

@@ -1,7 +1,7 @@
 class OrganizationUser < ActiveRecord::Base
   self.table_name = 'organizations_users'
   after_save :set_primary, on: :create
-  before_destroy :check_if_should_destroy_user, :check_if_primary_and_current_user
+  before_destroy :dont_remove_self, :check_if_should_destroy_user, :check_if_primary_and_current_user
 
   belongs_to :organization
   belongs_to :user
@@ -22,6 +22,13 @@ class OrganizationUser < ActiveRecord::Base
   def check_if_should_destroy_user
     if user.organizations.one? && Authorization.current_user != user
       user.destroy
+    end
+  end
+
+  def dont_remove_self
+    if Authorization.current_user&.id == user.id
+      errors.add(:base, "You can't remove yourself from an organization")
+      throw :abort
     end
   end
 
