@@ -172,6 +172,10 @@ class Organization < ApplicationRecord
     true
   end
 
+  def last_alerted_for_low_quotas_at
+    read_attribute(:last_alerted_for_low_quotas_at) || Time.at(0)
+  end
+
   private
 
   def generate_reference
