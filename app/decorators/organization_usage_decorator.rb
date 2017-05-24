@@ -1,5 +1,6 @@
 class OrganizationUsageDecorator < ApplicationDecorator
   RESOURCE_THRESHOLD_PERCENTAGE = 90
+  ALERT_INTERVAL = Time.now - 90.days
 
   def threshold_message
     "You are reaching your #{active_organization_resources.to_sentence} quota limit" if over_threshold?
@@ -7,6 +8,14 @@ class OrganizationUsageDecorator < ApplicationDecorator
 
   def over_threshold?
     active_organization_resources.any?
+  end
+
+  def alerted_more_than_90_days_ago?
+    if last_alerted_for_low_quotas_at
+      last_alerted_for_low_quotas_at < ALERT_INTERVAL
+    else
+      return false
+    end
   end
 
   private
