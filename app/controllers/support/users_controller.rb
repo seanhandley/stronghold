@@ -26,7 +26,14 @@ module Support
 
     def destroy
       @user = User.find params[:id]
-      ajax_response(@user, :destroy, support_roles_path)
+      @organization_user = OrganizationUser.find_by organization: current_organization, user: @user
+      if @organization_user
+        ajax_response(@organization_user, :destroy, support_roles_path)
+      else
+        respond_to do |format|
+          format.js { render :template => "shared/dialog_info", :locals => {:object => @user, message: "User is not a member of this organization" }}
+        end
+      end
     end
 
     private
