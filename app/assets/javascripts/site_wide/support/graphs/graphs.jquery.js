@@ -23,14 +23,12 @@ $(document).ready(function () {
         }
 
         $('#capacity-used div:first-child').css('width', capacityUsed + "%");
-        $('.progress-caption#capacity-used em span#percent').text(capacityUsed + "%")
+        $('.progress-caption#capacity-used em span#percent').text(capacityUsed + "%");
       },
       error: function (result) {
         console.log('There was an error:' + JSON.stringify(result));
       }
     });
-
-    $('#compute-volume-network-tabs a:first').tab('show');
-  }
+  };
 });
 

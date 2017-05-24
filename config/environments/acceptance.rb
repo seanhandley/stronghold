@@ -66,4 +66,12 @@ Rails.application.configure do
 
 
   config.action_cable.disable_request_forgery_protection = true
+
+  config.action_dispatch.default_headers.merge!(
+  {
+      'Access-Control-Allow-Origin' => '*',
+      'Access-Control-Allow-Methods' => 'POST, PUT, DELETE, GET, OPTIONS',
+      'Access-Control-Max-Age' => "1728000",
+     'Access-Control-Allow-Headers' =>'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+  })
 end

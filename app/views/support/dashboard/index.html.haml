@@ -14,17 +14,7 @@
           = render partial: 'support/dashboard/buttons'
 
         .dashboard-content
-          .centered-tabs
-            %ul.nav.nav-tabs#dashboard-tabs
-              %li{'class' => active_tab?('overview')}
-                %a{:href => '#overview', 'data-toggle' => 'tab', 'data-name' => 'overview'}
-                  %i.fa.fa-cloud.hide-on-small-screens
-                  = t(:overview)
-
-          .tab-content#dashboard-tabs-content
-            .tab-pane#overview{'class' => active_tab?('overview')}
-              = render partial: 'support/dashboard/graphs'
-
+          = render partial: 'support/dashboard/graphs'
       - else
         &nbsp;
         .jumbotron.bg-info
