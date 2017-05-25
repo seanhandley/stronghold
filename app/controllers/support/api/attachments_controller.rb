@@ -11,14 +11,18 @@ module Support
 
       def create
         attachment = create_params[:file]
-        attachment = UploadIO.new attachment,
-                     attachment.content_type,
-                     attachment.original_filename
-        ticket_id  = create_params[:ticket_id]
-        @ticket = SIRPORTLY.ticket(ticket_id)
-        @ticket.add_attachment :ticket => @ticket.reference,
-                               :update => @ticket.updates[0].id,
-                               :file   => attachment
+        if attachment.size < 20.megabytes
+          attachment = UploadIO.new attachment,
+                       attachment.content_type,
+                       attachment.original_filename
+          ticket_id  = create_params[:ticket_id]
+          @ticket = SIRPORTLY.ticket(ticket_id)
+          @ticket.add_attachment :ticket => @ticket.reference,
+                                 :update => @ticket.updates[0].id,
+                                 :file   => attachment
+        else
+          slow_404
+        end
       end
 
       private

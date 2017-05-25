@@ -232,12 +232,18 @@ angularJS.controller "TicketsController", [
       return
 
     uploader.onAfterAddingFile = ->
-      uploadedFilesTable = $(".uploaded-files-table")
-      attachmentsInputGroup = $(".form-control#attachments")
-      attachmentsInputGroup.addClass("bigger-box")
-      uploadedFilesTable.removeClass("hidden")
-      if this.queue.length > 0
-        $("#attachment-field").prop('disabled', true)
+      $scope.clearErrors()
+      if uploader.queue[0].file.size < 20971520
+        uploadedFilesTable = $(".uploaded-files-table")
+        attachmentsInputGroup = $(".form-control#attachments")
+        attachmentsInputGroup.addClass("bigger-box")
+        uploadedFilesTable.removeClass("hidden")
+        if this.queue.length > 0
+          $("#attachment-field").prop('disabled', true)
+      else
+        uploader.clearQueue()
+        $scope.clearFileField()
+        $scope.staticError = "Files must be smaller than 20MB in size"
 
     $scope.attachmentDialogUpload = ->
       attachmentUploadButton = $($("#newAttachment button.btn-success")[0])
@@ -252,7 +258,6 @@ angularJS.controller "TicketsController", [
         attachmentUploadButton.html('<span><i class="fa fa-upload"></i> Upload</span>')
         attachmentUploadButton.removeClass("disabled")
         $scope.attachmentDialogHide()
-        window.location.replace '/account/tickets/' + $scope.selectedTicket.reference
         return
 
 
