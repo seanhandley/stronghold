@@ -11,6 +11,7 @@
 //= require angular-gravatar
 //= require angular-animate
 //= require angular-inview
+//= require angular-file-upload
 //
 //= require common
 //

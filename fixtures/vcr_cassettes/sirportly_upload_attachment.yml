@@ -1,0 +1,119 @@
+---
+http_interactions:
+- request:
+    method: put
+    uri: https://helpdesk.datacentred.io/api/v1/tickets/ticket
+    body:
+      encoding: US-ASCII
+      string: reference=YQ-232421
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      - SirportlyRubyClient/1.4.2
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Auth-Token:
+      - 1e7b5272-1d4d-88c9-47d9-4c3679662cb0
+      X-Auth-Secret:
+      - 8u355uplau541u8okxt6k2nnnjrbw05ebtzy2ncag4jpdqzxqo
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.4.6 (Ubuntu)
+      Date:
+      - Thu, 25 May 2017 15:20:31 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '4285'
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Etag:
+      - '"ee04ec5571e4ed8b9a8da374fb1670e6"'
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 2afbe12e-9fa5-438c-a01c-82b5f62f4525
+      X-Runtime:
+      - '0.034806'
+      Strict-Transport-Security:
+      - max-age=31536000
+    body:
+      encoding: UTF-8
+      string: '{"id":6182,"reference":"YQ-232421","subject":"Test Ticket - update
+        properties","message_id":"1f66a300-c3ce-3944-e2c0-4612e6631d58@helpdesk.datacentred.io","submitted_at":"2017-03-22T14:41:41Z","updated_at":"2017-04-06T14:19:58Z","reply_due_at":null,"resolution_due_at":null,"auth_code":"ve6u3pq46grm","last_update_posted_at":"2017-03-22T14:41:41Z","first_response_time":null,"first_resolution_time":null,"resolution_time":null,"last_respondant":"contact","update_count":1,"status":{"id":1,"name":"New","colour":"77c300","status_type":0},"priority":{"id":1,"name":"Normal","colour":"0097cf","position":1},"department":{"id":15,"name":"Technical
+        Support","brand":{"id":2,"name":"DataCentred Staging","url":"","phone":""},"private":false},"team":{"id":9,"name":"Staging
+        Team"},"user":null,"sla":null,"additional_contact_methods":[],"updates":[{"id":12446,"subject":"Test
+        Ticket - update properties","message":"test","html_body":null,"html_safe":false,"private":false,"posted_at":"2017-03-22T14:41:41Z","avatar_url":"https://secure.gravatar.com/avatar/7628635c265c850c8da327eb4706d274?rating=PG\u0026size={{size}}\u0026d=mm","author":{"type":"Customer","id":454,"reference":"750","name":"Eugenia
+        Grieff","abbreviated_name":"Eugenia G","company":"datacentred","mail_format":"both","picture_url":"https://secure.gravatar.com/avatar/7628635c265c850c8da327eb4706d274?rating=PG\u0026size=90\u0026default=blah","discussion_count":4,"pin":"134926","created_at":"2016-05-24T10:17:01Z"},"from_name":"Eugenia
+        Pereira","from_address":"eugenia.grieff@datacentred.co.uk","minutes_since_reply_due":null,"minutes_since_resolution_due":null,"minutes_since_submission":"0.01","minutes_since_last_reply":null,"signature_text":null,"stripped_content":null,"authenticated":null,"message_id":null,"attachments":[{"id":512,"name":"icon.ruby.png","content_type":"image/png","file_size":30247,"extension":"png","disposition":"inline","temporary_token":null,"temporary_token_expires_at":null},{"id":513,"name":"icon.ruby.png","content_type":"image/png","file_size":30247,"extension":"png","disposition":"inline","temporary_token":null,"temporary_token_expires_at":null},{"id":515,"name":"icon.ruby.png","content_type":"image/png","file_size":30247,"extension":"png","disposition":"inline","temporary_token":null,"temporary_token_expires_at":null},{"id":516,"name":"icon.ruby.png","content_type":"image/png","file_size":30247,"extension":"png","disposition":"inline","temporary_token":null,"temporary_token_expires_at":null},{"id":517,"name":"text.txt","content_type":"text/plain","file_size":21,"extension":"txt","disposition":"inline","temporary_token":null,"temporary_token_expires_at":null},{"id":518,"name":"icon.ruby.png","content_type":"image/png","file_size":30247,"extension":"png","disposition":"inline","temporary_token":null,"temporary_token_expires_at":null},{"id":519,"name":"2f2115419d0a9eb3105085ecf42a9ec2.jpg","content_type":"image/jpeg","file_size":23667,"extension":"jpg","disposition":"inline","temporary_token":null,"temporary_token_expires_at":null},{"id":520,"name":"2f2115419d0a9eb3105085ecf42a9ec2.jpg","content_type":"image/jpeg","file_size":23667,"extension":"jpg","disposition":"inline","temporary_token":null,"temporary_token_expires_at":null},{"id":521,"name":"2f2115419d0a9eb3105085ecf42a9ec2.jpg","content_type":"image/jpeg","file_size":23667,"extension":"jpg","disposition":"inline","temporary_token":null,"temporary_token_expires_at":null}],"source":"api","notification_sent":null,"delivered":null}],"custom_fields":{"company_reference":"DC-EDQ-169"},"source":{"id":1,"name":"Stronghold","token":"1e7b5272-1d4d-88c9-47d9-4c3679662cb0","secret":"8u355uplau541u8okxt6k2nnnjrbw05ebtzy2ncag4jpdqzxqo","ip_addresses":"","enabled":true,"log":false,"log_response":false,"user":null,"api_application":null,"type":"ApiToken"},"tags":[],"customer":{"id":454,"reference":"750","name":"Eugenia
+        Grieff","abbreviated_name":"Eugenia G","company":"datacentred","mail_format":"both","picture_url":"https://secure.gravatar.com/avatar/7628635c265c850c8da327eb4706d274?rating=PG\u0026size=90\u0026default=blah","discussion_count":4,"pin":"134926","created_at":"2016-05-24T10:17:01Z"},"customer_contact_method":{"id":456,"method_type":"email","data":"eugenia.grieff@datacentred.co.uk","default":true}}'
+    http_version: 
+  recorded_at: Thu, 25 May 2017 15:20:31 GMT
+- request:
+    method: post
+    uri: https://helpdesk.datacentred.io/api/v1/tickets/add_attachment
+    body:
+      encoding: UTF-8
+      string: "-------------RubyMultipartPost\r\nContent-Disposition: form-data; name=\"ticket\"\r\n\r\nYQ-232421\r\n-------------RubyMultipartPost\r\nContent-Disposition:
+        form-data; name=\"update\"\r\n\r\n12446\r\n-------------RubyMultipartPost\r\nContent-Disposition:
+        form-data; name=\"file\"; filename=\"example.txt\"\r\nContent-Length: 19\r\nContent-Type:
+        text/txt\r\nContent-Transfer-Encoding: binary\r\n\r\nExample text file.\n\r\n-------------RubyMultipartPost--\r\n\r\n"
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      - SirportlyRubyClient/1.4.2
+      Content-Type:
+      - multipart/form-data; boundary=-----------RubyMultipartPost
+      Content-Length:
+      - '419'
+      X-Auth-Token:
+      - 1e7b5272-1d4d-88c9-47d9-4c3679662cb0
+      X-Auth-Secret:
+      - 8u355uplau541u8okxt6k2nnnjrbw05ebtzy2ncag4jpdqzxqo
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Server:
+      - nginx/1.4.6 (Ubuntu)
+      Date:
+      - Thu, 25 May 2017 15:20:31 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '174'
+      Connection:
+      - keep-alive
+      Status:
+      - 201 Created
+      Etag:
+      - '"fdcc9a46119750808503c5db1d64ae41"'
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 12a2e93e-fba6-498c-9f86-e6b87781f003
+      X-Runtime:
+      - '0.020690'
+      Strict-Transport-Security:
+      - max-age=31536000
+    body:
+      encoding: UTF-8
+      string: '{"id":557,"name":"example.txt","content_type":"text/txt","file_size":19,"extension":"txt","disposition":"attachment","temporary_token":null,"temporary_token_expires_at":null}'
+    http_version: 
+  recorded_at: Thu, 25 May 2017 15:20:31 GMT
+recorded_with: VCR 2.9.3

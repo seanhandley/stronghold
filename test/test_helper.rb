@@ -13,6 +13,7 @@ require File.expand_path("../../config/environment", __FILE__)
 require "rails/test_help"
 require "minitest/rails"
 require 'minitest/pride'
+require "faker"
 require File.expand_path(File.dirname(__FILE__) + '/blueprints')
 require 'database_cleaner'
 require 'webmock/minitest'
@@ -37,6 +38,19 @@ class UserNoCallbacks < User
   def delete_object   ; end
   def update_password ; end
 end
+
+# Noops
+Organization.redefine_method :create_salesforce_object do ; end
+Organization.redefine_method :update_salesforce_object do ; end
+Organization.redefine_method :can_sync_with_openstack  do ; end
+Project.redefine_method      :create_openstack_object  do ; end
+Project.redefine_method      :create_ceph_object       do ; end
+Project.redefine_method      :delete_ceph_object       do ; end
+User.redefine_method         :create_openstack_object  do ; end
+User.redefine_method         :can_sync_with_openstack  do ; end
+User.redefine_method         :update_password          do ; end
+User.redefine_method         :generate_ec2_credentials do ; end
+User.redefine_method         :subscribe_to_status_io   do ; end
 
 module Billing
   class Instance < ApplicationRecord

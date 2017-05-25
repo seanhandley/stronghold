@@ -3,6 +3,7 @@ module Support
     class TicketCommentsController < SupportBaseController
 
       include ApplicationHelper
+      include TicketOwnership
 
       load_and_authorize_resource :class => "TicketComment"
 

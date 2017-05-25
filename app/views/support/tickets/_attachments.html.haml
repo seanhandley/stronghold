@@ -1,0 +1,18 @@
+%table.table
+  %thead
+    %tr
+      %th{:width => "50%"} Name
+      %th{"ng-show" => "uploader.isHTML5"} Size
+      %th{"ng-show" => "uploader.isHTML5"} Progress
+  %tbody
+    = hidden_field_tag :safe_upload_token, safe_upload_token
+    %tr{"ng-repeat" => "item in uploader.queue"}
+      %td {{ item.file.name | limitTo : 40}}
+      %td{"ng-show" => "uploader.isHTML5", :nowrap => "nowrap"} {{ item.file.size/1024/1024|number:2 }} MB
+      %td{"ng-show" => "uploader.isHTML5"}
+        .progress{:style => "margin-bottom: 0;"}
+          .progress-bar{"ng-style" => "{ 'width': item.progress + '%' }", :role => "progressbar"}
+      %td{:nowrap => "nowrap"}
+        %button.btn.btn-danger.btn-xs{"ng-click" => "item.remove(); clearFileField()", :type => "button", :id => "remove-item-button"}
+          %i.fa.fa-trash-o
+          Remove

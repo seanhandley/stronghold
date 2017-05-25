@@ -70,19 +70,39 @@
           %td{style: 'width: 100px'}
             %strong Access code:
           %td {{selectedTicket.reference}}
-  %div{'ng-show' => "selectedTicket.department == 'Technical Support' || selectedTicket.department == 'Colo Support'"}
-    .table-responsive
-      %table
-        %tr
-          %td{style: 'width: 100px'}
-            %strong Additional information:
-          %td {{selectedTicket.more_info}}
+  %div{'ng-hide' => "selectedTicket.more_info == null "}
+    %div.extra-block#additional-information
+      .table-responsive
+        %table
+          %tr
+            %td{style: 'width: 100px'}
+              %strong Additional information:
+            %td {{selectedTicket.more_info}}
+
+  %div{'ng-show' => "selectedTicket.attachments.length > 0"}
+    %div.extra-block#show-attachments
+      .table-responsive
+        %table
+          %tr
+            %td{style: 'width: 100px'}
+              %strong Attachments:
+            %td
+              %div{"ng-repeat" => "attachment in selectedTicket.attachments"}
+                %a{:'href' => "{{attachment.url}}", :target => '_blank', :id => "attachment-link"}
+                  %i.fa.fa-paperclip
+                  {{attachment.name}}
+                %span.attachment-size
+                  {{attachment.size}}
   - if can? :modify, Ticket
     %hr
     %div.btn-group#comment-button
       %button.btn.btn-default{:'ng-click' => "commentDialogShow()"}
         %i.fa.fa-comment
         Add Reply
+    %div.btn-group#attachment-button
+      %button.btn.btn-default#addAttachment{:'ng-click' => "attachmentDialogShow()"}
+        %i.fa.fa-cloud-upload
+        Add Atachment
 
   %div.comments
     %div{:'ng-show' => "hasComments(selectedTicket)"}
@@ -105,7 +125,7 @@
           %span{:'in-view' => "comment.unread.length > 0 && markTicketRead(selectedTicket.reference, comment.id)"}
         %hr
         - if can? :modify, Ticket
-          %div.btn-group#comment-button
+          %div.btn-group#attachment-button
             %button.btn.btn-default{:'ng-click' => "commentDialogShow()"}
               %i.fa.fa-comment
               Add Reply
@@ -135,3 +155,29 @@
           = t(:cancel)
         %button.btn.btn-primary{:'ng-click' => 'commentDialogSubmit()'}
           = t(:submit)
+
+.modal.fade{'id' => 'newAttachment', 'tabindex' => "-1", 'role' => "dialog", 'aria-labelledby' => 'newAttachment', 'aria-hidden' => "true", 'data-backdrop' => 'static'}
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button{'type' => "button", 'class' => "close", 'data-dismiss' => "modal", 'aria-hidden' => "true"}
+          &times;
+        %h4.modal-title
+          %i.fa.fa-upload
+          Upload Files.
+        %p Add and attachment to this ticket.
+      .modal-body
+        = render partial: 'shared/model_errors'
+        %div#add-attachments
+          %label
+            Attach a file
+          %input{:'type' => "file", :'nv-file-select' => "", :'uploader' => "uploader", :id => 'attachment-field', :name => 'file-upload'}
+        %div.uploaded-files-table.hidden
+          = render partial: 'support/tickets/attachments'
+      .modal-footer
+        %button.btn.btn-success.btn-s{"ng-click" => "attachmentDialogUpload()", "ng-disabled" => "!uploader.getNotUploadedItems().length", :type => "button"}
+          %span
+            %i.fa.fa-upload
+          Upload
+        %button.btn.btn-s{"ng-click" => "attachmentDialogCancel()", "ng-disabled" => "uploader.isUploading", :type => "button"}
+          Cancel
