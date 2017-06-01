@@ -60,6 +60,7 @@ gem 'harbour', git: 'git@github.com:datacentred/harbour.git', branch: 'master'
 group :test, :acceptance do
   gem 'faker'
   gem 'machinist'
+  gem 'minitest', '~> 5.10', '!= 5.10.2'
   gem "minitest-rails"
   gem "minitest-rails-capybara"
   gem 'poltergeist'
