@@ -48,6 +48,10 @@ class Project < ApplicationRecord
     read_attribute(:quota_set) || StartingQuota['standard']
   end
 
+  def quota_set=(hash)
+    write_attribute :quota_set, (read_attribute(:quota_set) || StartingQuota['standard']).deep_merge(hash)
+  end
+
   def staff_project?
     self.name == 'datacentred'
   end
