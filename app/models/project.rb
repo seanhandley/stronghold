@@ -133,7 +133,7 @@ class Project < ApplicationRecord
         errors.add(:quota_set, "#{top_level_key} keys are invalid. Valid keys are #{StartingQuota['standard'][top_level_key].keys}.")
         throw :abort
       end
-      errors.add(:quota_set, "values must all be numeric")    unless quotas[top_level_key].values.all? {|v| Integer(v.to_s) rescue false }
+      (errors.add(:quota_set, "values must all be numeric") && break) unless quotas[top_level_key].values.all? {|v| Integer(v.to_s) rescue false }
       errors.add(:quota_set, "values must all be above zero") unless quotas[top_level_key].values.all? {|v| Integer(v.to_s) > 0 }
     end
     throw :abort if errors.any?
