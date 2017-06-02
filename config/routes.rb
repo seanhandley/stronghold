@@ -66,7 +66,7 @@ Rails.application.routes.draw do
       resources :audits, only: [:show]
       resources :states, only: [:show]
 
-      resources :organization_assignments, only: [:create, :destroy]
+      resources :organization_assignments, only: [:create, :destroy, :update]
       resources :quotas, except: [:create, :new, :destroy, :show] do
         member do
           post 'mail'

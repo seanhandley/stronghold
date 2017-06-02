@@ -173,18 +173,6 @@ ul#billing_address-list li {
   padding: 8px 8px 0px 0;
 }
 
-div#temporary-memberships.col-md-12 {
-  margin-top: 50px;
-}
-
-input#create-org-membership {
-  margin-top: 15px;
-}
-
-input#delete-org-membership {
-  margin-top: 15px;
-}
-
 td.first-column {
   font-weight: 500;
   width: 280px;
@@ -217,6 +205,39 @@ td.contact-type {
   font-weight: 500;
   width: 150px;
   background-color: rgb(249, 249, 249);
+}
+
+input#create-org-membership {
+  margin-top: 15px;
+}
+
+input#delete-org-membership {
+  margin-top: 15px;
+}
+
+@media (min-width: 1570px) {
+  div.membership-options {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@media (min-width: 1569px) {
+  div.membership-options {
+    display: flex;
+    flex-direction: row;
+  }
+}
+
+div.membership-options .row {
+  margin: 5px 5px 5px 0;
+  width: 100%;
+  padding: 10px 10px 5px 10px;
+  border: 1px solid rgb(221,221,221);
+  border-radius: 5px;
+  background-color: rgb(249, 249, 249);
+  text-align: center;
+  vertical-align: middle;
 }
 
 div#state-container {

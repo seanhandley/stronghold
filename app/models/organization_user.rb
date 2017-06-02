@@ -1,10 +1,29 @@
 class OrganizationUser < ActiveRecord::Base
+
   self.table_name = 'organizations_users'
+  after_initialize :check_if_temporary_membership_expired
   after_save :set_primary, on: :create
-  before_destroy :dont_remove_self, :check_if_should_destroy_user, :check_if_primary_and_current_user
+  before_destroy :check_if_should_destroy_user, :check_if_primary_and_current_user
+  DEFAULT_MEMBERSHIP_DURATION_IN_HOURS = 4
 
   belongs_to :organization
   belongs_to :user
+
+  def temporary?
+    !!duration
+  end
+
+  def expires_at
+    updated_at + duration.hours unless duration.nil?
+  end
+
+  def expired?
+    expires_at <= Time.now
+  end
+
+  def reset!
+    touch
+  end
 
   private
 
@@ -25,10 +44,12 @@ class OrganizationUser < ActiveRecord::Base
     end
   end
 
-  def dont_remove_self
-    if Authorization.current_user&.id == user.id
-      errors.add(:base, "You can't remove yourself from an organization")
-      throw :abort
+  def check_if_temporary_membership_expired
+    return unless persisted?
+    if temporary? && expired?
+      delete
+      raise Stronghold::Error::TemporaryMembershipExpiredError,
+            "Your temporary mermbership to #{organization.name} has expired."
     end
   end
 
