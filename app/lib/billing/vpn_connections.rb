@@ -48,7 +48,8 @@ module Billing
       VpnConnection.create vpn_connection_id: vpn_connection_id, project_id: project_id,
                           started_at: first_sample['recorded_at'],
                           name: first_sample['resource_metadata']['name'],
-                          sync_id: sync.id
+                          sync_id: sync.id,
+                          user_id: first_sample['user_id']
     end
 
   end

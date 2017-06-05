@@ -24,7 +24,8 @@ module Billing
                                    address: ips[0]['ip_address'],
                                    recorded_at: Time.zone.parse("#{sample['recorded_at']} UTC"),
                                    message_id: sample['message_id'],
-                                   sync_id: sync.id
+                                   sync_id: sync.id,
+                                   user_id: sample['user_id']
               end
             end
           end
@@ -36,7 +37,8 @@ module Billing
                                address: meta_data['floating_ip_address'],
                                recorded_at: Time.zone.parse("#{sample['recorded_at']} UTC"),
                                message_id: sample['message_id'],
-                               sync_id: sync.id
+                               sync_id: sync.id,
+                               user_id: sample['user_id']
           end
         end
       end

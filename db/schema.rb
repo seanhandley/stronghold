@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170526133710) do
+ActiveRecord::Schema.define(version: 20170605091157) do
 
   create_table "api_credentials", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "user_id"
@@ -52,6 +52,7 @@ ActiveRecord::Schema.define(version: 20170526133710) do
     t.integer  "image_id"
     t.integer  "sync_id"
     t.string   "message_id"
+    t.string   "user_id"
     t.index ["image_id"], name: "image_states", using: :btree
     t.index ["recorded_at"], name: "index_billing_image_states_on_recorded_at", using: :btree
     t.index ["sync_id"], name: "image_syncs", using: :btree
@@ -84,6 +85,7 @@ ActiveRecord::Schema.define(version: 20170526133710) do
     t.string   "flavor_id"
     t.integer  "previous_state_id"
     t.integer  "next_state_id"
+    t.string   "user_id"
     t.index ["instance_id"], name: "instance_states", using: :btree
     t.index ["next_state_id"], name: "index_billing_instance_states_on_next_state_id", using: :btree
     t.index ["previous_state_id"], name: "index_billing_instance_states_on_previous_state_id", using: :btree
@@ -141,6 +143,7 @@ ActiveRecord::Schema.define(version: 20170526133710) do
     t.string   "message_id"
     t.string   "ip_type"
     t.integer  "sync_id"
+    t.string   "user_id"
     t.index ["project_id"], name: "tenant_ips", using: :btree
     t.index ["recorded_at"], name: "index_billing_ips_on_recorded_at", using: :btree
   end
@@ -164,6 +167,7 @@ ActiveRecord::Schema.define(version: 20170526133710) do
     t.integer  "sync_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "user_id"
   end
 
   create_table "billing_storage_objects", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
@@ -199,6 +203,7 @@ ActiveRecord::Schema.define(version: 20170526133710) do
     t.string   "message_id"
     t.integer  "sync_id"
     t.string   "volume_type"
+    t.string   "user_id"
     t.index ["recorded_at"], name: "index_billing_volume_states_on_recorded_at", using: :btree
     t.index ["sync_id"], name: "volume_syncs", using: :btree
     t.index ["volume_id"], name: "volume_states", using: :btree
@@ -223,6 +228,7 @@ ActiveRecord::Schema.define(version: 20170526133710) do
     t.integer  "sync_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "user_id"
   end
 
   create_table "customer_signups", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
