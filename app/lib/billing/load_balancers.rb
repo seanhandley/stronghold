@@ -31,7 +31,8 @@ module Billing
           started_at: lb.started_at,
           terminated_at: lb.terminated_at,
           hours: hours,
-          cost:  (hours * RateCard.lb_pool).nearest_penny
+          cost:  (hours * RateCard.lb_pool).nearest_penny,
+          owner: lb.user_id
         }
       end
     end

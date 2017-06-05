@@ -14,15 +14,18 @@ module Billing
     def self.usage(project_id, from, to)
       volumes = Billing::Volume.where("project_id = ? AND (deleted_at is null or deleted_at >= ?)", project_id, from)
       volumes = volumes.collect do |volume|
-        { terabyte_hours: terabyte_hours(volume, from, to),
-                                    cost: cost(volume, from, to).nearest_penny,
-                                    id: volume.volume_id,
-                                    created_at: volume.created_at,
-                                    deleted_at: volume.deleted_at,
-                                    latest_size: volume.latest_size,
-                                    name: volume.name,
-                                    ssd: volume.ssd?,
-                                    volume_type_name: volume_name[volume.volume_type]}
+        {
+          terabyte_hours: terabyte_hours(volume, from, to),
+          cost: cost(volume, from, to).nearest_penny,
+          id: volume.volume_id,
+          created_at: volume.created_at,
+          deleted_at: volume.deleted_at,
+          latest_size: volume.latest_size,
+          name: volume.name,
+          ssd: volume.ssd?,
+          volume_type_name: volume_name[volume.volume_type],
+          owner: volume.volume_states&.first&.user_id
+        }
       end
       volumes.select{|v| v[:terabyte_hours] > 0}
     end

@@ -31,7 +31,8 @@ module Billing
           started_at: vpn.started_at,
           terminated_at: vpn.terminated_at,
           hours: hours,
-          cost:  (hours * RateCard.vpn_connection).nearest_penny
+          cost:  (hours * RateCard.vpn_connection).nearest_penny,
+          owner: vpn.user_id
         }
       end
     end
