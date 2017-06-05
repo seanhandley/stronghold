@@ -221,7 +221,8 @@ module Billing
                                       size: s['resource_metadata']['size'],
                                       event_name: s['resource_metadata']['event_type'], billing_sync: sync,
                                       message_id: s['message_id'],
-                                      volume_type: s['resource_metadata']['volume_type']
+                                      volume_type: s['resource_metadata']['volume_type'],
+                                      user_id: s['user_id']
         end
       end
     end

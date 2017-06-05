@@ -136,12 +136,14 @@ module Billing
           Billing::ImageState.create image_id: cached_images[image_id][:id], recorded_at: Time.zone.parse("#{s['recorded_at']} UTC"),
                                       size: bytes_to_terabytes(s['resource_metadata']['size'].to_i),
                                       event_name: s['resource_metadata']['event_type'], billing_sync: sync,
-                                      message_id: s['message_id']      
+                                      message_id: s['message_id'],
+                                      user_id: s['user_id']    
         elsif s['resource_metadata']['deleted_at'] != 'None'
           Billing::ImageState.create image_id: cached_images[image_id][:id], recorded_at: Time.zone.parse("#{s['resource_metadata']['deleted_at']} UTC"),
                                       size: bytes_to_terabytes(s['resource_metadata']['size'].to_i),
                                       event_name: 'image.delete', billing_sync: sync,
-                                      message_id: s['message_id']
+                                      message_id: s['message_id'],
+                                      user_id: s['user_id']
         end
       end
     end

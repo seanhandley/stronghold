@@ -105,7 +105,8 @@ module Billing
                                         state: meta_data['state'] ? meta_data['state'].downcase : 'active',
                                         event_name: meta_data['event_type'], billing_sync: sync,
                                         message_id: sample['message_id'],
-                                        flavor_id: meta_data["instance_flavor_id"]
+                                        flavor_id: meta_data["instance_flavor_id"],
+                                        user_id: sample['user_id']
         end
       end
       billing_instance.reindex_states
