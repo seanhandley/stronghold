@@ -46,11 +46,12 @@ module Billing
 
     def to_hash(from=nil, to=nil)
       {
-        billable: billable?,
-        flavor:   instance_flavor.flavor_id,
-        seconds:  seconds(from, to),
-        state:    state,
-        user_id:  user_id
+        billable:    billable?,
+        flavor:      instance_flavor.flavor_id,
+        seconds:     seconds(from, to),
+        state:       state,
+        user_id:     user_id,
+        recorded_at: recorded_at
       }
     end
 
