@@ -23,6 +23,9 @@ module Billing
           latest_size: volume.latest_size,
           name: volume.name,
           ssd: volume.ssd?,
+          tags: [
+            volume.ssd? ? 'ssd' : nil,
+          ].compact,
           volume_type_name: volume_name[volume.volume_type],
           owner: volume.volume_states&.first&.user_id
         }
