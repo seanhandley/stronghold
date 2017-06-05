@@ -48,7 +48,9 @@ module Billing
       {
         billable: billable?,
         flavor:   instance_flavor.flavor_id,
-        seconds:  seconds(from, to)
+        seconds:  seconds(from, to),
+        state:    state,
+        user_id:  user_id
       }
     end
 
