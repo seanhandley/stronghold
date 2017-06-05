@@ -36,6 +36,9 @@ module Billing
           cost: instance.cost(from, to).nearest_penny,
           cost_by_flavor: instance.cost_by_flavor(from, to),
           windows: Windows.billable?(instance),
+          tags: [
+            Windows.billable?(instance) ? "windows" : nil
+          ].compact,
           flavor: {
             flavor_id: instance_flavor.flavor_id,
             name: instance_flavor.name,
