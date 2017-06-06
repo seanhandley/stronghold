@@ -39,7 +39,7 @@ class Organization < ApplicationRecord
     }
   end
 
-  after_save :generate_reference, :generate_reporting_code, :update_search_tokens, :on => :create
+  after_create :generate_reference, :generate_reporting_code, :update_search_tokens
   before_save :check_limited_storage, :if => Proc.new{|o| o.limited_storage_changed? }
 
   validates :name, length: {minimum: 1}, allow_blank: false
