@@ -4,6 +4,7 @@ module Billing
 
   def self.sync!(to=nil)
     clear_memoized_samples
+    Rails.cache.delete('cached_project_info')
     last_sync = Billing::Sync.completed.last
     from = last_sync.period_to || last_sync.started_at
     to = to ? from + to.minutes : Time.now
