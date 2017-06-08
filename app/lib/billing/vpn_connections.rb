@@ -19,7 +19,12 @@ module Billing
         end
       end
       vpns = vpns.select do |vpn|
-        (!vpn.terminated_at && (vpn.started_at < to)) || (vpn.terminated_at && (vpn.terminated_at < to && vpn.terminated_at > from) && (vpn.started_at < to && vpn.started_at > from))
+        (!vpn.terminated_at && (vpn.started_at < to)) ||
+        (
+          vpn.terminated_at &&
+          vpn.terminated_at > from &&
+          vpn.started_at < to
+        )
       end
       vpns.collect do |vpn|
         start  = [vpn.started_at, from].max

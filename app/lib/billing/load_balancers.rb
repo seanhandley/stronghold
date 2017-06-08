@@ -19,7 +19,12 @@ module Billing
         end
       end
       lbs = lbs.select do |lb|
-        (!lb.terminated_at && (lb.started_at < to)) || (lb.terminated_at && (lb.terminated_at < to && lb.terminated_at > from) && (lb.started_at < to && lb.started_at > from))
+        (!lb.terminated_at && (lb.started_at < to)) ||
+        (
+          lb.terminated_at &&
+          lb.terminated_at > from &&
+          lb.started_at < to
+        )
       end
       lbs.collect do |lb|
         start  = [lb.started_at, from].max
