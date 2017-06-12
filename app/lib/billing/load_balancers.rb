@@ -31,13 +31,23 @@ module Billing
         finish = lb.terminated_at ? [lb.terminated_at, to].min : to
         hours = ((finish - start) / (60 ** 2)).ceil
         {
-          lb_id: lb.lb_id,
+          id: lb.lb_id,
           name:  lb.name,
           started_at: lb.started_at,
           terminated_at: lb.terminated_at,
-          hours: hours,
-          cost:  (hours * RateCard.lb_pool).nearest_penny,
-          owner: lb.user_id
+          owner: lb.user_id,
+          usage: [
+            {
+              unit: 'hours',
+              value: hours,
+              cost: {
+                currency: 'gbp',
+                value: (hours * RateCard.lb_pool).nearest_penny.round(2),
+                rate: RateCard.lb_pool
+              },
+              meta: {}
+            }
+          ]
         }
       end
     end

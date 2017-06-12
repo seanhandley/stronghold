@@ -16,17 +16,27 @@ module Billing
       images = images.collect do |image|
         tb_hours = terabyte_hours(image, from, to)
         {
-          terabyte_hours: tb_hours,
-          cost: (tb_hours * RateCard.block_storage).nearest_penny,
           id: image.image_id,
           created_at: image.created_at,
           deleted_at: image.deleted_at,
-          latest_size: terabytes_to_gigabytes(image.latest_size),
+          latest_size_gb: terabytes_to_gigabytes(image.latest_size).nearest_penny.round(2),
           name: image.name,
-          owner: image.image_states&.first&.user_id
+          owner: image.image_states&.first&.user_id,
+          usage: [
+            {
+              unit: 'terabyte hours',
+              value: tb_hours,
+              cost: {
+                currency: 'gbp',
+                value: (tb_hours * RateCard.block_storage).nearest_penny.round(2),
+                rate: RateCard.block_storage
+              },
+              meta: {}
+            }
+          ]
         }
       end
-      images.select{|i| i[:terabyte_hours] > 0}
+      images.select{|i| i[:usage].sum{|u| u[:value]} > 0}
     end
 
     def self.terabyte_hours(image, from, to)

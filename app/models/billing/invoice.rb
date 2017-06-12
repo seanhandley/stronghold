@@ -49,11 +49,14 @@ module Billing
       vpn_connection_total           = 0
       load_balancer_total            = 0
 
-      usage_data.each do |project, usages|
+      usage_data[:projects].each do |usages|
 
-        usages[:instance_usage].each do |instance|
-          instance[:billable_hours].each do |flavor_id, hours|
-            if instance[:windows]
+        usages[:usage][:instances].each do |instance|
+          instance[:usage].each do |usage|
+            flavor_id = usage[:meta][:flavor][:id]
+            hours     = usage[:value]
+
+            if instance[:tags].include?('windows')
               windows_instance_flavor_hours[flavor_id] ||= 0
               windows_instance_flavor_hours[flavor_id] += hours.ceil
             else
@@ -63,17 +66,17 @@ module Billing
           end
         end
 
-        volume_tbh     = usages[:volume_usage].reject{|volume| volume[:ssd]}.sum {|volume| volume[:terabyte_hours]}
-        ssd_volume_tbh = usages[:volume_usage].select{|volume| volume[:ssd]}.sum {|volume| volume[:terabyte_hours]}
-        image_tbh      = usages[:image_usage].sum  {|image| image[:terabyte_hours]}
+        volume_tbh     = usages[:usage][:volumes].reject{|volume| volume[:tags].include?('ssd')}.sum {|volume| volume[:usage].sum{|u| u[:value]}}
+        ssd_volume_tbh = usages[:usage][:volumes].select{|volume| volume[:tags].include?('ssd')}.sum {|volume| volume[:usage].sum{|u| u[:value]}}
+        image_tbh      = usages[:usage][:images].sum    {|image| image[:usage].sum{|u| u[:value]}}
 
         block_storage_total     += (volume_tbh + image_tbh)
         ssd_block_storage_total += ssd_volume_tbh
 
-        object_storage_total += usages[:object_storage_usage]
-        ip_addresses_total   += usages[:ip_quota_hours]
-        vpn_connection_total += usages[:vpn_connection_usage].sum {|v| v[:hours]}
-        load_balancer_total  += usages[:load_balancer_usage].sum  {|v| v[:hours]}
+        object_storage_total += usages[:usage][:object_storage][:usage].sum{|u| u[:value]}
+        ip_addresses_total   += usages[:usage][:ips][:usage].sum{|u| u[:value]}
+        vpn_connection_total += usages[:usage][:vpns].sum  {|v| v[:usage].sum{|u| u[:value]}}
+        load_balancer_total  += usages[:usage][:load_balancers].sum  {|v| v[:usage].sum{|u| u[:value]}}
       end
 
       # Add line items

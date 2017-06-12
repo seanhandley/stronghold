@@ -25,14 +25,15 @@ module Billing
 
     def blob
       conn
-      Marshal.load(
+      JSON.parse(
         open(
           AWS::S3::S3Object.url_for(
             object_uuid,
             bucket,
             authenticated: true
           )
-        )
+        ).read,
+        symbolize_names: true
       )
     rescue OpenURI::HTTPError => ex
       raise unless ex.message.include?("404")
@@ -43,9 +44,9 @@ module Billing
       conn
       AWS::S3::S3Object.store(
         object_uuid,
-        Marshal.dump(new_blob),
+        new_blob.to_json,
         bucket,
-        content_type: 'application/octet-stream'
+        content_type: 'application/json'
       )
     end
 

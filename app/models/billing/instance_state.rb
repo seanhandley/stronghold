@@ -20,10 +20,6 @@ module Billing
       next_state.nil?
     end
 
-    def only_state?
-      first_state? && last_state?
-    end
-
     def next_state
       InstanceState.find_by_id(next_state_id) if next_state_id
     end
@@ -48,7 +44,7 @@ module Billing
       {
         billable:    billable?,
         flavor:      instance_flavor.flavor_id,
-        seconds:     seconds(from, to),
+        seconds:     seconds(from, to).ceil,
         state:       state,
         user_id:     user_id,
         recorded_at: recorded_at

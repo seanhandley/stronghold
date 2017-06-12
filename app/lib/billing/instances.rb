@@ -21,38 +21,49 @@ module Billing
       end
 
       instances = instances.collect do |instance|
+        cost_by_flavour = instance.cost_by_flavor(from, to)
+        instance_usage = instance.billable_hours(from, to).map do |flavor_id, hours|
+          instance_flavor = Billing::InstanceFlavor.find_by_flavor_id flavor_id
+          {
+            unit: 'hours',
+            value: hours,
+            cost: {
+              currency: 'gbp',
+              value: cost_by_flavour[flavor_id].nearest_penny.round(2),
+              rate: instance.rate_for_flavor(flavor_id)
+            },
+            meta: {
+              flavor: {
+                id: instance_flavor.flavor_id,
+                name: instance_flavor.name,
+                vcpus_count: instance_flavor.vcpus,
+                ram_mb: instance_flavor.ram,
+                root_disk_gb: instance_flavor.disk
+              }
+            }
+          }
+        end
         instance_flavor = instance.instance_flavor
-        
         {
-          uuid: instance.instance_id,
+          id: instance.instance_id,
           name: instance.name,
-          project_id: instance.project_id,
           first_booted_at: instance.first_booted_at,
           latest_state: instance.latest_state(from,to),
           terminated_at: instance.terminated_at,
-          billable_hours: instance.billable_hours(from, to),
-          total_hours: instance.billable_hours(from, to).values.sum,
           history: instance.history(from, to),
-          cost: instance.cost(from, to).nearest_penny,
-          cost_by_flavor: instance.cost_by_flavor(from, to),
-          windows: Windows.billable?(instance),
           tags: [
             Windows.billable?(instance) ? "windows" : nil
           ].compact,
-          flavor: {
-            flavor_id: instance_flavor.flavor_id,
+          current_flavor: {
+            id: instance_flavor.flavor_id,
             name: instance_flavor.name,
             vcpus_count: instance_flavor.vcpus,
             ram_mb: instance_flavor.ram,
-            root_disk_gb: instance_flavor.disk,
-            rate: instance_flavor.rate},
-          image: {
-            image_id: instance.image_id,
-            name: instance.instance_image ? instance.instance_image.name : ''
-          }
+            root_disk_gb: instance_flavor.disk
+          },
+          usage: instance_usage
         }
       end
-      instances.select{|instance| instance[:total_hours] != 0}
     end
 
     def self.cached_flavor_ids

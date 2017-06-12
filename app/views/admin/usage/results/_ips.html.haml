@@ -3,12 +3,12 @@
   %p.tiny One address included free of charge.
   %p
     %strong Current Quota:
-    == #{project.quota_set['network']['floatingip']} addresses
+    == #{ips[:current_quota]} addresses
   - if current_organization.show_costs?
     %p
       %strong Cost:
-      == £#{number_with_precision(ip_quota_total, :delimiter => ',', :separator => '.', :precision => 2)}
-  - if ip_quotas && ip_quotas.any?
+      == £#{number_with_precision(ips[:usage].sum{|u| u[:cost][:value]}, :delimiter => ',', :separator => '.', :precision => 2)}
+  - if ips[:quota_changes] && ips[:quota_changes].any?
     .table-responsive
       %table.table.table-hover.phone-bill
         %thead
@@ -20,14 +20,14 @@
             %th Previous Value
             
         %tbody
-          - ip_quotas.each do |quota|
+          - ips[:quota_changes].each do |quota|
             %tr
               %td &nbsp;
-              %td= quota.recorded_at
+              %td= quota[:recorded_at]
               %td
-                = quota.quota
+                = quota[:quota]
                 addresses
               %td
-                = quota.previous.nil? ? "-" : "#{quota.previous} addresses"
+                = quota[:previous].nil? ? "-" : "#{quota[:previous]} addresses"
 
 

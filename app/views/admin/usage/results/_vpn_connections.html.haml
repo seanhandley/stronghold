@@ -23,13 +23,13 @@
             %tr
               %td &nbsp;
               %td= vpn[:name]
-              %td= vpn[:vpn_connection_id]
+              %td= vpn[:id]
               %td= vpn[:started_at]
               %td= vpn[:terminated_at] ? vpn[:terminated_at] : '-'
               %td
-                == #{number_with_delimiter(vpn[:hours], :delimiter => ',')} of #{@total_hours}
+                == #{number_with_delimiter(vpn[:usage].sum{|u| u[:value]}, :delimiter => ',')} of #{@total_hours}
               - if current_organization.show_costs?
-                %td== £#{number_with_precision(vpn[:cost], :delimiter => ',', :separator => '.', :precision => 4)}
+                %td== £#{number_with_precision(vpn[:usage].sum{|u| u[:cost][:value]}, :delimiter => ',', :separator => '.', :precision => 2)}
           %tr.highlight.bottomline
             %td &nbsp
             %td &nbsp
@@ -37,9 +37,9 @@
             %td &nbsp;
             %td Total:
             %td
-              = number_with_delimiter(vpn_connections.collect{|v| v[:hours]}.sum, :delimiter => ',')
+              = number_with_delimiter(vpn_connections.sum{|lb| lb[:usage].sum{|u| u[:value]}}, :delimiter => ',')
               hours
             - if current_organization.show_costs?
               %td
-                == £#{number_with_precision(@usage_decorator.vpn_connection_total(project.id), :delimiter => ',', :separator => '.', :precision => 2)}
+                == £#{number_with_precision(@usage_decorator.vpn_connection_total(project_uuid), :delimiter => ',', :separator => '.', :precision => 2)}
 
