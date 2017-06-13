@@ -226,7 +226,7 @@ class User < ApplicationRecord
   end
 
   def check_ceph_access
-    CheckCephAccessJob.perform_later(self)
+    CheckCephAccessJob.perform_later(self) if Rails.env.production?
   end
 
   def remove_ceph_keys
