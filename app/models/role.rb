@@ -42,6 +42,7 @@ class Role < ApplicationRecord
   end
 
   def check_ceph_access
+    return unless Rails.env.production?
     users.each {|user| CheckCephAccessJob.perform_later(user)}
   end
 
