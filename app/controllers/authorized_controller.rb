@@ -90,7 +90,7 @@ class AuthorizedController < ApplicationController
         safe_redirect_to activate_path
       end
     elsif !has_payment_method
-      redirect_with_no_payment_method
+      redirect_if_no_payment_method
     end
   end
 
