@@ -1,5 +1,5 @@
 require 'honeybadger'
-
+# This StatusIO module is responsible for
 module StatusIO
   class << self
     def add_subscriber(email)

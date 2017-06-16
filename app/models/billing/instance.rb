@@ -1,4 +1,5 @@
 module Billing
+  # This Instance class is responsible for
   class Instance < ApplicationRecord
     self.table_name = "billing_instances"
 
@@ -41,7 +42,7 @@ module Billing
       update_attributes terminated_at: terminated_at
       terminated_at
     end
-    
+
     def first_booted_at
       instance_states.where(state: 'active').first.try(:recorded_at) { nil }
     end
@@ -59,7 +60,7 @@ module Billing
         # active, even after they're deleted.
         if states.collect(&:state).include?('deleted')
           found_deleted = false
-          return states.take_while do |state| 
+          return states.take_while do |state|
             begin
               !found_deleted
             ensure

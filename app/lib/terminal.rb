@@ -1,3 +1,4 @@
+# This Terminal class is responsible for
 class Terminal
   def initialize(credentials)
     @credentials = DOCKER_ARGS.merge(credentials)
@@ -104,7 +105,7 @@ class Terminal
         res = class_variable_get(var_name) rescue nil
         return res if res
         class_variable_set var_name,
-                           OpenStackConnection.send(category[:name]).instance_variable_get("@openstack_management_uri").to_s.gsub(/\/\w+$/,'')                  
+                           OpenStackConnection.send(category[:name]).instance_variable_get("@openstack_management_uri").to_s.gsub(/\/\w+$/,'')
       end
     end
     categories.each do |category|
@@ -127,7 +128,7 @@ class Terminal
     end
 
     def self.sub_commands
-      { 
+      {
         "openstack.cli"             => ["help", "commands", "clear", "nyan", "save", "stranger"],
         "openstack.common"          => ["availability zone list", "configuration show", "limits show", "quota show"],
         "openstack.compute.v2"      => ["console", "console log", "console log show", "console url show",

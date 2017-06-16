@@ -1,3 +1,4 @@
+# This Sanity module is responsible for
 module Sanity
   def self.check
     results = current_sanity_state.dup
