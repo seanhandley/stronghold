@@ -41,9 +41,10 @@ class RegistrationGenerator
     end
 
     roles = (invite.roles + [@owners]).flatten.compact
-    @user = @organization.users.create email: invite.email.downcase, password: password,
-                                       roles: roles
+    @user = @organization.users.create email: invite.email.downcase, password: password
     @user.save!
+    @organization_user = OrganizationUser.find_by(organization: @organization, user: @user)
+    @organization_user.update_attributes roles: roles 
     OpenStack::User.update_enabled(@user.uuid, false) unless @organization.has_payment_method?
     unless Rails.env.test?
       invite.projects.each do |project|

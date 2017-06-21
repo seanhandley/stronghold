@@ -1,16 +1,16 @@
 class CheckDataCentredApiAccessJob < ApplicationJob
   queue_as :default
 
-  def perform(organization, user, state=nil)
-    credential = ApiCredential.find_by(user: user, organization: organization)
+  def perform(organization_user, state=nil)
+    credential = ApiCredential.find_by(organization_user: organization_user)
     return unless credential
 
     case state
     when nil
-      if organization.frozen?
+      if organization_user.organization.frozen?
         credential.update_attributes enabled: false
       else
-        credential.update_attributes enabled: User::Ability.new(user).can?(:read, :api)
+        credential.update_attributes enabled: OrganizationUser::Ability.new(organization_user).can?(:read, :api)
       end
     else
       credential.update_attributes enabled: state

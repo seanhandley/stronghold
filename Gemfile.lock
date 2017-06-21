@@ -1,13 +1,6 @@
 GIT
-  remote: git@github.com:circleci/minitest-ci.git
-  revision: 1e655bbfeafe9120db9a527794fa1125e3d99081
-  specs:
-    minitest-ci (3.0.4.pre)
-      minitest (~> 5.0, >= 5.0.6)
-
-GIT
   remote: git@github.com:datacentred/harbour.git
-  revision: 00aab1665a399054857efe3c6c54437cfcdda647
+  revision: a6a72e32d6ead1b361d0b49bbd54f451da7d3220
   branch: master
   specs:
     harbour (0.1.0)
@@ -15,7 +8,7 @@ GIT
       json-schema (~> 2.7)
       maruku (~> 0.3)
       nokogiri (~> 1.7.2)
-      rails (= 5.0.2)
+      rails (>= 5.0)
       responders (~> 2.2)
 
 GIT
@@ -587,8 +580,7 @@ DEPENDENCIES
   launchy
   machinist
   maxmind (~> 0.4)
-  minitest (~> 5.10, != 5.10.2)
-  minitest-ci!
+  minitest (= 5.10.1)
   minitest-rails
   minitest-rails-capybara
   momentjs-rails (~> 2.8.3)

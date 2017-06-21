@@ -44,7 +44,7 @@ class TestRegistrationGenerator < CleanTest
     registration = RegistrationGenerator.new(@invite, @valid_params)
     registration.generate!
     @invite.roles.each do |role|
-      assert registration.user.roles.include? role
+      assert registration.organization.roles.include? role
     end
   end
 

@@ -20,7 +20,7 @@
           %td= mail_to user.email, "#{user.email}"
           %td
             %i.fa.fa-key
-            = list_of_roles(user)
+            = list_of_roles(Authorization.current_organization_user)
           - if current_organization.cloud?
             %td
               %i.fa.fa-folder-o

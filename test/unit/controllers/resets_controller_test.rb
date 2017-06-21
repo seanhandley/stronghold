@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class ResetsControllerTest < ActionController::TestCase
+class ResetsControllerTest < CleanControllerTest
   setup do
     @user = User.make!(password: 'Password1')
   end
