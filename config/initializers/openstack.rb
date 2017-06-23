@@ -56,7 +56,7 @@ end
 
 ## DIRTY MONKEY PATCH
 
-OpenStackConnection.metering
+OpenStackConnection.metering rescue nil
 
 module Fog
   module Metering
