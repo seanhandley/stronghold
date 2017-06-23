@@ -1,41 +1,5 @@
 require 'fog/openstack'
 
-## DIRTY MONKEY PATCH
-module Fog
-  module Metering
-    class OpenStack
-      class Real
-        def get_samples(meter_id, options = [])
-          data = {
-            'q' => []
-          }
-
-          options.each do |opt|
-            filter = {}
-
-            ['field', 'op', 'value'].each do |key|
-              filter[key] = opt[key] if opt[key]
-            end
-
-            data['q'] << filter unless filter.empty?
-            ## MAGIC
-            data['limit'] = 10000000
-          end
-
-          request(
-            :body    => Fog::JSON.encode(data),
-            :expects => 200,
-            :method  => 'GET',
-            :path    => "meters/#{meter_id}"
-          )
-        end
-      end
-    end
-  end
-end
-## DIRTY MONKEY PATCH
-
-
 settings = YAML.load_file("#{Rails.root}/config/openstack.yml")[Rails.env]
 
 OPENSTACK_ARGS = {
@@ -87,3 +51,43 @@ module OpenStackConnection
     end
   end
 end
+
+
+
+## DIRTY MONKEY PATCH
+
+OpenStackConnection.metering
+
+module Fog
+  module Metering
+    class OpenStack
+      class Real
+        def get_samples(meter_id, options = [])
+          data = {
+            'q' => []
+          }
+
+          options.each do |opt|
+            filter = {}
+
+            ['field', 'op', 'value'].each do |key|
+              filter[key] = opt[key] if opt[key]
+            end
+
+            data['q'] << filter unless filter.empty?
+            ## MAGIC
+            data['limit'] = 10000000
+          end
+
+          request(
+            :body    => Fog::JSON.encode(data),
+            :expects => 200,
+            :method  => 'GET',
+            :path    => "meters/#{meter_id}"
+          )
+        end
+      end
+    end
+  end
+end
+## DIRTY MONKEY PATCH
