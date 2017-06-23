@@ -1,37 +1,3 @@
-## DIRTY MONKEY PATCH
-module Fog
-  module Metering
-    class OpenStack
-      class Real
-        def get_samples(meter_id, options = [])
-          data = {
-            'q' => []
-          }
-
-          options.each do |opt|
-            filter = {}
-
-            ['field', 'op', 'value'].each do |key|
-              filter[key] = opt[key] if opt[key]
-            end
-
-            data['q'] << filter unless filter.empty?
-            data['limit'] = 10000000
-          end
-
-          request(
-            :body    => Fog::JSON.encode(data),
-            :expects => 200,
-            :method  => 'GET',
-            :path    => "meters/#{meter_id}"
-          )
-        end
-      end
-    end
-  end
-end
-## DIRTY MONKEY PATCH
-
 module Billing
   SECONDS_TO_HOURS = 3600.0
   SYNC_INTERVAL_MINUTES = 30
