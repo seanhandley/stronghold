@@ -5,5 +5,7 @@ module Billing
     validates :address, :project_id, :ip_type, :ip_id, presence: true
 
     belongs_to :billing_sync, :class_name => "Billing::Sync", :foreign_key => 'sync_id'
+
+    scope :active, -> { all.group_by(&:address).map{|_,occurences| occurences.sort_by(&:recorded_at).last} }
   end
 end
