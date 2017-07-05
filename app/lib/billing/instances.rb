@@ -62,6 +62,9 @@ module Billing
     end
 
     def self.create_new_states(project_id, instance_id, samples, sync)
+      samples.reject!{|s| s['resource_metadata']['event_type'] == "compute.instance.exists"}
+      return unless samples.any?
+
       first_sample_metadata = samples.first['resource_metadata']
       flavor_id = first_sample_metadata["instance_flavor_id"] ? first_sample_metadata["instance_flavor_id"] : first_sample_metadata["flavor.id"]
       billing_instance = Billing::Instance.find_by_instance_id(instance_id)
@@ -71,16 +74,6 @@ module Billing
           instance.name        = first_sample_metadata["display_name"]
           instance.flavor_id   = flavor_id
           instance.image_id    = first_sample_metadata["image_ref_url"].split('/').last
-        end
-        unless samples.any? && samples.any? {|sample| sample['resource_metadata']['event_type']}
-          # This is a new instance and we don't know its current state.
-          # Attempt to find out
-          if(os_instance = OpenStackConnection.compute.servers.get(instance_id))
-            billing_instance.instance_states.create recorded_at: Time.now, state: os_instance.state.downcase,
-                                            event_name: 'ping', billing_sync: sync,
-                                            message_id: SecureRandom.uuid,
-                                            flavor_id: os_instance.flavor['id']
-          end
         end
       end
       unless cached_flavor_ids.include?(flavor_id)
