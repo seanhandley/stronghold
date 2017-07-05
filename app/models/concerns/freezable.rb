@@ -1,5 +1,5 @@
+# This Freezable module is responsible for freezing server.
 module Freezable
-
   # Lock out of OpenStack, but leave instances and storage accessible
   def soft_freeze!
     disable_users_and_projects!
@@ -93,6 +93,18 @@ module Freezable
     end
   end
 
+  # def toggle_server(action)
+  #   instances.each do |instance_id, name, project|
+  #     begin
+  #       fog.action_server(instance_id)
+  #       print '.'
+  #     rescue StandardError => error
+  #       "Couldn't #{action} #{name} in project #{project}: #{error.message}"
+  #     end
+  #   end
+  # end
+  # Here I am trying to pass as an argumnent part of the name of the unpause_server method
+  # so this function can replace line 114-121 and 123-131
   def toggle_instances!(state)
     fog = OpenStackConnection.compute
     instances = projects.collect do |project|
@@ -103,8 +115,8 @@ module Freezable
         begin
           fog.unpause_server(instance_id)
           print '.'
-        rescue StandardError => e
-          "Couldn't unpause #{name} in project #{project}: #{e.message}"
+        rescue StandardError => error
+          "Couldn't unpause #{name} in project #{project}: #{error.message}"
         end
       end
     else
@@ -112,8 +124,8 @@ module Freezable
         begin
           fog.pause_server(instance_id)
           print '.'
-        rescue StandardError => e
-          "Couldn't pause #{name} in project #{project}: #{e.message}"
+        rescue StandardError => error
+          "Couldn't pause #{name} in project #{project}: #{error.message}"
         end
       end
     end

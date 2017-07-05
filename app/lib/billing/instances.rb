@@ -1,4 +1,5 @@
 module Billing
+  # This Instances module is responsible for  providing Instances info to the Billing Module.
   module Instances
 
     def self.sync!(from, to, sync)
@@ -22,7 +23,7 @@ module Billing
 
       instances = instances.collect do |instance|
         instance_flavor = instance.instance_flavor
-        
+
         {
           uuid: instance.instance_id,
           name: instance.name,
@@ -88,7 +89,7 @@ module Billing
                                          vcpus: first_sample_metadata['vcpus'])
         end
       end
-      
+
       # Catch renames
       if(billing_instance && first_sample_metadata && billing_instance.name != first_sample_metadata["display_name"])
         billing_instance.update_attributes(name: first_sample_metadata["display_name"])

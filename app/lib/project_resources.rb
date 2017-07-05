@@ -1,3 +1,4 @@
+# This ProjectResources class is responsible for managing projects networking resources.
 class ProjectResources
   using FogRefinements
   attr_reader :project_uuid
@@ -7,29 +8,30 @@ class ProjectResources
   end
 
   def create_default_network
-    n = fog_network.networks.create name: default_name,  tenant_id: project_uuid
-    s = fog_network.subnets.create  name: default_name,  cidr: default_cidr,
-                                    network_id: n.id,    ip_version: 4,
+    network = fog_network.networks.create name: default_name,  tenant_id: project_uuid
+    subnet = fog_network.subnets.create  name: default_name,  cidr: default_cidr,
+                                    network_id: network.id,    ip_version: 4,
                                     dns_nameservers:     default_dns,
                                     tenant_id:           project_uuid
 
     
 
-    r = fog_network.routers.create name: default_name,    tenant_id: project_uuid,
+
+    router = fog_network.routers.create name: default_name,    tenant_id: project_uuid,
                                    external_gateway_info: external_network.id
 
-    fog_network.add_router_interface(r.id, s.id)
+    fog_network.add_router_interface(router.id, subnet.id)
   end
 
   def destroy_default_network
     clear_router_gateways
-    routers.each  {|r| fog_network.delete_router(r)}
-    subnets.each  {|s| fog_network.delete_subnet(s)}
-    networks.each {|n| fog_network.delete_network(n)}
+    routers.each  { |router| fog_network.delete_router(router) }
+    subnets.each  { |subnet| fog_network.delete_subnet(subnet) }
+    networks.each { |network| fog_network.delete_network(network) }
   end
 
   def clear_router_gateways
-    floating_ips.each {|p| fog_network.disassociate_floating_ip(p)}
+    floating_ips.each { |ip| fog_network.disassociate_floating_ip(ip) }
     routers.each do |router|
       subnets.each do |subnet|
         begin
@@ -39,7 +41,7 @@ class ProjectResources
           # Ignore
         end
       end
-    end  
+    end
   end
 
   def reattach_router_gateways
@@ -52,7 +54,7 @@ class ProjectResources
           # Ignore
         end
       end
-    end 
+    end
   end
 
   private
@@ -66,7 +68,7 @@ class ProjectResources
   end
 
   def external_network
-    fog_network.networks.select{|n| n.router_external == true }.first
+    fog_network.networks.select{|network| network.router_external == true }.first
   end
 
   def filters
@@ -74,11 +76,11 @@ class ProjectResources
   end
 
   def routers
-    fog_network.list_routers(filters).body['routers'].map{|r|   r['id']}
+    fog_network.list_routers(filters).body['routers'].map{ |router|   router['id'] }
   end
 
   def subnets
-    fog_network.list_subnets(filters).body['subnets'].map{|s|   s['id']}
+    fog_network.list_subnets(filters).body['subnets'].map{ |subnet|   subnet['id'] }
   end
 
   def ports
@@ -86,11 +88,11 @@ class ProjectResources
   end
 
   def networks
-    fog_network.list_networks(filters).body['networks'].map{|n| n['id']}
+    fog_network.list_networks(filters).body['networks'].map{ |network| network['id'] }
   end
 
   def floating_ips
-    fog_network.list_floating_ips.body['floatingips'].map{|n| n['id']}
+    fog_network.list_floating_ips.body['floatingips'].map{ |network| network['id'] }
   end
 
   def fog_network

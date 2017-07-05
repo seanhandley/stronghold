@@ -1,3 +1,4 @@
+# This Reaper class is responsible for
 class Reaper
   def ips
     @ips ||= OpenStackConnection.network.floating_ips

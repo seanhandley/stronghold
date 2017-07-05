@@ -1,3 +1,4 @@
+# The Organization class is responsible for creating the Organization object
 class Organization < ApplicationRecord
   include StripeHelper
   include Freezable
@@ -40,11 +41,11 @@ class Organization < ApplicationRecord
   end
 
   after_create :generate_reference, :generate_reporting_code, :update_search_tokens
-  before_save :check_limited_storage, :if => Proc.new{|o| o.limited_storage_changed? }
+  before_save :check_limited_storage, :if => Proc.new{|org| org.limited_storage_changed? }
 
   validates :name, length: {minimum: 1}, allow_blank: false
-  validates :reference,      :uniqueness => true, :if => Proc.new{|o| o.reference.present? }
-  validates :reporting_code, :uniqueness => true, :if => Proc.new{|o| o.reporting_code.present? }
+  validates :reference,      :uniqueness => true, :if => Proc.new{|org| org.reference.present? }
+  validates :reporting_code, :uniqueness => true, :if => Proc.new{|org| org.reporting_code.present? }
 
   has_many :roles, dependent: :destroy
   has_many :invites, dependent: :destroy
@@ -67,7 +68,7 @@ class Organization < ApplicationRecord
   scope :self_service,          -> { where(self_service: true) }
   scope :pending,               -> { where(state: 'fresh')}
   scope :frozen,                -> { where(state: 'frozen')}
-  scope :pending_without_users, -> { all.select{|o| o.fresh? && o.users.count == 0}}
+  scope :pending_without_users, -> { all.select{|org| org.fresh? && org.users.count == 0}}
 
   serialize :quota_limit
 
@@ -152,9 +153,9 @@ class Organization < ApplicationRecord
 
   def active_vouchers(from_date, to_date)
     return [] if from_date > to_date
-    organization_vouchers.select do |v|
-      (from_date < v.updated_at && to_date >= v.updated_at) ||
-      (from_date < v.expires_at && to_date >= v.expires_at)
+    organization_vouchers.select do |voucher|
+      (from_date < voucher.updated_at && to_date >= voucher.updated_at) ||
+      (from_date < voucher.expires_at && to_date >= voucher.expires_at)
     end
   end
 
@@ -186,11 +187,11 @@ class Organization < ApplicationRecord
     else
       update_column(:reference, new_ref)
       begin
-        t = projects.create! name: "#{reference}_primary"
+        tenant = projects.create! name: "#{reference}_primary"
       rescue ActiveRecord::RecordNotSaved
-        t = projects.create! name: "#{SecureRandom.hex.slice(0,16)}_primary"
+        tenant = projects.create! name: "#{SecureRandom.hex.slice(0,16)}_primary"
       end
-      update_column(:primary_project_id, t.id)
+      update_column(:primary_project_id, tenant.id)
     end
   end
 

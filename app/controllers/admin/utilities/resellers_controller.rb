@@ -1,5 +1,6 @@
 module Admin
   module Utilities
+    # This ResellersController class is responsible for supplying plattform stats fot hte view. 
     class ResellersController < UtilitiesBaseController
       include ActionView::Helpers::NumberHelper
 

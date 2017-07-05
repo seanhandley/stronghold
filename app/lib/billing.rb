@@ -1,3 +1,4 @@
+# This module Billing is responsible for meassuring usage to bill customers.
 module Billing
   SECONDS_TO_HOURS = 3600.0
   SYNC_INTERVAL_MINUTES = 30
@@ -49,8 +50,8 @@ module Billing
 
   def self.cached_projects
     Rails.cache.fetch('cached_project_info', expires_in: 5.minutes) do
-      Project.includes(:organization).pluck("projects.uuid", "projects.name", "organizations.name").inject({}) do |hash, e|
-        hash[e[0]] = {project_name: e[1], organization_name: e[2]}
+      Project.includes(:organization).pluck("projects.uuid", "projects.name", "organizations.name").inject({}) do |hash, example|
+        hash[e[0]] = {project_name: example[1], organization_name: example[2]}
         hash
       end
     end
@@ -61,7 +62,7 @@ module Billing
       Billing.logger.info "Extracting #{measurement} samples from cache for #{project[:organization_name]} (Project: #{project[:project_name]})..."
     end
     project_samples = fetch_all_samples(measurement, from, to)[project_id]
-    project_samples ? project_samples.group_by{|s| s['resource_id']} : {}
+    project_samples ? project_samples.group_by{|sample| sample['resource_id']} : {}
   end
 
   def self.memoized_samples
@@ -80,7 +81,7 @@ module Billing
         options = [{'field' => 'timestamp', 'op' => 'ge', 'value' => from.utc.strftime(timestamp_format)},
                    {'field' => 'timestamp', 'op' => 'lt', 'value' => to.utc.strftime(timestamp_format)}]
         project_samples = OpenStackConnection.metering.get_samples(measurement, options).body
-        project_samples.group_by{|s| s['project_id']}
+        project_samples.group_by{|sample| sample['project_id']}
       end
     end
     memoized_samples[key]
@@ -94,7 +95,7 @@ module Billing
 
     instance_events = OpenStackConnection.metering.get_samples('instance', options).body
     return [] unless instance_events
-    instance_events.collect{|i| i['resource_metadata']['event_type'] ? [i['resource_metadata']['event_type'], i['recorded_at']] : nil}.compact.reverse
+    instance_events.collect{|instance| instance['resource_metadata']['event_type'] ? [instance['resource_metadata']['event_type'], instance['recorded_at']] : nil}.compact.reverse
   end
 
   def self.timestamp_format

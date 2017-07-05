@@ -1,4 +1,5 @@
 module Reports
+  # This module is responsible for generating usage reports
   class UsageReport
 
     attr_reader :from, :to
