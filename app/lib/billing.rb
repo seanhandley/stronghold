@@ -90,11 +90,9 @@ module Billing
   def self.fetch_raw_events_for_instance(instance, from, to)
     options = [{'field' => 'timestamp', 'op' => 'ge', 'value' => from.utc.strftime(timestamp_format)},
                      {'field' => 'timestamp', 'op' => 'lt', 'value' => to.utc.strftime(timestamp_format)},
-                     {'field' => 'project_id', 'op' => 'eq', 'value' => instance.project_id}]
+                     {'field' => 'resource_id', 'type' => 'string', 'op' => 'eq', 'value' => instance.instance_id}]
 
-    instance_usage = OpenStackConnection.metering.get_samples('instance', options).body
-    grouped_results = instance_usage.group_by{|s| s['resource_id']}
-    instance_events = grouped_results[instance.instance_id]
+    instance_events = OpenStackConnection.metering.get_samples('instance', options).body
     return [] unless instance_events
     instance_events.collect{|i| i['resource_metadata']['event_type'] ? [i['resource_metadata']['event_type'], i['recorded_at']] : nil}.compact.reverse
   end
