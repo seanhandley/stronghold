@@ -33,6 +33,7 @@
     = render partial: 'admin/usage/results/load_balancers',  locals: { project_uuid: project[:id], load_balancers:  project[:usage][:load_balancers] }
     = render partial: 'admin/usage/results/vpn_connections', locals: { project_uuid: project[:id], vpn_connections: project[:usage][:vpns]           }
 
+- else
   %h3
     %em No usage data collected yet.
 
