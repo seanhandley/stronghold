@@ -62,6 +62,7 @@ module Billing
     end
 
     def remove_blob
+      conn
       AWS::S3::S3Object.delete(object_uuid, bucket)
     rescue StandardError => ex
       Honeybadger.notify(ex)
