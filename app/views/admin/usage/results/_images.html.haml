@@ -27,14 +27,14 @@
               %td= image[:id]
               %td= image[:created_at]
               %td
-                = image[:latest_size].round(2)
+                = image[:latest_size_gb].round(2)
                 GB
               %td= image[:deleted_at] ? image[:deleted_at] : '-'
               %td
-                = number_with_delimiter(image[:terabyte_hours], :delimiter => ',')
+                = number_with_delimiter(image[:usage].sum{|u| u[:value]}, :delimiter => ',')
                 TBh
               - if current_organization.show_costs?
-                %td== £#{number_with_precision(image[:cost], :delimiter => ',', :separator => '.', :precision => 4)}
+                %td== £#{number_with_precision(image[:usage].sum{|u| u[:cost][:value]}, :delimiter => ',', :separator => '.', :precision => 2)}
           %tr.highlight.bottomline
             %td &nbsp;
             %td &nbsp
@@ -43,9 +43,9 @@
             %td &nbsp
             %td Total:
             %td
-              = number_with_delimiter(images.collect{|v| v[:terabyte_hours]}.sum.round(2), :delimiter => ',')
+              = number_with_delimiter(images.sum{|i| i[:usage].sum{|u| u[:value]}}.round(2), :delimiter => ',')
               TBh
             - if current_organization.show_costs?
               %td
-                == £#{number_with_precision(@usage_decorator.image_total(project.id), :delimiter => ',', :separator => '.', :precision => 2)}
+                == £#{number_with_precision(@usage_decorator.image_total(project_uuid), :delimiter => ',', :separator => '.', :precision => 2)}
 

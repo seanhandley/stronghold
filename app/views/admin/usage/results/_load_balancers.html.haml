@@ -23,13 +23,13 @@
             %tr
               %td &nbsp;
               %td= lb[:name]
-              %td= lb[:lb_id]
+              %td= lb[:id]
               %td= lb[:started_at]
               %td= lb[:terminated_at] ? lb[:terminated_at] : '-'
               %td
-                == #{number_with_delimiter(lb[:hours], :delimiter => ',')} of #{@total_hours}
+                == #{number_with_delimiter(lb[:usage].sum{|u| u[:value]}, :delimiter => ',')} of #{@total_hours}
               - if current_organization.show_costs?
-                %td== £#{number_with_precision(lb[:cost], :delimiter => ',', :separator => '.', :precision => 4)}
+                %td== £#{number_with_precision(lb[:usage].sum{|u| u[:cost][:value]}, :delimiter => ',', :separator => '.', :precision => 2)}
           %tr.highlight.bottomline
             %td &nbsp
             %td &nbsp
@@ -37,9 +37,9 @@
             %td &nbsp;
             %td Total:
             %td
-              = number_with_delimiter(load_balancers.collect{|v| v[:hours]}.sum, :delimiter => ',')
+              = number_with_delimiter(load_balancers.sum{|lb| lb[:usage].sum{|u| u[:value]}}, :delimiter => ',')
               hours
             - if current_organization.show_costs?
               %td
-                == £#{number_with_precision(@usage_decorator.load_balancer_total(project.id), :delimiter => ',', :separator => '.', :precision => 2)}
+                == £#{number_with_precision(@usage_decorator.load_balancer_total(project_uuid), :delimiter => ',', :separator => '.', :precision => 2)}
 

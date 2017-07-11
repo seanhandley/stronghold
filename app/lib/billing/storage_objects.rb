@@ -25,7 +25,20 @@ module Billing
         last = measurement
         gb * seconds
       end.sum
-      gbs / 3_600_000.0
+      tbh = (gbs / 3_600_000.0)
+      {
+        usage: [
+          {
+            cost: {
+              currency: 'gbp',
+              rate: RateCard.object_storage,
+              value: (tbh * RateCard.object_storage).nearest_penny
+            },
+            unit: 'terabyte hours',
+            value: tbh.round(3)
+          }
+        ]
+      }
     end
 
   end

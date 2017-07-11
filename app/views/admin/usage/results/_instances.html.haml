@@ -4,11 +4,11 @@
     .table-responsive
       %table.table.table-hover.phone-bill
         %tbody
-          - instances.group_by{|i| i[:flavor][:flavor_id]}.each do |flavor_id, instances|
+          - instances.group_by{|i| i[:current_flavor][:id]}.each do |flavor_id, instances|
             %tr.highlight
               %td.icon
                 %i.fa.fa-rocket
-              %td== Flavor: #{instances.first[:flavor][:name]}
+              %td== Flavor: #{instances.first[:current_flavor][:name]}
               %td Unique Identifier
               %td First Booted
               %td Status
@@ -28,32 +28,32 @@
               %td.line_entry
               - if current_organization.show_costs?
                 %td.line_entry
-            - instances.sort { |x,y| x[:name] <=> y[:name] }.each do |instance|
+            - instances.sort_by{|i| i[:name]}.each do |instance|
               %tr
                 %td.line_entry
-                  - if instance[:windows]
+                  - if instance[:tags].include? 'windows'
                     %i.fa.fa-windows{title: 'Windows Instance †'}
                   &nbsp;
                 %td.line_entry= instance[:name]
-                %td.line_entry= instance[:uuid]
+                %td.line_entry= instance[:id]
                 %td.line_entry= instance[:first_booted_at]
                 %td.line_entry= state_with_icon(instance[:latest_state])
                 %td.line_entry= (instance[:terminated_at] && instance[:terminated_at] <= @to_date) ? instance[:terminated_at] : '-'
                 %td.line_entry
                   %i.fa.fa-clock-o
-                  == #{number_with_delimiter(instance[:total_hours], :delimiter => ',')} of #{@total_hours}
+                  == #{number_with_delimiter(instance[:usage].sum{|u| u[:value]}, :delimiter => ',')} of #{@total_hours}
                 - if current_organization.show_costs?
-                  %td.line_entry== £#{number_with_precision(instance[:cost], :delimiter => ',', :separator => '.', :precision => 4)}
+                  %td.line_entry== £#{number_with_precision(instance[:usage].sum{|u| u[:cost][:value]}, :delimiter => ',', :separator => '.', :precision => 2)}
             %tr.highlight.bottomline
               %td &nbsp;
               %td &nbsp;
               %td &nbsp;
               %td &nbsp;
               %td &nbsp;
-              %td== Total #{instances.first[:flavor][:name]}:
-              %td== #{number_with_delimiter(instances.map{|i| i[:total_hours]}.sum, :delimiter => ',')} hours
+              %td== Total #{instances.first[:current_flavor][:name]}:
+              %td== #{number_with_delimiter(instances.sum{|i| i[:usage].sum{|u| u[:value]}}, :delimiter => ',')} hours
               - if current_organization.show_costs?
-                %td== £#{number_with_precision(@usage_decorator.instance_total(project.id, flavor_id), :delimiter => ',', :separator => '.', :precision => 2)}
+                %td== £#{number_with_precision(@usage_decorator.instance_total(project_uuid, flavor_id), :delimiter => ',', :separator => '.', :precision => 2)}
             %tr
               %td &nbsp;
               %td &nbsp;

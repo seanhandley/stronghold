@@ -10,20 +10,17 @@
     %strong Total:
     == £#{number_with_precision(@grand_total, :delimiter => ',', :separator => '.', :precision => 2)}
 
-  - @usage.each do |project, results|
+  - @usage[:projects].each do |project|
     %hr
     %h2
       %strong Project:
-      = project.name
+      = project[:name]
 
-    = render partial: 'admin/usage/results/vouchers',  locals: { vouchers: @active_vouchers }
-    = render partial: 'admin/usage/results/instances', locals: { project: project, instances:        results[:instance_usage]            }
-    = render partial: 'admin/usage/results/volumes',   locals: { project: project, volumes:           results[:volume_usage]              }
-    = render partial: 'admin/usage/results/images',    locals: { project: project, images:            results[:image_usage]             }
-    = render partial: 'admin/usage/results/objects',   locals: { project: project, tbh:               results[:object_storage_usage]   }
-    = render partial: 'admin/usage/results/ips',       locals: { ip_quotas:         results[:ip_quota_usage],
-                                                                 ip_quota_total:    results[:ip_quota_total],
-                                                                 external_gateways: @external_gateway_results,
-                                                                 project:           project                     }
-    = render partial: 'admin/usage/results/load_balancers',      locals: { load_balancers:  results[:load_balancer_usage], project: project }
-    = render partial: 'admin/usage/results/vpn_connections',     locals: { vpn_connections: results[:vpn_connection_usage], project: project }
+    = render partial: 'admin/usage/results/vouchers',        locals: { vouchers:     @active_vouchers                                                }
+    = render partial: 'admin/usage/results/instances',       locals: { project_uuid: project[:id], instances:         project[:usage][:instances]    }
+    = render partial: 'admin/usage/results/volumes',         locals: { project_uuid: project[:id], volumes:           project[:usage][:volumes]      }
+    = render partial: 'admin/usage/results/images',          locals: { project_uuid: project[:id], images:            project[:usage][:images]       }
+    = render partial: 'admin/usage/results/objects',         locals: { tbh:          project[:usage][:object_storage][:usage].sum{|u| u[:value]}     }
+    = render partial: 'admin/usage/results/ips',             locals: { ips:          project[:usage][:ips]                                           }
+    = render partial: 'admin/usage/results/load_balancers',  locals: { project_uuid: project[:id], load_balancers:  project[:usage][:load_balancers] }
+    = render partial: 'admin/usage/results/vpn_connections', locals: { project_uuid: project[:id], vpn_connections: project[:usage][:vpns]           }

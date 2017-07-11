@@ -31,13 +31,23 @@ module Billing
         finish = vpn.terminated_at ? [vpn.terminated_at, to].min : to
         hours = ((finish - start) / (60 ** 2)).ceil
         {
-          vpn_connection_id: vpn.vpn_connection_id,
+          id: vpn.vpn_connection_id,
           name:  vpn.name,
           started_at: vpn.started_at,
           terminated_at: vpn.terminated_at,
-          hours: hours,
-          cost:  (hours * RateCard.vpn_connection).nearest_penny,
-          owner: vpn.user_id
+          owner: vpn.user_id,
+          usage: [
+            {
+              unit: 'hours',
+              value: hours,
+              cost: {
+                currency: 'gbp',
+                value: (hours * RateCard.vpn_connection).nearest_penny.round(2),
+                rate: RateCard.vpn_connection
+              },
+              meta: {}
+            }
+          ]
         }
       end
     end

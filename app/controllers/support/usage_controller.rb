@@ -26,15 +26,6 @@ module Support
                                            year: @year, month: @month).first&.updated_at
 
       respond_to do |format|
-        format.json {
-          render json: usage_data_as_json(@usage, @usage_decorator.grand_total)
-        }
-        format.xml {
-          render xml: usage_data_as_xml(@usage, @usage_decorator.grand_total)
-        }
-        format.csv {
-          render text: usage_data_as_csv(@usage)
-        }
         format.html
       end
     end

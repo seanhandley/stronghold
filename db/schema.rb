@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170605091157) do
+ActiveRecord::Schema.define(version: 20170705084827) do
 
   create_table "api_credentials", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "user_id"
@@ -196,7 +196,7 @@ ActiveRecord::Schema.define(version: 20170605091157) do
   end
 
   create_table "billing_volume_states", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
-    t.datetime "recorded_at", precision: 3
+    t.datetime "recorded_at",       precision: 3
     t.string   "event_name"
     t.integer  "size"
     t.integer  "volume_id"
@@ -204,6 +204,10 @@ ActiveRecord::Schema.define(version: 20170605091157) do
     t.integer  "sync_id"
     t.string   "volume_type"
     t.string   "user_id"
+    t.integer  "previous_state_id"
+    t.integer  "next_state_id"
+    t.index ["next_state_id"], name: "index_billing_volume_states_on_next_state_id", using: :btree
+    t.index ["previous_state_id"], name: "index_billing_volume_states_on_previous_state_id", using: :btree
     t.index ["recorded_at"], name: "index_billing_volume_states_on_recorded_at", using: :btree
     t.index ["sync_id"], name: "volume_syncs", using: :btree
     t.index ["volume_id"], name: "volume_states", using: :btree
@@ -300,12 +304,12 @@ ActiveRecord::Schema.define(version: 20170605091157) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "time_zone",                        default: "London", null: false
-    t.string   "locale",                           default: "en",     null: false
+    t.string   "time_zone",                                    default: "London",              null: false
+    t.string   "locale",                                       default: "en",                  null: false
     t.integer  "primary_project_id"
     t.datetime "started_paying_at"
     t.string   "stripe_customer_id"
-    t.boolean  "self_service",                     default: true,     null: false
+    t.boolean  "self_service",                                 default: true,                  null: false
     t.string   "salesforce_id"
     t.string   "billing_address1"
     t.string   "billing_address2"
@@ -314,20 +318,19 @@ ActiveRecord::Schema.define(version: 20170605091157) do
     t.string   "billing_country"
     t.string   "phone"
     t.integer  "customer_signup_id"
-    t.string   "state",                            default: "active", null: false
-    t.boolean  "disabled",                         default: false,    null: false
-    t.boolean  "test_account",                     default: false,    null: false
+    t.string   "state",                                        default: "active",              null: false
+    t.boolean  "disabled",                                     default: false,                 null: false
+    t.boolean  "test_account",                                 default: false,                 null: false
     t.string   "reporting_code"
-    t.boolean  "limited_storage",                  default: false,    null: false
-    t.integer  "projects_limit",                   default: 1,        null: false
-    t.float    "weekly_spend",       limit: 24,    default: 0.0,      null: false
-    t.text     "quota_limit",        limit: 65535
+    t.boolean  "limited_storage",                              default: false,                 null: false
+    t.integer  "projects_limit",                               default: 1,                     null: false
+    t.float    "weekly_spend",                   limit: 24,    default: 0.0,                   null: false
+    t.text     "quota_limit",                    limit: 65535
     t.string   "billing_contact"
-    t.boolean  "bill_automatically",               default: true,     null: false
+    t.boolean  "bill_automatically",                           default: true,                  null: false
     t.string   "technical_contact"
-    t.boolean  "slow_jobs",                        default: false,    null: false
-    t.boolean  "track_usage",                      default: true,     null: false
-    t.datetime "last_alerted_for_low_quotas_at"
+    t.boolean  "slow_jobs",                                    default: false,                 null: false
+    t.boolean  "track_usage",                                  default: true,                  null: false
     t.datetime "last_alerted_for_low_quotas_at",               default: '1970-01-01 01:00:00'
     t.index ["reporting_code"], name: "index_organizations_on_reporting_code", unique: true, using: :btree
     t.index ["state"], name: "index_organizations_on_state", using: :btree

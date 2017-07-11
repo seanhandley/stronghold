@@ -107,16 +107,22 @@ module Billing
     end
 
     def cost_by_flavor(from, to)
-      Hash[billable_hours(from, to).map {|flavor, hours|
-        begin
-          product_id = Salesforce.find_instance_product(flavor, windows: Windows.billable?(self))['salesforce_id']
-          price = Salesforce::Product.all[product_id][:price]
+      Hash[
+        billable_hours(from, to).map do |flavor, hours|
+          price = rate_for_flavor(flavor)
           [flavor, price * hours]
-        rescue StandardError => e
-          Honeybadger.notify(StandardError.new("No flavor: #{flavor}"))
-          nil
         end
-      }.compact]
+      ]
+    end
+
+    def rate_for_flavor(flavor_id)
+      begin
+        product_id = Salesforce.find_instance_product(flavor_id, windows: Windows.billable?(self))['salesforce_id']
+        price = Salesforce::Product.all[product_id][:price]
+      rescue StandardError => e
+        Honeybadger.notify(StandardError.new("No flavor: #{flavor_id}"))
+        0
+      end
     end
 
     def latest_state(from, to)

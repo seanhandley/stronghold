@@ -28,15 +28,15 @@
               %td= volume[:id]
               %td= volume[:created_at]
               %td
-                = volume[:latest_size]
+                = volume[:latest_size_gb]
                 GB
               %td= volume[:deleted_at] ? volume[:deleted_at] : '-'
-              %td= volume[:volume_type_name] ? volume[:volume_type_name]  : '-'
+              %td= volume[:tags].include?('ssd') ? 'SSD'  : '-'
               %td
-                = number_with_delimiter(volume[:terabyte_hours], :delimiter => ',')
+                = number_with_delimiter(volume[:usage].sum{|u| u[:value]}.round(4), :delimiter => ',')
                 TBh
               - if current_organization.show_costs?
-                %td== £#{number_with_precision(volume[:cost], :delimiter => ',', :separator => '.', :precision => 4)}
+                %td== £#{number_with_precision(volume[:usage].sum{|u| u[:cost][:value]}.nearest_penny, :delimiter => ',', :separator => '.', :precision => 2)}
           %tr.highlight.bottomline
             %td &nbsp
             %td &nbsp
@@ -46,9 +46,9 @@
             %td &nbsp;
             %td Total:
             %td
-              = number_with_delimiter(volumes.collect{|v| v[:terabyte_hours]}.sum.round(2), :delimiter => ',')
+              = number_with_delimiter(volumes.sum{|i| i[:usage].sum{|u| u[:value]}}.round(2), :delimiter => ',')
               TBh
             - if current_organization.show_costs?
               %td
-                == £#{number_with_precision(@usage_decorator.volume_total(project.id), :delimiter => ',', :separator => '.', :precision => 2)}
+                == £#{number_with_precision(@usage_decorator.volume_total(project_uuid), :delimiter => ',', :separator => '.', :precision => 2)}
 

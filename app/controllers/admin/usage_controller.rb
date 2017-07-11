@@ -22,10 +22,6 @@ module Admin
         @to_date, @from_date = to_date, from_date
 
         case params[:format].try :downcase
-        when 'json'
-          render json: usage_data_as_json(@usage, @usage_decorator.grand_total)
-        when 'xml'
-          render xml: usage_data_as_xml(@usage, @usage_decorator.grand_total)
         when 'csv'
           headers['Content-Type'] ||= 'text/csv'
           render text: usage_data_as_csv(@usage)

@@ -4,11 +4,11 @@ http_interactions:
     method: put
     uri: https://storage.datacentred.io/stronghold_usage/3a6a220de-9a92-4320-803a-5fa95492386
     body:
-      encoding: ASCII-8BIT
-      string: "\x04\b{\x06:\fcomplexU:\x0FOpenStruct{\x06:\bfooI\"\bbar\x06:\x06ET"
+      encoding: UTF-8
+      string: '{"complex":{"foo":"bar"}}'
     headers:
       Content-Type:
-      - application/octet-stream
+      - application/json
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -16,26 +16,26 @@ http_interactions:
       User-Agent:
       - Ruby
       Date:
-      - Wed, 07 Dec 2016 09:37:00 GMT
+      - Tue, 13 Jun 2017 11:59:06 GMT
       Authorization:
-      - AWS I9860H3V0MMNO5B3FQSX:i2XUWRO0Qh70lirE2dXbASb3pFg=
+      - AWS I9860H3V0MMNO5B3FQSX:3CAXIsuXKEmYc/lZxtOkmWQhnXc=
       Content-Length:
-      - '44'
+      - '25'
   response:
     status:
       code: 200
       message: OK
     headers:
       Date:
-      - Wed, 07 Dec 2016 09:36:55 GMT
+      - Tue, 13 Jun 2017 11:59:06 GMT
       Server:
       - Apache/2.4.7 (Ubuntu)
       Etag:
-      - '"47c943f59600069ee4b826c1eaf204b3"'
+      - '"c94cf98f6e1072a4d996eefc70c765cc"'
       Accept-Ranges:
       - bytes
       X-Amz-Request-Id:
-      - tx000000000000000426efd-005847d837-899badb-uk-sal01
+      - tx00000000000000005c6a9-00593fd38a-e6a31a3-uk-sal01
       Content-Length:
       - '0'
       Strict-Transport-Security:
@@ -44,10 +44,10 @@ http_interactions:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Wed, 07 Dec 2016 09:37:00 GMT
+  recorded_at: Tue, 13 Jun 2017 11:59:06 GMT
 - request:
     method: get
-    uri: https://storage.datacentred.io/stronghold_usage/3a6a220de-9a92-4320-803a-5fa95492386?AWSAccessKeyId=I9860H3V0MMNO5B3FQSX&Expires=1481103720&Signature=74yP/oN90V28Ry0XzOCSDc0ZIIE=
+    uri: https://storage.datacentred.io/stronghold_usage/3a6a220de-9a92-4320-803a-5fa95492386?AWSAccessKeyId=I9860H3V0MMNO5B3FQSX&Expires=1497355447&Signature=cJ2lXQ8HJKtfodx5EVMS4VXRlzE=
     body:
       encoding: US-ASCII
       string: ''
@@ -64,31 +64,33 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 07 Dec 2016 09:36:55 GMT
+      - Tue, 13 Jun 2017 11:59:07 GMT
       Server:
       - Apache/2.4.7 (Ubuntu)
       Accept-Ranges:
       - bytes
       Last-Modified:
-      - Wed, 07 Dec 2016 09:36:55 GMT
+      - Tue, 13 Jun 2017 11:59:06 GMT
       Etag:
-      - '"47c943f59600069ee4b826c1eaf204b3"'
+      - '"c94cf98f6e1072a4d996eefc70c765cc"'
       X-Amz-Request-Id:
-      - tx000000000000000426f56-005847d837-8949e01-uk-sal01
-      Content-Length:
-      - '44'
+      - tx00000000000000005c667-00593fd38b-e1c7939-uk-sal01
+      Vary:
+      - Accept-Encoding
+      Transfer-Encoding:
+      - chunked
       Content-Type:
-      - application/octet-stream
+      - application/json
       Strict-Transport-Security:
       - max-age=31536000
     body:
-      encoding: UTF-8
-      string: "\x04\b{\x06:\fcomplexU:\x0FOpenStruct{\x06:\bfooI\"\bbar\x06:\x06ET"
+      encoding: ASCII-8BIT
+      string: '{"complex":{"foo":"bar"}}'
     http_version: 
-  recorded_at: Wed, 07 Dec 2016 09:37:00 GMT
+  recorded_at: Tue, 13 Jun 2017 11:59:07 GMT
 - request:
     method: get
-    uri: https://storage.datacentred.io/stronghold_usage/3a6a220de-9a92-4320-803a-5fa95492386?AWSAccessKeyId=I9860H3V0MMNO5B3FQSX&Expires=1481103720&Signature=74yP/oN90V28Ry0XzOCSDc0ZIIE=
+    uri: https://storage.datacentred.io/stronghold_usage/3a6a220de-9a92-4320-803a-5fa95492386?AWSAccessKeyId=I9860H3V0MMNO5B3FQSX&Expires=1497355447&Signature=cJ2lXQ8HJKtfodx5EVMS4VXRlzE=
     body:
       encoding: US-ASCII
       string: ''
@@ -105,37 +107,39 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 07 Dec 2016 09:36:55 GMT
+      - Tue, 13 Jun 2017 11:59:07 GMT
       Server:
       - Apache/2.4.7 (Ubuntu)
       Accept-Ranges:
       - bytes
       Last-Modified:
-      - Wed, 07 Dec 2016 09:36:55 GMT
+      - Tue, 13 Jun 2017 11:59:06 GMT
       Etag:
-      - '"47c943f59600069ee4b826c1eaf204b3"'
+      - '"c94cf98f6e1072a4d996eefc70c765cc"'
       X-Amz-Request-Id:
-      - tx000000000000000426efe-005847d837-899badb-uk-sal01
-      Content-Length:
-      - '44'
+      - tx00000000000000005c6aa-00593fd38b-e6a31a3-uk-sal01
+      Vary:
+      - Accept-Encoding
+      Transfer-Encoding:
+      - chunked
       Content-Type:
-      - application/octet-stream
+      - application/json
       Strict-Transport-Security:
       - max-age=31536000
     body:
-      encoding: UTF-8
-      string: "\x04\b{\x06:\fcomplexU:\x0FOpenStruct{\x06:\bfooI\"\bbar\x06:\x06ET"
+      encoding: ASCII-8BIT
+      string: '{"complex":{"foo":"bar"}}'
     http_version: 
-  recorded_at: Wed, 07 Dec 2016 09:37:00 GMT
+  recorded_at: Tue, 13 Jun 2017 11:59:07 GMT
 - request:
     method: put
     uri: https://storage.datacentred.io/stronghold_usage/3a6a220de-9a92-4320-803a-5fa95492386
     body:
-      encoding: ASCII-8BIT
-      string: "\x04\b{\x06:\x0EsomethingI\"\telse\x06:\x06ET"
+      encoding: UTF-8
+      string: '{"something":"else"}'
     headers:
       Content-Type:
-      - application/octet-stream
+      - application/json
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -143,26 +147,26 @@ http_interactions:
       User-Agent:
       - Ruby
       Date:
-      - Wed, 07 Dec 2016 09:37:00 GMT
+      - Tue, 13 Jun 2017 11:59:07 GMT
       Authorization:
-      - AWS I9860H3V0MMNO5B3FQSX:i2XUWRO0Qh70lirE2dXbASb3pFg=
+      - AWS I9860H3V0MMNO5B3FQSX:0ZItAHbOfjKnuUOsfSjV0A13ycg=
       Content-Length:
-      - '27'
+      - '20'
   response:
     status:
       code: 200
       message: OK
     headers:
       Date:
-      - Wed, 07 Dec 2016 09:36:55 GMT
+      - Tue, 13 Jun 2017 11:59:07 GMT
       Server:
       - Apache/2.4.7 (Ubuntu)
       Etag:
-      - '"2d0a637a675b4fc8bead36af29481ea6"'
+      - '"1521cb63d9db1054200045580ee5422a"'
       Accept-Ranges:
       - bytes
       X-Amz-Request-Id:
-      - tx000000000000000426f57-005847d837-8949e01-uk-sal01
+      - tx00000000000000005c668-00593fd38b-e1c7939-uk-sal01
       Content-Length:
       - '0'
       Strict-Transport-Security:
@@ -171,10 +175,10 @@ http_interactions:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Wed, 07 Dec 2016 09:37:00 GMT
+  recorded_at: Tue, 13 Jun 2017 11:59:08 GMT
 - request:
     method: get
-    uri: https://storage.datacentred.io/stronghold_usage/3a6a220de-9a92-4320-803a-5fa95492386?AWSAccessKeyId=I9860H3V0MMNO5B3FQSX&Expires=1481103720&Signature=74yP/oN90V28Ry0XzOCSDc0ZIIE=
+    uri: https://storage.datacentred.io/stronghold_usage/3a6a220de-9a92-4320-803a-5fa95492386?AWSAccessKeyId=I9860H3V0MMNO5B3FQSX&Expires=1497355448&Signature=42lbSs4Cf1TUTAy1/8bemmA4TCE=
     body:
       encoding: US-ASCII
       string: ''
@@ -191,31 +195,33 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 07 Dec 2016 09:36:56 GMT
+      - Tue, 13 Jun 2017 11:59:08 GMT
       Server:
       - Apache/2.4.7 (Ubuntu)
       Accept-Ranges:
       - bytes
       Last-Modified:
-      - Wed, 07 Dec 2016 09:36:55 GMT
+      - Tue, 13 Jun 2017 11:59:07 GMT
       Etag:
-      - '"2d0a637a675b4fc8bead36af29481ea6"'
+      - '"1521cb63d9db1054200045580ee5422a"'
       X-Amz-Request-Id:
-      - tx000000000000000426eff-005847d838-899badb-uk-sal01
-      Content-Length:
-      - '27'
+      - tx00000000000000005c669-00593fd38c-e1c7939-uk-sal01
+      Vary:
+      - Accept-Encoding
+      Transfer-Encoding:
+      - chunked
       Content-Type:
-      - application/octet-stream
+      - application/json
       Strict-Transport-Security:
       - max-age=31536000
     body:
-      encoding: UTF-8
-      string: "\x04\b{\x06:\x0EsomethingI\"\telse\x06:\x06ET"
+      encoding: ASCII-8BIT
+      string: '{"something":"else"}'
     http_version: 
-  recorded_at: Wed, 07 Dec 2016 09:37:00 GMT
+  recorded_at: Tue, 13 Jun 2017 11:59:08 GMT
 - request:
     method: get
-    uri: https://storage.datacentred.io/stronghold_usage/3a6a220de-9a92-4320-803a-5fa95492386?AWSAccessKeyId=I9860H3V0MMNO5B3FQSX&Expires=1481103720&Signature=74yP/oN90V28Ry0XzOCSDc0ZIIE=
+    uri: https://storage.datacentred.io/stronghold_usage/3a6a220de-9a92-4320-803a-5fa95492386?AWSAccessKeyId=I9860H3V0MMNO5B3FQSX&Expires=1497355448&Signature=42lbSs4Cf1TUTAy1/8bemmA4TCE=
     body:
       encoding: US-ASCII
       string: ''
@@ -232,28 +238,30 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 07 Dec 2016 09:36:56 GMT
+      - Tue, 13 Jun 2017 11:59:08 GMT
       Server:
       - Apache/2.4.7 (Ubuntu)
       Accept-Ranges:
       - bytes
       Last-Modified:
-      - Wed, 07 Dec 2016 09:36:55 GMT
+      - Tue, 13 Jun 2017 11:59:07 GMT
       Etag:
-      - '"2d0a637a675b4fc8bead36af29481ea6"'
+      - '"1521cb63d9db1054200045580ee5422a"'
       X-Amz-Request-Id:
-      - tx000000000000000426f00-005847d838-899badb-uk-sal01
-      Content-Length:
-      - '27'
+      - tx00000000000000005c6ac-00593fd38c-e6a31a3-uk-sal01
+      Vary:
+      - Accept-Encoding
+      Transfer-Encoding:
+      - chunked
       Content-Type:
-      - application/octet-stream
+      - application/json
       Strict-Transport-Security:
       - max-age=31536000
     body:
-      encoding: UTF-8
-      string: "\x04\b{\x06:\x0EsomethingI\"\telse\x06:\x06ET"
+      encoding: ASCII-8BIT
+      string: '{"something":"else"}'
     http_version: 
-  recorded_at: Wed, 07 Dec 2016 09:37:00 GMT
+  recorded_at: Tue, 13 Jun 2017 11:59:08 GMT
 - request:
     method: delete
     uri: https://storage.datacentred.io/stronghold_usage/3a6a220de-9a92-4320-803a-5fa95492386
@@ -270,9 +278,9 @@ http_interactions:
       Content-Type:
       - binary/octet-stream
       Date:
-      - Wed, 07 Dec 2016 09:37:00 GMT
+      - Tue, 13 Jun 2017 11:59:08 GMT
       Authorization:
-      - AWS I9860H3V0MMNO5B3FQSX:sFwTJq3gSep7V688EWMb1F/JVwM=
+      - AWS I9860H3V0MMNO5B3FQSX:wvwVp8/OJu9xwhIW7fQSgVC5ybw=
       Content-Length:
       - '0'
   response:
@@ -281,21 +289,21 @@ http_interactions:
       message: No Content
     headers:
       Date:
-      - Wed, 07 Dec 2016 09:36:56 GMT
+      - Tue, 13 Jun 2017 11:59:08 GMT
       Server:
       - Apache/2.4.7 (Ubuntu)
       X-Amz-Request-Id:
-      - tx000000000000000426f01-005847d838-899badb-uk-sal01
+      - tx00000000000000005c66a-00593fd38c-e1c7939-uk-sal01
       Strict-Transport-Security:
       - max-age=31536000
     body:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Wed, 07 Dec 2016 09:37:00 GMT
+  recorded_at: Tue, 13 Jun 2017 11:59:08 GMT
 - request:
     method: get
-    uri: https://storage.datacentred.io/stronghold_usage/3a6a220de-9a92-4320-803a-5fa95492386?AWSAccessKeyId=I9860H3V0MMNO5B3FQSX&Expires=1481103720&Signature=74yP/oN90V28Ry0XzOCSDc0ZIIE=
+    uri: https://storage.datacentred.io/stronghold_usage/3a6a220de-9a92-4320-803a-5fa95492386?AWSAccessKeyId=I9860H3V0MMNO5B3FQSX&Expires=1497355448&Signature=42lbSs4Cf1TUTAy1/8bemmA4TCE=
     body:
       encoding: US-ASCII
       string: ''
@@ -312,11 +320,11 @@ http_interactions:
       message: Not Found
     headers:
       Date:
-      - Wed, 07 Dec 2016 09:36:56 GMT
+      - Tue, 13 Jun 2017 11:59:08 GMT
       Server:
       - Apache/2.4.7 (Ubuntu)
       X-Amz-Request-Id:
-      - tx000000000000000426f5a-005847d838-8949e01-uk-sal01
+      - tx00000000000000005c6ad-00593fd38c-e6a31a3-uk-sal01
       Accept-Ranges:
       - bytes
       Content-Length:
@@ -327,7 +335,7 @@ http_interactions:
       - max-age=31536000
     body:
       encoding: UTF-8
-      string: <?xml version="1.0" encoding="UTF-8"?><Error><Code>NoSuchKey</Code><BucketName>stronghold_usage</BucketName><RequestId>tx000000000000000426f5a-005847d838-8949e01-uk-sal01</RequestId><HostId>8949e01-uk-sal01-uk</HostId></Error>
+      string: <?xml version="1.0" encoding="UTF-8"?><Error><Code>NoSuchKey</Code><BucketName>stronghold_usage</BucketName><RequestId>tx00000000000000005c6ad-00593fd38c-e6a31a3-uk-sal01</RequestId><HostId>e6a31a3-uk-sal01-uk</HostId></Error>
     http_version: 
-  recorded_at: Wed, 07 Dec 2016 09:37:01 GMT
+  recorded_at: Tue, 13 Jun 2017 11:59:08 GMT
 recorded_with: VCR 2.9.3
