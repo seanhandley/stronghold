@@ -44,12 +44,14 @@ module Billing
 
     def blob=(new_blob)
       conn
-      AWS::S3::S3Object.store(
-        object_uuid,
-        new_blob.to_json,
-        bucket,
-        content_type: 'application/json'
-      )
+      Time.use_zone('UTC') do
+        AWS::S3::S3Object.store(
+          object_uuid,
+          new_blob.to_json,
+          bucket,
+          content_type: 'application/json'
+        )
+      end
     end
 
     private
