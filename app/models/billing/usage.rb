@@ -25,17 +25,15 @@ module Billing
 
     def blob
       conn
-      parse_timestamps(
-        JSON.parse(
-          open(
-            AWS::S3::S3Object.url_for(
-              object_uuid,
-              bucket,
-              authenticated: true
-            )
-          ).read,
-          symbolize_names: true
-        )
+      JSON.parse(
+        open(
+          AWS::S3::S3Object.url_for(
+            object_uuid,
+            bucket,
+            authenticated: true
+          )
+        ).read,
+        symbolize_names: true
       )
     rescue OpenURI::HTTPError => ex
       raise unless ex.message.include?("404")
