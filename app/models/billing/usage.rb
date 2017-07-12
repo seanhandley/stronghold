@@ -89,7 +89,7 @@ module Billing
         end
       elsif enum.is_a?(Hash)
         enum.each do |k,v|
-          if element =~ time_format
+          if v =~ time_format
             enum[k] = Time.parse(v) rescue v
           elsif v.is_a? Enumerable
             enum[k] = parse_timestamps(v)
