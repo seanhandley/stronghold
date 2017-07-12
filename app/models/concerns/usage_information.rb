@@ -26,11 +26,11 @@ module UsageInformation
   end
 
   def monthly_ceph_storage_tbh
-    projects.map{|t| Billing::StorageObjects.usage(t.uuid, *last_month)}.sum.round(5)
+    projects.map{|t| Billing::StorageObjects.usage(t.uuid, *last_month)[:usage].sum{|u| u[:value]}}.sum.round(5)
   end
 
   def weekly_ceph_storage_tbh
-    projects.map{|t| Billing::StorageObjects.usage(t.uuid, *last_week)}.sum.round(5)
+    projects.map{|t| Billing::StorageObjects.usage(t.uuid, *last_week)[:usage].sum{|u| u[:value]}}.sum.round(5)
   end
 
   def monthly_usage_value
