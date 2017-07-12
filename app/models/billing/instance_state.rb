@@ -46,7 +46,7 @@ module Billing
         event_name:  event_name,
         flavor:      instance_flavor.flavor_id,
         seconds:     seconds(from, to).ceil,
-        recorded_at: recorded_at
+        recorded_at: recorded_at,
         state:       state,
         user_id:     user_id
       }
