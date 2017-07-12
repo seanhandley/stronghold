@@ -25,15 +25,17 @@ module Billing
 
     def blob
       conn
-      JSON.parse(
-        open(
-          AWS::S3::S3Object.url_for(
-            object_uuid,
-            bucket,
-            authenticated: true
-          )
-        ).read,
-        symbolize_names: true
+      parse_timestamps(
+        JSON.parse(
+          open(
+            AWS::S3::S3Object.url_for(
+              object_uuid,
+              bucket,
+              authenticated: true
+            )
+          ).read,
+          symbolize_names: true
+        )
       )
     rescue OpenURI::HTTPError => ex
       raise unless ex.message.include?("404")
@@ -73,13 +75,13 @@ module Billing
     end
 
     def time_format
-      /^\d\d\d\d\-\d\d-\d\dT\d\d:\d\d:\d\d/
+      /^\d\d\d\d\-\d\d\-\d\dT\d\d:\d\d:\d\d/
     end
 
     def parse_timestamps(enum)
       if enum.is_a?(Array)
         enum.each_with_index do |element, i|
-          if element.is_a? String && element =~ time_format
+          if element =~ time_format
             enum[i] = Time.parse(element) rescue element
           elsif element.is_a? Enumerable
             enum[i] = parse_timestamps(element)
@@ -87,7 +89,7 @@ module Billing
         end
       elsif enum.is_a?(Hash)
         enum.each do |k,v|
-          if v.is_a? String && element =~ time_format
+          if element =~ time_format
             enum[k] = Time.parse(v) rescue v
           elsif v.is_a? Enumerable
             enum[k] = parse_timestamps(v)
