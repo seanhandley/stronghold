@@ -75,7 +75,7 @@ module Billing
     end
 
     def time_format
-      /^\d\d\d\d\-\d\d-\d\d \d\d:\d\d:\d\d/
+      /^\d\d\d\d\-\d\d-\d\dT\d\d:\d\d:\d\d/
     end
 
     def parse_timestamps(enum)
