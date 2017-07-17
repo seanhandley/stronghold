@@ -5,7 +5,6 @@
         %thead
           = render partial: "column_headings"
           %th
-          %th
         %tbody
           - for invoice in @pending_manual_invoices
             = render partial: 'edit', locals: {invoice: invoice }

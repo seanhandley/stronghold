@@ -115,13 +115,12 @@ module Billing
         return false if stripe_invoice_id
 
         begin
-          invoice_item = Stripe::InvoiceItem.create(customer:    organization.stripe_customer_id,
-                                                    amount:      to_pence(grand_total),
-                                                    currency:    currency,
-                                                    description: invoice_description)
+          invoice_item = Stripe::InvoiceItem.create(customer: organization.stripe_customer_id,
+                                                  amount: to_pence(grand_total),
+                                                  currency: currency,
+                                                  description: invoice_description)
 
-          invoice = Stripe::Invoice.create(customer:    organization.stripe_customer_id,
-                                           tax_percent: tax_percent)
+          invoice = Stripe::Invoice.create(customer: organization.stripe_customer_id)
           update_attributes(stripe_invoice_id: invoice.id)
         rescue StandardError => e
           Honeybadger.notify(e)
@@ -158,7 +157,7 @@ module Billing
     end
 
     def grand_total_plus_tax
-      grand_total * (1 + (tax_percent.to_f / 100.0))
+      grand_total + (grand_total * (tax_percent.to_f / 100.0))
     end
 
     def salesforce_invoice_link
