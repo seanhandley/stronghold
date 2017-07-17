@@ -34,19 +34,20 @@ module Reports
           Billing::VpnConnections.usage(project.uuid, from, to)
         end.flatten
 
-        vcpu_hours   = instances.sum {|i| i[:billable_hours].sum {|flavor_id, hours| hours * instance_flavors[flavor_id][:vcpus_count]}}
-        ram_tb_hours = instances.sum {|i| i[:billable_hours].sum {|flavor_id, hours| hours * ((instance_flavors[flavor_id][:ram_mb] / 1024.0) / 1024.0)}}
+        vcpu_hours   = instances.sum {|i| i[:usage].sum {|usage| usage[:value] * usage[:meta][:flavor][:vcpus_count]}}
+        ram_tb_hours = instances.sum {|i| i[:usage].sum {|usage| usage[:value] * ((usage[:meta][:flavor][:ram_mb] / 1024.0) / 1024.0)}}
 
-        volumes_tb_hours = volumes.collect{|i| i[:terabyte_hours]}.sum
-        images_tb_hours  = images.collect {|i| i[:terabyte_hours]}.sum
-        instances_disk_tb_hours = instances.sum {|i| i[:billable_hours].sum {|flavor_id, hours| hours * (instance_flavors[flavor_id][:root_disk_gb] / 1024.0)}}
+        volumes_tb_hours = volumes.sum {|i| i[:usage].sum{|u| u[:value]}}
+        images_tb_hours  = images.sum  {|i| i[:usage].sum{|u| u[:value]}}
+        instances_disk_tb_hours = instances.sum {|i| i[:usage].sum {|usage| usage[:value] * (usage[:meta][:flavor][:root_disk_gb] / 1024.0)}}
         openstack_tb_hours = volumes_tb_hours + images_tb_hours + instances_disk_tb_hours
 
-        ceph_tb_hours  = objects.sum
-        ceph_cost = [{cost: ceph_tb_hours * RateCard.object_storage}]
+        ceph_tb_hours  = objects.sum{|o| o[:usage].sum{|usage| usage[:value]}}
 
-        load_balancer_hours  = load_balancers.sum  {|i| i[:hours]}
-        vpn_connection_hours = vpn_connections.sum {|i| i[:hours]}
+        load_balancer_hours  = load_balancers.sum  {|i| i[:usage].sum{|u| u[:value]}}
+        vpn_connection_hours = vpn_connections.sum {|i| i[:usage].sum{|u| u[:value]}}
+
+        spend = [instances, volumes, images, load_balancers, vpn_connections, objects].sum{|i| i.sum{|j| j[:usage].sum{|u| u[:cost][:value]}}}
 
         result = {
           :name => organization.name,
@@ -58,33 +59,11 @@ module Reports
           :load_balancer_hours => load_balancer_hours,
           :vpn_connection_hours => vpn_connection_hours,
           :paying => organization.paying?,
-          :spend => [instances, volumes, images, load_balancers, vpn_connections, ceph_cost].map{|i| i.map{|j| j[:cost]}}.flatten.compact.sum
+          :spend => spend
         }
         organization.update_attributes(weekly_spend: result[:spend])
         result
       end.sort{|x,y| y[:spend] <=> x[:spend]}.take(30)
-    end
-
-    private
-
-    def organizations
-      Organization.includes(
-      :projects => [
-        :billing_storage_objects,
-        :billing_ip_quotas,
-        {
-        billing_instances: :instance_states,
-        billing_volumes: :volume_states,
-        billing_images: :image_states,
-      }]
-    )
-    end
-
-    def instance_flavors
-      @instance_flavors ||= Billing::InstanceFlavor.all.inject({}) do |acc, e|
-        acc[e.flavor_id] = { vcpus_count: e.vcpus, root_disk_gb: e.disk, ram_mb: e.ram}
-        acc
-      end
     end
   end
 end
