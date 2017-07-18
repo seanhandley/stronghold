@@ -4,7 +4,7 @@ module OffboardingHelper
 
     Rails.logger.info "Offboarding..."
 
-    os_args = OPENSTACK_ARGS.dup
+    os_args = OpenStackConnection.configuration.dup
     os_args.merge!(creds)
 
     # Delete all instances to clear ports

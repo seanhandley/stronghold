@@ -1,21 +1,54 @@
-default: &default
-  auth_url: "http://devstack.datacentred.io:5000/v3/auth/tokens"
+---
+datacentred:
+  default: &default
+    :provider: 'OpenStack'
+    :openstack_auth_url: "http://devstack.datacentred.io:5000/v3/auth/tokens"
+    :openstack_username: "<%= ENV["OPENSTACK_USERNAME"] %>"
+    :openstack_api_key: "<%= ENV["OPENSTACK_PASSWORD"] %>"
+    :openstack_project_name: "<%= ENV["OPENSTACK_PROJECT_NAME"] %>"
+    :openstack_domain_id: "default"
+    :persistent: true
 
-development:
-  <<: *default
+  development:
+    <<: *default
 
-test:
-  <<: *default
+  test:
+    <<: *default
 
-acceptance:
-  <<: *default
+  acceptance:
+    <<: *default
 
-staging:
-  <<: *default
+  staging:
+    <<: *default
 
-vagrant:
-  <<: *default
+  vagrant:
+    <<: *default
 
-production:
-  <<: *default
-  auth_url: "https://compute.datacentred.io:5000/v3/auth/tokens"
+  production:
+    <<: *default
+    :openstack_auth_url: "https://compute.datacentred.io:5000/v3/auth/tokens"
+
+sentinel:
+  default: &sentinel_defaults
+    :provider: 'OpenStack'
+    :openstack_auth_url: 'https://luigi.datacentred.io:5000/v3/auth/tokens'
+    :openstack_username: 'dummy'
+    :openstack_api_key: 'dummy'
+    :connection_options:
+      :ssl_verify_peer: true
+      :ssl_ca_file: '<%= Rails.root %>/config/sentinel/luigi.datacentred.io/ca.crt'
+      :client_cert: '<%= Rails.root %>/config/sentinel/luigi.datacentred.io/stronghold-testing.datacentred.io.crt'
+      :client_key: '<%= Rails.root %>/config/sentinel/luigi.datacentred.io/stronghold-testing.datacentred.io.key'
+    :persistent: true
+  development:
+    <<: *sentinel_defaults
+  test:
+    <<: *sentinel_defaults
+  acceptance:
+    <<: *sentinel_defaults
+  staging:
+    <<: *sentinel_defaults
+  vagrant:
+    <<: *sentinel_defaults
+  production:
+    <<: *sentinel_defaults

@@ -27,9 +27,6 @@ VCR.configure do |c|
   c.hook_into :webmock # or :fakeweb
 end
 
-OPENSTACK_ARGS[:openstack_api_key]  = 'foo' unless OPENSTACK_ARGS[:openstack_api_key]
-OPENSTACK_ARGS[:openstack_username] = 'bar' unless OPENSTACK_ARGS[:openstack_username]
-
 DatabaseCleaner.strategy = :truncation
 
 class UserNoCallbacks < User

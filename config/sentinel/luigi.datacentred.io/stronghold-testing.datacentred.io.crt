@@ -1,0 +1,85 @@
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number:
+            98:34:9b:d7:68:0c:19:b4:e6:de:8d:15:ef:f8:ed:94
+    Signature Algorithm: sha256WithRSAEncryption
+        Issuer: CN=Luigi CA
+        Validity
+            Not Before: Jul 18 13:01:29 2017 GMT
+            Not After : Jul 16 13:01:29 2027 GMT
+        Subject: CN=stronghold-testing.datacentred.io
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+                Public-Key: (2048 bit)
+                Modulus:
+                    00:a1:ea:cd:14:27:fd:78:83:a4:a1:01:c2:55:3f:
+                    fe:f9:42:57:82:54:d7:18:46:e9:65:ef:23:4b:e2:
+                    f6:ed:e7:4a:93:b0:b1:51:4b:dd:09:62:56:7b:68:
+                    5a:d0:47:b5:1a:0c:3b:e5:19:67:f5:cf:76:90:af:
+                    b2:9b:ef:8d:aa:6e:e3:0b:20:91:32:62:59:b7:2c:
+                    f6:f3:ab:37:70:cc:ed:29:ac:28:cc:46:a8:a4:4a:
+                    b1:23:f4:28:23:db:7c:6a:4c:5a:c0:0d:4f:c5:d0:
+                    4a:08:dd:d4:7f:f3:60:53:da:46:95:87:ba:f5:d6:
+                    c9:4d:18:4a:24:c9:21:25:87:dd:be:3d:09:5a:25:
+                    64:81:62:a9:21:e6:90:54:0a:c8:65:e5:07:e5:16:
+                    51:fc:f4:62:34:ce:98:55:5e:3c:26:73:e0:51:eb:
+                    2b:7e:4b:8a:10:48:95:fc:53:22:9a:5c:e4:af:20:
+                    da:ae:13:ac:b1:9d:e4:37:a5:f0:03:b4:22:70:2b:
+                    13:8d:67:6e:4b:d5:a6:df:80:f9:44:4a:d8:6a:30:
+                    f9:5b:36:ae:16:b2:44:ad:72:3f:a7:09:38:d8:40:
+                    52:49:6d:e1:89:49:ca:3b:c5:cb:ab:83:cc:78:45:
+                    0f:db:29:8a:69:d5:9f:56:a6:c3:a6:59:e0:4f:66:
+                    7c:09
+                Exponent: 65537 (0x10001)
+        X509v3 extensions:
+            X509v3 Basic Constraints: 
+                CA:FALSE
+            X509v3 Subject Key Identifier: 
+                8C:3A:73:79:5C:86:5E:0B:3A:2D:48:55:8A:9F:BA:10:FE:96:71:53
+            X509v3 Authority Key Identifier: 
+                keyid:AE:88:23:10:F9:77:E3:34:F5:5F:4E:D3:8A:59:38:66:CF:B0:49:82
+                DirName:/CN=Luigi CA
+                serial:A2:C1:73:B1:0E:C1:DF:07
+
+            X509v3 Extended Key Usage: 
+                TLS Web Client Authentication
+            X509v3 Key Usage: 
+                Digital Signature
+    Signature Algorithm: sha256WithRSAEncryption
+         01:cd:ab:b9:18:69:e7:b7:56:50:2e:1d:3e:56:3f:16:0d:d9:
+         82:b8:80:6a:b3:ff:f6:d3:38:42:44:11:26:ab:11:bd:b5:18:
+         49:aa:3c:73:74:4c:16:fb:8a:8a:d6:02:45:18:65:1f:f2:de:
+         11:95:32:d2:bf:b1:9c:77:bf:64:6d:5d:a1:8f:5f:58:e2:c6:
+         cc:3c:6d:85:fd:8a:3f:13:62:72:26:72:41:62:69:52:ad:60:
+         ab:cb:07:e0:2f:da:48:51:ea:5f:a1:37:81:8a:87:e9:c1:af:
+         b8:e1:b4:94:9a:bf:ee:13:a8:10:10:cc:87:29:5f:e4:d3:1a:
+         2a:f1:2c:f2:30:75:7c:55:0d:b2:cc:85:f8:d0:ad:86:ff:de:
+         bd:20:46:98:00:fb:38:f5:a9:c5:1c:e4:59:a0:fd:da:83:6b:
+         0b:4d:91:0a:8b:3e:a9:8a:c6:69:2f:e2:60:4e:35:28:0e:33:
+         5a:81:55:40:a9:11:5b:57:25:8c:2e:61:de:0f:54:c9:6d:bb:
+         c1:a0:57:f7:15:93:64:35:c6:7e:88:9d:51:2e:19:f6:1d:15:
+         08:20:b0:98:9b:58:0b:09:17:21:92:4f:c4:c2:ee:3b:33:81:
+         bf:ce:ec:48:43:6d:24:a7:d5:ec:88:f3:8c:43:ac:26:30:d1:
+         b6:08:dc:39
+-----BEGIN CERTIFICATE-----
+MIIDXzCCAkegAwIBAgIRAJg0m9doDBm05t6NFe/47ZQwDQYJKoZIhvcNAQELBQAw
+EzERMA8GA1UEAwwITHVpZ2kgQ0EwHhcNMTcwNzE4MTMwMTI5WhcNMjcwNzE2MTMw
+MTI5WjAsMSowKAYDVQQDDCFzdHJvbmdob2xkLXRlc3RpbmcuZGF0YWNlbnRyZWQu
+aW8wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCh6s0UJ/14g6ShAcJV
+P/75QleCVNcYRull7yNL4vbt50qTsLFRS90JYlZ7aFrQR7UaDDvlGWf1z3aQr7Kb
+742qbuMLIJEyYlm3LPbzqzdwzO0prCjMRqikSrEj9Cgj23xqTFrADU/F0EoI3dR/
+82BT2kaVh7r11slNGEokySElh92+PQlaJWSBYqkh5pBUCshl5QflFlH89GI0zphV
+Xjwmc+BR6yt+S4oQSJX8UyKaXOSvINquE6yxneQ3pfADtCJwKxONZ25L1abfgPlE
+SthqMPlbNq4WskStcj+nCTjYQFJJbeGJSco7xcurg8x4RQ/bKYpp1Z9WpsOmWeBP
+ZnwJAgMBAAGjgZQwgZEwCQYDVR0TBAIwADAdBgNVHQ4EFgQUjDpzeVyGXgs6LUhV
+ip+6EP6WcVMwQwYDVR0jBDwwOoAUrogjEPl34zT1X07Tilk4Zs+wSYKhF6QVMBMx
+ETAPBgNVBAMMCEx1aWdpIENBggkAosFzsQ7B3wcwEwYDVR0lBAwwCgYIKwYBBQUH
+AwIwCwYDVR0PBAQDAgeAMA0GCSqGSIb3DQEBCwUAA4IBAQABzau5GGnnt1ZQLh0+
+Vj8WDdmCuIBqs//20zhCRBEmqxG9tRhJqjxzdEwW+4qK1gJFGGUf8t4RlTLSv7Gc
+d79kbV2hj19Y4sbMPG2F/Yo/E2JyJnJBYmlSrWCrywfgL9pIUepfoTeBiofpwa+4
+4bSUmr/uE6gQEMyHKV/k0xoq8SzyMHV8VQ2yzIX40K2G/969IEaYAPs49anFHORZ
+oP3ag2sLTZEKiz6pisZpL+JgTjUoDjNagVVAqRFbVyWMLmHeD1TJbbvBoFf3FZNk
+NcZ+iJ1RLhn2HRUIILCYm1gLCRchkk/Ewu47M4G/zuxIQ20kp9XsiPOMQ6wmMNG2
+CNw5
+-----END CERTIFICATE-----
