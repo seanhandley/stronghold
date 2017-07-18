@@ -21,7 +21,7 @@
                 %li{'role' => "presentation", 'class' => @openstack_active ? '' : 'active'}
                   %a{'href' => "#ceph", 'aria-controls' => "ceph", 'role' => "tab", 'data-toggle' => "tab"}
                     Ceph API
-              - if can?(:read, :api) && current_user.staff?
+              - if can?(:read, :api)
                 %li{'role' => "presentation", 'class' => @openstack_active ? '' : 'active'}
                   %a{'href' => "#datacentred-api", 'aria-controls' => "datacentred-api", 'role' => "tab", 'data-toggle' => "tab"}
                     DataCentred API
