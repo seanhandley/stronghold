@@ -229,6 +229,10 @@ class User < ApplicationRecord
     CheckCephAccessJob.perform_later(self) if Rails.env.production?
   end
 
+  def check_datacentred_api_access
+    CheckDataCentredApiAccessJob.perform_later(self, current_organization) unless Rails.env.test?
+  end
+
   def remove_ceph_keys
     if Rails.env.production?
       begin

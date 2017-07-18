@@ -34,7 +34,7 @@
             - if current_organization.storage? && can?(:read, :storage)
               %div.tab-pane{'role' => "tabpanel", 'class' => @openstack_active ? '' : 'active', 'id' => "ceph"}
                 = render partial: 'shared/ceph_details'
-            - if can?(:read, :api) && current_user.staff?
+            - if can?(:read, :api)
               %div.tab-pane{'role' => "tabpanel", 'class' => @openstack_active ? '' : 'active', 'id' => "datacentred-api"}
                 = render partial: 'shared/datacentred_api'
           

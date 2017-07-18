@@ -7,6 +7,8 @@ class ApiCredential < ApplicationRecord
 
   after_create :generate_access_key
 
+  scope :enabled, -> { where(enabled: true) }
+
   def authenticate_and_authorize(password)
     authenticate(password) && User::Ability.new(user).can?(:read, :api)
   end

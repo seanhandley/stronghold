@@ -20,7 +20,6 @@ module Support
     end
 
     def regenerate_datacentred_api_credentials
-      slow_404 unless current_user.staff?
       secret_key = current_user.refresh_datacentred_api_credentials!
       render json: {success: true, secret_key: secret_key}
     rescue StandardError => e
