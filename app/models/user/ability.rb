@@ -5,10 +5,6 @@ class User::Ability
     return unless user
     alias_action :new, :create, :edit, :update, :destroy, :read, :index, :to => :modify
 
-    # Instances
-    can :read,   OpenStack::Instance if user.has_permission?('instances.read')
-    can :modify, OpenStack::Instance if user.has_permission?('instances.modify')
-
     # Roles
     can :read,   Role     if user.has_permission?('roles.read')
     can :read,   User     if user.has_permission?('roles.read')
@@ -36,5 +32,8 @@ class User::Ability
 
     ## Power User can do everything
     can :modify, :all if user.power_user?
+
+    ## Can't do anything if account is frozen
+    cannot :modify, :all if user.current_organization.frozen?
   end
 end
