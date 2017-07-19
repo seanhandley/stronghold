@@ -26,7 +26,7 @@ class User < ApplicationRecord
   before_save :valid_email_address
   after_save :update_password
   after_commit :generate_ec2_credentials, on: :create
-  after_commit :check_openstack_access, :check_ceph_access, on: :create
+  after_commit :check_openstack_access, :check_ceph_access, :check_datacentred_api_access, on: :create
 
   after_create :set_local_password, :subscribe_to_status_io
   before_destroy :dont_delete_self, :remove_ceph_keys, :unsubscribe_from_status_io
@@ -230,7 +230,7 @@ class User < ApplicationRecord
   end
 
   def check_datacentred_api_access
-    CheckDataCentredApiAccessJob.perform_later(self, current_organization) unless Rails.env.test?
+    CheckDataCentredApiAccessJob.perform_later(current_organization, self) unless Rails.env.test?
   end
 
   def remove_ceph_keys
