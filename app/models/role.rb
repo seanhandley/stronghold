@@ -5,7 +5,7 @@ class Role < ApplicationRecord
   has_and_belongs_to_many :users, -> { distinct }
   belongs_to :organization
   before_destroy :check_power, :check_users
-  after_commit :check_openstack_access, :check_ceph_access
+  after_commit :check_openstack_access, :check_ceph_access, :check_datacentred_api_access
   after_save :generate_uuid, :on => :create
 
   serialize :permissions
@@ -44,6 +44,10 @@ class Role < ApplicationRecord
   def check_ceph_access
     return unless Rails.env.production?
     users.each {|user| CheckCephAccessJob.perform_later(user)}
+  end
+
+  def check_datacentred_api_access
+    users.each {|user| CheckDataCentredApiAccessJob.perform_later(organization, user)}
   end
 
   def permissions_are_valid

@@ -35,10 +35,12 @@ module Freezable
 
   def enable_users!
     toggle_openstack!('user', true)
+    toggle_datacentred_api_users!
   end
 
   def disable_users!
     toggle_openstack!('user', false)
+    toggle_datacentred_api_users!(false)
   end
 
   def enable_projects!
@@ -53,6 +55,14 @@ module Freezable
     unless Rails.env.test?
       send("#{coll}s").each do |entity|
         OpenStackConnection.identity.send("update_#{coll}".to_sym, entity.uuid, enabled: state)
+      end
+    end
+  end
+
+  def toggle_datacentred_api_users!(state=nil)
+    unless Rails.env.test?
+      users.each do |user|
+        CheckDataCentredApiAccessJob.perform_later(self, user, state)
       end
     end
   end
@@ -84,8 +94,6 @@ module Freezable
   def pause_instances!
     toggle_instances!(false)
   end
-
-  private
 
   def cached_servers
     Rails.cache.fetch("all_servers_for_freeze", expires_in: 2.minutes) do
