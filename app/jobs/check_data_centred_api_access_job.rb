@@ -5,6 +5,15 @@ class CheckDataCentredApiAccessJob < ApplicationJob
     credential = ApiCredential.find_by(user: user, organization: organization)
     return unless credential
 
-    credential.update_attributes enabled: (state.nil? ? User::Ability.new(user).can?(:read, :api) : state)
+    case state
+    when nil
+      if organization.frozen?
+        credential.update_attributes enabled: false
+      else
+        credential.update_attributes enabled: User::Ability.new(user).can?(:read, :api)
+      end
+    else
+      credential.update_attributes enabled: state
+    end
   end
 end
