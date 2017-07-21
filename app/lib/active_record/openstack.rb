@@ -4,7 +4,7 @@ module ActiveRecord
       define_method :authenticate_openstack do |password|
         return true
         begin
-          args = OPENSTACK_ARGS.dup
+          args = OpenStackConnection.configuration.dup
           args.merge!(:openstack_username         => email,
                       :openstack_project_name     => organization.primary_project.reference,
                       :openstack_api_key          => password)

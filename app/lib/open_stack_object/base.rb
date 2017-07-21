@@ -108,7 +108,7 @@ module OpenStackObject
       private
 
       def conn
-        args = OPENSTACK_ARGS.dup
+        args = OpenStackConnection.configuration.dup
         current_user = Authorization.current_user
         if current_user.present? && !current_user.admin? && !current_user.staff?
           username    = current_user.email
