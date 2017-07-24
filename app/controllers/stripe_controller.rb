@@ -1,16 +1,16 @@
 require 'ostruct'
-
+# This StripeController class is responsible for retrieve Stripe customer info.
 class StripeController < ApplicationController
   protect_from_forgery :except => :webhook
   before_action :verify_secret
 
   def webhook
-
     case params["type"]
     when "invoice.payment_succeeded"
-      Notifications.notify(:stripe_success, "Invoice #{stripe_info[:invoice_id]} for £#{stripe_info[:total]} successfully charged to #{stripe_info[:customer_description]} (#{stripe_info[:link]}).")
+      Notifications.notify(:stripe_success, notification_message("successfully"))
+
     when "invoice.payment_failed"
-      Notifications.notify(:stripe_fail, "Invoice #{stripe_info[:invoice_id]} for £#{stripe_info[:total]} could not be charged to #{stripe_info[:customer_description]}. (#{stripe_info[:link]})")
+      Notifications.notify(:stripe_fail, notification_message("could not be"))
     end
 
     render status: 200, json: nil
@@ -33,5 +33,9 @@ class StripeController < ApplicationController
     unless params['secret'] == Rails.application.secrets.stripe_webhook_secret
       render status: 401, json: nil
     end
+  end
+
+  def notification_message(status)
+    "Invoice #{stripe_info[:invoice_id]} for £#{stripe_info[:total]} #{status} charged to #{stripe_info[:customer_description]} (#{stripe_info[:link]})."
   end
 end
