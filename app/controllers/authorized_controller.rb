@@ -1,3 +1,5 @@
+# :reek:PrimaDonnaMethod { exclude: [ timeout_session! , authenticate_user! ] }
+# The AuthorizedController class is responsible for authorizing login creadentials and redirecting user.
 class AuthorizedController < ApplicationController
   before_action :current_user, :current_organization, :authenticate_user!, :timeout_session!
   before_action { Authorization.current_user = current_user }
@@ -35,46 +37,66 @@ class AuthorizedController < ApplicationController
 
   private
 
+  def js_redirect_to_root
+    javascript_redirect_to support_root_url
+  end
+
   def redirect_to_root(exception=nil)
     respond_to do |format|
-      format.js   { javascript_redirect_to support_root_url }
-      format.json   { javascript_redirect_to support_root_url }
+      format.js   { js_redirect_to_root }
+      format.json   { js_redirect_to_root }
       format.html { redirect_to support_root_url, :alert => exception ? exception.message : nil }
     end
   end
 
   def set_locale
-    I18n.locale = current_user.present? ? current_organization.locale.to_sym : I18n.default_locale
+    default = I18n.default_locale
+    I18n.locale = current_user.present? ? current_organization.locale.to_sym : default
   rescue I18n::InvalidLocale
-    I18n.locale = I18n.default_locale
+    I18n.locale = default
   end
 
   def user_time_zone(&block)
     Time.use_zone(current_organization.time_zone, &block)
   end
 
-  def authenticate_user!
+  def check_if_current_session
     unless current_user && current_organization
       safe_redirect_to sign_in_path('next' => current_path)
       return
     end
-    if !current_organization.known_to_payment_gateway? || current_organization.frozen?
+  end
+
+  def redirect_if_no_payment_method
+    if !current_user.admin?
+      reset_session
+      flash.alert = "Payment method has expired. Please inform a user with admin rights."
+      safe_redirect_to sign_in_path
+    else
+      return if current_path == support_manage_cards_path
+      safe_redirect_to support_manage_cards_path, alert: "Please add a valid card to continue."
+    end
+  end
+
+  def check_organization_state_and_payment
+    frozen = current_organization.frozen?
+    knowm_to_payment = current_organization.known_to_payment_gateway?
+    has_payment_method = current_organization.has_payment_method?
+    if !knowm_to_payment || frozen
       return if allowed_paths_unactivated.include?(current_path) || is_tickets_path?(current_path)
-      if current_organization.frozen?
+      if frozen
         safe_redirect_to support_root_path
       else
         safe_redirect_to activate_path
       end
-    elsif !current_organization.has_payment_method?
-      if !current_user.admin?
-        reset_session
-        flash.alert = "Payment method has expired. Please inform a user with admin rights."
-        safe_redirect_to sign_in_path
-      else
-        return if current_path == support_manage_cards_path
-        safe_redirect_to support_manage_cards_path, alert: "Please add a valid card to continue."
-      end
+    elsif !has_payment_method
+      redirect_if_no_payment_method
     end
+  end
+
+  def authenticate_user!
+    check_if_current_session
+    check_organization_state_and_payment
   end
 
   def allowed_paths_unactivated
@@ -92,10 +114,11 @@ class AuthorizedController < ApplicationController
   end
 
   def timeout_session!
+    now = Time.now.utc
     if session
-      session[:created_at] = Time.now.utc unless session[:created_at]
-
-      if (Time.now.utc - Time.parse(session[:created_at].to_s).utc) > SESSION_TIMEOUT.minutes
+      session[:created_at] = now unless session[:created_at]
+      session_period = now - Time.parse(session[:created_at].to_s).utc
+      if session_period > SESSION_TIMEOUT.minutes
         reset_session
         safe_redirect_to sign_in_path('next' => current_path)
       end
