@@ -40,6 +40,10 @@ module Billing
       to - from
     end
 
+    def total_seconds
+      ((last_state? ? Time.now : next_state.recorded_at) - recorded_at).round
+    end
+
     def to_hash(from=nil, to=nil)
       {
         billable:    billable?,

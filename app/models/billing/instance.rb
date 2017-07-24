@@ -34,6 +34,10 @@ module Billing
       instance_states&.last&.update_column(:next_state_id, nil)
     end
 
+    def total_billable_seconds
+      instance_states.select{|s| s.billable?}.sum{|s| s.total_seconds }
+    end
+
     def terminated_at
       terminated_at = read_attribute(:terminated_at)
       return terminated_at if terminated_at

@@ -7,6 +7,7 @@ class UsageSanityJob < ApplicationJob
       Notifications.notify(:good, 'Sanity check passed.')
     else
       Sanity.notify!(check)
+      JanitorJob.perform_later(check)
     end
   end
 end
