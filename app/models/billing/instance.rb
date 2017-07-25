@@ -38,6 +38,15 @@ module Billing
       instance_states.select{|s| s.billable?}.sum{|s| s.total_seconds }
     end
 
+    def raw_history
+      options = [{'field' => 'resource_id', 'type' => 'string', 'op' => 'eq', 'value' => instance_id}]
+      @raw_history ||= OpenStackConnection.metering.get_samples('instance', options).body
+    end
+
+    def raw_billable_states
+      raw_history.map{|h| h['resource_metadata']['state']}.select{|s| InstanceState.billable?(s)}
+    end
+
     def terminated_at
       terminated_at = read_attribute(:terminated_at)
       return terminated_at if terminated_at

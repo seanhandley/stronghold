@@ -1,5 +1,7 @@
 require 'test_helper'
 
+
+
 class TestJanitor < CleanTest
 
   def setup
@@ -15,6 +17,7 @@ class TestJanitor < CleanTest
                           started_at:   t,
                           period_from:  t,
                           period_to:    t
+    Billing::Instance.redefine_method(:raw_billable_states) { [] }
   end
 
   def test_if_instance_still_exists_do_nothing
@@ -59,6 +62,22 @@ class TestJanitor < CleanTest
     end
 
     assert_equal 3, @instance.instance_states.count  
+  end
+
+  def test_instance_with_billable_raw_events_stays
+    t = Time.now - 2.weeks
+    @instance.instance_states.create! recorded_at: t,
+                                      state:       'building',
+                                      event_name:  'compute.instance.create.start'
+    @instance.reindex_states
+
+    Billing::Instance.redefine_method(:raw_billable_states) { ['active'] }
+
+    LiveCloudResources.stub(:servers, []) do
+      Janitor.sweep(test_data)
+    end
+
+    assert_equal 1, Billing::Instance.all.count 
   end
 
   def test_instance_with_events_untouched_after_dry_run
