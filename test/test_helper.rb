@@ -69,18 +69,14 @@ class ActiveSupport::TestCase
 end
 
 def log_in(user)
-  session[:user_id]         = user.id
-  session[:created_at]      = Time.now.utc
-  session[:token]           = SecureRandom.hex
-  cookies.signed[:user_id]  = @user.id
-  cookies.signed[:current_organization_id] ||= @user.primary_organization.id
-  session[:organization_id] = @user.primary_organization.id
+  post sessions_url(user: {email: user.email, password: 'password'})
+  session[:token] = SecureRandom.hex
 end
 
 def assert_404(actions)
-  actions.each do |verb, action, args|
+  actions.each do |verb, args|
     assert_raises(ActionController::RoutingError) do
-      send verb, action, args
+      send verb, *args
     end
   end
 end
@@ -121,6 +117,6 @@ class CleanTest < Minitest::Test
   include CleanupOurTests
 end
 
-class CleanControllerTest < ActionController::TestCase
+class CleanControllerTest < ActionDispatch::IntegrationTest
   include CleanupOurTests
 end

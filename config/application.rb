@@ -1,5 +1,5 @@
-require File.expand_path('../boot', __FILE__)
 require_relative 'boot'
+
 require 'rails/all'
 
 # Require the gems listed in Gemfile, including any gems
@@ -8,6 +8,9 @@ Bundler.require(*Rails.groups)
 
 module Stronghold
   class Application < Rails::Application
+    # Initialize configuration defaults for originally generated Rails version.
+    config.load_defaults 5.1
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
@@ -32,6 +35,16 @@ module Stronghold
 
     # Default to Stripe Test
     config.stripe.publishable_key = "pk_test_7MJ5VPJPLNmTgHLC21kuoYCh"
+  end
+end
+
+module Stronghold
+  class Application < Rails::Application
+    # Settings in config/environments/* take precedence over those specified here.
+    # Application configuration should go into files in config/initializers
+    # -- all .rb files in that directory are automatically loaded.
+
+
 
   end
 end

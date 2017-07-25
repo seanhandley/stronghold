@@ -22,6 +22,8 @@ end
 Organization.blueprint do
   name { Faker::Company.name }
   projects_limit { 100 }
+  primary_project { Project.make!(organization: object) }
+  customer_signup { CustomerSignup.make! }
 end
 
 Project.blueprint do
