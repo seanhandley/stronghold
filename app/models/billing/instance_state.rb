@@ -31,6 +31,10 @@ module Billing
     def billable?
       delete_states = billing_instance.instance_states.where(state: 'deleted')
       return false if delete_states.any?{|s| s.recorded_at < recorded_at}
+      InstanceState.billable?(state)
+    end
+
+    def self.billable?(state)
       !["error","building", "stopped", "suspended", "shutoff", "deleted", "resized"].include?(state.downcase)
     end
 

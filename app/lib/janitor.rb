@@ -10,11 +10,15 @@ module Janitor
       instance = Billing::Instance.find_by_instance_id(id)
       if absent_from_live_resources?('servers', id)
         if instance.total_billable_seconds == 0
-          unless dry_run
-            instance.instance_states.delete_all
-            instance.delete
+          if instance.raw_billable_states.none?
+            unless dry_run
+              instance.instance_states.delete_all
+              instance.delete
+            end
+            logger.info "Instance #{id} is absent from hypervisor and has no billable time. Deleted."
+          else
+            logger.info "Instance #{id} has billable history: #{instance.raw_billable_states}. Please check ceilometer"
           end
-          logger.info "Instance #{id} is absent from hypervisor and has no billable time. Deleted."
         else
           unless dry_run
             instance.instance_states.create! recorded_at: Time.now,
