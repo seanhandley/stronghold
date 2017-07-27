@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class Support::Api::AttachmentsControllerTest < ActionController::TestCase
+class Support::Api::AttachmentsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @user = User.make!(password: 'Password1')
     @organization = @user.primary_organization

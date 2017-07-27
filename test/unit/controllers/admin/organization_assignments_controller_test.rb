@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class Admin::OrganizationAssignmentsControllerTest < ActionController::TestCase
+class Admin::OrganizationAssignmentsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @organization = Organization.make! state: 'active', reference: STAFF_REFERENCE
     @organization2 = Organization.make! state: 'active'
