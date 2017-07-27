@@ -228,8 +228,7 @@ GEM
     globalid (0.4.0)
       activesupport (>= 4.2.0)
     gravatar_image_tag (1.2.0)
-    haml (5.0.1)
-      temple (>= 0.8.0)
+    haml (4.0.7)
       tilt
     hashdiff (0.3.0)
     hashie (3.4.4)
@@ -487,7 +486,6 @@ GEM
       stripe
     tel_to_helper (0.1.0)
       rails
-    temple (0.8.0)
     therubyracer (0.12.2)
       libv8 (~> 3.16.14.0)
       ref
@@ -576,7 +574,7 @@ DEPENDENCIES
   geo_ip (~> 0.6)
   gibberish (~> 2.1)
   gravatar_image_tag (~> 1.2.0)
-  haml (~> 5.0)
+  haml (~> 4.0)
   harbour!
   hiredis (~> 0.6.0)
   holidays (~> 2.2)

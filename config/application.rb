@@ -37,14 +37,3 @@ module Stronghold
     config.stripe.publishable_key = "pk_test_7MJ5VPJPLNmTgHLC21kuoYCh"
   end
 end
-
-module Stronghold
-  class Application < Rails::Application
-    # Settings in config/environments/* take precedence over those specified here.
-    # Application configuration should go into files in config/initializers
-    # -- all .rb files in that directory are automatically loaded.
-
-
-
-  end
-end

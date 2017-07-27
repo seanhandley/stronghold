@@ -5,7 +5,7 @@ gem 'mysql2', '~> 0.3'
 gem 'sdoc', '~> 0.4.0',  group: :doc
 gem 'bcrypt', '~> 3.1'
 gem 'unicorn', '~> 5.0'
-gem 'haml', '~> 5.0'
+gem 'haml', '~> 4.0'
 gem 'cancancan', '~> 1.15'
 gem 'fog-openstack', '~> 0.1'
 gem 'gravatar_image_tag', '~> 1.2.0'
