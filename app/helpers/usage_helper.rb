@@ -55,30 +55,37 @@ module UsageHelper
   def usage_data_as_csv(data)
     CSV.generate do |csv|
       csv << ["Project", "Type", "Sub-Type", "ID", "Name", "Amount", "Unit", "Cost (£)"]
-      data.each do |project, usage|
-        usage[:instances].each do |instance|
-          instance[:billable_hours].each do |flavor_id, hours|
-            csv << [project.name, "Instance", flavors[flavor_id] + (instance[:windows] ? " (Windows)" : ""), instance[:uuid], instance[:name], hours, 'hours', instance[:cost_by_flavor][flavor_id].nearest_penny]
+      data[:projects].each do |project|
+        project[:usage][:instances].each do |instance|
+          instance[:usage].each do |usage|
+            csv << [project[:name], "Instance", nil, usage[:meta][:flavor][:id], usage[:meta][:name], usage[:value], 'hours', usage[:cost][:value]]
           end
         end
-
-        usage[:volumes].each do |volume|
-          csv << [project.name, "Volume", volume[:volume_type_name], volume[:id], volume[:name], volume[:terabyte_hours], 'TB/h', volume[:cost]]
+        project[:usage][:volumes].each do |volume|
+          volume[:usage].each do |usage|
+            csv << [project[:name], "Volume", usage[:meta][:volume_type], volume[:id], volume[:name], usage[:value], 'TB/h', usage[:cost][:value]]
+          end
         end
-        usage[:images].each do |image|
-          csv << [project.name, "Image", nil, image[:id], image[:name], image[:terabyte_hours], 'TB/h', image[:cost]]
+        project[:usage][:images].each do |image|
+          image[:usage].each do |usage|
+            csv << [project[:name], "Image", nil, image[:id], image[:name], usage[:meta][:value], 'TB/h', usage[:cost][:value]]
+          end
         end
-        csv << [project.name, "Object Storage", nil, nil, nil, usage[:object_storage].round(2), 'TB/h', (usage[:object_storage] * RateCard.object_storage).nearest_penny]
-        usage[:ip_quota_usage].each do |ip_quota|
-          change = "From #{ip_quota.previous || '0'} IPs to #{ip_quota.quota} IPs"
-          csv << [project.name, "Quota Change", nil, nil, ip_quota.recorded_at, change, 'floating IPs', nil]
+        project[:usage][:object_storage][:usage].each do |usage|
+          csv << [project[:name], "Object Storage", nil, nil, nil, usage[:value].round(2), 'TB/h', usage[:cost][:value]]
         end
-        csv << [project.name, "IP quota", nil, nil, nil, project.quota_set['network']['floatingip'], 'floating IPs', usage[:ip_quota_total]]
-        usage[:load_balancers].each do |load_balancer|
-          csv << [project.name, "Load Balancer", nil, load_balancer[:id], load_balancer[:name], load_balancer[:hours], "hours", load_balancer[:cost]]
+        project[:usage][:ips][:usage].each do |usage|
+          csv << [project[:name], "IP quota", nil, nil, nil, usage[:value], 'floating IPs', usage[:cost][:value]]
         end
-        usage[:vpns].each do |vpn_connection|
-          csv << [project.name, "VPN Connection", nil, vpn_connection[:id], vpn_connection[:name], vpn_connection[:hours], "hours", vpn_connection[:cost]]
+        project[:usage][:load_balancers].each do |load_balancer|
+          load_balancer[:usage].each do |usage|
+            csv << [project[:name], "Load Balancer", nil, load_balancer[:id], load_balancer[:name], usage[:value], "hours", usage[:cost][:value]]
+          end
+        end
+        project[:usage][:vpns].each do |vpns|
+          vpns[:usage].each do |usage|
+            csv << [project[:name], "VPN Connection", nil, vpns[:id], vpns[:name], usage[:value], "hours", usage[:cost][:value]]
+          end
         end
       end
     end

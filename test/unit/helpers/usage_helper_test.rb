@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class TestModel
+  require 'csv'
   include UsageHelper
   include Rails.application.routes.url_helpers
 
@@ -59,6 +60,14 @@ class UsageHelperTest < CleanTest
     assert_equal "<i class='fa fa-pause'></i> Stopped", @model.state_with_icon('stopped')
     assert_equal "<i class='fa fa-eject text-danger'></i> Terminated", @model.state_with_icon('terminated')
     assert_equal 'foom!', @model.state_with_icon('foom!')
+  end
+
+  def test_usage_csv_report
+    json_data     = File.read(File.expand_path("../../../files/usage.json", __FILE__))
+    expected_csv  = File.read(File.expand_path("../../../files/usage_report.csv", __FILE__))
+    generated_csv = @model.usage_data_as_csv(JSON.parse(json_data, symbolize_names: true))
+    
+    assert_equal(expected_csv, generated_csv)
   end
 
 end
