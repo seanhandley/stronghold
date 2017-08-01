@@ -8,6 +8,6 @@
     = select_tag :month_year, @usage_nav, id: 'admin-month-year', class: 'form-control'
   .form-group
     %label Format
-    = select_tag :format, options_for_select(['HTML (default)', 'CSV','JSON','XML'], selected: 'HTML (default)'), class: 'form-control'
+    = select_tag :format, options_for_select(['HTML (default)'], selected: 'HTML (default)'), class: 'form-control'
 
   = submit_tag 'Generate →', class: 'btn btn-primary'
