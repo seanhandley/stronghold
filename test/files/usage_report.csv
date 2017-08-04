@@ -1,6 +1,6 @@
 Project,Type,Sub-Type,ID,Name,Amount,Unit,Cost (£)
-wyld_stallyns,Instance,,b671216b-1c68-4765-b752-0e8e6b6d015f,,586,hours,20.39
-wyld_stallyns,Instance,,9cf6e43b-e191-47ca-8665-f8592e2d6227,,586,hours,81.51
+wyld_stallyns,Instance,dc1.1x2 (Windows),b671216b-1c68-4765-b752-0e8e6b6d015f,,586,hours,20.39
+wyld_stallyns,Instance,dc1.4x8,9cf6e43b-e191-47ca-8665-f8592e2d6227,,586,hours,81.51
 wyld_stallyns,Volume,Ceph SSD,7587d8b3-ddff-4ea3-b562-cf0fe2fe5864,excellent,17.16,TB/h,7.05
 wyld_stallyns,Image,,72d6058a-ce79-4556-8adb-b669cadeea07,bodacious,,TB/h,0.01
 wyld_stallyns,Image,,f61ea97c-dd83-4a5b-90d7-a1f151d7120e,non-heinous,,TB/h,0.02

@@ -93,7 +93,7 @@
             "latest_state": "active",
             "name": "awesome",
             "tags": [
-
+              "windows", "walls", "doors"
             ],
             "terminated_at": null,
             "usage": [
