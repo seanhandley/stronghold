@@ -1,0 +1,306 @@
+{
+  "last_updated_at": "2017-07-12T10:46:54Z",
+  "links": [
+    {
+      "href": "https://my.datacentred.io/api/usage/2017/6",
+      "rel": "self"
+    },
+    {
+      "href": "https://my.datacentred.io/api/schemas/usage",
+      "rel": "schema"
+    }
+  ],
+  "projects": [
+    {
+      "id": "3e516421b80a4b70aa816aef1dfd79fd",
+      "name": "wyld_stallyns",
+      "usage": {
+        "images": [
+          {
+            "created_at": "2017-06-06T13:26:38Z",
+            "deleted_at": null,
+            "id": "72d6058a-ce79-4556-8adb-b669cadeea07",
+            "latest_size_gb": 0.01,
+            "name": "bodacious",
+            "owner": "2bd21ee25cde40fdb9454954e4fbb4b5",
+            "usage": [
+              {
+                "cost": {
+                  "currency": "gbp",
+                  "rate": 0.0313,
+                  "value": 0.01
+                },
+                "meta": {
+                },
+                "unit": "terabyte hours",
+                "value": 0.01
+              }
+            ]
+          },
+          {
+            "created_at": "2017-06-07T15:23:06Z",
+            "deleted_at": null,
+            "id": "f61ea97c-dd83-4a5b-90d7-a1f151d7120e",
+            "latest_size_gb": 0.88,
+            "name": "non-heinous",
+            "owner": "2bd21ee25cde40fdb9454954e4fbb4b5",
+            "usage": [
+              {
+                "cost": {
+                  "currency": "gbp",
+                  "rate": 0.0313,
+                  "value": 0.02
+                },
+                "meta": {
+                },
+                "unit": "terabyte hours",
+                "value": 0.48
+              }
+            ]
+          }
+        ],
+        "instances": [
+          {
+            "current_flavor": {
+              "id": "b671216b-1c68-4765-b752-0e8e6b6d015f",
+              "name": "dc1.1x2",
+              "ram_mb": 2048,
+              "root_disk_gb": 40,
+              "vcpus_count": 1
+            },
+            "first_booted_at": "2017-06-06T13:32:05Z",
+            "history": [
+              {
+                "billable": false,
+                "event_name": "compute.instance.create.start",
+                "flavor": "b671216b-1c68-4765-b752-0e8e6b6d015f",
+                "recorded_at": "2017-06-06T13:31:59Z",
+                "seconds": 7,
+                "state": "building",
+                "user_id": "2bd21ee25cde40fdb9454954e4fbb4b5"
+              },
+              {
+                "billable": true,
+                "event_name": "compute.instance.create.end",
+                "flavor": "b671216b-1c68-4765-b752-0e8e6b6d015f",
+                "recorded_at": "2017-06-06T13:32:05Z",
+                "seconds": 2107675,
+                "state": "active",
+                "user_id": "2bd21ee25cde40fdb9454954e4fbb4b5"
+              }
+            ],
+            "id": "634771ce-3961-4b7c-a3e1-92da9f7bb4ed",
+            "latest_state": "active",
+            "name": "awesome",
+            "tags": [
+
+            ],
+            "terminated_at": null,
+            "usage": [
+              {
+                "cost": {
+                  "currency": "gbp",
+                  "rate": 0.0348,
+                  "value": 20.39
+                },
+                "meta": {
+                  "flavor": {
+                    "id": "b671216b-1c68-4765-b752-0e8e6b6d015f",
+                    "name": "dc1.1x2",
+                    "ram_mb": 2048,
+                    "root_disk_gb": 40,
+                    "vcpus_count": 1
+                  }
+                },
+                "unit": "hours",
+                "value": 586
+              }
+            ]
+          },
+          {
+            "current_flavor": {
+              "id": "9cf6e43b-e191-47ca-8665-f8592e2d6227",
+              "name": "dc1.4x8",
+              "ram_mb": 8192,
+              "root_disk_gb": 80,
+              "vcpus_count": 4
+            },
+            "first_booted_at": "2017-06-06T13:24:21Z",
+            "history": [
+              {
+                "billable": false,
+                "event_name": "compute.instance.create.start",
+                "flavor": "9cf6e43b-e191-47ca-8665-f8592e2d6227",
+                "recorded_at": "2017-06-06T13:23:59Z",
+                "seconds": 23,
+                "state": "building",
+                "user_id": "2bd21ee25cde40fdb9454954e4fbb4b5"
+              },
+              {
+                "billable": true,
+                "event_name": "compute.instance.create.end",
+                "flavor": "9cf6e43b-e191-47ca-8665-f8592e2d6227",
+                "recorded_at": "2017-06-06T13:24:21Z",
+                "seconds": 2108139,
+                "state": "active",
+                "user_id": "2bd21ee25cde40fdb9454954e4fbb4b5"
+              }
+            ],
+            "id": "e62c16d2-950f-4bec-bea7-e21edd330500",
+            "latest_state": "active",
+            "name": "bogus",
+            "tags": [
+
+            ],
+            "terminated_at": null,
+            "usage": [
+              {
+                "cost": {
+                  "currency": "gbp",
+                  "rate": 0.1391,
+                  "value": 81.51
+                },
+                "meta": {
+                  "flavor": {
+                    "id": "9cf6e43b-e191-47ca-8665-f8592e2d6227",
+                    "name": "dc1.4x8",
+                    "ram_mb": 8192,
+                    "root_disk_gb": 80,
+                    "vcpus_count": 4
+                  }
+                },
+                "unit": "hours",
+                "value": 586
+              }
+            ]
+          }
+        ],
+        "ips": {
+          "current_quota": 3,
+          "quota_changes": [
+            {
+              "previous": null,
+              "quota": 3,
+              "recorded_at": "2017-06-06T14:06:55Z"
+            }
+          ],
+          "usage": [
+            {
+              "cost": {
+                "currency": "gbp",
+                "rate": 0.0027,
+                "value": 3.16
+              },
+              "unit": "hours",
+              "value": 1170
+            }
+          ]
+        },
+        "load_balancers": [
+          {
+            "id": "3c7e7ddb-f5a1-4470-b2e7-3b28233e3369",
+            "name": "tubular",
+            "owner": "2bd21ee25cde40fdb9454954e4fbb4b5",
+            "started_at": "2017-06-07T08:32:28Z",
+            "terminated_at": null,
+            "usage": [
+              {
+                "cost": {
+                  "currency": "gbp",
+                  "rate": 0.062,
+                  "value": 35.15
+                },
+                "meta": {
+                },
+                "unit": "hours",
+                "value": 567
+              }
+            ]
+          },
+          {
+            "id": "f516b45f-9a4a-4c57-90cf-5ad9da6751cc",
+            "name": "metal",
+            "owner": "2bd21ee25cde40fdb9454954e4fbb4b5",
+            "started_at": "2017-06-13T10:06:01Z",
+            "terminated_at": null,
+            "usage": [
+              {
+                "cost": {
+                  "currency": "gbp",
+                  "rate": 0.062,
+                  "value": 26.1
+                },
+                "meta": {
+                },
+                "unit": "hours",
+                "value": 421
+              }
+            ]
+          }
+        ],
+        "object_storage": {
+          "usage": [
+            {
+              "cost": {
+                "currency": "gbp",
+                "rate": 0.0313,
+                "value": 0.0182
+              },
+              "unit": "terabyte hours",
+              "value": 0.583
+            }
+          ]
+        },
+        "volumes": [
+          {
+            "created_at": "2017-06-06T13:24:46Z",
+            "deleted_at": null,
+            "id": "7587d8b3-ddff-4ea3-b562-cf0fe2fe5864",
+            "latest_size_gb": 30,
+            "name": "excellent",
+            "owner": "2bd21ee25cde40fdb9454954e4fbb4b5",
+            "tags": [
+              "ssd"
+            ],
+            "usage": [
+              {
+                "cost": {
+                  "currency": "gbp",
+                  "rate": 0.4112,
+                  "value": 7.05
+                },
+                "meta": {
+                  "volume_type": "Ceph SSD"
+                },
+                "unit": "terabyte hours",
+                "value": 17.16
+              }
+            ]
+          }
+        ],
+        "vpns": [
+          {
+            "id": "e2c11952-1264-41a9-9b5a-529c0d227869",
+            "name": "melvin",
+            "owner": "2bd21ee25cde40fdb9454954e4fbb4b5",
+            "started_at": "2016-12-13T14:47:46Z",
+            "terminated_at": "2017-06-06T15:47:47Z",
+            "usage": [
+              {
+                "cost": {
+                  "currency": "gbp",
+                  "rate": 0.0313,
+                  "value": 4.29
+                },
+                "meta": {
+                },
+                "unit": "hours",
+                "value": 137
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
