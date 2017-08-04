@@ -70,4 +70,11 @@ class UsageHelperTest < CleanTest
     assert_equal(expected_csv, generated_csv)
   end
 
+  def test_instance_flavor_name
+    instance = {current_flavor: {name: "Foo"}, tags: []}
+    assert_equal "Foo", @model.instance_flavor_name(instance)
+    instance = {current_flavor: {name: "Bar All The"}, tags: ["doors", "walls", "windows"]}
+    assert_equal "Bar All The (Windows)", @model.instance_flavor_name(instance)
+  end
+
 end
