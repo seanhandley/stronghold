@@ -52,13 +52,17 @@ module UsageHelper
     @flavors ||= Hash[Billing::InstanceFlavor.all.map{|f| [f.flavor_id, f.name]}]
   end
 
+  def instance_flavor_name(instance)
+    [instance[:current_flavor][:name], instance[:tags].select{|t| t == "windows"}.map{|t| " (#{t.capitalize})"}].join
+  end
+
   def usage_data_as_csv(data)
     CSV.generate do |csv|
       csv << ["Project", "Type", "Sub-Type", "ID", "Name", "Amount", "Unit", "Cost (£)"]
       data[:projects].each do |project|
         project[:usage][:instances].each do |instance|
           instance[:usage].each do |usage|
-            csv << [project[:name], "Instance", nil, usage[:meta][:flavor][:id], usage[:meta][:name], usage[:value], 'hours', usage[:cost][:value]]
+            csv << [project[:name], "Instance", instance_flavor_name(instance) , usage[:meta][:flavor][:id], usage[:meta][:name], usage[:value], 'hours', usage[:cost][:value]]
           end
         end
         project[:usage][:volumes].each do |volume|
