@@ -12,7 +12,7 @@ class TestApiCredential < CleanTest
     ApiCredential.create!(password: SecureRandom.hex, organization_user: @organization_user2)
   end
 
-  def test_user_project_roles_are_removed_when_user_leaves_organization
+  def test_api_credentials_are_removed_when_user_leaves_organization
     assert_equal 2, ApiCredential.all.count
     @user.organization_users.where(organization: @organization2).destroy_all
     assert_equal 1, ApiCredential.all.count

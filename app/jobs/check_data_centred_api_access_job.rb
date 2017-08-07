@@ -2,7 +2,7 @@ class CheckDataCentredApiAccessJob < ApplicationJob
   queue_as :default
 
   def perform(organization_user, state=nil)
-    credential = ApiCredential.find_by(organization_user: organization_user)
+    credential = organization_user.api_credential
     return unless credential
 
     case state

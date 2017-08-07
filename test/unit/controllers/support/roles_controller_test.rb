@@ -15,7 +15,7 @@ class Support::RolesControllerTest < CleanControllerTest
   test "index sets the necessary variables" do
     get :index
     assert assigns(:roles)
-    assert assigns(:users)
+    assert assigns(:organization_users)
     assert assigns(:open_invites)
     assert_template "support/roles/index"
   end

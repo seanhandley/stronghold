@@ -13,12 +13,14 @@ class OrganizationUser::Ability
     if organization_user.has_permission?('roles.read')
       can :read, Role
       can :read, User
+      can :read, OrganizationUser
       can :read, OrganizationUserRole
     end
 
     if organization_user.has_permission?('roles.modify')
         can :modify, Role                 
         can :modify, User
+        can :modify, OrganizationUser
         can :modify, OrganizationUserRole
         can :modify, Invite
     end

@@ -11,7 +11,7 @@ module Support
 
     def index
       @roles = @organization.roles
-      @users = @organization.users.page params[:page]
+      @organization_users = @organization.organization_users.page params[:page]
       @open_invites = @organization.invites.select(&:can_register?)
     end
 

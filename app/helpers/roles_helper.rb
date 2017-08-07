@@ -3,8 +3,8 @@ module RolesHelper
     organization_user.roles.map(&:name).join(', ')
   end
 
-  def list_of_projects(user)
-    user.projects.where(organization: user.current_organization).map(&:name).uniq.join(', ')
+  def list_of_projects(organization_user)
+    organization_user.user.projects.where(organization: organization_user.organization).map(&:name).uniq.join(', ')
   end
 
   def roles_for_select(organization)
