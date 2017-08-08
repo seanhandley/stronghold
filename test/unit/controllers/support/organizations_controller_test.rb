@@ -1,20 +1,19 @@
 require 'test_helper'
 
-class Support::OrganizationsControllerTest < CleanControllerTest
+class Support::OrganizationsControllerTest < ActionController::TestCase
   setup do
     @organization = Organization.make!
     @user = User.make! organizations: [@organization]
     @organization.update_attributes self_service: false
     @organization2 = Organization.make!
     @role = Role.make!(organization: @organization, power_user: true)
-    @organization_user = OrganizationUser.find_by(organization: @organization, user: @user)
-    @organization_user.update_attributes(roles: [@role])
+    @user.update_attributes(roles: [@role])
     [@organization, @organization2].each{|o| o.transition_to(:active)}
     log_in(@user)
   end
 
   test "only power users get to do anything org related" do
-    @organization_user.update_attributes(roles: [])
+    @user.update_attributes(roles: [])
     assert_404([
       [:get, :index, nil],[:patch, :update, {params: { id: @organization.id}}],
       [:post, :reauthorise, {params: { id: @organization.id}}],[:post, :close, {params: { id: @organization.id}}]
@@ -75,5 +74,9 @@ class Support::OrganizationsControllerTest < CleanControllerTest
       post :close, params: { password: "UpperLower123"}
       assert_redirected_to support_edit_organization_path
     end
+  end
+
+  def teardown
+    DatabaseCleaner.clean
   end
 end

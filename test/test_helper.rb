@@ -114,7 +114,6 @@ module CleanupOurTests
     DatabaseCleaner.clean
     Authorization.current_user = nil
     Authorization.current_organization = nil
-    Authorization.current_organization_user = nil
   end
 end
 

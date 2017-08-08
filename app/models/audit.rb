@@ -19,7 +19,7 @@ class Audit < ApplicationRecord
 
   def self.for_organization_and_user(organization, user)
     Audit.where(user_id: user.id).where('organization_id is null').each(&:try_to_set_organization)
-    where(organization_id: organization.id).includes(:organization => :roles)
+    where(organization_id: organization.id).includes(:user => :roles)
   end
 
   def try_to_set_organization

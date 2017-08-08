@@ -1,15 +1,16 @@
 class ApiCredential < ApplicationRecord
   has_secure_password
-  belongs_to :organization_user
+  belongs_to :user
+  belongs_to :organization
 
-  validates :organization_user, :presence => true
+  validates :user, :organization, :presence => true
 
   after_create :generate_access_key
 
   scope :enabled, -> { where(enabled: true) }
 
   def authenticate_and_authorize(password)
-    authenticate(password) && OrganizationUser::Ability.new(organization_user).can?(:read, :api)
+    authenticate(password) && User::Ability.new(user).can?(:read, :api)
   end
 
   private

@@ -3,12 +3,11 @@ class UserProjectRole < ApplicationRecord
   audited only: [:user_id, :project_id, :role_uuid]
 
   belongs_to :user
-  belongs_to :organization_user
   belongs_to :project
 
   validates :role_uuid, presence: true
 
-  after_save :create_project_role, :set_organization_user, on: :create
+  after_save :create_project_role, on: :create
   after_destroy :destroy_project_role
 
   def self.required_role_ids
@@ -18,10 +17,6 @@ class UserProjectRole < ApplicationRecord
   end
 
   private
-
-  def set_organization_user
-    update_column :organization_user_id, OrganizationUser.find_by(user: user, organization: project.organization)&.id
-  end
 
   def create_project_role
     SyncUserProjectRolesJob.perform_later(true, *os_objects) unless Rails.env.test?

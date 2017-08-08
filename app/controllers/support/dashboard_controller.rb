@@ -12,15 +12,15 @@ module Support
     end
 
     def regenerate_ceph_credentials
-      current_organization_user.refresh_ec2_credentials!
-      render json: {success: true, credentials: current_organization_user.ec2_credentials}
+      current_user.refresh_ec2_credentials!
+      render json: {success: true, credentials: current_user.ec2_credentials}
     rescue StandardError => e
       Honeybadger.notify(e)
       render json: {success: false, message: e.message}
     end
 
     def regenerate_datacentred_api_credentials
-      secret_key = current_organization_user.refresh_datacentred_api_credentials!
+      secret_key = current_user.refresh_datacentred_api_credentials!
       render json: {success: true, secret_key: secret_key}
     rescue StandardError => e
       Honeybadger.notify(e)

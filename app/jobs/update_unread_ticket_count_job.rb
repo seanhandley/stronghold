@@ -1,7 +1,6 @@
 class UpdateUnreadTicketCountJob < ApplicationJob
-  def perform(organization_user, destroyed=false)
-    return unless organization_user
-    unread_count = organization_user.unread_tickets.count || 0
-    UnreadTicketsChannel.broadcast_to(organization_user, unread_count: unread_count, increased: !destroyed, play_sounds: organization_user.user.play_sounds?)
+  def perform(user, destroyed=false)
+    unread_count = user.unread_tickets.count
+    UnreadTicketsChannel.broadcast_to(user, unread_count: unread_count, increased: !destroyed, play_sounds: user.play_sounds?)
   end
 end

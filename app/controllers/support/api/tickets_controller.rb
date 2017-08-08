@@ -20,7 +20,7 @@ module Support
 
       def create
         ticket = Ticket.new(create_params.merge(name: Authorization.current_user.name, email: Authorization.current_user.email,
-                                                unread_tickets: Authorization.current_organization_user.unread_tickets.map(&:ticket_id)))
+                                                unread_tickets: Authorization.current_user.unread_tickets.map(&:ticket_id)))
         response = {
           :success => ticket.valid?,
           :message => nil

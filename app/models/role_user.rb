@@ -19,7 +19,7 @@ class RoleUser < ApplicationRecord
       errors.add(:base, I18n.t(:user_already_has_role_assigned))
       throw :abort
     else
-      return true
+      return true   
     end
   end
 

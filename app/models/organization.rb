@@ -51,8 +51,7 @@ class Organization < ApplicationRecord
   has_many :invoices, class_name: 'Billing::Invoice', dependent: :destroy
   has_many :projects, dependent: :destroy
   has_and_belongs_to_many :products, -> { distinct }
-  has_many :organization_users, dependent: :destroy
-  has_many :users, through: :organization_users
+  has_many :organization_users, dependent: :destroy; has_many :users, through: :organization_users
   has_many :organization_vouchers, {dependent: :destroy}, -> { distinct }
   has_many :vouchers, :through => :organization_vouchers
   has_many :usages

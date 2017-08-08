@@ -1,17 +1,16 @@
 class AuthorizedController < ApplicationController
-  before_action :current_user, :current_organization, :current_organization_user
+  before_action :current_user, :current_organization, :authenticate_user!, :timeout_session!
   before_action { Authorization.current_user = current_user }
   before_action { Authorization.current_organization = current_organization }
-  before_action { Authorization.current_organization_user = current_organization_user }
-  before_action :authenticate_user!, :timeout_session!
   before_action { Authorization.current_user.token = session[:token] }
+  before_action { Authorization.current_organization = current_organization }
   around_action :user_time_zone, :if => :current_user
   before_action :set_locale
 
   check_authorization
 
   def current_ability
-    @current_ability ||= OrganizationUser::Ability.new(current_organization_user)
+    @current_ability ||= User::Ability.new(current_user)
   end
 
   def reauthenticate(password)

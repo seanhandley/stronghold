@@ -2,8 +2,7 @@ class Role < ApplicationRecord
   audited :associated_with => :organization, except: [:organization_id, :power_user]
   has_associated_audits
 
-  has_and_belongs_to_many :organization_users, -> { distinct }
-  has_many :users, through: :organization_users
+  has_and_belongs_to_many :users, -> { distinct }
   belongs_to :organization
   before_destroy :check_power, :check_users
   after_commit :check_openstack_access, :check_ceph_access, :check_datacentred_api_access
@@ -35,20 +34,20 @@ class Role < ApplicationRecord
     if power_user? && users.any?
       errors.add(:base, I18n.t(:cannot_remove_power_user_group))
       throw :abort
-    end
+    end  
   end
 
   def check_openstack_access
-    organization_users.each {|ou| CheckOpenStackAccessJob.perform_later(ou)}
+    users.each {|user| CheckOpenStackAccessJob.perform_later(user)}
   end
 
   def check_ceph_access
     return unless Rails.env.production?
-    organization_users.each {|ou| CheckCephAccessJob.perform_later(ou)}
+    users.each {|user| CheckCephAccessJob.perform_later(user)}
   end
 
   def check_datacentred_api_access
-    organization_users.each {|ou| CheckDataCentredApiAccessJob.perform_later(ou)}
+    users.each {|user| CheckDataCentredApiAccessJob.perform_later(organization, user)}
   end
 
   def permissions_are_valid

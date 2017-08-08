@@ -11,6 +11,7 @@ class AdminBaseController < AuthorizedController
   private
 
   def check_user_is_staff
-    redirect_to support_root_path unless current_organization.staff? && current_user.admin?
+    return true if Rails.env.development?
+    slow_404 unless current_user.staff? && current_user.admin?
   end
 end

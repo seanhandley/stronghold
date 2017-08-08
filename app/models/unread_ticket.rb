@@ -1,6 +1,5 @@
 class UnreadTicket < ApplicationRecord
   belongs_to :user
-  belongs_to :organization_user
 
   after_create  :update_unread_count
   after_destroy :update_unread_count
@@ -8,6 +7,6 @@ class UnreadTicket < ApplicationRecord
   private
 
   def update_unread_count
-    UpdateUnreadTicketCountJob.perform_now(organization_user, self.destroyed?)
+    UpdateUnreadTicketCountJob.perform_now(user, self.destroyed?)
   end
 end

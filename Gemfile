@@ -44,6 +44,7 @@ gem "maxmind", '~> 0.4'
 gem "deep_merge", '~> 1.0'
 gem 'stripe-rails', '~> 0.3'
 gem 'holidays', '~> 2.2'
+gem 'minitest-ci', :git => 'git@github.com:circleci/minitest-ci.git'
 gem "useragent"
 gem 'soulheart'
 gem 'hiredis', '~> 0.6.0' # Skip using JRuby
@@ -59,7 +60,7 @@ gem 'harbour', git: 'git@github.com:datacentred/harbour.git', branch: 'master'
 group :test, :acceptance do
   gem 'faker'
   gem 'machinist'
-  gem 'minitest', '5.10.1'
+  gem 'minitest', '~> 5.10', '!= 5.10.2'
   gem "minitest-rails"
   gem "minitest-rails-capybara"
   gem 'poltergeist'

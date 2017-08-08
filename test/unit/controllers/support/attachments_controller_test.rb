@@ -1,13 +1,12 @@
 require 'test_helper'
 
-class Support::Api::AttachmentsControllerTest < CleanControllerTest
+class Support::Api::AttachmentsControllerTest < ActionController::TestCase
   setup do
     @user = User.make!(password: 'Password1')
     @organization = @user.primary_organization
     @organization.update_attributes(self_service: false)
     @role = Role.make!(organization: @organization, power_user: true)
-    @organization_user = OrganizationUser.find_by(organization: @organization, user: @user)
-    @organization_user.update_attributes(roles: [@role])
+    @user.update_attributes(roles: [@role])
     log_in(@user)
   end
 

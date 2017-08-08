@@ -47,7 +47,7 @@
         .top-menu-option{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => t(:support), 'class' => (current_section == 'tickets' ? 'selected' : '')}
           .badge-container
             %i.top-menu-icon.fa.fa-life-ring
-            %span.badge#unread-support-tickets= current_organization_user.unread_tickets.count > 0 ? current_organization_user.unread_tickets.count : ''
+            %span.badge#unread-support-tickets= current_user.unread_tickets.count > 0 ? current_user.unread_tickets.count : ''
     - else
       .top-menu-option.top-menu-option-disabled{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => t(:support_tickets)}
         %i.top-menu-icon.fa.fa-life-ring

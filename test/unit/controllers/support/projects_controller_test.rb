@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class Support::ProjectsControllerTest < CleanControllerTest
+class Support::ProjectsControllerTest < ActionController::TestCase
   setup do
     @user = User.make!
     @organization = @user.primary_organization
@@ -9,8 +9,7 @@ class Support::ProjectsControllerTest < CleanControllerTest
     @organization.products << Product.make!(:compute)
     @organization.save!
     @role = Role.make!(organization: @organization, power_user: true)
-    @organization_user = OrganizationUser.find_by(organization: @organization, user: @user)
-    @organization_user.update_attributes(roles: [@role])
+    @user.update_attributes(roles: [@role])
     @controller_paths = [
       [:get, :index, nil],
       [:post, :create, {params: { project: {name: 'Foo', users: []}}}],
@@ -21,7 +20,7 @@ class Support::ProjectsControllerTest < CleanControllerTest
   end
   
   test "Can't do anything unless power user" do
-    @organization_user.update_attributes(roles: [])
+    @user.update_attributes(roles: [])
     assert_404(@controller_paths)
   end
 
@@ -120,5 +119,9 @@ class Support::ProjectsControllerTest < CleanControllerTest
     delete :destroy, params: { id: @organization.primary_project.id}
     assert_redirected_to support_projects_path
     assert flash[:alert].include? "Couldn't delete project"
+  end
+
+  def teardown
+    DatabaseCleaner.clean
   end
 end

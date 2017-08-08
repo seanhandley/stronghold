@@ -1,7 +1,7 @@
 .modal.fade{'id' => "addRoleUser#{role.id}", 'tabindex' => "-1", 'role' => "dialog", 'aria-labelledby' => "addRoleUser", 'aria-hidden' => "true", 'data-backdrop' => 'static'}
   .modal-dialog
     .modal-content
-      = form_for OrganizationUserRole.new, url: support_organization_user_roles_path, remote: true do |f|
+      = form_for RoleUser.new, url: support_role_users_path, remote: true do |f|
         .modal-header
           %button{'type' => "button", 'class' => "close", 'data-dismiss' => "modal", 'aria-hidden' => "true"}
             &times;
@@ -15,7 +15,7 @@
           .input-group
             %span.input-group-addon
               %i.fa.fa-user
-            = f.select :organization_user_id, organization_users_for_select(role), {}, class: "select-user", placeholder: t(:select_a_user)
+            = f.select :user_id, users_for_select(role), {}, class: "select-user", placeholder: t(:select_a_user)
         .modal-footer
           %button.btn.btn-default{'data-toggle' => "modal", 'data-dismiss' => "modal"}
             = t(:cancel)

@@ -1,7 +1,16 @@
 require_relative '../acceptance_test_helper'
 
 class TemporaryAssignmentTests < CapybaraTestCase
-  def test_staff_can_create_temporary_membership
+
+  def setup
+    @user = User.find_by_email('capybara@test.com')
+    @organization = Organization.find_by_name 'capybara'
+    @organization.update_attributes reference: 'datacentred'
+    @user.roles.first.update_attributes power_user: true
+    login
+  end
+
+  def test_satff_can_create_temporary_membership
     @organization2 = Organization.create(name: 'test-organization2')
     @organization2.update_attributes(self_service: false)
     visit admin_customer_path(@organization2)

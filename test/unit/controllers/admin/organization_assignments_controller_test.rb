@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class Admin::OrganizationAssignmentsControllerTest < CleanControllerTest
+class Admin::OrganizationAssignmentsControllerTest < ActionController::TestCase
   setup do
     @organization = Organization.make! state: 'active', reference: STAFF_REFERENCE
     @organization2 = Organization.make! state: 'active'
@@ -9,8 +9,7 @@ class Admin::OrganizationAssignmentsControllerTest < CleanControllerTest
     @user = User.make!(organizations: [@organization])
     @organization.update_attributes self_service: false
     @role = Role.make!(organization: @organization, power_user: true)
-    @organization_user = OrganizationUser.find_by(organization: @organization, user: @user)
-    @organization_user.update_attributes(roles: [@role])
+    @user.update_attributes(roles: [@role])
     @membership = OrganizationUser.create! organization: @organization3,
                                            user:         @user,
                                            duration:     4
@@ -44,5 +43,9 @@ class Admin::OrganizationAssignmentsControllerTest < CleanControllerTest
       assert_equal 'You have restarted your membership timer.', flash[:notice]
       assert @membership.reload.expires_at > time1
     end
+  end
+
+  def teardown
+    DatabaseCleaner.clean
   end
 end

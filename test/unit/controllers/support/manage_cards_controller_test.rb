@@ -1,9 +1,9 @@
 require 'test_helper'
 
-class Support::ManageCardsControllerTest < CleanControllerTest
+class Support::ManageCardsControllerTest < ActionController::TestCase
   setup do
     @user = User.make!
-    @organization = @user.primary_organization
+    @organization = @user.primary_organization 
     @stripe_id = "cus_7QbAaReJ8NlEZS"
     @card_1 = {card: {
       number: "4242424242424242",
@@ -28,8 +28,7 @@ class Support::ManageCardsControllerTest < CleanControllerTest
     }
     @organization.update_attributes(stripe_customer_id: @stripe_id)
     @role = Role.make!(organization: @organization, power_user: true)
-    @organization_user = OrganizationUser.find_by(organization: @organization, user: @user)
-    @organization_user.update_attributes(roles: [@role])
+    @user.update_attributes(roles: [@role])
     log_in(@user)
   end
 
@@ -38,8 +37,8 @@ class Support::ManageCardsControllerTest < CleanControllerTest
   end
 
   test "Can't do anything unless power user" do
-    @organization_user.update_attributes(roles: [])
-    refute @user.reload.power_user?
+    @user.update_attributes(roles: [])
+    refute @user.power_user?
     VCR.use_cassette('stripe_has_valid_sources') do
       assert_404([
         [:get, :index, nil],
@@ -120,4 +119,9 @@ class Support::ManageCardsControllerTest < CleanControllerTest
       assert flash[:error].include?("something went wrong")
     end
   end
+
+  def teardown
+    DatabaseCleaner.clean
+  end
+
 end
