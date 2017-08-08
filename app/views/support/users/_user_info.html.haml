@@ -13,22 +13,23 @@
         %th Cloud Projects
       %th
     %tbody
-      - users.each do |user|
+      - organization_users.each do |organization_user|
+        - user = organization_user.user
         %tr
           %td= image_tag asset_path("assets/default_user.png"), "class" => "gravatar img-circle", "alt" => "Gravatar", "data-gravatar_hash" => user.gravatar_hash
           %td= link_to user.name, "#user_#{user.id}", 'data-toggle' => 'collapse', 'data-parent' => '#accordionUsers'
           %td= mail_to user.email, "#{user.email}"
           %td
             %i.fa.fa-key
-            = list_of_roles(user)
+            = list_of_roles(organization_user)
           - if current_organization.cloud?
             %td
               %i.fa.fa-folder-o
-              - if list_of_projects(user).present?
-                = list_of_projects(user)
+              - if list_of_projects(organization_user).present?
+                = list_of_projects(organization_user)
               - else
                 %em None
           %td
-            - if can?(:modify, User) && user.id != current_user.id
+            - if can?(:modify, OrganizationUser) && organization_user.id != current_organization_user.id
               %a{href: support_user_path(user), data: { remote: true, method: :delete, confirm: "Are you sure?"}}
                 %i.fa.fa-trash-o

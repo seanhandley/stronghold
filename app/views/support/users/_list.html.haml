@@ -1,6 +1,6 @@
-- @users.each do |user|
-  = javascript_error_messages_for(user)
-  = javascript_success_messages_for(user)
+- @organization_users.each do |organization_user|
+  = javascript_error_messages_for(organization_user)
+  = javascript_success_messages_for(organization_user)
 
 .page-controls
   - if can? :modify, Invite
@@ -37,7 +37,7 @@
 
 %h3
   = t(:users)
-  = "(#{@users.count})"
+  = "(#{@organization_users.count})"
   
-= render partial: 'support/users/user_info', locals: {users: @users}
+= render partial: 'support/users/user_info', locals: {organization_users: @organization_users}
 = render partial: 'support/users/invite_user'

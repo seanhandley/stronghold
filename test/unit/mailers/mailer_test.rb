@@ -125,7 +125,8 @@ class MailerTest < ActionMailer::TestCase
     @organization = Organization.make!
     @role = Role.make! organization: @organization, power_user: true
     @user = User.make! organizations: [@organization]
-    @role.users << @user
+    @organization_user = OrganizationUser.find_by(organization: @organization, user: @user)
+    @organization_user.roles << @role
     @cs = CustomerSignup.make!
 
     @cs.stub(:organization, @organization) do
@@ -143,7 +144,8 @@ class MailerTest < ActionMailer::TestCase
     @organization = Organization.make!
     @role = Role.make! organization: @organization, power_user: true
     @user = User.make! organizations: [@organization]
-    @role.users << @user
+    @organization_user = OrganizationUser.find_by(organization: @organization, user: @user)
+    @organization_user.roles << @role
     @email = Mailer.review_mode_successful(@user.primary_organization).deliver_now
 
     assert_not ActionMailer::Base.deliveries.empty?
@@ -157,7 +159,8 @@ class MailerTest < ActionMailer::TestCase
     @organization = Organization.make!
     @role = Role.make! organization: @organization, power_user: true
     @user = User.make! organizations: [@organization]
-    @role.users << @user
+    @organization_user = OrganizationUser.find_by(organization: @organization, user: @user)
+    @organization_user.roles << @role
     @email = Mailer.quota_changed(@user.primary_organization).deliver_now
     assert_not ActionMailer::Base.deliveries.empty?
 
@@ -170,7 +173,8 @@ class MailerTest < ActionMailer::TestCase
     @organization = Organization.make!
     @role = Role.make! organization: @organization, power_user: true
     @user = User.make! organizations: [@organization]
-    @role.users << @user
+    @organization_user = OrganizationUser.find_by(organization: @organization, user: @user)
+    @organization_user.roles << @role
     @email = Mailer.quota_limits_alert(@organization.id).deliver_now
 
     assert_not ActionMailer::Base.deliveries.empty?

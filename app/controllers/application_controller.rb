@@ -74,6 +74,12 @@ class ApplicationController < ActionController::Base
   end
   helper_method :current_organization
 
+  def current_organization_user
+    @current_organization_user ||= OrganizationUser.find_by(user: current_user, organization: current_organization)
+    @current_organization_user
+  end
+  helper_method :current_organization_user
+
   def current_path
     request.get? ? request.fullpath : request.original_fullpath.split('?').first
   end

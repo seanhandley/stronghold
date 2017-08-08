@@ -24,8 +24,9 @@ class TicketAdapter
                   }
       spql = "SELECT #{columns.join(',')} FROM tickets WHERE custom_field.company_reference = \"#{organization.reporting_code}\" AND brands.name = \"#{SIRPORTLY_BRAND}\" GROUP BY submitted_at ORDER BY submitted_at DESC LIMIT #{limit.join(',')}"
       user = Authorization.current_user
+      organization_user = Authorization.current_organization_user
       colo_user = Authorization.current_organization.colo? && !Authorization.current_organization.cloud?
-      unread_tickets = user.unread_tickets.map(&:ticket_id)
+      unread_tickets = organization_user.unread_tickets.map(&:ticket_id)
       SIRPORTLY.request("tickets/spql", spql: spql)["results"].map{|t| Hash[columns.zip(t)]}.map do |t|
         Thread.new do
           head, *tail = SIRPORTLY.request("ticket_updates/all", ticket: t['reference']).sort_by{|t| t['posted_at']}

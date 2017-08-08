@@ -84,9 +84,10 @@ class TestOrganizationProperties < CleanTest
     assert_equal 0, @organization.admin_users.count
     user = User.make!(organizations: [@organization])
     assert_equal 0, @organization.admin_users.count
-    role = Role.make!(power_user: true)
-    user.roles << role
-    user.save
+    role = Role.make!(power_user: true, organization: @organization)
+    ous = OrganizationUser.find_by(organization: @organization, user: user)
+    role.organization_users << ous
+    role.save!
     assert_equal 1, Organization.first.admin_users.count
   end
 
