@@ -29,12 +29,11 @@ class ProjectResources
   end
 
   def clear_router_gateways
-    floating_ips.each {|p| fog_network.disassociate_floating_ip(p)}
     routers.each do |router|
       subnets.each do |subnet|
         begin
-          fog_network.update_router router,  external_gateway_info: {}
-          fog_network.remove_router_interface(router, subnet)
+         fog_network.update_router router,  external_gateway_info: {}
+         fog_network.remove_router_interface(router, subnet)
         rescue Fog::Network::OpenStack::NotFound
           # Ignore
         end
@@ -74,23 +73,15 @@ class ProjectResources
   end
 
   def routers
-    fog_network.list_routers(filters).body['routers'].map{|r|   r['id']}
+    fog_network.list_routers(filters).body['routers'].map{|r| r['id']}
   end
 
   def subnets
-    fog_network.list_subnets(filters).body['subnets'].map{|s|   s['id']}
-  end
-
-  def ports
-    fog_network.list_ports.body['ports']
+    fog_network.list_subnets(filters).body['subnets'].map{|s| s['id']}
   end
 
   def networks
     fog_network.list_networks(filters).body['networks'].map{|n| n['id']}
-  end
-
-  def floating_ips
-    fog_network.list_floating_ips.body['floatingips'].map{|n| n['id']}
   end
 
   def fog_network
