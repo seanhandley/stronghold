@@ -1,0 +1,18 @@
+development:
+  debug: true
+
+test:
+  debug: false
+
+staging:
+  debug: true
+
+acceptance:
+  debug: false
+
+vagrant:
+  debug: false
+
+production:
+  debug: true
+  log: /var/log/rails/stronghold/openstack_requests.log
