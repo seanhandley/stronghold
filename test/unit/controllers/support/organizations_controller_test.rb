@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class Support::OrganizationsControllerTest < ActionController::TestCase
+class Support::OrganizationsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @organization = Organization.make!
     @user = User.make! organizations: [@organization]
@@ -15,37 +15,39 @@ class Support::OrganizationsControllerTest < ActionController::TestCase
   test "only power users get to do anything org related" do
     @user.update_attributes(roles: [])
     assert_404([
-      [:get, :index, nil],[:patch, :update, {params: { id: @organization.id}}],
-      [:post, :reauthorise, {params: { id: @organization.id}}],[:post, :close, {params: { id: @organization.id}}]
+      [:get,   support_edit_organization_url],
+      [:patch, support_organization_url(@organization)],
+      [:post,  reauthorise_url],
+      [:post,  close_account_url]
     ])
   end
 
   test "users can't change different orgs" do
     assert_404([
-      [:patch ,:update, params: {format: 'js', id: @organization2.id, organization: {name: 'foo'}}]
+      [:patch , support_organization_url(@organization2), params: {organization: {name: 'foo'}}, xhr: true]
     ])
   end
 
   test "user can edit their own org" do
     VCR.use_cassette('organization_with_graph_data') do
-      get :index
+      get support_edit_organization_url
     end
     assert assigns(:organization)
     assert_template "support/organizations/organization"
-    patch :update, params: {format: 'js', id: @organization.id, organization: {name: 'foo'}}
+    patch support_organization_url(@organization), params: {organization: {name: 'foo'}}, xhr: true
     assert response.body.include?('Saved')
   end
 
   test "User can reauthorise with right password" do
     @controller.stub(:reauthenticate, true, "UpperLower123") do
-      post :reauthorise, params: { password: "UpperLower123"}, format: 'json'
+      post :reauthorise, params: { password: "UpperLower123"}, xhr: true
       assert json_response['success']
     end
   end
 
   test "User can't reauthorise with wrong password" do
     @controller.stub(:reauthenticate, false, "wrgon") do
-      post :reauthorise, params: { password: "wrgon"}, format: 'json'
+      post :reauthorise, params: { password: "wrgon"}, xhr: true
       refute json_response['success']
     end
   end

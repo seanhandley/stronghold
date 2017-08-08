@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class SessionsControllerTest < ActionController::TestCase
+class SessionsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @user         = User.make!(password: 'Password1')
     @organization = @user.primary_organization

@@ -6,12 +6,14 @@ class User::Ability
     alias_action :new, :create, :edit, :update, :destroy, :read, :index, :to => :modify
 
     # Roles
-    can :read,   Role     if user.has_permission?('roles.read')
-    can :read,   User     if user.has_permission?('roles.read')
-    can :modify, Role     if user.has_permission?('roles.modify')
-    can :modify, User     if user.has_permission?('roles.modify')
-    can :modify, RoleUser if user.has_permission?('roles.modify')
-    can :modify, Invite   if user.has_permission?('roles.modify')
+    can :read,   Role             if user.has_permission?('roles.read')
+    can :read,   User             if user.has_permission?('roles.read')
+    can :read,   OrganizationUser if user.has_permission?('roles.read')
+    can :modify, Role             if user.has_permission?('roles.modify')
+    can :modify, User             if user.has_permission?('roles.modify')
+    can :modify, OrganizationUser if user.has_permission?('roles.modify')
+    can :modify, RoleUser         if user.has_permission?('roles.modify')
+    can :modify, Invite           if user.has_permission?('roles.modify')
 
     # Tickets
     ticket_permissions         = ['tickets.modify', 'access_requests.raise_for_self', 'access_requests.raise_for_others']

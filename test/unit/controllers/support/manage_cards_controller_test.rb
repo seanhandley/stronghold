@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class Support::ManageCardsControllerTest < ActionController::TestCase
+class Support::ManageCardsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @user = User.make!
     @organization = @user.primary_organization 

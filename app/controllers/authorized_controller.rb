@@ -4,7 +4,7 @@ class AuthorizedController < ApplicationController
   before_action { Authorization.current_organization = current_organization }
   before_action { Authorization.current_user.token = session[:token] }
   before_action { Authorization.current_organization = current_organization }
-  around_action :user_time_zone, :if => :current_user
+  around_action :user_time_zone
   before_action :set_locale
 
   check_authorization
@@ -49,8 +49,10 @@ class AuthorizedController < ApplicationController
     I18n.locale = I18n.default_locale
   end
 
-  def user_time_zone(&block)
-    Time.use_zone(current_organization.time_zone, &block)
+  def user_time_zone
+    if current_organization
+      Time.use_zone(current_organization.time_zone) { yield }
+    end
   end
 
   def authenticate_user!

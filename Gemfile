@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '5.0.2'
+gem 'rails', '5.1.2'
 gem 'mysql2', '~> 0.3'
 gem 'sdoc', '~> 0.4.0',  group: :doc
 gem 'bcrypt', '~> 3.1'
@@ -11,8 +11,8 @@ gem 'fog-openstack', '~> 0.1'
 gem 'gravatar_image_tag', '~> 1.2.0'
 gem 'js-routes', '~> 1.2'
 gem 'sidekiq', '~> 4.0'
-gem 'database_cleaner', '~> 1.5'
-gem "audited", "~> 4.3"
+gem 'database_cleaner', '~> 1.6'
+gem "audited", "~> 4.5"
 gem "rails-observers", git: 'https://github.com/rails/rails-observers'
 gem 'verbs', '~> 2.1.4'
 gem 'faraday', '~> 0.9'
@@ -54,7 +54,7 @@ gem 'statesman', '~> 2.0'
 gem 'parallel'
 gem 'docker-api', '~> 1.31'
 gem 'gibberish', '~> 2.1'
-gem 'paranoia', '~> 2.2'
+gem 'paranoia', '~> 2.3'
 gem 'harbour', git: 'git@github.com:datacentred/harbour.git', branch: 'master'
 
 group :test, :acceptance do
