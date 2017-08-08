@@ -3,7 +3,9 @@ class OrganizationUser < ActiveRecord::Base
   self.table_name = 'organizations_users'
   after_initialize :check_if_temporary_membership_expired
   after_save :set_primary, on: :create
-  before_destroy :check_if_should_destroy_user, :check_if_primary_and_current_user
+  before_destroy :check_if_should_destroy_user,
+                 :check_if_primary_and_current_user,
+                 :clean_roles_and_projects
   DEFAULT_MEMBERSHIP_DURATION_IN_HOURS = 4
 
   belongs_to :organization
@@ -41,6 +43,14 @@ class OrganizationUser < ActiveRecord::Base
   def check_if_should_destroy_user
     if user.organizations.one? && Authorization.current_user != user
       user.destroy
+    end
+  end
+
+  def clean_roles_and_projects
+    @projects = user.projects
+    @projects.each do |project|
+      project_for_user ||= UserProjectRole.find_by(user_id: user.id, project_id: project.id)
+      project_for_user.destroy if project_for_user
     end
   end
 

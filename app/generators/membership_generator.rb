@@ -1,24 +1,21 @@
-class RegistrationGenerator
+class MembershipGenerator
   include ActiveModel::Validations
 
-  attr_reader :invite, :password,
+  attr_reader :invite,
               :organization, :user
 
-  def initialize(invite, params)
-    @invite            = invite
-    @password          = params[:password]
+  def initialize(invite)
+    @invite = invite
   end
 
   def generate!
     if !invite.can_register?
-      errors.add :base, I18n.t(:signup_token_not_valid)
-    elsif password.length < 8
-      errors.add :base,  I18n.t(:password_too_short)
+      errors.add :base, I18n.t(:membership_token_not_valid)
     else
       error = nil
       ApplicationRecord.transaction do
         begin
-          create_registration
+          create_membership
         rescue StandardError => e
           error = e
           raise ActiveRecord::Rollback
@@ -33,17 +30,19 @@ class RegistrationGenerator
 
   private
 
-  def create_registration
+  def create_membership
     @organization = invite.organization
     Authorization.current_organization = @organization
     if invite.power_invite?
       @owners = @organization.roles.create name: I18n.t(:owners), power_user: true
     end
 
+    @user ||= User.find_by_email(invite.email.downcase)
     roles = (invite.roles + [@owners]).flatten.compact
-    @user = @organization.users.create email: invite.email.downcase, password: password,
-                                       roles: roles
-    @user.save!
+
+    @user.update_attributes roles: roles
+    @organizationuser = OrganizationUser.new organization_id: @organization.id, user_id: @user.id
+    @organizationuser.save!
     OpenStack::User.update_enabled(@user.uuid, false) unless @organization.has_payment_method?
     unless Rails.env.test?
       invite.projects.each do |project|

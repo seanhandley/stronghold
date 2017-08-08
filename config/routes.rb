@@ -112,6 +112,11 @@ Rails.application.routes.draw do
 
   get 'signup/:token', :controller => 'signups', :action => 'edit', :as => 'signup_begin'
   post 'signup/:token', :controller => 'signups', :action => 'update', :as => 'signup_complete'
+
+  get 'membership/:token', :controller => 'memberships', :action => 'confirm', :as => 'membership_begin'
+  post 'membership/:token', :controller => 'memberships', :action => 'create', :as => 'membership_complete'
+  get 'membership/thanks/:organization_id', :controller => 'memberships', :action => 'thanks', :as => 'membership_thanks'
+
   get 'signup', :controller => 'signups', :action => 'new', :as => 'new_signup'
   post 'signup', :controller => 'signups', :action => 'create', :as => 'create_signup'
   post 'sign_out', :controller => 'sessions', :action => 'destroy', :as => 'signout'

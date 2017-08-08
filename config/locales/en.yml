@@ -130,6 +130,7 @@ en:
   sign_out: "Sign out"
   signed_out_after_timeout: "You were signed out automatically. Please log in to continue."
   signup_token_not_valid: "Token is not valid"
+  membership_token_not_valid: "Token is not valid"
   state: "State"
   status: "Status"
   storage: "Storage"

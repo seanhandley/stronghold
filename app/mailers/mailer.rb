@@ -12,6 +12,11 @@ class Mailer < ActionMailer::Base
     mail(:to => @invite.email, :subject => "Confirm your account")
   end
 
+  def membership(invite_id)
+    @invite = Invite.find(invite_id)
+    mail(:to => @invite.email, :subject => "Confirm your invitation to join a new team")
+  end
+
   def reset(reset_id)
     @reset = Reset.find(reset_id)
     mail(:to => @reset.email, :subject => "Password reset")

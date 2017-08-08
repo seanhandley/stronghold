@@ -1,0 +1,21 @@
+- title "Confirm your new membership"
+
+%div
+  %h3
+    %strong
+      %i.fa.fa-envelope
+      Confirm your new membership
+  %br
+
+  %h4
+    %label Email:
+  %h4.form-control
+    = @invite.email
+    %i.fa.fa-question-circle-o{:class => "has-tooltip pull-right", :target => '_blank', 'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => 'Your email address'}
+  %h4
+    %label Organization:
+  %h4.form-control
+    = @invite.organization.name
+    %i.fa.fa-question-circle-o{:class => "has-tooltip pull-right", :target => '_blank', 'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => 'Name of the team you will join'}
+  %br
+    = link_to 'Proceed', membership_complete_path(@invite.token), class: 'btn btn-primary pull-right', 'data-method' => "post"
