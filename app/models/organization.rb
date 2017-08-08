@@ -77,6 +77,10 @@ class Organization < ApplicationRecord
     update(params)
   end
 
+  def active?
+    state == 'active'
+  end
+
   def frozen?
     state == 'frozen'
   end

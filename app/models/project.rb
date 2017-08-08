@@ -36,7 +36,7 @@ class Project < ApplicationRecord
   validate :check_quota_set_is_valid, :check_quota_set_within_limits, on: [:create, :update]
 
   after_commit :sync_quota_set, on: [:create, :update]
-  after_commit -> { CreateProjectDefaultNetworkJob.perform_later(uuid) if organization.cloud? }, on: :create
+  after_commit -> { CreateProjectDefaultNetworkJob.perform_later(uuid) if organization.cloud? && organization.active? }, on: :create
 
   accepts_nested_attributes_for :user_project_roles, allow_destroy: true, reject_if: proc { |attributes| User.find_by_id(attributes["user_id"]).blank? }
 
