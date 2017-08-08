@@ -1,13 +1,17 @@
 require 'test_helper'
 
-class Support::UsersControllerTest < ActionController::TestCase
+class Support::UsersControllerTest < CleanControllerTest
   setup do
     @user = User.make!
     @user2 = User.make!(organizations: [@user.primary_organization])
     @organization = @user.primary_organization
     @organization.update_attributes(self_service: false)
     @admin_role = @organization.roles.make!(power_user: true)
+    @organization_user = OrganizationUser.find_by(organization_id: @organization.id, user_id: @user.id)
     log_in(@user)
+    Authorization.current_user = @user
+    Authorization.current_organization = @organization
+    Authorization.current_organization_user = @organization_user
   end
 
   test "user can view profile" do
@@ -44,14 +48,14 @@ class Support::UsersControllerTest < ActionController::TestCase
   end
 
   test "user can delete another user if they have permission" do
-    @user.update_attributes(roles: [@admin_role])
+    @admin_role.update_attributes(organization_users: [@organization_user])
     delete :destroy, params: { id: @user2.id}, format: 'js'
     assert_response 302
     assert @response.body.include? support_roles_path
   end
 
   test "user can't delete self" do
-    @user.update_attributes(roles: [@admin_role])
+    @admin_role.update_attributes(organization_users: [@organization_user])
     delete :destroy, params: {id: @user.id}, format: 'js'
     assert_response :unprocessable_entity
     assert @response.body.include? "remove yourself"

@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class Support::CardsControllerTest < ActionController::TestCase
+class Support::CardsControllerTest < CleanControllerTest
   setup do
     @user = User.make!(password: 'Password1', uuid: '1234')
     @organization = @user.primary_organization

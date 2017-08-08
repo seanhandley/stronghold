@@ -34,8 +34,8 @@ Rails.application.routes.draw do
         end
       end
     end
-    delete 'role/:role_id/user/:user_id', :controller => 'role_users', :action => 'destroy', :as => 'remove_role_user'
-    resources :role_users, only: [:create]
+    delete 'role/:role_id/organization_user/:organization_user_id', :controller => 'organization_user_roles', :action => 'destroy', :as => 'remove_organization_user_role'
+    resources :organization_user_roles, only: [:create]
     resources :invites, only: [:create, :destroy]
     resources :audits, only: [:index]
     put '/change_organizations', :controller => 'change_organizations', :action => 'change'

@@ -1,20 +1,21 @@
 require 'test_helper'
 
-class Support::RolesControllerTest < ActionController::TestCase
+class Support::RolesControllerTest < CleanControllerTest
   setup do
     @user = User.make!
     @organization = @user.primary_organization
     @organization.update_attributes self_service: false
     @role = Role.make!(organization: @organization, power_user: true)
     @role2 = Role.make!(organization: @organization)
-    @user.update_attributes(roles: [@role])
+    @organization_user = OrganizationUser.find_by(user: @user, organization: @organization)
+    @organization_user.update_attributes(roles: [@role])
     log_in(@user)
   end
 
   test "index sets the necessary variables" do
     get :index
     assert assigns(:roles)
-    assert assigns(:users)
+    assert assigns(:organization_users)
     assert assigns(:open_invites)
     assert_template "support/roles/index"
   end
@@ -56,8 +57,8 @@ class Support::RolesControllerTest < ActionController::TestCase
   end
 
   test "can't destroy role if someone is assigned" do
-    @user.roles << @role2
-    @user.save!
+    @organization_user.roles << @role2
+    @organization_user.save!
     delete :destroy, params: { id: @role2.id}
     assert_redirected_to support_roles_path(tab: 'roles')
     assert flash[:notice].include? 'users assigned'
@@ -73,9 +74,5 @@ class Support::RolesControllerTest < ActionController::TestCase
     delete :destroy, params: { id: @role2.id}
     assert_redirected_to support_roles_path(tab: 'roles')
     assert flash[:notice].include? 'success'
-  end
-
-  def teardown
-    DatabaseCleaner.clean
   end
 end

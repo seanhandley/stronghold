@@ -15,9 +15,9 @@
 
   .tab-content
     .tab-pane#users{'class' => active_tab?('users')}
-      = render partial: 'support/users/list', locals: { users: @users, open_invites: @open_invites }
+      = render partial: 'support/users/list', locals: { organization_users: @organization_users, open_invites: @open_invites }
 
     .tab-pane#roles{'class' => active_tab?('roles')}
       = render partial: 'list', locals: { roles: @roles }
 
-= pagination @users
+= pagination @organization_users
