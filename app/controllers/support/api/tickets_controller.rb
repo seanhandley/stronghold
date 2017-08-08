@@ -57,7 +57,7 @@ module Support
       end
 
       def read
-        current_user.unread_tickets.find_by(ticket_id: read_params[:ticket_id],
+        current_organization_user.unread_tickets.find_by(ticket_id: read_params[:ticket_id],
           update_id: read_params[:update_id])&.destroy
         head :no_content
       end

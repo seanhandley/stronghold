@@ -13,22 +13,22 @@
         %th Cloud Projects
       %th
     %tbody
-      - users.each do |user|
+      - organization_users.each do |organization_user|
         %tr
-          %td= image_tag asset_path("assets/default_user.png"), "class" => "gravatar img-circle", "alt" => "Gravatar", "data-gravatar_hash" => user.gravatar_hash
-          %td= link_to user.name, "#user_#{user.id}", 'data-toggle' => 'collapse', 'data-parent' => '#accordionUsers'
-          %td= mail_to user.email, "#{user.email}"
+          %td= image_tag asset_path("assets/default_user.png"), "class" => "gravatar img-circle", "alt" => "Gravatar", "data-gravatar_hash" => organization_user.user.gravatar_hash
+          %td= link_to organization_user.user.name, "#user_#{organization_user.user.id}", 'data-toggle' => 'collapse', 'data-parent' => '#accordionUsers'
+          %td= mail_to organization_user.user.email, "#{organization_user.user.email}"
           %td
             %i.fa.fa-key
-            = list_of_roles(current_organization_user)
+            = list_of_roles(organization_user)
           - if organization.cloud?
             %td
               %i.fa.fa-folder-o
-              - if list_of_projects(user).present?
-                = list_of_projects(user)
+              - if list_of_projects(organization_user).present?
+                = list_of_projects(organization_user)
               - else
                 %em None
           %td
-            - if can?(:modify, User) && user.id != current_user.id
-              %a{href: admin_customer_user_path(organization, user), data: { remote: true, method: :delete, confirm: "Are you sure?"}, class: "btn btn-danger"}
+            - if can?(:modify, OrganizationUser) && organization_user.id != current_organization_user.id
+              %a{href: admin_customer_user_path(organization, organization_user.user), data: { remote: true, method: :delete, confirm: "Are you sure?"}, class: "btn btn-danger"}
                 %i.fa.fa-trash-o
