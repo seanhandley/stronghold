@@ -18,18 +18,18 @@
         %td
           %strong Access Key:
         %td#ceph-access-key
-          = current_user.ec2_credentials ? current_user.ec2_credentials['access'] : "Unknown" 
+          = current_organization_user.ec2_credentials ? current_organization_user.ec2_credentials['access'] : "Unknown" 
           .pull-right
-            %button{class: 'btn btn-copy btn-default', 'data-trigger' => 'manual', 'data-clipboard-text' => current_user.ec2_credentials ? current_user.ec2_credentials['access'] : "Unknown", 'data-placement' => "bottom"}
+            %button{class: 'btn btn-copy btn-default', 'data-trigger' => 'manual', 'data-clipboard-text' => current_organization_user.ec2_credentials ? current_organization_user.ec2_credentials['access'] : "Unknown", 'data-placement' => "bottom"}
               = image_tag asset_path('clippy.svg'), title: 'Click to copy', class: 'copy-btn-img'
       %tr
         %td
           %strong Secret Key
         %td
-          %span.click-to-reveal{'data-reveal' => current_user.ec2_credentials ? current_user.ec2_credentials['secret'] : "Unknown"}
+          %span.click-to-reveal{'data-reveal' => current_organization_user.ec2_credentials ? current_organization_user.ec2_credentials['secret'] : "Unknown"}
             %em Click To Reveal
           .pull-right
-            %button{class: 'btn btn-copy btn-default', 'data-trigger' => 'manual', 'data-clipboard-text' => current_user.ec2_credentials ? current_user.ec2_credentials['secret'] : "Unknown", 'data-placement' => "bottom"}
+            %button{class: 'btn btn-copy btn-default', 'data-trigger' => 'manual', 'data-clipboard-text' => current_organization_user.ec2_credentials ? current_organization_user.ec2_credentials['secret'] : "Unknown", 'data-placement' => "bottom"}
               = image_tag asset_path('clippy.svg'), title: 'Click to copy', class: 'copy-btn-img'
 
 = link_to "#{content_tag(:i, '', class: 'fa fa-refresh')} Regenerate Credentials".html_safe, '#', id: 'regenerate-ceph-credentials'

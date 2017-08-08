@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class SignupsControllerTest < ActionController::TestCase
+class SignupsControllerTest < CleanControllerTest
   setup do
     @user = User.make!
     @organization = @user.primary_organization

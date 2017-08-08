@@ -10,16 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170714141851) do
+ActiveRecord::Schema.define(version: 20170731154943) do
 
   create_table "api_credentials", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "user_id"
     t.string   "access_key"
     t.string   "password_digest"
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
     t.integer  "organization_id"
-    t.boolean  "enabled",         default: true, null: false
+    t.boolean  "enabled",              default: true, null: false
+    t.integer  "organization_user_id"
     t.index ["enabled"], name: "index_api_credentials_on_enabled", using: :btree
   end
 
@@ -357,6 +358,13 @@ ActiveRecord::Schema.define(version: 20170714141851) do
     t.index ["user_id"], name: "index_organizations_users_on_user_id", using: :btree
   end
 
+  create_table "organizations_users_roles", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "role_id"
+    t.integer  "organization_user_id"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
   create_table "products", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
     t.string   "name"
     t.datetime "created_at"
@@ -423,8 +431,9 @@ ActiveRecord::Schema.define(version: 20170714141851) do
     t.string   "update_id"
     t.string   "ticket_id"
     t.integer  "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+    t.integer  "organization_user_id"
     t.index ["user_id"], name: "index_unread_tickets_on_user_id", using: :btree
   end
 
@@ -432,6 +441,7 @@ ActiveRecord::Schema.define(version: 20170714141851) do
     t.integer "user_id"
     t.integer "project_id"
     t.string  "role_uuid"
+    t.integer "organization_user_id"
     t.index ["user_id", "project_id", "role_uuid"], name: "index_user_project_roles_on_user_id_and_project_id_and_role_uuid", unique: true, using: :btree
   end
 

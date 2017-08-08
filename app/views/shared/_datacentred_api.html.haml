@@ -12,9 +12,9 @@
         %td
           %strong Access Key:
         %td#datacentred-access-key
-          = current_user.api_credential.access_key
+          = current_organization_user.api_credential.access_key
           .pull-right
-            %button{class: 'btn btn-copy btn-default', 'data-trigger' => 'manual', 'data-clipboard-text' => current_user.api_credential.access_key, 'data-placement' => "bottom"}
+            %button{class: 'btn btn-copy btn-default', 'data-trigger' => 'manual', 'data-clipboard-text' => current_organization_user.api_credential.access_key, 'data-placement' => "bottom"}
               = image_tag asset_path('clippy.svg'), title: 'Click to copy', class: 'copy-btn-img'
       %tr
         %td

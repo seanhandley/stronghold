@@ -3,11 +3,11 @@
     %span.new-user
       %a{'href' => '', 'data-toggle' => "modal", 'data-target' => "#addRoleUser#{role.id}"}
         %i.fa.fa-plus
-  = render partial: 'support/roles_users/form', locals: { role: role }
-  - for user in role.users
+  = render partial: 'support/organizations_users_roles/form', locals: { role: role }
+  - for organization_user in role.organization_users
     - if can? :modify, Role
-      %span.image{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => "#{t(:remove)} #{user.name}?"}
-        %a{href: support_remove_role_user_path(role, user), data: { method: 'delete', confirm: "#{t(:remove)} #{user.name}?"}}
-          = gravatar_image_tag(user.email, title: '', alt: user.name, class: 'img-circle')
+      %span.image{'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => "#{t(:remove)} #{organization_user.user.name_with_email}?"}
+        %a{href: support_remove_organization_user_role_path(role, organization_user), data: { method: 'delete', confirm: "#{t(:remove)} #{organization_user.user.name_with_email}?"}}
+          = gravatar_image_tag(organization_user.user.email, title: '', alt: organization_user.user.name_with_email, class: 'img-circle')
     - else
-      = gravatar_image_tag(user.email, title: '', alt: user.name, class: 'img-circle')
+      = gravatar_image_tag(organization_user.user.email, title: '', alt: organization_user.user.name_with_email, class: 'img-circle')

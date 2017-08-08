@@ -61,8 +61,8 @@ module Freezable
 
   def toggle_datacentred_api_users!(state=nil)
     unless Rails.env.test?
-      users.each do |user|
-        CheckDataCentredApiAccessJob.perform_later(self, user, state)
+      organization_users.each do |organization_user|
+        CheckDataCentredApiAccessJob.perform_later(organization_user, state)
       end
     end
   end
