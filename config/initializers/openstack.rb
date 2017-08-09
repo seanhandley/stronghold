@@ -1,8 +1,5 @@
 require 'fog/openstack'
-
-Excon.defaults[:connect_timeout] = 10
-Excon.defaults[:write_timeout] = 180
-Excon.defaults[:read_timeout] = 180
+require_relative "./excon"
 
 module OpenStackConnection
   @@service_provider = 'datacentred'
