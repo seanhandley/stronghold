@@ -26,7 +26,7 @@ module Admin
     end
 
     def show
-      @organization       = Organization.find(params[:id]) if params[:id]
+      @organization       = get_organization
       @usage_decorator    = UsageDecorator.new(@organization)
       @tickets            = decorated_tickets(@organization)
       @organization_users = @organization.organization_users
@@ -37,11 +37,11 @@ module Admin
     end
 
     def edit
-      @organization = Organization.find(params[:id])
+      @organization = get_organization
     end
 
     def update
-      organization = Organization.find(params[:id])
+      organization = get_organization
 
       if organization.update_including_state(sanitised_update_params)
         respond_to do |format|
@@ -88,7 +88,10 @@ module Admin
     end
 
     def get_organization
-      @organization = Organization.find(params[:id]) if params[:id]
+      if params[:id]
+        @organization ||= Organization.find_by_reporting_code(params[:id])
+        @organization ||= Organization.find(params[:id])
+      end
     end
   end
 end
