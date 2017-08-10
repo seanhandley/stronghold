@@ -6,6 +6,7 @@ class TestOrganizationUser < CleanTest
     @organization2 = Organization.make!
     @user = User.make!(organizations: [])
     OrganizationUser.create(user: @user, organization: @organization)
+    Role.make!(organization: @organization, power_user: true)
   end
 
   def test_new_users_organization_is_primary
@@ -49,6 +50,12 @@ class TestOrganizationUser < CleanTest
     assert_raises Stronghold::Error::TemporaryMembershipExpiredError do
       relation.reload
     end
+  end
+
+  def test_admin_user_created_is_power_user
+    ou = OrganizationUser.create_admin(user: @user, organization: @organization, duration: 4)
+    assert_equal 1, ou.roles.count
+    assert ou.roles.first.power_user?
   end
 
 end
