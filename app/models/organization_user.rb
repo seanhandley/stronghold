@@ -85,6 +85,15 @@ class OrganizationUser < ActiveRecord::Base
     check_ceph_access
   end
 
+  def self.create_admin(params)
+    ou = create(params)
+    if ou.save
+      admin_role = ou.organization.roles.find_by(power_user: true)
+      our = OrganizationUserRole.create(organization_user: ou, role: admin_role)
+    end
+    ou
+  end
+
   private
 
   def _ec2_credentials

@@ -3,10 +3,10 @@ class Admin::OrganizationAssignmentsController < AdminBaseController
   before_action :fetch_organization
 
   def create
-    @organization_user = OrganizationUser.create organization: @organization,
-                                                 user:         current_user,
-                                                 duration:     OrganizationUser::DEFAULT_MEMBERSHIP_DURATION_IN_HOURS
-    if @organization_user.save
+    @organization_user = OrganizationUser.create_admin organization: @organization,
+                                                       user:         current_user,
+                                                       duration:     OrganizationUser::DEFAULT_MEMBERSHIP_DURATION_IN_HOURS
+    if @organization_user.persisted?
       redirect_to admin_customer_path(@organization), notice: "You have added yourself to this account."
     else
       redirect_to admin_customer_path(@organization), alert: model_errors_as_html(@organization_user)
