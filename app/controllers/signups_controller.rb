@@ -24,7 +24,7 @@ class SignupsController < ApplicationController
                       device_id: device_cookie
                     }
     @customer_signup = CustomerSignup.new(create_params.merge(extra_headers))
-    if @customer_signup.save
+    if verify_recaptcha(:model => @customer_signup) && @customer_signup.save
       respond_to do |format|
         format.html { redirect_to thanks_path }
         format.json { head :ok }
@@ -55,7 +55,7 @@ class SignupsController < ApplicationController
 
   def update
     @registration = RegistrationGenerator.new(@invite, update_params)
-    if verify_recaptcha(:model => @registration) && @registration.generate!
+    if @registration.generate!
       Rails.cache.write("up_#{@registration.user.uuid}", update_params[:password], expires_in: 60.minutes)
       session[:user_id] = @registration.user.id
       session[:created_at] = Time.zone.now
