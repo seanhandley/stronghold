@@ -6,20 +6,20 @@ class SearchTermLoader
     data = []
 
     Organization.all.each do |customer|
-      data << {'text' => customer.name, 'category' => 'Organization', 'aliases' => [customer.reporting_code],
+      data << {'text' => customer.reporting_code, 'category' => 'Organization', 'aliases' => [customer.name],
         'id' => customer.id, 'data' => {'url' => admin_customer_path(customer), 'additional_info' => customer.reporting_code} }
     end
 
     User.all.each do |user|
       user.organizations.each do |organization|
-        data << {'text' => user.email, 'category' => 'User', 'aliases' => [user.name, user.uuid],
+        data << {'text' => user.uuid, 'category' => 'User', 'aliases' => [user.name, user.email],
           'id' => user.id, 'data' => {'url' => admin_customer_path(organization), 'additional_info' => "#{user.uuid} / #{organization.reporting_code}" }}
       end
     end
 
     Project.all.each do |project|
       if project.organization
-         data << {'text' => project.name, 'category' => 'Project', 'aliases' => [project.name, project.uuid],
+         data << {'text' => project.uuid, 'category' => 'Project', 'aliases' => [project.name],
           'id' => project.id, 'data' => {'url' => admin_customer_path(project.organization), 'additional_info' => project.uuid} }
       end
     end
