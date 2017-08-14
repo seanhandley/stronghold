@@ -17,7 +17,7 @@ $(document).ready(function() {
             results: data.matches.map(function(item) {
               return {
                 id: item.id,
-                text: item.text + ' (' + item.additional_info + ')',
+                text: item.display_name,
                 category: item.category,
                 url: item.url
               };

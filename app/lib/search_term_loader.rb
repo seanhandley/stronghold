@@ -6,21 +6,59 @@ class SearchTermLoader
     data = []
 
     Organization.all.each do |customer|
-      data << {'text' => customer.name, 'category' => 'Organization', 'aliases' => [customer.reporting_code],
-        'id' => customer.id, 'data' => {'url' => admin_customer_path(customer), 'additional_info' => customer.reporting_code} }
+      data << {'text' => customer.name, 'category' => 'Organization',
+        'id' => customer.id, 'data' => {
+          'url' => admin_customer_path(customer),
+          'display_name'    => "#{customer.name} (#{customer.reporting_code})"
+        }
+      }
+      data << {'text' => customer.reporting_code, 'category' => 'Organization',
+        'id' => customer.reporting_code, 'data' => {
+          'url' => admin_customer_path(customer),
+          'display_name'    => "#{customer.name} (#{customer.reporting_code})"
+        }
+      }
     end
 
     User.all.each do |user|
-      user.organizations.each do |organization|
-        data << {'text' => user.email, 'category' => 'User', 'aliases' => [user.name, user.uuid],
-          'id' => user.id, 'data' => {'url' => admin_customer_path(organization), 'additional_info' => "#{user.uuid} / #{organization.reporting_code}" }}
+      user.organization_users.each do |organization_user|
+        user         = organization_user.user
+        organization = organization_user.organization
+        next unless organization && user
+        data << {'text' => user.email, 'category' => 'User',
+          'id' => "organization_user_#{user.email}", 'data' => {
+            'url' => admin_customer_path(organization),
+            'display_name' => "#{user.email} (#{user.uuid} / #{user.name})"
+          }
+        }
+        data << {'text' => user.name, 'category' => 'User',
+          'id' => "organization_user_#{organization_user.id}", 'data' => {
+            'url' => admin_customer_path(organization),
+            'display_name' => "#{user.email} (#{user.uuid} / #{user.name})"
+          }
+        }
+        data << {'text' => user.uuid, 'category' => 'User',
+          'id' => "organization_user_#{user.uuid}", 'data' => {
+            'url' => admin_customer_path(organization),
+            'display_name' => "#{user.email} (#{user.uuid} / #{user.name})"          }
+        }
       end
     end
 
     Project.all.each do |project|
       if project.organization
-         data << {'text' => project.name, 'category' => 'Project', 'aliases' => [project.name, project.uuid],
-          'id' => project.id, 'data' => {'url' => admin_customer_path(project.organization), 'additional_info' => project.uuid} }
+        data << {'text' => project.name, 'category' => 'Project', 'aliases' => [project.name, project.uuid],
+          'id' => "project_#{project.id}", 'data' => {
+            'url' => admin_customer_path(project.organization),
+            'display_name' => "#{project.name} (#{project.uuid})"
+          }
+        }
+        data << {'text' => project.uuid, 'category' => 'Project',
+          'id' => "project_#{project.uuid}", 'data' => {
+            'url' => admin_customer_path(project.organization),
+            'display_name' => "#{project.name} (#{project.uuid})"
+          }
+        }
       end
     end
 
