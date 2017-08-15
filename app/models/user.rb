@@ -94,8 +94,9 @@ class User < ApplicationRecord
   end
 
   def keystone_params
-    { email: email, name: email,
-      enabled: current_organization.has_payment_method? && has_permission?('cloud.read'),
+    {
+      email:    email,
+      name:     email,
       password: password
     }
   end

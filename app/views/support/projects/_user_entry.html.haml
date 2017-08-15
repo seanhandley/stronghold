@@ -1,5 +1,8 @@
-.col-md-6
-  .checkbox
-    %label
-      = check_box_tag "project[users][#{user.id}]", true, project.users.map(&:uuid).include?(user.uuid)
-      = user.name
+.col-md-12
+  .row
+    .col-md-1= gravatar_image_tag(user.email, :class => 'img-circle nav-profile')
+    .col-md-11
+      .checkbox
+        %label
+          = check_box_tag "project[users][#{user.id}]", true, project.users.map(&:uuid).include?(user.uuid)
+          = user.name_with_email

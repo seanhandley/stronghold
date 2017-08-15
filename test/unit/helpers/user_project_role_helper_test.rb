@@ -27,6 +27,10 @@ module UserProjectRoleHelperTests
       @organization = Organization.make!
       @user1 = User.make!(organizations: [@organization])
       @user2 = User.make!(organizations: [@organization])
+      @role  = Role.make!(organization: @organization, power_user: true)
+      @organization.organization_users.each do |ou|
+        OrganizationUserRole.create! organization_user: ou, role: @role
+      end
     end
 
     def test_user_project_roles_attributes_both_users_chosen

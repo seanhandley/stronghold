@@ -11,7 +11,6 @@ class TestOrganizationMutativeMethods < CleanTest
     Rails.env.stub(:test?, false) do
       mock = Minitest::Mock.new
       mock.expect(:update_project, nil, [@organization.primary_project.uuid, enabled: enable])
-      mock.expect(:update_user, nil, [@user.uuid, enabled: enable])
 
       OpenStackConnection.stub(:identity, mock) do
         yield

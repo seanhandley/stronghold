@@ -9,7 +9,7 @@ class UserProjectRole < ApplicationRecord
   validates :role_uuid, presence: true
 
   after_save :create_project_role, :set_organization_user, on: :create
-  after_destroy :destroy_project_role
+  before_destroy :destroy_project_role
 
   def self.required_role_ids
     ["heat_stack_owner", "_member_", "object-store"].collect do |name|
