@@ -19,11 +19,10 @@
           %i.fa.fa-briefcase
           Edit Organization
       - if current_organization.cloud?
-        - unless current_organization.limited_storage?
-          %li
-            %a{:href => support_projects_path}
-              %i.fa.fa-folder-o
-              Cloud Projects
+        %li
+          %a{:href => support_projects_path}
+            %i.fa.fa-folder-o
+            Cloud Projects
         %li
           %a{:href => support_quotas_path}
             %i.fa.fa-sliders
