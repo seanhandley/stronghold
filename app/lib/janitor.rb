@@ -25,7 +25,8 @@ module Janitor
                                              state:       'deleted',
                                              event_name:  'compute.instance.detected_absence',
                                              message_id:  SecureRandom.hex,
-                                             sync_id:     Billing::Sync.last.id
+                                             sync_id:     Billing::Sync.last.id,
+                                             flavor_id:   instance.instance_flavor.flavor_id
             instance.reindex_states
           end
           logger.info "Instance #{id} is missing delete event. Automatically added one."
