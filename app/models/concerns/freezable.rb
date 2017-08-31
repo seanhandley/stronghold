@@ -34,12 +34,10 @@ module Freezable
   private
 
   def enable_users!
-    toggle_openstack!('user', true)
     toggle_datacentred_api_users!
   end
 
   def disable_users!
-    toggle_openstack!('user', false)
     toggle_datacentred_api_users!(false)
   end
 

@@ -1,5 +1,4 @@
+.alert.alert-info Only users belonging to a role with OpenStack permissions are available for selection.
 %div{'style' => "overflow: auto; height: 180px"}
-  - current_organization.users.each_slice(2) do |users|
-    .row
-      - users.each do |user|
-        = render partial: 'user_entry', locals: {user: user, project: project}
+  - users_with_openstack_permissions.each do |user|
+    .row= render partial: 'user_entry', locals: {user: user, project: project}

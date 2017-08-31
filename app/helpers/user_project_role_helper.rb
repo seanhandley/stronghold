@@ -1,6 +1,11 @@
 module UserProjectRoleHelper
+
+  def users_with_openstack_permissions
+    current_organization.organization_users.select{|ou| ou.has_permission?('cloud.read')}.map(&:user)
+  end
+
   def user_project_roles_attributes
-    users_in_this_org = current_organization.users.collect(&:id)
+    users_in_this_org = users_with_openstack_permissions.collect(&:id)
     users_destined_for_this_project = project_params[:users].present? ? project_params[:users].keys.map(&:to_i).select{|u| User.find_by_id(u)}.compact : []
     users_not_destined_for_this_project = users_in_this_org - users_destined_for_this_project
 
