@@ -9,7 +9,7 @@ class BroadcastUnreadNotificationJob < ApplicationJob
     users.each do |user|
       UnreadTicket.create ticket_id: ticket['reference'],
                           update_id: update['id'],
-                          user_id:   user.id
+                          organization_user: OrganizationUser.find_by(organization: organization, user: user)
     end
   end
 end
