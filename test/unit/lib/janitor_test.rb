@@ -5,9 +5,11 @@ require 'test_helper'
 class TestJanitor < CleanTest
 
   def setup
+    @flavor = Billing::InstanceFlavor.create! flavor_id: 'foo', name: 'foo'
     @instance = Billing::Instance.create!({
       instance_id: 'ff90714a-6b5e-45e4-9253-c952b63bb3d6',
       name: 'foo',
+      flavor_id: 'foo'
     })
     @live_servers = [
       {'id' => 'ff90714a-6b5e-45e4-9253-c952b63bb3d6'}
