@@ -30,7 +30,8 @@ class SessionsController < ApplicationController
         cookies.signed[:user_id]  = @user.id
         if cookies.signed[:current_organization_id]
           unless OrganizationUser.where(user_id: @user.id, organization_id: cookies.signed[:current_organization_id]).any?
-          cookies.signed[:current_organization_id] = @user.primary_organization.id
+            cookies.signed[:current_organization_id] = @user.primary_organization.id
+          end
         end
         session[:organization_id] = cookies.signed[:current_organization_id]
 
