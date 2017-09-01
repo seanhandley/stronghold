@@ -29,10 +29,11 @@ class SessionsController < ApplicationController
         session[:token]           = token if token.is_a? String
         cookies.signed[:user_id]  = @user.id
         if cookies.signed[:current_organization_id]
-          unless OrganizationUser.where(user_id: @user.id, organization_id: cookies.signed[:current_organization_id]).any?
-            cookies.signed[:current_organization_id] = @user.primary_organization.id
+          if OrganizationUser.where(user_id: @user.id, organization_id: cookies.signed[:current_organization_id]).none?
+            cookies.signed[:current_organization_id] = nil
           end
         end
+        cookies.signed[:current_organization_id] ||= @user.primary_organization.id
         session[:organization_id] = cookies.signed[:current_organization_id]
 
         if current_organization.known_to_payment_gateway?
