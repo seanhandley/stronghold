@@ -28,15 +28,11 @@ class SessionsController < ApplicationController
         session[:created_at]      = Time.now.utc
         session[:token]           = token if token.is_a? String
         cookies.signed[:user_id]  = @user.id
-        cookies.signed[:current_organization_id] ||= @user.primary_organization.id
+        if cookies.signed[:current_organization_id]
+          unless OrganizationUser.where(user_id: @user.id, organization_id: cookies.signed[:current_organization_id]).any?
+          cookies.signed[:current_organization_id] = @user.primary_organization.id
+        end
         session[:organization_id] = cookies.signed[:current_organization_id]
-
-        Rails.logger.info '*' * 10
-        Rails.logger.info session[:user_id]
-        Rails.logger.info session[:organization_id]
-        Rails.logger.info current_user
-        Rails.logger.info current_organization
-        Rails.logger.info '*' * 10
 
         if current_organization.known_to_payment_gateway?
           if params[:next]
