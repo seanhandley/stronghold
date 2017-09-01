@@ -18,7 +18,7 @@ module Support
           :message => nil
         }
         if ticket_comment.valid?
-          response["message"] = TicketAdapter.create_comment(ticket_comment)
+          response["message"] = TicketAdapter.create_comment(ticket_comment, Authorization.current_user.id)
         else
           response["message"] = get_model_errors(ticket_comment)
         end
