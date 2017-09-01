@@ -10,15 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170731154943) do
+ActiveRecord::Schema.define(version: 20170831141435) do
 
   create_table "api_credentials", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.integer  "user_id"
     t.string   "access_key"
     t.string   "password_digest"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
-    t.integer  "organization_id"
     t.boolean  "enabled",              default: true, null: false
     t.integer  "organization_user_id"
     t.index ["enabled"], name: "index_api_credentials_on_enabled", using: :btree
@@ -401,13 +399,6 @@ ActiveRecord::Schema.define(version: 20170731154943) do
     t.string   "uuid"
   end
 
-  create_table "roles_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
-    t.integer  "role_id"
-    t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "starburst_announcement_views", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
     t.integer  "user_id"
     t.integer  "announcement_id"
@@ -430,11 +421,9 @@ ActiveRecord::Schema.define(version: 20170731154943) do
   create_table "unread_tickets", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "update_id"
     t.string   "ticket_id"
-    t.integer  "user_id"
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
     t.integer  "organization_user_id"
-    t.index ["user_id"], name: "index_unread_tickets_on_user_id", using: :btree
   end
 
   create_table "user_project_roles", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
@@ -451,7 +440,6 @@ ActiveRecord::Schema.define(version: 20170731154943) do
     t.string   "last_name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "organization_id"
     t.string   "uuid"
     t.string   "password_digest"
     t.string   "salesforce_id"
