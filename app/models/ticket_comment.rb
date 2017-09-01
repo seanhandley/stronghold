@@ -23,7 +23,7 @@ class TicketComment
     params = {
       update_id: id,
       ticket_id: ticket_reference,
-      user_id: Authorization&.current_user&.id
+      organization_user_id: Authorization&.current_organization_user&.id
     }
     if ticket = UnreadTicket.find_by(params)
       'unread-comment'
