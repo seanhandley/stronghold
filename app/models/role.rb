@@ -7,7 +7,7 @@ class Role < ApplicationRecord
   belongs_to :organization
   before_destroy :check_power, :check_users
   after_commit :check_openstack_access, :check_ceph_access, :check_datacentred_api_access
-  after_save :generate_uuid, :on => :create
+  after_create :generate_uuid
 
   serialize :permissions
 
