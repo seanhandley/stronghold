@@ -72,7 +72,7 @@ module UsageHelper
         end
         project[:usage][:images].each do |image|
           image[:usage].each do |usage|
-            csv << [project[:name], "Image", nil, image[:id], image[:name], usage[:meta][:value], 'TB/h', usage[:cost][:value]]
+            csv << [project[:name], "Image", nil, image[:id], image[:name], usage[:value], 'TB/h', usage[:cost][:value]]
           end
         end
         project[:usage][:object_storage][:usage].each do |usage|
