@@ -1,6 +1,6 @@
 GIT
   remote: git@github.com:datacentred/harbour.git
-  revision: a6a72e32d6ead1b361d0b49bbd54f451da7d3220
+  revision: 85071bacee8e0b12568c4a4875291e4f4809a563
   branch: master
   specs:
     harbour (0.1.0)
@@ -78,11 +78,11 @@ GEM
       i18n (~> 0.7)
       minitest (~> 5.1)
       tzinfo (~> 1.1)
-    addressable (2.5.1)
-      public_suffix (~> 2.0, >= 2.0.2)
+    addressable (2.5.2)
+      public_suffix (>= 2.0.2, < 4.0)
     airbrussh (1.0.2)
       sshkit (>= 1.6.1, != 1.7.0)
-    apipie-rails (0.5.1)
+    apipie-rails (0.5.4)
       rails (>= 4.1)
     arel (7.1.4)
     ast (2.3.0)
@@ -310,7 +310,7 @@ GEM
     premailer-rails (1.9.3)
       actionmailer (>= 3, < 6)
       premailer (~> 1.7, >= 1.7.9)
-    public_suffix (2.0.5)
+    public_suffix (3.0.0)
     puma (3.5.2)
     rack (2.0.3)
     rack-attack (4.4.1)
@@ -379,7 +379,7 @@ GEM
       thor (>= 0.18.1, < 2.0)
     rainbow (2.1.0)
     raindrops (0.16.0)
-    rake (12.0.0)
+    rake (12.1.0)
     rdoc (4.2.2)
       json (~> 1.4)
     recaptcha (3.2.0)
@@ -462,7 +462,7 @@ GEM
     sprockets (3.7.1)
       concurrent-ruby (~> 1.0)
       rack (> 1, < 3)
-    sprockets-rails (3.2.0)
+    sprockets-rails (3.2.1)
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
@@ -482,7 +482,7 @@ GEM
     therubyracer (0.12.2)
       libv8 (~> 3.16.14.0)
       ref
-    thor (0.19.4)
+    thor (0.20.0)
     thread_safe (0.3.6)
     tilt (2.0.5)
     timecop (0.8.1)
@@ -653,4 +653,4 @@ DEPENDENCIES
   world-flags (~> 0.6)
 
 BUNDLED WITH
-   1.14.6
+   1.15.4
