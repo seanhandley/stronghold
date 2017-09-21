@@ -9,7 +9,6 @@ class Invite < ApplicationRecord
   validates :organization, :presence => true
   validate :has_roles?
   validate :email_looks_valid?
-  validate :no_user_has_that_email?
   validate :role_ids_belong?
   validate :project_ids_belong?
 
@@ -70,13 +69,6 @@ class Invite < ApplicationRecord
     end
   end
 
-  def no_user_has_that_email?
-    if email.present? && User.find_by_email(email.downcase) && !persisted?
-      errors.add(:email, 'already has an account. Please choose another email.') 
-      throw :abort
-    end
-  end
-
   def role_ids_belong?
     roles.each do |role|
       unless role.organization_id == organization_id
@@ -95,7 +87,11 @@ class Invite < ApplicationRecord
     end
   end
 
+  def existing_user?
+    email.present? && User.find_by_email(email.downcase) && !persisted?
+  end
+
   def send_email
-    Mailer.signup(id).deliver_later
+    existing_user? ? Mailer.membership(id).deliver_later : Mailer.signup(id).deliver_later
   end
 end

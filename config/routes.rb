@@ -110,6 +110,9 @@ Rails.application.routes.draw do
   resources :sessions, only: [:create, :destroy, :new, :index]
   resources :resets, only: [:create, :new, :show, :update]
 
+  get 'membership/:token', :controller => 'memberships', :action => 'confirm', :as => 'membership_begin'
+  post 'membership/:token', :controller => 'memberships', :action => 'create', :as => 'membership_complete'
+  get 'membership/thanks/:organization_id', :controller => 'memberships', :action => 'thanks', :as => 'membership_thanks'
   get 'signup/:token', :controller => 'signups', :action => 'edit', :as => 'signup_begin'
   post 'signup/:token', :controller => 'signups', :action => 'update', :as => 'signup_complete'
   get 'signup', :controller => 'signups', :action => 'new', :as => 'new_signup'
