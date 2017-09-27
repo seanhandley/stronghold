@@ -1,13 +1,13 @@
 GIT
   remote: git@github.com:datacentred/harbour.git
-  revision: aa63923015c7680f766bddc9b09c55a71f5a4428
+  revision: 8b6acc310b2fa58a466b3a8c37e2c8f0af97023a
   branch: master
   specs:
     harbour (0.1.0)
       apipie-rails (= 0.5.1)
       json-schema (~> 2.7)
       maruku (~> 0.3)
-      nokogiri (~> 1.7.2)
+      nokogiri (~> 1.8.1)
       rails (>= 5.0)
       responders (~> 2.2)
 
@@ -165,6 +165,7 @@ GEM
       sort_alphabetical (~> 1.0)
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
+    crass (1.0.2)
     css_parser (1.4.5)
       addressable
     currencies (0.4.2)
@@ -255,16 +256,17 @@ GEM
     launchy (2.4.3)
       addressable (~> 2.3)
     libv8 (3.16.14.15)
-    loofah (2.0.3)
+    loofah (2.1.1)
+      crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     machinist (2.0)
     mail (2.6.6)
       mime-types (>= 1.16, < 4)
     maruku (0.7.3)
     maxmind (0.4.7)
-    method_source (0.8.2)
+    method_source (0.9.0)
     mime-types (2.99.3)
-    mini_portile2 (2.1.0)
+    mini_portile2 (2.3.0)
     minitest (5.10.1)
     minitest-capybara (0.8.2)
       capybara (~> 2.2)
@@ -292,8 +294,8 @@ GEM
     netrc (0.11.0)
     newrelic_rpm (3.17.2.327)
     nio4r (2.1.0)
-    nokogiri (1.7.2)
-      mini_portile2 (~> 2.1.0)
+    nokogiri (1.8.1)
+      mini_portile2 (~> 2.3.0)
     parallel (1.9.0)
     paranoia (2.2.0)
       activerecord (>= 4.0, < 5.1)
@@ -587,7 +589,7 @@ DEPENDENCIES
   mysql2 (~> 0.3)
   net-ssh (~> 2.8.0)
   newrelic_rpm (~> 3.9)
-  nokogiri (~> 1.7.1)
+  nokogiri (~> 1.8.1)
   parallel
   paranoia (~> 2.2)
   poltergeist
@@ -653,4 +655,8 @@ DEPENDENCIES
   world-flags (~> 0.6)
 
 BUNDLED WITH
+<<<<<<< HEAD
    1.15.4
+=======
+   1.15.1
+>>>>>>> Update nokogiri.
