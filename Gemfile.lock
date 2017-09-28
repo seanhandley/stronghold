@@ -655,8 +655,4 @@ DEPENDENCIES
   world-flags (~> 0.6)
 
 BUNDLED WITH
-<<<<<<< HEAD
    1.15.4
-=======
-   1.15.1
->>>>>>> Update nokogiri.
