@@ -88,7 +88,7 @@ class Invite < ApplicationRecord
   end
 
   def existing_user?
-    email.present? && User.find_by_email(email.downcase) && !persisted?
+    email.present? && User.find_by_email(email.downcase)
   end
 
   def send_email
