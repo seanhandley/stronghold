@@ -34,7 +34,6 @@ class MembershipsControllerTest < ActionController::TestCase
       post :create, params: { token: @invite.token }
       assert session[:user_id]
       assert session[:created_at]
-      # assert session[:token]
       assert_redirected_to membership_thanks_path(@invite.organization)
     end
   end
