@@ -10,24 +10,20 @@ class TestInvite < CleanTest
   end
 
   def test_invite_for_existing_user
-    mock_mailer = Minitest::Mock.new
-    mock_mailer.expect(:deliver_later, true)
-    def mock_mailer.apply; true; end
-
-    Mailer.stub :membership, mock_mailer do
-      @invite.save
+    mock = MiniTest::Mock.new
+    mock.expect(:deliver_later, true)
+    Mailer.stub(:membership, mock) do
+      Invite.create! organization_id: @organization.id, email: @user.email, roles: [@role]
     end
-    assert_mock mock_mailer
+    mock.verify
   end
 
   def test_invite_for_new_user
-    mock_mailer = Minitest::Mock.new
-    mock_mailer.expect(:deliver_later, true)
-    def mock_mailer.apply; true; end
-
-    Mailer.stub :signup, mock_mailer do
-      @invite2.save
+    mock = MiniTest::Mock.new
+    mock.expect(:deliver_later, true)
+    Mailer.stub(:signup, mock) do
+      Invite.create! organization_id: @organization.id, email: 'user@foo.com', roles: [@role]
     end
-    assert_mock mock_mailer
+    mock.verify
   end
 end
