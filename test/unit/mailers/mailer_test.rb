@@ -15,6 +15,18 @@ class MailerTest < ActionMailer::TestCase
     assert email.html_part.to_s.include?(@invite.token), 'mail body contains invite token'
   end
 
+  def test_membersip
+    @invite = Invite.make!
+
+    email = Mailer.membership(@invite.id).deliver_now
+    assert_not ActionMailer::Base.deliveries.empty?
+
+    assert email.from.include?("noreply@datacentred.io")
+    assert_equal [@invite.email], email.to
+    assert_equal 'Confirm your invitation to join a new team', email.subject
+    assert email.html_part.to_s.include?(@invite.token), 'mail body contains invite token'
+  end
+
   def test_reset
     @reset = Reset.make!
 
