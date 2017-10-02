@@ -1,0 +1,25 @@
+<%= stylesheet_link_tag '/email.css' %>
+
+<div class="container" id="email">
+  <%= render partial: 'header' %>
+
+  <h1>Please confirm your email address</h1>
+
+  <p>Welcome to your new DataCentred team. Please click below to confirm your new membership.</p>
+
+  <div style: "padding: 30px">
+    <a class="confirm" target='_blank' href="<%= membership_begin_url(@invite.token) %>">Confirm Membership</a>
+  </div>
+
+  <h2>Why am I seeing this?</h2>
+
+  <p>You've been sent this email because you've been invited to join <%= @invite.organization.name %> team.</p>
+
+  <p>The above setup link will expire at <%= am_pm_time(@invite.expires_at) %> on <%= long_date(@invite.expires_at.utc) %>. If you have any issues accessing your new team, please contact <%= link_to 'support@datacentred.co.uk', 'mailto:support@datacentred.co.uk' %>.</p>
+
+  <p>If you require any assistance, please log into <%= link_to 'my.datacentred.io', 'https://my.datacentred.io' %> and raise a ticket in the Support section.</p>
+
+  <p>Kind regards,<br/>
+  The DataCentred Team</p>
+</div>
+<%= render partial: 'footer' %>
