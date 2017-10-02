@@ -15,14 +15,6 @@
 
   <p>You've been sent this email because you've been invited to join <%= @invite.organization.name %> team.</p>
 
-  <h2>What's next?</h2>
-
-  <ul>
-    <li></li>
-    <li></li>
-    <li></li>
-  </ul>
-
   <p>The above setup link will expire at <%= am_pm_time(@invite.expires_at) %> on <%= long_date(@invite.expires_at.utc) %>. If you have any issues accessing your new team, please contact <%= link_to 'support@datacentred.co.uk', 'mailto:support@datacentred.co.uk' %>.</p>
 
   <p>If you require any assistance, please log into <%= link_to 'my.datacentred.io', 'https://my.datacentred.io' %> and raise a ticket in the Support section.</p>
