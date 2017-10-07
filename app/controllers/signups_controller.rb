@@ -24,20 +24,29 @@ class SignupsController < ApplicationController
                       device_id: device_cookie
                     }
     @customer_signup = CustomerSignup.new(create_params.merge(extra_headers))
-    if @customer_signup.save
-      respond_to do |format|
-        format.html { redirect_to thanks_path }
-        format.json { head :ok }
-      end
-    else
-      respond_to do |format|
-        format.html {
-          flash.now.alert = model_errors_as_html(@customer_signup)
-          render :new, status: :unprocessable_entity
-        }
-        format.json { render json: {errors: model_errors_as_html(@customer_signup)}, status: :unprocessable_entity }
-      end
+    msg = "Unfortunately, we are currently unable to accept signups."
+    respond_to do |format|
+      format.html {
+        flash.now.alert = msg
+        render :new, status: :unprocessable_entity
+      }
+      format.json { render json: {errors: msg, status: :unprocessable_entity } }
     end
+
+    # if @customer_signup.save
+    #   respond_to do |format|
+    #     format.html { redirect_to thanks_path }
+    #     format.json { head :ok }
+    #   end
+    # else
+    #   respond_to do |format|
+    #     format.html {
+    #       flash.now.alert = model_errors_as_html(@customer_signup)
+    #       render :new, status: :unprocessable_entity
+    #     }
+    #     format.json { render json: {errors: model_errors_as_html(@customer_signup)}, status: :unprocessable_entity }
+    #   end
+    # end
   end
 
   def thanks
