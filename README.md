@@ -1,6 +1,6 @@
-# Stronghold
+# Stronghold - The DataCentred Dashboard Application
 
-The DataCentred dashboard application, formerly at my.datacentred.io
+The DataCentred dashboard application, formerly at my.datacentred.io. This app allows you to run a public cloud business on top of OpenStack.
 
 ## NOTICE: No longer maintained
 
