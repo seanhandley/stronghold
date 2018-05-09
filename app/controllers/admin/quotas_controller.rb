@@ -1,6 +1,7 @@
 module Admin
   class QuotasController < AdminBaseController
 
+    # This QuotasController class is responsible for coordinating organizations quotas.
     before_action :find_organization
 
     def edit ; end
@@ -14,8 +15,8 @@ module Admin
         }
         @organization.update_attributes(attrs)
         redirect_to edit_admin_quota_path(@organization), notice: 'Saved'
-      rescue ArgumentError => e
-        redirect_to edit_admin_quota_path(@organization), notice: e.message
+      rescue ArgumentError => error
+        redirect_to edit_admin_quota_path(@organization), notice: error.message
       end
     end
 
@@ -25,10 +26,16 @@ module Admin
       @organization ||= Organization.find(params[:id]) if params[:id]
     end
 
+    def services_quotas
+      @compute_quota = StartingQuota['standard']['compute'].keys.map(&:to_sym)
+      @volume_quota = StartingQuota['standard']['volume'].keys.map(&:to_sym)
+      @network_quota = StartingQuota['standard']['network'].keys.map(&:to_sym)
+    end
+
     def quota_params
-      params.require(:quota).permit(:compute => StartingQuota['standard']['compute'].keys.map(&:to_sym),
-        :volume => StartingQuota['standard']['volume'].keys.map(&:to_sym),
-        :network => StartingQuota['standard']['network'].keys.map(&:to_sym))
+      params.require(:quota).permit(:compute => @compute_quota,
+                                    :volume => @volume_quota,
+                                    :network => @network_quota)
     end
 
     def storage_params
